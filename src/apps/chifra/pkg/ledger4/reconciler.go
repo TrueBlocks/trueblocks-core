@@ -42,7 +42,7 @@ type Ledger struct{}
 // }
 
 // type assetHolderKey struct {
-// 	AssetAddress base.Address
+// 	Asset base.Address
 // 	Holder       base.Address
 // }
 
@@ -93,7 +93,7 @@ func (r *Reconciler4) createTransfers(tx *types.Transaction) []ledger10.AssetTra
 	r1 := ledger1.NewReconciler(r.opts)
 	pos := &types.AppPosition{}
 	filter := &filter.AppearanceFilter{}
-	transfers, err := r1.GetStatements(pos, filter, tx)
+	transfers, err := r1.GetStatements1(pos, filter, tx)
 	if err != nil {
 		return []ledger10.AssetTransfer{}
 	}

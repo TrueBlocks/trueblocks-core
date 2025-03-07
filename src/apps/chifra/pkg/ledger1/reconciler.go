@@ -23,23 +23,24 @@ import (
 )
 
 type Reconciler1 struct {
-	connection        *rpc.Connection
-	accountFor        base.Address
-	firstBlock        base.Blknum
-	lastBlock         base.Blknum
-	asEther           bool
-	testMode          bool
-	reversed          bool
-	useTraces         bool
-	assetFilter       []base.Address
-	names             map[base.Address]types.Name
-	hasStartBlock     bool
-	transfers         map[blockTxKey][]ledger10.AssetTransfer
-	accountLedger     map[assetHolderKey]base.Wei
-	ledgerAssets      map[base.Address]bool
-	correctionCounter base.Value
-	entryCounter      base.Value
-	ledgers           map[base.Address]Ledger
+	opts          *ledger10.ReconcilerOptions
+	connection    *rpc.Connection
+	accountFor    base.Address
+	firstBlock    base.Blknum
+	lastBlock     base.Blknum
+	asEther       bool
+	testMode      bool
+	reversed      bool
+	useTraces     bool
+	assetFilter   []base.Address
+	names         map[base.Address]types.Name
+	hasStartBlock bool
+	transfers     map[blockTxKey][]ledger10.AssetTransfer
+	accountLedger map[assetHolderKey]base.Wei
+	ledgerAssets  map[base.Address]bool
+	// correctionCounter base.Value
+	// entryCounter      base.Value
+	ledgers map[base.Address]Ledger
 }
 
 func (r *Reconciler1) String() string {
@@ -51,6 +52,7 @@ func NewReconciler(opts *ledger10.ReconcilerOptions) *Reconciler1 {
 	parts := types.Custom | types.Prefund | types.Regular
 	names, _ := names.LoadNamesMap(opts.Connection.Chain, parts, []string{})
 	return &Reconciler1{
+		opts:          opts,
 		connection:    opts.Connection,
 		accountFor:    opts.AccountFor,
 		firstBlock:    opts.FirstBlock,
@@ -81,7 +83,7 @@ type assetHolderKey struct {
 	Holder base.Address
 }
 
-func (r *Reconciler1) getAssetTransfers(pos *types.AppPosition, filter *filter.AppearanceFilter, trans *types.Transaction) ([]ledger10.AssetTransfer, error) {
+func (r *Reconciler1) GetStatements1(pos *types.AppPosition, filter *filter.AppearanceFilter, trans *types.Transaction) ([]types.Statement, error) {
 	if r.connection.Store != nil {
 		statementGroup := &types.StatementGroup{
 			BlockNumber:      trans.BlockNumber,
@@ -310,10 +312,6 @@ func (r *Reconciler1) getAssetTransfers(pos *types.AppPosition, filter *filter.A
 	return results, err
 }
 
-func (r *Reconciler1) GetStatements(pos *types.AppPosition, filter *filter.AppearanceFilter, trans *types.Transaction) ([]types.Statement, error) {
-	return r.getAssetTransfers(pos, filter, trans)
-}
-
 func (r *Reconciler1) getStatementsFromTraces(pos *types.AppPosition, trans *types.Transaction, s *types.Statement) ([]types.Statement, error) {
 	statements := make([]types.Statement, 0, 20)
 
@@ -502,8 +500,8 @@ func correctForNullTransfer(s *types.Statement, tx *types.Transaction) bool {
 	return s.Reconciled()
 }
 
-// GetTransfers returns a statement from a given transaction
-func (r *Reconciler1) GetTransfers(pos *types.AppPosition, filter *filter.AppearanceFilter, trans *types.Transaction) ([]types.Transfer, error) {
+// GetTransfers1 returns a statement from a given transaction
+func (r *Reconciler1) GetTransfers1(pos *types.AppPosition, filter *filter.AppearanceFilter, trans *types.Transaction) ([]types.Transfer, error) {
 	if r.connection.Store != nil {
 		transferGroup := &types.TransferGroup{
 			BlockNumber:      trans.BlockNumber,
@@ -517,28 +515,17 @@ func (r *Reconciler1) GetTransfers(pos *types.AppPosition, filter *filter.Appear
 	var err error
 	var statements []types.Statement
 	if true { // !r.useTraces {
-		ledgerOpts := &ledger10.ReconcilerOptions{
-			Connection: r.connection,
-			AccountFor: r.accountFor,
-			// FirstBlock:   opts.FirstBlock,
-			// LastBlock:    opts.LastBlock,
-			AsEther: r.asEther,
-			// TestMode:     testMode,
-			// UseTraces:    opts.Traces,
-			// Reversed:     opts.Reversed,
-			AssetFilters: r.assetFilter,
-		}
-		r2 := ledger2.NewReconciler(ledgerOpts)
-		if statements, err = r2.GetStatements(pos, filter, trans); err != nil {
+		r2 := ledger2.NewReconciler(r.opts)
+		if statements, err = r2.GetStatements2(pos, filter, trans); err != nil {
 			return nil, err
 		}
 		// } else {
-		// 	if statements, err = r.GetStatements(pos, filter, trans); err != nil {
+		// 	if statements, err = r.GetStatements2(pos, filter, trans); err != nil {
 		// 		return nil, err
 		// 	}
 	}
 
-	if transfers, err := types.ConvertToTransfers(statements); err != nil {
+	if transfers, err := convertToTransfers(statements); err != nil {
 		return nil, err
 	} else {
 
@@ -580,12 +567,29 @@ func GetTransfersFromTransaction(tx *types.Transaction) ([]ledger10.AssetTransfe
 				amount = base.NewWei(0)
 			}
 			transfers = append(transfers, ledger10.AssetTransfer{
-				Sender:       sender,
-				Recipient:    recipient,
-				AmountIn:     *amount,
-				AssetAddress: normalized.Address,
+				Sender:    sender,
+				Recipient: recipient,
+				AmountIn:  *amount,
+				Asset:     normalized.Address,
 			})
 		}
+	}
+	return transfers, nil
+}
+
+func convertToTransfers(statements []types.Statement) ([]types.Transfer, error) {
+	transfers := make([]types.Transfer, 0, len(statements)*2)
+	for _, stmnt := range statements {
+		t := types.Transfer{
+			Asset:            stmnt.Asset,
+			Holder:           stmnt.AccountedFor,
+			Amount:           *stmnt.AmountNet(),
+			BlockNumber:      stmnt.BlockNumber,
+			TransactionIndex: stmnt.TransactionIndex,
+			LogIndex:         stmnt.LogIndex,
+			Decimals:         stmnt.Decimals,
+		}
+		transfers = append(transfers, t)
 	}
 	return transfers, nil
 }

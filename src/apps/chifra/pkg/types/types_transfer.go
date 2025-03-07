@@ -184,21 +184,4 @@ func (s *Transfer) IsMaterial() bool {
 	return !s.Amount.Equal(base.ZeroWei)
 }
 
-func ConvertToTransfers(statements []Statement) ([]Transfer, error) {
-	transfers := make([]Transfer, 0, len(statements)*2)
-	for _, stmnt := range statements {
-		t := Transfer{
-			Asset:            stmnt.Asset,
-			Holder:           stmnt.AccountedFor,
-			Amount:           *stmnt.AmountNet(),
-			BlockNumber:      stmnt.BlockNumber,
-			TransactionIndex: stmnt.TransactionIndex,
-			LogIndex:         stmnt.LogIndex,
-			Decimals:         stmnt.Decimals,
-		}
-		transfers = append(transfers, t)
-	}
-	return transfers, nil
-}
-
 // EXISTING_CODE

@@ -7,15 +7,12 @@ package exportPkg
 import (
 	"context"
 	"fmt"
-	"os"
 	"sort"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/filter"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/ledger1"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/ledger10"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/ledger2"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/ledger3"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/monitor"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
@@ -37,7 +34,7 @@ func (opts *ExportOptions) HandleTransfers(rCtx *output.RenderCtx, monitorArray 
 		assetFilters = append(assetFilters, base.HexToAddress(asset))
 	}
 
-	var recon ledger10.Reconcilerer
+	var recon *ledger1.Reconciler1
 	fetchData := func(modelChan chan types.Modeler, errorChan chan error) {
 		for _, mon := range monitorArray {
 			if apps, cnt, err := mon.ReadAndFilterAppearances(filter, false /* withCount */); err != nil {
@@ -133,15 +130,7 @@ func (opts *ExportOptions) HandleTransfers(rCtx *output.RenderCtx, monitorArray 
 							AssetFilters: assetFilters,
 						}
 
-						if os.Getenv("NEW_CODE") == "3" {
-							recon = ledger3.NewReconciler(ledgerOpts)
-						} else if os.Getenv("NEW_CODE") == "3" {
-							recon = ledger2.NewReconciler(ledgerOpts)
-							// recon.InitData()
-						} else {
-							recon = ledger1.NewReconciler(ledgerOpts)
-						}
-
+						recon = ledger1.NewReconciler(ledgerOpts)
 						items := make([]types.Transfer, 0, len(thisMap))
 						for i, tx := range txArray {
 							// Note: apps and txArray are the same list, so we can use the index from txArray
@@ -162,7 +151,7 @@ func (opts *ExportOptions) HandleTransfers(rCtx *output.RenderCtx, monitorArray 
 								First: i == 0,
 								Last:  i == len(apps)-1,
 							}
-							if transfers, err := recon.GetTransfers(pos, filter, tx); err != nil {
+							if transfers, err := recon.GetTransfers1(pos, filter, tx); err != nil {
 								errorChan <- err
 
 							} else if len(transfers) > 0 {

@@ -41,14 +41,12 @@ TEST[DATE|TIME] bigPrice:            1237.8129236177362007
 TEST[DATE|TIME] price:               1237.8129236177363
 TEST[DATE|TIME] source:              uniswap
 TEST[DATE|TIME] ===================================================
-TEST[DATE|TIME] ====> token
-TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] Previous:               11670418
 TEST[DATE|TIME] Current:                11670419
 TEST[DATE|TIME] Next:                   11670420
 TEST[DATE|TIME] accountedFor:           0x65b0d5e1dc0dee0704f53f660aa865c72e986fc7
 TEST[DATE|TIME] sender:                 0x65b0d5e1dc0dee0704f53f660aa865c72e986fc7  ==>  0x0
-TEST[DATE|TIME] asset:           0xc713e5e149d5d0715dcd1c156a020976e7e56b88 (aMKR) decimals: 18
+TEST[DATE|TIME] asset:                  0xc713e5e149d5d0715dcd1c156a020976e7e56b88 (aMKR) decimals: 18
 TEST[DATE|TIME] hash:                   0x634799410165000edaf1b1e8e5e8055b39cdd534d3c3dc9738865d39adb5d888
 TEST[DATE|TIME] timestamp:              1610856118
 TEST[DATE|TIME] blockNumber:            11670419.91.195
@@ -84,7 +82,6 @@ Results in ./statement_failed_2572_2_out.file
       "amountOut": "14922878243871414864",
       "amountOutEth": "14.922878243871414864",
       "asset": "0xc713e5e149d5d0715dcd1c156a020976e7e56b88",
-      "symbol": "aMKR",
       "begBal": "14922878205530494041",
       "begBalDiff": "0",
       "begBalDiffEth": "0",
@@ -131,6 +128,7 @@ Results in ./statement_failed_2572_2_out.file
       "selfDestructOutEth": "0",
       "sender": "0x65b0d5e1dc0dee0704f53f660aa865c72e986fc7",
       "spotPrice": 0,
+      "symbol": "aMKR",
       "timestamp": 1610856118,
       "totalIn": "0",
       "totalInEth": "0",

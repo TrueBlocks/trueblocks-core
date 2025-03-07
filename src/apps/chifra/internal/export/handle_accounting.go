@@ -6,15 +6,12 @@ package exportPkg
 
 import (
 	"fmt"
-	"os"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/articulate"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/filter"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/ledger1"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/ledger10"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/ledger2"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/ledger3"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/monitor"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
@@ -38,7 +35,7 @@ func (opts *ExportOptions) HandleAccounting(rCtx *output.RenderCtx, monitorArray
 		assetFilters = append(assetFilters, base.HexToAddress(asset))
 	}
 
-	var recon ledger10.Reconcilerer
+	var recon *ledger1.Reconciler1
 	fetchData := func(modelChan chan types.Modeler, errorChan chan error) {
 		visitAppearance := func(pos *types.AppPosition, app *types.Appearance) error {
 			if tx, err := opts.Conn.GetTransactionByAppearance(app, false); err != nil {
@@ -54,7 +51,7 @@ func (opts *ExportOptions) HandleAccounting(rCtx *output.RenderCtx, monitorArray
 						}
 					}
 
-					if statements, err := recon.GetStatements(pos, filter, tx); err != nil {
+					if statements, err := recon.GetStatements1(pos, filter, tx); err != nil {
 						errorChan <- err
 
 					} else {
@@ -85,14 +82,7 @@ func (opts *ExportOptions) HandleAccounting(rCtx *output.RenderCtx, monitorArray
 					AssetFilters: assetFilters,
 				}
 
-				if os.Getenv("NEW_CODE") == "3" {
-					recon = ledger3.NewReconciler(ledgerOpts)
-				} else if os.Getenv("NEW_CODE") == "true" {
-					recon = ledger2.NewReconciler(ledgerOpts)
-				} else {
-					recon = ledger1.NewReconciler(ledgerOpts)
-				}
-
+				recon = ledger1.NewReconciler(ledgerOpts)
 				for i, app := range apps {
 					prev := uint32(0)
 					if apps[i].BlockNumber > 0 {

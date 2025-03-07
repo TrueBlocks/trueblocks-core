@@ -20,23 +20,21 @@ import (
 )
 
 type Reconciler2 struct {
-	connection        *rpc.Connection
-	accountFor        base.Address
-	firstBlock        base.Blknum
-	lastBlock         base.Blknum
-	asEther           bool
-	testMode          bool
-	reversed          bool
-	useTraces         bool
-	assetFilter       []base.Address
-	names             map[base.Address]types.Name
-	hasStartBlock     bool
-	transfers         map[blockTxKey][]ledger10.AssetTransfer
-	accountLedger     map[assetHolderKey]base.Wei
-	ledgerAssets      map[base.Address]bool
-	correctionCounter base.Value
-	entryCounter      base.Value
-	ledgers           map[base.Address]Ledger
+	connection    *rpc.Connection
+	accountFor    base.Address
+	firstBlock    base.Blknum
+	lastBlock     base.Blknum
+	asEther       bool
+	testMode      bool
+	reversed      bool
+	useTraces     bool
+	assetFilter   []base.Address
+	names         map[base.Address]types.Name
+	hasStartBlock bool
+	transfers     map[blockTxKey][]ledger10.AssetTransfer
+	accountLedger map[assetHolderKey]base.Wei
+	ledgerAssets  map[base.Address]bool
+	ledgers       map[base.Address]Ledger
 }
 
 func (r *Reconciler2) String() string {
@@ -438,57 +436,11 @@ func (l *Ledger) NetValue() base.Wei {
 	return *net
 }
 
-func (r *Reconciler2) GetStatements(pos *types.AppPosition, filter *filter.AppearanceFilter, trans *types.Transaction) ([]types.Statement, error) {
+func (r *Reconciler2) GetStatements2(pos *types.AppPosition, filter *filter.AppearanceFilter, trans *types.Transaction) ([]types.Statement, error) {
 	if transfers, err := r.getAssetTransfers2(pos, filter, trans); err != nil {
 		return []types.Statement{}, err
 	} else {
 		r.getStatementsInner(pos, trans, transfers)
 		return r.Statements()
-	}
-}
-
-func (r *Reconciler2) GetTransfers(pos *types.AppPosition, filter *filter.AppearanceFilter, trans *types.Transaction) ([]types.Transfer, error) {
-	if r.connection.Store != nil {
-		transferGroup := &types.TransferGroup{
-			BlockNumber:      trans.BlockNumber,
-			TransactionIndex: trans.TransactionIndex,
-		}
-		if err := r.connection.Store.Read(transferGroup); err == nil {
-			return transferGroup.Transfers, nil
-		}
-	}
-
-	var err error
-	var statements []types.Statement
-	ledgerOpts := &ledger10.ReconcilerOptions{
-		Connection:   r.connection,
-		AccountFor:   r.accountFor,
-		AsEther:      r.asEther,
-		AssetFilters: r.assetFilter,
-	}
-	r2 := NewReconciler(ledgerOpts)
-	if statements, err = r2.GetStatements(pos, filter, trans); err != nil {
-		return nil, err
-	}
-
-	if transfers, err := types.ConvertToTransfers(statements); err != nil {
-		return nil, err
-	} else {
-
-		allReconciled := true
-		for _, transfer := range transfers {
-			if transfer.IsMaterial() {
-				allReconciled = false
-				break
-			}
-		}
-
-		transfersGroup := &types.TransferGroup{
-			BlockNumber:      trans.BlockNumber,
-			TransactionIndex: trans.TransactionIndex,
-			Transfers:        transfers,
-		}
-		err = r.connection.Store.WriteToCache(transfersGroup, walk.Cache_Transfers, trans.Timestamp, allReconciled, false)
-		return transfers, err
 	}
 }

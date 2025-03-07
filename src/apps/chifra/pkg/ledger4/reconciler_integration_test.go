@@ -27,8 +27,8 @@ import (
 // 	s3 := fmt.Sprintf("%d\t%d", t1.LogIndex, t2.LogIndex)
 // 	fmt.Println("logid:  ", e3, s3)
 
-// 	e4 := t1.AssetAddress == t2.AssetAddress
-// 	s4 := fmt.Sprintf("%s\t%s", t1.AssetAddress.Display(3, 3), t2.AssetAddress.Display(3, 3))
+// 	e4 := t1.Asset == t2.Asset
+// 	s4 := fmt.Sprintf("%s\t%s", t1.Asset.Display(3, 3), t2.Asset.Display(3, 3))
 // 	fmt.Println("asset:  ", e4, s4)
 
 // 	e5 := t1.Holder == t2.Holder
@@ -47,7 +47,7 @@ import (
 // 		t1.BlockNumber,
 // 		t1.TransactionIndex,
 // 		t1.LogIndex,
-// 		t1.AssetAddress.Display(3, 3),
+// 		t1.Asset.Display(3, 3),
 // 		t1.Holder.Display(3, 3),
 // 		t1.AmountNet().Text(10))
 // }
@@ -76,7 +76,7 @@ import (
 // 					BlockNumber:      15549162,
 // 					TransactionIndex: 83,
 // 					LogIndex:         1774,
-// 					AssetAddress:     addrf5b2,
+// 					Asset:     addrf5b2,
 // 					Holder:           addr0549,
 // 					AmountIn:         base.MustParseWei("2017000000000000000000"),
 // 				},
@@ -166,7 +166,7 @@ func TestFetchTxIntegration(t *testing.T) {
 // 	// Example assertion: Check for a specific known transfer
 // 	// Replace with actual values from your chosen transaction
 // 	expectedTransfer := ledger10.AssetTransfer{
-// 		AssetAddress: base.HexToAddress("0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48"), // USDC contract address
+// 		Asset: base.HexToAddress("0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48"), // USDC contract address
 // 		From:         "0x123...",                                                      // Replace with actual 'From' address
 // 		To:           "0x456...",                                                      // Replace with actual 'To' address
 // 		Amount:       big.NewInt(1000000),                                             // e.g., 1 USDC (6 decimals)

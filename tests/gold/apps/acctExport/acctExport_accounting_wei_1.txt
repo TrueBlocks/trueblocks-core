@@ -8,17 +8,15 @@ TEST[DATE|TIME] Format:  json
 INFO[DATE|TIME] { "outputFilename": "--output_filename--" }
 TEST[DATE|TIME] Block 0 is prior to deployment (3684349) of Maker. No fallback pricing method
 TEST[DATE|TIME] ===================================================
-TEST[DATE|TIME] ====> eth
-TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] Previous:               0
 TEST[DATE|TIME] Current:                0
 TEST[DATE|TIME] Next:                   202249
 TEST[DATE|TIME] accountedFor:           0x001d14804b399c6ef80e64576f657660804fec0b
 TEST[DATE|TIME] sender:                 0x0000000000000000000000000050726566756e64  ==>  0x001d14804b399c6ef80e64576f657660804fec0b
-TEST[DATE|TIME] asset:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
+TEST[DATE|TIME] asset:                  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
 TEST[DATE|TIME] hash:                   0x0000000000000000000000000000000000000000000000000000000000000000
 TEST[DATE|TIME] timestamp:              1438269975
-TEST[DATE|TIME] blockNumber:            0.2
+TEST[DATE|TIME] blockNumber:            0.2.0
 TEST[DATE|TIME] priceSource:            0 (eth-not-priced-pre-maker)
 TEST[DATE|TIME] --------------------------------------------------- 
 TEST[DATE|TIME] Trial balance:
@@ -38,17 +36,15 @@ TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] Block 202249 is prior to deployment (3684349) of Maker. No fallback pricing method
 TEST[DATE|TIME] ===================================================
-TEST[DATE|TIME] ====> eth
-TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] Previous:               0
 TEST[DATE|TIME] Current:                202249
 TEST[DATE|TIME] Next:                   1501459
 TEST[DATE|TIME] accountedFor:           0x001d14804b399c6ef80e64576f657660804fec0b
 TEST[DATE|TIME] sender:                 0x001d14804b399c6ef80e64576f657660804fec0b  ==>  0x2910543af39aba0cd09dbb2d50200b3e800a63d2
-TEST[DATE|TIME] asset:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
+TEST[DATE|TIME] asset:                  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
 TEST[DATE|TIME] hash:                   0x6e443af86a84920cace198340020e4ca54321a2c515cd3ad1f274d3506b4aff8
 TEST[DATE|TIME] timestamp:              1441703356
-TEST[DATE|TIME] blockNumber:            202249.0
+TEST[DATE|TIME] blockNumber:            202249.0.0
 TEST[DATE|TIME] priceSource:            0 (eth-not-priced-pre-maker)
 TEST[DATE|TIME] --------------------------------------------------- 
 TEST[DATE|TIME] Trial balance:
@@ -69,17 +65,15 @@ TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] Block 1501459 is prior to deployment (3684349) of Maker. No fallback pricing method
 TEST[DATE|TIME] ===================================================
-TEST[DATE|TIME] ====> eth
-TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] Previous:               202249
 TEST[DATE|TIME] Current:                1501459
 TEST[DATE|TIME] Next:                   1501460
 TEST[DATE|TIME] accountedFor:           0x001d14804b399c6ef80e64576f657660804fec0b
 TEST[DATE|TIME] sender:                 0x001d14804b399c6ef80e64576f657660804fec0b  ==>  0xcfab9ac2bb2e1dcfc2d50f01f4e61f2f72fb5902
-TEST[DATE|TIME] asset:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
+TEST[DATE|TIME] asset:                  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
 TEST[DATE|TIME] hash:                   0xe1822bdf66fb415883f85b61a4a5ab1c13c4c7ab4b102c5d00504347a69b84f5
 TEST[DATE|TIME] timestamp:              1463025233
-TEST[DATE|TIME] blockNumber:            1501459.2
+TEST[DATE|TIME] blockNumber:            1501459.2.0
 TEST[DATE|TIME] priceSource:            0 (eth-not-priced-pre-maker)
 TEST[DATE|TIME] --------------------------------------------------- 
 TEST[DATE|TIME] Trial balance:
@@ -121,7 +115,6 @@ Results in ./accounting_wei_1_out.file
           "amountNet": "4200000000000000000000",
           "amountOut": "0",
           "asset": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
-          "symbol": "WEI",
           "begBal": "0",
           "begBalDiff": "0",
           "blockNumber": 0,
@@ -150,6 +143,7 @@ Results in ./accounting_wei_1_out.file
           "selfDestructOut": "0",
           "sender": "0x0000000000000000000000000050726566756e64",
           "spotPrice": 0,
+          "symbol": "WEI",
           "timestamp": 1438269975,
           "totalIn": "4200000000000000000000",
           "totalOut": "0",
@@ -191,7 +185,6 @@ Results in ./accounting_wei_1_out.file
           "amountNet": "-4199925320679510922664",
           "amountOut": "4199900000000000000000",
           "asset": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
-          "symbol": "WEI",
           "begBal": "4200000000000000000000",
           "begBalDiff": "0",
           "blockNumber": 202249,
@@ -220,6 +213,7 @@ Results in ./accounting_wei_1_out.file
           "selfDestructOut": "0",
           "sender": "0x001d14804b399c6ef80e64576f657660804fec0b",
           "spotPrice": 0,
+          "symbol": "WEI",
           "timestamp": 1441703356,
           "totalIn": "0",
           "totalOut": "4199925320679510922664",
@@ -260,7 +254,6 @@ Results in ./accounting_wei_1_out.file
           "amountNet": "-74679320489077336",
           "amountOut": "74259320489077336",
           "asset": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
-          "symbol": "WEI",
           "begBal": "74679320489077336",
           "begBalDiff": "0",
           "blockNumber": 1501459,
@@ -289,6 +282,7 @@ Results in ./accounting_wei_1_out.file
           "selfDestructOut": "0",
           "sender": "0x001d14804b399c6ef80e64576f657660804fec0b",
           "spotPrice": 0,
+          "symbol": "WEI",
           "timestamp": 1463025233,
           "totalIn": "0",
           "totalOut": "74679320489077336",

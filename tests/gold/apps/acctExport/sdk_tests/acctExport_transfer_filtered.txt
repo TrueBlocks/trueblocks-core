@@ -15,14 +15,12 @@ Format:  json
 =========================================================
 stable-coin
 ===================================================
-====> token
-===================================================
 Previous:               8860512
 Current:                8860513
 Next:                   8860529
 accountedFor:           0xf503017d7baf7fbc0fff7492b751025c6a78179b
 sender:                 0xf503017d7baf7fbc0fff7492b751025c6a78179b  ==>  0x30f938fed5de6e06a9a7cd2ac3517131c317b1e7
-asset:           0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359 (DAI) decimals: 18
+asset:                  0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359 (DAI) decimals: 18
 hash:                   0xd5a49ef68f77357a5202ca09499b343b27cd02c1172c4ace3050a494dc218d8a
 timestamp:              1572720150
 blockNumber:            8860513.85.84
@@ -48,14 +46,12 @@ Trial balance:
 =========================================================
 stable-coin
 ===================================================
-====> token
-===================================================
 Previous:               8860529
 Current:                8860531
 Next:                   8860532
 accountedFor:           0xf503017d7baf7fbc0fff7492b751025c6a78179b
 sender:                 0xf503017d7baf7fbc0fff7492b751025c6a78179b  ==>  0x30f938fed5de6e06a9a7cd2ac3517131c317b1e7
-asset:           0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359 (DAI) decimals: 18
+asset:                  0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359 (DAI) decimals: 18
 hash:                   0x1cdbe0fcca2ee3f9e4504f25e6f2a485835caa920496d20b10fa6241cbfdb124
 timestamp:              1572720361
 blockNumber:            8860531.152.95

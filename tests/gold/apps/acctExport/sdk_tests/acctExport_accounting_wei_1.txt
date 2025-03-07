@@ -8,17 +8,15 @@ Caps:  cache,decache,ether
 Format:  json
 Block 0 is prior to deployment (3684349) of Maker. No fallback pricing method
 ===================================================
-====> eth
-===================================================
 Previous:               0
 Current:                0
 Next:                   202249
 accountedFor:           0x001d14804b399c6ef80e64576f657660804fec0b
 sender:                 0x0000000000000000000000000050726566756e64  ==>  0x001d14804b399c6ef80e64576f657660804fec0b
-asset:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
+asset:                  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
 hash:                   0x0000000000000000000000000000000000000000000000000000000000000000
 timestamp:              1438269975
-blockNumber:            0.2
+blockNumber:            0.2.0
 priceSource:            0 (eth-not-priced-pre-maker)
 --------------------------------------------------- 
 Trial balance:
@@ -38,17 +36,15 @@ Trial balance:
 ---------------------------------------------------
 Block 202249 is prior to deployment (3684349) of Maker. No fallback pricing method
 ===================================================
-====> eth
-===================================================
 Previous:               0
 Current:                202249
 Next:                   1501459
 accountedFor:           0x001d14804b399c6ef80e64576f657660804fec0b
 sender:                 0x001d14804b399c6ef80e64576f657660804fec0b  ==>  0x2910543af39aba0cd09dbb2d50200b3e800a63d2
-asset:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
+asset:                  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
 hash:                   0x6e443af86a84920cace198340020e4ca54321a2c515cd3ad1f274d3506b4aff8
 timestamp:              1441703356
-blockNumber:            202249.0
+blockNumber:            202249.0.0
 priceSource:            0 (eth-not-priced-pre-maker)
 --------------------------------------------------- 
 Trial balance:
@@ -69,17 +65,15 @@ Trial balance:
 ---------------------------------------------------
 Block 1501459 is prior to deployment (3684349) of Maker. No fallback pricing method
 ===================================================
-====> eth
-===================================================
 Previous:               202249
 Current:                1501459
 Next:                   1501460
 accountedFor:           0x001d14804b399c6ef80e64576f657660804fec0b
 sender:                 0x001d14804b399c6ef80e64576f657660804fec0b  ==>  0xcfab9ac2bb2e1dcfc2d50f01f4e61f2f72fb5902
-asset:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
+asset:                  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
 hash:                   0xe1822bdf66fb415883f85b61a4a5ab1c13c4c7ab4b102c5d00504347a69b84f5
 timestamp:              1463025233
-blockNumber:            1501459.2
+blockNumber:            1501459.2.0
 priceSource:            0 (eth-not-priced-pre-maker)
 --------------------------------------------------- 
 Trial balance:
@@ -119,7 +113,6 @@ Trial balance:
           "amountNet": "4200000000000000000000",
           "amountOut": "0",
           "asset": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
-          "symbol": "WEI",
           "begBal": "0",
           "begBalDiff": "0",
           "blockNumber": 0,
@@ -148,6 +141,7 @@ Trial balance:
           "selfDestructOut": "0",
           "sender": "0x0000000000000000000000000050726566756e64",
           "spotPrice": 0,
+          "symbol": "WEI",
           "timestamp": 1438269975,
           "totalIn": "4200000000000000000000",
           "totalOut": "0",
@@ -189,7 +183,6 @@ Trial balance:
           "amountNet": "-4199925320679510922664",
           "amountOut": "4199900000000000000000",
           "asset": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
-          "symbol": "WEI",
           "begBal": "4200000000000000000000",
           "begBalDiff": "0",
           "blockNumber": 202249,
@@ -218,6 +211,7 @@ Trial balance:
           "selfDestructOut": "0",
           "sender": "0x001d14804b399c6ef80e64576f657660804fec0b",
           "spotPrice": 0,
+          "symbol": "WEI",
           "timestamp": 1441703356,
           "totalIn": "0",
           "totalOut": "4199925320679510922664",
@@ -258,7 +252,6 @@ Trial balance:
           "amountNet": "-74679320489077336",
           "amountOut": "74259320489077336",
           "asset": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
-          "symbol": "WEI",
           "begBal": "74679320489077336",
           "begBalDiff": "0",
           "blockNumber": 1501459,
@@ -287,6 +280,7 @@ Trial balance:
           "selfDestructOut": "0",
           "sender": "0x001d14804b399c6ef80e64576f657660804fec0b",
           "spotPrice": 0,
+          "symbol": "WEI",
           "timestamp": 1463025233,
           "totalIn": "0",
           "totalOut": "74679320489077336",

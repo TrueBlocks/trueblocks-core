@@ -23,17 +23,15 @@ bigPrice:            183.09
 price:               183.09
 source:              maker
 ===================================================
-====> eth
-===================================================
 Previous:               8860512
 Current:                8860513
 Next:                   8860529
 accountedFor:           0xf503017d7baf7fbc0fff7492b751025c6a78179b
 sender:                 0xf503017d7baf7fbc0fff7492b751025c6a78179b  ==>  0x30f938fed5de6e06a9a7cd2ac3517131c317b1e7
-asset:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (ETH) decimals: 18
+asset:                  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (ETH) decimals: 18
 hash:                   0xd5a49ef68f77357a5202ca09499b343b27cd02c1172c4ace3050a494dc218d8a
 timestamp:              1572720150
-blockNumber:            8860513.85
+blockNumber:            8860513.85.0
 priceSource:            183.09 (maker)
 --------------------------------------------------- 
 Trial balance:
@@ -56,14 +54,12 @@ Trial balance:
 =========================================================
 stable-coin
 ===================================================
-====> token
-===================================================
 Previous:               8860512
 Current:                8860513
 Next:                   8860529
 accountedFor:           0xf503017d7baf7fbc0fff7492b751025c6a78179b
 sender:                 0xf503017d7baf7fbc0fff7492b751025c6a78179b  ==>  0x30f938fed5de6e06a9a7cd2ac3517131c317b1e7
-asset:           0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359 (DAI) decimals: 18
+asset:                  0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359 (DAI) decimals: 18
 hash:                   0xd5a49ef68f77357a5202ca09499b343b27cd02c1172c4ace3050a494dc218d8a
 timestamp:              1572720150
 blockNumber:            8860513.85.84
@@ -98,17 +94,15 @@ bigPrice:            183.09
 price:               183.09
 source:              maker
 ===================================================
-====> eth
-===================================================
 Previous:               8860513
 Current:                8860529
 Next:                   8860531
 accountedFor:           0xf503017d7baf7fbc0fff7492b751025c6a78179b
 sender:                 0xf503017d7baf7fbc0fff7492b751025c6a78179b  ==>  0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359
-asset:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (ETH) decimals: 18
+asset:                  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (ETH) decimals: 18
 hash:                   0x3af5419098b5510f39ec64d6eb8ee08f3fe5cb538469fa9ef263cf7ebd4b607d
 timestamp:              1572720358
-blockNumber:            8860529.145
+blockNumber:            8860529.145.0
 priceSource:            183.09 (maker)
 --------------------------------------------------- 
 Trial balance:
@@ -140,17 +134,15 @@ bigPrice:            183.09
 price:               183.09
 source:              maker
 ===================================================
-====> eth
-===================================================
 Previous:               8860529
 Current:                8860531
 Next:                   8860532
 accountedFor:           0xf503017d7baf7fbc0fff7492b751025c6a78179b
 sender:                 0xf503017d7baf7fbc0fff7492b751025c6a78179b  ==>  0x30f938fed5de6e06a9a7cd2ac3517131c317b1e7
-asset:           0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (ETH) decimals: 18
+asset:                  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (ETH) decimals: 18
 hash:                   0x1cdbe0fcca2ee3f9e4504f25e6f2a485835caa920496d20b10fa6241cbfdb124
 timestamp:              1572720361
-blockNumber:            8860531.152
+blockNumber:            8860531.152.0
 priceSource:            183.09 (maker)
 --------------------------------------------------- 
 Trial balance:
@@ -173,14 +165,12 @@ Trial balance:
 =========================================================
 stable-coin
 ===================================================
-====> token
-===================================================
 Previous:               8860529
 Current:                8860531
 Next:                   8860532
 accountedFor:           0xf503017d7baf7fbc0fff7492b751025c6a78179b
 sender:                 0xf503017d7baf7fbc0fff7492b751025c6a78179b  ==>  0x30f938fed5de6e06a9a7cd2ac3517131c317b1e7
-asset:           0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359 (DAI) decimals: 18
+asset:                  0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359 (DAI) decimals: 18
 hash:                   0x1cdbe0fcca2ee3f9e4504f25e6f2a485835caa920496d20b10fa6241cbfdb124
 timestamp:              1572720361
 blockNumber:            8860531.152.95
@@ -212,7 +202,6 @@ Trial balance:
       "amountOut": "0",
       "amountOutEth": "0",
       "asset": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
-      "symbol": "ETH",
       "begBal": "4999744015000000000",
       "begBalDiff": "0",
       "begBalDiffEth": "0",
@@ -259,6 +248,7 @@ Trial balance:
       "selfDestructOutEth": "0",
       "sender": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
       "spotPrice": 183.09,
+      "symbol": "ETH",
       "timestamp": 1572720150,
       "totalIn": "0",
       "totalInEth": "0",
@@ -278,7 +268,6 @@ Trial balance:
       "amountOut": "500000000000000000000",
       "amountOutEth": "500",
       "asset": "0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359",
-      "symbol": "DAI",
       "begBal": "7500000000000000000000",
       "begBalDiff": "0",
       "begBalDiffEth": "0",
@@ -325,6 +314,7 @@ Trial balance:
       "selfDestructOutEth": "0",
       "sender": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
       "spotPrice": 1,
+      "symbol": "DAI",
       "timestamp": 1572720150,
       "totalIn": "0",
       "totalInEth": "0",
@@ -344,7 +334,6 @@ Trial balance:
       "amountOut": "0",
       "amountOutEth": "0",
       "asset": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
-      "symbol": "ETH",
       "begBal": "4999709998000000000",
       "begBalDiff": "0",
       "begBalDiffEth": "0",
@@ -391,6 +380,7 @@ Trial balance:
       "selfDestructOutEth": "0",
       "sender": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
       "spotPrice": 183.09,
+      "symbol": "ETH",
       "timestamp": 1572720358,
       "totalIn": "0",
       "totalInEth": "0",
@@ -410,7 +400,6 @@ Trial balance:
       "amountOut": "0",
       "amountOutEth": "0",
       "asset": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
-      "symbol": "ETH",
       "begBal": "4999663949000000000",
       "begBalDiff": "0",
       "begBalDiffEth": "0",
@@ -457,6 +446,7 @@ Trial balance:
       "selfDestructOutEth": "0",
       "sender": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
       "spotPrice": 183.09,
+      "symbol": "ETH",
       "timestamp": 1572720361,
       "totalIn": "0",
       "totalInEth": "0",
@@ -476,7 +466,6 @@ Trial balance:
       "amountOut": "7000000000000000000000",
       "amountOutEth": "7000",
       "asset": "0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359",
-      "symbol": "DAI",
       "begBal": "7000000000000000000000",
       "begBalDiff": "0",
       "begBalDiffEth": "0",
@@ -523,6 +512,7 @@ Trial balance:
       "selfDestructOutEth": "0",
       "sender": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
       "spotPrice": 1,
+      "symbol": "DAI",
       "timestamp": 1572720361,
       "totalIn": "0",
       "totalInEth": "0",

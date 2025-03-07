@@ -97,7 +97,7 @@ func TestBuildDoublyLinkedList(t *testing.T) {
 // 		defer mu.Unlock()
 // 		createTransfersCalls++
 // 		return []ledger10.AssetTransfer{{
-// 			AssetAddress: base.FAKE_ETH_ADDRESS,
+// 			Asset: base.FAKE_ETH_ADDRESS,
 // 			AmountIn:     *base.NewWei(100),
 // 		}}
 // 	}

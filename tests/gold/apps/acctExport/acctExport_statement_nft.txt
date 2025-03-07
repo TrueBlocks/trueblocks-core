@@ -8,14 +8,12 @@ TEST[DATE|TIME] Caps:  cache,decache,ether
 TEST[DATE|TIME] Format:  json
 TEST[DATE|TIME] Block 8876232 is prior to deployment (10000835) of Uniswap V2. No other source for tokens prior to UniSwap
 TEST[DATE|TIME] ===================================================
-TEST[DATE|TIME] ====> token
-TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] Previous:               8876231
 TEST[DATE|TIME] Current:                8876232
 TEST[DATE|TIME] Next:                   9000998
 TEST[DATE|TIME] accountedFor:           0xf503017d7baf7fbc0fff7492b751025c6a78179b
 TEST[DATE|TIME] sender:                 0x0  ==>  0xf503017d7baf7fbc0fff7492b751025c6a78179b
-TEST[DATE|TIME] asset:           0xd53b50a6213ee7ff2fcc41a7cf69d22ded0a43b3 (CSTK) decimals: 18
+TEST[DATE|TIME] asset:                  0xd53b50a6213ee7ff2fcc41a7cf69d22ded0a43b3 (CSTK) decimals: 18
 TEST[DATE|TIME] hash:                   0x389e24356a19c24cac14e99574553a33662099559921691fb592fba3232748fa
 TEST[DATE|TIME] timestamp:              1572938328
 TEST[DATE|TIME] blockNumber:            8876232.84.169
@@ -44,7 +42,6 @@ TEST[DATE|TIME] ---------------------------------------------------
       "amountNet": "22500000000000000000000",
       "amountOut": "0",
       "asset": "0xd53b50a6213ee7ff2fcc41a7cf69d22ded0a43b3",
-      "symbol": "CSTK",
       "begBal": "0",
       "begBalDiff": "0",
       "blockNumber": 8876232,
@@ -73,6 +70,7 @@ TEST[DATE|TIME] ---------------------------------------------------
       "selfDestructOut": "0",
       "sender": "0x0",
       "spotPrice": 0,
+      "symbol": "CSTK",
       "timestamp": 1572938328,
       "totalIn": "22500000000000000000000",
       "totalOut": "0",

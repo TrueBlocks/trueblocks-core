@@ -12,12 +12,10 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/filter"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/ledger10"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/ledger2"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/names"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/walk"
 )
 
 type Reconciler3 struct {
@@ -276,52 +274,6 @@ type assetHolderKey struct {
 	Holder base.Address
 }
 
-func (r *Reconciler3) GetStatements(pos *types.AppPosition, filter *filter.AppearanceFilter, trans *types.Transaction) ([]types.Statement, error) {
+func (r *Reconciler3) GetStatements3(pos *types.AppPosition, filter *filter.AppearanceFilter, trans *types.Transaction) ([]types.Statement, error) {
 	return []types.Statement{}, nil
-}
-
-func (r *Reconciler3) GetTransfers(pos *types.AppPosition, filter *filter.AppearanceFilter, trans *types.Transaction) ([]types.Transfer, error) {
-	if r.connection.Store != nil {
-		transferGroup := &types.TransferGroup{
-			BlockNumber:      trans.BlockNumber,
-			TransactionIndex: trans.TransactionIndex,
-		}
-		if err := r.connection.Store.Read(transferGroup); err == nil {
-			return transferGroup.Transfers, nil
-		}
-	}
-
-	var err error
-	var statements []types.Statement
-	ledgerOpts := &ledger10.ReconcilerOptions{
-		Connection:   r.connection,
-		AccountFor:   r.accountFor,
-		AsEther:      r.asEther,
-		AssetFilters: r.assetFilter,
-	}
-	r2 := ledger2.NewReconciler(ledgerOpts)
-	if statements, err = r2.GetStatements(pos, filter, trans); err != nil {
-		return nil, err
-	}
-
-	if transfers, err := types.ConvertToTransfers(statements); err != nil {
-		return nil, err
-	} else {
-
-		allReconciled := true
-		for _, transfer := range transfers {
-			if transfer.IsMaterial() {
-				allReconciled = false
-				break
-			}
-		}
-
-		transfersGroup := &types.TransferGroup{
-			BlockNumber:      trans.BlockNumber,
-			TransactionIndex: trans.TransactionIndex,
-			Transfers:        transfers,
-		}
-		err = r.connection.Store.WriteToCache(transfersGroup, walk.Cache_Transfers, trans.Timestamp, allReconciled, false)
-		return transfers, err
-	}
 }
