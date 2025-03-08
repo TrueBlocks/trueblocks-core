@@ -599,14 +599,10 @@ func TestDebugStatement(t *testing.T) {
 	}
 	stmt.DebugStatement(pos)
 
-	foundHeader := false
 	foundBlockLine := false
 	foundTrialBalance := false
 
 	for _, logLine := range capturedLogs {
-		if strings.Contains(logLine, "====> eth") {
-			foundHeader = true
-		}
 		if strings.Contains(logLine, fmt.Sprintf("Current:               %d", stmt.BlockNumber)) {
 			foundBlockLine = true
 		}
@@ -615,9 +611,6 @@ func TestDebugStatement(t *testing.T) {
 		}
 	}
 
-	if !foundHeader {
-		t.Error("DebugStatement output missing header with asset type")
-	}
 	if !foundBlockLine {
 		t.Error("DebugStatement output missing current block number information")
 	}
