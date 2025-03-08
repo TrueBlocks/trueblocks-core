@@ -21,13 +21,13 @@ func LoadCodebase() (CodeBase, error) {
 		return CodeBase{}, err
 	}
 
-	baseTypes, err := LoadCsv[Structure, any](filepath.Join(thePath, "base-types.csv"), readStructure, nil)
+	baseTypes, err := LoadCsv(filepath.Join(thePath, "base-types.csv"), readStructure, nil)
 	if err != nil {
 		return CodeBase{}, err
 	}
 
 	var cb CodeBase
-	options, err := LoadCsv[Option, any](filepath.Join(thePath, "cmd-line-options.csv"), readCmdOption, nil)
+	options, err := LoadCsv(filepath.Join(thePath, "cmd-line-options.csv"), readCmdOption, nil)
 	if err != nil {
 		return cb, err
 	}
@@ -118,7 +118,7 @@ func (cb *CodeBase) LoadMembers(thePath string, structMap map[string]Structure) 
 		class := strings.TrimSuffix(filepath.Base(path), ".csv")
 		mapKey := strings.ToLower(class)
 		structure := structMap[mapKey]
-		structure.Members, err = LoadCsv[Member, any](path, readMember, nil)
+		structure.Members, err = LoadCsv(path, readMember, nil)
 		if err != nil {
 			return err
 		}

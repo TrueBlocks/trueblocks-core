@@ -39,7 +39,7 @@ func (r *Reconciler1) String() string {
 func NewReconciler(opts *ledger10.ReconcilerOptions) *Reconciler1 {
 	parts := types.Custom | types.Prefund | types.Regular
 	names, _ := names.LoadNamesMap(opts.Connection.Chain, parts, []string{})
-	return &Reconciler1{
+	r := &Reconciler1{
 		opts:          opts,
 		names:         names,
 		hasStartBlock: false,
@@ -48,6 +48,9 @@ func NewReconciler(opts *ledger10.ReconcilerOptions) *Reconciler1 {
 		ledgerAssets:  make(map[base.Address]bool),
 		ledgers:       make(map[base.Address]Ledger),
 	}
+	_ = r.correctionCounter
+	_ = r.entryCounter
+	return r
 }
 
 type Ledger struct{}

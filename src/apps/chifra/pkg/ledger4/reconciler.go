@@ -77,7 +77,7 @@ func BuildDoublyLinkedList(appearances []types.Appearance) *list.List {
 	return l
 }
 
-func (r *Reconciler4) ProcessTransactionsConcurrently(l *list.List, accountFor base.Address) {
+func (r *Reconciler4) ProcessTransactionsConcurrently(l *list.List) {
 	var wg sync.WaitGroup
 	for e := l.Front(); e != nil; e = e.Next() {
 		wg.Add(1)

@@ -36,7 +36,7 @@ func (r *Reconciler2) String() string {
 func NewReconciler(opts *ledger10.ReconcilerOptions) *Reconciler2 {
 	parts := types.Custom | types.Prefund | types.Regular
 	names, _ := names.LoadNamesMap(opts.Connection.Chain, parts, []string{})
-	return &Reconciler2{
+	r := &Reconciler2{
 		opts:          opts,
 		names:         names,
 		hasStartBlock: false,
@@ -45,6 +45,9 @@ func NewReconciler(opts *ledger10.ReconcilerOptions) *Reconciler2 {
 		ledgerAssets:  make(map[base.Address]bool),
 		ledgers:       make(map[base.Address]Ledger),
 	}
+	_ = r.correctionCounter
+	_ = r.entryCounter
+	return r
 }
 
 func (r *Reconciler2) getStatementsInner(pos *types.AppPosition, trans *types.Transaction, allTransfers []types.Statement) {
