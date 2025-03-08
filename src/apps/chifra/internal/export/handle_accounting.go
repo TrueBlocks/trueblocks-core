@@ -51,7 +51,7 @@ func (opts *ExportOptions) HandleAccounting(rCtx *output.RenderCtx, monitorArray
 						}
 					}
 
-					if statements, err := recon.GetStatements1(pos, filter, tx); err != nil {
+					if statements, err := recon.GetStatements1(pos, tx); err != nil {
 						errorChan <- err
 
 					} else {
@@ -80,6 +80,7 @@ func (opts *ExportOptions) HandleAccounting(rCtx *output.RenderCtx, monitorArray
 					UseTraces:    opts.Traces,
 					Reversed:     opts.Reversed,
 					AssetFilters: assetFilters,
+					AppFilters:   filter,
 				}
 
 				recon = ledger1.NewReconciler(ledgerOpts)

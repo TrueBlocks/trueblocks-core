@@ -128,6 +128,7 @@ func (opts *ExportOptions) HandleStatements(rCtx *output.RenderCtx, monitorArray
 							UseTraces:    opts.Traces,
 							Reversed:     opts.Reversed,
 							AssetFilters: assetFilters,
+							AppFilters:   filter,
 						}
 
 						recon = ledger1.NewReconciler(ledgerOpts)
@@ -151,7 +152,7 @@ func (opts *ExportOptions) HandleStatements(rCtx *output.RenderCtx, monitorArray
 								First: i == 0,
 								Last:  i == len(apps)-1,
 							}
-							if statements, err := recon.GetStatements1(pos, filter, tx); err != nil {
+							if statements, err := recon.GetStatements1(pos, tx); err != nil {
 								errorChan <- err
 
 							} else if len(statements) > 0 {

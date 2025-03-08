@@ -10,24 +10,14 @@ import (
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/filter"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/ledger10"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/names"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
 type Reconciler3 struct {
-	connection        *rpc.Connection
-	accountFor        base.Address
-	firstBlock        base.Blknum
-	lastBlock         base.Blknum
-	asEther           bool
-	testMode          bool
-	reversed          bool
-	useTraces         bool
-	assetFilter       []base.Address
+	opts              *ledger10.ReconcilerOptions
 	names             map[base.Address]types.Name
 	hasStartBlock     bool
 	transfers         map[blockTxKey][]ledger10.AssetTransfer
@@ -47,15 +37,7 @@ func NewReconciler(opts *ledger10.ReconcilerOptions) *Reconciler3 {
 	parts := types.Custom | types.Prefund | types.Regular
 	names, _ := names.LoadNamesMap(opts.Connection.Chain, parts, []string{})
 	return &Reconciler3{
-		connection:    opts.Connection,
-		accountFor:    opts.AccountFor,
-		firstBlock:    opts.FirstBlock,
-		lastBlock:     opts.LastBlock,
-		asEther:       opts.AsEther,
-		testMode:      opts.TestMode,
-		reversed:      opts.Reversed,
-		useTraces:     opts.UseTraces,
-		assetFilter:   opts.AssetFilters,
+		opts:          opts,
 		names:         names,
 		hasStartBlock: false,
 		transfers:     make(map[blockTxKey][]ledger10.AssetTransfer),
@@ -73,7 +55,7 @@ func (r *Reconciler3) getTransferChannel(app *types.Appearance) <-chan ledger10.
 		defer close(ch)
 		key := blockTxKey{BlockNumber: base.Blknum(app.BlockNumber), TransactionIndex: base.Txnum(app.TransactionIndex)}
 		for _, p := range r.transfers[key] {
-			if p.Holder == r.accountFor {
+			if p.Holder == r.opts.AccountFor {
 				ch <- p
 			}
 		}
@@ -104,7 +86,7 @@ func (r *Reconciler3) flushBlock(postings []ledger10.AssetTransfer, modelChan ch
 		key := assetHolderKey{Asset: p.Asset, Holder: p.Holder}
 		if !blockProcessedAssets[p.Asset] {
 			if r.hasStartBlock && !r.ledgerAssets[p.Asset] {
-				if onChain, err := r.connection.GetBalanceAtToken(p.Asset, p.Holder, p.BlockNumber-1); err == nil {
+				if onChain, err := r.opts.Connection.GetBalanceAtToken(p.Asset, p.Holder, p.BlockNumber-1); err == nil {
 					if p.BlockNumber == 0 {
 						onChain = base.ZeroWei
 					}
@@ -112,7 +94,7 @@ func (r *Reconciler3) flushBlock(postings []ledger10.AssetTransfer, modelChan ch
 				}
 				r.ledgerAssets[p.Asset] = true
 			}
-			if onChain, err := r.connection.GetBalanceAtToken(p.Asset, p.Holder, p.BlockNumber-1); err == nil {
+			if onChain, err := r.opts.Connection.GetBalanceAtToken(p.Asset, p.Holder, p.BlockNumber-1); err == nil {
 				if p.BlockNumber == 0 {
 					onChain = base.ZeroWei
 				}
@@ -252,7 +234,7 @@ func (r *Reconciler3) InitData() {
 			} else if amt.Cmp(base.ZeroWei) < 0 {
 				p.AmountOut = *amt.Neg()
 			}
-			eb, _ := r.connection.GetBalanceAtToken(p.Asset, p.Holder, p.BlockNumber)
+			eb, _ := r.opts.Connection.GetBalanceAtToken(p.Asset, p.Holder, p.BlockNumber)
 			p.EndBal = *eb
 
 			key := blockTxKey{BlockNumber: p.BlockNumber, TransactionIndex: p.TransactionIndex}
@@ -272,8 +254,4 @@ type blockTxKey struct {
 type assetHolderKey struct {
 	Asset  base.Address
 	Holder base.Address
-}
-
-func (r *Reconciler3) GetStatements3(pos *types.AppPosition, filter *filter.AppearanceFilter, trans *types.Transaction) ([]types.Statement, error) {
-	return []types.Statement{}, nil
 }

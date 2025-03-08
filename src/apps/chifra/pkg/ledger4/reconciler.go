@@ -6,7 +6,6 @@ import (
 	"sync"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/filter"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/ledger1"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/ledger10"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/names"
@@ -16,8 +15,15 @@ import (
 )
 
 type Reconciler4 struct {
-	opts  *ledger10.ReconcilerOptions
-	names map[base.Address]types.Name
+	opts              *ledger10.ReconcilerOptions
+	names             map[base.Address]types.Name
+	hasStartBlock     bool
+	transfers         map[blockTxKey][]ledger10.AssetTransfer
+	accountLedger     map[assetHolderKey]base.Wei
+	ledgerAssets      map[base.Address]bool
+	correctionCounter base.Value
+	entryCounter      base.Value
+	ledgers           map[base.Address]Ledger
 }
 
 func (r *Reconciler4) String() string {
@@ -28,10 +34,18 @@ func (r *Reconciler4) String() string {
 func NewReconciler(opts *ledger10.ReconcilerOptions) *Reconciler4 {
 	parts := types.Custom | types.Prefund | types.Regular
 	names, _ := names.LoadNamesMap(opts.Connection.Chain, parts, []string{})
-	return &Reconciler4{
+	r := &Reconciler4{
 		opts:  opts,
 		names: names,
 	}
+	_ = r.hasStartBlock
+	_ = r.transfers
+	_ = r.accountLedger
+	_ = r.ledgerAssets
+	_ = r.correctionCounter
+	_ = r.entryCounter
+	_ = r.ledgers
+	return r
 }
 
 type Ledger struct{}
@@ -92,8 +106,7 @@ func getConnection() *rpc.Connection {
 func (r *Reconciler4) createTransfers(tx *types.Transaction) []ledger10.AssetTransfer {
 	r1 := ledger1.NewReconciler(r.opts)
 	pos := &types.AppPosition{}
-	filter := &filter.AppearanceFilter{}
-	transfers, err := r1.GetStatements1(pos, filter, tx)
+	transfers, err := r1.GetStatements1(pos, tx)
 	if err != nil {
 		return []ledger10.AssetTransfer{}
 	}
@@ -110,4 +123,14 @@ func (r *Reconciler4) queryBalances(transfers []ledger10.AssetTransfer) []types.
 		statements = append(statements, s)
 	}
 	return statements
+}
+
+type blockTxKey struct {
+	BlockNumber      base.Blknum
+	TransactionIndex base.Txnum
+}
+
+type assetHolderKey struct {
+	Asset  base.Address
+	Holder base.Address
 }

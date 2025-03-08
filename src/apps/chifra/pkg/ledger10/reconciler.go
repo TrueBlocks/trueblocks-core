@@ -2,6 +2,7 @@ package ledger10
 
 import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/filter"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
@@ -16,6 +17,7 @@ type ReconcilerOptions struct {
 	UseTraces    bool
 	Reversed     bool
 	AssetFilters []base.Address
+	AppFilters   *filter.AppearanceFilter
 }
 
 type AssetTransfer = types.Statement

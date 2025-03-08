@@ -8,39 +8,27 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/filter"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/ledger10"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/ledger2"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/names"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/normalize"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/pricing"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/topics"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/walk"
 )
 
 type Reconciler1 struct {
-	opts          *ledger10.ReconcilerOptions
-	connection    *rpc.Connection
-	accountFor    base.Address
-	firstBlock    base.Blknum
-	lastBlock     base.Blknum
-	asEther       bool
-	testMode      bool
-	reversed      bool
-	useTraces     bool
-	assetFilter   []base.Address
-	names         map[base.Address]types.Name
-	hasStartBlock bool
-	transfers     map[blockTxKey][]ledger10.AssetTransfer
-	accountLedger map[assetHolderKey]base.Wei
-	ledgerAssets  map[base.Address]bool
-	// correctionCounter base.Value
-	// entryCounter      base.Value
-	ledgers map[base.Address]Ledger
+	opts              *ledger10.ReconcilerOptions
+	names             map[base.Address]types.Name
+	hasStartBlock     bool
+	transfers         map[blockTxKey][]ledger10.AssetTransfer
+	accountLedger     map[assetHolderKey]base.Wei
+	ledgerAssets      map[base.Address]bool
+	correctionCounter base.Value
+	entryCounter      base.Value
+	ledgers           map[base.Address]Ledger
 }
 
 func (r *Reconciler1) String() string {
@@ -53,15 +41,6 @@ func NewReconciler(opts *ledger10.ReconcilerOptions) *Reconciler1 {
 	names, _ := names.LoadNamesMap(opts.Connection.Chain, parts, []string{})
 	return &Reconciler1{
 		opts:          opts,
-		connection:    opts.Connection,
-		accountFor:    opts.AccountFor,
-		firstBlock:    opts.FirstBlock,
-		lastBlock:     opts.LastBlock,
-		asEther:       opts.AsEther,
-		testMode:      opts.TestMode,
-		reversed:      opts.Reversed,
-		useTraces:     opts.UseTraces,
-		assetFilter:   opts.AssetFilters,
 		names:         names,
 		hasStartBlock: false,
 		transfers:     make(map[blockTxKey][]ledger10.AssetTransfer),
@@ -83,39 +62,11 @@ type assetHolderKey struct {
 	Holder base.Address
 }
 
-func (r *Reconciler1) GetStatements1(pos *types.AppPosition, filter *filter.AppearanceFilter, trans *types.Transaction) ([]types.Statement, error) {
-	if r.connection.Store != nil {
-		statementGroup := &types.StatementGroup{
-			BlockNumber:      trans.BlockNumber,
-			TransactionIndex: trans.TransactionIndex,
-			Address:          r.accountFor,
-		}
-		if err := r.connection.Store.Read(statementGroup); err == nil {
-			return statementGroup.Statements, nil
-		}
-	}
-
-	type AAA = types.Statement
-
-	results := make([]AAA, 0, 20)
-	var err error
-	if ledger10.AssetOfInterest(r.assetFilter, base.FAKE_ETH_ADDRESS) {
-		accountedFor := r.accountFor
-
-		prevBal, _ := r.connection.GetBalanceAt(r.accountFor, pos.Prev)
-		if trans.BlockNumber == 0 {
-			prevBal = base.ZeroWei
-		}
-
-		begBal, _ := r.connection.GetBalanceAt(r.accountFor, trans.BlockNumber-1)
-		if trans.BlockNumber == 0 {
-			begBal = base.ZeroWei
-		}
-
-		endBal, _ := r.connection.GetBalanceAt(r.accountFor, trans.BlockNumber)
-
+func (r *Reconciler1) GetStatements1(pos *types.AppPosition, trans *types.Transaction) ([]types.Statement, error) {
+	results := make([]types.Statement, 0, 20)
+	if ledger10.AssetOfInterest(r.opts.AssetFilters, base.FAKE_ETH_ADDRESS) {
 		at := ledger10.AssetTransfer{
-			AccountedFor:     accountedFor,
+			AccountedFor:     r.opts.AccountFor,
 			Sender:           trans.From,
 			Recipient:        trans.To,
 			BlockNumber:      trans.BlockNumber,
@@ -128,30 +79,32 @@ func (r *Reconciler1) GetStatements1(pos *types.AppPosition, filter *filter.Appe
 			Decimals:         18,
 			SpotPrice:        0.0,
 			PriceSource:      "not-priced",
-			PrevBal:          *prevBal,
-			BegBal:           *begBal,
-			EndBal:           *endBal,
 		}
-
-		if r.asEther {
+		if r.opts.AsEther {
 			at.Symbol = "ETH"
 		}
-
 		if trans.To.IsZero() && trans.Receipt != nil && !trans.Receipt.ContractAddress.IsZero() {
 			at.Recipient = trans.Receipt.ContractAddress
 		}
 
-		if r.useTraces {
-			if traceStatements, err := r.getStatementsFromTraces(pos, trans, &at); err != nil {
-				if !utils.IsFuzzing() {
-					logger.Warn(colors.Yellow+"Statement at ", fmt.Sprintf("%d.%d", trans.BlockNumber, trans.TransactionIndex), " does not reconcile."+colors.Off)
-				}
-			} else {
-				results = append(results, traceStatements...)
+		reconciled := false
+		if !r.opts.UseTraces {
+			prevBal, _ := r.opts.Connection.GetBalanceAtToken(base.FAKE_ETH_ADDRESS, r.opts.AccountFor, pos.Prev)
+			if trans.BlockNumber == 0 {
+				prevBal = base.ZeroWei
 			}
+			at.PrevBal = *prevBal
 
-		} else {
-			if at.Sender == accountedFor {
+			begBal, _ := r.opts.Connection.GetBalanceAtToken(base.FAKE_ETH_ADDRESS, r.opts.AccountFor, trans.BlockNumber-1)
+			if trans.BlockNumber == 0 {
+				begBal = base.ZeroWei
+			}
+			at.BegBal = *begBal
+
+			endBal, _ := r.opts.Connection.GetBalanceAtToken(base.FAKE_ETH_ADDRESS, r.opts.AccountFor, trans.BlockNumber)
+			at.EndBal = *endBal
+
+			if at.Sender == r.opts.AccountFor {
 				gasUsed := new(base.Wei)
 				if trans.Receipt != nil {
 					gasUsed.SetUint64(uint64(trans.Receipt.GasUsed))
@@ -162,7 +115,7 @@ func (r *Reconciler1) GetStatements1(pos *types.AppPosition, filter *filter.Appe
 				at.GasOut = *gasOut
 			}
 
-			if at.Recipient == accountedFor {
+			if at.Recipient == r.opts.AccountFor {
 				if at.BlockNumber == 0 {
 					at.PrefundIn = trans.Value
 				} else {
@@ -178,138 +131,91 @@ func (r *Reconciler1) GetStatements1(pos *types.AppPosition, filter *filter.Appe
 			}
 
 			if !utils.IsFuzzing() {
-				reconciled := r.trialBalance(pos, trans, &at)
-				if !reconciled {
-					logger.TestLog(!r.useTraces, "Trial balance failed for ", at.TransactionHash.Hex(), " need to decend into traces")
-					if traceStatements, err := r.getStatementsFromTraces(pos, trans, &at); err != nil {
-						logger.Warn(colors.Yellow+"Statement at ", fmt.Sprintf("%d.%d", trans.BlockNumber, trans.TransactionIndex), " does not reconcile."+colors.Off)
-					} else {
-						results = append(results, traceStatements...)
-					}
-
-				} else if at.IsMaterial() {
+				reconciled = r.trialBalance(pos, trans, &at)
+				if reconciled && at.IsMaterial() {
 					results = append(results, at)
 				}
+			}
+		}
+
+		if r.opts.UseTraces || !reconciled {
+			results = make([]types.Statement, 0, 20) /* reset this */
+			prevBal, _ := r.opts.Connection.GetBalanceAtToken(base.FAKE_ETH_ADDRESS, r.opts.AccountFor, pos.Prev)
+			if trans.BlockNumber == 0 {
+				prevBal = base.ZeroWei
+			}
+			at.PrevBal = *prevBal
+
+			begBal, _ := r.opts.Connection.GetBalanceAtToken(base.FAKE_ETH_ADDRESS, r.opts.AccountFor, trans.BlockNumber-1)
+			if trans.BlockNumber == 0 {
+				begBal = base.ZeroWei
+			}
+			at.BegBal = *begBal
+
+			endBal, _ := r.opts.Connection.GetBalanceAtToken(base.FAKE_ETH_ADDRESS, r.opts.AccountFor, trans.BlockNumber)
+			at.EndBal = *endBal
+
+			if traceStatements, err := r.getStatementsFromTraces(pos, trans, &at); err != nil {
+				if !utils.IsFuzzing() {
+					logger.Warn(colors.Yellow+"Statement at ", fmt.Sprintf("%d.%d", trans.BlockNumber, trans.TransactionIndex), " does not reconcile."+colors.Off)
+				}
+			} else {
+				results = append(results, traceStatements...)
 			}
 		}
 	}
 
 	if trans.Receipt != nil {
-		receiptStatements := make([]types.Statement, 0, 20)
-		for _, log := range trans.Receipt.Logs {
-			if log.Topics[0] != topics.TransferTopic {
-				continue
-			}
-			addrArray := []base.Address{r.accountFor}
-			if filter.ApplyLogFilter(&log, addrArray) && ledger10.AssetOfInterest(r.assetFilter, log.Address) {
-				normalized, err := normalize.NormalizeKnownLogs(&log)
-				if err != nil {
+		if statements, err := r.getTransfersFromLogs(trans.Receipt.Logs, r.names); err != nil {
+			return nil, err
+		} else {
+			receiptStatements := make([]types.Statement, 0, len(statements))
+			for _, s := range statements {
+				prevBal, err := r.opts.Connection.GetBalanceAtToken(s.Asset, s.AccountedFor, pos.Prev)
+				if err != nil || prevBal == nil {
+					// TODO: silent fail?
 					continue
-				} else if normalized.IsNFT() {
+				}
+				if trans.BlockNumber == 0 {
+					prevBal = base.ZeroWei
+				}
+				s.PrevBal = *prevBal
+
+				begBal, err := r.opts.Connection.GetBalanceAtToken(s.Asset, s.AccountedFor, trans.BlockNumber-1)
+				if err != nil || begBal == nil {
+					// TODO: silent fail?
 					continue
+				}
+				if trans.BlockNumber == 0 {
+					begBal = base.ZeroWei
+				}
+				s.BegBal = *begBal
+				endBal, err := r.opts.Connection.GetBalanceAtToken(s.Asset, s.AccountedFor, trans.BlockNumber)
+				if err != nil || endBal == nil {
+					continue
+				}
+				s.EndBal = *endBal
+
+				id := fmt.Sprintf(" %d.%d.%d", s.BlockNumber, s.TransactionIndex, s.LogIndex)
+				reconciled := r.trialBalance(pos, trans, &s)
+				if reconciled {
+					logger.Progress(true, colors.Green+"Transaction", id, "reconciled       "+colors.Off)
 				} else {
-					sender := base.HexToAddress(normalized.Topics[1].Hex())
-					recipient := base.HexToAddress(normalized.Topics[2].Hex())
-					isSender, isRecipient := r.accountFor == sender, r.accountFor == recipient
-					if utils.IsFuzzing() || (!isSender && !isRecipient) {
-						continue
-					}
-
-					sym := normalized.Address.DefaultSymbol()
-					decimals := base.Value(18)
-					name := r.names[normalized.Address]
-					if name.Address == normalized.Address {
-						if name.Symbol != "" {
-							sym = name.Symbol
-						}
-						if name.Decimals != 0 {
-							decimals = base.Value(name.Decimals)
-						}
-					}
-
-					var amountIn, amountOut base.Wei
-					amount, _ := new(base.Wei).SetString(strings.ReplaceAll(normalized.Data, "0x", ""), 16)
-					if amount == nil {
-						amount = base.NewWei(0)
-					}
-					if r.accountFor == sender {
-						amountOut = *amount
-					}
-					if r.accountFor == recipient {
-						amountIn = *amount
-					}
-					s := AAA{
-						AccountedFor:     r.accountFor,
-						Sender:           sender,
-						Recipient:        recipient,
-						BlockNumber:      normalized.BlockNumber,
-						TransactionIndex: normalized.TransactionIndex,
-						LogIndex:         normalized.LogIndex,
-						TransactionHash:  normalized.TransactionHash,
-						Timestamp:        normalized.Timestamp,
-						Asset:            normalized.Address,
-						Symbol:           sym,
-						Decimals:         decimals,
-						SpotPrice:        0.0,
-						PriceSource:      "not-priced",
-						AmountIn:         amountIn,
-						AmountOut:        amountOut,
-					}
-
-					pBal, err := r.connection.GetBalanceAtToken(normalized.Address, r.accountFor, pos.Prev)
-					if err != nil || pBal == nil {
-						continue
-					}
-					s.PrevBal = *pBal
-					bBal, err := r.connection.GetBalanceAtToken(normalized.Address, r.accountFor, trans.BlockNumber-1)
-					if err != nil || bBal == nil {
-						continue
-					}
-					if trans.BlockNumber == 0 {
-						bBal = base.NewWei(0)
-					}
-					s.BegBal = *bBal
-					eBal, err := r.connection.GetBalanceAtToken(normalized.Address, r.accountFor, trans.BlockNumber)
-					if err != nil || eBal == nil {
-						continue
-					}
-					s.EndBal = *eBal
-					reconciled := r.trialBalance(pos, trans, &s)
-					if reconciled {
-						id := fmt.Sprintf(" %d.%d.%d", s.BlockNumber, s.TransactionIndex, s.LogIndex)
-						logger.Progress(true, colors.Green+"Transaction", id, "reconciled       "+colors.Off)
-					} else {
-						id := fmt.Sprintf(" %d.%d.%d", s.BlockNumber, s.TransactionIndex, s.LogIndex)
-						if os.Getenv("TEST_MODE") != "true" {
-							logger.Warn("Log statement at ", id, " does not reconcile.")
-						}
-					}
-
-					if s.IsMaterial() {
-						receiptStatements = append(receiptStatements, s)
+					if os.Getenv("TEST_MODE") != "true" {
+						logger.Warn("Log statement at ", id, " does not reconcile.")
 					}
 				}
+
+				// order matters
+				if s.IsMaterial() {
+					receiptStatements = append(receiptStatements, s)
+				}
 			}
-		}
-		results = append(results, receiptStatements...)
-	}
-
-	allReconciled := true
-	for _, statement := range results {
-		if statement.IsMaterial() && !statement.Reconciled() {
-			allReconciled = false
-			break
+			results = append(results, receiptStatements...)
 		}
 	}
 
-	statementGroup := &types.StatementGroup{
-		BlockNumber:      trans.BlockNumber,
-		TransactionIndex: trans.TransactionIndex,
-		Address:          r.accountFor,
-		Statements:       results,
-	}
-	err = r.connection.Store.WriteToCache(statementGroup, walk.Cache_Statements, trans.Timestamp, allReconciled, false)
-	return results, err
+	return results, nil
 }
 
 func (r *Reconciler1) getStatementsFromTraces(pos *types.AppPosition, trans *types.Transaction, s *types.Statement) ([]types.Statement, error) {
@@ -335,7 +241,7 @@ func (r *Reconciler1) getStatementsFromTraces(pos *types.AppPosition, trans *typ
 	ret.CorrectingOut.SetUint64(0)
 	ret.SelfDestructOut.SetUint64(0)
 
-	if traces, err := r.connection.GetTracesByTransactionHash(trans.Hash.Hex(), trans); err != nil {
+	if traces, err := r.opts.Connection.GetTracesByTransactionHash(trans.Hash.Hex(), trans); err != nil {
 		return statements, err
 
 	} else {
@@ -443,8 +349,8 @@ func (r *Reconciler1) trialBalance(pos *types.AppPosition, trans *types.Transact
 	}
 
 	if s.IsMaterial() {
-		s.SpotPrice, s.PriceSource, _ = pricing.PriceUsd(r.connection, s)
-		if r.testMode {
+		s.SpotPrice, s.PriceSource, _ = pricing.PriceUsd(r.opts.Connection, s)
+		if r.opts.TestMode {
 			s.DebugStatement(pos)
 		}
 	}
@@ -501,80 +407,13 @@ func correctForNullTransfer(s *types.Statement, tx *types.Transaction) bool {
 }
 
 // GetTransfers1 returns a statement from a given transaction
-func (r *Reconciler1) GetTransfers1(pos *types.AppPosition, filter *filter.AppearanceFilter, trans *types.Transaction) ([]types.Transfer, error) {
-	if r.connection.Store != nil {
-		transferGroup := &types.TransferGroup{
-			BlockNumber:      trans.BlockNumber,
-			TransactionIndex: trans.TransactionIndex,
-		}
-		if err := r.connection.Store.Read(transferGroup); err == nil {
-			return transferGroup.Transfers, nil
-		}
-	}
-
-	var err error
-	var statements []types.Statement
-	if true { // !r.useTraces {
-		r2 := ledger2.NewReconciler(r.opts)
-		if statements, err = r2.GetStatements2(pos, filter, trans); err != nil {
-			return nil, err
-		}
-		// } else {
-		// 	if statements, err = r.GetStatements2(pos, filter, trans); err != nil {
-		// 		return nil, err
-		// 	}
-	}
-
-	if transfers, err := convertToTransfers(statements); err != nil {
+func (r *Reconciler1) GetTransfers1(pos *types.AppPosition, trans *types.Transaction) ([]types.Transfer, error) {
+	r2 := ledger2.NewReconciler(r.opts)
+	if statements, err := r2.GetStatements2(pos, trans); err != nil {
 		return nil, err
 	} else {
-
-		allReconciled := true
-		for _, transfer := range transfers {
-			if transfer.IsMaterial() {
-				allReconciled = false
-				break
-			}
-		}
-
-		transfersGroup := &types.TransferGroup{
-			BlockNumber:      trans.BlockNumber,
-			TransactionIndex: trans.TransactionIndex,
-			Transfers:        transfers,
-		}
-		// TODO: BOGUS Turn on caching (remove the false below) for results once we get 100% coverage
-		err = r.connection.Store.WriteToCache(transfersGroup, walk.Cache_Transfers, trans.Timestamp, allReconciled, false)
-		return transfers, err
+		return convertToTransfers(statements)
 	}
-}
-
-func GetTransfersFromTransaction(tx *types.Transaction) ([]ledger10.AssetTransfer, error) {
-	transfers := make([]ledger10.AssetTransfer, 0, 20)
-	for _, log := range tx.Receipt.Logs {
-		if log.Topics[0] != topics.TransferTopic {
-			continue
-		}
-		normalized, err := normalize.NormalizeKnownLogs(&log)
-		if err != nil {
-			continue
-		} else if normalized.IsNFT() {
-			continue
-		} else {
-			sender := base.HexToAddress(normalized.Topics[1].Hex())
-			recipient := base.HexToAddress(normalized.Topics[2].Hex())
-			amount, _ := new(base.Wei).SetString(strings.ReplaceAll(normalized.Data, "0x", ""), 16)
-			if amount == nil {
-				amount = base.NewWei(0)
-			}
-			transfers = append(transfers, ledger10.AssetTransfer{
-				Sender:    sender,
-				Recipient: recipient,
-				AmountIn:  *amount,
-				Asset:     normalized.Address,
-			})
-		}
-	}
-	return transfers, nil
 }
 
 func convertToTransfers(statements []types.Statement) ([]types.Transfer, error) {
@@ -592,4 +431,72 @@ func convertToTransfers(statements []types.Statement) ([]types.Transfer, error) 
 		transfers = append(transfers, t)
 	}
 	return transfers, nil
+}
+
+func (r *Reconciler1) getTransfersFromLogs(logs []types.Log, names map[base.Address]types.Name) ([]types.Statement, error) {
+	receiptStatements := make([]types.Statement, 0, 20)
+	for _, log := range logs {
+		if log.Topics[0] != topics.TransferTopic {
+			continue
+		}
+		addrArray := []base.Address{r.opts.AccountFor}
+		if r.opts.AppFilters.ApplyLogFilter(&log, addrArray) && ledger10.AssetOfInterest(r.opts.AssetFilters, log.Address) {
+			normalized, err := normalize.NormalizeKnownLogs(&log)
+			if err != nil {
+				continue
+			} else if normalized.IsNFT() {
+				continue
+			} else {
+				sender := base.HexToAddress(normalized.Topics[1].Hex())
+				recipient := base.HexToAddress(normalized.Topics[2].Hex())
+				isSender, isRecipient := r.opts.AccountFor == sender, r.opts.AccountFor == recipient
+				if utils.IsFuzzing() || (!isSender && !isRecipient) {
+					continue
+				}
+
+				sym := normalized.Address.DefaultSymbol()
+				decimals := base.Value(18)
+				name := names[normalized.Address]
+				if name.Address == normalized.Address {
+					if name.Symbol != "" {
+						sym = name.Symbol
+					}
+					if name.Decimals != 0 {
+						decimals = base.Value(name.Decimals)
+					}
+				}
+
+				var amountIn, amountOut base.Wei
+				amount, _ := new(base.Wei).SetString(strings.ReplaceAll(normalized.Data, "0x", ""), 16)
+				if amount == nil {
+					amount = base.NewWei(0)
+				}
+				if r.opts.AccountFor == sender {
+					amountOut = *amount
+				}
+				if r.opts.AccountFor == recipient {
+					amountIn = *amount
+				}
+				s := types.Statement{
+					AccountedFor:     r.opts.AccountFor,
+					Sender:           sender,
+					Recipient:        recipient,
+					BlockNumber:      normalized.BlockNumber,
+					TransactionIndex: normalized.TransactionIndex,
+					LogIndex:         normalized.LogIndex,
+					TransactionHash:  normalized.TransactionHash,
+					Timestamp:        normalized.Timestamp,
+					Asset:            normalized.Address,
+					Symbol:           sym,
+					Decimals:         decimals,
+					SpotPrice:        0.0,
+					PriceSource:      "not-priced",
+					AmountIn:         amountIn,
+					AmountOut:        amountOut,
+				}
+				receiptStatements = append(receiptStatements, s)
+			}
+		}
+	}
+	return receiptStatements, nil
 }
