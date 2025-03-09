@@ -9,6 +9,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/names"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/pricing"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
@@ -63,7 +64,17 @@ type assetHolderKey struct {
 // any other reason. If that works and the statement is material (money moved in some way), the
 // function tries to price the asset. it then prints optional debugging information. Note that
 // the statement may be modified in this function.
-func (r *Reconciler1) trialBalance(pos *types.AppPosition, trans *types.Transaction, s *types.Statement) bool {
+func (r *Reconciler1) trialBalance(pos *types.AppPosition, trans *types.Transaction, s *types.Statement) (bool, error) {
+	var err error
+	if s.PrevBal, s.BegBal, s.EndBal, err = r.opts.Connection.GetReconBalances(&rpc.BalanceOptions{
+		PrevAppBlk: pos.Prev,
+		CurrBlk:    trans.BlockNumber,
+		Asset:      s.Asset,
+		Holder:     s.AccountedFor,
+	}); err != nil {
+		return false, err
+	}
+
 	var okay bool
 	if okay = s.Reconciled(); !okay {
 		if !s.IsEth() {
@@ -78,7 +89,7 @@ func (r *Reconciler1) trialBalance(pos *types.AppPosition, trans *types.Transact
 		s.DebugStatement(pos)
 	}
 
-	return s.Reconciled()
+	return s.Reconciled(), nil
 }
 
 func (r *Reconciler1) correctForSomethingElseToken(s *types.Statement) bool {

@@ -10,7 +10,6 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/ledger10"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/normalize"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/topics"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
@@ -68,16 +67,7 @@ func (r *Reconciler1) GetStatements1(pos *types.AppPosition, trans *types.Transa
 				}
 			}
 
-			var err error
-			if s.PrevBal, s.BegBal, s.EndBal, err = r.opts.Connection.GetReconBalances(&rpc.BalanceOptions{
-				PrevAppBlk: pos.Prev,
-				CurrBlk:    trans.BlockNumber,
-				Asset:      s.Asset,
-				Holder:     s.AccountedFor,
-			}); err != nil {
-				return nil, err
-			}
-			reconciled = r.trialBalance(pos, trans, &s)
+			reconciled, _ = r.trialBalance(pos, trans, &s)
 			if reconciled && s.IsMaterial() {
 				results = append(results, s)
 			}
@@ -88,16 +78,7 @@ func (r *Reconciler1) GetStatements1(pos *types.AppPosition, trans *types.Transa
 			if s, err := r.getStatementFromTraces(pos, trans, &s); err != nil {
 				logger.Warn(colors.Yellow+"Statement at ", fmt.Sprintf("%d.%d", trans.BlockNumber, trans.TransactionIndex), " does not reconcile."+colors.Off)
 			} else {
-				var err error
-				if s.PrevBal, s.BegBal, s.EndBal, err = r.opts.Connection.GetReconBalances(&rpc.BalanceOptions{
-					PrevAppBlk: pos.Prev,
-					CurrBlk:    trans.BlockNumber,
-					Asset:      s.Asset,
-					Holder:     s.AccountedFor,
-				}); err != nil {
-					return nil, err
-				}
-				_ = r.trialBalance(pos, trans, s)
+				_, _ = r.trialBalance(pos, trans, s)
 				results = append(results, *s)
 			}
 		}
@@ -109,17 +90,7 @@ func (r *Reconciler1) GetStatements1(pos *types.AppPosition, trans *types.Transa
 		} else {
 			receiptStatements := make([]types.Statement, 0, len(statements))
 			for _, s := range statements {
-				var err error
-				if s.PrevBal, s.BegBal, s.EndBal, err = r.opts.Connection.GetReconBalances(&rpc.BalanceOptions{
-					PrevAppBlk: pos.Prev,
-					CurrBlk:    trans.BlockNumber,
-					Asset:      s.Asset,
-					Holder:     s.AccountedFor,
-				}); err != nil {
-					return nil, err
-				}
-				reconciled := r.trialBalance(pos, trans, &s)
-
+				reconciled, _ := r.trialBalance(pos, trans, &s)
 				if reconciled {
 					id := fmt.Sprintf(" %d.%d.%d", s.BlockNumber, s.TransactionIndex, s.LogIndex)
 					logger.Progress(true, colors.Green+"Transaction", id, "reconciled       "+colors.Off)
