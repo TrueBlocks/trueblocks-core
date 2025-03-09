@@ -75,11 +75,14 @@ func (r *Reconciler1) GetStatements1(pos *types.AppPosition, trans *types.Transa
 
 		if r.opts.UseTraces || !reconciled {
 			results = make([]types.Statement, 0, 20) /* reset this */
-			if s, err := r.getStatementFromTraces(pos, trans, &s); err != nil {
+			if stmt, err := r.getStatementFromTraces(pos, trans, &s); err != nil {
 				logger.Warn(colors.Yellow+"Statement at ", fmt.Sprintf("%d.%d", trans.BlockNumber, trans.TransactionIndex), " does not reconcile."+colors.Off)
 			} else {
-				_, _ = r.trialBalance(pos, trans, s)
-				results = append(results, *s)
+				if _, err = r.trialBalance(pos, trans, stmt); err != nil {
+					return nil, err
+				} else {
+					results = append(results, *stmt)
+				}
 			}
 		}
 	}
@@ -109,31 +112,59 @@ func (r *Reconciler1) GetStatements1(pos *types.AppPosition, trans *types.Transa
 			results = append(results, receiptStatements...)
 		}
 	}
-
 	return results, nil
+}
+
+func (r *Reconciler1) NewStatement(trans *types.Transaction) *types.Statement {
+	sym := "WEI"
+	if r.opts.AsEther {
+		sym = "ETH"
+	}
+	to := trans.To
+	if trans.To.IsZero() && trans.Receipt != nil && !trans.Receipt.ContractAddress.IsZero() {
+		to = trans.Receipt.ContractAddress
+	}
+
+	return &types.Statement{
+		AccountedFor:     r.opts.AccountFor,
+		Sender:           trans.From,
+		Recipient:        to,
+		BlockNumber:      trans.BlockNumber,
+		TransactionIndex: trans.TransactionIndex,
+		TransactionHash:  trans.Hash,
+		Timestamp:        trans.Timestamp,
+		Asset:            base.FAKE_ETH_ADDRESS,
+		Symbol:           sym,
+		Decimals:         18,
+		PriceSource:      "not-priced",
+	}
+}
+
+func (r *Reconciler1) getStatementFromTransaction(trans *types.Transaction) *types.Statement {
+	return nil
 }
 
 func (r *Reconciler1) getStatementFromTraces(pos *types.AppPosition, trans *types.Transaction, s *types.Statement) (*types.Statement, error) {
 
-	ret := *s
+	stmt := *s
 	// clear all the internal accounting values. Keeps AmountIn, AmountOut and GasOut because
 	// those are at the top level (both the transaction itself and trace '0' have them). We
 	// skip trace '0' because it's the same as the transaction.
-	// ret.AmountIn.SetUint64(0)
-	ret.InternalIn.SetUint64(0)
-	ret.MinerBaseRewardIn.SetUint64(0)
-	ret.MinerNephewRewardIn.SetUint64(0)
-	ret.MinerTxFeeIn.SetUint64(0)
-	ret.MinerUncleRewardIn.SetUint64(0)
-	ret.CorrectingIn.SetUint64(0)
-	ret.PrefundIn.SetUint64(0)
-	ret.SelfDestructIn.SetUint64(0)
+	// stmt.AmountIn.SetUint64(0)
+	stmt.InternalIn.SetUint64(0)
+	stmt.MinerBaseRewardIn.SetUint64(0)
+	stmt.MinerNephewRewardIn.SetUint64(0)
+	stmt.MinerTxFeeIn.SetUint64(0)
+	stmt.MinerUncleRewardIn.SetUint64(0)
+	stmt.CorrectingIn.SetUint64(0)
+	stmt.PrefundIn.SetUint64(0)
+	stmt.SelfDestructIn.SetUint64(0)
 
-	// ret.AmountOut.SetUint64(0)
-	// ret.GasOut.SetUint64(0)
-	ret.InternalOut.SetUint64(0)
-	ret.CorrectingOut.SetUint64(0)
-	ret.SelfDestructOut.SetUint64(0)
+	// stmt.AmountOut.SetUint64(0)
+	// stmt.GasOut.SetUint64(0)
+	stmt.InternalOut.SetUint64(0)
+	stmt.CorrectingOut.SetUint64(0)
+	stmt.SelfDestructOut.SetUint64(0)
 
 	if traces, err := r.opts.Connection.GetTracesByTransactionHash(trans.Hash.Hex(), trans); err != nil {
 		return nil, err
@@ -157,59 +188,59 @@ func (r *Reconciler1) getStatementFromTraces(pos *types.AppPosition, trans *type
 
 			// Do not collapse, more than one of these can be true at the same time
 			if trace.Action.From == s.AccountedFor {
-				ret.InternalOut = plusEq(&ret.InternalOut, &trace.Action.Value)
-				ret.Sender = trace.Action.From
+				stmt.InternalOut = plusEq(&stmt.InternalOut, &trace.Action.Value)
+				stmt.Sender = trace.Action.From
 				if trace.Action.To.IsZero() {
 					if trace.Result != nil {
-						ret.Recipient = trace.Result.Address
+						stmt.Recipient = trace.Result.Address
 					}
 				} else {
-					ret.Recipient = trace.Action.To
+					stmt.Recipient = trace.Action.To
 				}
 			}
 
 			if trace.Action.To == s.AccountedFor {
-				ret.InternalIn = plusEq(&ret.InternalIn, &trace.Action.Value)
-				ret.Sender = trace.Action.From
-				ret.Recipient = trace.Action.To
+				stmt.InternalIn = plusEq(&stmt.InternalIn, &trace.Action.Value)
+				stmt.Sender = trace.Action.From
+				stmt.Recipient = trace.Action.To
 			}
 
 			if trace.Action.SelfDestructed == s.AccountedFor {
-				ret.SelfDestructOut = plusEq(&ret.SelfDestructOut, &trace.Action.Balance)
-				ret.Sender = trace.Action.SelfDestructed
-				if ret.Sender.IsZero() {
-					ret.Sender = trace.Action.Address
+				stmt.SelfDestructOut = plusEq(&stmt.SelfDestructOut, &trace.Action.Balance)
+				stmt.Sender = trace.Action.SelfDestructed
+				if stmt.Sender.IsZero() {
+					stmt.Sender = trace.Action.Address
 				}
-				ret.Recipient = trace.Action.RefundAddress
+				stmt.Recipient = trace.Action.RefundAddress
 			}
 
 			if trace.Action.RefundAddress == s.AccountedFor {
-				ret.SelfDestructIn = plusEq(&ret.SelfDestructIn, &trace.Action.Balance)
-				ret.Sender = trace.Action.SelfDestructed
-				if ret.Sender.IsZero() {
-					ret.Sender = trace.Action.Address
+				stmt.SelfDestructIn = plusEq(&stmt.SelfDestructIn, &trace.Action.Balance)
+				stmt.Sender = trace.Action.SelfDestructed
+				if stmt.Sender.IsZero() {
+					stmt.Sender = trace.Action.Address
 				}
-				ret.Recipient = trace.Action.RefundAddress
+				stmt.Recipient = trace.Action.RefundAddress
 			}
 
 			if trace.Action.Address == s.AccountedFor && !trace.Action.RefundAddress.IsZero() {
-				ret.SelfDestructOut = plusEq(&ret.SelfDestructOut, &trace.Action.Balance)
+				stmt.SelfDestructOut = plusEq(&stmt.SelfDestructOut, &trace.Action.Balance)
 				// self destructed send
-				ret.Sender = trace.Action.Address
-				ret.Recipient = trace.Action.RefundAddress
+				stmt.Sender = trace.Action.Address
+				stmt.Recipient = trace.Action.RefundAddress
 			}
 
 			if trace.Result != nil {
 				if trace.Result.Address == s.AccountedFor {
-					ret.InternalIn = plusEq(&ret.InternalIn, &trace.Action.Value)
-					ret.Sender = trace.Action.From
-					ret.Recipient = trace.Result.Address
+					stmt.InternalIn = plusEq(&stmt.InternalIn, &trace.Action.Value)
+					stmt.Sender = trace.Action.From
+					stmt.Recipient = trace.Result.Address
 				}
 			}
 		}
 	}
 
-	return &ret, nil
+	return &stmt, nil
 }
 
 func (r *Reconciler1) getStatementsFromLogs(logs []types.Log) ([]types.Statement, error) {
