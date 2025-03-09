@@ -29,7 +29,8 @@ type Transfer struct {
 	LogIndex         base.Lognum  `json:"logIndex"`
 	TransactionIndex base.Txnum   `json:"transactionIndex"`
 	// EXISTING_CODE
-	Decimals base.Value `json:"decimals"`
+	Decimals         base.Value `json:"decimals"`
+	CorrectingReason string     `json:"correctingReason"`
 	// EXISTING_CODE
 }
 

@@ -20,7 +20,7 @@ func (r *Reconciler1) GetStatements1(pos *types.AppPosition, trans *types.Transa
 		var err error
 		reconciled := false
 		if !r.opts.UseTraces {
-			stmt := r.getStatementFromTransaction(trans)
+			stmt := trans.NewStatement(r.opts.AsEther, base.FAKE_ETH_ADDRESS, r.opts.AccountFor)
 			if reconciled, err = r.trialBalance(pos, trans, stmt); err != nil {
 				return nil, err
 			} else {
@@ -76,66 +76,12 @@ func (r *Reconciler1) GetStatements1(pos *types.AppPosition, trans *types.Transa
 	return results, nil
 }
 
-func (r *Reconciler1) NewStatement(trans *types.Transaction) *types.Statement {
-	sym := "WEI"
-	if r.opts.AsEther {
-		sym = "ETH"
-	}
-	to := trans.To
-	if trans.To.IsZero() && trans.Receipt != nil && !trans.Receipt.ContractAddress.IsZero() {
-		to = trans.Receipt.ContractAddress
-	}
-
-	return &types.Statement{
-		AccountedFor:     r.opts.AccountFor,
-		Sender:           trans.From,
-		Recipient:        to,
-		BlockNumber:      trans.BlockNumber,
-		TransactionIndex: trans.TransactionIndex,
-		TransactionHash:  trans.Hash,
-		Timestamp:        trans.Timestamp,
-		Asset:            base.FAKE_ETH_ADDRESS,
-		Symbol:           sym,
-		Decimals:         18,
-		PriceSource:      "not-priced",
-	}
-}
-
-func (r *Reconciler1) getStatementFromTransaction(trans *types.Transaction) *types.Statement {
-	stmt := r.NewStatement(trans)
-	if stmt.Sender == r.opts.AccountFor {
-		gasUsed := new(base.Wei)
-		if trans.Receipt != nil {
-			gasUsed.SetUint64(uint64(trans.Receipt.GasUsed))
-		}
-		gasPrice := new(base.Wei).SetUint64(uint64(trans.GasPrice))
-		gasOut := new(base.Wei).Mul(gasUsed, gasPrice)
-		stmt.AmountOut = trans.Value
-		stmt.GasOut = *gasOut
-	}
-	if stmt.Recipient == r.opts.AccountFor {
-		if stmt.BlockNumber == 0 {
-			stmt.PrefundIn = trans.Value
-		} else {
-			if trans.Rewards != nil {
-				stmt.MinerBaseRewardIn = trans.Rewards.Block
-				stmt.MinerNephewRewardIn = trans.Rewards.Nephew
-				stmt.MinerTxFeeIn = trans.Rewards.TxFee
-				stmt.MinerUncleRewardIn = trans.Rewards.Uncle
-			} else {
-				stmt.AmountIn = trans.Value
-			}
-		}
-	}
-	return stmt
-}
-
 func (r *Reconciler1) getStatementFromTraces(trans *types.Transaction) (*types.Statement, error) {
 	if traces, err := r.opts.Connection.GetTracesByTransactionHash(trans.Hash.Hex(), trans); err != nil {
 		return nil, err
 
 	} else {
-		stmt := r.getStatementFromTransaction(trans)
+		stmt := trans.NewStatement(r.opts.AsEther, base.FAKE_ETH_ADDRESS, r.opts.AccountFor)
 		for i, trace := range traces {
 			if i == 0 {
 				// the first trace is identical to the transaction itself, so we can skip it

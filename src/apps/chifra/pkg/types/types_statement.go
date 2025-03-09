@@ -730,15 +730,12 @@ func (s *Statement) IsNullTransfer(tx *Transaction) bool {
 	logger.TestLog(true, "A possible nullTransfer")
 	logger.TestLog(true, "  nLogs:            ", len(tx.Receipt.Logs))
 	logger.TestLog(true, "    lotsOfLogs:      -->", lotsOfLogs)
-
 	logger.TestLog(true, "  Sender.IsZero:    ", s.Sender, s.Sender.IsZero())
 	logger.TestLog(true, "  or Sender == To:  ", s.Sender == tx.To)
 	logger.TestLog(true, "    mayBeAirdrop:    -->", mayBeAirdrop)
-
 	logger.TestLog(true, "  EndBal-BegBal:    ", s.EndBal.Cmp(&s.BegBal))
 	logger.TestLog(true, "  Material:         ", s.IsMaterial())
 	logger.TestLog(true, "    noBalanceChange: -->", noBalanceChange)
-
 	if !ret {
 		logger.TestLog(true, "  ---> Not a nullTransfer")
 	}

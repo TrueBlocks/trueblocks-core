@@ -14,15 +14,16 @@ import (
 )
 
 type Reconciler1 struct {
-	opts              *ledger10.ReconcilerOptions
-	names             map[base.Address]types.Name
-	hasStartBlock     bool
-	transfers         map[blockTxKey][]ledger10.AssetTransfer
-	accountLedger     map[assetHolderKey]base.Wei
-	ledgerAssets      map[base.Address]bool
-	correctionCounter base.Value
-	entryCounter      base.Value
-	ledgers           map[base.Address]Ledger
+	opts               *ledger10.ReconcilerOptions
+	names              map[base.Address]types.Name
+	hasStartBlock      bool
+	enabledCorrections bool
+	transfers          map[blockTxKey][]ledger10.AssetTransfer
+	accountLedger      map[assetHolderKey]base.Wei
+	ledgerAssets       map[base.Address]bool
+	correctionCounter  base.Value
+	entryCounter       base.Value
+	ledgers            map[base.Address]Ledger
 }
 
 func (r *Reconciler1) String() string {
@@ -34,13 +35,14 @@ func NewReconciler(opts *ledger10.ReconcilerOptions) *Reconciler1 {
 	parts := types.Custom | types.Prefund | types.Regular
 	names, _ := names.LoadNamesMap(opts.Connection.Chain, parts, []string{})
 	r := &Reconciler1{
-		opts:          opts,
-		names:         names,
-		hasStartBlock: false,
-		transfers:     make(map[blockTxKey][]ledger10.AssetTransfer),
-		accountLedger: make(map[assetHolderKey]base.Wei),
-		ledgerAssets:  make(map[base.Address]bool),
-		ledgers:       make(map[base.Address]Ledger),
+		opts:               opts,
+		names:              names,
+		hasStartBlock:      false,
+		enabledCorrections: true,
+		transfers:          make(map[blockTxKey][]ledger10.AssetTransfer),
+		accountLedger:      make(map[assetHolderKey]base.Wei),
+		ledgerAssets:       make(map[base.Address]bool),
+		ledgers:            make(map[base.Address]Ledger),
 	}
 	_ = r.correctionCounter
 	_ = r.entryCounter
@@ -78,7 +80,7 @@ func (r *Reconciler1) trialBalance(pos *types.AppPosition, trans *types.Transact
 	var okay bool
 	if okay = s.Reconciled(); !okay {
 		if !s.IsEth() {
-			if okay = correctForNullTransfer(s, trans); !okay {
+			if okay = r.correctForNullTransfer(s, trans); !okay {
 				_ = r.correctForSomethingElseToken(s)
 			}
 		}
@@ -93,6 +95,10 @@ func (r *Reconciler1) trialBalance(pos *types.AppPosition, trans *types.Transact
 }
 
 func (r *Reconciler1) correctForSomethingElseToken(s *types.Statement) bool {
+	if !r.enabledCorrections {
+		return true
+	}
+
 	logger.TestLog(true, "Correcting token transfer for unknown income or outflow")
 
 	s.CorrectingIn.SetUint64(0)
@@ -124,7 +130,11 @@ func (r *Reconciler1) correctForSomethingElseToken(s *types.Statement) bool {
 	return s.Reconciled()
 }
 
-func correctForNullTransfer(s *types.Statement, tx *types.Transaction) bool {
+func (r *Reconciler1) correctForNullTransfer(s *types.Statement, tx *types.Transaction) bool {
+	if !r.enabledCorrections {
+		return true
+	}
+
 	if s.IsNullTransfer(tx) {
 		logger.TestLog(true, "Correcting token transfer for a null transfer")
 		amt := s.TotalIn() // use totalIn since this is the amount that was faked

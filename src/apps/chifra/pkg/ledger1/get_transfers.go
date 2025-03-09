@@ -1,35 +1,17 @@
 package ledger1
 
 import (
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/ledger2"
+	"os"
+	"sort"
+
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
 // GetTransfers1 returns a statement from a given transaction
 func (r *Reconciler1) GetTransfers1(pos *types.AppPosition, trans *types.Transaction) ([]types.Transfer, error) {
-	// statements := make([]types.Statement, 0, 20)
-	// if !r.opts.UseTraces {
-	// 	stmt := r.getStatementFromTransaction(trans)
-	// 	statements = append(statements, *stmt)
-	// } else {
-	// 	if stmt, err := r.getStatementFromTraces(trans); err == nil {
-	// 		statements = append(statements, *stmt)
-	// 	}
-	// }
-	// if trans.Receipt != nil {
-	// 	for _, log := range trans.Receipt.Logs {
-	// 		if stmt, err := r.getStatementFromLog(&log); err != nil {
-	// 			return nil, err
-	// 		} else if stmt == nil {
-	// 			continue
-	// 		} else {
-	// 			statements = append(statements, *stmt)
-	// 		}
-	// 	}
-	// }
-	// return convertToTransfers(statements)
-	r2 := ledger2.NewReconciler(r.opts)
-	if statements, err := r2.GetStatements2(pos, trans); err != nil {
+	r.enabledCorrections = false
+	if statements, err := r.GetStatements1(pos, trans); err != nil {
 		return nil, err
 	} else {
 		return convertToTransfers(statements)
@@ -47,8 +29,25 @@ func convertToTransfers(statements []types.Statement) ([]types.Transfer, error) 
 			TransactionIndex: stmnt.TransactionIndex,
 			LogIndex:         stmnt.LogIndex,
 			Decimals:         stmnt.Decimals,
+			CorrectingReason: stmnt.CorrectingReason,
 		}
 		transfers = append(transfers, t)
 	}
+
+	if os.Getenv("TEST_MODE") == "true" {
+		sort.Slice(transfers, func(i, j int) bool {
+			if transfers[i].BlockNumber == transfers[j].BlockNumber {
+				if transfers[i].TransactionIndex == transfers[j].TransactionIndex {
+					return transfers[i].LogIndex < transfers[j].LogIndex
+				}
+				return transfers[i].TransactionIndex < transfers[j].TransactionIndex
+			}
+			return transfers[i].BlockNumber < transfers[j].BlockNumber
+		})
+		for _, t := range transfers {
+			logger.TestLog(true, "transfer:", t.BlockNumber, t.TransactionIndex, t.LogIndex, t.Asset, t.Holder, t.Amount.Text(10), t.CorrectingReason)
+		}
+	}
+
 	return transfers, nil
 }
