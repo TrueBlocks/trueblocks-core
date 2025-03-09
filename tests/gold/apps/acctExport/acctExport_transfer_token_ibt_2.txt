@@ -11,6 +11,51 @@ TEST[DATE|TIME] Caps:  cache,decache,ether
 TEST[DATE|TIME] Format:  json
 INFO[DATE|TIME] { "outputFilename": "--output_filename--" }
 TEST[DATE|TIME] =========================================================
+TEST[DATE|TIME] ===> PRICING FOR 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (ETH) using Uniswap
+TEST[DATE|TIME] =========================================================
+TEST[DATE|TIME] blockNumber:         12704456
+TEST[DATE|TIME] source1 (uni/mkr):   0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f
+TEST[DATE|TIME] str0 (call):         getPair(0x6b175474e89094c44da98b954eedeac495271d0f, 0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2)
+TEST[DATE|TIME] source2 (pair):      0xa478c2975ab1ea89e8196811f51a7b7ade33eb11
+TEST[DATE|TIME] str1 (call/data):    getReserves()
+TEST[DATE|TIME] first:               0x6b175474e89094c44da98b954eedeac495271d0f
+TEST[DATE|TIME] second:              0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2
+TEST[DATE|TIME] reversed:            false
+TEST[DATE|TIME] float0:              36936252061481304330000000
+TEST[DATE|TIME] float1:              20243962597672319668000
+TEST[DATE|TIME] float2:              1
+TEST[DATE|TIME] bigPrice:            1824.5564267999728689
+TEST[DATE|TIME] price:               1824.5564267999728
+TEST[DATE|TIME] source:              uniswap
+TEST[DATE|TIME] ===================================================
+TEST[DATE|TIME] Previous:               12704455
+TEST[DATE|TIME] Current:                12704456
+TEST[DATE|TIME] Next:                   12704710
+TEST[DATE|TIME] accountedFor:           0xf503017d7baf7fbc0fff7492b751025c6a78179b
+TEST[DATE|TIME] sender:                 0x7d655c57f71464b6f83811c55d84009cd9f5221c  ==>  0xf503017d7baf7fbc0fff7492b751025c6a78179b
+TEST[DATE|TIME] asset:                  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (ETH) decimals: 18
+TEST[DATE|TIME] hash:                   0xc4d90e497f91f7feb1f9d1019bee148d3b00b7c900c9ba657cacdb156b67d781
+TEST[DATE|TIME] timestamp:              1624640874
+TEST[DATE|TIME] blockNumber:            12704456.92.0
+TEST[DATE|TIME] priceSource:            1824.5564267999728 (uniswap)
+TEST[DATE|TIME] --------------------------------------------------- 
+TEST[DATE|TIME] Trial balance:
+TEST[DATE|TIME]    prevBal:             36.711034261192445316
+TEST[DATE|TIME]    begBal:              36.711034261192445316 (0)
+TEST[DATE|TIME]    totalIn:             0.0095
+TEST[DATE|TIME]    totalOut:            0
+TEST[DATE|TIME]    amountNet:           0.0095
+TEST[DATE|TIME]                        ======================= 
+TEST[DATE|TIME]    endBal:              36.720534261192445316 (0)
+TEST[DATE|TIME]    endBalCalc:          36.720534261192445316
+TEST[DATE|TIME]    rollingBalance:      0
+TEST[DATE|TIME] --------------------------------------------------- 
+TEST[DATE|TIME]    internalIn:          0.0095
+TEST[DATE|TIME]    material:            true
+TEST[DATE|TIME]    reconciled:          true
+TEST[DATE|TIME] ---------------------------------------------------
+TEST[DATE|TIME] transfer: 12704456 92 0 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0xf503017d7baf7fbc0fff7492b751025c6a78179b 9500000000000000 
+TEST[DATE|TIME] =========================================================
 TEST[DATE|TIME] ===> PRICING FOR 0x6b175474e89094c44da98b954eedeac495271d0f (DAI) 
 TEST[DATE|TIME] =========================================================
 TEST[DATE|TIME] stable-coin
@@ -41,6 +86,7 @@ TEST[DATE|TIME]    amountIn:            4.75
 TEST[DATE|TIME]    material:            true
 TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
+TEST[DATE|TIME] transfer: 12704710 143 313 0x6b175474e89094c44da98b954eedeac495271d0f 0xf503017d7baf7fbc0fff7492b751025c6a78179b 4750000000000000000 
 TEST[DATE|TIME] =========================================================
 TEST[DATE|TIME] ===> PRICING FOR 0x6b175474e89094c44da98b954eedeac495271d0f (DAI) 
 TEST[DATE|TIME] =========================================================
@@ -72,6 +118,7 @@ TEST[DATE|TIME]    amountIn:            5
 TEST[DATE|TIME]    material:            true
 TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
+TEST[DATE|TIME] transfer: 12704812 11 87 0x6b175474e89094c44da98b954eedeac495271d0f 0xf503017d7baf7fbc0fff7492b751025c6a78179b 5000000000000000000 
 TEST[DATE|TIME] =========================================================
 TEST[DATE|TIME] ===> PRICING FOR 0x6b175474e89094c44da98b954eedeac495271d0f (DAI) 
 TEST[DATE|TIME] =========================================================
@@ -103,6 +150,7 @@ TEST[DATE|TIME]    amountIn:            3.8
 TEST[DATE|TIME]    material:            true
 TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
+TEST[DATE|TIME] transfer: 12705275 212 337 0x6b175474e89094c44da98b954eedeac495271d0f 0xf503017d7baf7fbc0fff7492b751025c6a78179b 3800000000000000000 
 TEST[DATE|TIME] =========================================================
 TEST[DATE|TIME] ===> PRICING FOR 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (ETH) using Uniswap
 TEST[DATE|TIME] =========================================================
@@ -1555,10 +1603,64 @@ TEST[DATE|TIME]    material:            true
 TEST[DATE|TIME]    reconciled:          false
 TEST[DATE|TIME]  ^^ we need to fix this ^^
 TEST[DATE|TIME] ---------------------------------------------------
+TEST[DATE|TIME] transfer: 12705892 117 0 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0xf503017d7baf7fbc0fff7492b751025c6a78179b -11780085000000000 
+TEST[DATE|TIME] transfer: 12705892 117 286 0x6b175474e89094c44da98b954eedeac495271d0f 0xf503017d7baf7fbc0fff7492b751025c6a78179b -2000000000000000000 
+TEST[DATE|TIME] transfer: 12705892 117 288 0x6b175474e89094c44da98b954eedeac495271d0f 0xf503017d7baf7fbc0fff7492b751025c6a78179b -2000000000000000000 
+TEST[DATE|TIME] transfer: 12705892 117 290 0x6b175474e89094c44da98b954eedeac495271d0f 0xf503017d7baf7fbc0fff7492b751025c6a78179b -2000000000000000000 
+TEST[DATE|TIME] transfer: 12705892 117 292 0x6b175474e89094c44da98b954eedeac495271d0f 0xf503017d7baf7fbc0fff7492b751025c6a78179b -2000000000000000000 
+TEST[DATE|TIME] transfer: 12705892 117 294 0x6b175474e89094c44da98b954eedeac495271d0f 0xf503017d7baf7fbc0fff7492b751025c6a78179b -2000000000000000000 
+TEST[DATE|TIME] transfer: 12705892 117 296 0x6b175474e89094c44da98b954eedeac495271d0f 0xf503017d7baf7fbc0fff7492b751025c6a78179b -2000000000000000000 
+TEST[DATE|TIME] transfer: 12705892 117 298 0x6b175474e89094c44da98b954eedeac495271d0f 0xf503017d7baf7fbc0fff7492b751025c6a78179b -2000000000000000000 
+TEST[DATE|TIME] transfer: 12705892 117 300 0x6b175474e89094c44da98b954eedeac495271d0f 0xf503017d7baf7fbc0fff7492b751025c6a78179b -2000000000000000000 
+TEST[DATE|TIME] transfer: 12705892 117 302 0x6b175474e89094c44da98b954eedeac495271d0f 0xf503017d7baf7fbc0fff7492b751025c6a78179b -2000000000000000000 
+TEST[DATE|TIME] transfer: 12705892 117 304 0x6b175474e89094c44da98b954eedeac495271d0f 0xf503017d7baf7fbc0fff7492b751025c6a78179b -2000000000000000000 
+TEST[DATE|TIME] transfer: 12705892 117 306 0x6b175474e89094c44da98b954eedeac495271d0f 0xf503017d7baf7fbc0fff7492b751025c6a78179b -2000000000000000000 
+TEST[DATE|TIME] transfer: 12705892 117 308 0x6b175474e89094c44da98b954eedeac495271d0f 0xf503017d7baf7fbc0fff7492b751025c6a78179b -2000000000000000000 
+TEST[DATE|TIME] transfer: 12705892 117 310 0x6b175474e89094c44da98b954eedeac495271d0f 0xf503017d7baf7fbc0fff7492b751025c6a78179b -2000000000000000000 
+TEST[DATE|TIME] transfer: 12705892 117 312 0x6b175474e89094c44da98b954eedeac495271d0f 0xf503017d7baf7fbc0fff7492b751025c6a78179b -2000000000000000000 
+TEST[DATE|TIME] transfer: 12705892 117 314 0x6b175474e89094c44da98b954eedeac495271d0f 0xf503017d7baf7fbc0fff7492b751025c6a78179b -2000000000000000000 
+TEST[DATE|TIME] transfer: 12705892 117 316 0x6b175474e89094c44da98b954eedeac495271d0f 0xf503017d7baf7fbc0fff7492b751025c6a78179b -2000000000000000000 
+TEST[DATE|TIME] transfer: 12705892 117 318 0x6b175474e89094c44da98b954eedeac495271d0f 0xf503017d7baf7fbc0fff7492b751025c6a78179b -2000000000000000000 
+TEST[DATE|TIME] transfer: 12705892 117 320 0x6b175474e89094c44da98b954eedeac495271d0f 0xf503017d7baf7fbc0fff7492b751025c6a78179b -2000000000000000000 
+TEST[DATE|TIME] transfer: 12705892 117 322 0x6b175474e89094c44da98b954eedeac495271d0f 0xf503017d7baf7fbc0fff7492b751025c6a78179b -2000000000000000000 
+TEST[DATE|TIME] transfer: 12705892 117 324 0x6b175474e89094c44da98b954eedeac495271d0f 0xf503017d7baf7fbc0fff7492b751025c6a78179b -2000000000000000000 
+TEST[DATE|TIME] transfer: 12705892 117 326 0x6b175474e89094c44da98b954eedeac495271d0f 0xf503017d7baf7fbc0fff7492b751025c6a78179b -2000000000000000000 
+TEST[DATE|TIME] transfer: 12705892 117 328 0x6b175474e89094c44da98b954eedeac495271d0f 0xf503017d7baf7fbc0fff7492b751025c6a78179b -2000000000000000000 
+TEST[DATE|TIME] transfer: 12705892 117 330 0x6b175474e89094c44da98b954eedeac495271d0f 0xf503017d7baf7fbc0fff7492b751025c6a78179b -2000000000000000000 
+TEST[DATE|TIME] transfer: 12705892 117 332 0x6b175474e89094c44da98b954eedeac495271d0f 0xf503017d7baf7fbc0fff7492b751025c6a78179b -2000000000000000000 
+TEST[DATE|TIME] transfer: 12705892 117 334 0x6b175474e89094c44da98b954eedeac495271d0f 0xf503017d7baf7fbc0fff7492b751025c6a78179b -2000000000000000000 
+TEST[DATE|TIME] transfer: 12705892 117 336 0x6b175474e89094c44da98b954eedeac495271d0f 0xf503017d7baf7fbc0fff7492b751025c6a78179b -2000000000000000000 
+TEST[DATE|TIME] transfer: 12705892 117 338 0x6b175474e89094c44da98b954eedeac495271d0f 0xf503017d7baf7fbc0fff7492b751025c6a78179b -2000000000000000000 
+TEST[DATE|TIME] transfer: 12705892 117 340 0x6b175474e89094c44da98b954eedeac495271d0f 0xf503017d7baf7fbc0fff7492b751025c6a78179b -2000000000000000000 
+TEST[DATE|TIME] transfer: 12705892 117 342 0x6b175474e89094c44da98b954eedeac495271d0f 0xf503017d7baf7fbc0fff7492b751025c6a78179b -2000000000000000000 
+TEST[DATE|TIME] transfer: 12705892 117 344 0x6b175474e89094c44da98b954eedeac495271d0f 0xf503017d7baf7fbc0fff7492b751025c6a78179b -2000000000000000000 
+TEST[DATE|TIME] transfer: 12705892 117 346 0x6b175474e89094c44da98b954eedeac495271d0f 0xf503017d7baf7fbc0fff7492b751025c6a78179b -2000000000000000000 
+TEST[DATE|TIME] transfer: 12705892 117 348 0x6b175474e89094c44da98b954eedeac495271d0f 0xf503017d7baf7fbc0fff7492b751025c6a78179b -2000000000000000000 
+TEST[DATE|TIME] transfer: 12705892 117 350 0x6b175474e89094c44da98b954eedeac495271d0f 0xf503017d7baf7fbc0fff7492b751025c6a78179b -2000000000000000000 
+TEST[DATE|TIME] transfer: 12705892 117 352 0x6b175474e89094c44da98b954eedeac495271d0f 0xf503017d7baf7fbc0fff7492b751025c6a78179b -2000000000000000000 
+TEST[DATE|TIME] transfer: 12705892 117 354 0x6b175474e89094c44da98b954eedeac495271d0f 0xf503017d7baf7fbc0fff7492b751025c6a78179b -2000000000000000000 
+TEST[DATE|TIME] transfer: 12705892 117 356 0x6b175474e89094c44da98b954eedeac495271d0f 0xf503017d7baf7fbc0fff7492b751025c6a78179b -2000000000000000000 
+TEST[DATE|TIME] transfer: 12705892 117 358 0x6b175474e89094c44da98b954eedeac495271d0f 0xf503017d7baf7fbc0fff7492b751025c6a78179b -2000000000000000000 
+TEST[DATE|TIME] transfer: 12705892 117 360 0x6b175474e89094c44da98b954eedeac495271d0f 0xf503017d7baf7fbc0fff7492b751025c6a78179b -2000000000000000000 
+TEST[DATE|TIME] transfer: 12705892 117 362 0x6b175474e89094c44da98b954eedeac495271d0f 0xf503017d7baf7fbc0fff7492b751025c6a78179b -2000000000000000000 
+TEST[DATE|TIME] transfer: 12705892 117 364 0x6b175474e89094c44da98b954eedeac495271d0f 0xf503017d7baf7fbc0fff7492b751025c6a78179b -2000000000000000000 
+TEST[DATE|TIME] transfer: 12705892 117 366 0x6b175474e89094c44da98b954eedeac495271d0f 0xf503017d7baf7fbc0fff7492b751025c6a78179b -2000000000000000000 
+TEST[DATE|TIME] transfer: 12705892 117 368 0x6b175474e89094c44da98b954eedeac495271d0f 0xf503017d7baf7fbc0fff7492b751025c6a78179b -2000000000000000000 
+TEST[DATE|TIME] transfer: 12705892 117 370 0x6b175474e89094c44da98b954eedeac495271d0f 0xf503017d7baf7fbc0fff7492b751025c6a78179b -2000000000000000000 
+TEST[DATE|TIME] transfer: 12705892 117 372 0x6b175474e89094c44da98b954eedeac495271d0f 0xf503017d7baf7fbc0fff7492b751025c6a78179b -2000000000000000000 
 ----
 Results in ./transfer_token_ibt_2_out.file
 {
   "data": [
+    {
+      "amount": "9500000000000000",
+      "amountEth": "0.0095",
+      "asset": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+      "blockNumber": 12704456,
+      "holder": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
+      "logIndex": 0,
+      "transactionIndex": 92
+    },
     {
       "amount": "4750000000000000000",
       "amountEth": "4.75",
@@ -1629,15 +1731,6 @@ Results in ./transfer_token_ibt_2_out.file
       "blockNumber": 12705892,
       "holder": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
       "logIndex": 292,
-      "transactionIndex": 117
-    },
-    {
-      "amount": "-2000000000000000000",
-      "amountEth": "-2",
-      "asset": "0x6b175474e89094c44da98b954eedeac495271d0f",
-      "blockNumber": 12705892,
-      "holder": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
-      "logIndex": 294,
       "transactionIndex": 117
     }
   ]

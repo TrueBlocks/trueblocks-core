@@ -2,6 +2,15 @@ export?addrs=0xf503017d7baf7fbc0fff7492b751025c6a78179b&accounting&transfers&fir
 {
   "data": [
     {
+      "amount": "9500000000000000",
+      "amountEth": "0.0095",
+      "asset": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+      "blockNumber": 12704456,
+      "holder": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
+      "logIndex": 0,
+      "transactionIndex": 92
+    },
+    {
       "amount": "4750000000000000000",
       "amountEth": "4.75",
       "asset": "0x6b175474e89094c44da98b954eedeac495271d0f",
@@ -71,15 +80,6 @@ export?addrs=0xf503017d7baf7fbc0fff7492b751025c6a78179b&accounting&transfers&fir
       "blockNumber": 12705892,
       "holder": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
       "logIndex": 292,
-      "transactionIndex": 117
-    },
-    {
-      "amount": "-2000000000000000000",
-      "amountEth": "-2",
-      "asset": "0x6b175474e89094c44da98b954eedeac495271d0f",
-      "blockNumber": 12705892,
-      "holder": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
-      "logIndex": 294,
       "transactionIndex": 117
     }
   ],

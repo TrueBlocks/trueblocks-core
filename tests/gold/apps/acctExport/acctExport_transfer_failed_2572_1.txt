@@ -55,6 +55,7 @@ TEST[DATE|TIME]    material:            true
 TEST[DATE|TIME]    reconciled:          false
 TEST[DATE|TIME]  ^^ we need to fix this ^^
 TEST[DATE|TIME] ---------------------------------------------------
+TEST[DATE|TIME] transfer: 15549162 83 1774 0xf5b2c59f6db42ffcdfc1625999c81fdf17953384 0x054993ab0f2b1acc0fdc65405ee203b4271bebe6 2017000000000000000000 
 ----
 Results in ./transfer_failed_2572_1_out.file
 {
