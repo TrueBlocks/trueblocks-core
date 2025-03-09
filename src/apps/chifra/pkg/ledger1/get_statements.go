@@ -210,35 +210,33 @@ func (r *Reconciler1) getStatementFromTraces(trans *types.Transaction) (*types.S
 func (r *Reconciler1) getStatementsFromLogs(logs []types.Log) ([]types.Statement, error) {
 	statements := make([]types.Statement, 0, 20)
 	for _, log := range logs {
-		pass1 := log.Topics[0] == topics.TransferTopic
-		if !pass1 {
-			continue
-		}
-
-		pass2 := r.opts.AppFilters.ApplyLogFilter(&log, []base.Address{r.opts.AccountFor})
-		if !pass2 {
-			continue
-		}
-
-		pass3 := ledger10.AssetOfInterest(r.opts.AssetFilters, log.Address)
-		if !pass3 {
-			continue
-		}
-
-		normalized, err := normalize.NormalizeKnownLogs(&log)
-		if err != nil {
+		if stmt, err := r.getStatementFromLog(&log); err != nil {
 			// TODO: silent fail?
 			continue
-
-		} else if normalized.IsNFT() {
+		} else if stmt == nil || !stmt.IsMaterial() {
 			continue
+		} else {
+			statements = append(statements, *stmt)
+		}
+	}
+	return statements, nil
+}
 
+func (r *Reconciler1) getStatementFromLog(log *types.Log) (*types.Statement, error) {
+	pass1 := log.Topics[0] == topics.TransferTopic
+	pass2 := r.opts.AppFilters.ApplyLogFilter(log, []base.Address{r.opts.AccountFor})
+	pass3 := ledger10.AssetOfInterest(r.opts.AssetFilters, log.Address)
+	if pass1 && pass2 && pass3 {
+		if normalized, err := normalize.NormalizeKnownLogs(log); err != nil {
+			return nil, err
+		} else if normalized.IsNFT() {
+			return nil, nil
 		} else {
 			sender := base.HexToAddress(normalized.Topics[1].Hex())
 			recipient := base.HexToAddress(normalized.Topics[2].Hex())
 			isSender, isRecipient := r.opts.AccountFor == sender, r.opts.AccountFor == recipient
 			if !isSender && !isRecipient {
-				continue
+				return nil, nil
 			}
 
 			var amountIn, amountOut base.Wei
@@ -278,8 +276,9 @@ func (r *Reconciler1) getStatementsFromLogs(logs []types.Log) ([]types.Statement
 					stmt.Decimals = base.Value(name.Decimals)
 				}
 			}
-			statements = append(statements, *stmt)
+			return stmt, nil
 		}
 	}
-	return statements, nil
+
+	return nil, nil
 }
