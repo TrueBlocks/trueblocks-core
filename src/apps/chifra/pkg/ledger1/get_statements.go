@@ -17,65 +17,22 @@ import (
 func (r *Reconciler1) GetStatements1(pos *types.AppPosition, trans *types.Transaction) ([]types.Statement, error) {
 	results := make([]types.Statement, 0, 20)
 	if ledger10.AssetOfInterest(r.opts.AssetFilters, base.FAKE_ETH_ADDRESS) {
-		s := types.Statement{
-			AccountedFor:     r.opts.AccountFor,
-			Sender:           trans.From,
-			Recipient:        trans.To,
-			BlockNumber:      trans.BlockNumber,
-			TransactionIndex: trans.TransactionIndex,
-			TransactionHash:  trans.Hash,
-			LogIndex:         0,
-			Timestamp:        trans.Timestamp,
-			Asset:            base.FAKE_ETH_ADDRESS,
-			Symbol:           "WEI",
-			Decimals:         18,
-			SpotPrice:        0.0,
-			PriceSource:      "not-priced",
-		}
-		if r.opts.AsEther {
-			s.Symbol = "ETH"
-		}
-		if trans.To.IsZero() && trans.Receipt != nil && !trans.Receipt.ContractAddress.IsZero() {
-			s.Recipient = trans.Receipt.ContractAddress
-		}
-
+		var err error
 		reconciled := false
+		stmt := r.getStatementFromTransaction(trans)
 		if !r.opts.UseTraces {
-			if s.Sender == r.opts.AccountFor {
-				gasUsed := new(base.Wei)
-				if trans.Receipt != nil {
-					gasUsed.SetUint64(uint64(trans.Receipt.GasUsed))
+			if reconciled, err = r.trialBalance(pos, trans, stmt); err != nil {
+				return nil, err
+			} else {
+				if reconciled && stmt.IsMaterial() {
+					results = append(results, *stmt)
 				}
-				gasPrice := new(base.Wei).SetUint64(uint64(trans.GasPrice))
-				gasOut := new(base.Wei).Mul(gasUsed, gasPrice)
-				s.AmountOut = trans.Value
-				s.GasOut = *gasOut
-			}
-
-			if s.Recipient == r.opts.AccountFor {
-				if s.BlockNumber == 0 {
-					s.PrefundIn = trans.Value
-				} else {
-					if trans.Rewards != nil {
-						s.MinerBaseRewardIn = trans.Rewards.Block
-						s.MinerNephewRewardIn = trans.Rewards.Nephew
-						s.MinerTxFeeIn = trans.Rewards.TxFee
-						s.MinerUncleRewardIn = trans.Rewards.Uncle
-					} else {
-						s.AmountIn = trans.Value
-					}
-				}
-			}
-
-			reconciled, _ = r.trialBalance(pos, trans, &s)
-			if reconciled && s.IsMaterial() {
-				results = append(results, s)
 			}
 		}
 
 		if r.opts.UseTraces || !reconciled {
 			results = make([]types.Statement, 0, 20) /* reset this */
-			if stmt, err := r.getStatementFromTraces(pos, trans, &s); err != nil {
+			if stmt, err := r.getStatementFromTraces(pos, trans, stmt); err != nil {
 				logger.Warn(colors.Yellow+"Statement at ", fmt.Sprintf("%d.%d", trans.BlockNumber, trans.TransactionIndex), " does not reconcile."+colors.Off)
 			} else {
 				if _, err = r.trialBalance(pos, trans, stmt); err != nil {
@@ -141,7 +98,32 @@ func (r *Reconciler1) NewStatement(trans *types.Transaction) *types.Statement {
 }
 
 func (r *Reconciler1) getStatementFromTransaction(trans *types.Transaction) *types.Statement {
-	return nil
+	stmt := r.NewStatement(trans)
+	if stmt.Sender == r.opts.AccountFor {
+		gasUsed := new(base.Wei)
+		if trans.Receipt != nil {
+			gasUsed.SetUint64(uint64(trans.Receipt.GasUsed))
+		}
+		gasPrice := new(base.Wei).SetUint64(uint64(trans.GasPrice))
+		gasOut := new(base.Wei).Mul(gasUsed, gasPrice)
+		stmt.AmountOut = trans.Value
+		stmt.GasOut = *gasOut
+	}
+	if stmt.Recipient == r.opts.AccountFor {
+		if stmt.BlockNumber == 0 {
+			stmt.PrefundIn = trans.Value
+		} else {
+			if trans.Rewards != nil {
+				stmt.MinerBaseRewardIn = trans.Rewards.Block
+				stmt.MinerNephewRewardIn = trans.Rewards.Nephew
+				stmt.MinerTxFeeIn = trans.Rewards.TxFee
+				stmt.MinerUncleRewardIn = trans.Rewards.Uncle
+			} else {
+				stmt.AmountIn = trans.Value
+			}
+		}
+	}
+	return stmt
 }
 
 func (r *Reconciler1) getStatementFromTraces(pos *types.AppPosition, trans *types.Transaction, s *types.Statement) (*types.Statement, error) {
