@@ -14,6 +14,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/names"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/normalize"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/pricing"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/topics"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
@@ -92,20 +93,14 @@ func (r *Reconciler1) GetStatements1(pos *types.AppPosition, trans *types.Transa
 
 		reconciled := false
 		if !r.opts.UseTraces {
-			prevBal, _ := r.opts.Connection.GetBalanceAtToken(base.FAKE_ETH_ADDRESS, r.opts.AccountFor, pos.Prev)
-			if trans.BlockNumber == 0 {
-				prevBal = base.ZeroWei
+			if err := r.opts.Connection.LoadReconcilationBalances(&rpc.BalanceOptions{
+				PrevAppBlk: pos.Prev,
+				CurrBlk:    trans.BlockNumber,
+				Asset:      s.Asset,
+				Holder:     s.AccountedFor,
+			}, &s); err != nil {
+				return nil, err
 			}
-			s.PrevBal = *prevBal
-
-			begBal, _ := r.opts.Connection.GetBalanceAtToken(base.FAKE_ETH_ADDRESS, r.opts.AccountFor, trans.BlockNumber-1)
-			if trans.BlockNumber == 0 {
-				begBal = base.ZeroWei
-			}
-			s.BegBal = *begBal
-
-			endBal, _ := r.opts.Connection.GetBalanceAtToken(base.FAKE_ETH_ADDRESS, r.opts.AccountFor, trans.BlockNumber)
-			s.EndBal = *endBal
 
 			if s.Sender == r.opts.AccountFor {
 				gasUsed := new(base.Wei)
@@ -143,20 +138,14 @@ func (r *Reconciler1) GetStatements1(pos *types.AppPosition, trans *types.Transa
 
 		if r.opts.UseTraces || !reconciled {
 			results = make([]types.Statement, 0, 20) /* reset this */
-			prevBal, _ := r.opts.Connection.GetBalanceAtToken(base.FAKE_ETH_ADDRESS, r.opts.AccountFor, pos.Prev)
-			if trans.BlockNumber == 0 {
-				prevBal = base.ZeroWei
+			if err := r.opts.Connection.LoadReconcilationBalances(&rpc.BalanceOptions{
+				PrevAppBlk: pos.Prev,
+				CurrBlk:    trans.BlockNumber,
+				Asset:      s.Asset,
+				Holder:     s.AccountedFor,
+			}, &s); err != nil {
+				return nil, err
 			}
-			s.PrevBal = *prevBal
-
-			begBal, _ := r.opts.Connection.GetBalanceAtToken(base.FAKE_ETH_ADDRESS, r.opts.AccountFor, trans.BlockNumber-1)
-			if trans.BlockNumber == 0 {
-				begBal = base.ZeroWei
-			}
-			s.BegBal = *begBal
-
-			endBal, _ := r.opts.Connection.GetBalanceAtToken(base.FAKE_ETH_ADDRESS, r.opts.AccountFor, trans.BlockNumber)
-			s.EndBal = *endBal
 
 			if traceStatements, err := r.getStatementsFromTraces(pos, trans, &s); err != nil {
 				if !utils.IsFuzzing() {
@@ -174,30 +163,14 @@ func (r *Reconciler1) GetStatements1(pos *types.AppPosition, trans *types.Transa
 		} else {
 			receiptStatements := make([]types.Statement, 0, len(statements))
 			for _, s := range statements {
-				prevBal, err := r.opts.Connection.GetBalanceAtToken(s.Asset, s.AccountedFor, pos.Prev)
-				if err != nil || prevBal == nil {
-					// TODO: silent fail?
-					continue
+				if err := r.opts.Connection.LoadReconcilationBalances(&rpc.BalanceOptions{
+					PrevAppBlk: pos.Prev,
+					CurrBlk:    trans.BlockNumber,
+					Asset:      s.Asset,
+					Holder:     s.AccountedFor,
+				}, &s); err != nil {
+					return nil, err
 				}
-				if trans.BlockNumber == 0 {
-					prevBal = base.ZeroWei
-				}
-				s.PrevBal = *prevBal
-
-				begBal, err := r.opts.Connection.GetBalanceAtToken(s.Asset, s.AccountedFor, trans.BlockNumber-1)
-				if err != nil || begBal == nil {
-					// TODO: silent fail?
-					continue
-				}
-				if trans.BlockNumber == 0 {
-					begBal = base.ZeroWei
-				}
-				s.BegBal = *begBal
-				endBal, err := r.opts.Connection.GetBalanceAtToken(s.Asset, s.AccountedFor, trans.BlockNumber)
-				if err != nil || endBal == nil {
-					continue
-				}
-				s.EndBal = *endBal
 
 				id := fmt.Sprintf(" %d.%d.%d", s.BlockNumber, s.TransactionIndex, s.LogIndex)
 				reconciled := r.trialBalance(pos, trans, &s)

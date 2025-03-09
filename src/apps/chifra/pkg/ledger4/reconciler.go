@@ -106,9 +106,14 @@ func getConnection() *rpc.Connection {
 func (r *Reconciler4) createTransfers(tx *types.Transaction) []ledger10.AssetTransfer {
 	r1 := ledger1.NewReconciler(r.opts)
 	pos := &types.AppPosition{}
-	transfers, err := r1.GetStatements1(pos, tx)
+	xfers, err := r1.GetTransfers1(pos, tx)
 	if err != nil {
 		return []ledger10.AssetTransfer{}
+	}
+	transfers := make([]ledger10.AssetTransfer, 0, len(xfers))
+	for _, xfer := range xfers {
+		transfer := ledger10.NewAssetTransfer(xfer)
+		transfers = append(transfers, transfer)
 	}
 	return transfers
 }

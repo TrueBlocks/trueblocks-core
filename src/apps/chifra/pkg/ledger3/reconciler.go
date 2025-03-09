@@ -160,10 +160,10 @@ func (r *Reconciler3) ProcessStream(apps []types.Appearance, modelChan chan<- ty
 		for _, app := range apps {
 			bn := base.Blknum(app.BlockNumber)
 			if bn != prevBlock && prevBlock != 0 {
-				postingStream <- ledger10.AssetTransfer{
+				postingStream <- ledger10.NewAssetTransfer(types.Transfer{
 					BlockNumber: prevBlock,
 					Asset:       base.EndOfBlockSentinel,
-				}
+				})
 			}
 			for p := range r.getTransferChannel(&app) {
 				postingStream <- p
@@ -171,14 +171,14 @@ func (r *Reconciler3) ProcessStream(apps []types.Appearance, modelChan chan<- ty
 			prevBlock = bn
 		}
 		if prevBlock != 0 {
-			postingStream <- ledger10.AssetTransfer{
+			postingStream <- ledger10.NewAssetTransfer(types.Transfer{
 				BlockNumber: prevBlock,
 				Asset:       base.EndOfBlockSentinel,
-			}
+			})
 		}
-		postingStream <- ledger10.AssetTransfer{
+		postingStream <- ledger10.NewAssetTransfer(types.Transfer{
 			Asset: base.EndOfStreamSentinel,
-		}
+		})
 	}()
 
 	var postings []ledger10.AssetTransfer
@@ -220,13 +220,13 @@ func (r *Reconciler3) InitData() {
 				continue
 			}
 			amt := base.NewWeiStr(record[5])
-			p := ledger10.AssetTransfer{
+			p := ledger10.NewAssetTransfer(types.Transfer{
 				BlockNumber:      base.Blknum(base.MustParseUint64(record[0])),
 				TransactionIndex: base.Txnum(base.MustParseUint64(record[1])),
 				LogIndex:         base.Lognum(base.MustParseUint64(record[2])),
 				Asset:            base.HexToAddress(record[3]),
 				Holder:           base.HexToAddress(record[4]),
-			}
+			})
 			if amt.Cmp(base.ZeroWei) > 0 {
 				p.AmountIn = *amt
 			} else if amt.Cmp(base.ZeroWei) < 0 {
