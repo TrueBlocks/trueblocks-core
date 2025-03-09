@@ -68,7 +68,7 @@ type assetHolderKey struct {
 func (r *Reconciler1) GetStatements1(pos *types.AppPosition, trans *types.Transaction) ([]types.Statement, error) {
 	results := make([]types.Statement, 0, 20)
 	if ledger10.AssetOfInterest(r.opts.AssetFilters, base.FAKE_ETH_ADDRESS) {
-		at := ledger10.AssetTransfer{
+		s := types.Statement{
 			AccountedFor:     r.opts.AccountFor,
 			Sender:           trans.From,
 			Recipient:        trans.To,
@@ -84,10 +84,10 @@ func (r *Reconciler1) GetStatements1(pos *types.AppPosition, trans *types.Transa
 			PriceSource:      "not-priced",
 		}
 		if r.opts.AsEther {
-			at.Symbol = "ETH"
+			s.Symbol = "ETH"
 		}
 		if trans.To.IsZero() && trans.Receipt != nil && !trans.Receipt.ContractAddress.IsZero() {
-			at.Recipient = trans.Receipt.ContractAddress
+			s.Recipient = trans.Receipt.ContractAddress
 		}
 
 		reconciled := false
@@ -96,47 +96,47 @@ func (r *Reconciler1) GetStatements1(pos *types.AppPosition, trans *types.Transa
 			if trans.BlockNumber == 0 {
 				prevBal = base.ZeroWei
 			}
-			at.PrevBal = *prevBal
+			s.PrevBal = *prevBal
 
 			begBal, _ := r.opts.Connection.GetBalanceAtToken(base.FAKE_ETH_ADDRESS, r.opts.AccountFor, trans.BlockNumber-1)
 			if trans.BlockNumber == 0 {
 				begBal = base.ZeroWei
 			}
-			at.BegBal = *begBal
+			s.BegBal = *begBal
 
 			endBal, _ := r.opts.Connection.GetBalanceAtToken(base.FAKE_ETH_ADDRESS, r.opts.AccountFor, trans.BlockNumber)
-			at.EndBal = *endBal
+			s.EndBal = *endBal
 
-			if at.Sender == r.opts.AccountFor {
+			if s.Sender == r.opts.AccountFor {
 				gasUsed := new(base.Wei)
 				if trans.Receipt != nil {
 					gasUsed.SetUint64(uint64(trans.Receipt.GasUsed))
 				}
 				gasPrice := new(base.Wei).SetUint64(uint64(trans.GasPrice))
 				gasOut := new(base.Wei).Mul(gasUsed, gasPrice)
-				at.AmountOut = trans.Value
-				at.GasOut = *gasOut
+				s.AmountOut = trans.Value
+				s.GasOut = *gasOut
 			}
 
-			if at.Recipient == r.opts.AccountFor {
-				if at.BlockNumber == 0 {
-					at.PrefundIn = trans.Value
+			if s.Recipient == r.opts.AccountFor {
+				if s.BlockNumber == 0 {
+					s.PrefundIn = trans.Value
 				} else {
 					if trans.Rewards != nil {
-						at.MinerBaseRewardIn = trans.Rewards.Block
-						at.MinerNephewRewardIn = trans.Rewards.Nephew
-						at.MinerTxFeeIn = trans.Rewards.TxFee
-						at.MinerUncleRewardIn = trans.Rewards.Uncle
+						s.MinerBaseRewardIn = trans.Rewards.Block
+						s.MinerNephewRewardIn = trans.Rewards.Nephew
+						s.MinerTxFeeIn = trans.Rewards.TxFee
+						s.MinerUncleRewardIn = trans.Rewards.Uncle
 					} else {
-						at.AmountIn = trans.Value
+						s.AmountIn = trans.Value
 					}
 				}
 			}
 
 			if !utils.IsFuzzing() {
-				reconciled = r.trialBalance(pos, trans, &at)
-				if reconciled && at.IsMaterial() {
-					results = append(results, at)
+				reconciled = r.trialBalance(pos, trans, &s)
+				if reconciled && s.IsMaterial() {
+					results = append(results, s)
 				}
 			}
 		}
@@ -147,18 +147,18 @@ func (r *Reconciler1) GetStatements1(pos *types.AppPosition, trans *types.Transa
 			if trans.BlockNumber == 0 {
 				prevBal = base.ZeroWei
 			}
-			at.PrevBal = *prevBal
+			s.PrevBal = *prevBal
 
 			begBal, _ := r.opts.Connection.GetBalanceAtToken(base.FAKE_ETH_ADDRESS, r.opts.AccountFor, trans.BlockNumber-1)
 			if trans.BlockNumber == 0 {
 				begBal = base.ZeroWei
 			}
-			at.BegBal = *begBal
+			s.BegBal = *begBal
 
 			endBal, _ := r.opts.Connection.GetBalanceAtToken(base.FAKE_ETH_ADDRESS, r.opts.AccountFor, trans.BlockNumber)
-			at.EndBal = *endBal
+			s.EndBal = *endBal
 
-			if traceStatements, err := r.getStatementsFromTraces(pos, trans, &at); err != nil {
+			if traceStatements, err := r.getStatementsFromTraces(pos, trans, &s); err != nil {
 				if !utils.IsFuzzing() {
 					logger.Warn(colors.Yellow+"Statement at ", fmt.Sprintf("%d.%d", trans.BlockNumber, trans.TransactionIndex), " does not reconcile."+colors.Off)
 				}

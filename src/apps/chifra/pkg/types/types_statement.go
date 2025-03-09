@@ -27,7 +27,6 @@ type Statement struct {
 	AmountIn            base.Wei       `json:"amountIn,omitempty"`
 	AmountOut           base.Wei       `json:"amountOut,omitempty"`
 	Asset               base.Address   `json:"asset"`
-	Symbol              string         `json:"symbol"`
 	BegBal              base.Wei       `json:"begBal"`
 	BlockNumber         base.Blknum    `json:"blockNumber"`
 	CorrectingIn        base.Wei       `json:"correctingIn,omitempty"`
@@ -52,6 +51,7 @@ type Statement struct {
 	SelfDestructOut     base.Wei       `json:"selfDestructOut,omitempty"`
 	Sender              base.Address   `json:"sender"`
 	SpotPrice           base.Float     `json:"spotPrice"`
+	Symbol              string         `json:"symbol"`
 	Timestamp           base.Timestamp `json:"timestamp"`
 	TransactionHash     base.Hash      `json:"transactionHash"`
 	TransactionIndex    base.Txnum     `json:"transactionIndex"`
@@ -76,30 +76,6 @@ func (s *Statement) Model(chain, format string, verbose bool, extraOpts map[stri
 	var order = []string{}
 
 	// EXISTING_CODE
-	if extraOpts != nil && extraOpts["accounting"] == true {
-		_, _, _, _ = chain, format, verbose, extraOpts
-		check1, check2, reconciles, byCheckpoint := s.Reconciled2()
-		calc := s.EndBalCalc()
-		fmt.Printf("%s\t%s\t%d\t%d\t%d\t%d\t%d\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%t\t%t\n",
-			s.Asset.Hex(),
-			s.Holder.Hex(),
-			s.BlockNumber,
-			s.TransactionIndex,
-			s.LogIndex,
-			s.StatementId,
-			s.CorrectionId,
-			s.CorrectingReason,
-			s.BegBal.Text(10),
-			s.AmountNet().Text(10),
-			calc.Text(10),
-			s.EndBal.Text(10),
-			check1.Text(10),
-			check2.Text(10),
-			reconciles,
-			byCheckpoint,
-		)
-		return Model{}
-	}
 	model = map[string]any{
 		"blockNumber":         s.BlockNumber,
 		"transactionIndex":    s.TransactionIndex,
@@ -246,11 +222,6 @@ func (s *Statement) MarshalCache(writer io.Writer) (err error) {
 		return err
 	}
 
-	// Symbol
-	if err = base.WriteValue(writer, s.Symbol); err != nil {
-		return err
-	}
-
 	// BegBal
 	if err = base.WriteValue(writer, &s.BegBal); err != nil {
 		return err
@@ -371,6 +342,11 @@ func (s *Statement) MarshalCache(writer io.Writer) (err error) {
 		return err
 	}
 
+	// Symbol
+	if err = base.WriteValue(writer, s.Symbol); err != nil {
+		return err
+	}
+
 	// Timestamp
 	if err = base.WriteValue(writer, s.Timestamp); err != nil {
 		return err
@@ -411,11 +387,6 @@ func (s *Statement) UnmarshalCache(fileVersion uint64, reader io.Reader) (err er
 
 	// Asset
 	if err = base.ReadValue(reader, &s.Asset, fileVersion); err != nil {
-		return err
-	}
-
-	// Symbol
-	if err = base.ReadValue(reader, &s.Symbol, fileVersion); err != nil {
 		return err
 	}
 
@@ -536,6 +507,11 @@ func (s *Statement) UnmarshalCache(fileVersion uint64, reader io.Reader) (err er
 
 	// SpotPrice
 	if err = base.ReadValue(reader, &s.SpotPrice, fileVersion); err != nil {
+		return err
+	}
+
+	// Symbol
+	if err = base.ReadValue(reader, &s.Symbol, fileVersion); err != nil {
 		return err
 	}
 
@@ -770,23 +746,4 @@ func (s *Statement) IsNullTransfer(tx *Transaction) bool {
 	return ret
 }
 
-// ---------------------------------------------------------
-func (p Statement) Reconciled2() (base.Wei, base.Wei, bool, bool) {
-	calc := p.EndBalCalc()
-	checkVal := *new(base.Wei).Add(&p.BegBal, p.AmountNet())
-	tentativeDiff := *new(base.Wei).Sub(&checkVal, calc)
-	checkpointDiff := *new(base.Wei).Sub(&checkVal, &p.EndBal)
-
-	checkpointEqual := checkVal.Equal(&p.EndBal)
-	if checkpointEqual {
-		return tentativeDiff, checkpointDiff, true, true
-	}
-
-	tentativeEqual := checkVal.Equal(calc)
-	return tentativeDiff, checkpointDiff, tentativeEqual, false
-}
-
-// ---------------------------------------------------------
-func PrintHeader() {
-	fmt.Println("asset\tholder\tblockNumber\ttransactionIndex\tlogIndex\trowIndex\tcorrectionIndex\tcorrectionReason\tbegBal\tamountNet\tendBalCalc\tendBal\tcheck1\tcheck2\treconciled\tcheckpoint")
-}
+// EXISTING_CODE

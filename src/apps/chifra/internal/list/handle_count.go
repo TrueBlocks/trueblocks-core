@@ -9,7 +9,6 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/filter"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/monitor"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
@@ -24,7 +23,7 @@ func (opts *ListOptions) HandleCount(rCtx *output.RenderCtx, monitorArray []moni
 	}
 
 	testMode := opts.Globals.TestMode
-	filter := filter.NewFilter(
+	filter := types.NewFilter(
 		opts.Reversed,
 		false,
 		[]string{},

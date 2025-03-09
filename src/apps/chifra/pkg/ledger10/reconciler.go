@@ -1,8 +1,9 @@
 package ledger10
 
 import (
+	"fmt"
+
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/filter"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
@@ -17,7 +18,7 @@ type ReconcilerOptions struct {
 	UseTraces    bool
 	Reversed     bool
 	AssetFilters []base.Address
-	AppFilters   *filter.AppearanceFilter
+	AppFilters   *types.AppearanceFilter
 }
 
 type AssetTransfer = types.Statement
@@ -34,4 +35,52 @@ func AssetOfInterest(filters []base.Address, needle base.Address) bool {
 	}
 
 	return false
+}
+
+/*
+	if extraOpts != nil && extraOpts["accounting"] == true {
+		_, _, _, _ = chain, format, verbose, extraOpts
+		check1, check2, reconciles, byCheckpoint := s.Reconciled2()
+		calc := s.EndBalCalc()
+		fmt.Printf("%s\t%s\t%d\t%d\t%d\t%d\t%d\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%t\t%t\n",
+			s.Asset.Hex(),
+			s.Holder.Hex(),
+			s.BlockNumber,
+			s.TransactionIndex,
+			s.LogIndex,
+			s.StatementId,
+			s.CorrectionId,
+			s.CorrectingReason,
+			s.BegBal.Text(10),
+			s.AmountNet().Text(10),
+			calc.Text(10),
+			s.EndBal.Text(10),
+			check1.Text(10),
+			check2.Text(10),
+			reconciles,
+			byCheckpoint,
+		)
+		return Model{}
+	}
+
+// ---------------------------------------------------------
+func (p *AssetTransfer) Reconciled2() (base.Wei, base.Wei, bool, bool) {
+	calc := p.EndBalCalc()
+	checkVal := *new(base.Wei).Add(&p.BegBal, p.AmountNet())
+	tentativeDiff := *new(base.Wei).Sub(&checkVal, calc)
+	checkpointDiff := *new(base.Wei).Sub(&checkVal, &p.EndBal)
+
+	checkpointEqual := checkVal.Equal(&p.EndBal)
+	if checkpointEqual {
+		return tentativeDiff, checkpointDiff, true, true
+	}
+
+	tentativeEqual := checkVal.Equal(calc)
+	return tentativeDiff, checkpointDiff, tentativeEqual, false
+}
+*/
+
+// ---------------------------------------------------------
+func PrintHeader() {
+	fmt.Println("asset\tholder\tblockNumber\ttransactionIndex\tlogIndex\trowIndex\tcorrectionIndex\tcorrectionReason\tbegBal\tamountNet\tendBalCalc\tendBal\tcheck1\tcheck2\treconciled\tcheckpoint")
 }

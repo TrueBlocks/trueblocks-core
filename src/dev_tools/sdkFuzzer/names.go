@@ -15,7 +15,6 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	sdk "github.com/TrueBlocks/trueblocks-sdk/v4"
 )
 
@@ -99,7 +98,7 @@ func TestNames(which, value, fn string, opts *sdk.NamesOptions) {
 		if names, _, err := opts.Names(); err != nil {
 			ReportError(fn, opts, err)
 		} else {
-			if err := SaveToFile[types.Name](fn, names); err != nil {
+			if err := SaveToFile(fn, names); err != nil {
 				ReportError2(fn, err)
 			} else {
 				ReportOkay(fn)
@@ -109,7 +108,7 @@ func TestNames(which, value, fn string, opts *sdk.NamesOptions) {
 		if addr, _, err := opts.NamesAddr(); err != nil {
 			ReportError(fn, opts, err)
 		} else {
-			if err := SaveToFile[types.Name](fn, addr); err != nil {
+			if err := SaveToFile(fn, addr); err != nil {
 				ReportError2(fn, err)
 			} else {
 				ReportOkay(fn)
@@ -119,7 +118,7 @@ func TestNames(which, value, fn string, opts *sdk.NamesOptions) {
 		if tags, _, err := opts.NamesTags(); err != nil {
 			ReportError(fn, opts, err)
 		} else {
-			if err := SaveToFile[types.Name](fn, tags); err != nil {
+			if err := SaveToFile(fn, tags); err != nil {
 				ReportError2(fn, err)
 			} else {
 				ReportOkay(fn)
@@ -129,7 +128,7 @@ func TestNames(which, value, fn string, opts *sdk.NamesOptions) {
 		if clean, _, err := opts.NamesClean(); err != nil {
 			ReportError(fn, opts, err)
 		} else {
-			if err := SaveToFile[types.Message](fn, clean); err != nil {
+			if err := SaveToFile(fn, clean); err != nil {
 				ReportError2(fn, err)
 			} else {
 				ReportOkay(fn)
@@ -139,7 +138,7 @@ func TestNames(which, value, fn string, opts *sdk.NamesOptions) {
 		if autoname, _, err := opts.NamesAutoname(base.HexToAddress(value)); err != nil {
 			ReportError(fn, opts, err)
 		} else {
-			if err := SaveToFile[types.Message](fn, autoname); err != nil {
+			if err := SaveToFile(fn, autoname); err != nil {
 				ReportError2(fn, err)
 			} else {
 				ReportOkay(fn)
@@ -149,7 +148,7 @@ func TestNames(which, value, fn string, opts *sdk.NamesOptions) {
 		if create, _, err := opts.NamesCreate(); err != nil {
 			ReportError(fn, opts, err)
 		} else {
-			if err := SaveToFile[types.Name](fn, create); err != nil {
+			if err := SaveToFile(fn, create); err != nil {
 				ReportError2(fn, err)
 			} else {
 				ReportOkay(fn)
@@ -159,7 +158,7 @@ func TestNames(which, value, fn string, opts *sdk.NamesOptions) {
 		if update, _, err := opts.NamesUpdate(); err != nil {
 			ReportError(fn, opts, err)
 		} else {
-			if err := SaveToFile[types.Name](fn, update); err != nil {
+			if err := SaveToFile(fn, update); err != nil {
 				ReportError2(fn, err)
 			} else {
 				ReportOkay(fn)
@@ -169,7 +168,7 @@ func TestNames(which, value, fn string, opts *sdk.NamesOptions) {
 		if delete, _, err := opts.NamesDelete(); err != nil {
 			ReportError(fn, opts, err)
 		} else {
-			if err := SaveToFile[types.Name](fn, delete); err != nil {
+			if err := SaveToFile(fn, delete); err != nil {
 				ReportError2(fn, err)
 			} else {
 				ReportOkay(fn)
@@ -179,7 +178,7 @@ func TestNames(which, value, fn string, opts *sdk.NamesOptions) {
 		if undelete, _, err := opts.NamesUndelete(); err != nil {
 			ReportError(fn, opts, err)
 		} else {
-			if err := SaveToFile[types.Name](fn, undelete); err != nil {
+			if err := SaveToFile(fn, undelete); err != nil {
 				ReportError2(fn, err)
 			} else {
 				ReportOkay(fn)
@@ -189,7 +188,7 @@ func TestNames(which, value, fn string, opts *sdk.NamesOptions) {
 		if remove, _, err := opts.NamesRemove(); err != nil {
 			ReportError(fn, opts, err)
 		} else {
-			if err := SaveToFile[types.Name](fn, remove); err != nil {
+			if err := SaveToFile(fn, remove); err != nil {
 				ReportError2(fn, err)
 			} else {
 				ReportOkay(fn)

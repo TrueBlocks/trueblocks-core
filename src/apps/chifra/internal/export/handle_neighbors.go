@@ -10,7 +10,6 @@ import (
 	"sort"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/filter"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/monitor"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
@@ -21,7 +20,7 @@ import (
 func (opts *ExportOptions) HandleNeighbors(rCtx *output.RenderCtx, monitorArray []monitor.Monitor) error {
 	testMode := opts.Globals.TestMode
 	nErrors := 0
-	filter := filter.NewFilter(
+	filter := types.NewFilter(
 		opts.Reversed,
 		opts.Reverted,
 		opts.Fourbytes,

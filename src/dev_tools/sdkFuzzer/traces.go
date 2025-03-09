@@ -14,7 +14,6 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	sdk "github.com/TrueBlocks/trueblocks-sdk/v4"
 )
 
@@ -74,7 +73,7 @@ func TestTraces(which, value, fn string, opts *sdk.TracesOptions) {
 		if traces, _, err := opts.Traces(); err != nil {
 			ReportError(fn, opts, err)
 		} else {
-			if err := SaveToFile[types.Trace](fn, traces); err != nil {
+			if err := SaveToFile(fn, traces); err != nil {
 				ReportError2(fn, err)
 			} else {
 				ReportOkay(fn)
@@ -84,7 +83,7 @@ func TestTraces(which, value, fn string, opts *sdk.TracesOptions) {
 		if count, _, err := opts.TracesCount(); err != nil {
 			ReportError(fn, opts, err)
 		} else {
-			if err := SaveToFile[types.TraceCount](fn, count); err != nil {
+			if err := SaveToFile(fn, count); err != nil {
 				ReportError2(fn, err)
 			} else {
 				ReportOkay(fn)
@@ -103,7 +102,7 @@ func TestTracesCount(fn string, opts *sdk.TracesOptions) {
 	if tracesCounts, _, err := opts.TracesCount(); err != nil {
 		ReportError(fn, opts, err)
 	} else {
-		if err := SaveToFile[types.TraceCount](fn, tracesCounts); err != nil {
+		if err := SaveToFile(fn, tracesCounts); err != nil {
 			ReportError2(fn, err)
 		} else {
 			ReportOkay(fn)

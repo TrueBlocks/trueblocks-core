@@ -1,16 +1,23 @@
 {
-	"folders": [
-		{
-			"path": "."
-		},
-		{
-			"path": "sdk"
-		},
-		{
-			"path": "examples"
-		},
-		{
-			"path": "khedra"
-		}
-	]
+  "folders": [
+    {
+      "path": "."
+    },
+    {
+      "path": "sdk"
+    },
+    {
+      "path": "examples"
+    },
+    {
+      "path": "khedra"
+    }
+  ],
+  "settings": {
+    "gopls": {
+      "analyses": {
+        "infertypeargs": false
+      }
+    }
+  }
 }

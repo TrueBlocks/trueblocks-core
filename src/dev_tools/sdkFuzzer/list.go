@@ -15,7 +15,6 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	sdk "github.com/TrueBlocks/trueblocks-sdk/v4"
 )
 
@@ -111,7 +110,7 @@ func TestList(which, value, fn string, opts *sdk.ListOptions) {
 		if list, _, err := opts.List(); err != nil {
 			ReportError(fn, opts, err)
 		} else {
-			if err := SaveToFile[types.Appearance](fn, list); err != nil {
+			if err := SaveToFile(fn, list); err != nil {
 				ReportError2(fn, err)
 			} else {
 				ReportOkay(fn)
@@ -121,7 +120,7 @@ func TestList(which, value, fn string, opts *sdk.ListOptions) {
 		if count, _, err := opts.ListCount(); err != nil {
 			ReportError(fn, opts, err)
 		} else {
-			if err := SaveToFile[types.Monitor](fn, count); err != nil {
+			if err := SaveToFile(fn, count); err != nil {
 				ReportError2(fn, err)
 			} else {
 				ReportOkay(fn)
@@ -131,7 +130,7 @@ func TestList(which, value, fn string, opts *sdk.ListOptions) {
 		if bounds, _, err := opts.ListBounds(); err != nil {
 			ReportError(fn, opts, err)
 		} else {
-			if err := SaveToFile[types.Bounds](fn, bounds); err != nil {
+			if err := SaveToFile(fn, bounds); err != nil {
 				ReportError2(fn, err)
 			} else {
 				ReportOkay(fn)

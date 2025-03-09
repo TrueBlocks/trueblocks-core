@@ -225,8 +225,6 @@ func (r *Reconciler3) InitData() {
 				TransactionIndex: base.Txnum(base.MustParseUint64(record[1])),
 				LogIndex:         base.Lognum(base.MustParseUint64(record[2])),
 				Asset:            base.HexToAddress(record[3]),
-				AmountIn:         *base.ZeroWei,
-				AmountOut:        *base.ZeroWei,
 				Holder:           base.HexToAddress(record[4]),
 			}
 			if amt.Cmp(base.ZeroWei) > 0 {

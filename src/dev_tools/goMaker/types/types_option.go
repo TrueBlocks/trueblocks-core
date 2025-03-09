@@ -781,7 +781,7 @@ var fuzzerSwitch = `	case "{{.Tool}}":
 if {{.Tool}}, _, err := opts.{{firstUpper .Route}}{{.GoName}}({{.ToolParameters true}}); err != nil {
 	ReportError(fn, opts, err)
 } else {
-	if err := SaveToFile[{{.SdkCoreType}}](fn, {{.Tool}}); err != nil {
+	if err := SaveToFile(fn, {{.Tool}}); err != nil {
 		ReportError2(fn, err)
 	} else {
 		ReportOkay(fn)
