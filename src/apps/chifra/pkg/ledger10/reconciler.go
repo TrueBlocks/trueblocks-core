@@ -14,7 +14,6 @@ type ReconcilerOptions struct {
 	FirstBlock   base.Blknum
 	LastBlock    base.Blknum
 	AsEther      bool
-	TestMode     bool
 	UseTraces    bool
 	Reversed     bool
 	AssetFilters []base.Address

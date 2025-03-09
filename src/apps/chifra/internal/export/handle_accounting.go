@@ -21,7 +21,6 @@ func (opts *ExportOptions) HandleAccounting(rCtx *output.RenderCtx, monitorArray
 	opts.Articulate = true
 
 	abiCache := articulate.NewAbiCache(opts.Conn, opts.Articulate)
-	testMode := opts.Globals.TestMode
 	filter := types.NewFilter(
 		opts.Reversed,
 		opts.Reverted,
@@ -75,7 +74,6 @@ func (opts *ExportOptions) HandleAccounting(rCtx *output.RenderCtx, monitorArray
 					FirstBlock:   opts.FirstBlock,
 					LastBlock:    opts.LastBlock,
 					AsEther:      opts.Globals.Ether,
-					TestMode:     testMode,
 					UseTraces:    opts.Traces,
 					Reversed:     opts.Reversed,
 					AssetFilters: assetFilters,

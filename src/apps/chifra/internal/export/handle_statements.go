@@ -20,7 +20,6 @@ import (
 )
 
 func (opts *ExportOptions) HandleStatements(rCtx *output.RenderCtx, monitorArray []monitor.Monitor) error {
-	testMode := opts.Globals.TestMode
 	filter := types.NewFilter(
 		opts.Reversed,
 		opts.Reverted,
@@ -123,7 +122,6 @@ func (opts *ExportOptions) HandleStatements(rCtx *output.RenderCtx, monitorArray
 							FirstBlock:   opts.FirstBlock,
 							LastBlock:    opts.LastBlock,
 							AsEther:      opts.Globals.Ether,
-							TestMode:     testMode,
 							UseTraces:    opts.Traces,
 							Reversed:     opts.Reversed,
 							AssetFilters: assetFilters,

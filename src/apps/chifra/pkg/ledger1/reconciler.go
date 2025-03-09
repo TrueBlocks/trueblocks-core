@@ -17,7 +17,6 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/topics"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
 type Reconciler1 struct {
@@ -93,15 +92,6 @@ func (r *Reconciler1) GetStatements1(pos *types.AppPosition, trans *types.Transa
 
 		reconciled := false
 		if !r.opts.UseTraces {
-			var err error
-			if s.PrevBal, s.BegBal, s.EndBal, err = r.opts.Connection.GetReconBalances(&rpc.BalanceOptions{
-				PrevAppBlk: pos.Prev,
-				CurrBlk:    trans.BlockNumber,
-				Asset:      s.Asset,
-				Holder:     s.AccountedFor,
-			}); err != nil {
-				return nil, err
-			}
 			if s.Sender == r.opts.AccountFor {
 				gasUsed := new(base.Wei)
 				if trans.Receipt != nil {
@@ -128,16 +118,6 @@ func (r *Reconciler1) GetStatements1(pos *types.AppPosition, trans *types.Transa
 				}
 			}
 
-			if !utils.IsFuzzing() {
-				reconciled = r.trialBalance(pos, trans, &s)
-				if reconciled && s.IsMaterial() {
-					results = append(results, s)
-				}
-			}
-		}
-
-		if r.opts.UseTraces || !reconciled {
-			results = make([]types.Statement, 0, 20) /* reset this */
 			var err error
 			if s.PrevBal, s.BegBal, s.EndBal, err = r.opts.Connection.GetReconBalances(&rpc.BalanceOptions{
 				PrevAppBlk: pos.Prev,
@@ -147,13 +127,28 @@ func (r *Reconciler1) GetStatements1(pos *types.AppPosition, trans *types.Transa
 			}); err != nil {
 				return nil, err
 			}
+			reconciled = r.trialBalance(pos, trans, &s)
+			if reconciled && s.IsMaterial() {
+				results = append(results, s)
+			}
+		}
 
-			if traceStatements, err := r.getStatementsFromTraces(pos, trans, &s); err != nil {
-				if !utils.IsFuzzing() {
-					logger.Warn(colors.Yellow+"Statement at ", fmt.Sprintf("%d.%d", trans.BlockNumber, trans.TransactionIndex), " does not reconcile."+colors.Off)
-				}
+		if r.opts.UseTraces || !reconciled {
+			results = make([]types.Statement, 0, 20) /* reset this */
+			if s, err := r.getStatementFromTraces(pos, trans, &s); err != nil {
+				logger.Warn(colors.Yellow+"Statement at ", fmt.Sprintf("%d.%d", trans.BlockNumber, trans.TransactionIndex), " does not reconcile."+colors.Off)
 			} else {
-				results = append(results, traceStatements...)
+				var err error
+				if s.PrevBal, s.BegBal, s.EndBal, err = r.opts.Connection.GetReconBalances(&rpc.BalanceOptions{
+					PrevAppBlk: pos.Prev,
+					CurrBlk:    trans.BlockNumber,
+					Asset:      s.Asset,
+					Holder:     s.AccountedFor,
+				}); err != nil {
+					return nil, err
+				}
+				_ = r.trialBalance(pos, trans, s)
+				results = append(results, *s)
 			}
 		}
 	}
@@ -173,13 +168,14 @@ func (r *Reconciler1) GetStatements1(pos *types.AppPosition, trans *types.Transa
 				}); err != nil {
 					return nil, err
 				}
-
-				id := fmt.Sprintf(" %d.%d.%d", s.BlockNumber, s.TransactionIndex, s.LogIndex)
 				reconciled := r.trialBalance(pos, trans, &s)
+
 				if reconciled {
+					id := fmt.Sprintf(" %d.%d.%d", s.BlockNumber, s.TransactionIndex, s.LogIndex)
 					logger.Progress(true, colors.Green+"Transaction", id, "reconciled       "+colors.Off)
 				} else {
 					if os.Getenv("TEST_MODE") != "true" {
+						id := fmt.Sprintf(" %d.%d.%d", s.BlockNumber, s.TransactionIndex, s.LogIndex)
 						logger.Warn("Log statement at ", id, " does not reconcile.")
 					}
 				}
@@ -196,8 +192,7 @@ func (r *Reconciler1) GetStatements1(pos *types.AppPosition, trans *types.Transa
 	return results, nil
 }
 
-func (r *Reconciler1) getStatementsFromTraces(pos *types.AppPosition, trans *types.Transaction, s *types.Statement) ([]types.Statement, error) {
-	statements := make([]types.Statement, 0, 20)
+func (r *Reconciler1) getStatementFromTraces(pos *types.AppPosition, trans *types.Transaction, s *types.Statement) (*types.Statement, error) {
 
 	ret := *s
 	// clear all the internal accounting values. Keeps AmountIn, AmountOut and GasOut because
@@ -220,7 +215,7 @@ func (r *Reconciler1) getStatementsFromTraces(pos *types.AppPosition, trans *typ
 	ret.SelfDestructOut.SetUint64(0)
 
 	if traces, err := r.opts.Connection.GetTracesByTransactionHash(trans.Hash.Hex(), trans); err != nil {
-		return statements, err
+		return nil, err
 
 	} else {
 		// These values accumulate...so we use += instead of =
@@ -293,22 +288,7 @@ func (r *Reconciler1) getStatementsFromTraces(pos *types.AppPosition, trans *typ
 		}
 	}
 
-	if utils.IsFuzzing() {
-		statements = append(statements, ret)
-		return statements, nil
-	}
-
-	reconciled := r.trialBalance(pos, trans, &ret)
-	if !reconciled {
-		statements = append(statements, ret)
-		return statements, nil
-	}
-
-	if ret.IsMaterial() {
-		statements = append(statements, ret)
-	}
-
-	return statements, nil
+	return &ret, nil
 }
 
 // GetTransfers1 returns a statement from a given transaction
@@ -355,7 +335,7 @@ func (r *Reconciler1) getStatementsFromLogs(logs []types.Log) ([]types.Statement
 				sender := base.HexToAddress(normalized.Topics[1].Hex())
 				recipient := base.HexToAddress(normalized.Topics[2].Hex())
 				isSender, isRecipient := r.opts.AccountFor == sender, r.opts.AccountFor == recipient
-				if utils.IsFuzzing() || (!isSender && !isRecipient) {
+				if !isSender && !isRecipient {
 					continue
 				}
 
@@ -423,9 +403,7 @@ func (r *Reconciler1) trialBalance(pos *types.AppPosition, trans *types.Transact
 
 	if s.IsMaterial() {
 		s.SpotPrice, s.PriceSource, _ = pricing.PriceUsd(r.opts.Connection, s)
-		if r.opts.TestMode {
-			s.DebugStatement(pos)
-		}
+		s.DebugStatement(pos)
 	}
 
 	return s.Reconciled()
