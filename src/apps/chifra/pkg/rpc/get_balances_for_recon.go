@@ -2,7 +2,6 @@ package rpc
 
 import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
 type BalanceOptions struct {
@@ -12,16 +11,28 @@ type BalanceOptions struct {
 	Holder     base.Address // the holder whose balance we need
 }
 
-func (c *Connection) LoadReconcilationBalances(opts *BalanceOptions, s *types.Statement) error {
-	prevBal, _ := c.GetBalanceAtToken(opts.Asset, opts.Holder, opts.PrevAppBlk)
-	begBal, _ := c.GetBalanceAtToken(opts.Asset, opts.Holder, opts.CurrBlk-1)
-	endBal, _ := c.GetBalanceAtToken(opts.Asset, opts.Holder, opts.CurrBlk)
+func (c *Connection) GetReconBalances(opts *BalanceOptions) (base.Wei, base.Wei, base.Wei, error) {
+	zero := *base.ZeroWei
+
+	prevBal, err := c.GetBalanceAtToken(opts.Asset, opts.Holder, opts.PrevAppBlk)
+	if err != nil {
+		return zero, zero, zero, err
+	}
+
+	begBal, err := c.GetBalanceAtToken(opts.Asset, opts.Holder, opts.CurrBlk-1)
+	if err != nil {
+		return zero, zero, zero, err
+	}
+
+	endBal, err := c.GetBalanceAtToken(opts.Asset, opts.Holder, opts.CurrBlk)
+	if err != nil {
+		return zero, zero, zero, err
+	}
+
 	if opts.CurrBlk == 0 {
 		prevBal = base.ZeroWei
 		begBal = base.ZeroWei
 	}
-	s.PrevBal = *prevBal
-	s.BegBal = *begBal
-	s.EndBal = *endBal
-	return nil
+
+	return *prevBal, *begBal, *endBal, nil
 }
