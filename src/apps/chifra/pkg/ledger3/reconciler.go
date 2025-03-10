@@ -25,7 +25,6 @@ type Reconciler3 struct {
 	ledgerAssets      map[base.Address]bool
 	correctionCounter base.Value
 	entryCounter      base.Value
-	ledgers           map[base.Address]Ledger
 }
 
 func (r *Reconciler3) String() string {
@@ -43,11 +42,8 @@ func NewReconciler(opts *ledger10.ReconcilerOptions) *Reconciler3 {
 		transfers:     make(map[blockTxKey][]ledger10.AssetTransfer),
 		accountLedger: make(map[assetHolderKey]base.Wei),
 		ledgerAssets:  make(map[base.Address]bool),
-		ledgers:       make(map[base.Address]Ledger),
 	}
 }
-
-type Ledger struct{}
 
 func (r *Reconciler3) getTransferChannel(app *types.Appearance) <-chan ledger10.AssetTransfer {
 	ch := make(chan ledger10.AssetTransfer)

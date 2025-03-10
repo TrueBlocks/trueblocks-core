@@ -77,20 +77,6 @@ func (s *AssetTransfer) Model(chain, format string, verbose bool, extraOpts map[
 	}
 }
 
-func AssetOfInterest(filters []base.Address, needle base.Address) bool {
-	if len(filters) == 0 {
-		return true
-	}
-
-	for _, asset := range filters {
-		if asset.Hex() == needle.Hex() {
-			return true
-		}
-	}
-
-	return false
-}
-
 // ---------------------------------------------------------
 func (p *AssetTransfer) Reconciled2() (base.Wei, base.Wei, bool, bool) {
 	calc := p.EndBalCalc()

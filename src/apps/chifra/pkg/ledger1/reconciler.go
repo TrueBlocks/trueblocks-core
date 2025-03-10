@@ -16,14 +16,7 @@ import (
 type Reconciler1 struct {
 	opts               *ledger10.ReconcilerOptions
 	names              map[base.Address]types.Name
-	hasStartBlock      bool
 	enabledCorrections bool
-	transfers          map[blockTxKey][]ledger10.AssetTransfer
-	accountLedger      map[assetHolderKey]base.Wei
-	ledgerAssets       map[base.Address]bool
-	correctionCounter  base.Value
-	entryCounter       base.Value
-	ledgers            map[base.Address]Ledger
 }
 
 func (r *Reconciler1) String() string {
@@ -37,28 +30,9 @@ func NewReconciler(opts *ledger10.ReconcilerOptions) *Reconciler1 {
 	r := &Reconciler1{
 		opts:               opts,
 		names:              names,
-		hasStartBlock:      false,
 		enabledCorrections: true,
-		transfers:          make(map[blockTxKey][]ledger10.AssetTransfer),
-		accountLedger:      make(map[assetHolderKey]base.Wei),
-		ledgerAssets:       make(map[base.Address]bool),
-		ledgers:            make(map[base.Address]Ledger),
 	}
-	_ = r.correctionCounter
-	_ = r.entryCounter
 	return r
-}
-
-type Ledger struct{}
-
-type blockTxKey struct {
-	BlockNumber      base.Blknum
-	TransactionIndex base.Txnum
-}
-
-type assetHolderKey struct {
-	Asset  base.Address
-	Holder base.Address
 }
 
 // trialBalance returns true of the reconciliation balances, false otherwise. If the statement

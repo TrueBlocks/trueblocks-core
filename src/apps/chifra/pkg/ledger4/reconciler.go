@@ -23,7 +23,6 @@ type Reconciler4 struct {
 	ledgerAssets      map[base.Address]bool
 	correctionCounter base.Value
 	entryCounter      base.Value
-	ledgers           map[base.Address]Ledger
 }
 
 func (r *Reconciler4) String() string {
@@ -44,21 +43,8 @@ func NewReconciler(opts *ledger10.ReconcilerOptions) *Reconciler4 {
 	_ = r.ledgerAssets
 	_ = r.correctionCounter
 	_ = r.entryCounter
-	_ = r.ledgers
 	return r
 }
-
-type Ledger struct{}
-
-// type blockTxKey struct {
-// 	BlockNumber      base.Blknum
-// 	TransactionIndex base.Txnum
-// }
-
-// type assetHolderKey struct {
-// 	Asset base.Address
-// 	Holder       base.Address
-// }
 
 type Node struct {
 	Appearance *types.Appearance
