@@ -92,17 +92,17 @@ func TestBuildDoublyLinkedList(t *testing.T) {
 // 		return &types.Transaction{BlockNumber: base.Blknum(app.BlockNumber)}
 // 	}
 
-// 	var mockCreateTransfers = func(tx *types.Transaction, accountFor base.Address) []ledger10.AssetTransfer {
+// 	var mockCreateTransfers = func(tx *types.Transaction, accountFor base.Address) []types.AssetTransfer {
 // 		mu.Lock()
 // 		defer mu.Unlock()
 // 		createTransfersCalls++
-// 		return []ledger10.AssetTransfer{{
+// 		return []types.AssetTransfer{{
 // 			Asset: base.FAKE_ETH_ADDRESS,
 // 			AmountIn:     *base.NewWei(100),
 // 		}}
 // 	}
 
-// 	var mockQueryBalances = func(transfers []ledger10.AssetTransfer) []types.Statement {
+// 	var mockQueryBalances = func(transfers []types.AssetTransfer) []types.Statement {
 // 		mu.Lock()
 // 		defer mu.Unlock()
 // 		queryBalancesCalls++

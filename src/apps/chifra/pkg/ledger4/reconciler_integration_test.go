@@ -13,11 +13,11 @@ import (
 // type testCase struct {
 // 	name        string
 // 	appearances []types.Appearance
-// 	expected    []ledger10.AssetTransfer
-// 	opts        *ledger10.ReconcilerOptions
+// 	expected    []types.AssetTransfer
+// 	opts        *ledger1.ReconcilerOptions
 // }
 
-// func Equal(t1, t2 *ledger10.AssetTransfer) bool {
+// func Equal(t1, t2 *types.AssetTransfer) bool {
 // 	e1 := t1.BlockNumber == t2.BlockNumber
 // 	s1 := fmt.Sprintf("%d\t%d", t1.BlockNumber, t2.BlockNumber)
 // 	fmt.Println("bn:     ", e1, s1)
@@ -45,7 +45,7 @@ import (
 // 	return e1 && e2 && e3 && e4 && e5 && e6
 // }
 
-// func printOne(t1 *ledger10.AssetTransfer) {
+// func printOne(t1 *types.AssetTransfer) {
 // 	fmt.Printf("%d.%d.%d %s %s %s\n",
 // 		t1.BlockNumber,
 // 		t1.TransactionIndex,
@@ -61,7 +61,7 @@ import (
 // 	tests := []testCase{
 // 		{
 // 			name: "Single Ether Transfer",
-// 			opts: &ledger10.ReconcilerOptions{
+// 			opts: &ledger1.ReconcilerOptions{
 // 				Connection: rpc.TempConnection("mainnet"),
 // 				AccountFor: addr0549,
 // 				AssetFilters: []base.Address{
@@ -74,7 +74,7 @@ import (
 // 					TransactionIndex: 83,
 // 				},
 // 			},
-// 			expected: []ledger10.AssetTransfer{
+// 			expected: []types.AssetTransfer{
 // 				{
 // 					BlockNumber:      15549162,
 // 					TransactionIndex: 83,
@@ -97,7 +97,7 @@ import (
 // 	for _, tc := range tests {
 // 		t.Run(tc.name, func(t *testing.T) {
 // 			r := NewReconciler(tc.opts)
-// 			var allTransfers []ledger10.AssetTransfer
+// 			var allTransfers []types.AssetTransfer
 // 			for _, appearance := range tc.appearances {
 // 				tx := r.fetchTx(&appearance, false)
 // 				if tx == nil {
@@ -168,7 +168,7 @@ func TestFetchTxIntegration(t *testing.T) {
 
 // 	// Example assertion: Check for a specific known transfer
 // 	// Replace with actual values from your chosen transaction
-// 	expectedTransfer := ledger10.AssetTransfer{
+// 	expectedTransfer := types.AssetTransfer{
 // 		Asset: base.HexToAddress("0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48"), // USDC contract address
 // 		From:         "0x123...",                                                      // Replace with actual 'From' address
 // 		To:           "0x456...",                                                      // Replace with actual 'To' address

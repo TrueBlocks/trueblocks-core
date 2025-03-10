@@ -185,4 +185,90 @@ func (s *Transfer) IsMaterial() bool {
 	return !s.Amount.Equal(base.ZeroWei)
 }
 
+type AssetTransfer struct {
+	Amount           base.Wei `json:"amount"`
+	AmountIn         base.Wei
+	AmountOut        base.Wei
+	Asset            base.Address `json:"asset"`
+	BegBal           base.Wei
+	BlockNumber      base.Blknum `json:"blockNumber"`
+	CorrectingReason string      `json:"correctingReason"`
+	CorrectionId     base.Value  `json:"correctionId"`
+	Decimals         base.Value  `json:"decimals"`
+	EndBal           base.Wei
+	Holder           base.Address `json:"holder"`
+	LogIndex         base.Lognum  `json:"logIndex"`
+	StatementId      base.Value   `json:"statementId"`
+	TransactionIndex base.Txnum   `json:"transactionIndex"`
+}
+
+func (s *AssetTransfer) EndBalCalc() *base.Wei {
+	return new(base.Wei).Add(&s.BegBal, s.AmountNet())
+}
+
+func (s *AssetTransfer) AmountNet() *base.Wei {
+	return new(base.Wei).Sub(&s.AmountIn, &s.AmountOut)
+}
+
+func NewAssetTransfer(t Transfer) AssetTransfer {
+	return AssetTransfer{
+		Amount:           t.Amount,
+		Asset:            t.Asset,
+		BlockNumber:      t.BlockNumber,
+		Holder:           t.Holder,
+		LogIndex:         t.LogIndex,
+		TransactionIndex: t.TransactionIndex,
+		Decimals:         t.Decimals,
+		CorrectingReason: t.CorrectingReason,
+	}
+}
+
+func (s *AssetTransfer) Model(chain, format string, verbose bool, extraOpts map[string]any) Model {
+	var model = map[string]any{}
+	var order = []string{}
+
+	_, _, _, _ = chain, format, verbose, extraOpts
+	check1, check2, reconciles, byCheckpoint := s.Reconciled()
+	calc := s.EndBalCalc()
+	fmt.Printf("%s\t%s\t%d\t%d\t%d\t%d\t%d\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%t\t%t\n",
+		s.Asset.Hex(),
+		s.Holder.Hex(),
+		s.BlockNumber,
+		s.TransactionIndex,
+		s.LogIndex,
+		s.StatementId,
+		s.CorrectionId,
+		s.CorrectingReason,
+		s.BegBal.Text(10),
+		s.AmountNet().Text(10),
+		calc.Text(10),
+		s.EndBal.Text(10),
+		check1.Text(10),
+		check2.Text(10),
+		reconciles,
+		byCheckpoint,
+	)
+
+	return Model{
+		Data:  model,
+		Order: order,
+	}
+}
+
+// ---------------------------------------------------------
+func (p *AssetTransfer) Reconciled() (base.Wei, base.Wei, bool, bool) {
+	calc := p.EndBalCalc()
+	checkVal := *new(base.Wei).Add(&p.BegBal, p.AmountNet())
+	tentativeDiff := *new(base.Wei).Sub(&checkVal, calc)
+	checkpointDiff := *new(base.Wei).Sub(&checkVal, &p.EndBal)
+
+	checkpointEqual := checkVal.Equal(&p.EndBal)
+	if checkpointEqual {
+		return tentativeDiff, checkpointDiff, true, true
+	}
+
+	tentativeEqual := checkVal.Equal(calc)
+	return tentativeDiff, checkpointDiff, tentativeEqual, false
+}
+
 // EXISTING_CODE

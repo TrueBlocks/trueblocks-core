@@ -5,7 +5,6 @@ import (
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/ledger10"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/names"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/pricing"
@@ -13,8 +12,20 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
+type ReconcilerOptions struct {
+	Connection   *rpc.Connection
+	AccountFor   base.Address
+	FirstBlock   base.Blknum
+	LastBlock    base.Blknum
+	AsEther      bool
+	UseTraces    bool
+	Reversed     bool
+	AssetFilters []base.Address
+	AppFilters   *types.AppearanceFilter
+}
+
 type Reconciler1 struct {
-	opts               *ledger10.ReconcilerOptions
+	opts               *ReconcilerOptions
 	names              map[base.Address]types.Name
 	enabledCorrections bool
 }
@@ -24,7 +35,7 @@ func (r *Reconciler1) String() string {
 	return string(bytes)
 }
 
-func NewReconciler(opts *ledger10.ReconcilerOptions) *Reconciler1 {
+func NewReconciler(opts *ReconcilerOptions) *Reconciler1 {
 	parts := types.Custom | types.Prefund | types.Regular
 	names, _ := names.LoadNamesMap(opts.Connection.Chain, parts, []string{})
 	r := &Reconciler1{

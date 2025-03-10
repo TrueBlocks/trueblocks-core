@@ -10,7 +10,6 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/articulate"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/ledger1"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/ledger10"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/monitor"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
@@ -68,7 +67,7 @@ func (opts *ExportOptions) HandleAccounting(rCtx *output.RenderCtx, monitorArray
 				return
 
 			} else if !opts.NoZero || cnt > 0 {
-				ledgerOpts := &ledger10.ReconcilerOptions{
+				ledgerOpts := &ledger1.ReconcilerOptions{
 					Connection:   opts.Conn,
 					AccountFor:   mon.Address,
 					FirstBlock:   opts.FirstBlock,

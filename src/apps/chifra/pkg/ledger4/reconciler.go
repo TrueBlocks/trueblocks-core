@@ -7,7 +7,6 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/ledger1"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/ledger10"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/names"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
@@ -15,10 +14,10 @@ import (
 )
 
 type Reconciler4 struct {
-	opts              *ledger10.ReconcilerOptions
+	opts              *ledger1.ReconcilerOptions
 	names             map[base.Address]types.Name
 	hasStartBlock     bool
-	transfers         map[blockTxKey][]ledger10.AssetTransfer
+	transfers         map[blockTxKey][]types.AssetTransfer
 	accountLedger     map[assetHolderKey]base.Wei
 	ledgerAssets      map[base.Address]bool
 	correctionCounter base.Value
@@ -30,7 +29,7 @@ func (r *Reconciler4) String() string {
 	return string(bytes)
 }
 
-func NewReconciler(opts *ledger10.ReconcilerOptions) *Reconciler4 {
+func NewReconciler(opts *ledger1.ReconcilerOptions) *Reconciler4 {
 	parts := types.Custom | types.Prefund | types.Regular
 	names, _ := names.LoadNamesMap(opts.Connection.Chain, parts, []string{})
 	r := &Reconciler4{
@@ -49,7 +48,7 @@ func NewReconciler(opts *ledger10.ReconcilerOptions) *Reconciler4 {
 type Node struct {
 	Appearance *types.Appearance
 	Tx         *types.Transaction
-	Transfers  []ledger10.AssetTransfer
+	Transfers  []types.AssetTransfer
 	Statement  []types.Statement
 	Reconciled bool
 }
@@ -89,22 +88,22 @@ func getConnection() *rpc.Connection {
 	return conn
 }
 
-func (r *Reconciler4) createTransfers(tx *types.Transaction) []ledger10.AssetTransfer {
+func (r *Reconciler4) createTransfers(tx *types.Transaction) []types.AssetTransfer {
 	r1 := ledger1.NewReconciler(r.opts)
 	pos := &types.AppPosition{}
 	xfers, err := r1.GetTransfers1(pos, tx)
 	if err != nil {
-		return []ledger10.AssetTransfer{}
+		return []types.AssetTransfer{}
 	}
-	transfers := make([]ledger10.AssetTransfer, 0, len(xfers))
+	transfers := make([]types.AssetTransfer, 0, len(xfers))
 	for _, xfer := range xfers {
-		transfer := ledger10.NewAssetTransfer(xfer)
+		transfer := types.NewAssetTransfer(xfer)
 		transfers = append(transfers, transfer)
 	}
 	return transfers
 }
 
-func (r *Reconciler4) queryBalances(transfers []ledger10.AssetTransfer) []types.Statement {
+func (r *Reconciler4) queryBalances(transfers []types.AssetTransfer) []types.Statement {
 	statements := make([]types.Statement, 0)
 	for range transfers {
 		s := types.Statement{

@@ -11,7 +11,6 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/ledger1"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/ledger10"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/monitor"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
@@ -116,7 +115,7 @@ func (opts *ExportOptions) HandleStatements(rCtx *output.RenderCtx, monitorArray
 							})
 						}
 
-						ledgerOpts := &ledger10.ReconcilerOptions{
+						ledgerOpts := &ledger1.ReconcilerOptions{
 							Connection:   opts.Conn,
 							AccountFor:   mon.Address,
 							FirstBlock:   opts.FirstBlock,
