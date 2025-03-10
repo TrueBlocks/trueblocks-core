@@ -1,9 +1,9 @@
 package ledger1
 
 import (
-	"os"
 	"sort"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
@@ -34,7 +34,7 @@ func convertToTransfers(statements []types.Statement) ([]types.Transfer, error) 
 		transfers = append(transfers, t)
 	}
 
-	if os.Getenv("TEST_MODE") == "true" {
+	if base.IsTestMode() {
 		sort.Slice(transfers, func(i, j int) bool {
 			if transfers[i].BlockNumber == transfers[j].BlockNumber {
 				if transfers[i].TransactionIndex == transfers[j].TransactionIndex {

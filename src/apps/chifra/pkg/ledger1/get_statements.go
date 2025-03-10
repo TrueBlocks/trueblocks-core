@@ -2,7 +2,6 @@ package ledger1
 
 import (
 	"fmt"
-	"os"
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
@@ -59,7 +58,7 @@ func (r *Reconciler1) GetStatements1(pos *types.AppPosition, trans *types.Transa
 						id := fmt.Sprintf(" %d.%d.%d", stmt.BlockNumber, stmt.TransactionIndex, stmt.LogIndex)
 						logger.Progress(true, colors.Green+"Transaction", id, "reconciled       "+colors.Off)
 					} else {
-						if os.Getenv("TEST_MODE") != "true" {
+						if !base.IsTestMode() {
 							id := fmt.Sprintf(" %d.%d.%d", stmt.BlockNumber, stmt.TransactionIndex, stmt.LogIndex)
 							logger.Warn("Log statement at ", id, " does not reconcile.")
 						}

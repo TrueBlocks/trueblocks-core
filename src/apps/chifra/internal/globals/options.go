@@ -13,7 +13,6 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/caps"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
@@ -71,7 +70,7 @@ func (opts *GlobalOptions) ShouldLoadNames(force bool) bool {
 
 // TODO: These options should be in a data file
 func InitGlobals(whoAmI string, cmd *cobra.Command, opts *GlobalOptions, c caps.Capability) {
-	opts.TestMode = file.IsTestMode()
+	opts.TestMode = base.IsTestMode()
 	opts.Caps = c
 
 	if opts.Caps.Has(caps.Ether) {

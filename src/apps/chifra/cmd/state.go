@@ -14,6 +14,7 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
 	statePkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/state"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/caps"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	outputHelpers "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output/helpers"
@@ -78,7 +79,7 @@ One or more of [ balance | nonce | code | proxy | deployed | accttype | some | a
 	stateCmd.Flags().StringVarP(&statePkg.GetOptions().Calldata, "calldata", "d", "", `for commands (--call or --send), provides the call data (in various forms) for the command (may be empty for --send)`)
 	stateCmd.Flags().BoolVarP(&statePkg.GetOptions().Articulate, "articulate", "a", false, `for commands only, articulate the retrieved data if ABIs can be found`)
 	stateCmd.Flags().StringVarP(&statePkg.GetOptions().ProxyFor, "proxy_for", "r", "", `for commands only, redirects calls to this implementation`)
-	if os.Getenv("TEST_MODE") != "true" {
+	if !base.IsTestMode() {
 		_ = stateCmd.Flags().MarkHidden("send")
 	}
 	globals.InitGlobals("state", stateCmd, &statePkg.GetOptions().Globals, capabilities)

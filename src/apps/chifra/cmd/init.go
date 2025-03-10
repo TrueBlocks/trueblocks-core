@@ -14,6 +14,7 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
 	initPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/init"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/caps"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	outputHelpers "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output/helpers"
@@ -63,7 +64,7 @@ func init() {
 	initCmd.Flags().StringVarP(&initPkg.GetOptions().Publisher, "publisher", "P", "", `the publisher of the index to download (hidden)`)
 	initCmd.Flags().Uint64VarP((*uint64)(&initPkg.GetOptions().FirstBlock), "first_block", "F", 0, `do not download any chunks earlier than this block`)
 	initCmd.Flags().Float64VarP(&initPkg.GetOptions().Sleep, "sleep", "s", 0.0, `seconds to sleep between downloads`)
-	if os.Getenv("TEST_MODE") != "true" {
+	if !base.IsTestMode() {
 		_ = initCmd.Flags().MarkHidden("publisher")
 	}
 	globals.InitGlobals("init", initCmd, &initPkg.GetOptions().Globals, capabilities)

@@ -14,6 +14,7 @@ import (
 
 	chunksPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/chunks"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/caps"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	outputHelpers "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output/helpers"
@@ -83,7 +84,7 @@ func init() {
 	chunksCmd.Flags().BoolVarP(&chunksPkg.GetOptions().Count, "count", "U", false, `for certain modes only, display the count of records`)
 	chunksCmd.Flags().StringVarP(&chunksPkg.GetOptions().Tag, "tag", "t", "", `visits each chunk and updates the headers with the supplied version string (vX.Y.Z-str) (hidden)`)
 	chunksCmd.Flags().Float64VarP(&chunksPkg.GetOptions().Sleep, "sleep", "s", 0.0, `for --remote pinning only, seconds to sleep between API calls`)
-	if os.Getenv("TEST_MODE") != "true" {
+	if !base.IsTestMode() {
 		_ = chunksCmd.Flags().MarkHidden("publisher")
 		_ = chunksCmd.Flags().MarkHidden("truncate")
 		_ = chunksCmd.Flags().MarkHidden("diff")

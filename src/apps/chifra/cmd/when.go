@@ -14,6 +14,7 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
 	whenPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/when"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/caps"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	outputHelpers "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output/helpers"
@@ -65,7 +66,7 @@ func init() {
 	whenCmd.Flags().BoolVarP(&whenPkg.GetOptions().Check, "check", "c", false, `with --timestamps only, checks the validity of the timestamp data`)
 	whenCmd.Flags().BoolVarP(&whenPkg.GetOptions().Update, "update", "u", false, `with --timestamps only, bring the timestamp database forward to the latest block`)
 	whenCmd.Flags().BoolVarP(&whenPkg.GetOptions().Deep, "deep", "d", false, `with --timestamps --check only, verifies timestamps from on chain (slow)`)
-	if os.Getenv("TEST_MODE") != "true" {
+	if !base.IsTestMode() {
 		_ = whenCmd.Flags().MarkHidden("truncate")
 	}
 	globals.InitGlobals("when", whenCmd, &whenPkg.GetOptions().Globals, capabilities)

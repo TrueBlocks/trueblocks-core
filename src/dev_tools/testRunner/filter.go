@@ -6,6 +6,7 @@ import (
 	"sort"
 	"strings"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 )
 
@@ -47,7 +48,7 @@ var modeMap = map[string]helper{
 }
 
 func isValidEnvironment() error {
-	if os.Getenv("TEST_MODE") != "true" {
+	if !base.IsTestMode() {
 		return fmt.Errorf("you must run this program with TEST_MODE=true")
 	}
 
