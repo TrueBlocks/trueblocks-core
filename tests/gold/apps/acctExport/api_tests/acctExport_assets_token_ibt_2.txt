@@ -1,0 +1,27 @@
+export?addrs=0xf503017d7baf7fbc0fff7492b751025c6a78179b&accounting&assets&firstBlock=12704456&lastBlock=12705893&ether&fmt=json&maxRecords=9
+{
+  "data": [
+    {
+      "address": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+      "decimals": 18,
+      "name": "ETH",
+      "symbol": "ETH"
+    },
+    {
+      "address": "0x6b175474e89094c44da98b954eedeac495271d0f",
+      "decimals": 18,
+      "name": "Dai Stablecoin",
+      "symbol": "DAI"
+    }
+  ],
+  "meta": {
+    "client": "0xdeadbeef",
+    "finalized": "0xdeadbeef",
+    "staging": "0xdeadbeef",
+    "ripe": "0xdeadbeef",
+    "unripe": "0xdeadbeef",
+    "chainId": 1,
+    "networkId": 1,
+    "chain": "mainnet"
+  }
+}

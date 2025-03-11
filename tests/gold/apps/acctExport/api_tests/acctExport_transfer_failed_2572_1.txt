@@ -5,6 +5,7 @@ export?addrs=0x054993ab0f2b1acc0fdc65405ee203b4271bebe6&accounting&transfers&eth
       "amount": "2017000000000000000000",
       "amountEth": "2017",
       "asset": "0xf5b2c59f6db42ffcdfc1625999c81fdf17953384",
+      "assetName": "mdai.io",
       "blockNumber": 15549162,
       "holder": "0x054993ab0f2b1acc0fdc65405ee203b4271bebe6",
       "logIndex": 1774,

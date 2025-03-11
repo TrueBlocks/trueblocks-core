@@ -18,18 +18,19 @@ num,folder,group,route,tool,longName,hotKey,def_val,attributes,handler,option_ty
 12150,apps,Accounts,list,acctExport,n2,,,,,note,,,,,,No other options are permitted when --silent is selected.
 #
 13000,apps,Accounts,export,acctExport,,,,visible|docs,,command,,,Export details,[flags] <address> [address...] [topics...] [fourbytes...],default|caching|ether|names|,Export full details of transactions for one or more addresses.
-13020,apps,Accounts,export,acctExport,addrs,,,required|visible|docs,12,positional,list<addr>,transaction,,,,one or more addresses (0x...) to export
+13020,apps,Accounts,export,acctExport,addrs,,,required|visible|docs,13,positional,list<addr>,transaction,,,,one or more addresses (0x...) to export
 13030,apps,Accounts,export,acctExport,topics,,,visible|docs,,positional,list<topic>,,,,,filter by one or more log topics (only for --logs option)
 13040,apps,Accounts,export,acctExport,fourbytes,,,visible|docs,,positional,list<fourbyte>,,,,,filter by one or more fourbytes (only for transactions and trace options)
 13050,apps,Accounts,export,acctExport,appearances,p,,visible|docs,5,switch,<boolean>,appearance,,,,export a list of appearances
 13060,apps,Accounts,export,acctExport,receipts,r,,visible|docs,2,switch,<boolean>,receipt,,,,export receipts instead of transactional data
 13070,apps,Accounts,export,acctExport,logs,l,,visible|docs,3,switch,<boolean>,log,,,,export logs instead of transactional data
-13080,apps,Accounts,export,acctExport,traces,t,,visible|docs,11,switch,<boolean>,trace,,,,export traces instead of transactional data
-13090,apps,Accounts,export,acctExport,neighbors,n,,visible|docs,7,switch,<boolean>,message,,,,export the neighbors of the given address
-13100,apps,Accounts,export,acctExport,accounting,C,,visible|docs,10,switch,<boolean>,,,,,attach accounting records to the exported data (applies to transactions export only)
-13110,apps,Accounts,export,acctExport,statements,A,,visible|docs,8,switch,<boolean>,statement,,,,for the accounting options only&#44; export only statements
-13110,apps,Accounts,export,acctExport,transfers,X,,visible|docs,9,switch,<boolean>,transfer,,,,for the accounting options only&#44; export only eth or token transfers
-13120,apps,Accounts,export,acctExport,balances,b,,visible|docs,6,switch,<boolean>,state,,,,traverse the transaction history and show each change in ETH balances
+13080,apps,Accounts,export,acctExport,traces,t,,visible|docs,12,switch,<boolean>,trace,,,,export traces instead of transactional data
+13090,apps,Accounts,export,acctExport,neighbors,n,,visible|docs,8,switch,<boolean>,message,,,,export the neighbors of the given address
+13100,apps,Accounts,export,acctExport,accounting,C,,visible|docs,11,switch,<boolean>,,,,,attach accounting records to the exported data (applies to transactions export only)
+13110,apps,Accounts,export,acctExport,statements,A,,visible|docs,9,switch,<boolean>,statement,,,,for the accounting options only&#44; export only statements
+13110,apps,Accounts,export,acctExport,transfers,X,,visible|docs,10,switch,<boolean>,transfer,,,,for the accounting options only&#44; export only eth or token transfers
+13120,apps,Accounts,export,acctExport,assets,s,,visible|docs,6,switch,<boolean>,name,,,,for the accounting options only&#44; list all assets (with names) that appear in any transfer
+13120,apps,Accounts,export,acctExport,balances,b,,visible|docs,7,switch,<boolean>,state,,,,traverse the transaction history and show each change in ETH balances
 13130,apps,Accounts,export,acctExport,withdrawals,i,,visible|docs,4,switch,<boolean>,withdrawal,,,,export withdrawals for the given address
 13140,apps,Accounts,export,acctExport,articulate,a,,visible|docs,,switch,<boolean>,,,,,articulate transactions&#44; traces&#44; logs&#44; and outputs
 13150,apps,Accounts,export,acctExport,cache_traces,R,,visible|docs,,switch,<boolean>,,,,,force the transaction's traces into the cache

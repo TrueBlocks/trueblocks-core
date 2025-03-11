@@ -72,6 +72,8 @@ func (opts *ExportOptions) ExportInternal(rCtx *output.RenderCtx) error {
 		err = opts.HandleWithdrawals(rCtx, monitorArray)
 	} else if opts.Appearances {
 		err = opts.HandleAppearances(rCtx, monitorArray)
+	} else if opts.Assets {
+		err = opts.HandleAssets(rCtx, monitorArray)
 	} else if opts.Balances {
 		err = opts.HandleBalances(rCtx, monitorArray)
 	} else if opts.Neighbors {

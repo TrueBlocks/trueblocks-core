@@ -22,64 +22,10 @@ int1:                18309000
 bigPrice:            183.09
 price:               183.09
 source:              maker
-===================================================
-Previous:               8860512
-Current:                8860513
-Next:                   8860529
-accountedFor:           0xf503017d7baf7fbc0fff7492b751025c6a78179b
-sender:                 0xf503017d7baf7fbc0fff7492b751025c6a78179b  ==>  0x30f938fed5de6e06a9a7cd2ac3517131c317b1e7
-asset:                  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (ETH) decimals: 18
-hash:                   0xd5a49ef68f77357a5202ca09499b343b27cd02c1172c4ace3050a494dc218d8a
-timestamp:              1572720150
-blockNumber:            8860513.85.0
-priceSource:            183.09 (maker)
---------------------------------------------------- 
-Trial balance:
-   prevBal:             4.999744015
-   begBal:              4.999744015 (0)
-   totalIn:             0
-   totalOut:            0.000034017
-   amountNet:           -0.000034017
-                       ======================= 
-   endBal:              4.999709998 (0)
-   endBalCalc:          4.999709998
-   rollingBalance:      0
---------------------------------------------------- 
-   gasOut:              0.000034017
-   material:            true
-   reconciled:          true
----------------------------------------------------
 =========================================================
 ===> PRICING FOR 0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359 (DAI) 
 =========================================================
 stable-coin
-===================================================
-Previous:               8860512
-Current:                8860513
-Next:                   8860529
-accountedFor:           0xf503017d7baf7fbc0fff7492b751025c6a78179b
-sender:                 0xf503017d7baf7fbc0fff7492b751025c6a78179b  ==>  0x30f938fed5de6e06a9a7cd2ac3517131c317b1e7
-asset:                  0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359 (DAI) decimals: 18
-hash:                   0xd5a49ef68f77357a5202ca09499b343b27cd02c1172c4ace3050a494dc218d8a
-timestamp:              1572720150
-blockNumber:            8860513.85.84
-priceSource:            1 (stable-coin)
---------------------------------------------------- 
-Trial balance:
-   prevBal:             7500
-   begBal:              7500 (0)
-   totalIn:             0
-   totalOut:            500
-   amountNet:           -500
-                       ======================= 
-   endBal:              7000 (0)
-   endBalCalc:          7000
-   rollingBalance:      0
---------------------------------------------------- 
-   amountOut:           500
-   material:            true
-   reconciled:          true
----------------------------------------------------
 transfer: 8860513 85 0 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0xf503017d7baf7fbc0fff7492b751025c6a78179b -34017000000000 
 transfer: 8860513 85 84 0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359 0xf503017d7baf7fbc0fff7492b751025c6a78179b -500000000000000000000 
 Block 8860529 is prior to deployment (10000835) of Uniswap V2. Falling back to Maker (0x729d19f657bd0614b4985cf1d82531c67569197b)
@@ -95,33 +41,6 @@ int1:                18309000
 bigPrice:            183.09
 price:               183.09
 source:              maker
-===================================================
-Previous:               8860513
-Current:                8860529
-Next:                   8860531
-accountedFor:           0xf503017d7baf7fbc0fff7492b751025c6a78179b
-sender:                 0xf503017d7baf7fbc0fff7492b751025c6a78179b  ==>  0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359
-asset:                  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (ETH) decimals: 18
-hash:                   0x3af5419098b5510f39ec64d6eb8ee08f3fe5cb538469fa9ef263cf7ebd4b607d
-timestamp:              1572720358
-blockNumber:            8860529.145.0
-priceSource:            183.09 (maker)
---------------------------------------------------- 
-Trial balance:
-   prevBal:             4.999709998
-   begBal:              4.999709998 (0)
-   totalIn:             0
-   totalOut:            0.000046049
-   amountNet:           -0.000046049
-                       ======================= 
-   endBal:              4.999663949 (0)
-   endBalCalc:          4.999663949
-   rollingBalance:      0
---------------------------------------------------- 
-   gasOut:              0.000046049
-   material:            true
-   reconciled:          true
----------------------------------------------------
 transfer: 8860529 145 0 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0xf503017d7baf7fbc0fff7492b751025c6a78179b -46049000000000 
 Block 8860531 is prior to deployment (10000835) of Uniswap V2. Falling back to Maker (0x729d19f657bd0614b4985cf1d82531c67569197b)
 =========================================================
@@ -136,64 +55,10 @@ int1:                18309000
 bigPrice:            183.09
 price:               183.09
 source:              maker
-===================================================
-Previous:               8860529
-Current:                8860531
-Next:                   8860532
-accountedFor:           0xf503017d7baf7fbc0fff7492b751025c6a78179b
-sender:                 0xf503017d7baf7fbc0fff7492b751025c6a78179b  ==>  0x30f938fed5de6e06a9a7cd2ac3517131c317b1e7
-asset:                  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (ETH) decimals: 18
-hash:                   0x1cdbe0fcca2ee3f9e4504f25e6f2a485835caa920496d20b10fa6241cbfdb124
-timestamp:              1572720361
-blockNumber:            8860531.152.0
-priceSource:            183.09 (maker)
---------------------------------------------------- 
-Trial balance:
-   prevBal:             4.999663949
-   begBal:              4.999663949 (0)
-   totalIn:             0
-   totalOut:            0.000024541
-   amountNet:           -0.000024541
-                       ======================= 
-   endBal:              4.999639408 (0)
-   endBalCalc:          4.999639408
-   rollingBalance:      0
---------------------------------------------------- 
-   gasOut:              0.000024541
-   material:            true
-   reconciled:          true
----------------------------------------------------
 =========================================================
 ===> PRICING FOR 0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359 (DAI) 
 =========================================================
 stable-coin
-===================================================
-Previous:               8860529
-Current:                8860531
-Next:                   8860532
-accountedFor:           0xf503017d7baf7fbc0fff7492b751025c6a78179b
-sender:                 0xf503017d7baf7fbc0fff7492b751025c6a78179b  ==>  0x30f938fed5de6e06a9a7cd2ac3517131c317b1e7
-asset:                  0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359 (DAI) decimals: 18
-hash:                   0x1cdbe0fcca2ee3f9e4504f25e6f2a485835caa920496d20b10fa6241cbfdb124
-timestamp:              1572720361
-blockNumber:            8860531.152.95
-priceSource:            1 (stable-coin)
---------------------------------------------------- 
-Trial balance:
-   prevBal:             7000
-   begBal:              7000 (0)
-   totalIn:             0
-   totalOut:            7000
-   amountNet:           -7000
-                       ======================= 
-   endBal:              0 (0)
-   endBalCalc:          0
-   rollingBalance:      0
---------------------------------------------------- 
-   amountOut:           7000
-   material:            true
-   reconciled:          true
----------------------------------------------------
 transfer: 8860531 152 0 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0xf503017d7baf7fbc0fff7492b751025c6a78179b -24541000000000 
 transfer: 8860531 152 95 0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359 0xf503017d7baf7fbc0fff7492b751025c6a78179b -7000000000000000000000 
 {
@@ -202,6 +67,7 @@ transfer: 8860531 152 95 0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359 0xf503017d7b
       "amount": "-34017000000000",
       "amountEth": "-0.000034017",
       "asset": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+      "assetName": "ETH",
       "blockNumber": 8860513,
       "holder": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
       "logIndex": 0,
@@ -211,6 +77,7 @@ transfer: 8860531 152 95 0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359 0xf503017d7b
       "amount": "-500000000000000000000",
       "amountEth": "-500",
       "asset": "0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359",
+      "assetName": "Dai Stablecoin v1.0",
       "blockNumber": 8860513,
       "holder": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
       "logIndex": 84,
@@ -220,6 +87,7 @@ transfer: 8860531 152 95 0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359 0xf503017d7b
       "amount": "-46049000000000",
       "amountEth": "-0.000046049",
       "asset": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+      "assetName": "ETH",
       "blockNumber": 8860529,
       "holder": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
       "logIndex": 0,
@@ -229,6 +97,7 @@ transfer: 8860531 152 95 0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359 0xf503017d7b
       "amount": "-24541000000000",
       "amountEth": "-0.000024541",
       "asset": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+      "assetName": "ETH",
       "blockNumber": 8860531,
       "holder": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
       "logIndex": 0,
@@ -238,6 +107,7 @@ transfer: 8860531 152 95 0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359 0xf503017d7b
       "amount": "-7000000000000000000000",
       "amountEth": "-7000",
       "asset": "0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359",
+      "assetName": "Dai Stablecoin v1.0",
       "blockNumber": 8860531,
       "holder": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
       "logIndex": 95,

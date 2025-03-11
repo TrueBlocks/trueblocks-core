@@ -9,39 +9,13 @@ LastBlock:  9024186
 Caps:  cache,decache,ether
 Format:  json
 Block 8876232 is prior to deployment (10000835) of Uniswap V2. No other source for tokens prior to UniSwap
-===================================================
-Previous:               8876231
-Current:                8876232
-Next:                   9000998
-accountedFor:           0xf503017d7baf7fbc0fff7492b751025c6a78179b
-sender:                 0x0  ==>  0xf503017d7baf7fbc0fff7492b751025c6a78179b
-asset:                  0xd53b50a6213ee7ff2fcc41a7cf69d22ded0a43b3 (CSTK) decimals: 18
-hash:                   0x389e24356a19c24cac14e99574553a33662099559921691fb592fba3232748fa
-timestamp:              1572938328
-blockNumber:            8876232.84.169
-priceSource:            0 (token-not-priced-pre-uni)
---------------------------------------------------- 
-Trial balance:
-   prevBal:             0
-   begBal:              0 (0)
-   totalIn:             22500
-   totalOut:            0
-   amountNet:           22500
-                       ======================= 
-   endBal:              22500 (0)
-   endBalCalc:          22500
-   rollingBalance:      0
---------------------------------------------------- 
-   amountIn:            22500
-   material:            true
-   reconciled:          true
----------------------------------------------------
 transfer: 8876232 84 169 0xd53b50a6213ee7ff2fcc41a7cf69d22ded0a43b3 0xf503017d7baf7fbc0fff7492b751025c6a78179b 22500000000000000000000 
 {
   "data": [
     {
       "amount": "22500000000000000000000",
       "asset": "0xd53b50a6213ee7ff2fcc41a7cf69d22ded0a43b3",
+      "assetName": "CommonsStackToken",
       "blockNumber": 8876232,
       "holder": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
       "logIndex": 169,

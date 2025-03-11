@@ -168,8 +168,10 @@ func (opts *ExportOptions) validateExport() error {
 			logger.Warn("The --accounting option reports a spotPrice of one for all assets on non-mainnet chains.")
 		}
 
-		if opts.Statements && opts.Transfers {
-			return validate.Usage("Choose either {0} or {1}, not both.", "--transfers", "--statements")
+		if opts.Statements && opts.Transfers ||
+			opts.Statements && opts.Assets ||
+			opts.Transfers && opts.Assets {
+			return validate.Usage("Choose only one of {0}, {1}, or {2}.", "--statements", "--transfers", "--assets")
 		}
 
 		if len(opts.Flow) > 0 {
@@ -177,8 +179,8 @@ func (opts *ExportOptions) validateExport() error {
 				return err
 			}
 
-			if !opts.Statements && !opts.Transfers {
-				return validate.Usage("The {0} option is only available with the {1} option.", "--flow", "--transfers or --statements")
+			if !opts.Statements && !opts.Transfers && !opts.Assets {
+				return validate.Usage("The {0} option is only available with the {1} option.", "--flow", "--statements, --transfers, or --asset")
 			}
 		}
 
@@ -189,6 +191,10 @@ func (opts *ExportOptions) validateExport() error {
 
 		if opts.Transfers {
 			return validate.Usage("The {0} option is only available with the {1} option.", "--transfers", "--accounting")
+		}
+
+		if opts.Assets {
+			return validate.Usage("The {0} option is only available with the {1} option.", "--assets", "--accounting")
 		}
 
 		if opts.Globals.Format == "ofx" {

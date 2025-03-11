@@ -340,6 +340,14 @@ paths:
           explode: true
           schema:
             type: boolean
+        - name: assets
+          description: for the accounting options only, list all assets (with names) that appear in any transfer
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
         - name: balances
           description: traverse the transaction history and show each change in ETH balances
           required: false

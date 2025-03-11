@@ -78,6 +78,7 @@ func init() {
 	exportCmd.Flags().BoolVarP(&exportPkg.GetOptions().Accounting, "accounting", "C", false, `attach accounting records to the exported data (applies to transactions export only)`)
 	exportCmd.Flags().BoolVarP(&exportPkg.GetOptions().Statements, "statements", "A", false, `for the accounting options only, export only statements`)
 	exportCmd.Flags().BoolVarP(&exportPkg.GetOptions().Transfers, "transfers", "X", false, `for the accounting options only, export only eth or token transfers`)
+	exportCmd.Flags().BoolVarP(&exportPkg.GetOptions().Assets, "assets", "s", false, `for the accounting options only, list all assets (with names) that appear in any transfer`)
 	exportCmd.Flags().BoolVarP(&exportPkg.GetOptions().Balances, "balances", "b", false, `traverse the transaction history and show each change in ETH balances`)
 	exportCmd.Flags().BoolVarP(&exportPkg.GetOptions().Withdrawals, "withdrawals", "i", false, `export withdrawals for the given address`)
 	exportCmd.Flags().BoolVarP(&exportPkg.GetOptions().Articulate, "articulate", "a", false, `articulate transactions, traces, logs, and outputs`)

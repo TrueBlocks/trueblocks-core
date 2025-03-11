@@ -1,0 +1,39 @@
+export?addrs=0x054993ab0f2b1acc0fdc65405ee203b4271bebe6&accounting&assets&ether&fmt=json&lastBlock=15549163&maxRecords=40
+{
+  "data": [
+    {
+      "address": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+      "decimals": 18,
+      "name": "ETH",
+      "symbol": "ETH"
+    },
+    {
+      "address": "0x6b175474e89094c44da98b954eedeac495271d0f",
+      "decimals": 18,
+      "name": "Dai Stablecoin",
+      "symbol": "DAI"
+    },
+    {
+      "address": "0xde30da39c46104798bb5aa3fe8b9e0e1f348163f",
+      "decimals": 18,
+      "name": "Gitcoin",
+      "symbol": "GTC"
+    },
+    {
+      "address": "0x1f9840a85d5af5bf1d1762f925bdaddc4201f984",
+      "decimals": 18,
+      "name": "Uniswap",
+      "symbol": "UNI"
+    }
+  ],
+  "meta": {
+    "client": "0xdeadbeef",
+    "finalized": "0xdeadbeef",
+    "staging": "0xdeadbeef",
+    "ripe": "0xdeadbeef",
+    "unripe": "0xdeadbeef",
+    "chainId": 1,
+    "networkId": 1,
+    "chain": "mainnet"
+  }
+}

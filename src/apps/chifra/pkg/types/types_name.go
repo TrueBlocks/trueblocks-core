@@ -62,6 +62,16 @@ func (s *Name) Model(chain, format string, verbose bool, extraOpts map[string]an
 			Data:  model,
 			Order: order,
 		}
+	} else if extraOpts["single"] == "asset" {
+		model["address"] = s.Address.Hex()
+		model["symbol"] = s.Symbol
+		model["name"] = s.Name
+		model["decimals"] = s.Decimals
+		order = append(order, []string{"address", "symbol", "name", "decimals"}...)
+		return Model{
+			Data:  model,
+			Order: order,
+		}
 	}
 
 	model = map[string]any{

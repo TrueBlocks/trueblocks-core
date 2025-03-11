@@ -98,6 +98,7 @@ Trial balance:
   "data": [
     {
       "accountedFor": "0x08166f02313feae18bb044e7877c808b55b5bf58",
+      "accountedForName": "Prefund_0270",
       "amountIn": "0",
       "amountInEth": "0",
       "amountNet": "1970000000000000000000",
@@ -105,6 +106,7 @@ Trial balance:
       "amountOut": "0",
       "amountOutEth": "0",
       "asset": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+      "assetName": "ETH",
       "begBal": "0",
       "begBalDiff": "0",
       "begBalDiffEth": "0",
@@ -164,6 +166,7 @@ Trial balance:
     },
     {
       "accountedFor": "0x08166f02313feae18bb044e7877c808b55b5bf58",
+      "accountedForName": "Prefund_0270",
       "amountIn": "0",
       "amountInEth": "0",
       "amountNet": "-5010500000000000000",
@@ -171,6 +174,7 @@ Trial balance:
       "amountOut": "5000000000000000000",
       "amountOutEth": "5",
       "asset": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+      "assetName": "ETH",
       "begBal": "1970000000000000000000",
       "begBalDiff": "0",
       "begBalDiffEth": "0",
@@ -230,6 +234,7 @@ Trial balance:
     },
     {
       "accountedFor": "0x08166f02313feae18bb044e7877c808b55b5bf58",
+      "accountedForName": "Prefund_0270",
       "amountIn": "0",
       "amountInEth": "0",
       "amountNet": "-1964900000000000000000",
@@ -237,6 +242,7 @@ Trial balance:
       "amountOut": "1964889500000000000000",
       "amountOutEth": "1964.8895",
       "asset": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+      "assetName": "ETH",
       "begBal": "1964989500000000000000",
       "begBalDiff": "0",
       "begBalDiffEth": "0",

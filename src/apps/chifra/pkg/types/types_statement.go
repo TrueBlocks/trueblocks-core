@@ -163,6 +163,21 @@ func (s *Statement) Model(chain, format string, verbose bool, extraOpts map[stri
 			"selfDestructOutEth", "gasOutEth", "totalOutLessGasEth", "begBalDiffEth",
 			"endBalDiffEth", "endBalCalcEth", "prevBalEth"}...)
 	}
+	if asset, loaded, found := nameAddress(extraOpts, s.Asset); found {
+		model["assetName"] = asset.Name
+		order = append(order, "assetName")
+	} else if loaded && format != "json" {
+		model["assetName"] = ""
+		order = append(order, "assetName")
+	}
+	if accountedFor, loaded, found := nameAddress(extraOpts, s.AccountedFor); found {
+		model["accountedForName"] = accountedFor.Name
+		order = append(order, "accountedForName")
+	} else if loaded && format != "json" {
+		model["accountedForName"] = ""
+		order = append(order, "accountedForName")
+	}
+	order = reorderOrdering(order)
 	// EXISTING_CODE
 
 	return Model{

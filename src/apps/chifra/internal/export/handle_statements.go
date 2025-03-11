@@ -148,7 +148,7 @@ func (opts *ExportOptions) HandleStatements(rCtx *output.RenderCtx, monitorArray
 								First: i == 0,
 								Last:  i == len(apps)-1,
 							}
-							if statements, err := recon.GetStatements1(pos, tx); err != nil {
+							if statements, err := recon.GetStatements(pos, tx); err != nil {
 								errorChan <- err
 
 							} else if len(statements) > 0 {
@@ -189,6 +189,7 @@ func (opts *ExportOptions) HandleStatements(rCtx *output.RenderCtx, monitorArray
 	extraOpts := map[string]any{
 		"articulate": opts.Articulate,
 		"export":     true,
+		"loadNames":  true,
 	}
 
 	return output.StreamMany(rCtx, fetchData, opts.Globals.OutputOptsWithExtra(extraOpts))

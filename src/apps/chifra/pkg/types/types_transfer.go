@@ -66,6 +66,21 @@ func (s *Transfer) Model(chain, format string, verbose bool, extraOpts map[strin
 		model["amountEth"] = s.Amount.ToEtherStr(decimals)
 		order = append(order, []string{"amountEth"}...)
 	}
+	if asset, loaded, found := nameAddress(extraOpts, s.Asset); found {
+		model["assetName"] = asset.Name
+		order = append(order, "assetName")
+	} else if loaded && format != "json" {
+		model["assetName"] = ""
+		order = append(order, "assetName")
+	}
+	if holder, loaded, found := nameAddress(extraOpts, s.Holder); found {
+		model["holderName"] = holder.Name
+		order = append(order, "holderName")
+	} else if loaded && format != "json" {
+		model["holderName"] = ""
+		order = append(order, "holderName")
+	}
+	order = reorderOrdering(order)
 	// EXISTING_CODE
 
 	return Model{

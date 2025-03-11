@@ -5,8 +5,10 @@ export?addrs=0x08166f02313feae18bb044e7877c808b55b5bf58&accounting&transfers&las
       "amount": "1970000000000000000000",
       "amountEth": "1970",
       "asset": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+      "assetName": "ETH",
       "blockNumber": 0,
       "holder": "0x08166f02313feae18bb044e7877c808b55b5bf58",
+      "holderName": "Prefund_0270",
       "logIndex": 0,
       "transactionIndex": 270
     },
@@ -14,8 +16,10 @@ export?addrs=0x08166f02313feae18bb044e7877c808b55b5bf58&accounting&transfers&las
       "amount": "-5010500000000000000",
       "amountEth": "-5.0105",
       "asset": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+      "assetName": "ETH",
       "blockNumber": 46685,
       "holder": "0x08166f02313feae18bb044e7877c808b55b5bf58",
+      "holderName": "Prefund_0270",
       "logIndex": 0,
       "transactionIndex": 0
     },
@@ -23,8 +27,10 @@ export?addrs=0x08166f02313feae18bb044e7877c808b55b5bf58&accounting&transfers&las
       "amount": "-1964900000000000000000",
       "amountEth": "-1964.9",
       "asset": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+      "assetName": "ETH",
       "blockNumber": 46709,
       "holder": "0x08166f02313feae18bb044e7877c808b55b5bf58",
+      "holderName": "Prefund_0270",
       "logIndex": 0,
       "transactionIndex": 0
     }

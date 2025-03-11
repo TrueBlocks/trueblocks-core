@@ -48,7 +48,7 @@ func (opts *ExportOptions) HandleAccounting(rCtx *output.RenderCtx, monitorArray
 						}
 					}
 
-					if statements, err := recon.GetStatements1(pos, tx); err != nil {
+					if statements, err := recon.GetStatements(pos, tx); err != nil {
 						errorChan <- err
 
 					} else {

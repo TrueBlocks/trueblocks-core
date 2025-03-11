@@ -1,0 +1,100 @@
+chifra export  0x868b8fd259abfcfdf9634c343593b34ef359641d --accounting --assets --first_block 8769018 --last_block 8769053 --fmt json --output assets_tributes_out.file
+TEST[DATE|TIME] Addrs:  [0x868b8fd259abfcfdf9634c343593b34ef359641d]
+TEST[DATE|TIME] Accounting:  true
+TEST[DATE|TIME] Assets:  true
+TEST[DATE|TIME] FirstBlock:  8769018
+TEST[DATE|TIME] LastBlock:  8769053
+TEST[DATE|TIME] OutputFn:  assets_tributes_out.file
+TEST[DATE|TIME] Caps:  cache,decache,ether
+TEST[DATE|TIME] Format:  json
+INFO[DATE|TIME] { "outputFilename": "--output_filename--" }
+TEST[DATE|TIME] Block 8769019 is prior to deployment (10000835) of Uniswap V2. Falling back to Maker (0x729d19f657bd0614b4985cf1d82531c67569197b)
+TEST[DATE|TIME] =========================================================
+TEST[DATE|TIME] ===> PRICING FOR 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) using Maker
+TEST[DATE|TIME] =========================================================
+TEST[DATE|TIME] blockNumber:         8769019
+TEST[DATE|TIME] source1 (uni/mkr):   0x729d19f657bd0614b4985cf1d82531c67569197b
+TEST[DATE|TIME] str0 (call):         peek()
+TEST[DATE|TIME] str1 (call/data):    0x0000000000000000000000000000000000000000000000096b794ada83c08000
+TEST[DATE|TIME] int0:                17376500000000000000000000
+TEST[DATE|TIME] int1:                17376500
+TEST[DATE|TIME] bigPrice:            173.765
+TEST[DATE|TIME] price:               173.765
+TEST[DATE|TIME] source:              maker
+TEST[DATE|TIME] transfer: 8769019 124 0 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0x868b8fd259abfcfdf9634c343593b34ef359641d 25000000000000000 
+TEST[DATE|TIME] Block 8769029 is prior to deployment (10000835) of Uniswap V2. No other source for tokens prior to UniSwap
+TEST[DATE|TIME] transfer: 8769029 80 61 0x0ba45a8b5d5575935b8158a88c631e9f9c95a2e5 0x868b8fd259abfcfdf9634c343593b34ef359641d 85000000000000000000 
+TEST[DATE|TIME] Block 8769052 is prior to deployment (10000835) of Uniswap V2. Falling back to Maker (0x729d19f657bd0614b4985cf1d82531c67569197b)
+TEST[DATE|TIME] =========================================================
+TEST[DATE|TIME] ===> PRICING FOR 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) using Maker
+TEST[DATE|TIME] =========================================================
+TEST[DATE|TIME] blockNumber:         8769052
+TEST[DATE|TIME] source1 (uni/mkr):   0x729d19f657bd0614b4985cf1d82531c67569197b
+TEST[DATE|TIME] str0 (call):         peek()
+TEST[DATE|TIME] str1 (call/data):    0x0000000000000000000000000000000000000000000000096b794ada83c08000
+TEST[DATE|TIME] int0:                17376500000000000000000000
+TEST[DATE|TIME] int1:                17376500
+TEST[DATE|TIME] bigPrice:            173.765
+TEST[DATE|TIME] price:               173.765
+TEST[DATE|TIME] source:              maker
+TEST[DATE|TIME] Block 8769052 is prior to deployment (10000835) of Uniswap V2. Falling back to Maker (0x729d19f657bd0614b4985cf1d82531c67569197b)
+TEST[DATE|TIME] =========================================================
+TEST[DATE|TIME] ===> PRICING FOR 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) using Maker
+TEST[DATE|TIME] =========================================================
+TEST[DATE|TIME] blockNumber:         8769052
+TEST[DATE|TIME] source1 (uni/mkr):   0x729d19f657bd0614b4985cf1d82531c67569197b
+TEST[DATE|TIME] str0 (call):         peek()
+TEST[DATE|TIME] str1 (call/data):    0x0000000000000000000000000000000000000000000000096b794ada83c08000
+TEST[DATE|TIME] int0:                17376500000000000000000000
+TEST[DATE|TIME] int1:                17376500
+TEST[DATE|TIME] bigPrice:            173.765
+TEST[DATE|TIME] price:               173.765
+TEST[DATE|TIME] source:              maker
+TEST[DATE|TIME] transfer: 8769052 73 0 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0x868b8fd259abfcfdf9634c343593b34ef359641d -247180000000000 
+TEST[DATE|TIME] Block 8769052 is prior to deployment (10000835) of Uniswap V2. Falling back to Maker (0x729d19f657bd0614b4985cf1d82531c67569197b)
+TEST[DATE|TIME] =========================================================
+TEST[DATE|TIME] ===> PRICING FOR 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) using Maker
+TEST[DATE|TIME] =========================================================
+TEST[DATE|TIME] blockNumber:         8769052
+TEST[DATE|TIME] source1 (uni/mkr):   0x729d19f657bd0614b4985cf1d82531c67569197b
+TEST[DATE|TIME] str0 (call):         peek()
+TEST[DATE|TIME] str1 (call/data):    0x0000000000000000000000000000000000000000000000096b794ada83c08000
+TEST[DATE|TIME] int0:                17376500000000000000000000
+TEST[DATE|TIME] int1:                17376500
+TEST[DATE|TIME] bigPrice:            173.765
+TEST[DATE|TIME] price:               173.765
+TEST[DATE|TIME] source:              maker
+TEST[DATE|TIME] Block 8769052 is prior to deployment (10000835) of Uniswap V2. Falling back to Maker (0x729d19f657bd0614b4985cf1d82531c67569197b)
+TEST[DATE|TIME] =========================================================
+TEST[DATE|TIME] ===> PRICING FOR 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) using Maker
+TEST[DATE|TIME] =========================================================
+TEST[DATE|TIME] blockNumber:         8769052
+TEST[DATE|TIME] source1 (uni/mkr):   0x729d19f657bd0614b4985cf1d82531c67569197b
+TEST[DATE|TIME] str0 (call):         peek()
+TEST[DATE|TIME] str1 (call/data):    0x0000000000000000000000000000000000000000000000096b794ada83c08000
+TEST[DATE|TIME] int0:                17376500000000000000000000
+TEST[DATE|TIME] int1:                17376500
+TEST[DATE|TIME] bigPrice:            173.765
+TEST[DATE|TIME] price:               173.765
+TEST[DATE|TIME] source:              maker
+TEST[DATE|TIME] Block 8769052 is prior to deployment (10000835) of Uniswap V2. No other source for tokens prior to UniSwap
+TEST[DATE|TIME] transfer: 8769052 74 0 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0x868b8fd259abfcfdf9634c343593b34ef359641d -702230000000000 
+TEST[DATE|TIME] transfer: 8769052 74 73 0x0ba45a8b5d5575935b8158a88c631e9f9c95a2e5 0x868b8fd259abfcfdf9634c343593b34ef359641d -85000000000000000000 
+----
+Results in ./assets_tributes_out.file
+{
+  "data": [
+    {
+      "address": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+      "decimals": 18,
+      "name": "ETH",
+      "symbol": "ETH"
+    },
+    {
+      "address": "0x0ba45a8b5d5575935b8158a88c631e9f9c95a2e5",
+      "decimals": 18,
+      "name": "Tellor Tributes",
+      "symbol": "TRB"
+    }
+  ]
+}

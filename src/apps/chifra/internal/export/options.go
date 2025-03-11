@@ -39,6 +39,7 @@ type ExportOptions struct {
 	Accounting  bool                  `json:"accounting,omitempty"`  // Attach accounting records to the exported data (applies to transactions export only)
 	Statements  bool                  `json:"statements,omitempty"`  // For the accounting options only, export only statements
 	Transfers   bool                  `json:"transfers,omitempty"`   // For the accounting options only, export only eth or token transfers
+	Assets      bool                  `json:"assets,omitempty"`      // For the accounting options only, list all assets (with names) that appear in any transfer
 	Balances    bool                  `json:"balances,omitempty"`    // Traverse the transaction history and show each change in ETH balances
 	Withdrawals bool                  `json:"withdrawals,omitempty"` // Export withdrawals for the given address
 	Articulate  bool                  `json:"articulate,omitempty"`  // Articulate transactions, traces, logs, and outputs
@@ -84,6 +85,7 @@ func (opts *ExportOptions) testLog() {
 	logger.TestLog(opts.Accounting, "Accounting: ", opts.Accounting)
 	logger.TestLog(opts.Statements, "Statements: ", opts.Statements)
 	logger.TestLog(opts.Transfers, "Transfers: ", opts.Transfers)
+	logger.TestLog(opts.Assets, "Assets: ", opts.Assets)
 	logger.TestLog(opts.Balances, "Balances: ", opts.Balances)
 	logger.TestLog(opts.Withdrawals, "Withdrawals: ", opts.Withdrawals)
 	logger.TestLog(opts.Articulate, "Articulate: ", opts.Articulate)
@@ -162,6 +164,8 @@ func ExportFinishParseInternal(w io.Writer, values url.Values) *ExportOptions {
 			opts.Statements = true
 		case "transfers":
 			opts.Transfers = true
+		case "assets":
+			opts.Assets = true
 		case "balances":
 			opts.Balances = true
 		case "withdrawals":

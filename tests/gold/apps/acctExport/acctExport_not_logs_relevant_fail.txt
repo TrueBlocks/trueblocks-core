@@ -22,6 +22,7 @@ Flags:
   -C, --accounting          attach accounting records to the exported data (applies to transactions export only)
   -A, --statements          for the accounting options only, export only statements
   -X, --transfers           for the accounting options only, export only eth or token transfers
+  -s, --assets              for the accounting options only, list all assets (with names) that appear in any transfer
   -b, --balances            traverse the transaction history and show each change in ETH balances
   -i, --withdrawals         export withdrawals for the given address
   -a, --articulate          articulate transactions, traces, logs, and outputs

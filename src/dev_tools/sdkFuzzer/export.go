@@ -177,6 +177,16 @@ func TestExport(which, value, fn string, opts *sdk.ExportOptions) {
 				ReportOkay(fn)
 			}
 		}
+	case "assets":
+		if assets, _, err := opts.ExportAssets(); err != nil {
+			ReportError(fn, opts, err)
+		} else {
+			if err := SaveToFile(fn, assets); err != nil {
+				ReportError2(fn, err)
+			} else {
+				ReportOkay(fn)
+			}
+		}
 	case "balances":
 		if balances, _, err := opts.ExportBalances(); err != nil {
 			ReportError(fn, opts, err)

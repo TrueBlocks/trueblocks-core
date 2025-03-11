@@ -1,0 +1,7 @@
+address,symbol,name,decimals
+0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359,DAI,Dai Stablecoin v1.0,18
+0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee,ETH,ETH,18
+0xd53b50a6213ee7ff2fcc41a7cf69d22ded0a43b3,CSTK,CommonsStackToken,18
+0x8619c9194bf7212bcab69b8d58ad6ab872decd5c,BEB,betbeb,18
+0x6b175474e89094c44da98b954eedeac495271d0f,DAI,Dai Stablecoin,18
+0xc12d1c73ee7dc3615ba4e37e4abfdbddfa38907e,KICK,KickToken,8

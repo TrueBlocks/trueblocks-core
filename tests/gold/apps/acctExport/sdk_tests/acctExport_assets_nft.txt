@@ -1,0 +1,32 @@
+export?addrs=trueblocks.eth&accounting&assets&firstBlock=8876230&lastBlock=9024186
+Args: [addrs=trueblocks.eth accounting assets firstBlock=8876230 lastBlock=9024186]
+Opts: {"addrs":["trueblocks.eth"],"accounting":true,"assets":true,"firstBlock":8876230,"lastBlock":9024186}
+Addrs:  [0xf503017d7baf7fbc0fff7492b751025c6a78179b]
+Accounting:  true
+Assets:  true
+FirstBlock:  8876230
+LastBlock:  9024186
+Caps:  cache,decache,ether
+Format:  json
+Block 8876232 is prior to deployment (10000835) of Uniswap V2. No other source for tokens prior to UniSwap
+transfer: 8876232 84 169 0xd53b50a6213ee7ff2fcc41a7cf69d22ded0a43b3 0xf503017d7baf7fbc0fff7492b751025c6a78179b 22500000000000000000000 
+{
+  "data": [
+    {
+      "address": "0xd53b50a6213ee7ff2fcc41a7cf69d22ded0a43b3",
+      "decimals": 18,
+      "name": "CommonsStackToken",
+      "symbol": "CSTK"
+    }
+  ],
+  "meta": {
+    "client": "0xdeadbeef",
+    "finalized": "0xdeadbeef",
+    "staging": "0xdeadbeef",
+    "ripe": "0xdeadbeef",
+    "unripe": "0xdeadbeef",
+    "chainId": 1,
+    "networkId": 1,
+    "chain": "mainnet"
+  }
+}

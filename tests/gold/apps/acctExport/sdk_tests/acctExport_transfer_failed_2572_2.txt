@@ -28,34 +28,6 @@ float2:              1
 bigPrice:            1237.8129236177362007
 price:               1237.8129236177363
 source:              uniswap
-===================================================
-Previous:               11670418
-Current:                11670419
-Next:                   11670420
-accountedFor:           0x65b0d5e1dc0dee0704f53f660aa865c72e986fc7
-sender:                 0x65b0d5e1dc0dee0704f53f660aa865c72e986fc7  ==>  0x0
-asset:                  0xc713e5e149d5d0715dcd1c156a020976e7e56b88 (aMKR) decimals: 18
-hash:                   0x634799410165000edaf1b1e8e5e8055b39cdd534d3c3dc9738865d39adb5d888
-timestamp:              1610856118
-blockNumber:            11670419.91.195
-priceSource:            0 (not-priced)
---------------------------------------------------- 
-Trial balance:
-   prevBal:             14.922878205530494041
-   begBal:              14.922878205530494041 (-0.000000038340920823)
-   totalIn:             0
-   totalOut:            14.922878243871414864
-   amountNet:           -14.922878243871414864
-                       ======================= 
-   endBal:              0 (0)
-   endBalCalc:          -0.000000038340920823
-   rollingBalance:      0
---------------------------------------------------- 
-   amountOut:           14.922878243871414864
-   material:            true
-   reconciled:          false
- ^^ we need to fix this ^^
----------------------------------------------------
 transfer: 11670419 91 195 0xc713e5e149d5d0715dcd1c156a020976e7e56b88 0x65b0d5e1dc0dee0704f53f660aa865c72e986fc7 -14922878243871414864 
 {
   "data": [
@@ -63,6 +35,7 @@ transfer: 11670419 91 195 0xc713e5e149d5d0715dcd1c156a020976e7e56b88 0x65b0d5e1d
       "amount": "-14922878243871414864",
       "amountEth": "-14.922878243871414864",
       "asset": "0xc713e5e149d5d0715dcd1c156a020976e7e56b88",
+      "assetName": "Aave interest bearing MKR",
       "blockNumber": 11670419,
       "holder": "0x65b0d5e1dc0dee0704f53f660aa865c72e986fc7",
       "logIndex": 195,

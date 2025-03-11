@@ -1,0 +1,89 @@
+export?addrs=0xf503017d7baf7fbc0fff7492b751025c6a78179b&accounting&assets&firstBlock=8860513&lastBlock=8860531&ether
+Args: [addrs=0xf503017d7baf7fbc0fff7492b751025c6a78179b accounting assets firstBlock=8860513 lastBlock=8860531 ether]
+Opts: {"addrs":["0xf503017d7baf7fbc0fff7492b751025c6a78179b"],"accounting":true,"assets":true,"firstBlock":8860513,"lastBlock":8860531,"ether":true}
+Addrs:  [0xf503017d7baf7fbc0fff7492b751025c6a78179b]
+Accounting:  true
+Assets:  true
+FirstBlock:  8860513
+LastBlock:  8860531
+Ether:  true
+Caps:  cache,decache,ether
+Format:  json
+Block 8860513 is prior to deployment (10000835) of Uniswap V2. Falling back to Maker (0x729d19f657bd0614b4985cf1d82531c67569197b)
+=========================================================
+===> PRICING FOR 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (ETH) using Maker
+=========================================================
+blockNumber:         8860513
+source1 (uni/mkr):   0x729d19f657bd0614b4985cf1d82531c67569197b
+str0 (call):         peek()
+str1 (call/data):    0x000000000000000000000000000000000000000000000009ece258f296450000
+int0:                18309000000000000000000000
+int1:                18309000
+bigPrice:            183.09
+price:               183.09
+source:              maker
+=========================================================
+===> PRICING FOR 0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359 (DAI) 
+=========================================================
+stable-coin
+transfer: 8860513 85 0 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0xf503017d7baf7fbc0fff7492b751025c6a78179b -34017000000000 
+transfer: 8860513 85 84 0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359 0xf503017d7baf7fbc0fff7492b751025c6a78179b -500000000000000000000 
+Block 8860529 is prior to deployment (10000835) of Uniswap V2. Falling back to Maker (0x729d19f657bd0614b4985cf1d82531c67569197b)
+=========================================================
+===> PRICING FOR 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (ETH) using Maker
+=========================================================
+blockNumber:         8860529
+source1 (uni/mkr):   0x729d19f657bd0614b4985cf1d82531c67569197b
+str0 (call):         peek()
+str1 (call/data):    0x000000000000000000000000000000000000000000000009ece258f296450000
+int0:                18309000000000000000000000
+int1:                18309000
+bigPrice:            183.09
+price:               183.09
+source:              maker
+transfer: 8860529 145 0 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0xf503017d7baf7fbc0fff7492b751025c6a78179b -46049000000000 
+Block 8860531 is prior to deployment (10000835) of Uniswap V2. Falling back to Maker (0x729d19f657bd0614b4985cf1d82531c67569197b)
+=========================================================
+===> PRICING FOR 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (ETH) using Maker
+=========================================================
+blockNumber:         8860531
+source1 (uni/mkr):   0x729d19f657bd0614b4985cf1d82531c67569197b
+str0 (call):         peek()
+str1 (call/data):    0x000000000000000000000000000000000000000000000009ece258f296450000
+int0:                18309000000000000000000000
+int1:                18309000
+bigPrice:            183.09
+price:               183.09
+source:              maker
+=========================================================
+===> PRICING FOR 0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359 (DAI) 
+=========================================================
+stable-coin
+transfer: 8860531 152 0 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0xf503017d7baf7fbc0fff7492b751025c6a78179b -24541000000000 
+transfer: 8860531 152 95 0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359 0xf503017d7baf7fbc0fff7492b751025c6a78179b -7000000000000000000000 
+{
+  "data": [
+    {
+      "address": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+      "decimals": 18,
+      "name": "ETH",
+      "symbol": "ETH"
+    },
+    {
+      "address": "0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359",
+      "decimals": 18,
+      "name": "Dai Stablecoin v1.0",
+      "symbol": "DAI"
+    }
+  ],
+  "meta": {
+    "client": "0xdeadbeef",
+    "finalized": "0xdeadbeef",
+    "staging": "0xdeadbeef",
+    "ripe": "0xdeadbeef",
+    "unripe": "0xdeadbeef",
+    "chainId": 1,
+    "networkId": 1,
+    "chain": "mainnet"
+  }
+}

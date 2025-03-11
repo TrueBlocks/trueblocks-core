@@ -42,6 +42,7 @@ TEST[DATE|TIME] ---------------------------------------------------
       "amountNet": "22500000000000000000000",
       "amountOut": "0",
       "asset": "0xd53b50a6213ee7ff2fcc41a7cf69d22ded0a43b3",
+      "assetName": "CommonsStackToken",
       "begBal": "0",
       "begBalDiff": "0",
       "blockNumber": 8876232,

@@ -1,0 +1,61 @@
+chifra export  0x05a56e2d52c817161883f50c441c3228cfe54d9f --accounting --assets --fmt json --first_record 0 --max_records 15 --output assets_wei_2_1_out.file
+TEST[DATE|TIME] Addrs:  [0x05a56e2d52c817161883f50c441c3228cfe54d9f]
+TEST[DATE|TIME] Accounting:  true
+TEST[DATE|TIME] Assets:  true
+TEST[DATE|TIME] MaxRecords:  15
+TEST[DATE|TIME] OutputFn:  assets_wei_2_1_out.file
+TEST[DATE|TIME] Caps:  cache,decache,ether
+TEST[DATE|TIME] Format:  json
+INFO[DATE|TIME] { "outputFilename": "--output_filename--" }
+TEST[DATE|TIME] Block 1 is prior to deployment (3684349) of Maker. No fallback pricing method
+TEST[DATE|TIME] transfer: 1 99999 0 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0x05a56e2d52c817161883f50c441c3228cfe54d9f 5000000000000000000 
+TEST[DATE|TIME] Block 5 is prior to deployment (3684349) of Maker. No fallback pricing method
+TEST[DATE|TIME] transfer: 5 99999 0 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0x05a56e2d52c817161883f50c441c3228cfe54d9f 5000000000000000000 
+TEST[DATE|TIME] Block 56 is prior to deployment (3684349) of Maker. No fallback pricing method
+TEST[DATE|TIME] transfer: 56 99998 0 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0x05a56e2d52c817161883f50c441c3228cfe54d9f 3750000000000000000 
+TEST[DATE|TIME] Block 235 is prior to deployment (3684349) of Maker. No fallback pricing method
+TEST[DATE|TIME] transfer: 235 99999 0 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0x05a56e2d52c817161883f50c441c3228cfe54d9f 5000000000000000000 
+TEST[DATE|TIME] Block 247 is prior to deployment (3684349) of Maker. No fallback pricing method
+TEST[DATE|TIME] transfer: 247 99998 0 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0x05a56e2d52c817161883f50c441c3228cfe54d9f 3125000000000000000 
+TEST[DATE|TIME] Block 348 is prior to deployment (3684349) of Maker. No fallback pricing method
+TEST[DATE|TIME] transfer: 348 99999 0 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0x05a56e2d52c817161883f50c441c3228cfe54d9f 5000000000000000000 
+TEST[DATE|TIME] Block 500 is prior to deployment (3684349) of Maker. No fallback pricing method
+TEST[DATE|TIME] transfer: 500 99998 0 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0x05a56e2d52c817161883f50c441c3228cfe54d9f 3750000000000000000 
+TEST[DATE|TIME] Block 563 is prior to deployment (3684349) of Maker. No fallback pricing method
+TEST[DATE|TIME] transfer: 563 99998 0 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0x05a56e2d52c817161883f50c441c3228cfe54d9f 3750000000000000000 
+TEST[DATE|TIME] Block 987 is prior to deployment (3684349) of Maker. No fallback pricing method
+TEST[DATE|TIME] transfer: 987 99998 0 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0x05a56e2d52c817161883f50c441c3228cfe54d9f 2500000000000000000 
+TEST[DATE|TIME] Block 1450 is prior to deployment (3684349) of Maker. No fallback pricing method
+TEST[DATE|TIME] transfer: 1450 99999 0 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0x05a56e2d52c817161883f50c441c3228cfe54d9f 5156250000000000000 
+TEST[DATE|TIME] Block 1580 is prior to deployment (3684349) of Maker. No fallback pricing method
+TEST[DATE|TIME] transfer: 1580 99998 0 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0x05a56e2d52c817161883f50c441c3228cfe54d9f 3750000000000000000 
+TEST[DATE|TIME] Block 1586 is prior to deployment (3684349) of Maker. No fallback pricing method
+TEST[DATE|TIME] transfer: 1586 99998 0 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0x05a56e2d52c817161883f50c441c3228cfe54d9f 3750000000000000000 
+TEST[DATE|TIME] Block 1861 is prior to deployment (3684349) of Maker. No fallback pricing method
+TEST[DATE|TIME] transfer: 1861 99999 0 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0x05a56e2d52c817161883f50c441c3228cfe54d9f 5000000000000000000 
+TEST[DATE|TIME] Block 1912 is prior to deployment (3684349) of Maker. No fallback pricing method
+TEST[DATE|TIME] transfer: 1912 99998 0 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0x05a56e2d52c817161883f50c441c3228cfe54d9f 3750000000000000000 
+TEST[DATE|TIME] Block 2057 is prior to deployment (3684349) of Maker. No fallback pricing method
+TEST[DATE|TIME] transfer: 2057 99999 0 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0x05a56e2d52c817161883f50c441c3228cfe54d9f 5000000000000000000 
+TEST[DATE|TIME] Block 2256 is prior to deployment (3684349) of Maker. No fallback pricing method
+TEST[DATE|TIME] transfer: 2256 99999 0 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0x05a56e2d52c817161883f50c441c3228cfe54d9f 5000000000000000000 
+TEST[DATE|TIME] Block 2392 is prior to deployment (3684349) of Maker. No fallback pricing method
+TEST[DATE|TIME] transfer: 2392 99999 0 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0x05a56e2d52c817161883f50c441c3228cfe54d9f 5156250000000000000 
+TEST[DATE|TIME] Block 2516 is prior to deployment (3684349) of Maker. No fallback pricing method
+TEST[DATE|TIME] transfer: 2516 99998 0 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0x05a56e2d52c817161883f50c441c3228cfe54d9f 3750000000000000000 
+TEST[DATE|TIME] Block 3962 is prior to deployment (3684349) of Maker. No fallback pricing method
+TEST[DATE|TIME] transfer: 3962 99998 0 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0x05a56e2d52c817161883f50c441c3228cfe54d9f 3750000000000000000 
+TEST[DATE|TIME] Block 4256 is prior to deployment (3684349) of Maker. No fallback pricing method
+TEST[DATE|TIME] transfer: 4256 99998 0 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0x05a56e2d52c817161883f50c441c3228cfe54d9f 3750000000000000000 
+----
+Results in ./assets_wei_2_1_out.file
+{
+  "data": [
+    {
+      "address": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+      "decimals": 18,
+      "name": "ETH",
+      "symbol": "ETH"
+    }
+  ]
+}

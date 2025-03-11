@@ -1,0 +1,268 @@
+export?addrs=trueblocks.eth&accounting&assets&ether&firstBlock=8856476&lastBlock=9193814
+Args: [addrs=trueblocks.eth accounting assets ether firstBlock=8856476 lastBlock=9193814]
+Opts: {"addrs":["trueblocks.eth"],"accounting":true,"assets":true,"firstBlock":8856476,"lastBlock":9193814,"ether":true}
+Addrs:  [0xf503017d7baf7fbc0fff7492b751025c6a78179b]
+Accounting:  true
+Assets:  true
+FirstBlock:  8856476
+LastBlock:  9193814
+Ether:  true
+Caps:  cache,decache,ether
+Format:  json
+=========================================================
+===> PRICING FOR 0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359 (DAI) 
+=========================================================
+stable-coin
+transfer: 8856476 55 40 0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359 0xf503017d7baf7fbc0fff7492b751025c6a78179b 1000000000000000000 
+=========================================================
+===> PRICING FOR 0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359 (DAI) 
+=========================================================
+stable-coin
+transfer: 8856511 161 94 0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359 0xf503017d7baf7fbc0fff7492b751025c6a78179b 4999000000000000000000 
+=========================================================
+===> PRICING FOR 0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359 (DAI) 
+=========================================================
+stable-coin
+transfer: 8860434 21 19 0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359 0xf503017d7baf7fbc0fff7492b751025c6a78179b 2500000000000000000000 
+Block 8860511 is prior to deployment (10000835) of Uniswap V2. Falling back to Maker (0x729d19f657bd0614b4985cf1d82531c67569197b)
+=========================================================
+===> PRICING FOR 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (ETH) using Maker
+=========================================================
+blockNumber:         8860511
+source1 (uni/mkr):   0x729d19f657bd0614b4985cf1d82531c67569197b
+str0 (call):         peek()
+str1 (call/data):    0x000000000000000000000000000000000000000000000009ece258f296450000
+int0:                18309000000000000000000000
+int1:                18309000
+bigPrice:            183.09
+price:               183.09
+source:              maker
+transfer: 8860511 47 0 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0xf503017d7baf7fbc0fff7492b751025c6a78179b -45985000000000 
+Block 8860513 is prior to deployment (10000835) of Uniswap V2. Falling back to Maker (0x729d19f657bd0614b4985cf1d82531c67569197b)
+=========================================================
+===> PRICING FOR 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (ETH) using Maker
+=========================================================
+blockNumber:         8860513
+source1 (uni/mkr):   0x729d19f657bd0614b4985cf1d82531c67569197b
+str0 (call):         peek()
+str1 (call/data):    0x000000000000000000000000000000000000000000000009ece258f296450000
+int0:                18309000000000000000000000
+int1:                18309000
+bigPrice:            183.09
+price:               183.09
+source:              maker
+=========================================================
+===> PRICING FOR 0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359 (DAI) 
+=========================================================
+stable-coin
+transfer: 8860513 85 0 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0xf503017d7baf7fbc0fff7492b751025c6a78179b -34017000000000 
+transfer: 8860513 85 84 0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359 0xf503017d7baf7fbc0fff7492b751025c6a78179b -500000000000000000000 
+Block 8860529 is prior to deployment (10000835) of Uniswap V2. Falling back to Maker (0x729d19f657bd0614b4985cf1d82531c67569197b)
+=========================================================
+===> PRICING FOR 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (ETH) using Maker
+=========================================================
+blockNumber:         8860529
+source1 (uni/mkr):   0x729d19f657bd0614b4985cf1d82531c67569197b
+str0 (call):         peek()
+str1 (call/data):    0x000000000000000000000000000000000000000000000009ece258f296450000
+int0:                18309000000000000000000000
+int1:                18309000
+bigPrice:            183.09
+price:               183.09
+source:              maker
+transfer: 8860529 145 0 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0xf503017d7baf7fbc0fff7492b751025c6a78179b -46049000000000 
+Block 8860531 is prior to deployment (10000835) of Uniswap V2. Falling back to Maker (0x729d19f657bd0614b4985cf1d82531c67569197b)
+=========================================================
+===> PRICING FOR 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (ETH) using Maker
+=========================================================
+blockNumber:         8860531
+source1 (uni/mkr):   0x729d19f657bd0614b4985cf1d82531c67569197b
+str0 (call):         peek()
+str1 (call/data):    0x000000000000000000000000000000000000000000000009ece258f296450000
+int0:                18309000000000000000000000
+int1:                18309000
+bigPrice:            183.09
+price:               183.09
+source:              maker
+=========================================================
+===> PRICING FOR 0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359 (DAI) 
+=========================================================
+stable-coin
+transfer: 8860531 152 0 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0xf503017d7baf7fbc0fff7492b751025c6a78179b -24541000000000 
+transfer: 8860531 152 95 0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359 0xf503017d7baf7fbc0fff7492b751025c6a78179b -7000000000000000000000 
+Block 8867898 is prior to deployment (10000835) of Uniswap V2. Falling back to Maker (0x729d19f657bd0614b4985cf1d82531c67569197b)
+=========================================================
+===> PRICING FOR 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (ETH) using Maker
+=========================================================
+blockNumber:         8867898
+source1 (uni/mkr):   0x729d19f657bd0614b4985cf1d82531c67569197b
+str0 (call):         peek()
+str1 (call/data):    0x000000000000000000000000000000000000000000000009d0311ca6d5264000
+int0:                18102250000000000000000000
+int1:                18102250
+bigPrice:            181.0225
+price:               181.0225
+source:              maker
+transfer: 8867898 28 0 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0xf503017d7baf7fbc0fff7492b751025c6a78179b -105208000000000 
+Block 8876232 is prior to deployment (10000835) of Uniswap V2. No other source for tokens prior to UniSwap
+transfer: 8876232 84 169 0xd53b50a6213ee7ff2fcc41a7cf69d22ded0a43b3 0xf503017d7baf7fbc0fff7492b751025c6a78179b 22500000000000000000000 
+Block 9024196 is prior to deployment (10000835) of Uniswap V2. No other source for tokens prior to UniSwap
+transfer: 9024196 41 149 0x8619c9194bf7212bcab69b8d58ad6ab872decd5c 0xf503017d7baf7fbc0fff7492b751025c6a78179b 88888000000000000000000 
+Block 9024350 is prior to deployment (10000835) of Uniswap V2. Falling back to Maker (0x729d19f657bd0614b4985cf1d82531c67569197b)
+=========================================================
+===> PRICING FOR 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (ETH) using Maker
+=========================================================
+blockNumber:         9024350
+source1 (uni/mkr):   0x729d19f657bd0614b4985cf1d82531c67569197b
+str0 (call):         peek()
+str1 (call/data):    0x0000000000000000000000000000000000000000000000085ede84e698110000
+int0:                15441000000000000000000000
+int1:                15441000
+bigPrice:            154.41
+price:               154.41
+source:              maker
+transfer: 9024350 73 0 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0xf503017d7baf7fbc0fff7492b751025c6a78179b 15000000000000000 
+Block 9046970 is prior to deployment (10000835) of Uniswap V2. Falling back to Maker (0x729d19f657bd0614b4985cf1d82531c67569197b)
+=========================================================
+===> PRICING FOR 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (ETH) using Maker
+=========================================================
+blockNumber:         9046970
+source1 (uni/mkr):   0x729d19f657bd0614b4985cf1d82531c67569197b
+str0 (call):         peek()
+str1 (call/data):    0x000000000000000000000000000000000000000000000007d4c9049e3cee0000
+int0:                14446000000000000000000000
+int1:                14446000
+bigPrice:            144.46
+price:               144.46
+source:              maker
+transfer: 9046970 71 0 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0xf503017d7baf7fbc0fff7492b751025c6a78179b -25799130000000000 
+Block 9066048 is prior to deployment (10000835) of Uniswap V2. No other source for tokens prior to UniSwap
+transfer: 9066048 62 93 0xd53b50a6213ee7ff2fcc41a7cf69d22ded0a43b3 0xf503017d7baf7fbc0fff7492b751025c6a78179b 174000000000000000000 
+=========================================================
+===> PRICING FOR 0x6b175474e89094c44da98b954eedeac495271d0f (DAI) 
+=========================================================
+stable-coin
+transfer: 9136971 32 52 0x6b175474e89094c44da98b954eedeac495271d0f 0xf503017d7baf7fbc0fff7492b751025c6a78179b 12500000000000000000000 
+Block 9193234 is prior to deployment (10000835) of Uniswap V2. No other source for tokens prior to UniSwap
+transfer: 9193234 2 86 0xc12d1c73ee7dc3615ba4e37e4abfdbddfa38907e 0xf503017d7baf7fbc0fff7492b751025c6a78179b 88888800000000 
+Block 9193753 is prior to deployment (10000835) of Uniswap V2. Falling back to Maker (0x729d19f657bd0614b4985cf1d82531c67569197b)
+=========================================================
+===> PRICING FOR 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (ETH) using Maker
+=========================================================
+blockNumber:         9193753
+source1 (uni/mkr):   0x729d19f657bd0614b4985cf1d82531c67569197b
+str0 (call):         peek()
+str1 (call/data):    0x000000000000000000000000000000000000000000000006fb13d27beafd4000
+int0:                12877250000000000000000000
+int1:                12877250
+bigPrice:            128.7725
+price:               128.7725
+source:              maker
+=========================================================
+===> PRICING FOR 0x6b175474e89094c44da98b954eedeac495271d0f (DAI) 
+=========================================================
+stable-coin
+transfer: 9193753 147 0 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0xf503017d7baf7fbc0fff7492b751025c6a78179b -467946000000000 
+transfer: 9193753 147 112 0x6b175474e89094c44da98b954eedeac495271d0f 0xf503017d7baf7fbc0fff7492b751025c6a78179b -10000000000000000000 
+Block 9193777 is prior to deployment (10000835) of Uniswap V2. Falling back to Maker (0x729d19f657bd0614b4985cf1d82531c67569197b)
+=========================================================
+===> PRICING FOR 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (ETH) using Maker
+=========================================================
+blockNumber:         9193777
+source1 (uni/mkr):   0x729d19f657bd0614b4985cf1d82531c67569197b
+str0 (call):         peek()
+str1 (call/data):    0x000000000000000000000000000000000000000000000006fb13d27beafd4000
+int0:                12877250000000000000000000
+int1:                12877250
+bigPrice:            128.7725
+price:               128.7725
+source:              maker
+=========================================================
+===> PRICING FOR 0x6b175474e89094c44da98b954eedeac495271d0f (DAI) 
+=========================================================
+stable-coin
+transfer: 9193777 226 0 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0xf503017d7baf7fbc0fff7492b751025c6a78179b -416144000000000 
+transfer: 9193777 226 172 0x6b175474e89094c44da98b954eedeac495271d0f 0xf503017d7baf7fbc0fff7492b751025c6a78179b -6000000000000000000000 
+Block 9193806 is prior to deployment (10000835) of Uniswap V2. Falling back to Maker (0x729d19f657bd0614b4985cf1d82531c67569197b)
+=========================================================
+===> PRICING FOR 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (ETH) using Maker
+=========================================================
+blockNumber:         9193806
+source1 (uni/mkr):   0x729d19f657bd0614b4985cf1d82531c67569197b
+str0 (call):         peek()
+str1 (call/data):    0x000000000000000000000000000000000000000000000006fb13d27beafd4000
+int0:                12877250000000000000000000
+int1:                12877250
+bigPrice:            128.7725
+price:               128.7725
+source:              maker
+transfer: 9193806 80 0 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0xf503017d7baf7fbc0fff7492b751025c6a78179b -385209000000000 
+Block 9193814 is prior to deployment (10000835) of Uniswap V2. Falling back to Maker (0x729d19f657bd0614b4985cf1d82531c67569197b)
+=========================================================
+===> PRICING FOR 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (ETH) using Maker
+=========================================================
+blockNumber:         9193814
+source1 (uni/mkr):   0x729d19f657bd0614b4985cf1d82531c67569197b
+str0 (call):         peek()
+str1 (call/data):    0x000000000000000000000000000000000000000000000006fb13d27beafd4000
+int0:                12877250000000000000000000
+int1:                12877250
+bigPrice:            128.7725
+price:               128.7725
+source:              maker
+=========================================================
+===> PRICING FOR 0x6b175474e89094c44da98b954eedeac495271d0f (DAI) 
+=========================================================
+stable-coin
+transfer: 9193814 38 0 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0xf503017d7baf7fbc0fff7492b751025c6a78179b -416240000000000 
+transfer: 9193814 38 26 0x6b175474e89094c44da98b954eedeac495271d0f 0xf503017d7baf7fbc0fff7492b751025c6a78179b -6489950000000000000000 
+{
+  "data": [
+    {
+      "address": "0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359",
+      "decimals": 18,
+      "name": "Dai Stablecoin v1.0",
+      "symbol": "DAI"
+    },
+    {
+      "address": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+      "decimals": 18,
+      "name": "ETH",
+      "symbol": "ETH"
+    },
+    {
+      "address": "0xd53b50a6213ee7ff2fcc41a7cf69d22ded0a43b3",
+      "decimals": 18,
+      "name": "CommonsStackToken",
+      "symbol": "CSTK"
+    },
+    {
+      "address": "0x8619c9194bf7212bcab69b8d58ad6ab872decd5c",
+      "decimals": 18,
+      "name": "betbeb",
+      "symbol": "BEB"
+    },
+    {
+      "address": "0x6b175474e89094c44da98b954eedeac495271d0f",
+      "decimals": 18,
+      "name": "Dai Stablecoin",
+      "symbol": "DAI"
+    },
+    {
+      "address": "0xc12d1c73ee7dc3615ba4e37e4abfdbddfa38907e",
+      "decimals": 8,
+      "name": "KickToken",
+      "symbol": "KICK"
+    }
+  ],
+  "meta": {
+    "client": "0xdeadbeef",
+    "finalized": "0xdeadbeef",
+    "staging": "0xdeadbeef",
+    "ripe": "0xdeadbeef",
+    "unripe": "0xdeadbeef",
+    "chainId": 1,
+    "networkId": 1,
+    "chain": "mainnet"
+  }
+}
