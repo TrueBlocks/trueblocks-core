@@ -118,7 +118,6 @@ func (opts *ExportOptions) HandleAssets(rCtx *output.RenderCtx, monitorArray []m
 						}
 
 						ledgerOpts := &ledger1.ReconcilerOptions{
-							Connection:   opts.Conn,
 							AccountFor:   mon.Address,
 							FirstBlock:   opts.FirstBlock,
 							LastBlock:    opts.LastBlock,
@@ -129,7 +128,7 @@ func (opts *ExportOptions) HandleAssets(rCtx *output.RenderCtx, monitorArray []m
 							AppFilters:   filter,
 						}
 
-						recon = ledger1.NewReconciler(ledgerOpts)
+						recon = ledger1.NewReconciler(opts.Conn, ledgerOpts)
 						items := make([]types.Transfer, 0, len(thisMap))
 						for i, tx := range txArray {
 							// Note: apps and txArray are the same list, so we can use the index from txArray

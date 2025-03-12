@@ -1,4 +1,4 @@
-package normalize
+package types
 
 import (
 	"strings"
@@ -6,11 +6,10 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/topics"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
 func TestNormalizedLog_Standard(t *testing.T) {
-	log := types.Log{
+	log := Log{
 		Topics: []base.Hash{
 			topics.TransferTopic,
 			base.HexToHash("0x0000000000000000000000001111111111111111111111111111111111111111"),
@@ -42,7 +41,7 @@ func TestNormalizedLog_Standard(t *testing.T) {
 }
 
 func TestNormalizedLog_Approval(t *testing.T) {
-	log := types.Log{
+	log := Log{
 		Topics: []base.Hash{
 			topics.ApprovalTopic,
 			base.HexToHash("0x0000000000000000000000001111111111111111111111111111111111111111"),
@@ -81,7 +80,7 @@ func TestNormalizedLog_TwoTopics(t *testing.T) {
 	valueHex, _ := base.WeiToHash(value)
 	data := "0x" + strings.TrimPrefix(toTopic, "0x") + strings.TrimPrefix(valueHex, "0x")
 
-	log := types.Log{
+	log := Log{
 		Topics: []base.Hash{
 			topics.TransferTopic,
 			base.HexToHash(fromTopic),
@@ -115,7 +114,7 @@ func TestNormalizedLog_NonStandard(t *testing.T) {
 		"000000000000000000000000dddddddddddddddddddddddddddddddddddddddd" +
 		"000000000000000000000000000000000000000000000000000000000000270f"
 
-	log := types.Log{
+	log := Log{
 		Topics: []base.Hash{
 			topics.TransferTopic,
 		},
@@ -147,7 +146,7 @@ func TestNormalizedLog_NonStandard(t *testing.T) {
 }
 
 func TestNormalizedLog_UnrecognizedFormat(t *testing.T) {
-	log := types.Log{
+	log := Log{
 		Topics: []base.Hash{
 			topics.TransferTopic,
 			base.HexToHash("0x000000000000000000000000aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"),

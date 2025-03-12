@@ -1,4 +1,4 @@
-package normalize
+package types
 
 import (
 	"errors"
@@ -7,12 +7,11 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/topics"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
 var ErrNormalization = errors.New("normalization error")
 
-func NormalizeKnownLogs(log *types.Log) (*types.Log, error) {
+func NormalizeKnownLogs(log *Log) (*Log, error) {
 	if len(log.Topics) == 0 {
 		return log, fmt.Errorf("log has no topics: %w", ErrNormalization)
 	}

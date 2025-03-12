@@ -68,7 +68,6 @@ func (opts *ExportOptions) HandleAccounting(rCtx *output.RenderCtx, monitorArray
 
 			} else if !opts.NoZero || cnt > 0 {
 				ledgerOpts := &ledger1.ReconcilerOptions{
-					Connection:   opts.Conn,
 					AccountFor:   mon.Address,
 					FirstBlock:   opts.FirstBlock,
 					LastBlock:    opts.LastBlock,
@@ -79,7 +78,7 @@ func (opts *ExportOptions) HandleAccounting(rCtx *output.RenderCtx, monitorArray
 					AppFilters:   filter,
 				}
 
-				recon = ledger1.NewReconciler(ledgerOpts)
+				recon = ledger1.NewReconciler(opts.Conn, ledgerOpts)
 				for i, app := range apps {
 					prev := uint32(0)
 					if apps[i].BlockNumber > 0 {

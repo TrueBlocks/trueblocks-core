@@ -6,7 +6,6 @@ import (
 	"fmt"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/abi"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/normalize"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/topics"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
@@ -87,7 +86,7 @@ func findCommonEvent(logIn *types.Log) (*types.Function, error) {
 		return nil, nil
 	}
 
-	if log, err := normalize.NormalizeKnownLogs(logIn); err != nil {
+	if log, err := types.NormalizeKnownLogs(logIn); err != nil {
 		return nil, err
 	} else {
 		switch log.Topics[0] {

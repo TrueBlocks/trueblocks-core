@@ -13,6 +13,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/ledger1"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/names"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
@@ -25,6 +26,7 @@ type Reconciler3 struct {
 	ledgerAssets      map[base.Address]bool
 	correctionCounter base.Value
 	entryCounter      base.Value
+	Connection        *rpc.Connection
 }
 
 func (r *Reconciler3) String() string {
@@ -32,10 +34,11 @@ func (r *Reconciler3) String() string {
 	return string(bytes)
 }
 
-func NewReconciler(opts *ledger1.ReconcilerOptions) *Reconciler3 {
+func NewReconciler(conn *rpc.Connection, opts *ledger1.ReconcilerOptions) *Reconciler3 {
 	parts := types.Custom | types.Prefund | types.Regular
-	names, _ := names.LoadNamesMap(opts.Connection.Chain, parts, []string{})
+	names, _ := names.LoadNamesMap(conn.Chain, parts, []string{})
 	return &Reconciler3{
+		Connection:    conn,
 		opts:          opts,
 		names:         names,
 		hasStartBlock: false,
@@ -82,7 +85,7 @@ func (r *Reconciler3) flushBlock(postings []types.AssetTransfer, modelChan chan<
 		key := assetHolderKey{Asset: p.Asset, Holder: p.Holder}
 		if !blockProcessedAssets[p.Asset] {
 			if r.hasStartBlock && !r.ledgerAssets[p.Asset] {
-				if onChain, err := r.opts.Connection.GetBalanceAtToken(p.Asset, p.Holder, p.BlockNumber-1); err == nil {
+				if onChain, err := r.Connection.GetBalanceAtToken(p.Asset, p.Holder, p.BlockNumber-1); err == nil {
 					if p.BlockNumber == 0 {
 						onChain = base.ZeroWei
 					}
@@ -90,7 +93,7 @@ func (r *Reconciler3) flushBlock(postings []types.AssetTransfer, modelChan chan<
 				}
 				r.ledgerAssets[p.Asset] = true
 			}
-			if onChain, err := r.opts.Connection.GetBalanceAtToken(p.Asset, p.Holder, p.BlockNumber-1); err == nil {
+			if onChain, err := r.Connection.GetBalanceAtToken(p.Asset, p.Holder, p.BlockNumber-1); err == nil {
 				if p.BlockNumber == 0 {
 					onChain = base.ZeroWei
 				}
@@ -228,7 +231,7 @@ func (r *Reconciler3) InitData() {
 			} else if amt.Cmp(base.ZeroWei) < 0 {
 				p.AmountOut = *amt.Neg()
 			}
-			eb, _ := r.opts.Connection.GetBalanceAtToken(p.Asset, p.Holder, p.BlockNumber)
+			eb, _ := r.Connection.GetBalanceAtToken(p.Asset, p.Holder, p.BlockNumber)
 			p.EndBal = *eb
 
 			key := blockTxKey{BlockNumber: p.BlockNumber, TransactionIndex: p.TransactionIndex}
