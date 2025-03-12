@@ -246,4 +246,15 @@ const (
 	SortByTags
 )
 
+func (n *Name) IsAirdrop() bool {
+	str := strings.ToLower(n.Name + " " + n.Symbol + " " + n.Source + " " + n.Tags)
+	searches := []string{"airdrop", "claim", "visit"}
+	for _, search := range searches {
+		if strings.Contains(str, search) {
+			return true
+		}
+	}
+	return false
+}
+
 // EXISTING_CODE

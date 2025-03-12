@@ -196,10 +196,6 @@ func (s *Transfer) FinishUnmarshal(fileVersion uint64) {
 }
 
 // EXISTING_CODE
-func (s *Transfer) IsMaterial() bool {
-	return !s.Amount.Equal(base.ZeroWei)
-}
-
 type AssetTransfer struct {
 	Amount           base.Wei `json:"amount"`
 	AmountIn         base.Wei

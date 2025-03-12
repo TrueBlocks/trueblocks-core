@@ -31,9 +31,11 @@ type ReconcilerOptions struct {
 }
 
 type Reconciler1 struct {
-	opts          *ReconcilerOptions
-	Names         map[base.Address]types.Name
-	DoCorrections bool
+	opts           *ReconcilerOptions
+	Names          map[base.Address]types.Name
+	AddCorrections bool
+	ShowDebugging  bool
+	RemoveAirdrops bool
 }
 
 func (r *Reconciler1) String() string {
@@ -45,9 +47,11 @@ func NewReconciler(opts *ReconcilerOptions) *Reconciler1 {
 	parts := types.Custom | types.Prefund | types.Regular
 	names, _ := names.LoadNamesMap("mainnet", parts, []string{})
 	r := &Reconciler1{
-		opts:          opts,
-		Names:         names,
-		DoCorrections: true,
+		opts:           opts,
+		Names:          names,
+		AddCorrections: true,
+		ShowDebugging:  true,
+		RemoveAirdrops: true,
 	}
 	return r
 }
@@ -68,7 +72,7 @@ func (r *Reconciler1) trialBalance(pos *types.AppPosition, trans *types.Transact
 		return false, err
 	}
 
-	if r.DoCorrections {
+	if r.AddCorrections {
 		var okay bool
 		if okay = s.Reconciled(); !okay {
 			if !s.IsEth() {
@@ -79,11 +83,13 @@ func (r *Reconciler1) trialBalance(pos *types.AppPosition, trans *types.Transact
 		}
 	}
 
-	if s.IsMaterial() {
-		s.SpotPrice, s.PriceSource, _ = pricing.PriceUsd(r.opts.Connection, s)
-		if r.DoCorrections {
-			s.DebugStatement(pos)
-		}
+	if !s.IsMaterial() {
+		return s.Reconciled(), nil
+	}
+
+	s.SpotPrice, s.PriceSource, _ = pricing.PriceUsd(r.opts.Connection, s)
+	if r.ShowDebugging {
+		s.DebugStatement(pos)
 	}
 
 	return s.Reconciled(), nil
@@ -137,6 +143,18 @@ func (r *Reconciler1) correctForNullTransfer(s *types.Statement, tx *types.Trans
 	return s.Reconciled()
 }
 
+func (r *Reconciler1) SkipAirdrop(stmt *types.Statement) bool {
+	if !r.RemoveAirdrops {
+		return false
+	}
+
+	if name, found := r.Names[stmt.Asset]; !found {
+		return false
+	} else {
+		return name.IsAirdrop()
+	}
+}
+
 func (r *Reconciler1) GetStatements(pos *types.AppPosition, trans *types.Transaction) ([]types.Statement, error) {
 	results := make([]types.Statement, 0, 20)
 	if AssetOfInterest(r.opts.AssetFilters, base.FAKE_ETH_ADDRESS) {
@@ -160,7 +178,7 @@ func (r *Reconciler1) GetStatements(pos *types.AppPosition, trans *types.Transac
 				if _, err = r.trialBalance(pos, trans, stmt); err != nil {
 					return nil, err
 				} else {
-					if stmt.IsMaterial() {
+					if stmt.IsMaterial() { // append even if not reconciled
 						results = append(results, *stmt)
 					}
 				}
@@ -172,7 +190,6 @@ func (r *Reconciler1) GetStatements(pos *types.AppPosition, trans *types.Transac
 		if statements, err := r.getStatementsFromLogs(trans.Receipt.Logs); err != nil {
 			return nil, err
 		} else {
-			receiptStatements := make([]types.Statement, 0, len(statements))
 			for _, stmt := range statements {
 				if reconciled, err := r.trialBalance(pos, trans, &stmt); err != nil {
 					// TODO: Silent fail?
@@ -187,13 +204,13 @@ func (r *Reconciler1) GetStatements(pos *types.AppPosition, trans *types.Transac
 							logger.Warn("Log statement at ", id, " does not reconcile.")
 						}
 					}
-					// order matters
-					if stmt.IsMaterial() {
-						receiptStatements = append(receiptStatements, stmt)
+
+					// order matters - don't move
+					if stmt.IsMaterial() && !r.SkipAirdrop(&stmt) { // add even if not reconciled
+						results = append(results, stmt)
 					}
 				}
 			}
-			results = append(results, receiptStatements...)
 		}
 	}
 	return results, nil
@@ -286,7 +303,7 @@ func (r *Reconciler1) getStatementsFromLogs(logs []types.Log) ([]types.Statement
 			if stmt, err := r.getStatementFromLog(&log); err != nil {
 				// TODO: silent fail?
 				continue
-			} else if stmt == nil || !stmt.IsMaterial() {
+			} else if stmt == nil {
 				continue
 			} else {
 				statements = append(statements, *stmt)
@@ -362,7 +379,8 @@ func AssetOfInterest(filters []base.Address, needle base.Address) bool {
 
 // GetTransfers returns a statement from a given transaction
 func (r *Reconciler1) GetTransfers(pos *types.AppPosition, trans *types.Transaction) ([]types.Transfer, error) {
-	r.DoCorrections = false
+	r.AddCorrections = false
+	r.ShowDebugging = false
 	if statements, err := r.GetStatements(pos, trans); err != nil {
 		return nil, err
 	} else {
