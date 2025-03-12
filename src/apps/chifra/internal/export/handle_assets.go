@@ -161,13 +161,7 @@ func (opts *ExportOptions) HandleAssets(rCtx *output.RenderCtx, monitorArray []m
 							if opts.Reversed {
 								i, j = j, i
 							}
-							if items[i].BlockNumber == items[j].BlockNumber {
-								if items[i].TransactionIndex == items[j].TransactionIndex {
-									return items[i].LogIndex < items[j].LogIndex
-								}
-								return items[i].TransactionIndex < items[j].TransactionIndex
-							}
-							return items[i].BlockNumber < items[j].BlockNumber
+							return items[i].Asset.LessThan(items[j].Asset)
 						})
 
 						for _, item := range items {

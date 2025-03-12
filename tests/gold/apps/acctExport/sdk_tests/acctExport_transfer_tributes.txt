@@ -9,71 +9,14 @@ FirstBlock:  8769018
 LastBlock:  8769053
 Caps:  cache,decache,ether
 Format:  json
-Block 8769029 is prior to deployment (10000835) of Uniswap V2. No other source for tokens prior to UniSwap
-===================================================
-====> token
-===================================================
-Previous:               8769019
-Current:                8769029
-Next:                   8769052
-accountedFor:           0x868b8fd259abfcfdf9634c343593b34ef359641d
-sender:                 0x103348c47ffc3254aff761894e7c13ca0c680465  ==>  0x868b8fd259abfcfdf9634c343593b34ef359641d
-asset:                  0x0ba45a8b5d5575935b8158a88c631e9f9c95a2e5 (TRB) decimals: 18
-hash:                   0x22f3135a1c2b201456a4770ef9c1ac65a759db3aebe5cb8ad36ad7373f48532f
-timestamp:              1571457649
-blockNumber:            8769029.80.61
-priceSource:            0 (token-not-priced-pre-uni)
---------------------------------------------------- 
-Trial balance:
-   prevBal:             0
-   begBal:              0 (0)
-   totalIn:             85
-   totalOut:            0
-   amountNet:           85
-                       ======================= 
-   endBal:              85 (0)
-   endBalCalc:          85
-   rollingBalance:      0
---------------------------------------------------- 
-   amountIn:            85
-   material:            true
-   reconciled:          true
----------------------------------------------------
-Block 8769052 is prior to deployment (10000835) of Uniswap V2. No other source for tokens prior to UniSwap
-===================================================
-====> token
-===================================================
-Previous:               8769052
-Current:                8769052
-Next:                   8769053
-accountedFor:           0x868b8fd259abfcfdf9634c343593b34ef359641d
-sender:                 0x868b8fd259abfcfdf9634c343593b34ef359641d  ==>  0x2a0c0dbecc7e4d658f48e01e3fa353f44050c208
-asset:                  0x0ba45a8b5d5575935b8158a88c631e9f9c95a2e5 (TRB) decimals: 18
-hash:                   0x90feb158340931c051ccb4def6112b6d46794f739499d7255b5109481b991265
-timestamp:              1571458005
-blockNumber:            8769052.74.73
-priceSource:            0 (token-not-priced-pre-uni)
---------------------------------------------------- 
-Trial balance:
-   prevBal:             85
-   begBal:              85 (0)
-   totalIn:             0
-   totalOut:            85
-   amountNet:           -85
-                       ======================= 
-   endBal:              0 (0)
-   endBalCalc:          0
-   rollingBalance:      0
---------------------------------------------------- 
-   amountOut:           85
-   material:            true
-   reconciled:          true
----------------------------------------------------
+transfer: 8769029 80 61 0x0ba45a8b5d5575935b8158a88c631e9f9c95a2e5 0x868b8fd259abfcfdf9634c343593b34ef359641d 85000000000000000000 
+transfer: 8769052 74 73 0x0ba45a8b5d5575935b8158a88c631e9f9c95a2e5 0x868b8fd259abfcfdf9634c343593b34ef359641d -85000000000000000000 
 {
   "data": [
     {
       "amount": "85000000000000000000",
       "asset": "0x0ba45a8b5d5575935b8158a88c631e9f9c95a2e5",
+      "assetName": "Tellor Tributes",
       "blockNumber": 8769029,
       "holder": "0x868b8fd259abfcfdf9634c343593b34ef359641d",
       "logIndex": 61,
@@ -82,6 +25,7 @@ Trial balance:
     {
       "amount": "-85000000000000000000",
       "asset": "0x0ba45a8b5d5575935b8158a88c631e9f9c95a2e5",
+      "assetName": "Tellor Tributes",
       "blockNumber": 8769052,
       "holder": "0x868b8fd259abfcfdf9634c343593b34ef359641d",
       "logIndex": 73,

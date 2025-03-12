@@ -7,11 +7,8 @@ Transfers:  true
 LastBlock:  4000000
 Caps:  cache,decache,ether
 Format:  json
-Block 0 is prior to deployment (3684349) of Maker. No fallback pricing method
 transfer: 0 270 0 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0x08166f02313feae18bb044e7877c808b55b5bf58 1970000000000000000000 
-Block 46685 is prior to deployment (3684349) of Maker. No fallback pricing method
 transfer: 46685 0 0 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0x08166f02313feae18bb044e7877c808b55b5bf58 -5010500000000000000 
-Block 46709 is prior to deployment (3684349) of Maker. No fallback pricing method
 transfer: 46709 0 0 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0x08166f02313feae18bb044e7877c808b55b5bf58 -1964900000000000000000 
 {
   "data": [

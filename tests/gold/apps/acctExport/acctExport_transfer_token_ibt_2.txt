@@ -10,232 +10,9 @@ TEST[DATE|TIME] OutputFn:  transfer_token_ibt_2_out.file
 TEST[DATE|TIME] Caps:  cache,decache,ether
 TEST[DATE|TIME] Format:  json
 INFO[DATE|TIME] { "outputFilename": "--output_filename--" }
-TEST[DATE|TIME] =========================================================
-TEST[DATE|TIME] ===> PRICING FOR 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (ETH) using Uniswap
-TEST[DATE|TIME] =========================================================
-TEST[DATE|TIME] blockNumber:         12704456
-TEST[DATE|TIME] source1 (uni/mkr):   0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f
-TEST[DATE|TIME] str0 (call):         getPair(0x6b175474e89094c44da98b954eedeac495271d0f, 0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2)
-TEST[DATE|TIME] source2 (pair):      0xa478c2975ab1ea89e8196811f51a7b7ade33eb11
-TEST[DATE|TIME] str1 (call/data):    getReserves()
-TEST[DATE|TIME] first:               0x6b175474e89094c44da98b954eedeac495271d0f
-TEST[DATE|TIME] second:              0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2
-TEST[DATE|TIME] reversed:            false
-TEST[DATE|TIME] float0:              36936252061481304330000000
-TEST[DATE|TIME] float1:              20243962597672319668000
-TEST[DATE|TIME] float2:              1
-TEST[DATE|TIME] bigPrice:            1824.5564267999728689
-TEST[DATE|TIME] price:               1824.5564267999728
-TEST[DATE|TIME] source:              uniswap
-TEST[DATE|TIME] transfer: 12704456 92 0 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0xf503017d7baf7fbc0fff7492b751025c6a78179b 9500000000000000 
-TEST[DATE|TIME] =========================================================
-TEST[DATE|TIME] ===> PRICING FOR 0x6b175474e89094c44da98b954eedeac495271d0f (DAI) 
-TEST[DATE|TIME] =========================================================
-TEST[DATE|TIME] stable-coin
 TEST[DATE|TIME] transfer: 12704710 143 313 0x6b175474e89094c44da98b954eedeac495271d0f 0xf503017d7baf7fbc0fff7492b751025c6a78179b 4750000000000000000 
-TEST[DATE|TIME] =========================================================
-TEST[DATE|TIME] ===> PRICING FOR 0x6b175474e89094c44da98b954eedeac495271d0f (DAI) 
-TEST[DATE|TIME] =========================================================
-TEST[DATE|TIME] stable-coin
 TEST[DATE|TIME] transfer: 12704812 11 87 0x6b175474e89094c44da98b954eedeac495271d0f 0xf503017d7baf7fbc0fff7492b751025c6a78179b 5000000000000000000 
-TEST[DATE|TIME] =========================================================
-TEST[DATE|TIME] ===> PRICING FOR 0x6b175474e89094c44da98b954eedeac495271d0f (DAI) 
-TEST[DATE|TIME] =========================================================
-TEST[DATE|TIME] stable-coin
 TEST[DATE|TIME] transfer: 12705275 212 337 0x6b175474e89094c44da98b954eedeac495271d0f 0xf503017d7baf7fbc0fff7492b751025c6a78179b 3800000000000000000 
-TEST[DATE|TIME] =========================================================
-TEST[DATE|TIME] ===> PRICING FOR 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (ETH) using Uniswap
-TEST[DATE|TIME] =========================================================
-TEST[DATE|TIME] blockNumber:         12705892
-TEST[DATE|TIME] source1 (uni/mkr):   0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f
-TEST[DATE|TIME] str0 (call):         getPair(0x6b175474e89094c44da98b954eedeac495271d0f, 0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2)
-TEST[DATE|TIME] source2 (pair):      0xa478c2975ab1ea89e8196811f51a7b7ade33eb11
-TEST[DATE|TIME] str1 (call/data):    getReserves()
-TEST[DATE|TIME] first:               0x6b175474e89094c44da98b954eedeac495271d0f
-TEST[DATE|TIME] second:              0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2
-TEST[DATE|TIME] reversed:            false
-TEST[DATE|TIME] float0:              37180643455112622587000000
-TEST[DATE|TIME] float1:              20114701524999621489000
-TEST[DATE|TIME] float2:              1
-TEST[DATE|TIME] bigPrice:            1848.4312784309794644
-TEST[DATE|TIME] price:               1848.4312784309795
-TEST[DATE|TIME] source:              uniswap
-TEST[DATE|TIME] =========================================================
-TEST[DATE|TIME] ===> PRICING FOR 0x6b175474e89094c44da98b954eedeac495271d0f (DAI) 
-TEST[DATE|TIME] =========================================================
-TEST[DATE|TIME] stable-coin
-TEST[DATE|TIME] =========================================================
-TEST[DATE|TIME] ===> PRICING FOR 0x6b175474e89094c44da98b954eedeac495271d0f (DAI) 
-TEST[DATE|TIME] =========================================================
-TEST[DATE|TIME] stable-coin
-TEST[DATE|TIME] =========================================================
-TEST[DATE|TIME] ===> PRICING FOR 0x6b175474e89094c44da98b954eedeac495271d0f (DAI) 
-TEST[DATE|TIME] =========================================================
-TEST[DATE|TIME] stable-coin
-TEST[DATE|TIME] =========================================================
-TEST[DATE|TIME] ===> PRICING FOR 0x6b175474e89094c44da98b954eedeac495271d0f (DAI) 
-TEST[DATE|TIME] =========================================================
-TEST[DATE|TIME] stable-coin
-TEST[DATE|TIME] =========================================================
-TEST[DATE|TIME] ===> PRICING FOR 0x6b175474e89094c44da98b954eedeac495271d0f (DAI) 
-TEST[DATE|TIME] =========================================================
-TEST[DATE|TIME] stable-coin
-TEST[DATE|TIME] =========================================================
-TEST[DATE|TIME] ===> PRICING FOR 0x6b175474e89094c44da98b954eedeac495271d0f (DAI) 
-TEST[DATE|TIME] =========================================================
-TEST[DATE|TIME] stable-coin
-TEST[DATE|TIME] =========================================================
-TEST[DATE|TIME] ===> PRICING FOR 0x6b175474e89094c44da98b954eedeac495271d0f (DAI) 
-TEST[DATE|TIME] =========================================================
-TEST[DATE|TIME] stable-coin
-TEST[DATE|TIME] =========================================================
-TEST[DATE|TIME] ===> PRICING FOR 0x6b175474e89094c44da98b954eedeac495271d0f (DAI) 
-TEST[DATE|TIME] =========================================================
-TEST[DATE|TIME] stable-coin
-TEST[DATE|TIME] =========================================================
-TEST[DATE|TIME] ===> PRICING FOR 0x6b175474e89094c44da98b954eedeac495271d0f (DAI) 
-TEST[DATE|TIME] =========================================================
-TEST[DATE|TIME] stable-coin
-TEST[DATE|TIME] =========================================================
-TEST[DATE|TIME] ===> PRICING FOR 0x6b175474e89094c44da98b954eedeac495271d0f (DAI) 
-TEST[DATE|TIME] =========================================================
-TEST[DATE|TIME] stable-coin
-TEST[DATE|TIME] =========================================================
-TEST[DATE|TIME] ===> PRICING FOR 0x6b175474e89094c44da98b954eedeac495271d0f (DAI) 
-TEST[DATE|TIME] =========================================================
-TEST[DATE|TIME] stable-coin
-TEST[DATE|TIME] =========================================================
-TEST[DATE|TIME] ===> PRICING FOR 0x6b175474e89094c44da98b954eedeac495271d0f (DAI) 
-TEST[DATE|TIME] =========================================================
-TEST[DATE|TIME] stable-coin
-TEST[DATE|TIME] =========================================================
-TEST[DATE|TIME] ===> PRICING FOR 0x6b175474e89094c44da98b954eedeac495271d0f (DAI) 
-TEST[DATE|TIME] =========================================================
-TEST[DATE|TIME] stable-coin
-TEST[DATE|TIME] =========================================================
-TEST[DATE|TIME] ===> PRICING FOR 0x6b175474e89094c44da98b954eedeac495271d0f (DAI) 
-TEST[DATE|TIME] =========================================================
-TEST[DATE|TIME] stable-coin
-TEST[DATE|TIME] =========================================================
-TEST[DATE|TIME] ===> PRICING FOR 0x6b175474e89094c44da98b954eedeac495271d0f (DAI) 
-TEST[DATE|TIME] =========================================================
-TEST[DATE|TIME] stable-coin
-TEST[DATE|TIME] =========================================================
-TEST[DATE|TIME] ===> PRICING FOR 0x6b175474e89094c44da98b954eedeac495271d0f (DAI) 
-TEST[DATE|TIME] =========================================================
-TEST[DATE|TIME] stable-coin
-TEST[DATE|TIME] =========================================================
-TEST[DATE|TIME] ===> PRICING FOR 0x6b175474e89094c44da98b954eedeac495271d0f (DAI) 
-TEST[DATE|TIME] =========================================================
-TEST[DATE|TIME] stable-coin
-TEST[DATE|TIME] =========================================================
-TEST[DATE|TIME] ===> PRICING FOR 0x6b175474e89094c44da98b954eedeac495271d0f (DAI) 
-TEST[DATE|TIME] =========================================================
-TEST[DATE|TIME] stable-coin
-TEST[DATE|TIME] =========================================================
-TEST[DATE|TIME] ===> PRICING FOR 0x6b175474e89094c44da98b954eedeac495271d0f (DAI) 
-TEST[DATE|TIME] =========================================================
-TEST[DATE|TIME] stable-coin
-TEST[DATE|TIME] =========================================================
-TEST[DATE|TIME] ===> PRICING FOR 0x6b175474e89094c44da98b954eedeac495271d0f (DAI) 
-TEST[DATE|TIME] =========================================================
-TEST[DATE|TIME] stable-coin
-TEST[DATE|TIME] =========================================================
-TEST[DATE|TIME] ===> PRICING FOR 0x6b175474e89094c44da98b954eedeac495271d0f (DAI) 
-TEST[DATE|TIME] =========================================================
-TEST[DATE|TIME] stable-coin
-TEST[DATE|TIME] =========================================================
-TEST[DATE|TIME] ===> PRICING FOR 0x6b175474e89094c44da98b954eedeac495271d0f (DAI) 
-TEST[DATE|TIME] =========================================================
-TEST[DATE|TIME] stable-coin
-TEST[DATE|TIME] =========================================================
-TEST[DATE|TIME] ===> PRICING FOR 0x6b175474e89094c44da98b954eedeac495271d0f (DAI) 
-TEST[DATE|TIME] =========================================================
-TEST[DATE|TIME] stable-coin
-TEST[DATE|TIME] =========================================================
-TEST[DATE|TIME] ===> PRICING FOR 0x6b175474e89094c44da98b954eedeac495271d0f (DAI) 
-TEST[DATE|TIME] =========================================================
-TEST[DATE|TIME] stable-coin
-TEST[DATE|TIME] =========================================================
-TEST[DATE|TIME] ===> PRICING FOR 0x6b175474e89094c44da98b954eedeac495271d0f (DAI) 
-TEST[DATE|TIME] =========================================================
-TEST[DATE|TIME] stable-coin
-TEST[DATE|TIME] =========================================================
-TEST[DATE|TIME] ===> PRICING FOR 0x6b175474e89094c44da98b954eedeac495271d0f (DAI) 
-TEST[DATE|TIME] =========================================================
-TEST[DATE|TIME] stable-coin
-TEST[DATE|TIME] =========================================================
-TEST[DATE|TIME] ===> PRICING FOR 0x6b175474e89094c44da98b954eedeac495271d0f (DAI) 
-TEST[DATE|TIME] =========================================================
-TEST[DATE|TIME] stable-coin
-TEST[DATE|TIME] =========================================================
-TEST[DATE|TIME] ===> PRICING FOR 0x6b175474e89094c44da98b954eedeac495271d0f (DAI) 
-TEST[DATE|TIME] =========================================================
-TEST[DATE|TIME] stable-coin
-TEST[DATE|TIME] =========================================================
-TEST[DATE|TIME] ===> PRICING FOR 0x6b175474e89094c44da98b954eedeac495271d0f (DAI) 
-TEST[DATE|TIME] =========================================================
-TEST[DATE|TIME] stable-coin
-TEST[DATE|TIME] =========================================================
-TEST[DATE|TIME] ===> PRICING FOR 0x6b175474e89094c44da98b954eedeac495271d0f (DAI) 
-TEST[DATE|TIME] =========================================================
-TEST[DATE|TIME] stable-coin
-TEST[DATE|TIME] =========================================================
-TEST[DATE|TIME] ===> PRICING FOR 0x6b175474e89094c44da98b954eedeac495271d0f (DAI) 
-TEST[DATE|TIME] =========================================================
-TEST[DATE|TIME] stable-coin
-TEST[DATE|TIME] =========================================================
-TEST[DATE|TIME] ===> PRICING FOR 0x6b175474e89094c44da98b954eedeac495271d0f (DAI) 
-TEST[DATE|TIME] =========================================================
-TEST[DATE|TIME] stable-coin
-TEST[DATE|TIME] =========================================================
-TEST[DATE|TIME] ===> PRICING FOR 0x6b175474e89094c44da98b954eedeac495271d0f (DAI) 
-TEST[DATE|TIME] =========================================================
-TEST[DATE|TIME] stable-coin
-TEST[DATE|TIME] =========================================================
-TEST[DATE|TIME] ===> PRICING FOR 0x6b175474e89094c44da98b954eedeac495271d0f (DAI) 
-TEST[DATE|TIME] =========================================================
-TEST[DATE|TIME] stable-coin
-TEST[DATE|TIME] =========================================================
-TEST[DATE|TIME] ===> PRICING FOR 0x6b175474e89094c44da98b954eedeac495271d0f (DAI) 
-TEST[DATE|TIME] =========================================================
-TEST[DATE|TIME] stable-coin
-TEST[DATE|TIME] =========================================================
-TEST[DATE|TIME] ===> PRICING FOR 0x6b175474e89094c44da98b954eedeac495271d0f (DAI) 
-TEST[DATE|TIME] =========================================================
-TEST[DATE|TIME] stable-coin
-TEST[DATE|TIME] =========================================================
-TEST[DATE|TIME] ===> PRICING FOR 0x6b175474e89094c44da98b954eedeac495271d0f (DAI) 
-TEST[DATE|TIME] =========================================================
-TEST[DATE|TIME] stable-coin
-TEST[DATE|TIME] =========================================================
-TEST[DATE|TIME] ===> PRICING FOR 0x6b175474e89094c44da98b954eedeac495271d0f (DAI) 
-TEST[DATE|TIME] =========================================================
-TEST[DATE|TIME] stable-coin
-TEST[DATE|TIME] =========================================================
-TEST[DATE|TIME] ===> PRICING FOR 0x6b175474e89094c44da98b954eedeac495271d0f (DAI) 
-TEST[DATE|TIME] =========================================================
-TEST[DATE|TIME] stable-coin
-TEST[DATE|TIME] =========================================================
-TEST[DATE|TIME] ===> PRICING FOR 0x6b175474e89094c44da98b954eedeac495271d0f (DAI) 
-TEST[DATE|TIME] =========================================================
-TEST[DATE|TIME] stable-coin
-TEST[DATE|TIME] =========================================================
-TEST[DATE|TIME] ===> PRICING FOR 0x6b175474e89094c44da98b954eedeac495271d0f (DAI) 
-TEST[DATE|TIME] =========================================================
-TEST[DATE|TIME] stable-coin
-TEST[DATE|TIME] =========================================================
-TEST[DATE|TIME] ===> PRICING FOR 0x6b175474e89094c44da98b954eedeac495271d0f (DAI) 
-TEST[DATE|TIME] =========================================================
-TEST[DATE|TIME] stable-coin
-TEST[DATE|TIME] =========================================================
-TEST[DATE|TIME] ===> PRICING FOR 0x6b175474e89094c44da98b954eedeac495271d0f (DAI) 
-TEST[DATE|TIME] =========================================================
-TEST[DATE|TIME] stable-coin
-TEST[DATE|TIME] =========================================================
-TEST[DATE|TIME] ===> PRICING FOR 0x6b175474e89094c44da98b954eedeac495271d0f (DAI) 
-TEST[DATE|TIME] =========================================================
-TEST[DATE|TIME] stable-coin
 TEST[DATE|TIME] transfer: 12705892 117 0 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0xf503017d7baf7fbc0fff7492b751025c6a78179b -11780085000000000 
 TEST[DATE|TIME] transfer: 12705892 117 286 0x6b175474e89094c44da98b954eedeac495271d0f 0xf503017d7baf7fbc0fff7492b751025c6a78179b -2000000000000000000 
 TEST[DATE|TIME] transfer: 12705892 117 288 0x6b175474e89094c44da98b954eedeac495271d0f 0xf503017d7baf7fbc0fff7492b751025c6a78179b -2000000000000000000 
@@ -285,16 +62,6 @@ TEST[DATE|TIME] transfer: 12705892 117 372 0x6b175474e89094c44da98b954eedeac4952
 Results in ./transfer_token_ibt_2_out.file
 {
   "data": [
-    {
-      "amount": "9500000000000000",
-      "amountEth": "0.0095",
-      "asset": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
-      "assetName": "ETH",
-      "blockNumber": 12704456,
-      "holder": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
-      "logIndex": 0,
-      "transactionIndex": 92
-    },
     {
       "amount": "4750000000000000000",
       "amountEth": "4.75",
@@ -373,6 +140,16 @@ Results in ./transfer_token_ibt_2_out.file
       "blockNumber": 12705892,
       "holder": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
       "logIndex": 292,
+      "transactionIndex": 117
+    },
+    {
+      "amount": "-2000000000000000000",
+      "amountEth": "-2",
+      "asset": "0x6b175474e89094c44da98b954eedeac495271d0f",
+      "assetName": "Dai Stablecoin",
+      "blockNumber": 12705892,
+      "holder": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
+      "logIndex": 294,
       "transactionIndex": 117
     }
   ]

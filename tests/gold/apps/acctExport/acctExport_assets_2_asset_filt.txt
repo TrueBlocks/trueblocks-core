@@ -8,219 +8,36 @@ TEST[DATE|TIME] Ether:  true
 TEST[DATE|TIME] OutputFn:  assets_2_asset_filt_out.file
 TEST[DATE|TIME] Caps:  cache,decache,ether
 TEST[DATE|TIME] Format:  csv
-TEST[DATE|TIME] =========================================================
-TEST[DATE|TIME] ===> PRICING FOR 0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359 (DAI) 
-TEST[DATE|TIME] =========================================================
-TEST[DATE|TIME] stable-coin
 TEST[DATE|TIME] transfer: 8856476 55 40 0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359 0xf503017d7baf7fbc0fff7492b751025c6a78179b 1000000000000000000 
-TEST[DATE|TIME] =========================================================
-TEST[DATE|TIME] ===> PRICING FOR 0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359 (DAI) 
-TEST[DATE|TIME] =========================================================
-TEST[DATE|TIME] stable-coin
 TEST[DATE|TIME] transfer: 8856511 161 94 0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359 0xf503017d7baf7fbc0fff7492b751025c6a78179b 4999000000000000000000 
-TEST[DATE|TIME] =========================================================
-TEST[DATE|TIME] ===> PRICING FOR 0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359 (DAI) 
-TEST[DATE|TIME] =========================================================
-TEST[DATE|TIME] stable-coin
 TEST[DATE|TIME] transfer: 8860434 21 19 0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359 0xf503017d7baf7fbc0fff7492b751025c6a78179b 2500000000000000000000 
-TEST[DATE|TIME] Block 8860511 is prior to deployment (10000835) of Uniswap V2. Falling back to Maker (0x729d19f657bd0614b4985cf1d82531c67569197b)
-TEST[DATE|TIME] =========================================================
-TEST[DATE|TIME] ===> PRICING FOR 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (ETH) using Maker
-TEST[DATE|TIME] =========================================================
-TEST[DATE|TIME] blockNumber:         8860511
-TEST[DATE|TIME] source1 (uni/mkr):   0x729d19f657bd0614b4985cf1d82531c67569197b
-TEST[DATE|TIME] str0 (call):         peek()
-TEST[DATE|TIME] str1 (call/data):    0x000000000000000000000000000000000000000000000009ece258f296450000
-TEST[DATE|TIME] int0:                18309000000000000000000000
-TEST[DATE|TIME] int1:                18309000
-TEST[DATE|TIME] bigPrice:            183.09
-TEST[DATE|TIME] price:               183.09
-TEST[DATE|TIME] source:              maker
 TEST[DATE|TIME] transfer: 8860511 47 0 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0xf503017d7baf7fbc0fff7492b751025c6a78179b -45985000000000 
-TEST[DATE|TIME] Block 8860513 is prior to deployment (10000835) of Uniswap V2. Falling back to Maker (0x729d19f657bd0614b4985cf1d82531c67569197b)
-TEST[DATE|TIME] =========================================================
-TEST[DATE|TIME] ===> PRICING FOR 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (ETH) using Maker
-TEST[DATE|TIME] =========================================================
-TEST[DATE|TIME] blockNumber:         8860513
-TEST[DATE|TIME] source1 (uni/mkr):   0x729d19f657bd0614b4985cf1d82531c67569197b
-TEST[DATE|TIME] str0 (call):         peek()
-TEST[DATE|TIME] str1 (call/data):    0x000000000000000000000000000000000000000000000009ece258f296450000
-TEST[DATE|TIME] int0:                18309000000000000000000000
-TEST[DATE|TIME] int1:                18309000
-TEST[DATE|TIME] bigPrice:            183.09
-TEST[DATE|TIME] price:               183.09
-TEST[DATE|TIME] source:              maker
-TEST[DATE|TIME] =========================================================
-TEST[DATE|TIME] ===> PRICING FOR 0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359 (DAI) 
-TEST[DATE|TIME] =========================================================
-TEST[DATE|TIME] stable-coin
 TEST[DATE|TIME] transfer: 8860513 85 0 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0xf503017d7baf7fbc0fff7492b751025c6a78179b -34017000000000 
 TEST[DATE|TIME] transfer: 8860513 85 84 0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359 0xf503017d7baf7fbc0fff7492b751025c6a78179b -500000000000000000000 
-TEST[DATE|TIME] Block 8860529 is prior to deployment (10000835) of Uniswap V2. Falling back to Maker (0x729d19f657bd0614b4985cf1d82531c67569197b)
-TEST[DATE|TIME] =========================================================
-TEST[DATE|TIME] ===> PRICING FOR 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (ETH) using Maker
-TEST[DATE|TIME] =========================================================
-TEST[DATE|TIME] blockNumber:         8860529
-TEST[DATE|TIME] source1 (uni/mkr):   0x729d19f657bd0614b4985cf1d82531c67569197b
-TEST[DATE|TIME] str0 (call):         peek()
-TEST[DATE|TIME] str1 (call/data):    0x000000000000000000000000000000000000000000000009ece258f296450000
-TEST[DATE|TIME] int0:                18309000000000000000000000
-TEST[DATE|TIME] int1:                18309000
-TEST[DATE|TIME] bigPrice:            183.09
-TEST[DATE|TIME] price:               183.09
-TEST[DATE|TIME] source:              maker
 TEST[DATE|TIME] transfer: 8860529 145 0 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0xf503017d7baf7fbc0fff7492b751025c6a78179b -46049000000000 
-TEST[DATE|TIME] Block 8860531 is prior to deployment (10000835) of Uniswap V2. Falling back to Maker (0x729d19f657bd0614b4985cf1d82531c67569197b)
-TEST[DATE|TIME] =========================================================
-TEST[DATE|TIME] ===> PRICING FOR 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (ETH) using Maker
-TEST[DATE|TIME] =========================================================
-TEST[DATE|TIME] blockNumber:         8860531
-TEST[DATE|TIME] source1 (uni/mkr):   0x729d19f657bd0614b4985cf1d82531c67569197b
-TEST[DATE|TIME] str0 (call):         peek()
-TEST[DATE|TIME] str1 (call/data):    0x000000000000000000000000000000000000000000000009ece258f296450000
-TEST[DATE|TIME] int0:                18309000000000000000000000
-TEST[DATE|TIME] int1:                18309000
-TEST[DATE|TIME] bigPrice:            183.09
-TEST[DATE|TIME] price:               183.09
-TEST[DATE|TIME] source:              maker
-TEST[DATE|TIME] =========================================================
-TEST[DATE|TIME] ===> PRICING FOR 0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359 (DAI) 
-TEST[DATE|TIME] =========================================================
-TEST[DATE|TIME] stable-coin
 TEST[DATE|TIME] transfer: 8860531 152 0 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0xf503017d7baf7fbc0fff7492b751025c6a78179b -24541000000000 
 TEST[DATE|TIME] transfer: 8860531 152 95 0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359 0xf503017d7baf7fbc0fff7492b751025c6a78179b -7000000000000000000000 
-TEST[DATE|TIME] Block 8867898 is prior to deployment (10000835) of Uniswap V2. Falling back to Maker (0x729d19f657bd0614b4985cf1d82531c67569197b)
-TEST[DATE|TIME] =========================================================
-TEST[DATE|TIME] ===> PRICING FOR 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (ETH) using Maker
-TEST[DATE|TIME] =========================================================
-TEST[DATE|TIME] blockNumber:         8867898
-TEST[DATE|TIME] source1 (uni/mkr):   0x729d19f657bd0614b4985cf1d82531c67569197b
-TEST[DATE|TIME] str0 (call):         peek()
-TEST[DATE|TIME] str1 (call/data):    0x000000000000000000000000000000000000000000000009d0311ca6d5264000
-TEST[DATE|TIME] int0:                18102250000000000000000000
-TEST[DATE|TIME] int1:                18102250
-TEST[DATE|TIME] bigPrice:            181.0225
-TEST[DATE|TIME] price:               181.0225
-TEST[DATE|TIME] source:              maker
 TEST[DATE|TIME] transfer: 8867898 28 0 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0xf503017d7baf7fbc0fff7492b751025c6a78179b -105208000000000 
-TEST[DATE|TIME] Block 8876232 is prior to deployment (10000835) of Uniswap V2. No other source for tokens prior to UniSwap
 TEST[DATE|TIME] transfer: 8876232 84 169 0xd53b50a6213ee7ff2fcc41a7cf69d22ded0a43b3 0xf503017d7baf7fbc0fff7492b751025c6a78179b 22500000000000000000000 
-TEST[DATE|TIME] Block 9024196 is prior to deployment (10000835) of Uniswap V2. No other source for tokens prior to UniSwap
 TEST[DATE|TIME] transfer: 9024196 41 149 0x8619c9194bf7212bcab69b8d58ad6ab872decd5c 0xf503017d7baf7fbc0fff7492b751025c6a78179b 88888000000000000000000 
-TEST[DATE|TIME] Block 9024350 is prior to deployment (10000835) of Uniswap V2. Falling back to Maker (0x729d19f657bd0614b4985cf1d82531c67569197b)
-TEST[DATE|TIME] =========================================================
-TEST[DATE|TIME] ===> PRICING FOR 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (ETH) using Maker
-TEST[DATE|TIME] =========================================================
-TEST[DATE|TIME] blockNumber:         9024350
-TEST[DATE|TIME] source1 (uni/mkr):   0x729d19f657bd0614b4985cf1d82531c67569197b
-TEST[DATE|TIME] str0 (call):         peek()
-TEST[DATE|TIME] str1 (call/data):    0x0000000000000000000000000000000000000000000000085ede84e698110000
-TEST[DATE|TIME] int0:                15441000000000000000000000
-TEST[DATE|TIME] int1:                15441000
-TEST[DATE|TIME] bigPrice:            154.41
-TEST[DATE|TIME] price:               154.41
-TEST[DATE|TIME] source:              maker
 TEST[DATE|TIME] transfer: 9024350 73 0 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0xf503017d7baf7fbc0fff7492b751025c6a78179b 15000000000000000 
-TEST[DATE|TIME] Block 9046970 is prior to deployment (10000835) of Uniswap V2. Falling back to Maker (0x729d19f657bd0614b4985cf1d82531c67569197b)
-TEST[DATE|TIME] =========================================================
-TEST[DATE|TIME] ===> PRICING FOR 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (ETH) using Maker
-TEST[DATE|TIME] =========================================================
-TEST[DATE|TIME] blockNumber:         9046970
-TEST[DATE|TIME] source1 (uni/mkr):   0x729d19f657bd0614b4985cf1d82531c67569197b
-TEST[DATE|TIME] str0 (call):         peek()
-TEST[DATE|TIME] str1 (call/data):    0x000000000000000000000000000000000000000000000007d4c9049e3cee0000
-TEST[DATE|TIME] int0:                14446000000000000000000000
-TEST[DATE|TIME] int1:                14446000
-TEST[DATE|TIME] bigPrice:            144.46
-TEST[DATE|TIME] price:               144.46
-TEST[DATE|TIME] source:              maker
 TEST[DATE|TIME] transfer: 9046970 71 0 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0xf503017d7baf7fbc0fff7492b751025c6a78179b -25799130000000000 
-TEST[DATE|TIME] Block 9066048 is prior to deployment (10000835) of Uniswap V2. No other source for tokens prior to UniSwap
 TEST[DATE|TIME] transfer: 9066048 62 93 0xd53b50a6213ee7ff2fcc41a7cf69d22ded0a43b3 0xf503017d7baf7fbc0fff7492b751025c6a78179b 174000000000000000000 
-TEST[DATE|TIME] =========================================================
-TEST[DATE|TIME] ===> PRICING FOR 0x6b175474e89094c44da98b954eedeac495271d0f (DAI) 
-TEST[DATE|TIME] =========================================================
-TEST[DATE|TIME] stable-coin
 TEST[DATE|TIME] transfer: 9136971 32 52 0x6b175474e89094c44da98b954eedeac495271d0f 0xf503017d7baf7fbc0fff7492b751025c6a78179b 12500000000000000000000 
-TEST[DATE|TIME] Block 9193234 is prior to deployment (10000835) of Uniswap V2. No other source for tokens prior to UniSwap
 TEST[DATE|TIME] transfer: 9193234 2 86 0xc12d1c73ee7dc3615ba4e37e4abfdbddfa38907e 0xf503017d7baf7fbc0fff7492b751025c6a78179b 88888800000000 
-TEST[DATE|TIME] Block 9193753 is prior to deployment (10000835) of Uniswap V2. Falling back to Maker (0x729d19f657bd0614b4985cf1d82531c67569197b)
-TEST[DATE|TIME] =========================================================
-TEST[DATE|TIME] ===> PRICING FOR 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (ETH) using Maker
-TEST[DATE|TIME] =========================================================
-TEST[DATE|TIME] blockNumber:         9193753
-TEST[DATE|TIME] source1 (uni/mkr):   0x729d19f657bd0614b4985cf1d82531c67569197b
-TEST[DATE|TIME] str0 (call):         peek()
-TEST[DATE|TIME] str1 (call/data):    0x000000000000000000000000000000000000000000000006fb13d27beafd4000
-TEST[DATE|TIME] int0:                12877250000000000000000000
-TEST[DATE|TIME] int1:                12877250
-TEST[DATE|TIME] bigPrice:            128.7725
-TEST[DATE|TIME] price:               128.7725
-TEST[DATE|TIME] source:              maker
-TEST[DATE|TIME] =========================================================
-TEST[DATE|TIME] ===> PRICING FOR 0x6b175474e89094c44da98b954eedeac495271d0f (DAI) 
-TEST[DATE|TIME] =========================================================
-TEST[DATE|TIME] stable-coin
 TEST[DATE|TIME] transfer: 9193753 147 0 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0xf503017d7baf7fbc0fff7492b751025c6a78179b -467946000000000 
 TEST[DATE|TIME] transfer: 9193753 147 112 0x6b175474e89094c44da98b954eedeac495271d0f 0xf503017d7baf7fbc0fff7492b751025c6a78179b -10000000000000000000 
-TEST[DATE|TIME] Block 9193777 is prior to deployment (10000835) of Uniswap V2. Falling back to Maker (0x729d19f657bd0614b4985cf1d82531c67569197b)
-TEST[DATE|TIME] =========================================================
-TEST[DATE|TIME] ===> PRICING FOR 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (ETH) using Maker
-TEST[DATE|TIME] =========================================================
-TEST[DATE|TIME] blockNumber:         9193777
-TEST[DATE|TIME] source1 (uni/mkr):   0x729d19f657bd0614b4985cf1d82531c67569197b
-TEST[DATE|TIME] str0 (call):         peek()
-TEST[DATE|TIME] str1 (call/data):    0x000000000000000000000000000000000000000000000006fb13d27beafd4000
-TEST[DATE|TIME] int0:                12877250000000000000000000
-TEST[DATE|TIME] int1:                12877250
-TEST[DATE|TIME] bigPrice:            128.7725
-TEST[DATE|TIME] price:               128.7725
-TEST[DATE|TIME] source:              maker
-TEST[DATE|TIME] =========================================================
-TEST[DATE|TIME] ===> PRICING FOR 0x6b175474e89094c44da98b954eedeac495271d0f (DAI) 
-TEST[DATE|TIME] =========================================================
-TEST[DATE|TIME] stable-coin
 TEST[DATE|TIME] transfer: 9193777 226 0 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0xf503017d7baf7fbc0fff7492b751025c6a78179b -416144000000000 
 TEST[DATE|TIME] transfer: 9193777 226 172 0x6b175474e89094c44da98b954eedeac495271d0f 0xf503017d7baf7fbc0fff7492b751025c6a78179b -6000000000000000000000 
-TEST[DATE|TIME] Block 9193806 is prior to deployment (10000835) of Uniswap V2. Falling back to Maker (0x729d19f657bd0614b4985cf1d82531c67569197b)
-TEST[DATE|TIME] =========================================================
-TEST[DATE|TIME] ===> PRICING FOR 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (ETH) using Maker
-TEST[DATE|TIME] =========================================================
-TEST[DATE|TIME] blockNumber:         9193806
-TEST[DATE|TIME] source1 (uni/mkr):   0x729d19f657bd0614b4985cf1d82531c67569197b
-TEST[DATE|TIME] str0 (call):         peek()
-TEST[DATE|TIME] str1 (call/data):    0x000000000000000000000000000000000000000000000006fb13d27beafd4000
-TEST[DATE|TIME] int0:                12877250000000000000000000
-TEST[DATE|TIME] int1:                12877250
-TEST[DATE|TIME] bigPrice:            128.7725
-TEST[DATE|TIME] price:               128.7725
-TEST[DATE|TIME] source:              maker
 TEST[DATE|TIME] transfer: 9193806 80 0 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0xf503017d7baf7fbc0fff7492b751025c6a78179b -385209000000000 
-TEST[DATE|TIME] Block 9193814 is prior to deployment (10000835) of Uniswap V2. Falling back to Maker (0x729d19f657bd0614b4985cf1d82531c67569197b)
-TEST[DATE|TIME] =========================================================
-TEST[DATE|TIME] ===> PRICING FOR 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (ETH) using Maker
-TEST[DATE|TIME] =========================================================
-TEST[DATE|TIME] blockNumber:         9193814
-TEST[DATE|TIME] source1 (uni/mkr):   0x729d19f657bd0614b4985cf1d82531c67569197b
-TEST[DATE|TIME] str0 (call):         peek()
-TEST[DATE|TIME] str1 (call/data):    0x000000000000000000000000000000000000000000000006fb13d27beafd4000
-TEST[DATE|TIME] int0:                12877250000000000000000000
-TEST[DATE|TIME] int1:                12877250
-TEST[DATE|TIME] bigPrice:            128.7725
-TEST[DATE|TIME] price:               128.7725
-TEST[DATE|TIME] source:              maker
-TEST[DATE|TIME] =========================================================
-TEST[DATE|TIME] ===> PRICING FOR 0x6b175474e89094c44da98b954eedeac495271d0f (DAI) 
-TEST[DATE|TIME] =========================================================
-TEST[DATE|TIME] stable-coin
 TEST[DATE|TIME] transfer: 9193814 38 0 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0xf503017d7baf7fbc0fff7492b751025c6a78179b -416240000000000 
 TEST[DATE|TIME] transfer: 9193814 38 26 0x6b175474e89094c44da98b954eedeac495271d0f 0xf503017d7baf7fbc0fff7492b751025c6a78179b -6489950000000000000000 
 ----
 Results in ./assets_2_asset_filt_out.file
 address,symbol,name,decimals
-0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359,DAI,Dai Stablecoin v1.0,18
-0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee,ETH,ETH,18
-0xd53b50a6213ee7ff2fcc41a7cf69d22ded0a43b3,CSTK,CommonsStackToken,18
-0x8619c9194bf7212bcab69b8d58ad6ab872decd5c,BEB,betbeb,18
 0x6b175474e89094c44da98b954eedeac495271d0f,DAI,Dai Stablecoin,18
+0x8619c9194bf7212bcab69b8d58ad6ab872decd5c,BEB,betbeb,18
+0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359,DAI,Dai Stablecoin v1.0,18
 0xc12d1c73ee7dc3615ba4e37e4abfdbddfa38907e,KICK,KickToken,8
+0xd53b50a6213ee7ff2fcc41a7cf69d22ded0a43b3,CSTK,CommonsStackToken,18
+0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee,ETH,ETH,18

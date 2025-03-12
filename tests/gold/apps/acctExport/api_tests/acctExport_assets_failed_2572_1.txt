@@ -2,10 +2,10 @@ export?addrs=0x054993ab0f2b1acc0fdc65405ee203b4271bebe6&accounting&assets&ether&
 {
   "data": [
     {
-      "address": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+      "address": "0x1f9840a85d5af5bf1d1762f925bdaddc4201f984",
       "decimals": 18,
-      "name": "ETH",
-      "symbol": "ETH"
+      "name": "Uniswap",
+      "symbol": "UNI"
     },
     {
       "address": "0x6b175474e89094c44da98b954eedeac495271d0f",
@@ -20,10 +20,10 @@ export?addrs=0x054993ab0f2b1acc0fdc65405ee203b4271bebe6&accounting&assets&ether&
       "symbol": "GTC"
     },
     {
-      "address": "0x1f9840a85d5af5bf1d1762f925bdaddc4201f984",
+      "address": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
       "decimals": 18,
-      "name": "Uniswap",
-      "symbol": "UNI"
+      "name": "ETH",
+      "symbol": "ETH"
     }
   ],
   "meta": {

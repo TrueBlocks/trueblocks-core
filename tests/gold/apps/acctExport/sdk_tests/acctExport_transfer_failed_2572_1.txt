@@ -10,23 +10,6 @@ LastBlock:  15549163
 Ether:  true
 Caps:  cache,decache,ether
 Format:  json
-=========================================================
-===> PRICING FOR 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) using Uniswap
-=========================================================
-blockNumber:         15549162
-source1 (uni/mkr):   0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f
-str0 (call):         getPair(0x6b175474e89094c44da98b954eedeac495271d0f, 0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2)
-source2 (pair):      0xa478c2975ab1ea89e8196811f51a7b7ade33eb11
-str1 (call/data):    getReserves()
-first:               0x6b175474e89094c44da98b954eedeac495271d0f
-second:              0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2
-reversed:            false
-float0:              7102397413752175341300000
-float1:              4931839383183232451600
-float2:              1
-bigPrice:            1440.1112570636812698
-price:               1440.1112570636813
-source:              uniswap
 transfer: 15549162 83 1774 0xf5b2c59f6db42ffcdfc1625999c81fdf17953384 0x054993ab0f2b1acc0fdc65405ee203b4271bebe6 2017000000000000000000 
 {
   "data": [

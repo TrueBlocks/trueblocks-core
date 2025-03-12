@@ -355,14 +355,14 @@ func (s *Receipt) IsDefault() bool {
 	return a && b && c && d
 }
 
-func (s *Receipt) GetStatementsFromReceipt(accountedFor base.Address, assetFilters []base.Address, appFilter *AppearanceFilter) ([]Statement, error) {
+func (s *Receipt) FetchStatements(accountedFor base.Address, assetFilters []base.Address, appFilter *AppearanceFilter) ([]Statement, error) {
 	statements := make([]Statement, 0, 20)
 	for _, log := range s.Logs {
 		isTransfer := log.Topics[0] == topics.TransferTopic
 		isOfIterest := AssetOfInterest(assetFilters, log.Address)
 		passesFilter := appFilter.ApplyLogFilter(&log, []base.Address{accountedFor})
 		if isTransfer && isOfIterest && passesFilter {
-			if stmt, err := log.GetStatementFromLog(accountedFor); err != nil {
+			if stmt, err := log.FetchStatement(accountedFor); err != nil {
 				// TODO: silent fail?
 				continue
 			} else if stmt == nil {

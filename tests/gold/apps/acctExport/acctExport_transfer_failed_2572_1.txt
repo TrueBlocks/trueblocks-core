@@ -10,23 +10,6 @@ TEST[DATE|TIME] OutputFn:  transfer_failed_2572_1_out.file
 TEST[DATE|TIME] Caps:  cache,decache,ether
 TEST[DATE|TIME] Format:  json
 INFO[DATE|TIME] { "outputFilename": "--output_filename--" }
-TEST[DATE|TIME] =========================================================
-TEST[DATE|TIME] ===> PRICING FOR 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) using Uniswap
-TEST[DATE|TIME] =========================================================
-TEST[DATE|TIME] blockNumber:         15549162
-TEST[DATE|TIME] source1 (uni/mkr):   0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f
-TEST[DATE|TIME] str0 (call):         getPair(0x6b175474e89094c44da98b954eedeac495271d0f, 0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2)
-TEST[DATE|TIME] source2 (pair):      0xa478c2975ab1ea89e8196811f51a7b7ade33eb11
-TEST[DATE|TIME] str1 (call/data):    getReserves()
-TEST[DATE|TIME] first:               0x6b175474e89094c44da98b954eedeac495271d0f
-TEST[DATE|TIME] second:              0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2
-TEST[DATE|TIME] reversed:            false
-TEST[DATE|TIME] float0:              7102397413752175341300000
-TEST[DATE|TIME] float1:              4931839383183232451600
-TEST[DATE|TIME] float2:              1
-TEST[DATE|TIME] bigPrice:            1440.1112570636812698
-TEST[DATE|TIME] price:               1440.1112570636813
-TEST[DATE|TIME] source:              uniswap
 TEST[DATE|TIME] transfer: 15549162 83 1774 0xf5b2c59f6db42ffcdfc1625999c81fdf17953384 0x054993ab0f2b1acc0fdc65405ee203b4271bebe6 2017000000000000000000 
 ----
 Results in ./transfer_failed_2572_1_out.file

@@ -9,107 +9,27 @@ LastBlock:  8769141
 Ether:  true
 Caps:  cache,decache,ether
 Format:  json
-Block 8769019 is prior to deployment (10000835) of Uniswap V2. Falling back to Maker (0x729d19f657bd0614b4985cf1d82531c67569197b)
-=========================================================
-===> PRICING FOR 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (ETH) using Maker
-=========================================================
-blockNumber:         8769019
-source1 (uni/mkr):   0x729d19f657bd0614b4985cf1d82531c67569197b
-str0 (call):         peek()
-str1 (call/data):    0x0000000000000000000000000000000000000000000000096b794ada83c08000
-int0:                17376500000000000000000000
-int1:                17376500
-bigPrice:            173.765
-price:               173.765
-source:              maker
 transfer: 8769019 124 0 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0x868b8fd259abfcfdf9634c343593b34ef359641d 25000000000000000 
-Block 8769029 is prior to deployment (10000835) of Uniswap V2. No other source for tokens prior to UniSwap
 transfer: 8769029 80 61 0x0ba45a8b5d5575935b8158a88c631e9f9c95a2e5 0x868b8fd259abfcfdf9634c343593b34ef359641d 85000000000000000000 
-Block 8769052 is prior to deployment (10000835) of Uniswap V2. Falling back to Maker (0x729d19f657bd0614b4985cf1d82531c67569197b)
-=========================================================
-===> PRICING FOR 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (ETH) using Maker
-=========================================================
-blockNumber:         8769052
-source1 (uni/mkr):   0x729d19f657bd0614b4985cf1d82531c67569197b
-str0 (call):         peek()
-str1 (call/data):    0x0000000000000000000000000000000000000000000000096b794ada83c08000
-int0:                17376500000000000000000000
-int1:                17376500
-bigPrice:            173.765
-price:               173.765
-source:              maker
 transfer: 8769052 73 0 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0x868b8fd259abfcfdf9634c343593b34ef359641d -247180000000000 
-Block 8769052 is prior to deployment (10000835) of Uniswap V2. Falling back to Maker (0x729d19f657bd0614b4985cf1d82531c67569197b)
-=========================================================
-===> PRICING FOR 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (ETH) using Maker
-=========================================================
-blockNumber:         8769052
-source1 (uni/mkr):   0x729d19f657bd0614b4985cf1d82531c67569197b
-str0 (call):         peek()
-str1 (call/data):    0x0000000000000000000000000000000000000000000000096b794ada83c08000
-int0:                17376500000000000000000000
-int1:                17376500
-bigPrice:            173.765
-price:               173.765
-source:              maker
-Block 8769052 is prior to deployment (10000835) of Uniswap V2. No other source for tokens prior to UniSwap
 transfer: 8769052 74 0 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0x868b8fd259abfcfdf9634c343593b34ef359641d -702230000000000 
 transfer: 8769052 74 73 0x0ba45a8b5d5575935b8158a88c631e9f9c95a2e5 0x868b8fd259abfcfdf9634c343593b34ef359641d -85000000000000000000 
-Block 8769064 is prior to deployment (10000835) of Uniswap V2. Falling back to Maker (0x729d19f657bd0614b4985cf1d82531c67569197b)
-=========================================================
-===> PRICING FOR 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (ETH) using Maker
-=========================================================
-blockNumber:         8769064
-source1 (uni/mkr):   0x729d19f657bd0614b4985cf1d82531c67569197b
-str0 (call):         peek()
-str1 (call/data):    0x0000000000000000000000000000000000000000000000096bae95462b620000
-int0:                17378000000000000000000000
-int1:                17378000
-bigPrice:            173.78
-price:               173.78
-source:              maker
 transfer: 8769064 131 0 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0x868b8fd259abfcfdf9634c343593b34ef359641d 450562200000000000 
-Block 8769130 is prior to deployment (10000835) of Uniswap V2. Falling back to Maker (0x729d19f657bd0614b4985cf1d82531c67569197b)
-=========================================================
-===> PRICING FOR 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (ETH) using Maker
-=========================================================
-blockNumber:         8769130
-source1 (uni/mkr):   0x729d19f657bd0614b4985cf1d82531c67569197b
-str0 (call):         peek()
-str1 (call/data):    0x0000000000000000000000000000000000000000000000096c192a1d7aa50000
-int0:                17381000000000000000000000
-int1:                17381000
-bigPrice:            173.81
-price:               173.81
-source:              maker
 transfer: 8769130 51 0 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0x868b8fd259abfcfdf9634c343593b34ef359641d -100021000000000000 
-Block 8769141 is prior to deployment (10000835) of Uniswap V2. Falling back to Maker (0x729d19f657bd0614b4985cf1d82531c67569197b)
-=========================================================
-===> PRICING FOR 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (ETH) using Maker
-=========================================================
-blockNumber:         8769141
-source1 (uni/mkr):   0x729d19f657bd0614b4985cf1d82531c67569197b
-str0 (call):         peek()
-str1 (call/data):    0x0000000000000000000000000000000000000000000000096c192a1d7aa50000
-int0:                17381000000000000000000000
-int1:                17381000
-bigPrice:            173.81
-price:               173.81
-source:              maker
 transfer: 8769141 27 0 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0x868b8fd259abfcfdf9634c343593b34ef359641d -374591790000000000 
 {
   "data": [
-    {
-      "address": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
-      "decimals": 18,
-      "name": "ETH",
-      "symbol": "ETH"
-    },
     {
       "address": "0x0ba45a8b5d5575935b8158a88c631e9f9c95a2e5",
       "decimals": 18,
       "name": "Tellor Tributes",
       "symbol": "TRB"
+    },
+    {
+      "address": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+      "decimals": 18,
+      "name": "ETH",
+      "symbol": "ETH"
     }
   ],
   "meta": {

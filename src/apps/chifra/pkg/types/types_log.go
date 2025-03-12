@@ -349,7 +349,7 @@ func (log *Log) IsNFT() bool {
 	return len(log.Topics) == 4 && log.Topics[0] == topics.TransferTopic
 }
 
-func (log *Log) GetStatementFromLog(accountedFor base.Address) (*Statement, error) {
+func (log *Log) FetchStatement(accountedFor base.Address) (*Statement, error) {
 	if normalized, err := NormalizeKnownLogs(log); err != nil {
 		return nil, err
 	} else if normalized.IsNFT() {
@@ -386,6 +386,7 @@ func (log *Log) GetStatementFromLog(accountedFor base.Address) (*Statement, erro
 			PriceSource:      "not-priced",
 			AmountIn:         amountIn,
 			AmountOut:        amountOut,
+			Decimals:         18,
 		}
 		return stmt, nil
 	}

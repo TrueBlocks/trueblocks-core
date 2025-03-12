@@ -8,7 +8,6 @@ FirstBlock:  8876230
 LastBlock:  9024186
 Caps:  cache,decache,ether
 Format:  json
-Block 8876232 is prior to deployment (10000835) of Uniswap V2. No other source for tokens prior to UniSwap
 transfer: 8876232 84 169 0xd53b50a6213ee7ff2fcc41a7cf69d22ded0a43b3 0xf503017d7baf7fbc0fff7492b751025c6a78179b 22500000000000000000000 
 {
   "data": [

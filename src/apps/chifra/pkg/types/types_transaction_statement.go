@@ -2,7 +2,7 @@ package types
 
 import "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 
-func (trans *Transaction) GetStatementFromTransaction(asEther bool, asset, holder base.Address) *Statement {
+func (trans *Transaction) FetchStatement(asEther bool, asset, holder base.Address) *Statement {
 	sym := "WEI"
 	if asEther {
 		sym = "ETH"
@@ -55,8 +55,8 @@ func (trans *Transaction) GetStatementFromTransaction(asEther bool, asset, holde
 	return stmt
 }
 
-func (trans *Transaction) GetStatementFromTraces(traces []Trace, accountedFor base.Address, asEther bool) (*Statement, error) {
-	stmt := trans.GetStatementFromTransaction(asEther, base.FAKE_ETH_ADDRESS, accountedFor)
+func (trans *Transaction) FetchStatementFromTraces(traces []Trace, accountedFor base.Address, asEther bool) (*Statement, error) {
+	stmt := trans.FetchStatement(asEther, base.FAKE_ETH_ADDRESS, accountedFor)
 	for i, trace := range traces {
 		if i == 0 {
 			// the first trace is identical to the transaction itself, so we can skip it

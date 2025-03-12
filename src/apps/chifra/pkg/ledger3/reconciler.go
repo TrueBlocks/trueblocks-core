@@ -215,16 +215,17 @@ func (r *Reconciler3) InitData() {
 		logger.Fatal("no transfers")
 	} else {
 		for _, record := range transfersRecords[1:] {
+			// blockNumber,transactionIndex,logIndex,asset,assetName,holder,holderName,amount
 			if strings.HasPrefix(record[0], "#") {
 				continue
 			}
-			amt := base.NewWeiStr(record[5])
+			amt := base.NewWeiStr(record[7])
 			p := types.NewAssetTransfer(types.Transfer{
 				BlockNumber:      base.Blknum(base.MustParseUint64(record[0])),
 				TransactionIndex: base.Txnum(base.MustParseUint64(record[1])),
 				LogIndex:         base.Lognum(base.MustParseUint64(record[2])),
 				Asset:            base.HexToAddress(record[3]),
-				Holder:           base.HexToAddress(record[4]),
+				Holder:           base.HexToAddress(record[5]),
 			})
 			if amt.Cmp(base.ZeroWei) > 0 {
 				p.AmountIn = *amt

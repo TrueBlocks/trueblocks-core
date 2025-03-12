@@ -9,23 +9,18 @@ LastBlock:  7005780
 Ether:  true
 Caps:  cache,decache,ether
 Format:  json
-Block 7005646 is prior to deployment (10000835) of Uniswap V2. No other source for tokens prior to UniSwap
 transfer: 7005646 182 42 0x5c2c629feefcc07b338e97e39c73d2db33a85548 0xec3ef464bf821c3b10a18adf9ac7177a628e87cc 3016109787000000000000 
-Block 7005654 is prior to deployment (10000835) of Uniswap V2. No other source for tokens prior to UniSwap
 transfer: 7005654 54 32 0x5c2c629feefcc07b338e97e39c73d2db33a85548 0xec3ef464bf821c3b10a18adf9ac7177a628e87cc 1982984682000000000000 
-Block 7005662 is prior to deployment (10000835) of Uniswap V2. No other source for tokens prior to UniSwap
 transfer: 7005662 5 5 0x5c2c629feefcc07b338e97e39c73d2db33a85548 0xec3ef464bf821c3b10a18adf9ac7177a628e87cc 1377663523000000000000 
-Block 7005737 is prior to deployment (10000835) of Uniswap V2. No other source for tokens prior to UniSwap
 transfer: 7005737 27 17 0x5c2c629feefcc07b338e97e39c73d2db33a85548 0xec3ef464bf821c3b10a18adf9ac7177a628e87cc 1787395981000000000000 
-Block 7005737 is prior to deployment (10000835) of Uniswap V2. No other source for tokens prior to UniSwap
 transfer: 7005737 30 20 0x5c2c629feefcc07b338e97e39c73d2db33a85548 0xec3ef464bf821c3b10a18adf9ac7177a628e87cc 3016109787000000000000 
 {
   "data": [
     {
       "address": "0x5c2c629feefcc07b338e97e39c73d2db33a85548",
       "decimals": 18,
-      "name": "0x5c2...548",
-      "symbol": ""
+      "name": "olefincash",
+      "symbol": "OCC1"
     }
   ],
   "meta": {

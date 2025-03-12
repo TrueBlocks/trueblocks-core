@@ -16,23 +16,23 @@ import (
 )
 
 type ReconcilerOptions struct {
-	AccountFor   base.Address
-	FirstBlock   base.Blknum
-	LastBlock    base.Blknum
-	AsEther      bool
-	UseTraces    bool
-	Reversed     bool
-	AssetFilters []base.Address
-	AppFilters   *types.AppearanceFilter
+	AccountFor   base.Address            `json:"accountFor"`
+	FirstBlock   base.Blknum             `json:"firstBlock"`
+	LastBlock    base.Blknum             `json:"lastBlock"`
+	AsEther      bool                    `json:"asEther"`
+	UseTraces    bool                    `json:"useTraces"`
+	Reversed     bool                    `json:"reversed"`
+	AssetFilters []base.Address          `json:"assetFilters"`
+	AppFilters   *types.AppearanceFilter `json:"appFilters"`
 }
 
 type Reconciler1 struct {
-	Connection     *rpc.Connection
-	opts           *ReconcilerOptions
-	Names          map[base.Address]types.Name
-	AddCorrections bool
-	ShowDebugging  bool
-	RemoveAirdrops bool
+	Connection     *rpc.Connection             `json:"-"`
+	Opts           *ReconcilerOptions          `json:"opts"`
+	Names          map[base.Address]types.Name `json:"-"`
+	AddCorrections bool                        `json:"addCorrections"`
+	ShowDebugging  bool                        `json:"showDebugging"`
+	RemoveAirdrops bool                        `json:"removeAirdrops"`
 }
 
 func (r *Reconciler1) String() string {
@@ -44,7 +44,7 @@ func NewReconciler(conn *rpc.Connection, opts *ReconcilerOptions) *Reconciler1 {
 	parts := types.Custom | types.Prefund | types.Regular
 	names, _ := names.LoadNamesMap("mainnet", parts, []string{})
 	r := &Reconciler1{
-		opts:           opts,
+		Opts:           opts,
 		Connection:     conn,
 		Names:          names,
 		AddCorrections: true,
@@ -155,11 +155,11 @@ func (r *Reconciler1) SkipAirdrop(stmt *types.Statement) bool {
 
 func (r *Reconciler1) GetStatements(pos *types.AppPosition, trans *types.Transaction) ([]types.Statement, error) {
 	results := make([]types.Statement, 0, 20)
-	if types.AssetOfInterest(r.opts.AssetFilters, base.FAKE_ETH_ADDRESS) {
+	if types.AssetOfInterest(r.Opts.AssetFilters, base.FAKE_ETH_ADDRESS) {
 		var err error
 		reconciled := false
-		if !r.opts.UseTraces {
-			stmt := trans.GetStatementFromTransaction(r.opts.AsEther, base.FAKE_ETH_ADDRESS, r.opts.AccountFor)
+		if !r.Opts.UseTraces {
+			stmt := trans.FetchStatement(r.Opts.AsEther, base.FAKE_ETH_ADDRESS, r.Opts.AccountFor)
 			if reconciled, err = r.trialBalance(pos, trans, stmt); err != nil {
 				return nil, err
 			} else {
@@ -169,11 +169,11 @@ func (r *Reconciler1) GetStatements(pos *types.AppPosition, trans *types.Transac
 			}
 		}
 
-		if r.opts.UseTraces || !reconciled {
+		if r.Opts.UseTraces || !reconciled {
 			if traces, err := r.Connection.GetTracesByTransactionHash(trans.Hash.Hex(), trans); err != nil {
 				return nil, err
 			} else {
-				if stmt, err := trans.GetStatementFromTraces(traces, r.opts.AccountFor, r.opts.AsEther); err != nil {
+				if stmt, err := trans.FetchStatementFromTraces(traces, r.Opts.AccountFor, r.Opts.AsEther); err != nil {
 					logger.Warn(colors.Yellow+"Statement at ", fmt.Sprintf("%d.%d", trans.BlockNumber, trans.TransactionIndex), " does not reconcile."+colors.Off)
 				} else {
 					if _, err = r.trialBalance(pos, trans, stmt); err != nil {
@@ -189,7 +189,7 @@ func (r *Reconciler1) GetStatements(pos *types.AppPosition, trans *types.Transac
 	}
 
 	if trans.Receipt != nil {
-		if statements, err := trans.Receipt.GetStatementsFromReceipt(r.opts.AccountFor, r.opts.AssetFilters, r.opts.AppFilters); err != nil {
+		if statements, err := trans.Receipt.FetchStatements(r.Opts.AccountFor, r.Opts.AssetFilters, r.Opts.AppFilters); err != nil {
 			return nil, err
 		} else {
 			for _, stmt := range statements {
@@ -231,13 +231,46 @@ func (r *Reconciler1) GetStatements(pos *types.AppPosition, trans *types.Transac
 
 // GetTransfers returns a statement from a given transaction
 func (r *Reconciler1) GetTransfers(pos *types.AppPosition, trans *types.Transaction) ([]types.Transfer, error) {
-	r.AddCorrections = false
-	r.ShowDebugging = false
-	if statements, err := r.GetStatements(pos, trans); err != nil {
-		return nil, err
-	} else {
-		return convertToTransfers(statements)
+	var statements []types.Statement
+
+	// if base.IsTestMode() {
+	// 	logger.Info(r.String())
+	// }
+
+	if types.AssetOfInterest(r.Opts.AssetFilters, base.FAKE_ETH_ADDRESS) {
+		var stmt *types.Statement
+		if r.Opts.UseTraces {
+			if traces, err := r.Connection.GetTracesByTransactionHash(trans.Hash.Hex(), trans); err != nil {
+				return nil, err
+			} else {
+				if s, err := trans.FetchStatementFromTraces(traces, r.Opts.AccountFor, r.Opts.AsEther); err != nil {
+					return nil, err
+				} else {
+					stmt = s
+				}
+			}
+		} else {
+			stmt = trans.FetchStatement(r.Opts.AsEther, base.FAKE_ETH_ADDRESS, r.Opts.AccountFor)
+		}
+		// Append only if the statement is material
+		if stmt.IsMaterial() {
+			statements = append(statements, *stmt)
+		}
 	}
+
+	if trans.Receipt != nil {
+		if receiptStatements, err := trans.Receipt.FetchStatements(r.Opts.AccountFor, r.Opts.AssetFilters, r.Opts.AppFilters); err != nil {
+			return nil, err
+		} else {
+			for _, stmt := range receiptStatements {
+				if stmt.IsMaterial() && !r.SkipAirdrop(&stmt) {
+					statements = append(statements, stmt)
+				}
+			}
+		}
+	}
+
+	return convertToTransfers(statements)
 }
 
 func convertToTransfers(statements []types.Statement) ([]types.Transfer, error) {
@@ -253,7 +286,9 @@ func convertToTransfers(statements []types.Statement) ([]types.Transfer, error) 
 			Decimals:         stmnt.Decimals,
 			CorrectingReason: stmnt.CorrectingReason,
 		}
-		transfers = append(transfers, t)
+		if !t.Amount.Equal(base.ZeroWei) {
+			transfers = append(transfers, t)
+		}
 	}
 
 	if base.IsTestMode() {
@@ -267,7 +302,9 @@ func convertToTransfers(statements []types.Statement) ([]types.Transfer, error) 
 			return transfers[i].BlockNumber < transfers[j].BlockNumber
 		})
 		for _, t := range transfers {
-			logger.TestLog(true, "transfer:", t.BlockNumber, t.TransactionIndex, t.LogIndex, t.Asset, t.Holder, t.Amount.Text(10), t.CorrectingReason)
+			if !t.Amount.Equal(base.ZeroWei) {
+				logger.TestLog(true, "transfer:", t.BlockNumber, t.TransactionIndex, t.LogIndex, t.Asset, t.Holder, t.Amount.Text(10), t.CorrectingReason)
+			}
 		}
 	}
 

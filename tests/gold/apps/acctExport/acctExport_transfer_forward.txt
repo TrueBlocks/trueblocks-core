@@ -9,281 +9,14 @@ TEST[DATE|TIME] OutputFn:  transfer_forward_out.file
 TEST[DATE|TIME] Caps:  cache,decache,ether
 TEST[DATE|TIME] Format:  json
 INFO[DATE|TIME] { "outputFilename": "--output_filename--" }
-TEST[DATE|TIME] Block 8769019 is prior to deployment (10000835) of Uniswap V2. Falling back to Maker (0x729d19f657bd0614b4985cf1d82531c67569197b)
-TEST[DATE|TIME] =========================================================
-TEST[DATE|TIME] ===> PRICING FOR 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (ETH) using Maker
-TEST[DATE|TIME] =========================================================
-TEST[DATE|TIME] blockNumber:         8769019
-TEST[DATE|TIME] source1 (uni/mkr):   0x729d19f657bd0614b4985cf1d82531c67569197b
-TEST[DATE|TIME] str0 (call):         peek()
-TEST[DATE|TIME] str1 (call/data):    0x0000000000000000000000000000000000000000000000096b794ada83c08000
-TEST[DATE|TIME] int0:                17376500000000000000000000
-TEST[DATE|TIME] int1:                17376500
-TEST[DATE|TIME] bigPrice:            173.765
-TEST[DATE|TIME] price:               173.765
-TEST[DATE|TIME] source:              maker
-TEST[DATE|TIME] ===================================================
-TEST[DATE|TIME] ====> eth
-TEST[DATE|TIME] ===================================================
-TEST[DATE|TIME] Previous:               8769018
-TEST[DATE|TIME] Current:                8769019
-TEST[DATE|TIME] Next:                   8769029
-TEST[DATE|TIME] accountedFor:           0x868b8fd259abfcfdf9634c343593b34ef359641d
-TEST[DATE|TIME] sender:                 0x103348c47ffc3254aff761894e7c13ca0c680465  ==>  0x868b8fd259abfcfdf9634c343593b34ef359641d
-TEST[DATE|TIME] asset:                  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (ETH) decimals: 18
-TEST[DATE|TIME] hash:                   0xf6bce3d9edd00f2e8a996505fded2e7e28a1b6af193d94e9524b9ac7fbf3e8b3
-TEST[DATE|TIME] timestamp:              1571457514
-TEST[DATE|TIME] blockNumber:            8769019.124
-TEST[DATE|TIME] priceSource:            173.765 (maker)
-TEST[DATE|TIME] --------------------------------------------------- 
-TEST[DATE|TIME] Trial balance:
-TEST[DATE|TIME]    prevBal:             0
-TEST[DATE|TIME]    begBal:              0 (0)
-TEST[DATE|TIME]    totalIn:             0.025
-TEST[DATE|TIME]    totalOut:            0
-TEST[DATE|TIME]    amountNet:           0.025
-TEST[DATE|TIME]                        ======================= 
-TEST[DATE|TIME]    endBal:              0.025 (0)
-TEST[DATE|TIME]    endBalCalc:          0.025
-TEST[DATE|TIME]    rollingBalance:      0
-TEST[DATE|TIME] --------------------------------------------------- 
-TEST[DATE|TIME]    amountIn:            0.025
-TEST[DATE|TIME]    material:            true
-TEST[DATE|TIME]    reconciled:          true
-TEST[DATE|TIME] ---------------------------------------------------
-TEST[DATE|TIME] Block 8769029 is prior to deployment (10000835) of Uniswap V2. No other source for tokens prior to UniSwap
-TEST[DATE|TIME] ===================================================
-TEST[DATE|TIME] ====> token
-TEST[DATE|TIME] ===================================================
-TEST[DATE|TIME] Previous:               8769019
-TEST[DATE|TIME] Current:                8769029
-TEST[DATE|TIME] Next:                   8769052
-TEST[DATE|TIME] accountedFor:           0x868b8fd259abfcfdf9634c343593b34ef359641d
-TEST[DATE|TIME] sender:                 0x103348c47ffc3254aff761894e7c13ca0c680465  ==>  0x868b8fd259abfcfdf9634c343593b34ef359641d
-TEST[DATE|TIME] asset:                  0x0ba45a8b5d5575935b8158a88c631e9f9c95a2e5 (TRB) decimals: 18
-TEST[DATE|TIME] hash:                   0x22f3135a1c2b201456a4770ef9c1ac65a759db3aebe5cb8ad36ad7373f48532f
-TEST[DATE|TIME] timestamp:              1571457649
-TEST[DATE|TIME] blockNumber:            8769029.80.61
-TEST[DATE|TIME] priceSource:            0 (token-not-priced-pre-uni)
-TEST[DATE|TIME] --------------------------------------------------- 
-TEST[DATE|TIME] Trial balance:
-TEST[DATE|TIME]    prevBal:             0
-TEST[DATE|TIME]    begBal:              0 (0)
-TEST[DATE|TIME]    totalIn:             85
-TEST[DATE|TIME]    totalOut:            0
-TEST[DATE|TIME]    amountNet:           85
-TEST[DATE|TIME]                        ======================= 
-TEST[DATE|TIME]    endBal:              85 (0)
-TEST[DATE|TIME]    endBalCalc:          85
-TEST[DATE|TIME]    rollingBalance:      0
-TEST[DATE|TIME] --------------------------------------------------- 
-TEST[DATE|TIME]    amountIn:            85
-TEST[DATE|TIME]    material:            true
-TEST[DATE|TIME]    reconciled:          true
-TEST[DATE|TIME] ---------------------------------------------------
-TEST[DATE|TIME] Block 8769052 is prior to deployment (10000835) of Uniswap V2. Falling back to Maker (0x729d19f657bd0614b4985cf1d82531c67569197b)
-TEST[DATE|TIME] =========================================================
-TEST[DATE|TIME] ===> PRICING FOR 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (ETH) using Maker
-TEST[DATE|TIME] =========================================================
-TEST[DATE|TIME] blockNumber:         8769052
-TEST[DATE|TIME] source1 (uni/mkr):   0x729d19f657bd0614b4985cf1d82531c67569197b
-TEST[DATE|TIME] str0 (call):         peek()
-TEST[DATE|TIME] str1 (call/data):    0x0000000000000000000000000000000000000000000000096b794ada83c08000
-TEST[DATE|TIME] int0:                17376500000000000000000000
-TEST[DATE|TIME] int1:                17376500
-TEST[DATE|TIME] bigPrice:            173.765
-TEST[DATE|TIME] price:               173.765
-TEST[DATE|TIME] source:              maker
-TEST[DATE|TIME] ===================================================
-TEST[DATE|TIME] ====> eth
-TEST[DATE|TIME] ===================================================
-TEST[DATE|TIME] Previous:               8769029
-TEST[DATE|TIME] Current:                8769052
-TEST[DATE|TIME] Next:                   8769052
-TEST[DATE|TIME] accountedFor:           0x868b8fd259abfcfdf9634c343593b34ef359641d
-TEST[DATE|TIME] sender:                 0x868b8fd259abfcfdf9634c343593b34ef359641d  ==>  0x0ba45a8b5d5575935b8158a88c631e9f9c95a2e5
-TEST[DATE|TIME] asset:                  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (ETH) decimals: 18
-TEST[DATE|TIME] hash:                   0x66cdceb982decd5c899ee7a608468eed3b0032b7f146bdef7a96ec0dfecfcc1d
-TEST[DATE|TIME] timestamp:              1571458005
-TEST[DATE|TIME] blockNumber:            8769052.73
-TEST[DATE|TIME] priceSource:            173.765 (maker)
-TEST[DATE|TIME] --------------------------------------------------- 
-TEST[DATE|TIME] Trial balance:
-TEST[DATE|TIME]    prevBal:             0.025
-TEST[DATE|TIME]    begBal:              0.025 (0.00070223)
-TEST[DATE|TIME]    totalIn:             0
-TEST[DATE|TIME]    totalOut:            0.00024718
-TEST[DATE|TIME]    amountNet:           -0.00024718
-TEST[DATE|TIME]                        ======================= 
-TEST[DATE|TIME]    endBal:              0.02405059 (0)
-TEST[DATE|TIME]    endBalCalc:          0.02475282
-TEST[DATE|TIME]    rollingBalance:      0
-TEST[DATE|TIME] --------------------------------------------------- 
-TEST[DATE|TIME]    gasOut:              0.00024718
-TEST[DATE|TIME]    material:            true
-TEST[DATE|TIME]    reconciled:          false
-TEST[DATE|TIME]  ^^ we need to fix this ^^
-TEST[DATE|TIME] ---------------------------------------------------
-TEST[DATE|TIME] Block 8769052 is prior to deployment (10000835) of Uniswap V2. Falling back to Maker (0x729d19f657bd0614b4985cf1d82531c67569197b)
-TEST[DATE|TIME] =========================================================
-TEST[DATE|TIME] ===> PRICING FOR 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (ETH) using Maker
-TEST[DATE|TIME] =========================================================
-TEST[DATE|TIME] blockNumber:         8769052
-TEST[DATE|TIME] source1 (uni/mkr):   0x729d19f657bd0614b4985cf1d82531c67569197b
-TEST[DATE|TIME] str0 (call):         peek()
-TEST[DATE|TIME] str1 (call/data):    0x0000000000000000000000000000000000000000000000096b794ada83c08000
-TEST[DATE|TIME] int0:                17376500000000000000000000
-TEST[DATE|TIME] int1:                17376500
-TEST[DATE|TIME] bigPrice:            173.765
-TEST[DATE|TIME] price:               173.765
-TEST[DATE|TIME] source:              maker
-TEST[DATE|TIME] ===================================================
-TEST[DATE|TIME] ====> eth
-TEST[DATE|TIME] ===================================================
-TEST[DATE|TIME] Previous:               8769052
-TEST[DATE|TIME] Current:                8769052
-TEST[DATE|TIME] Next:                   8769064
-TEST[DATE|TIME] accountedFor:           0x868b8fd259abfcfdf9634c343593b34ef359641d
-TEST[DATE|TIME] sender:                 0x868b8fd259abfcfdf9634c343593b34ef359641d  ==>  0x2a0c0dbecc7e4d658f48e01e3fa353f44050c208
-TEST[DATE|TIME] asset:                  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (ETH) decimals: 18
-TEST[DATE|TIME] hash:                   0x90feb158340931c051ccb4def6112b6d46794f739499d7255b5109481b991265
-TEST[DATE|TIME] timestamp:              1571458005
-TEST[DATE|TIME] blockNumber:            8769052.74
-TEST[DATE|TIME] priceSource:            173.765 (maker)
-TEST[DATE|TIME] --------------------------------------------------- 
-TEST[DATE|TIME] Trial balance:
-TEST[DATE|TIME]    prevBal:             0.02405059
-TEST[DATE|TIME]    begBal:              0.025 (0.00024718)
-TEST[DATE|TIME]    totalIn:             0
-TEST[DATE|TIME]    totalOut:            0.00070223
-TEST[DATE|TIME]    amountNet:           -0.00070223
-TEST[DATE|TIME]                        ======================= 
-TEST[DATE|TIME]    endBal:              0.02405059 (0.00094941)
-TEST[DATE|TIME]    endBalCalc:          0.02429777
-TEST[DATE|TIME]    rollingBalance:      0
-TEST[DATE|TIME] --------------------------------------------------- 
-TEST[DATE|TIME]    gasOut:              0.00070223
-TEST[DATE|TIME]    material:            true
-TEST[DATE|TIME]    reconciled:          false
-TEST[DATE|TIME]  ^^ we need to fix this ^^
-TEST[DATE|TIME] ---------------------------------------------------
-TEST[DATE|TIME] Block 8769052 is prior to deployment (10000835) of Uniswap V2. No other source for tokens prior to UniSwap
-TEST[DATE|TIME] ===================================================
-TEST[DATE|TIME] ====> token
-TEST[DATE|TIME] ===================================================
-TEST[DATE|TIME] Previous:               8769052
-TEST[DATE|TIME] Current:                8769052
-TEST[DATE|TIME] Next:                   8769064
-TEST[DATE|TIME] accountedFor:           0x868b8fd259abfcfdf9634c343593b34ef359641d
-TEST[DATE|TIME] sender:                 0x868b8fd259abfcfdf9634c343593b34ef359641d  ==>  0x2a0c0dbecc7e4d658f48e01e3fa353f44050c208
-TEST[DATE|TIME] asset:                  0x0ba45a8b5d5575935b8158a88c631e9f9c95a2e5 (TRB) decimals: 18
-TEST[DATE|TIME] hash:                   0x90feb158340931c051ccb4def6112b6d46794f739499d7255b5109481b991265
-TEST[DATE|TIME] timestamp:              1571458005
-TEST[DATE|TIME] blockNumber:            8769052.74.73
-TEST[DATE|TIME] priceSource:            0 (token-not-priced-pre-uni)
-TEST[DATE|TIME] --------------------------------------------------- 
-TEST[DATE|TIME] Trial balance:
-TEST[DATE|TIME]    prevBal:             0
-TEST[DATE|TIME]    begBal:              85 (0)
-TEST[DATE|TIME]    totalIn:             0
-TEST[DATE|TIME]    totalOut:            85
-TEST[DATE|TIME]    amountNet:           -85
-TEST[DATE|TIME]                        ======================= 
-TEST[DATE|TIME]    endBal:              0 (85)
-TEST[DATE|TIME]    endBalCalc:          0
-TEST[DATE|TIME]    rollingBalance:      0
-TEST[DATE|TIME] --------------------------------------------------- 
-TEST[DATE|TIME]    amountOut:           85
-TEST[DATE|TIME]    material:            true
-TEST[DATE|TIME]    reconciled:          false
-TEST[DATE|TIME]  ^^ we need to fix this ^^
-TEST[DATE|TIME] ---------------------------------------------------
-TEST[DATE|TIME] Block 8769130 is prior to deployment (10000835) of Uniswap V2. Falling back to Maker (0x729d19f657bd0614b4985cf1d82531c67569197b)
-TEST[DATE|TIME] =========================================================
-TEST[DATE|TIME] ===> PRICING FOR 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (ETH) using Maker
-TEST[DATE|TIME] =========================================================
-TEST[DATE|TIME] blockNumber:         8769130
-TEST[DATE|TIME] source1 (uni/mkr):   0x729d19f657bd0614b4985cf1d82531c67569197b
-TEST[DATE|TIME] str0 (call):         peek()
-TEST[DATE|TIME] str1 (call/data):    0x0000000000000000000000000000000000000000000000096c192a1d7aa50000
-TEST[DATE|TIME] int0:                17381000000000000000000000
-TEST[DATE|TIME] int1:                17381000
-TEST[DATE|TIME] bigPrice:            173.81
-TEST[DATE|TIME] price:               173.81
-TEST[DATE|TIME] source:              maker
-TEST[DATE|TIME] ===================================================
-TEST[DATE|TIME] ====> eth
-TEST[DATE|TIME] ===================================================
-TEST[DATE|TIME] Previous:               8769064
-TEST[DATE|TIME] Current:                8769130
-TEST[DATE|TIME] Next:                   8769141
-TEST[DATE|TIME] accountedFor:           0x868b8fd259abfcfdf9634c343593b34ef359641d
-TEST[DATE|TIME] sender:                 0x868b8fd259abfcfdf9634c343593b34ef359641d  ==>  0x103348c47ffc3254aff761894e7c13ca0c680465
-TEST[DATE|TIME] asset:                  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (ETH) decimals: 18
-TEST[DATE|TIME] hash:                   0xe9278cb13db118e569d98b43b5d7feb01f799ad734d255198d46c293f9455b9e
-TEST[DATE|TIME] timestamp:              1571458850
-TEST[DATE|TIME] blockNumber:            8769130.51
-TEST[DATE|TIME] priceSource:            173.81 (maker)
-TEST[DATE|TIME] --------------------------------------------------- 
-TEST[DATE|TIME] Trial balance:
-TEST[DATE|TIME]    prevBal:             0.47461279
-TEST[DATE|TIME]    begBal:              0.47461279 (0)
-TEST[DATE|TIME]    totalIn:             0
-TEST[DATE|TIME]    totalOut:            0.100021
-TEST[DATE|TIME]    amountNet:           -0.100021
-TEST[DATE|TIME]                        ======================= 
-TEST[DATE|TIME]    endBal:              0.37459179 (0)
-TEST[DATE|TIME]    endBalCalc:          0.37459179
-TEST[DATE|TIME]    rollingBalance:      0
-TEST[DATE|TIME] --------------------------------------------------- 
-TEST[DATE|TIME]    amountOut:           0.1
-TEST[DATE|TIME]    gasOut:              0.000021
-TEST[DATE|TIME]    material:            true
-TEST[DATE|TIME]    reconciled:          true
-TEST[DATE|TIME] ---------------------------------------------------
-TEST[DATE|TIME] Block 8769141 is prior to deployment (10000835) of Uniswap V2. Falling back to Maker (0x729d19f657bd0614b4985cf1d82531c67569197b)
-TEST[DATE|TIME] =========================================================
-TEST[DATE|TIME] ===> PRICING FOR 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (ETH) using Maker
-TEST[DATE|TIME] =========================================================
-TEST[DATE|TIME] blockNumber:         8769141
-TEST[DATE|TIME] source1 (uni/mkr):   0x729d19f657bd0614b4985cf1d82531c67569197b
-TEST[DATE|TIME] str0 (call):         peek()
-TEST[DATE|TIME] str1 (call/data):    0x0000000000000000000000000000000000000000000000096c192a1d7aa50000
-TEST[DATE|TIME] int0:                17381000000000000000000000
-TEST[DATE|TIME] int1:                17381000
-TEST[DATE|TIME] bigPrice:            173.81
-TEST[DATE|TIME] price:               173.81
-TEST[DATE|TIME] source:              maker
-TEST[DATE|TIME] ===================================================
-TEST[DATE|TIME] ====> eth
-TEST[DATE|TIME] ===================================================
-TEST[DATE|TIME] Previous:               8769130
-TEST[DATE|TIME] Current:                8769141
-TEST[DATE|TIME] Next:                   8769142
-TEST[DATE|TIME] accountedFor:           0x868b8fd259abfcfdf9634c343593b34ef359641d
-TEST[DATE|TIME] sender:                 0x868b8fd259abfcfdf9634c343593b34ef359641d  ==>  0xf322ccd630465c8a6fc517326ff58fe102310251
-TEST[DATE|TIME] asset:                  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (ETH) decimals: 18
-TEST[DATE|TIME] hash:                   0xcc85517a32761d7de6b4aa07c75d54f4b54a88663505d2734f4e98e441e8e35e
-TEST[DATE|TIME] timestamp:              1571459025
-TEST[DATE|TIME] blockNumber:            8769141.27
-TEST[DATE|TIME] priceSource:            173.81 (maker)
-TEST[DATE|TIME] --------------------------------------------------- 
-TEST[DATE|TIME] Trial balance:
-TEST[DATE|TIME]    prevBal:             0.37459179
-TEST[DATE|TIME]    begBal:              0.37459179 (0)
-TEST[DATE|TIME]    totalIn:             0
-TEST[DATE|TIME]    totalOut:            0.37459179
-TEST[DATE|TIME]    amountNet:           -0.37459179
-TEST[DATE|TIME]                        ======================= 
-TEST[DATE|TIME]    endBal:              0 (0)
-TEST[DATE|TIME]    endBalCalc:          0
-TEST[DATE|TIME]    rollingBalance:      0
-TEST[DATE|TIME] --------------------------------------------------- 
-TEST[DATE|TIME]    amountOut:           0.37457079
-TEST[DATE|TIME]    gasOut:              0.000021
-TEST[DATE|TIME]    material:            true
-TEST[DATE|TIME]    reconciled:          true
-TEST[DATE|TIME] ---------------------------------------------------
+TEST[DATE|TIME] transfer: 8769019 124 0 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0x868b8fd259abfcfdf9634c343593b34ef359641d 25000000000000000 
+TEST[DATE|TIME] transfer: 8769029 80 61 0x0ba45a8b5d5575935b8158a88c631e9f9c95a2e5 0x868b8fd259abfcfdf9634c343593b34ef359641d 85000000000000000000 
+TEST[DATE|TIME] transfer: 8769052 73 0 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0x868b8fd259abfcfdf9634c343593b34ef359641d -247180000000000 
+TEST[DATE|TIME] transfer: 8769052 74 0 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0x868b8fd259abfcfdf9634c343593b34ef359641d -702230000000000 
+TEST[DATE|TIME] transfer: 8769052 74 73 0x0ba45a8b5d5575935b8158a88c631e9f9c95a2e5 0x868b8fd259abfcfdf9634c343593b34ef359641d -85000000000000000000 
+TEST[DATE|TIME] transfer: 8769064 131 0 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0x868b8fd259abfcfdf9634c343593b34ef359641d 450562200000000000 
+TEST[DATE|TIME] transfer: 8769130 51 0 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0x868b8fd259abfcfdf9634c343593b34ef359641d -100021000000000000 
+TEST[DATE|TIME] transfer: 8769141 27 0 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0x868b8fd259abfcfdf9634c343593b34ef359641d -374591790000000000 
 ----
 Results in ./transfer_forward_out.file
 {
@@ -292,6 +25,7 @@ Results in ./transfer_forward_out.file
       "amount": "25000000000000000",
       "amountEth": "0.025",
       "asset": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+      "assetName": "ETH",
       "blockNumber": 8769019,
       "holder": "0x868b8fd259abfcfdf9634c343593b34ef359641d",
       "logIndex": 0,
@@ -301,6 +35,7 @@ Results in ./transfer_forward_out.file
       "amount": "85000000000000000000",
       "amountEth": "85",
       "asset": "0x0ba45a8b5d5575935b8158a88c631e9f9c95a2e5",
+      "assetName": "Tellor Tributes",
       "blockNumber": 8769029,
       "holder": "0x868b8fd259abfcfdf9634c343593b34ef359641d",
       "logIndex": 61,
@@ -310,6 +45,7 @@ Results in ./transfer_forward_out.file
       "amount": "-247180000000000",
       "amountEth": "-0.00024718",
       "asset": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+      "assetName": "ETH",
       "blockNumber": 8769052,
       "holder": "0x868b8fd259abfcfdf9634c343593b34ef359641d",
       "logIndex": 0,
@@ -319,6 +55,7 @@ Results in ./transfer_forward_out.file
       "amount": "-702230000000000",
       "amountEth": "-0.00070223",
       "asset": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+      "assetName": "ETH",
       "blockNumber": 8769052,
       "holder": "0x868b8fd259abfcfdf9634c343593b34ef359641d",
       "logIndex": 0,
@@ -328,6 +65,7 @@ Results in ./transfer_forward_out.file
       "amount": "-85000000000000000000",
       "amountEth": "-85",
       "asset": "0x0ba45a8b5d5575935b8158a88c631e9f9c95a2e5",
+      "assetName": "Tellor Tributes",
       "blockNumber": 8769052,
       "holder": "0x868b8fd259abfcfdf9634c343593b34ef359641d",
       "logIndex": 73,
@@ -337,6 +75,7 @@ Results in ./transfer_forward_out.file
       "amount": "450562200000000000",
       "amountEth": "0.4505622",
       "asset": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+      "assetName": "ETH",
       "blockNumber": 8769064,
       "holder": "0x868b8fd259abfcfdf9634c343593b34ef359641d",
       "logIndex": 0,
@@ -346,6 +85,7 @@ Results in ./transfer_forward_out.file
       "amount": "-100021000000000000",
       "amountEth": "-0.100021",
       "asset": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+      "assetName": "ETH",
       "blockNumber": 8769130,
       "holder": "0x868b8fd259abfcfdf9634c343593b34ef359641d",
       "logIndex": 0,
@@ -355,6 +95,7 @@ Results in ./transfer_forward_out.file
       "amount": "-374591790000000000",
       "amountEth": "-0.37459179",
       "asset": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+      "assetName": "ETH",
       "blockNumber": 8769141,
       "holder": "0x868b8fd259abfcfdf9634c343593b34ef359641d",
       "logIndex": 0,

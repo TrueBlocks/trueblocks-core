@@ -2,12 +2,6 @@ export?addrs=0x65b0d5e1dc0dee0704f53f660aa865c72e986fc7&accounting&assets&ether&
 {
   "data": [
     {
-      "address": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
-      "decimals": 18,
-      "name": "ETH",
-      "symbol": "ETH"
-    },
-    {
       "address": "0x9f8f72aa9304c8b593d555f12ef6589cc3a579a2",
       "decimals": 18,
       "name": "Maker",
@@ -18,6 +12,12 @@ export?addrs=0x65b0d5e1dc0dee0704f53f660aa865c72e986fc7&accounting&assets&ether&
       "decimals": 18,
       "name": "Aave interest bearing MKR",
       "symbol": "aMKR"
+    },
+    {
+      "address": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+      "decimals": 18,
+      "name": "ETH",
+      "symbol": "ETH"
     }
   ],
   "meta": {

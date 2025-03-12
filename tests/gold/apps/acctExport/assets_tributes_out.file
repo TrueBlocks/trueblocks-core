@@ -1,16 +1,16 @@
 {
   "data": [
     {
-      "address": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
-      "decimals": 18,
-      "name": "ETH",
-      "symbol": "ETH"
-    },
-    {
       "address": "0x0ba45a8b5d5575935b8158a88c631e9f9c95a2e5",
       "decimals": 18,
       "name": "Tellor Tributes",
       "symbol": "TRB"
+    },
+    {
+      "address": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+      "decimals": 18,
+      "name": "ETH",
+      "symbol": "ETH"
     }
   ]
 }
