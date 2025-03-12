@@ -305,7 +305,7 @@ func (op *Option) IsConfigurableAddr() bool {
 }
 
 func (op *Option) IsSpecialAddr() bool {
-	return op.IsConfigurableAddr() || op.GoName == "Autoname"
+	return op.DataType == "<address>"
 }
 
 func (op *Option) EnsConvert() string {

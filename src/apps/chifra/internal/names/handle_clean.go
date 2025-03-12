@@ -188,10 +188,13 @@ func preparePrefunds(chain string) (results map[base.Address]bool, err error) {
 	return
 }
 
-func cleanName(chain string, name *types.Name) (modified bool, err error) {
+func cleanName(chain string, name *types.Name) (bool, error) {
+	var modified bool
+	var err error
+
 	conn := rpc.TempConnection(chain)
 	if err = conn.IsContractAtLatest(name.Address); err != nil && !errors.Is(err, rpc.ErrNotAContract) {
-		return
+		return modified, err
 	}
 
 	isContract := !errors.Is(err, rpc.ErrNotAContract)
@@ -203,7 +206,7 @@ func cleanName(chain string, name *types.Name) (modified bool, err error) {
 		if mod := cleanNonContract(name, wasContract); mod {
 			modified = true
 		}
-		return
+		return modified, err
 	}
 
 	// If this address is not a token, we're done
@@ -211,10 +214,11 @@ func cleanName(chain string, name *types.Name) (modified bool, err error) {
 
 	contractModified, err := cleanContract(tokenState, name)
 	if err != nil {
-		return
+		return modified, err
 	}
+
 	modified = modified || contractModified
-	return
+	return modified, err
 }
 
 func cleanCommon(name *types.Name) (modified bool) {
