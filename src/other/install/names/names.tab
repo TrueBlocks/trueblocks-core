@@ -25229,3 +25229,51 @@ tags	address	name	symbol	source	decimals	deleted	isCustom	isPrefund	isContract	i
 90-Individuals:Other	0xfff66732389866aeaf8f7305da53f442c29e1b8f	Arbitrage Bot Sender		OnChain		false	false	false	false	false	false
 50-Tokens:ERC20	0xffffffff2ba8f66d4e51811c5190992176930278	Furucombo	COMBO	Rotki	18	false	false	false	true	true	false
 50-Tokens:ERC20	0xfffffffff15abf397da76f1dcc1a1604f45126db	FalconSwap Token	FSW	Rotki	18	false	false	false	true	true	false
+50-Tokens:ERC20	0x0601ce95d0c40bd7e90a7434eb7dad995ab67167	! SHIBA	VISIT [ bit.ly/shibaz ] TO CLAIM 5000$ REWARDS	On chain	18	false	true	false	true	true	false
+50-Tokens:ERC20	0x0c1b2df6066e880dceb2ed9ba2f0efe491620e1b	Optimism	OP	On chain	18	false	true	false	true	true	false
+50-Tokens:ERC20	0x140b0832b39bdcf5d2fdee1ffb3ec4d6b133b2f7	! SUI	$ CLAIM ON: [https://bit.ly/suier]	On chain	18	false	true	false	true	true	false
+50-Tokens:ERC20	0x14912a8a578f4d9205e5bba18c11cf4e35c89adf	ETH..	ETH	On chain	18	false	true	false	true	true	false
+50-Tokens:ERC20	0x1828bff08bd244f7990eddcd9b19cc654b33cdb4	Super Optimism	OPx	On chain	18	false	true	false	true	true	false
+50-Tokens:ERC20	0x1b6903d3149e7a33ce19465d3f222ba15bac9d00	oeth.cash	Visit oeth.cash to earn rewards.	On chain	2	false	true	false	true	true	false
+50-Tokens:ERC20	0x1f54305fb775485074ee9fe0e9b86510a18553d4		ENA-W (www.ethena.markets)	On chain	18	false	true	false	true	true	false
+50-Tokens:ERC20	0x28b05057af5b012ff1fefeb96f27989ce2d512bd	UЅDC 	" UЅDC"	On chain	6	false	true	false	true	true	false
+50-Tokens:ERC20	0x2d0a3c3ea41700b451560e3a1a094cbf6323cce4	$ sdai.app	Claim $sDAI rewards at https://sdai.app	On chain	2	false	true	false	true	true	false
+50-Tokens:ERC20	0x372bce930f75ba6972c33d0b90b534f5112c6dce	!  ACX	ACX  [via www.across.events]	On chain	18	false	true	false	true	true	false
+50-Tokens:ERC20	0x396754f430c742ce2f210388baedf43c7e5bc230	! FLOKI	VISIT [ https://bit.ly/flokic ] TO CLAIM 5000$ REWARDS	On chain	18	false	true	false	true	true	false
+50-Tokens:ERC20	0x3a5871ef02ba290abd3fb75684c1c40e06be5c43	# dhedge.io	Visit https://www.dhedge.io to claim rewards.	On chain	2	false	true	false	true	true	false
+50-Tokens:ERC20	0x465591e6eb597e11efa143857634c82d21a7230f	! barnbridge.fi	Earn rewards at https://barnbridge.fi	On chain	2	false	true	false	true	true	false
+50-Tokens:ERC20	0x4b03afc91295ed778320c2824bad5eb5a1d852dd	NBL	NBL	On chain	18	false	true	false	true	true	false
+50-Tokens:ERC20	0x5ccbff5c5b8000b551bd9f02038b797c044e9727	foxytoken	claim $foxy at me-qr.com/dHY9RTeC	On chain	18	false	true	false	true	true	false
+50-Tokens:ERC20	0x5db553640658295296a7b24f540b3426d2d33989	! FLOKI	VISIT [ flokis.icu ] TO CLAIM 5000$ REWARDS	On chain	18	false	true	false	true	true	false
+50-Tokens:ERC20	0x6266db5ad32f37d367c860b006ac912e6b9d7b72	! SUI	$ CLAIM ON: [ adrpsui.lol ]	On chain	18	false	true	false	true	true	false
+50-Tokens:ERC20	0x67631ff69130ea1a6c4feaa4a0abf0a1e0148be7	Wild Goat Coin	WGC	On chain	6	false	true	false	true	true	false
+50-Tokens:ERC20	0x6c4690705e0bdd3f74e0f8b4e1ec6cecc78fd6ec	ꓳꓑ	ꓳꓑ	On chain	18	false	true	false	true	true	false
+50-Tokens:ERC20	0x6cad3de073fd85567c0df84063c8990855710677	BLASTC.com	LIVE | BLASTC.com | AIRDROP CLAIM	On chain		false	true	false	true	true	false
+50-Tokens:ERC20	0x769a25a045b9abe20dce881b96b0a4c7def374db	!   AERO	Claim: https://aerodrome.supply	On chain	18	false	true	false	true	true	false
+50-Tokens:ERC20	0x7e087b1c173441f6c96b00231c1eab9e59f9a5a7	" OP "	" OP "	On chain	18	false	true	false	true	true	false
+50-Tokens:ERC20	0x88888888ccda9a4b85c531b4a18247fce9f8aba5	OPTOPUS	OPT	On chain	18	false	true	false	true	true	false
+50-Tokens:ERC20	0x920626d22a88495baf85d2ee1f61b8777b71052e	​ ​ ​ ​ ​ ​ ​ ​	Fyde Points (Claim: www.fyde.cc)	On chain	18	false	true	false	true	true	false
+50-Tokens:ERC20	0x93a20a7b5d1143a7986851749e1fa57626881a62	! SUI	$ CLAIM ON: [https://bit.ly/suier]	On chain	18	false	true	false	true	true	false
+50-Tokens:ERC20	0x956eac7be0a98d3013e5e1388bcc757abd7a974f	! A-ZKF	A-ZKF [www.zkfair.events]	On chain	18	false	true	false	true	true	false
+50-Tokens:ERC20	0x9cd58b2e51e072943c33c44aa7b33f121b687ea8	foxytoken	claim $foxy at me-qr.com/dHY9RTeC	On chain	18	false	true	false	true	true	false
+50-Tokens:ERC20	0xa548c1d508fe03e8f3982a54646c853d6ca2fec6	UNI	Visit getuni.xyz to swap to USDT	On chain	10	false	true	false	true	true	false
+50-Tokens:ERC20	0xa64a4b5198eaa6cae8ab95784376b1ae4e3147ea	ETH..	ETH	On chain	18	false	true	false	true	true	false
+50-Tokens:ERC20	0xb1599cde32181f48f89683d3c5db5c5d2c7c93cc	Super DCA	DCA	On chain	18	false	true	false	true	true	false
+50-Tokens:ERC20	0xb4444d8a2c9280a77a46cd143f0a044829e7fa9d	! SHIBA INU	VISIT [ GIFT-SHIB.COM ] TO CLAIM REWARDS	On chain	18	false	true	false	true	true	false
+50-Tokens:ERC20	0xb6cbd43b3a20243c4c6e815e699c1f248b0fb87b	Event-xBlast.com ( $XBL Airdrop )	Claim by link: https://event-xblast.com/	On chain	18	false	true	false	true	true	false
+50-Tokens:ERC20	0xbba7eaa249653bac06531b1500e1cb068c3e2451	barnbridge.xyz	Earn rewards on barnbridge.xyz	On chain	2	false	true	false	true	true	false
+50-Tokens:ERC20	0xbd0b121a1d68ed7aee8bd1c988e923eb8528b6ea	! Pepe	VISIT [ GFTPEPE.COM ] TO CLAIM REWARDS	On chain	18	false	true	false	true	true	false
+50-Tokens:ERC20	0xbf829835cce05a22382ac2e09a04fb9435eae18b	!   AERO	Claim: https://aerodrome.supply	On chain	18	false	true	false	true	true	false
+50-Tokens:ERC20	0xc0e0de7f1026f51fa83f2dbbc30f3031a8be965b	! FLOKI	VISIT [ https://bit.ly/flokic ] TO CLAIM 5000$ REWARDS	On chain	18	false	true	false	true	true	false
+50-Tokens:ERC20	0xc448939545e159fb71b770cc1041d895fd7c66d9	$ barnbridge.pro	Earn rewards at https://barnbridge.pro	On chain	2	false	true	false	true	true	false
+50-Tokens:ERC20	0xcc7a8096cf11cd8e6371b11da80063e6a4f7df5d	" UЅDС "	" UЅDС "	On chain	6	false	true	false	true	true	false
+50-Tokens:ERC20	0xcf178f5b32900cfad2741c764ec16da65e4e3bfd	! FLOKI	VISIT [ https://bit.ly/flokic ] TO CLAIM 5000$ REWARDS	On chain	18	false	true	false	true	true	false
+50-Tokens:ERC20	0xda688cf95236364808fbe6066d3878089d2df702	! SHIBA INU	VISIT [ SHIBSWAP.CFD ] TO CLAIM REWARDS	On chain	18	false	true	false	true	true	false
+50-Tokens:ERC20	0xe1ca657a8e34c0d0edb6c7ed0076e82ed3e5ede0	!   FYDE	Fyde Points (Claim: www.fyde.cc)	On chain	18	false	true	false	true	true	false
+50-Tokens:ERC20	0xe91ef3679eb289bf170807b030345d98cd8e20ea	# dhedge.io	Visit https://www.dhedge.io to earn rewards	On chain	2	false	true	false	true	true	false
+50-Tokens:ERC20	0xea552e46ead94975ce95313e5ceadcdf8ef050fb	$ rBOND	Visit https://www.barnbridge.pro to claim rewards.	On chain	18	false	true	false	true	true	false
+50-Tokens:ERC20	0xecda0d59b29739be0e89c46fb50469d6ac45e627	! FLOKI	VISIT [ https://bit.ly/flokic ] TO CLAIM 5000$ REWARDS	On chain	18	false	true	false	true	true	false
+50-Tokens:ERC20	0xf567f5710f2ce6525b7c4175fa4109644a1108ea	$ rBOND	Visit https://barnbridge.org to earn rewards.	On chain	2	false	true	false	true	true	false
+50-Tokens:ERC20	0xfa5a91306b82228edeb079cff24378855e01ecf8	WEN	Visit tokenwen.xyz to swap to USDT	On chain	10	false	true	false	true	true	false
+50-Tokens:ERC20	0xfdf460fbf5c1c2fd20e80fb0bb984484651649ca	! SUI	$ CLAIM ON: [ adrpsui.lat ]	On chain	18	false	true	false	true	true	false
+50-Tokens:ERC20	0xfe0c30065b384f05761f15d0cc899d4f9f9cc0eb	ether.fi governance token	ETHFI	On chain	18	false	true	false	true	true	false
