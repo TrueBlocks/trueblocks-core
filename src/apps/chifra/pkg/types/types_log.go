@@ -349,47 +349,4 @@ func (log *Log) IsNFT() bool {
 	return len(log.Topics) == 4 && log.Topics[0] == topics.TransferTopic
 }
 
-func (log *Log) FetchStatement(accountedFor base.Address) (*Statement, error) {
-	if normalized, err := NormalizeKnownLogs(log); err != nil {
-		return nil, err
-	} else if normalized.IsNFT() {
-		return nil, nil
-	} else {
-		sender := base.HexToAddress(normalized.Topics[1].Hex())
-		recipient := base.HexToAddress(normalized.Topics[2].Hex())
-		isSender, isRecipient := accountedFor == sender, accountedFor == recipient
-		if !isSender && !isRecipient {
-			return nil, nil
-		}
-
-		var amountIn, amountOut base.Wei
-		amount, _ := new(base.Wei).SetString(strings.ReplaceAll(normalized.Data, "0x", ""), 16)
-		if amount == nil {
-			amount = base.ZeroWei
-		}
-		if accountedFor == sender {
-			amountOut = *amount
-		}
-		if accountedFor == recipient {
-			amountIn = *amount
-		}
-		stmt := &Statement{
-			AccountedFor:     accountedFor,
-			Sender:           sender,
-			Recipient:        recipient,
-			BlockNumber:      normalized.BlockNumber,
-			TransactionIndex: normalized.TransactionIndex,
-			LogIndex:         normalized.LogIndex,
-			TransactionHash:  normalized.TransactionHash,
-			Timestamp:        normalized.Timestamp,
-			Asset:            normalized.Address,
-			PriceSource:      "not-priced",
-			AmountIn:         amountIn,
-			AmountOut:        amountOut,
-			Decimals:         18,
-		}
-		return stmt, nil
-	}
-}
-
 // EXISTING_CODE

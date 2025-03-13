@@ -14,12 +14,10 @@ import (
 	"fmt"
 	"io"
 	"path/filepath"
-	"slices"
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/topics"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/version"
 )
 
@@ -353,36 +351,6 @@ func (s *Receipt) IsDefault() bool {
 	c := s.GasUsed == 0
 	d := len(s.Logs) == 0
 	return a && b && c && d
-}
-
-func (s *Receipt) FetchStatements(accountedFor base.Address, assetFilters []base.Address, appFilter *AppearanceFilter) ([]Statement, error) {
-	statements := make([]Statement, 0, 20)
-	for _, log := range s.Logs {
-		isTransfer := log.Topics[0] == topics.TransferTopic
-		isOfIterest := AssetOfInterest(assetFilters, log.Address)
-		passesFilter := appFilter.ApplyLogFilter(&log, []base.Address{accountedFor})
-		if isTransfer && isOfIterest && passesFilter {
-			if stmt, err := log.FetchStatement(accountedFor); err != nil {
-				// TODO: silent fail?
-				continue
-			} else if stmt == nil {
-				continue
-			} else {
-				statements = append(statements, *stmt)
-			}
-		}
-	}
-	return statements, nil
-}
-
-// ---------------------------------------------------------
-func AssetOfInterest(filters []base.Address, needle base.Address) bool {
-	if len(filters) == 0 {
-		return true
-	}
-	return slices.ContainsFunc(filters, func(asset base.Address) bool {
-		return asset.Hex() == needle.Hex()
-	})
 }
 
 // EXISTING_CODE

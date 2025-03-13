@@ -156,15 +156,18 @@ func (r *Reconciler1) SkipAirdrop(stmt *types.Statement) bool {
 func (r *Reconciler1) GetStatements(pos *types.AppPosition, trans *types.Transaction) ([]types.Statement, error) {
 	results := make([]types.Statement, 0, 20)
 	if types.AssetOfInterest(r.Opts.AssetFilters, base.FAKE_ETH_ADDRESS) {
-		var err error
 		reconciled := false
 		if !r.Opts.UseTraces {
-			stmt := trans.FetchStatement(r.Opts.AsEther, base.FAKE_ETH_ADDRESS, r.Opts.AccountFor)
-			if reconciled, err = r.trialBalance(pos, trans, stmt); err != nil {
+			if stmt, err := trans.FetchStatement(r.Opts.AsEther, base.FAKE_ETH_ADDRESS, r.Opts.AccountFor); err != nil {
 				return nil, err
 			} else {
-				if reconciled && stmt.IsMaterial() {
-					results = append(results, *stmt)
+				var err error
+				if reconciled, err = r.trialBalance(pos, trans, stmt); err != nil {
+					return nil, err
+				} else {
+					if reconciled && stmt.IsMaterial() {
+						r.addStatement(&results, stmt)
+					}
 				}
 			}
 		}
@@ -180,7 +183,7 @@ func (r *Reconciler1) GetStatements(pos *types.AppPosition, trans *types.Transac
 						return nil, err
 					} else {
 						if stmt.IsMaterial() { // append even if not reconciled
-							results = append(results, *stmt)
+							r.addStatement(&results, stmt)
 						}
 					}
 				}
@@ -192,7 +195,8 @@ func (r *Reconciler1) GetStatements(pos *types.AppPosition, trans *types.Transac
 		if statements, err := trans.Receipt.FetchStatements(r.Opts.AccountFor, r.Opts.AssetFilters, r.Opts.AppFilters); err != nil {
 			return nil, err
 		} else {
-			for _, stmt := range statements {
+			for _, s := range statements {
+				stmt := &s
 				name := r.Names[stmt.Asset]
 				stmt.Symbol = stmt.Asset.DefaultSymbol()
 				stmt.Decimals = base.Value(18)
@@ -204,23 +208,23 @@ func (r *Reconciler1) GetStatements(pos *types.AppPosition, trans *types.Transac
 						stmt.Decimals = base.Value(name.Decimals)
 					}
 				}
-				if reconciled, err := r.trialBalance(pos, trans, &stmt); err != nil {
+				if reconciled, err := r.trialBalance(pos, trans, stmt); err != nil {
 					// TODO: Silent fail?
 					continue
 				} else {
 					if reconciled {
 						id := fmt.Sprintf(" %d.%d.%d", stmt.BlockNumber, stmt.TransactionIndex, stmt.LogIndex)
 						logger.Progress(true, colors.Green+"Transaction", id, "reconciled       "+colors.Off)
-					} else {
-						if !base.IsTestMode() {
-							id := fmt.Sprintf(" %d.%d.%d", stmt.BlockNumber, stmt.TransactionIndex, stmt.LogIndex)
-							logger.Warn("Log statement at ", id, " does not reconcile.")
-						}
+						// } else {
+						// 	if !base.IsTestMode() {
+						// 		id := fmt.Sprintf(" %d.%d.%d", stmt.BlockNumber, stmt.TransactionIndex, stmt.LogIndex)
+						// 		logger.Warn("Log statement at ", id, " does not reconcile.")
+						// 	}
 					}
 
 					// order matters - don't move
-					if stmt.IsMaterial() && !r.SkipAirdrop(&stmt) { // add even if not reconciled
-						results = append(results, stmt)
+					if stmt.IsMaterial() && !r.SkipAirdrop(stmt) { // add even if not reconciled
+						r.addStatement(&results, stmt)
 					}
 				}
 			}
@@ -229,14 +233,20 @@ func (r *Reconciler1) GetStatements(pos *types.AppPosition, trans *types.Transac
 	return results, nil
 }
 
+func (r *Reconciler1) addStatement(results *[]types.Statement, stmt *types.Statement) {
+	if !base.IsTestMode() && !stmt.Reconciled() {
+		t := "Eth"
+		if !stmt.IsEth() {
+			t = "Token"
+		}
+		logger.Warn(t, "statement at ", fmt.Sprintf("%d.%d.%d", stmt.BlockNumber, stmt.TransactionIndex, stmt.LogIndex), " does not reconcile.")
+	}
+	*results = append(*results, *stmt)
+}
+
 // GetTransfers returns a statement from a given transaction
 func (r *Reconciler1) GetTransfers(pos *types.AppPosition, trans *types.Transaction) ([]types.Transfer, error) {
 	var statements []types.Statement
-
-	// if base.IsTestMode() {
-	// 	logger.Info(r.String())
-	// }
-
 	if types.AssetOfInterest(r.Opts.AssetFilters, base.FAKE_ETH_ADDRESS) {
 		var stmt *types.Statement
 		if r.Opts.UseTraces {
@@ -250,7 +260,10 @@ func (r *Reconciler1) GetTransfers(pos *types.AppPosition, trans *types.Transact
 				}
 			}
 		} else {
-			stmt = trans.FetchStatement(r.Opts.AsEther, base.FAKE_ETH_ADDRESS, r.Opts.AccountFor)
+			var err error
+			if stmt, err = trans.FetchStatement(r.Opts.AsEther, base.FAKE_ETH_ADDRESS, r.Opts.AccountFor); err != nil {
+				return nil, err
+			}
 		}
 		// Append only if the statement is material
 		if stmt.IsMaterial() {
