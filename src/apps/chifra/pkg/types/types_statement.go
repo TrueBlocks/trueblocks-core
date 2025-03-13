@@ -633,7 +633,7 @@ func (s *Statement) EndBalDiff() *base.Wei {
 
 func (s *Statement) Reconciled() bool {
 	zero := new(base.Wei).SetInt64(0)
-	return (s.EndBalDiff().Cmp(zero) == 0 && s.BegBalDiff().Cmp(zero) == 0)
+	return (s.EndBalDiff().Equal(zero) && s.BegBalDiff().Equal(zero))
 }
 
 func (s *Statement) IsEth() bool {
@@ -736,26 +736,33 @@ func (s *Statement) DebugStatement(pos *AppPosition) {
 	logger.TestLog(true, "---------------------------------------------------")
 }
 
-func (s *Statement) IsNullTransfer(tx *Transaction) bool {
-	lotsOfLogs := len(tx.Receipt.Logs) > 10
-	mayBeAirdrop := s.Sender.IsZero() || s.Sender == tx.To
-	noBalanceChange := s.EndBal.Cmp(&s.BegBal) == 0 && s.IsMaterial()
-	ret := (lotsOfLogs || mayBeAirdrop) && noBalanceChange
+type NullTest struct {
+	NLogs int
+	To    base.Address
+}
+
+func (s *Statement) IsNullTransfer(nLogs int, to base.Address) bool {
+	lotsOfLogs := nLogs > 10
+	mayBeAirdrop := s.Sender.IsZero() || s.Sender == to
+	if !lotsOfLogs && !mayBeAirdrop {
+		return false
+	}
+
+	hasBalanceChange := !s.IsMaterial() || !s.EndBal.Equal(&s.BegBal)
+	if hasBalanceChange {
+		return false
+	}
 
 	logger.TestLog(true, "A possible nullTransfer")
-	logger.TestLog(true, "  nLogs:            ", len(tx.Receipt.Logs))
+	logger.TestLog(true, "  nLogs:            ", nLogs)
 	logger.TestLog(true, "    lotsOfLogs:      -->", lotsOfLogs)
 	logger.TestLog(true, "  Sender.IsZero:    ", s.Sender, s.Sender.IsZero())
-	logger.TestLog(true, "  or Sender == To:  ", s.Sender == tx.To)
+	logger.TestLog(true, "  or Sender == To:  ", s.Sender == to)
 	logger.TestLog(true, "    mayBeAirdrop:    -->", mayBeAirdrop)
 	logger.TestLog(true, "  EndBal-BegBal:    ", s.EndBal.Cmp(&s.BegBal))
 	logger.TestLog(true, "  Material:         ", s.IsMaterial())
-	logger.TestLog(true, "    noBalanceChange: -->", noBalanceChange)
-	if !ret {
-		logger.TestLog(true, "  ---> Not a nullTransfer")
-	}
-
-	return ret
+	logger.TestLog(true, "    hasBalanceChange: -->", hasBalanceChange)
+	return true
 }
 
 // EXISTING_CODE

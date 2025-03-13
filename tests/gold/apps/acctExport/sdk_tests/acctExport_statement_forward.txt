@@ -22,8 +22,6 @@ bigPrice:            173.765
 price:               173.765
 source:              maker
 ===================================================
-====> eth
-===================================================
 Previous:               8769018
 Current:                8769019
 Next:                   8769029
@@ -32,7 +30,7 @@ sender:                 0x103348c47ffc3254aff761894e7c13ca0c680465  ==>  0x868b8
 asset:                  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (ETH) decimals: 18
 hash:                   0xf6bce3d9edd00f2e8a996505fded2e7e28a1b6af193d94e9524b9ac7fbf3e8b3
 timestamp:              1571457514
-blockNumber:            8769019.124
+blockNumber:            8769019.124.0
 priceSource:            173.765 (maker)
 --------------------------------------------------- 
 Trial balance:
@@ -51,8 +49,6 @@ Trial balance:
    reconciled:          true
 ---------------------------------------------------
 Block 8769029 is prior to deployment (10000835) of Uniswap V2. No other source for tokens prior to UniSwap
-===================================================
-====> token
 ===================================================
 Previous:               8769019
 Current:                8769029
@@ -94,8 +90,6 @@ bigPrice:            173.765
 price:               173.765
 source:              maker
 ===================================================
-====> eth
-===================================================
 Previous:               8769029
 Current:                8769052
 Next:                   8769052
@@ -104,7 +98,7 @@ sender:                 0x868b8fd259abfcfdf9634c343593b34ef359641d  ==>  0x0ba45
 asset:                  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (ETH) decimals: 18
 hash:                   0x66cdceb982decd5c899ee7a608468eed3b0032b7f146bdef7a96ec0dfecfcc1d
 timestamp:              1571458005
-blockNumber:            8769052.73
+blockNumber:            8769052.73.0
 priceSource:            173.765 (maker)
 --------------------------------------------------- 
 Trial balance:
@@ -138,8 +132,6 @@ bigPrice:            173.765
 price:               173.765
 source:              maker
 ===================================================
-====> trace-eth
-===================================================
 Previous:               8769029
 Current:                8769052
 Next:                   8769052
@@ -148,24 +140,25 @@ sender:                 0x868b8fd259abfcfdf9634c343593b34ef359641d  ==>  0x0ba45
 asset:                  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (ETH) decimals: 18
 hash:                   0x66cdceb982decd5c899ee7a608468eed3b0032b7f146bdef7a96ec0dfecfcc1d
 timestamp:              1571458005
-blockNumber:            8769052.73
+blockNumber:            8769052.73.0
 priceSource:            173.765 (maker)
 --------------------------------------------------- 
 Trial balance:
    prevBal:             0.025
-   begBal:              0.025 (0.00070223)
+   begBal:              0.025 (0)
    totalIn:             0
-   totalOut:            0.00024718
-   amountNet:           -0.00024718
+   totalOut:            0.00094941
+   amountNet:           -0.00094941
                        ======================= 
    endBal:              0.02405059 (0)
-   endBalCalc:          0.02475282
+   endBalCalc:          0.02405059
    rollingBalance:      0
 --------------------------------------------------- 
+   correctingOut:       0.00070223
    gasOut:              0.00024718
+   correctingReason:    intra-block? endbal
    material:            true
-   reconciled:          false
- ^^ we need to fix this ^^
+   reconciled:          true
 ---------------------------------------------------
 Block 8769052 is prior to deployment (10000835) of Uniswap V2. Falling back to Maker (0x729d19f657bd0614b4985cf1d82531c67569197b)
 =========================================================
@@ -181,8 +174,6 @@ bigPrice:            173.765
 price:               173.765
 source:              maker
 ===================================================
-====> eth
-===================================================
 Previous:               8769052
 Current:                8769052
 Next:                   8769064
@@ -191,7 +182,7 @@ sender:                 0x868b8fd259abfcfdf9634c343593b34ef359641d  ==>  0x2a0c0
 asset:                  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (ETH) decimals: 18
 hash:                   0x90feb158340931c051ccb4def6112b6d46794f739499d7255b5109481b991265
 timestamp:              1571458005
-blockNumber:            8769052.74
+blockNumber:            8769052.74.0
 priceSource:            173.765 (maker)
 --------------------------------------------------- 
 Trial balance:
@@ -225,8 +216,6 @@ bigPrice:            173.765
 price:               173.765
 source:              maker
 ===================================================
-====> trace-eth
-===================================================
 Previous:               8769052
 Current:                8769052
 Next:                   8769064
@@ -235,21 +224,24 @@ sender:                 0x868b8fd259abfcfdf9634c343593b34ef359641d  ==>  0x2a0c0
 asset:                  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (ETH) decimals: 18
 hash:                   0x90feb158340931c051ccb4def6112b6d46794f739499d7255b5109481b991265
 timestamp:              1571458005
-blockNumber:            8769052.74
+blockNumber:            8769052.74.0
 priceSource:            173.765 (maker)
 --------------------------------------------------- 
 Trial balance:
    prevBal:             0.02405059
-   begBal:              0.025 (0.00024718)
-   totalIn:             0
-   totalOut:            0.00070223
-   amountNet:           -0.00070223
+   begBal:              0.025 (-0.00140446)
+   totalIn:             -0.00070223
+   totalOut:            0.00165164
+   amountNet:           -0.00235387
                        ======================= 
    endBal:              0.02405059 (0.00094941)
-   endBalCalc:          0.02429777
+   endBalCalc:          0.02264613
    rollingBalance:      0
 --------------------------------------------------- 
+   correctingIn:        -0.00070223
+   correctingOut:       0.00094941
    gasOut:              0.00070223
+   correctingReason:    intra-block? begbal-endbal
    material:            true
    reconciled:          false
  ^^ we need to fix this ^^
@@ -268,8 +260,6 @@ Needs correction for token transfer
 Correcting token transfer for unknown income or outflow
 Block 8769052 is prior to deployment (10000835) of Uniswap V2. No other source for tokens prior to UniSwap
 ===================================================
-====> token
-===================================================
 Previous:               8769052
 Current:                8769052
 Next:                   8769064
@@ -283,18 +273,19 @@ priceSource:            0 (token-not-priced-pre-uni)
 --------------------------------------------------- 
 Trial balance:
    prevBal:             0
-   begBal:              85 (85)
-   totalIn:             85
-   totalOut:            85
-   amountNet:           0
+   begBal:              85 (-170)
+   totalIn:             -85
+   totalOut:            170
+   amountNet:           -255
                        ======================= 
    endBal:              0 (85)
-   endBalCalc:          85
+   endBalCalc:          -170
    rollingBalance:      0
 --------------------------------------------------- 
-   correctingIn:        85
+   correctingIn:        -85
    amountOut:           85
-   correctingReason:    begbal
+   correctingOut:       85
+   correctingReason:    intra-block? begbal-endbal
    material:            true
    reconciled:          false
  ^^ we need to fix this ^^
@@ -358,8 +349,6 @@ bigPrice:            173.81
 price:               173.81
 source:              maker
 ===================================================
-====> eth
-===================================================
 Previous:               8769064
 Current:                8769130
 Next:                   8769141
@@ -368,7 +357,7 @@ sender:                 0x868b8fd259abfcfdf9634c343593b34ef359641d  ==>  0x10334
 asset:                  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (ETH) decimals: 18
 hash:                   0xe9278cb13db118e569d98b43b5d7feb01f799ad734d255198d46c293f9455b9e
 timestamp:              1571458850
-blockNumber:            8769130.51
+blockNumber:            8769130.51.0
 priceSource:            173.81 (maker)
 --------------------------------------------------- 
 Trial balance:
@@ -401,8 +390,6 @@ bigPrice:            173.81
 price:               173.81
 source:              maker
 ===================================================
-====> eth
-===================================================
 Previous:               8769130
 Current:                8769141
 Next:                   8769142
@@ -411,7 +398,7 @@ sender:                 0x868b8fd259abfcfdf9634c343593b34ef359641d  ==>  0xf322c
 asset:                  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (ETH) decimals: 18
 hash:                   0xcc85517a32761d7de6b4aa07c75d54f4b54a88663505d2734f4e98e441e8e35e
 timestamp:              1571459025
-blockNumber:            8769141.27
+blockNumber:            8769141.27.0
 priceSource:            173.81 (maker)
 --------------------------------------------------- 
 Trial balance:
@@ -441,7 +428,7 @@ Trial balance:
       "amountOut": "0",
       "amountOutEth": "0",
       "asset": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
-      "symbol": "ETH",
+      "assetName": "ETH",
       "begBal": "0",
       "begBalDiff": "0",
       "begBalDiffEth": "0",
@@ -488,6 +475,7 @@ Trial balance:
       "selfDestructOutEth": "0",
       "sender": "0x103348c47ffc3254aff761894e7c13ca0c680465",
       "spotPrice": 173.765,
+      "symbol": "ETH",
       "timestamp": 1571457514,
       "totalIn": "25000000000000000",
       "totalInEth": "0.025",
@@ -507,7 +495,7 @@ Trial balance:
       "amountOut": "0",
       "amountOutEth": "0",
       "asset": "0x0ba45a8b5d5575935b8158a88c631e9f9c95a2e5",
-      "symbol": "TRB",
+      "assetName": "Tellor Tributes",
       "begBal": "0",
       "begBalDiff": "0",
       "begBalDiffEth": "0",
@@ -554,6 +542,7 @@ Trial balance:
       "selfDestructOutEth": "0",
       "sender": "0x103348c47ffc3254aff761894e7c13ca0c680465",
       "spotPrice": 0,
+      "symbol": "TRB",
       "timestamp": 1571457649,
       "totalIn": "85000000000000000000",
       "totalInEth": "85",
@@ -573,7 +562,7 @@ Trial balance:
       "amountOut": "0",
       "amountOutEth": "0",
       "asset": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
-      "symbol": "ETH",
+      "assetName": "ETH",
       "begBal": "25000000000000000",
       "begBalDiff": "0",
       "begBalDiffEth": "0",
@@ -620,6 +609,7 @@ Trial balance:
       "selfDestructOutEth": "0",
       "sender": "0x868b8fd259abfcfdf9634c343593b34ef359641d",
       "spotPrice": 173.765,
+      "symbol": "ETH",
       "timestamp": 1571458005,
       "totalIn": "0",
       "totalInEth": "0",
@@ -815,6 +805,7 @@ Trial balance:
       "selfDestructOutEth": "0",
       "sender": "0x2a0c0dbecc7e4d658f48e01e3fa353f44050c208",
       "spotPrice": 173.78,
+      "symbol": "ETH",
       "timestamp": 1571458209,
       "totalIn": "450562200000000000",
       "totalInEth": "0.4505622",
@@ -834,7 +825,7 @@ Trial balance:
       "amountOut": "100000000000000000",
       "amountOutEth": "0.1",
       "asset": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
-      "symbol": "ETH",
+      "assetName": "ETH",
       "begBal": "474612790000000000",
       "begBalDiff": "0",
       "begBalDiffEth": "0",
@@ -881,6 +872,7 @@ Trial balance:
       "selfDestructOutEth": "0",
       "sender": "0x868b8fd259abfcfdf9634c343593b34ef359641d",
       "spotPrice": 173.81,
+      "symbol": "ETH",
       "timestamp": 1571458850,
       "totalIn": "0",
       "totalInEth": "0",
@@ -900,7 +892,7 @@ Trial balance:
       "amountOut": "374570790000000000",
       "amountOutEth": "0.37457079",
       "asset": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
-      "symbol": "ETH",
+      "assetName": "ETH",
       "begBal": "374591790000000000",
       "begBalDiff": "0",
       "begBalDiffEth": "0",
@@ -947,6 +939,7 @@ Trial balance:
       "selfDestructOutEth": "0",
       "sender": "0x868b8fd259abfcfdf9634c343593b34ef359641d",
       "spotPrice": 173.81,
+      "symbol": "ETH",
       "timestamp": 1571459025,
       "totalIn": "0",
       "totalInEth": "0",

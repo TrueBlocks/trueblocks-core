@@ -1,0 +1,1308 @@
+export?addrs=trueblocks.eth&accounting&statements&asset=0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee&asset=0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359&firstBlock=8856476&lastBlock=9193814
+Args: [addrs=trueblocks.eth accounting statements asset=0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee asset=0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359 firstBlock=8856476 lastBlock=9193814]
+Opts: {"addrs":["trueblocks.eth"],"accounting":true,"statements":true,"asset":["0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee","0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359"],"firstBlock":8856476,"lastBlock":9193814}
+Addrs:  [0xf503017d7baf7fbc0fff7492b751025c6a78179b]
+Accounting:  true
+Statements:  true
+Asset:  [0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359]
+FirstBlock:  8856476
+LastBlock:  9193814
+Caps:  cache,decache,ether
+Format:  json
+=========================================================
+===> PRICING FOR 0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359 (DAI) 
+=========================================================
+stable-coin
+===================================================
+Previous:               8856475
+Current:                8856476
+Next:                   8856511
+accountedFor:           0xf503017d7baf7fbc0fff7492b751025c6a78179b
+sender:                 0xeba60d324c2546459e1e9dd4c7e740ca80134588  ==>  0xf503017d7baf7fbc0fff7492b751025c6a78179b
+asset:                  0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359 (DAI) decimals: 18
+hash:                   0x118f8d42e6b858427f6b54c1636a6ec1f72e0cf8941da03deffa55a3c2357204
+timestamp:              1572663370
+blockNumber:            8856476.55.40
+priceSource:            1 (stable-coin)
+--------------------------------------------------- 
+Trial balance:
+   prevBal:             0
+   begBal:              0 (0)
+   totalIn:             1
+   totalOut:            0
+   amountNet:           1
+                       ======================= 
+   endBal:              1 (0)
+   endBalCalc:          1
+   rollingBalance:      0
+--------------------------------------------------- 
+   amountIn:            1
+   material:            true
+   reconciled:          true
+---------------------------------------------------
+=========================================================
+===> PRICING FOR 0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359 (DAI) 
+=========================================================
+stable-coin
+===================================================
+Previous:               8856476
+Current:                8856511
+Next:                   8860434
+accountedFor:           0xf503017d7baf7fbc0fff7492b751025c6a78179b
+sender:                 0x8c492d5f763841767362d716e3e69511f0527791  ==>  0xf503017d7baf7fbc0fff7492b751025c6a78179b
+asset:                  0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359 (DAI) decimals: 18
+hash:                   0x973699ddd12186570c957369788e0128b1acc66c994685c5d3f52ef6b3b84fed
+timestamp:              1572663859
+blockNumber:            8856511.161.94
+priceSource:            1 (stable-coin)
+--------------------------------------------------- 
+Trial balance:
+   prevBal:             1
+   begBal:              1 (0)
+   totalIn:             4999
+   totalOut:            0
+   amountNet:           4999
+                       ======================= 
+   endBal:              5000 (0)
+   endBalCalc:          5000
+   rollingBalance:      0
+--------------------------------------------------- 
+   amountIn:            4999
+   material:            true
+   reconciled:          true
+---------------------------------------------------
+=========================================================
+===> PRICING FOR 0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359 (DAI) 
+=========================================================
+stable-coin
+===================================================
+Previous:               8856511
+Current:                8860434
+Next:                   8860511
+accountedFor:           0xf503017d7baf7fbc0fff7492b751025c6a78179b
+sender:                 0x3f1c1e14fd919415010c03f9de29cbafd5866e81  ==>  0xf503017d7baf7fbc0fff7492b751025c6a78179b
+asset:                  0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359 (DAI) decimals: 18
+hash:                   0xf411e204daf3b005c251d506bbbf421de482ea468b1c3b76289e76d33459a083
+timestamp:              1572719011
+blockNumber:            8860434.21.19
+priceSource:            1 (stable-coin)
+--------------------------------------------------- 
+Trial balance:
+   prevBal:             5000
+   begBal:              5000 (0)
+   totalIn:             2500
+   totalOut:            0
+   amountNet:           2500
+                       ======================= 
+   endBal:              7500 (0)
+   endBalCalc:          7500
+   rollingBalance:      0
+--------------------------------------------------- 
+   amountIn:            2500
+   material:            true
+   reconciled:          true
+---------------------------------------------------
+Block 8860511 is prior to deployment (10000835) of Uniswap V2. Falling back to Maker (0x729d19f657bd0614b4985cf1d82531c67569197b)
+=========================================================
+===> PRICING FOR 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) using Maker
+=========================================================
+blockNumber:         8860511
+source1 (uni/mkr):   0x729d19f657bd0614b4985cf1d82531c67569197b
+str0 (call):         peek()
+str1 (call/data):    0x000000000000000000000000000000000000000000000009ece258f296450000
+int0:                18309000000000000000000000
+int1:                18309000
+bigPrice:            183.09
+price:               183.09
+source:              maker
+===================================================
+Previous:               8860434
+Current:                8860511
+Next:                   8860513
+accountedFor:           0xf503017d7baf7fbc0fff7492b751025c6a78179b
+sender:                 0xf503017d7baf7fbc0fff7492b751025c6a78179b  ==>  0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359
+asset:                  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
+hash:                   0xc36909ffb8335811e5b92d662f39c5e5c0e75394bb9638d7136ab4a4bb2b6951
+timestamp:              1572720103
+blockNumber:            8860511.47.0
+priceSource:            183.09 (maker)
+--------------------------------------------------- 
+Trial balance:
+   prevBal:             4.99979
+   begBal:              4.99979 (0)
+   totalIn:             0
+   totalOut:            0.000045985
+   amountNet:           -0.000045985
+                       ======================= 
+   endBal:              4.999744015 (0)
+   endBalCalc:          4.999744015
+   rollingBalance:      0
+--------------------------------------------------- 
+   gasOut:              0.000045985
+   material:            true
+   reconciled:          true
+---------------------------------------------------
+Block 8860513 is prior to deployment (10000835) of Uniswap V2. Falling back to Maker (0x729d19f657bd0614b4985cf1d82531c67569197b)
+=========================================================
+===> PRICING FOR 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) using Maker
+=========================================================
+blockNumber:         8860513
+source1 (uni/mkr):   0x729d19f657bd0614b4985cf1d82531c67569197b
+str0 (call):         peek()
+str1 (call/data):    0x000000000000000000000000000000000000000000000009ece258f296450000
+int0:                18309000000000000000000000
+int1:                18309000
+bigPrice:            183.09
+price:               183.09
+source:              maker
+===================================================
+Previous:               8860511
+Current:                8860513
+Next:                   8860529
+accountedFor:           0xf503017d7baf7fbc0fff7492b751025c6a78179b
+sender:                 0xf503017d7baf7fbc0fff7492b751025c6a78179b  ==>  0x30f938fed5de6e06a9a7cd2ac3517131c317b1e7
+asset:                  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
+hash:                   0xd5a49ef68f77357a5202ca09499b343b27cd02c1172c4ace3050a494dc218d8a
+timestamp:              1572720150
+blockNumber:            8860513.85.0
+priceSource:            183.09 (maker)
+--------------------------------------------------- 
+Trial balance:
+   prevBal:             4.999744015
+   begBal:              4.999744015 (0)
+   totalIn:             0
+   totalOut:            0.000034017
+   amountNet:           -0.000034017
+                       ======================= 
+   endBal:              4.999709998 (0)
+   endBalCalc:          4.999709998
+   rollingBalance:      0
+--------------------------------------------------- 
+   gasOut:              0.000034017
+   material:            true
+   reconciled:          true
+---------------------------------------------------
+=========================================================
+===> PRICING FOR 0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359 (DAI) 
+=========================================================
+stable-coin
+===================================================
+Previous:               8860434
+Current:                8860513
+Next:                   8860529
+accountedFor:           0xf503017d7baf7fbc0fff7492b751025c6a78179b
+sender:                 0xf503017d7baf7fbc0fff7492b751025c6a78179b  ==>  0x30f938fed5de6e06a9a7cd2ac3517131c317b1e7
+asset:                  0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359 (DAI) decimals: 18
+hash:                   0xd5a49ef68f77357a5202ca09499b343b27cd02c1172c4ace3050a494dc218d8a
+timestamp:              1572720150
+blockNumber:            8860513.85.84
+priceSource:            1 (stable-coin)
+--------------------------------------------------- 
+Trial balance:
+   prevBal:             7500
+   begBal:              7500 (0)
+   totalIn:             0
+   totalOut:            500
+   amountNet:           -500
+                       ======================= 
+   endBal:              7000 (0)
+   endBalCalc:          7000
+   rollingBalance:      0
+--------------------------------------------------- 
+   amountOut:           500
+   material:            true
+   reconciled:          true
+---------------------------------------------------
+Block 8860529 is prior to deployment (10000835) of Uniswap V2. Falling back to Maker (0x729d19f657bd0614b4985cf1d82531c67569197b)
+=========================================================
+===> PRICING FOR 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) using Maker
+=========================================================
+blockNumber:         8860529
+source1 (uni/mkr):   0x729d19f657bd0614b4985cf1d82531c67569197b
+str0 (call):         peek()
+str1 (call/data):    0x000000000000000000000000000000000000000000000009ece258f296450000
+int0:                18309000000000000000000000
+int1:                18309000
+bigPrice:            183.09
+price:               183.09
+source:              maker
+===================================================
+Previous:               8860513
+Current:                8860529
+Next:                   8860531
+accountedFor:           0xf503017d7baf7fbc0fff7492b751025c6a78179b
+sender:                 0xf503017d7baf7fbc0fff7492b751025c6a78179b  ==>  0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359
+asset:                  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
+hash:                   0x3af5419098b5510f39ec64d6eb8ee08f3fe5cb538469fa9ef263cf7ebd4b607d
+timestamp:              1572720358
+blockNumber:            8860529.145.0
+priceSource:            183.09 (maker)
+--------------------------------------------------- 
+Trial balance:
+   prevBal:             4.999709998
+   begBal:              4.999709998 (0)
+   totalIn:             0
+   totalOut:            0.000046049
+   amountNet:           -0.000046049
+                       ======================= 
+   endBal:              4.999663949 (0)
+   endBalCalc:          4.999663949
+   rollingBalance:      0
+--------------------------------------------------- 
+   gasOut:              0.000046049
+   material:            true
+   reconciled:          true
+---------------------------------------------------
+Block 8860531 is prior to deployment (10000835) of Uniswap V2. Falling back to Maker (0x729d19f657bd0614b4985cf1d82531c67569197b)
+=========================================================
+===> PRICING FOR 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) using Maker
+=========================================================
+blockNumber:         8860531
+source1 (uni/mkr):   0x729d19f657bd0614b4985cf1d82531c67569197b
+str0 (call):         peek()
+str1 (call/data):    0x000000000000000000000000000000000000000000000009ece258f296450000
+int0:                18309000000000000000000000
+int1:                18309000
+bigPrice:            183.09
+price:               183.09
+source:              maker
+===================================================
+Previous:               8860529
+Current:                8860531
+Next:                   8867898
+accountedFor:           0xf503017d7baf7fbc0fff7492b751025c6a78179b
+sender:                 0xf503017d7baf7fbc0fff7492b751025c6a78179b  ==>  0x30f938fed5de6e06a9a7cd2ac3517131c317b1e7
+asset:                  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
+hash:                   0x1cdbe0fcca2ee3f9e4504f25e6f2a485835caa920496d20b10fa6241cbfdb124
+timestamp:              1572720361
+blockNumber:            8860531.152.0
+priceSource:            183.09 (maker)
+--------------------------------------------------- 
+Trial balance:
+   prevBal:             4.999663949
+   begBal:              4.999663949 (0)
+   totalIn:             0
+   totalOut:            0.000024541
+   amountNet:           -0.000024541
+                       ======================= 
+   endBal:              4.999639408 (0)
+   endBalCalc:          4.999639408
+   rollingBalance:      0
+--------------------------------------------------- 
+   gasOut:              0.000024541
+   material:            true
+   reconciled:          true
+---------------------------------------------------
+=========================================================
+===> PRICING FOR 0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359 (DAI) 
+=========================================================
+stable-coin
+===================================================
+Previous:               8860513
+Current:                8860531
+Next:                   8867898
+accountedFor:           0xf503017d7baf7fbc0fff7492b751025c6a78179b
+sender:                 0xf503017d7baf7fbc0fff7492b751025c6a78179b  ==>  0x30f938fed5de6e06a9a7cd2ac3517131c317b1e7
+asset:                  0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359 (DAI) decimals: 18
+hash:                   0x1cdbe0fcca2ee3f9e4504f25e6f2a485835caa920496d20b10fa6241cbfdb124
+timestamp:              1572720361
+blockNumber:            8860531.152.95
+priceSource:            1 (stable-coin)
+--------------------------------------------------- 
+Trial balance:
+   prevBal:             7000
+   begBal:              7000 (0)
+   totalIn:             0
+   totalOut:            7000
+   amountNet:           -7000
+                       ======================= 
+   endBal:              0 (0)
+   endBalCalc:          0
+   rollingBalance:      0
+--------------------------------------------------- 
+   amountOut:           7000
+   material:            true
+   reconciled:          true
+---------------------------------------------------
+Block 8867898 is prior to deployment (10000835) of Uniswap V2. Falling back to Maker (0x729d19f657bd0614b4985cf1d82531c67569197b)
+=========================================================
+===> PRICING FOR 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) using Maker
+=========================================================
+blockNumber:         8867898
+source1 (uni/mkr):   0x729d19f657bd0614b4985cf1d82531c67569197b
+str0 (call):         peek()
+str1 (call/data):    0x000000000000000000000000000000000000000000000009d0311ca6d5264000
+int0:                18102250000000000000000000
+int1:                18102250
+bigPrice:            181.0225
+price:               181.0225
+source:              maker
+===================================================
+Previous:               8860531
+Current:                8867898
+Next:                   8875684
+accountedFor:           0xf503017d7baf7fbc0fff7492b751025c6a78179b
+sender:                 0xf503017d7baf7fbc0fff7492b751025c6a78179b  ==>  0x9062c0a6dbd6108336bcbe4593a3d1ce05512069
+asset:                  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
+hash:                   0xbf2b254e62f24f10e59281aca2e04204228a9fef109363881286677ca206ab91
+timestamp:              1572821537
+blockNumber:            8867898.28.0
+priceSource:            181.0225 (maker)
+--------------------------------------------------- 
+Trial balance:
+   prevBal:             4.999639408
+   begBal:              4.999639408 (0)
+   totalIn:             0
+   totalOut:            0.000105208
+   amountNet:           -0.000105208
+                       ======================= 
+   endBal:              4.9995342 (0)
+   endBalCalc:          4.9995342
+   rollingBalance:      0
+--------------------------------------------------- 
+   gasOut:              0.000105208
+   material:            true
+   reconciled:          true
+---------------------------------------------------
+Block 9024350 is prior to deployment (10000835) of Uniswap V2. Falling back to Maker (0x729d19f657bd0614b4985cf1d82531c67569197b)
+=========================================================
+===> PRICING FOR 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) using Maker
+=========================================================
+blockNumber:         9024350
+source1 (uni/mkr):   0x729d19f657bd0614b4985cf1d82531c67569197b
+str0 (call):         peek()
+str1 (call/data):    0x0000000000000000000000000000000000000000000000085ede84e698110000
+int0:                15441000000000000000000000
+int1:                15441000
+bigPrice:            154.41
+price:               154.41
+source:              maker
+===================================================
+Previous:               9024196
+Current:                9024350
+Next:                   9046970
+accountedFor:           0xf503017d7baf7fbc0fff7492b751025c6a78179b
+sender:                 0xbc62985faabed27a8f174cbd5ea1ee7b1ed8fc12  ==>  0xf503017d7baf7fbc0fff7492b751025c6a78179b
+asset:                  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
+hash:                   0x6874facd48c3ddc4716148ce7721e4fa66dfd49564b371026d6ec6856a1f6c0e
+timestamp:              1575080501
+blockNumber:            9024350.73.0
+priceSource:            154.41 (maker)
+--------------------------------------------------- 
+Trial balance:
+   prevBal:             4.9995342
+   begBal:              4.9995342 (0)
+   totalIn:             0.015
+   totalOut:            0
+   amountNet:           0.015
+                       ======================= 
+   endBal:              5.0145342 (0)
+   endBalCalc:          5.0145342
+   rollingBalance:      0
+--------------------------------------------------- 
+   amountIn:            0.015
+   material:            true
+   reconciled:          true
+---------------------------------------------------
+Block 9046970 is prior to deployment (10000835) of Uniswap V2. Falling back to Maker (0x729d19f657bd0614b4985cf1d82531c67569197b)
+=========================================================
+===> PRICING FOR 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) using Maker
+=========================================================
+blockNumber:         9046970
+source1 (uni/mkr):   0x729d19f657bd0614b4985cf1d82531c67569197b
+str0 (call):         peek()
+str1 (call/data):    0x000000000000000000000000000000000000000000000007d4c9049e3cee0000
+int0:                14446000000000000000000000
+int1:                14446000
+bigPrice:            144.46
+price:               144.46
+source:              maker
+===================================================
+Previous:               9024350
+Current:                9046970
+Next:                   9061086
+accountedFor:           0xf503017d7baf7fbc0fff7492b751025c6a78179b
+sender:                 0xf503017d7baf7fbc0fff7492b751025c6a78179b  ==>  0xc28a260c6b2969349eeaa3ba5253b616c1d9ac0b
+asset:                  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
+hash:                   0xe1e3c29fdebdfaa3b261b8f294d5007427163a7b90ba4beb79e940c957d393d1
+timestamp:              1575426133
+blockNumber:            9046970.71.0
+priceSource:            144.46 (maker)
+--------------------------------------------------- 
+Trial balance:
+   prevBal:             5.0145342
+   begBal:              5.0145342 (0)
+   totalIn:             0
+   totalOut:            0.02579913
+   amountNet:           -0.02579913
+                       ======================= 
+   endBal:              4.98873507 (0)
+   endBalCalc:          4.98873507
+   rollingBalance:      0
+--------------------------------------------------- 
+   gasOut:              0.02579913
+   material:            true
+   reconciled:          true
+---------------------------------------------------
+Block 9193753 is prior to deployment (10000835) of Uniswap V2. Falling back to Maker (0x729d19f657bd0614b4985cf1d82531c67569197b)
+=========================================================
+===> PRICING FOR 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) using Maker
+=========================================================
+blockNumber:         9193753
+source1 (uni/mkr):   0x729d19f657bd0614b4985cf1d82531c67569197b
+str0 (call):         peek()
+str1 (call/data):    0x000000000000000000000000000000000000000000000006fb13d27beafd4000
+int0:                12877250000000000000000000
+int1:                12877250
+bigPrice:            128.7725
+price:               128.7725
+source:              maker
+===================================================
+Previous:               9193234
+Current:                9193753
+Next:                   9193754
+accountedFor:           0xf503017d7baf7fbc0fff7492b751025c6a78179b
+sender:                 0xf503017d7baf7fbc0fff7492b751025c6a78179b  ==>  0x6b175474e89094c44da98b954eedeac495271d0f
+asset:                  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
+hash:                   0x823221aac029b0495c8b045fe2a345bad618f2f6e3a6e473d55338b60eaf4763
+timestamp:              1577845169
+blockNumber:            9193753.147.0
+priceSource:            128.7725 (maker)
+--------------------------------------------------- 
+Trial balance:
+   prevBal:             4.98873507
+   begBal:              4.98873507 (0)
+   totalIn:             0
+   totalOut:            0.000467946
+   amountNet:           -0.000467946
+                       ======================= 
+   endBal:              4.988267124 (0)
+   endBalCalc:          4.988267124
+   rollingBalance:      0
+--------------------------------------------------- 
+   gasOut:              0.000467946
+   material:            true
+   reconciled:          true
+---------------------------------------------------
+Block 9193777 is prior to deployment (10000835) of Uniswap V2. Falling back to Maker (0x729d19f657bd0614b4985cf1d82531c67569197b)
+=========================================================
+===> PRICING FOR 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) using Maker
+=========================================================
+blockNumber:         9193777
+source1 (uni/mkr):   0x729d19f657bd0614b4985cf1d82531c67569197b
+str0 (call):         peek()
+str1 (call/data):    0x000000000000000000000000000000000000000000000006fb13d27beafd4000
+int0:                12877250000000000000000000
+int1:                12877250
+bigPrice:            128.7725
+price:               128.7725
+source:              maker
+===================================================
+Previous:               9193776
+Current:                9193777
+Next:                   9193806
+accountedFor:           0xf503017d7baf7fbc0fff7492b751025c6a78179b
+sender:                 0xf503017d7baf7fbc0fff7492b751025c6a78179b  ==>  0x6b175474e89094c44da98b954eedeac495271d0f
+asset:                  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
+hash:                   0x0c71e18450039b2a06f548b30217a063d905d3fb8642b3f767562027e1036ccd
+timestamp:              1577845600
+blockNumber:            9193777.226.0
+priceSource:            128.7725 (maker)
+--------------------------------------------------- 
+Trial balance:
+   prevBal:             4.988267124
+   begBal:              4.988267124 (0)
+   totalIn:             0
+   totalOut:            0.000416144
+   amountNet:           -0.000416144
+                       ======================= 
+   endBal:              4.98785098 (0)
+   endBalCalc:          4.98785098
+   rollingBalance:      0
+--------------------------------------------------- 
+   gasOut:              0.000416144
+   material:            true
+   reconciled:          true
+---------------------------------------------------
+Block 9193806 is prior to deployment (10000835) of Uniswap V2. Falling back to Maker (0x729d19f657bd0614b4985cf1d82531c67569197b)
+=========================================================
+===> PRICING FOR 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) using Maker
+=========================================================
+blockNumber:         9193806
+source1 (uni/mkr):   0x729d19f657bd0614b4985cf1d82531c67569197b
+str0 (call):         peek()
+str1 (call/data):    0x000000000000000000000000000000000000000000000006fb13d27beafd4000
+int0:                12877250000000000000000000
+int1:                12877250
+bigPrice:            128.7725
+price:               128.7725
+source:              maker
+===================================================
+Previous:               9193777
+Current:                9193806
+Next:                   9193814
+accountedFor:           0xf503017d7baf7fbc0fff7492b751025c6a78179b
+sender:                 0xf503017d7baf7fbc0fff7492b751025c6a78179b  ==>  0x6b175474e89094c44da98b954eedeac495271d0f
+asset:                  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
+hash:                   0xa5d76ece0db3a7621313d79950e2a933db3e06724402c5c9231313fdd8705661
+timestamp:              1577846201
+blockNumber:            9193806.80.0
+priceSource:            128.7725 (maker)
+--------------------------------------------------- 
+Trial balance:
+   prevBal:             4.98785098
+   begBal:              4.98785098 (0)
+   totalIn:             0
+   totalOut:            0.000385209
+   amountNet:           -0.000385209
+                       ======================= 
+   endBal:              4.987465771 (0)
+   endBalCalc:          4.987465771
+   rollingBalance:      0
+--------------------------------------------------- 
+   gasOut:              0.000385209
+   material:            true
+   reconciled:          true
+---------------------------------------------------
+Block 9193814 is prior to deployment (10000835) of Uniswap V2. Falling back to Maker (0x729d19f657bd0614b4985cf1d82531c67569197b)
+=========================================================
+===> PRICING FOR 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) using Maker
+=========================================================
+blockNumber:         9193814
+source1 (uni/mkr):   0x729d19f657bd0614b4985cf1d82531c67569197b
+str0 (call):         peek()
+str1 (call/data):    0x000000000000000000000000000000000000000000000006fb13d27beafd4000
+int0:                12877250000000000000000000
+int1:                12877250
+bigPrice:            128.7725
+price:               128.7725
+source:              maker
+===================================================
+Previous:               9193806
+Current:                9193814
+Next:                   9193815
+accountedFor:           0xf503017d7baf7fbc0fff7492b751025c6a78179b
+sender:                 0xf503017d7baf7fbc0fff7492b751025c6a78179b  ==>  0x6b175474e89094c44da98b954eedeac495271d0f
+asset:                  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
+hash:                   0x4150e6fff9eca62c06b94b188b6287b424d703dcf4e5cba0b5c1ee338ea7cd7b
+timestamp:              1577846341
+blockNumber:            9193814.38.0
+priceSource:            128.7725 (maker)
+--------------------------------------------------- 
+Trial balance:
+   prevBal:             4.987465771
+   begBal:              4.987465771 (0)
+   totalIn:             0
+   totalOut:            0.00041624
+   amountNet:           -0.00041624
+                       ======================= 
+   endBal:              4.987049531 (0)
+   endBalCalc:          4.987049531
+   rollingBalance:      0
+--------------------------------------------------- 
+   gasOut:              0.00041624
+   material:            true
+   reconciled:          true
+---------------------------------------------------
+{
+  "data": [
+    {
+      "accountedFor": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
+      "amountIn": "1000000000000000000",
+      "amountNet": "1000000000000000000",
+      "amountOut": "0",
+      "asset": "0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359",
+      "assetName": "Dai Stablecoin v1.0",
+      "begBal": "0",
+      "begBalDiff": "0",
+      "blockNumber": 8856476,
+      "correctingIn": "0",
+      "correctingOut": "0",
+      "correctingReason": "",
+      "date": "2019-11-02 02:56:10 UTC",
+      "decimals": 18,
+      "endBal": "1000000000000000000",
+      "endBalCalc": "1000000000000000000",
+      "endBalDiff": "0",
+      "gasOut": "0",
+      "internalIn": "0",
+      "internalOut": "0",
+      "logIndex": 40,
+      "minerBaseRewardIn": "0",
+      "minerNephewRewardIn": "0",
+      "minerTxFeeIn": "0",
+      "minerUncleRewardIn": "0",
+      "prefundIn": "0",
+      "prevBal": "0",
+      "priceSource": "stable-coin",
+      "recipient": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
+      "reconciled": true,
+      "selfDestructIn": "0",
+      "selfDestructOut": "0",
+      "sender": "0xeba60d324c2546459e1e9dd4c7e740ca80134588",
+      "spotPrice": 1,
+      "symbol": "DAI",
+      "timestamp": 1572663370,
+      "totalIn": "1000000000000000000",
+      "totalOut": "0",
+      "totalOutLessGas": "0",
+      "transactionHash": "0x118f8d42e6b858427f6b54c1636a6ec1f72e0cf8941da03deffa55a3c2357204",
+      "transactionIndex": 55
+    },
+    {
+      "accountedFor": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
+      "amountIn": "4999000000000000000000",
+      "amountNet": "4999000000000000000000",
+      "amountOut": "0",
+      "asset": "0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359",
+      "assetName": "Dai Stablecoin v1.0",
+      "begBal": "1000000000000000000",
+      "begBalDiff": "0",
+      "blockNumber": 8856511,
+      "correctingIn": "0",
+      "correctingOut": "0",
+      "correctingReason": "",
+      "date": "2019-11-02 03:04:19 UTC",
+      "decimals": 18,
+      "endBal": "5000000000000000000000",
+      "endBalCalc": "5000000000000000000000",
+      "endBalDiff": "0",
+      "gasOut": "0",
+      "internalIn": "0",
+      "internalOut": "0",
+      "logIndex": 94,
+      "minerBaseRewardIn": "0",
+      "minerNephewRewardIn": "0",
+      "minerTxFeeIn": "0",
+      "minerUncleRewardIn": "0",
+      "prefundIn": "0",
+      "prevBal": "1000000000000000000",
+      "priceSource": "stable-coin",
+      "recipient": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
+      "reconciled": true,
+      "selfDestructIn": "0",
+      "selfDestructOut": "0",
+      "sender": "0x8c492d5f763841767362d716e3e69511f0527791",
+      "spotPrice": 1,
+      "symbol": "DAI",
+      "timestamp": 1572663859,
+      "totalIn": "4999000000000000000000",
+      "totalOut": "0",
+      "totalOutLessGas": "0",
+      "transactionHash": "0x973699ddd12186570c957369788e0128b1acc66c994685c5d3f52ef6b3b84fed",
+      "transactionIndex": 161
+    },
+    {
+      "accountedFor": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
+      "amountIn": "2500000000000000000000",
+      "amountNet": "2500000000000000000000",
+      "amountOut": "0",
+      "asset": "0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359",
+      "assetName": "Dai Stablecoin v1.0",
+      "begBal": "5000000000000000000000",
+      "begBalDiff": "0",
+      "blockNumber": 8860434,
+      "correctingIn": "0",
+      "correctingOut": "0",
+      "correctingReason": "",
+      "date": "2019-11-02 18:23:31 UTC",
+      "decimals": 18,
+      "endBal": "7500000000000000000000",
+      "endBalCalc": "7500000000000000000000",
+      "endBalDiff": "0",
+      "gasOut": "0",
+      "internalIn": "0",
+      "internalOut": "0",
+      "logIndex": 19,
+      "minerBaseRewardIn": "0",
+      "minerNephewRewardIn": "0",
+      "minerTxFeeIn": "0",
+      "minerUncleRewardIn": "0",
+      "prefundIn": "0",
+      "prevBal": "5000000000000000000000",
+      "priceSource": "stable-coin",
+      "recipient": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
+      "reconciled": true,
+      "selfDestructIn": "0",
+      "selfDestructOut": "0",
+      "sender": "0x3f1c1e14fd919415010c03f9de29cbafd5866e81",
+      "spotPrice": 1,
+      "symbol": "DAI",
+      "timestamp": 1572719011,
+      "totalIn": "2500000000000000000000",
+      "totalOut": "0",
+      "totalOutLessGas": "0",
+      "transactionHash": "0xf411e204daf3b005c251d506bbbf421de482ea468b1c3b76289e76d33459a083",
+      "transactionIndex": 21
+    },
+    {
+      "accountedFor": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
+      "amountIn": "0",
+      "amountNet": "-45985000000000",
+      "amountOut": "0",
+      "asset": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+      "assetName": "ETH",
+      "begBal": "4999790000000000000",
+      "begBalDiff": "0",
+      "blockNumber": 8860511,
+      "correctingIn": "0",
+      "correctingOut": "0",
+      "correctingReason": "",
+      "date": "2019-11-02 18:41:43 UTC",
+      "decimals": 18,
+      "endBal": "4999744015000000000",
+      "endBalCalc": "4999744015000000000",
+      "endBalDiff": "0",
+      "gasOut": "45985000000000",
+      "internalIn": "0",
+      "internalOut": "0",
+      "logIndex": 0,
+      "minerBaseRewardIn": "0",
+      "minerNephewRewardIn": "0",
+      "minerTxFeeIn": "0",
+      "minerUncleRewardIn": "0",
+      "prefundIn": "0",
+      "prevBal": "4999790000000000000",
+      "priceSource": "maker",
+      "recipient": "0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359",
+      "reconciled": true,
+      "selfDestructIn": "0",
+      "selfDestructOut": "0",
+      "sender": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
+      "spotPrice": 183.09,
+      "symbol": "WEI",
+      "timestamp": 1572720103,
+      "totalIn": "0",
+      "totalOut": "45985000000000",
+      "totalOutLessGas": "0",
+      "transactionHash": "0xc36909ffb8335811e5b92d662f39c5e5c0e75394bb9638d7136ab4a4bb2b6951",
+      "transactionIndex": 47
+    },
+    {
+      "accountedFor": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
+      "amountIn": "0",
+      "amountNet": "-34017000000000",
+      "amountOut": "0",
+      "asset": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+      "assetName": "ETH",
+      "begBal": "4999744015000000000",
+      "begBalDiff": "0",
+      "blockNumber": 8860513,
+      "correctingIn": "0",
+      "correctingOut": "0",
+      "correctingReason": "",
+      "date": "2019-11-02 18:42:30 UTC",
+      "decimals": 18,
+      "endBal": "4999709998000000000",
+      "endBalCalc": "4999709998000000000",
+      "endBalDiff": "0",
+      "gasOut": "34017000000000",
+      "internalIn": "0",
+      "internalOut": "0",
+      "logIndex": 0,
+      "minerBaseRewardIn": "0",
+      "minerNephewRewardIn": "0",
+      "minerTxFeeIn": "0",
+      "minerUncleRewardIn": "0",
+      "prefundIn": "0",
+      "prevBal": "4999744015000000000",
+      "priceSource": "maker",
+      "recipient": "0x30f938fed5de6e06a9a7cd2ac3517131c317b1e7",
+      "reconciled": true,
+      "selfDestructIn": "0",
+      "selfDestructOut": "0",
+      "sender": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
+      "spotPrice": 183.09,
+      "symbol": "WEI",
+      "timestamp": 1572720150,
+      "totalIn": "0",
+      "totalOut": "34017000000000",
+      "totalOutLessGas": "0",
+      "transactionHash": "0xd5a49ef68f77357a5202ca09499b343b27cd02c1172c4ace3050a494dc218d8a",
+      "transactionIndex": 85
+    },
+    {
+      "accountedFor": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
+      "amountIn": "0",
+      "amountNet": "-500000000000000000000",
+      "amountOut": "500000000000000000000",
+      "asset": "0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359",
+      "assetName": "Dai Stablecoin v1.0",
+      "begBal": "7500000000000000000000",
+      "begBalDiff": "0",
+      "blockNumber": 8860513,
+      "correctingIn": "0",
+      "correctingOut": "0",
+      "correctingReason": "",
+      "date": "2019-11-02 18:42:30 UTC",
+      "decimals": 18,
+      "endBal": "7000000000000000000000",
+      "endBalCalc": "7000000000000000000000",
+      "endBalDiff": "0",
+      "gasOut": "0",
+      "internalIn": "0",
+      "internalOut": "0",
+      "logIndex": 84,
+      "minerBaseRewardIn": "0",
+      "minerNephewRewardIn": "0",
+      "minerTxFeeIn": "0",
+      "minerUncleRewardIn": "0",
+      "prefundIn": "0",
+      "prevBal": "7500000000000000000000",
+      "priceSource": "stable-coin",
+      "recipient": "0x30f938fed5de6e06a9a7cd2ac3517131c317b1e7",
+      "reconciled": true,
+      "selfDestructIn": "0",
+      "selfDestructOut": "0",
+      "sender": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
+      "spotPrice": 1,
+      "symbol": "DAI",
+      "timestamp": 1572720150,
+      "totalIn": "0",
+      "totalOut": "500000000000000000000",
+      "totalOutLessGas": "500000000000000000000",
+      "transactionHash": "0xd5a49ef68f77357a5202ca09499b343b27cd02c1172c4ace3050a494dc218d8a",
+      "transactionIndex": 85
+    },
+    {
+      "accountedFor": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
+      "amountIn": "0",
+      "amountNet": "-46049000000000",
+      "amountOut": "0",
+      "asset": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+      "assetName": "ETH",
+      "begBal": "4999709998000000000",
+      "begBalDiff": "0",
+      "blockNumber": 8860529,
+      "correctingIn": "0",
+      "correctingOut": "0",
+      "correctingReason": "",
+      "date": "2019-11-02 18:45:58 UTC",
+      "decimals": 18,
+      "endBal": "4999663949000000000",
+      "endBalCalc": "4999663949000000000",
+      "endBalDiff": "0",
+      "gasOut": "46049000000000",
+      "internalIn": "0",
+      "internalOut": "0",
+      "logIndex": 0,
+      "minerBaseRewardIn": "0",
+      "minerNephewRewardIn": "0",
+      "minerTxFeeIn": "0",
+      "minerUncleRewardIn": "0",
+      "prefundIn": "0",
+      "prevBal": "4999709998000000000",
+      "priceSource": "maker",
+      "recipient": "0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359",
+      "reconciled": true,
+      "selfDestructIn": "0",
+      "selfDestructOut": "0",
+      "sender": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
+      "spotPrice": 183.09,
+      "symbol": "WEI",
+      "timestamp": 1572720358,
+      "totalIn": "0",
+      "totalOut": "46049000000000",
+      "totalOutLessGas": "0",
+      "transactionHash": "0x3af5419098b5510f39ec64d6eb8ee08f3fe5cb538469fa9ef263cf7ebd4b607d",
+      "transactionIndex": 145
+    },
+    {
+      "accountedFor": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
+      "amountIn": "0",
+      "amountNet": "-24541000000000",
+      "amountOut": "0",
+      "asset": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+      "assetName": "ETH",
+      "begBal": "4999663949000000000",
+      "begBalDiff": "0",
+      "blockNumber": 8860531,
+      "correctingIn": "0",
+      "correctingOut": "0",
+      "correctingReason": "",
+      "date": "2019-11-02 18:46:01 UTC",
+      "decimals": 18,
+      "endBal": "4999639408000000000",
+      "endBalCalc": "4999639408000000000",
+      "endBalDiff": "0",
+      "gasOut": "24541000000000",
+      "internalIn": "0",
+      "internalOut": "0",
+      "logIndex": 0,
+      "minerBaseRewardIn": "0",
+      "minerNephewRewardIn": "0",
+      "minerTxFeeIn": "0",
+      "minerUncleRewardIn": "0",
+      "prefundIn": "0",
+      "prevBal": "4999663949000000000",
+      "priceSource": "maker",
+      "recipient": "0x30f938fed5de6e06a9a7cd2ac3517131c317b1e7",
+      "reconciled": true,
+      "selfDestructIn": "0",
+      "selfDestructOut": "0",
+      "sender": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
+      "spotPrice": 183.09,
+      "symbol": "WEI",
+      "timestamp": 1572720361,
+      "totalIn": "0",
+      "totalOut": "24541000000000",
+      "totalOutLessGas": "0",
+      "transactionHash": "0x1cdbe0fcca2ee3f9e4504f25e6f2a485835caa920496d20b10fa6241cbfdb124",
+      "transactionIndex": 152
+    },
+    {
+      "accountedFor": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
+      "amountIn": "0",
+      "amountNet": "-7000000000000000000000",
+      "amountOut": "7000000000000000000000",
+      "asset": "0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359",
+      "assetName": "Dai Stablecoin v1.0",
+      "begBal": "7000000000000000000000",
+      "begBalDiff": "0",
+      "blockNumber": 8860531,
+      "correctingIn": "0",
+      "correctingOut": "0",
+      "correctingReason": "",
+      "date": "2019-11-02 18:46:01 UTC",
+      "decimals": 18,
+      "endBal": "0",
+      "endBalCalc": "0",
+      "endBalDiff": "0",
+      "gasOut": "0",
+      "internalIn": "0",
+      "internalOut": "0",
+      "logIndex": 95,
+      "minerBaseRewardIn": "0",
+      "minerNephewRewardIn": "0",
+      "minerTxFeeIn": "0",
+      "minerUncleRewardIn": "0",
+      "prefundIn": "0",
+      "prevBal": "7000000000000000000000",
+      "priceSource": "stable-coin",
+      "recipient": "0x30f938fed5de6e06a9a7cd2ac3517131c317b1e7",
+      "reconciled": true,
+      "selfDestructIn": "0",
+      "selfDestructOut": "0",
+      "sender": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
+      "spotPrice": 1,
+      "symbol": "DAI",
+      "timestamp": 1572720361,
+      "totalIn": "0",
+      "totalOut": "7000000000000000000000",
+      "totalOutLessGas": "7000000000000000000000",
+      "transactionHash": "0x1cdbe0fcca2ee3f9e4504f25e6f2a485835caa920496d20b10fa6241cbfdb124",
+      "transactionIndex": 152
+    },
+    {
+      "accountedFor": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
+      "amountIn": "0",
+      "amountNet": "-105208000000000",
+      "amountOut": "0",
+      "asset": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+      "assetName": "ETH",
+      "begBal": "4999639408000000000",
+      "begBalDiff": "0",
+      "blockNumber": 8867898,
+      "correctingIn": "0",
+      "correctingOut": "0",
+      "correctingReason": "",
+      "date": "2019-11-03 22:52:17 UTC",
+      "decimals": 18,
+      "endBal": "4999534200000000000",
+      "endBalCalc": "4999534200000000000",
+      "endBalDiff": "0",
+      "gasOut": "105208000000000",
+      "internalIn": "0",
+      "internalOut": "0",
+      "logIndex": 0,
+      "minerBaseRewardIn": "0",
+      "minerNephewRewardIn": "0",
+      "minerTxFeeIn": "0",
+      "minerUncleRewardIn": "0",
+      "prefundIn": "0",
+      "prevBal": "4999639408000000000",
+      "priceSource": "maker",
+      "recipient": "0x9062c0a6dbd6108336bcbe4593a3d1ce05512069",
+      "reconciled": true,
+      "selfDestructIn": "0",
+      "selfDestructOut": "0",
+      "sender": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
+      "spotPrice": 181.0225,
+      "symbol": "WEI",
+      "timestamp": 1572821537,
+      "totalIn": "0",
+      "totalOut": "105208000000000",
+      "totalOutLessGas": "0",
+      "transactionHash": "0xbf2b254e62f24f10e59281aca2e04204228a9fef109363881286677ca206ab91",
+      "transactionIndex": 28
+    },
+    {
+      "accountedFor": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
+      "amountIn": "15000000000000000",
+      "amountNet": "15000000000000000",
+      "amountOut": "0",
+      "asset": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+      "assetName": "ETH",
+      "begBal": "4999534200000000000",
+      "begBalDiff": "0",
+      "blockNumber": 9024350,
+      "correctingIn": "0",
+      "correctingOut": "0",
+      "correctingReason": "",
+      "date": "2019-11-30 02:21:41 UTC",
+      "decimals": 18,
+      "endBal": "5014534200000000000",
+      "endBalCalc": "5014534200000000000",
+      "endBalDiff": "0",
+      "gasOut": "0",
+      "internalIn": "0",
+      "internalOut": "0",
+      "logIndex": 0,
+      "minerBaseRewardIn": "0",
+      "minerNephewRewardIn": "0",
+      "minerTxFeeIn": "0",
+      "minerUncleRewardIn": "0",
+      "prefundIn": "0",
+      "prevBal": "4999534200000000000",
+      "priceSource": "maker",
+      "recipient": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
+      "reconciled": true,
+      "selfDestructIn": "0",
+      "selfDestructOut": "0",
+      "sender": "0xbc62985faabed27a8f174cbd5ea1ee7b1ed8fc12",
+      "spotPrice": 154.41,
+      "symbol": "WEI",
+      "timestamp": 1575080501,
+      "totalIn": "15000000000000000",
+      "totalOut": "0",
+      "totalOutLessGas": "0",
+      "transactionHash": "0x6874facd48c3ddc4716148ce7721e4fa66dfd49564b371026d6ec6856a1f6c0e",
+      "transactionIndex": 73
+    },
+    {
+      "accountedFor": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
+      "amountIn": "0",
+      "amountNet": "-25799130000000000",
+      "amountOut": "0",
+      "asset": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+      "assetName": "ETH",
+      "begBal": "5014534200000000000",
+      "begBalDiff": "0",
+      "blockNumber": 9046970,
+      "correctingIn": "0",
+      "correctingOut": "0",
+      "correctingReason": "",
+      "date": "2019-12-04 02:22:13 UTC",
+      "decimals": 18,
+      "endBal": "4988735070000000000",
+      "endBalCalc": "4988735070000000000",
+      "endBalDiff": "0",
+      "gasOut": "25799130000000000",
+      "internalIn": "0",
+      "internalOut": "0",
+      "logIndex": 0,
+      "minerBaseRewardIn": "0",
+      "minerNephewRewardIn": "0",
+      "minerTxFeeIn": "0",
+      "minerUncleRewardIn": "0",
+      "prefundIn": "0",
+      "prevBal": "5014534200000000000",
+      "priceSource": "maker",
+      "recipient": "0xc28a260c6b2969349eeaa3ba5253b616c1d9ac0b",
+      "reconciled": true,
+      "selfDestructIn": "0",
+      "selfDestructOut": "0",
+      "sender": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
+      "spotPrice": 144.46,
+      "symbol": "WEI",
+      "timestamp": 1575426133,
+      "totalIn": "0",
+      "totalOut": "25799130000000000",
+      "totalOutLessGas": "0",
+      "transactionHash": "0xe1e3c29fdebdfaa3b261b8f294d5007427163a7b90ba4beb79e940c957d393d1",
+      "transactionIndex": 71
+    },
+    {
+      "accountedFor": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
+      "amountIn": "0",
+      "amountNet": "-467946000000000",
+      "amountOut": "0",
+      "asset": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+      "assetName": "ETH",
+      "begBal": "4988735070000000000",
+      "begBalDiff": "0",
+      "blockNumber": 9193753,
+      "correctingIn": "0",
+      "correctingOut": "0",
+      "correctingReason": "",
+      "date": "2020-01-01 02:19:29 UTC",
+      "decimals": 18,
+      "endBal": "4988267124000000000",
+      "endBalCalc": "4988267124000000000",
+      "endBalDiff": "0",
+      "gasOut": "467946000000000",
+      "internalIn": "0",
+      "internalOut": "0",
+      "logIndex": 0,
+      "minerBaseRewardIn": "0",
+      "minerNephewRewardIn": "0",
+      "minerTxFeeIn": "0",
+      "minerUncleRewardIn": "0",
+      "prefundIn": "0",
+      "prevBal": "4988735070000000000",
+      "priceSource": "maker",
+      "recipient": "0x6b175474e89094c44da98b954eedeac495271d0f",
+      "reconciled": true,
+      "selfDestructIn": "0",
+      "selfDestructOut": "0",
+      "sender": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
+      "spotPrice": 128.7725,
+      "symbol": "WEI",
+      "timestamp": 1577845169,
+      "totalIn": "0",
+      "totalOut": "467946000000000",
+      "totalOutLessGas": "0",
+      "transactionHash": "0x823221aac029b0495c8b045fe2a345bad618f2f6e3a6e473d55338b60eaf4763",
+      "transactionIndex": 147
+    },
+    {
+      "accountedFor": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
+      "amountIn": "0",
+      "amountNet": "-416144000000000",
+      "amountOut": "0",
+      "asset": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+      "assetName": "ETH",
+      "begBal": "4988267124000000000",
+      "begBalDiff": "0",
+      "blockNumber": 9193777,
+      "correctingIn": "0",
+      "correctingOut": "0",
+      "correctingReason": "",
+      "date": "2020-01-01 02:26:40 UTC",
+      "decimals": 18,
+      "endBal": "4987850980000000000",
+      "endBalCalc": "4987850980000000000",
+      "endBalDiff": "0",
+      "gasOut": "416144000000000",
+      "internalIn": "0",
+      "internalOut": "0",
+      "logIndex": 0,
+      "minerBaseRewardIn": "0",
+      "minerNephewRewardIn": "0",
+      "minerTxFeeIn": "0",
+      "minerUncleRewardIn": "0",
+      "prefundIn": "0",
+      "prevBal": "4988267124000000000",
+      "priceSource": "maker",
+      "recipient": "0x6b175474e89094c44da98b954eedeac495271d0f",
+      "reconciled": true,
+      "selfDestructIn": "0",
+      "selfDestructOut": "0",
+      "sender": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
+      "spotPrice": 128.7725,
+      "symbol": "WEI",
+      "timestamp": 1577845600,
+      "totalIn": "0",
+      "totalOut": "416144000000000",
+      "totalOutLessGas": "0",
+      "transactionHash": "0x0c71e18450039b2a06f548b30217a063d905d3fb8642b3f767562027e1036ccd",
+      "transactionIndex": 226
+    },
+    {
+      "accountedFor": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
+      "amountIn": "0",
+      "amountNet": "-385209000000000",
+      "amountOut": "0",
+      "asset": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+      "assetName": "ETH",
+      "begBal": "4987850980000000000",
+      "begBalDiff": "0",
+      "blockNumber": 9193806,
+      "correctingIn": "0",
+      "correctingOut": "0",
+      "correctingReason": "",
+      "date": "2020-01-01 02:36:41 UTC",
+      "decimals": 18,
+      "endBal": "4987465771000000000",
+      "endBalCalc": "4987465771000000000",
+      "endBalDiff": "0",
+      "gasOut": "385209000000000",
+      "internalIn": "0",
+      "internalOut": "0",
+      "logIndex": 0,
+      "minerBaseRewardIn": "0",
+      "minerNephewRewardIn": "0",
+      "minerTxFeeIn": "0",
+      "minerUncleRewardIn": "0",
+      "prefundIn": "0",
+      "prevBal": "4987850980000000000",
+      "priceSource": "maker",
+      "recipient": "0x6b175474e89094c44da98b954eedeac495271d0f",
+      "reconciled": true,
+      "selfDestructIn": "0",
+      "selfDestructOut": "0",
+      "sender": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
+      "spotPrice": 128.7725,
+      "symbol": "WEI",
+      "timestamp": 1577846201,
+      "totalIn": "0",
+      "totalOut": "385209000000000",
+      "totalOutLessGas": "0",
+      "transactionHash": "0xa5d76ece0db3a7621313d79950e2a933db3e06724402c5c9231313fdd8705661",
+      "transactionIndex": 80
+    },
+    {
+      "accountedFor": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
+      "amountIn": "0",
+      "amountNet": "-416240000000000",
+      "amountOut": "0",
+      "asset": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+      "assetName": "ETH",
+      "begBal": "4987465771000000000",
+      "begBalDiff": "0",
+      "blockNumber": 9193814,
+      "correctingIn": "0",
+      "correctingOut": "0",
+      "correctingReason": "",
+      "date": "2020-01-01 02:39:01 UTC",
+      "decimals": 18,
+      "endBal": "4987049531000000000",
+      "endBalCalc": "4987049531000000000",
+      "endBalDiff": "0",
+      "gasOut": "416240000000000",
+      "internalIn": "0",
+      "internalOut": "0",
+      "logIndex": 0,
+      "minerBaseRewardIn": "0",
+      "minerNephewRewardIn": "0",
+      "minerTxFeeIn": "0",
+      "minerUncleRewardIn": "0",
+      "prefundIn": "0",
+      "prevBal": "4987465771000000000",
+      "priceSource": "maker",
+      "recipient": "0x6b175474e89094c44da98b954eedeac495271d0f",
+      "reconciled": true,
+      "selfDestructIn": "0",
+      "selfDestructOut": "0",
+      "sender": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
+      "spotPrice": 128.7725,
+      "symbol": "WEI",
+      "timestamp": 1577846341,
+      "totalIn": "0",
+      "totalOut": "416240000000000",
+      "totalOutLessGas": "0",
+      "transactionHash": "0x4150e6fff9eca62c06b94b188b6287b424d703dcf4e5cba0b5c1ee338ea7cd7b",
+      "transactionIndex": 38
+    }
+  ],
+  "meta": {
+    "client": "0xdeadbeef",
+    "finalized": "0xdeadbeef",
+    "staging": "0xdeadbeef",
+    "ripe": "0xdeadbeef",
+    "unripe": "0xdeadbeef",
+    "chainId": 1,
+    "networkId": 1,
+    "chain": "mainnet"
+  }
+}

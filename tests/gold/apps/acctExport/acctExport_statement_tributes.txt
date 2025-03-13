@@ -9,8 +9,6 @@ TEST[DATE|TIME] Caps:  cache,decache,ether
 TEST[DATE|TIME] Format:  json
 TEST[DATE|TIME] Block 8769029 is prior to deployment (10000835) of Uniswap V2. No other source for tokens prior to UniSwap
 TEST[DATE|TIME] ===================================================
-TEST[DATE|TIME] ====> token
-TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] Previous:               8769019
 TEST[DATE|TIME] Current:                8769029
 TEST[DATE|TIME] Next:                   8769052
@@ -39,9 +37,7 @@ TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] Block 8769052 is prior to deployment (10000835) of Uniswap V2. No other source for tokens prior to UniSwap
 TEST[DATE|TIME] ===================================================
-TEST[DATE|TIME] ====> token
-TEST[DATE|TIME] ===================================================
-TEST[DATE|TIME] Previous:               8769052
+TEST[DATE|TIME] Previous:               8769029
 TEST[DATE|TIME] Current:                8769052
 TEST[DATE|TIME] Next:                   8769053
 TEST[DATE|TIME] accountedFor:           0x868b8fd259abfcfdf9634c343593b34ef359641d
@@ -75,7 +71,7 @@ TEST[DATE|TIME] ---------------------------------------------------
       "amountNet": "85000000000000000000",
       "amountOut": "0",
       "asset": "0x0ba45a8b5d5575935b8158a88c631e9f9c95a2e5",
-      "symbol": "TRB",
+      "assetName": "Tellor Tributes",
       "begBal": "0",
       "begBalDiff": "0",
       "blockNumber": 8769029,
@@ -104,6 +100,7 @@ TEST[DATE|TIME] ---------------------------------------------------
       "selfDestructOut": "0",
       "sender": "0x103348c47ffc3254aff761894e7c13ca0c680465",
       "spotPrice": 0,
+      "symbol": "TRB",
       "timestamp": 1571457649,
       "totalIn": "85000000000000000000",
       "totalOut": "0",
@@ -117,7 +114,7 @@ TEST[DATE|TIME] ---------------------------------------------------
       "amountNet": "-85000000000000000000",
       "amountOut": "85000000000000000000",
       "asset": "0x0ba45a8b5d5575935b8158a88c631e9f9c95a2e5",
-      "symbol": "TRB",
+      "assetName": "Tellor Tributes",
       "begBal": "85000000000000000000",
       "begBalDiff": "0",
       "blockNumber": 8769052,
@@ -146,6 +143,7 @@ TEST[DATE|TIME] ---------------------------------------------------
       "selfDestructOut": "0",
       "sender": "0x868b8fd259abfcfdf9634c343593b34ef359641d",
       "spotPrice": 0,
+      "symbol": "TRB",
       "timestamp": 1571458005,
       "totalIn": "0",
       "totalOut": "85000000000000000000",

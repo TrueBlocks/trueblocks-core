@@ -1,6 +1,6 @@
-export?addrs=0x65b0d5e1dc0dee0704f53f660aa865c72e986fc7&accounting&statements&ether&asset=0xc713e5e149d5d0715dcd1c156a020976e7e56b88&firstBlock=11670418&lastBlock=11670420&maxRecords=40
-Args: [addrs=0x65b0d5e1dc0dee0704f53f660aa865c72e986fc7 accounting statements ether asset=0xc713e5e149d5d0715dcd1c156a020976e7e56b88 firstBlock=11670418 lastBlock=11670420 maxRecords=40]
-Opts: {"addrs":["0x65b0d5e1dc0dee0704f53f660aa865c72e986fc7"],"accounting":true,"statements":true,"maxRecords":40,"asset":["0xc713e5e149d5d0715dcd1c156a020976e7e56b88"],"firstBlock":11670418,"lastBlock":11670420,"ether":true}
+export?addrs=0x65b0d5e1dc0dee0704f53f660aa865c72e986fc7&accounting&statements&asset=0xc713e5e149d5d0715dcd1c156a020976e7e56b88&firstBlock=11670418&lastBlock=11670420&maxRecords=40
+Args: [addrs=0x65b0d5e1dc0dee0704f53f660aa865c72e986fc7 accounting statements asset=0xc713e5e149d5d0715dcd1c156a020976e7e56b88 firstBlock=11670418 lastBlock=11670420 maxRecords=40]
+Opts: {"addrs":["0x65b0d5e1dc0dee0704f53f660aa865c72e986fc7"],"accounting":true,"statements":true,"maxRecords":40,"asset":["0xc713e5e149d5d0715dcd1c156a020976e7e56b88"],"firstBlock":11670418,"lastBlock":11670420}
 Addrs:  [0x65b0d5e1dc0dee0704f53f660aa865c72e986fc7]
 Accounting:  true
 Statements:  true
@@ -8,20 +8,8 @@ MaxRecords:  40
 Asset:  [0xc713e5e149d5d0715dcd1c156a020976e7e56b88]
 FirstBlock:  11670418
 LastBlock:  11670420
-Ether:  true
 Caps:  cache,decache,ether
 Format:  json
-A possible nullTransfer
-  nLogs:             8
-    lotsOfLogs:      --> false
-  Sender.IsZero:     0x65b0d5e1dc0dee0704f53f660aa865c72e986fc7 false
-  or Sender == To:   false
-    mayBeAirdrop:    --> false
-  EndBal-BegBal:     -1
-  Material:          true
-    noBalanceChange: --> false
-  ---> Not a nullTransfer
-Needs correction for token transfer
 Correcting token transfer for unknown income or outflow
 =========================================================
 ===> PRICING FOR 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) using Uniswap
@@ -65,7 +53,7 @@ Trial balance:
 --------------------------------------------------- 
    amountOut:           14.922878243871414864
    correctingOut:       -0.000000038340920823
-   correctingReason:    endbal
+   correctingReason:    endbal-out
    material:            true
    reconciled:          true
 ---------------------------------------------------
@@ -74,67 +62,43 @@ Trial balance:
     {
       "accountedFor": "0x65b0d5e1dc0dee0704f53f660aa865c72e986fc7",
       "amountIn": "0",
-      "amountInEth": "0",
       "amountNet": "-14922878205530494041",
-      "amountNetEth": "-14.922878205530494041",
       "amountOut": "14922878243871414864",
-      "amountOutEth": "14.922878243871414864",
       "asset": "0xc713e5e149d5d0715dcd1c156a020976e7e56b88",
       "assetName": "Aave interest bearing MKR",
       "begBal": "14922878205530494041",
       "begBalDiff": "0",
-      "begBalDiffEth": "0",
-      "begBalEth": "14.922878205530494041",
       "blockNumber": 11670419,
       "correctingIn": "0",
-      "correctingInEth": "0",
       "correctingOut": "-38340920823",
-      "correctingOutEth": "-0.000000038340920823",
-      "correctingReason": "endbal",
+      "correctingReason": "endbal-out",
       "date": "2021-01-17 04:01:58 UTC",
       "decimals": 18,
       "endBal": "0",
       "endBalCalc": "0",
-      "endBalCalcEth": "0",
       "endBalDiff": "0",
-      "endBalDiffEth": "0",
-      "endBalEth": "0",
       "gasOut": "0",
-      "gasOutEth": "0",
       "internalIn": "0",
-      "internalInEth": "0",
       "internalOut": "0",
-      "internalOutEth": "0",
       "logIndex": 195,
       "minerBaseRewardIn": "0",
-      "minerBaseRewardInEth": "0",
       "minerNephewRewardIn": "0",
-      "minerNephewRewardInEth": "0",
       "minerTxFeeIn": "0",
-      "minerTxFeeInEth": "0",
       "minerUncleRewardIn": "0",
-      "minerUncleRewardInEth": "0",
       "prefundIn": "0",
-      "prefundInEth": "0",
       "prevBal": "14922878205530494041",
-      "prevBalEth": "14.922878205530494041",
       "priceSource": "not-priced",
       "recipient": "0x0",
       "reconciled": true,
       "selfDestructIn": "0",
-      "selfDestructInEth": "0",
       "selfDestructOut": "0",
-      "selfDestructOutEth": "0",
       "sender": "0x65b0d5e1dc0dee0704f53f660aa865c72e986fc7",
       "spotPrice": 0,
       "symbol": "aMKR",
       "timestamp": 1610856118,
       "totalIn": "0",
-      "totalInEth": "0",
       "totalOut": "14922878205530494041",
-      "totalOutEth": "14.922878205530494041",
       "totalOutLessGas": "14922878205530494041",
-      "totalOutLessGasEth": "14.922878205530494041",
       "transactionHash": "0x634799410165000edaf1b1e8e5e8055b39cdd534d3c3dc9738865d39adb5d888",
       "transactionIndex": 91
     }

@@ -26,6 +26,11 @@ type ReconcilerOptions struct {
 	AppFilters   *types.AppearanceFilter `json:"appFilters"`
 }
 
+type Running struct {
+	Amount base.Wei    `json:"amount"`
+	Prev   base.Blknum `json:"blockNumber"`
+}
+
 type Reconciler1 struct {
 	Connection     *rpc.Connection             `json:"-"`
 	Opts           *ReconcilerOptions          `json:"opts"`
@@ -33,6 +38,7 @@ type Reconciler1 struct {
 	AddCorrections bool                        `json:"addCorrections"`
 	ShowDebugging  bool                        `json:"showDebugging"`
 	RemoveAirdrops bool                        `json:"removeAirdrops"`
+	Running        map[base.Address]Running    `json:"running"`
 }
 
 func (r *Reconciler1) String() string {
@@ -50,103 +56,99 @@ func NewReconciler(conn *rpc.Connection, opts *ReconcilerOptions) *Reconciler1 {
 		AddCorrections: true,
 		ShowDebugging:  true,
 		RemoveAirdrops: true,
+		Running:        make(map[base.Address]Running),
 	}
 	return r
 }
 
-// trialBalance returns true of the reconciliation balances, false otherwise. If the statement
-// does not reconcile, it tries to repair it in two ways (a) for null transfers and (b) for
-// any other reason. If that works and the statement is material (money moved in some way), the
-// function tries to price the asset. it then prints optional debugging information. Note that
-// the statement may be modified in this function.
-func (r *Reconciler1) trialBalance(pos *types.AppPosition, trans *types.Transaction, s *types.Statement) (bool, error) {
+func (r *Reconciler1) trialBalance(trans *types.Transaction, stmt *types.Statement, pos *types.AppPosition, correct bool) (bool, error) {
 	var err error
-	if s.PrevBal, s.BegBal, s.EndBal, err = r.Connection.GetReconBalances(&rpc.BalanceOptions{
+	if stmt.PrevBal, stmt.BegBal, stmt.EndBal, err = r.Connection.GetReconBalances(&rpc.BalanceOptions{
 		PrevAppBlk: pos.Prev,
 		CurrBlk:    trans.BlockNumber,
-		Asset:      s.Asset,
-		Holder:     s.AccountedFor,
+		Asset:      stmt.Asset,
+		Holder:     stmt.AccountedFor,
 	}); err != nil {
 		return false, err
 	}
+	if running, ok := r.Running[stmt.Asset]; ok {
+		stmt.PrevBal = running.Amount
+		pos.Prev = running.Prev
+	}
 
-	if r.AddCorrections {
-		var okay bool
-		if okay = s.Reconciled(); !okay {
-			if !s.IsEth() {
-				if okay = r.correctForNullTransfer(s, trans); !okay {
-					_ = r.correctForSomethingElseToken(s)
-				}
+	if correct {
+		if !stmt.Reconciled() {
+			if trans.Receipt != nil && stmt.IsNullTransfer(len(trans.Receipt.Logs), trans.To) {
+				r.correctForNullTransfer(stmt)
+			}
+			if !stmt.Reconciled() {
+				r.correctBegEndBal(stmt)
 			}
 		}
 	}
 
-	if !s.IsMaterial() {
-		return s.Reconciled(), nil
+	r.Running[stmt.Asset] = Running{
+		Amount: *stmt.EndBalCalc(),
+		Prev:   trans.BlockNumber,
 	}
 
-	s.SpotPrice, s.PriceSource, _ = pricing.PriceUsd(r.Connection, s)
+	if !stmt.IsMaterial() {
+		return stmt.Reconciled(), nil
+	}
+
+	stmt.SpotPrice, stmt.PriceSource, _ = pricing.PriceUsd(r.Connection, stmt)
 	if r.ShowDebugging {
-		s.DebugStatement(pos)
+		stmt.DebugStatement(pos)
 	}
 
-	return s.Reconciled(), nil
+	return stmt.Reconciled(), nil
 }
 
-func (r *Reconciler1) correctForSomethingElseToken(s *types.Statement) bool {
-	logger.TestLog(true, "Correcting token transfer for unknown income or outflow")
-
-	s.CorrectingIn.SetUint64(0)
-	s.CorrectingOut.SetUint64(0)
-	s.CorrectingReason = ""
-	zero := new(base.Wei).SetInt64(0)
-	cmpBegBal := s.BegBalDiff().Cmp(zero)
-	cmpEndBal := s.EndBalDiff().Cmp(zero)
-
-	if cmpBegBal > 0 {
-		s.CorrectingIn = *s.BegBalDiff()
-		s.CorrectingReason = "begbal"
-	} else if cmpBegBal < 0 {
-		s.CorrectingOut = *s.BegBalDiff()
-		s.CorrectingReason = "begbal"
-	}
-
-	if cmpEndBal > 0 {
-		n := new(base.Wei).Add(&s.CorrectingIn, s.EndBalDiff())
-		s.CorrectingIn = *n
-		s.CorrectingReason += "endbal"
-	} else if cmpEndBal < 0 {
-		n := new(base.Wei).Add(&s.CorrectingOut, s.EndBalDiff())
-		s.CorrectingOut = *n
-		s.CorrectingReason += "endbal"
-	}
-	s.CorrectingReason = strings.Replace(s.CorrectingReason, "begbalendbal", "begbal-endbal", -1)
-
+func (r *Reconciler1) correctForNullTransfer(s *types.Statement) bool {
+	logger.TestLog(true, "Correcting token transfer for a null transfer")
+	amt := s.TotalIn() // use totalIn since this is the amount that was faked
+	s.AmountOut = *base.ZeroWei
+	s.AmountIn = *base.ZeroWei
+	s.CorrectingIn = *amt
+	s.CorrectingOut = *amt
+	s.CorrectingReason = "null-transfer"
 	return s.Reconciled()
 }
 
-func (r *Reconciler1) correctForNullTransfer(s *types.Statement, tx *types.Transaction) bool {
-	if s.IsNullTransfer(tx) {
-		logger.TestLog(true, "Correcting token transfer for a null transfer")
-		amt := s.TotalIn() // use totalIn since this is the amount that was faked
-		s.AmountOut = *base.ZeroWei
-		s.AmountIn = *base.ZeroWei
-		s.CorrectingIn = *amt
-		s.CorrectingOut = *amt
-		s.CorrectingReason = "null-transfer"
-	} else {
-		logger.TestLog(true, "Needs correction for token transfer")
+func (r *Reconciler1) correctBegEndBal(stmt *types.Statement) bool {
+	reasons := []string{}
+	if !stmt.BegBalDiff().Equal(base.ZeroWei) {
+		logger.TestLog(true, "Correcting token transfer for unknown income or outflow")
+		if stmt.BegBalDiff().LessThan(base.ZeroWei) {
+			reasons = append(reasons, "begbal-out")
+			val := new(base.Wei).Add(&stmt.CorrectingOut, stmt.BegBalDiff())
+			stmt.CorrectingOut = *val
+		} else {
+			reasons = append(reasons, "begbal-in")
+			val := new(base.Wei).Add(&stmt.CorrectingIn, stmt.BegBalDiff())
+			stmt.CorrectingIn = *val
+		}
 	}
 
-	return s.Reconciled()
+	if !stmt.EndBalDiff().Equal(base.ZeroWei) {
+		logger.TestLog(true, "Correcting token transfer for unknown income or outflow")
+		if stmt.EndBalDiff().LessThan(base.ZeroWei) {
+			reasons = append(reasons, "endbal-out")
+			val := new(base.Wei).Add(&stmt.CorrectingOut, stmt.EndBalDiff())
+			stmt.CorrectingOut = *val
+		} else {
+			reasons = append(reasons, "endbal-in")
+			val := new(base.Wei).Add(&stmt.CorrectingIn, stmt.EndBalDiff())
+			stmt.CorrectingIn = *val
+		}
+	}
+
+	stmt.CorrectingReason = strings.Join(reasons, "-")
+	return stmt.Reconciled()
 }
 
-func (r *Reconciler1) SkipAirdrop(stmt *types.Statement) bool {
-	if !r.RemoveAirdrops {
-		return false
-	}
-
-	if name, found := r.Names[stmt.Asset]; !found {
+func (r *Reconciler1) SkipAirdrop(addr base.Address) bool {
+	if name, found := r.Names[addr]; !found {
 		return false
 	} else {
 		return name.IsAirdrop()
@@ -162,7 +164,7 @@ func (r *Reconciler1) GetStatements(pos *types.AppPosition, trans *types.Transac
 				return nil, err
 			} else {
 				var err error
-				if reconciled, err = r.trialBalance(pos, trans, stmt); err != nil {
+				if reconciled, err = r.trialBalance(trans, stmt, pos, false); err != nil {
 					return nil, err
 				} else {
 					if reconciled && stmt.IsMaterial() {
@@ -179,7 +181,7 @@ func (r *Reconciler1) GetStatements(pos *types.AppPosition, trans *types.Transac
 				if stmt, err := trans.FetchStatementFromTraces(traces, r.Opts.AccountFor, r.Opts.AsEther); err != nil {
 					logger.Warn(colors.Yellow+"Statement at ", fmt.Sprintf("%d.%d", trans.BlockNumber, trans.TransactionIndex), " does not reconcile."+colors.Off)
 				} else {
-					if _, err = r.trialBalance(pos, trans, stmt); err != nil {
+					if _, err = r.trialBalance(trans, stmt, pos, r.AddCorrections); err != nil {
 						return nil, err
 					} else {
 						if stmt.IsMaterial() { // append even if not reconciled
@@ -197,10 +199,12 @@ func (r *Reconciler1) GetStatements(pos *types.AppPosition, trans *types.Transac
 		} else {
 			for _, s := range statements {
 				stmt := &s
-				name := r.Names[stmt.Asset]
 				stmt.Symbol = stmt.Asset.DefaultSymbol()
 				stmt.Decimals = base.Value(18)
-				if name.Address == stmt.Asset {
+				if name, found := r.Names[stmt.Asset]; found {
+					if r.RemoveAirdrops && r.SkipAirdrop(stmt.Asset) {
+						continue
+					}
 					if name.Symbol != "" {
 						stmt.Symbol = name.Symbol
 					}
@@ -208,22 +212,18 @@ func (r *Reconciler1) GetStatements(pos *types.AppPosition, trans *types.Transac
 						stmt.Decimals = base.Value(name.Decimals)
 					}
 				}
-				if reconciled, err := r.trialBalance(pos, trans, stmt); err != nil {
+
+				if reconciled, err := r.trialBalance(trans, stmt, pos, r.AddCorrections); err != nil {
 					// TODO: Silent fail?
 					continue
 				} else {
 					if reconciled {
 						id := fmt.Sprintf(" %d.%d.%d", stmt.BlockNumber, stmt.TransactionIndex, stmt.LogIndex)
 						logger.Progress(true, colors.Green+"Transaction", id, "reconciled       "+colors.Off)
-						// } else {
-						// 	if !base.IsTestMode() {
-						// 		id := fmt.Sprintf(" %d.%d.%d", stmt.BlockNumber, stmt.TransactionIndex, stmt.LogIndex)
-						// 		logger.Warn("Log statement at ", id, " does not reconcile.")
-						// 	}
 					}
 
 					// order matters - don't move
-					if stmt.IsMaterial() && !r.SkipAirdrop(stmt) { // add even if not reconciled
+					if stmt.IsMaterial() { // add even if not reconciled
 						r.addStatement(&results, stmt)
 					}
 				}
@@ -276,7 +276,9 @@ func (r *Reconciler1) GetTransfers(pos *types.AppPosition, trans *types.Transact
 			return nil, err
 		} else {
 			for _, stmt := range receiptStatements {
-				if stmt.IsMaterial() && !r.SkipAirdrop(&stmt) {
+				if r.RemoveAirdrops && r.SkipAirdrop(stmt.Asset) {
+					continue
+				} else if stmt.IsMaterial() {
 					statements = append(statements, stmt)
 				}
 			}

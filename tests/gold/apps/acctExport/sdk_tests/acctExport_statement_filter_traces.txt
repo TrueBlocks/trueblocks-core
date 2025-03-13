@@ -1,6 +1,6 @@
-export?addrs=0xf503017d7baf7fbc0fff7492b751025c6a78179b&accounting&statements&traces&firstBlock=8860513&lastBlock=8860531&ether&asset=0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359
-Args: [addrs=0xf503017d7baf7fbc0fff7492b751025c6a78179b accounting statements traces firstBlock=8860513 lastBlock=8860531 ether asset=0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359]
-Opts: {"addrs":["0xf503017d7baf7fbc0fff7492b751025c6a78179b"],"traces":true,"accounting":true,"statements":true,"asset":["0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359"],"firstBlock":8860513,"lastBlock":8860531,"ether":true}
+export?addrs=0xf503017d7baf7fbc0fff7492b751025c6a78179b&accounting&statements&traces&firstBlock=8860513&lastBlock=8860531&asset=0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359
+Args: [addrs=0xf503017d7baf7fbc0fff7492b751025c6a78179b accounting statements traces firstBlock=8860513 lastBlock=8860531 asset=0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359]
+Opts: {"addrs":["0xf503017d7baf7fbc0fff7492b751025c6a78179b"],"traces":true,"accounting":true,"statements":true,"asset":["0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359"],"firstBlock":8860513,"lastBlock":8860531}
 Addrs:  [0xf503017d7baf7fbc0fff7492b751025c6a78179b]
 Traces:  true
 Accounting:  true
@@ -8,7 +8,6 @@ Statements:  true
 Asset:  [0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359]
 FirstBlock:  8860513
 LastBlock:  8860531
-Ether:  true
 Caps:  cache,decache,ether
 Format:  json
 =========================================================
@@ -47,7 +46,7 @@ Trial balance:
 =========================================================
 stable-coin
 ===================================================
-Previous:               8860529
+Previous:               8860513
 Current:                8860531
 Next:                   8860532
 accountedFor:           0xf503017d7baf7fbc0fff7492b751025c6a78179b
@@ -78,134 +77,86 @@ Trial balance:
     {
       "accountedFor": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
       "amountIn": "0",
-      "amountInEth": "0",
       "amountNet": "-500000000000000000000",
-      "amountNetEth": "-500",
       "amountOut": "500000000000000000000",
-      "amountOutEth": "500",
       "asset": "0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359",
       "assetName": "Dai Stablecoin v1.0",
       "begBal": "7500000000000000000000",
       "begBalDiff": "0",
-      "begBalDiffEth": "0",
-      "begBalEth": "7500",
       "blockNumber": 8860513,
       "correctingIn": "0",
-      "correctingInEth": "0",
       "correctingOut": "0",
-      "correctingOutEth": "0",
       "correctingReason": "",
       "date": "2019-11-02 18:42:30 UTC",
       "decimals": 18,
       "endBal": "7000000000000000000000",
       "endBalCalc": "7000000000000000000000",
-      "endBalCalcEth": "7000",
       "endBalDiff": "0",
-      "endBalDiffEth": "0",
-      "endBalEth": "7000",
       "gasOut": "0",
-      "gasOutEth": "0",
       "internalIn": "0",
-      "internalInEth": "0",
       "internalOut": "0",
-      "internalOutEth": "0",
       "logIndex": 84,
       "minerBaseRewardIn": "0",
-      "minerBaseRewardInEth": "0",
       "minerNephewRewardIn": "0",
-      "minerNephewRewardInEth": "0",
       "minerTxFeeIn": "0",
-      "minerTxFeeInEth": "0",
       "minerUncleRewardIn": "0",
-      "minerUncleRewardInEth": "0",
       "prefundIn": "0",
-      "prefundInEth": "0",
       "prevBal": "7500000000000000000000",
-      "prevBalEth": "7500",
       "priceSource": "stable-coin",
       "recipient": "0x30f938fed5de6e06a9a7cd2ac3517131c317b1e7",
       "reconciled": true,
       "selfDestructIn": "0",
-      "selfDestructInEth": "0",
       "selfDestructOut": "0",
-      "selfDestructOutEth": "0",
       "sender": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
       "spotPrice": 1,
       "symbol": "DAI",
       "timestamp": 1572720150,
       "totalIn": "0",
-      "totalInEth": "0",
       "totalOut": "500000000000000000000",
-      "totalOutEth": "500",
       "totalOutLessGas": "500000000000000000000",
-      "totalOutLessGasEth": "500",
       "transactionHash": "0xd5a49ef68f77357a5202ca09499b343b27cd02c1172c4ace3050a494dc218d8a",
       "transactionIndex": 85
     },
     {
       "accountedFor": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
       "amountIn": "0",
-      "amountInEth": "0",
       "amountNet": "-7000000000000000000000",
-      "amountNetEth": "-7000",
       "amountOut": "7000000000000000000000",
-      "amountOutEth": "7000",
       "asset": "0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359",
       "assetName": "Dai Stablecoin v1.0",
       "begBal": "7000000000000000000000",
       "begBalDiff": "0",
-      "begBalDiffEth": "0",
-      "begBalEth": "7000",
       "blockNumber": 8860531,
       "correctingIn": "0",
-      "correctingInEth": "0",
       "correctingOut": "0",
-      "correctingOutEth": "0",
       "correctingReason": "",
       "date": "2019-11-02 18:46:01 UTC",
       "decimals": 18,
       "endBal": "0",
       "endBalCalc": "0",
-      "endBalCalcEth": "0",
       "endBalDiff": "0",
-      "endBalDiffEth": "0",
-      "endBalEth": "0",
       "gasOut": "0",
-      "gasOutEth": "0",
       "internalIn": "0",
-      "internalInEth": "0",
       "internalOut": "0",
-      "internalOutEth": "0",
       "logIndex": 95,
       "minerBaseRewardIn": "0",
-      "minerBaseRewardInEth": "0",
       "minerNephewRewardIn": "0",
-      "minerNephewRewardInEth": "0",
       "minerTxFeeIn": "0",
-      "minerTxFeeInEth": "0",
       "minerUncleRewardIn": "0",
-      "minerUncleRewardInEth": "0",
       "prefundIn": "0",
-      "prefundInEth": "0",
       "prevBal": "7000000000000000000000",
-      "prevBalEth": "7000",
       "priceSource": "stable-coin",
       "recipient": "0x30f938fed5de6e06a9a7cd2ac3517131c317b1e7",
       "reconciled": true,
       "selfDestructIn": "0",
-      "selfDestructInEth": "0",
       "selfDestructOut": "0",
-      "selfDestructOutEth": "0",
       "sender": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
       "spotPrice": 1,
       "symbol": "DAI",
       "timestamp": 1572720361,
       "totalIn": "0",
-      "totalInEth": "0",
       "totalOut": "7000000000000000000000",
-      "totalOutEth": "7000",
       "totalOutLessGas": "7000000000000000000000",
-      "totalOutLessGasEth": "7000",
       "transactionHash": "0x1cdbe0fcca2ee3f9e4504f25e6f2a485835caa920496d20b10fa6241cbfdb124",
       "transactionIndex": 152
     }

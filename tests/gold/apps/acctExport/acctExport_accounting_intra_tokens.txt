@@ -1,4 +1,4 @@
-chifra export  0x6aED588ca2052CCFC907Db8c24dF4B7B95A29A5E --max_records 3 --first_record 683 --accounting --fmt json
+chifra export  0x6aED588ca2052CCFC907Db8c24dF4B7B95A29A5E --max_records 3 --first_record 683 --accounting --fmt json --output accounting_intra_tokens_out.file
 TEST[DATE|TIME] Addrs:  [0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e]
 TEST[DATE|TIME] Accounting:  true
 TEST[DATE|TIME] FirstRecord:  683
@@ -6,15 +6,7 @@ TEST[DATE|TIME] MaxRecords:  3
 TEST[DATE|TIME] OutputFn:  accounting_intra_tokens_out.file
 TEST[DATE|TIME] Caps:  cache,decache,ether
 TEST[DATE|TIME] Format:  json
-{ "outputFilename": "--output_filename--" }
-INFO[DATE|TIME] ------------------------------------------------------------
-INFO[DATE|TIME] Contexts (3)
-INFO[DATE|TIME] 014933657-00302:   14933657   14933657    14933657 first-same
-INFO[DATE|TIME] 014933657-00303:   14933657   14933657    14933657 same-same
-INFO[DATE|TIME] 014933657-00304:   14933657   14933657    14933657 same-last
-TEST[DATE|TIME] Start of trial balance report
-TEST[DATE|TIME] Needs correction for eth
-TEST[DATE|TIME] Needs correction for eth
+INFO[DATE|TIME] { "outputFilename": "--output_filename--" }
 TEST[DATE|TIME] =========================================================
 TEST[DATE|TIME] ===> PRICING FOR 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) using Uniswap
 TEST[DATE|TIME] =========================================================
@@ -703,7 +695,7 @@ Results in ./accounting_intra_tokens_out.file
         },
         "name": "transfer",
         "outputs": {
-          "val_0": null
+          "ret_0": null
         }
       },
       "blockHash": "0xe83164313d56dd57fd718123c311cd65d58f22761899bfb1710c77e2d7f67878",
@@ -756,8 +748,6 @@ Results in ./accounting_intra_tokens_out.file
           "amountNet": "-9143915636239443",
           "amountOut": "0",
           "asset": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
-          "symbol": "WEI",
-          "assetType": "trace-eth",
           "begBal": "568302725253886882348",
           "begBalDiff": "0",
           "blockNumber": 14933657,
@@ -777,8 +767,7 @@ Results in ./accounting_intra_tokens_out.file
           "minerNephewRewardIn": "0",
           "minerTxFeeIn": "0",
           "minerUncleRewardIn": "0",
-          "prefundIn": "0",
-          "prevAppBlk": 14933656,
+              "prefundIn": "0",
           "prevBal": "568302725253886882348",
           "priceSource": "uniswap",
           "recipient": "0xc011a73ee8576fb46f5e1c5751ca3b9fe0af2a6f",
@@ -800,8 +789,6 @@ Results in ./accounting_intra_tokens_out.file
           "amountNet": "-73541760990000000000",
           "amountOut": "73541760990000000000",
           "asset": "0xc011a73ee8576fb46f5e1c5751ca3b9fe0af2a6f",
-          "symbol": "SNX",
-          "assetType": "token",
           "begBal": "11321830602990000000000",
           "begBalDiff": "0",
           "blockNumber": 14933657,
@@ -821,8 +808,7 @@ Results in ./accounting_intra_tokens_out.file
           "minerNephewRewardIn": "0",
           "minerTxFeeIn": "0",
           "minerUncleRewardIn": "0",
-          "prefundIn": "0",
-          "prevAppBlk": 14933656,
+              "prefundIn": "0",
           "prevBal": "11321830602990000000000",
           "priceSource": "uniswap",
           "recipient": "0xaca096d2e6492d7380c5d8e70d90e13eecc72dd4",
@@ -830,7 +816,7 @@ Results in ./accounting_intra_tokens_out.file
           "selfDestructIn": "0",
           "selfDestructOut": "0",
           "sender": "0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e",
-          "spotPrice": 1179147.5857167975,
+          "spotPrice": 2.75328,
           "timestamp": 1654793734,
           "totalIn": "0",
           "totalOut": "73541760990000000000",
@@ -907,8 +893,6 @@ Results in ./accounting_intra_tokens_out.file
           "amountNet": "-3630819456680952",
           "amountOut": "0",
           "asset": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
-          "symbol": "WEI",
-          "assetType": "trace-eth",
           "begBal": "568293581338250642905",
           "begBalDiff": "0",
           "blockNumber": 14933657,
@@ -928,8 +912,7 @@ Results in ./accounting_intra_tokens_out.file
           "minerNephewRewardIn": "0",
           "minerTxFeeIn": "0",
           "minerUncleRewardIn": "0",
-          "prefundIn": "0",
-          "prevAppBlk": 14933657,
+              "prefundIn": "0",
           "prevBal": "568293581338250642905",
           "priceSource": "uniswap",
           "recipient": "0x0bc529c00c6401aef6d220be8c6ea1667f6ad93e",
@@ -937,7 +920,7 @@ Results in ./accounting_intra_tokens_out.file
           "selfDestructIn": "0",
           "selfDestructOut": "0",
           "sender": "0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e",
-          "spotPrice": 1801.80999,
+          "spotPrice": 1801.80998660384,
           "timestamp": 1654793734,
           "totalIn": "0",
           "totalOut": "3630819456680952",
@@ -951,8 +934,6 @@ Results in ./accounting_intra_tokens_out.file
           "amountNet": "-304442430000000000",
           "amountOut": "304442430000000000",
           "asset": "0x0bc529c00c6401aef6d220be8c6ea1667f6ad93e",
-          "symbol": "YFI",
-          "assetType": "token",
           "begBal": "18255476410000000000",
           "begBalDiff": "0",
           "blockNumber": 14933657,
@@ -972,8 +953,7 @@ Results in ./accounting_intra_tokens_out.file
           "minerNephewRewardIn": "0",
           "minerTxFeeIn": "0",
           "minerUncleRewardIn": "0",
-          "prefundIn": "0",
-          "prevAppBlk": 14933656,
+              "prefundIn": "0",
           "prevBal": "18255476410000000000",
           "priceSource": "uniswap",
           "recipient": "0xaca096d2e6492d7380c5d8e70d90e13eecc72dd4",
@@ -981,7 +961,8 @@ Results in ./accounting_intra_tokens_out.file
           "selfDestructIn": "0",
           "selfDestructOut": "0",
           "sender": "0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e",
-          "spotPrice": 7616.14451,
+          "spotPrice": 426.2680707888668,
+          "symbol": "YFI",
           "timestamp": 1654793734,
           "totalIn": "0",
           "totalOut": "304442430000000000",
@@ -1058,8 +1039,6 @@ Results in ./accounting_intra_tokens_out.file
           "amountNet": "-5687415285765885",
           "amountOut": "0",
           "asset": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
-          "symbol": "WEI",
-          "assetType": "trace-eth",
           "begBal": "568289950518793961953",
           "begBalDiff": "0",
           "blockNumber": 14933657,
@@ -1079,8 +1058,7 @@ Results in ./accounting_intra_tokens_out.file
           "minerNephewRewardIn": "0",
           "minerTxFeeIn": "0",
           "minerUncleRewardIn": "0",
-          "prefundIn": "0",
-          "prevAppBlk": 14933657,
+              "prefundIn": "0",
           "prevBal": "568289950518793961953",
           "priceSource": "uniswap",
           "recipient": "0x3506424f91fd33084466f402d5d97f05f8e3b4af",
@@ -1088,7 +1066,8 @@ Results in ./accounting_intra_tokens_out.file
           "selfDestructIn": "0",
           "selfDestructOut": "0",
           "sender": "0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e",
-          "spotPrice": 1801.80999,
+          "spotPrice": 1801.80998660384,
+          "symbol": "WEI",
           "timestamp": 1654793734,
           "totalIn": "0",
           "totalOut": "5687415285765885",
@@ -1102,8 +1081,6 @@ Results in ./accounting_intra_tokens_out.file
           "amountNet": "-312679827610000000000",
           "amountOut": "312679827610000000000",
           "asset": "0x3506424f91fd33084466f402d5d97f05f8e3b4af",
-          "symbol": "0x3506",
-          "assetType": "token",
           "begBal": "791497378854640000000000",
           "begBalDiff": "0",
           "blockNumber": 14933657,
@@ -1123,8 +1100,7 @@ Results in ./accounting_intra_tokens_out.file
           "minerNephewRewardIn": "0",
           "minerTxFeeIn": "0",
           "minerUncleRewardIn": "0",
-          "prefundIn": "0",
-          "prevAppBlk": 14933656,
+              "prefundIn": "0",
           "prevBal": "791497378854640000000000",
           "priceSource": "uniswap",
           "recipient": "0xcc34cc875d2d052f5b1c19652b5e71d6f90c7f7d",
@@ -1133,6 +1109,7 @@ Results in ./accounting_intra_tokens_out.file
           "selfDestructOut": "0",
           "sender": "0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e",
           "spotPrice": 0.11947,
+          "symbol": "CHZ",
           "timestamp": 1654793734,
           "totalIn": "0",
           "totalOut": "312679827610000000000",
@@ -1148,5 +1125,15 @@ Results in ./accounting_intra_tokens_out.file
       "type": "0x2",
       "value": "0"
     }
-  ]
+  ],
+  "meta": {
+    "client": "0xdeadbeef",
+    "finalized": "0xdeadbeef",
+    "staging": "0xdeadbeef",
+    "ripe": "0xdeadbeef",
+    "unripe": "0xdeadbeef",
+    "chainId": 1,
+    "networkId": 1,
+    "chain": "mainnet"
+  }
 }

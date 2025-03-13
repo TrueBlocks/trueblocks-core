@@ -8,8 +8,6 @@ TEST[DATE|TIME] Caps:  cache,decache,ether
 TEST[DATE|TIME] Format:  txt
 TEST[DATE|TIME] Block 13 is prior to deployment (3684349) of Maker. No fallback pricing method
 TEST[DATE|TIME] ===================================================
-TEST[DATE|TIME] ====> eth
-TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] Previous:               12
 TEST[DATE|TIME] Current:                13
 TEST[DATE|TIME] Next:                   22
@@ -18,7 +16,7 @@ TEST[DATE|TIME] sender:                 0x0000000000000000000000000000004d696e65
 TEST[DATE|TIME] asset:                  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
 TEST[DATE|TIME] hash:                   0x0000000000000000000000000000000000000000000000000000000000000000
 TEST[DATE|TIME] timestamp:              1438270158
-TEST[DATE|TIME] blockNumber:            13.99999
+TEST[DATE|TIME] blockNumber:            13.99999.0
 TEST[DATE|TIME] priceSource:            0 (eth-not-priced-pre-maker)
 TEST[DATE|TIME] --------------------------------------------------- 
 TEST[DATE|TIME] Trial balance:
@@ -38,8 +36,6 @@ TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] Block 22 is prior to deployment (3684349) of Maker. No fallback pricing method
 TEST[DATE|TIME] ===================================================
-TEST[DATE|TIME] ====> eth
-TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] Previous:               13
 TEST[DATE|TIME] Current:                22
 TEST[DATE|TIME] Next:                   37
@@ -48,7 +44,7 @@ TEST[DATE|TIME] sender:                 0x0000000000000000000000000000004d696e65
 TEST[DATE|TIME] asset:                  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
 TEST[DATE|TIME] hash:                   0x0000000000000000000000000000000000000000000000000000000000000000
 TEST[DATE|TIME] timestamp:              1438270204
-TEST[DATE|TIME] blockNumber:            22.99999
+TEST[DATE|TIME] blockNumber:            22.99999.0
 TEST[DATE|TIME] priceSource:            0 (eth-not-priced-pre-maker)
 TEST[DATE|TIME] --------------------------------------------------- 
 TEST[DATE|TIME] Trial balance:
@@ -68,8 +64,6 @@ TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] Block 37 is prior to deployment (3684349) of Maker. No fallback pricing method
 TEST[DATE|TIME] ===================================================
-TEST[DATE|TIME] ====> eth
-TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] Previous:               22
 TEST[DATE|TIME] Current:                37
 TEST[DATE|TIME] Next:                   39
@@ -78,7 +72,7 @@ TEST[DATE|TIME] sender:                 0x000000000000000000000000000000556e636c
 TEST[DATE|TIME] asset:                  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
 TEST[DATE|TIME] hash:                   0x0000000000000000000000000000000000000000000000000000000000000000
 TEST[DATE|TIME] timestamp:              1438270267
-TEST[DATE|TIME] blockNumber:            37.99998
+TEST[DATE|TIME] blockNumber:            37.99998.0
 TEST[DATE|TIME] priceSource:            0 (eth-not-priced-pre-maker)
 TEST[DATE|TIME] --------------------------------------------------- 
 TEST[DATE|TIME] Trial balance:
@@ -98,8 +92,6 @@ TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] Block 39 is prior to deployment (3684349) of Maker. No fallback pricing method
 TEST[DATE|TIME] ===================================================
-TEST[DATE|TIME] ====> eth
-TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] Previous:               37
 TEST[DATE|TIME] Current:                39
 TEST[DATE|TIME] Next:                   43
@@ -108,7 +100,7 @@ TEST[DATE|TIME] sender:                 0x0000000000000000000000000000004d696e65
 TEST[DATE|TIME] asset:                  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
 TEST[DATE|TIME] hash:                   0x0000000000000000000000000000000000000000000000000000000000000000
 TEST[DATE|TIME] timestamp:              1438270272
-TEST[DATE|TIME] blockNumber:            39.99999
+TEST[DATE|TIME] blockNumber:            39.99999.0
 TEST[DATE|TIME] priceSource:            0 (eth-not-priced-pre-maker)
 TEST[DATE|TIME] --------------------------------------------------- 
 TEST[DATE|TIME] Trial balance:
@@ -128,8 +120,6 @@ TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] Block 43 is prior to deployment (3684349) of Maker. No fallback pricing method
 TEST[DATE|TIME] ===================================================
-TEST[DATE|TIME] ====> eth
-TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] Previous:               39
 TEST[DATE|TIME] Current:                43
 TEST[DATE|TIME] Next:                   53
@@ -138,7 +128,7 @@ TEST[DATE|TIME] sender:                 0x0000000000000000000000000000004d696e65
 TEST[DATE|TIME] asset:                  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
 TEST[DATE|TIME] hash:                   0x0000000000000000000000000000000000000000000000000000000000000000
 TEST[DATE|TIME] timestamp:              1438270279
-TEST[DATE|TIME] blockNumber:            43.99999
+TEST[DATE|TIME] blockNumber:            43.99999.0
 TEST[DATE|TIME] priceSource:            0 (eth-not-priced-pre-maker)
 TEST[DATE|TIME] --------------------------------------------------- 
 TEST[DATE|TIME] Trial balance:
@@ -158,8 +148,6 @@ TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] Block 53 is prior to deployment (3684349) of Maker. No fallback pricing method
 TEST[DATE|TIME] ===================================================
-TEST[DATE|TIME] ====> eth
-TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] Previous:               43
 TEST[DATE|TIME] Current:                53
 TEST[DATE|TIME] Next:                   55
@@ -168,7 +156,7 @@ TEST[DATE|TIME] sender:                 0x0000000000000000000000000000004d696e65
 TEST[DATE|TIME] asset:                  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
 TEST[DATE|TIME] hash:                   0x0000000000000000000000000000000000000000000000000000000000000000
 TEST[DATE|TIME] timestamp:              1438270312
-TEST[DATE|TIME] blockNumber:            53.99999
+TEST[DATE|TIME] blockNumber:            53.99999.0
 TEST[DATE|TIME] priceSource:            0 (eth-not-priced-pre-maker)
 TEST[DATE|TIME] --------------------------------------------------- 
 TEST[DATE|TIME] Trial balance:
@@ -188,8 +176,6 @@ TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] Block 55 is prior to deployment (3684349) of Maker. No fallback pricing method
 TEST[DATE|TIME] ===================================================
-TEST[DATE|TIME] ====> eth
-TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] Previous:               53
 TEST[DATE|TIME] Current:                55
 TEST[DATE|TIME] Next:                   64
@@ -198,7 +184,7 @@ TEST[DATE|TIME] sender:                 0x000000000000000000000000000000556e636c
 TEST[DATE|TIME] asset:                  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
 TEST[DATE|TIME] hash:                   0x0000000000000000000000000000000000000000000000000000000000000000
 TEST[DATE|TIME] timestamp:              1438270320
-TEST[DATE|TIME] blockNumber:            55.99998
+TEST[DATE|TIME] blockNumber:            55.99998.0
 TEST[DATE|TIME] priceSource:            0 (eth-not-priced-pre-maker)
 TEST[DATE|TIME] --------------------------------------------------- 
 TEST[DATE|TIME] Trial balance:
@@ -218,8 +204,6 @@ TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] Block 64 is prior to deployment (3684349) of Maker. No fallback pricing method
 TEST[DATE|TIME] ===================================================
-TEST[DATE|TIME] ====> eth
-TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] Previous:               55
 TEST[DATE|TIME] Current:                64
 TEST[DATE|TIME] Next:                   67
@@ -228,7 +212,7 @@ TEST[DATE|TIME] sender:                 0x0000000000000000000000000000004d696e65
 TEST[DATE|TIME] asset:                  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
 TEST[DATE|TIME] hash:                   0x0000000000000000000000000000000000000000000000000000000000000000
 TEST[DATE|TIME] timestamp:              1438270345
-TEST[DATE|TIME] blockNumber:            64.99999
+TEST[DATE|TIME] blockNumber:            64.99999.0
 TEST[DATE|TIME] priceSource:            0 (eth-not-priced-pre-maker)
 TEST[DATE|TIME] --------------------------------------------------- 
 TEST[DATE|TIME] Trial balance:
@@ -248,8 +232,6 @@ TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] Block 67 is prior to deployment (3684349) of Maker. No fallback pricing method
 TEST[DATE|TIME] ===================================================
-TEST[DATE|TIME] ====> eth
-TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] Previous:               64
 TEST[DATE|TIME] Current:                67
 TEST[DATE|TIME] Next:                   78
@@ -258,7 +240,7 @@ TEST[DATE|TIME] sender:                 0x0000000000000000000000000000004d696e65
 TEST[DATE|TIME] asset:                  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
 TEST[DATE|TIME] hash:                   0x0000000000000000000000000000000000000000000000000000000000000000
 TEST[DATE|TIME] timestamp:              1438270366
-TEST[DATE|TIME] blockNumber:            67.99999
+TEST[DATE|TIME] blockNumber:            67.99999.0
 TEST[DATE|TIME] priceSource:            0 (eth-not-priced-pre-maker)
 TEST[DATE|TIME] --------------------------------------------------- 
 TEST[DATE|TIME] Trial balance:
@@ -278,8 +260,6 @@ TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] Block 78 is prior to deployment (3684349) of Maker. No fallback pricing method
 TEST[DATE|TIME] ===================================================
-TEST[DATE|TIME] ====> eth
-TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] Previous:               67
 TEST[DATE|TIME] Current:                78
 TEST[DATE|TIME] Next:                   84
@@ -288,7 +268,7 @@ TEST[DATE|TIME] sender:                 0x0000000000000000000000000000004d696e65
 TEST[DATE|TIME] asset:                  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
 TEST[DATE|TIME] hash:                   0x0000000000000000000000000000000000000000000000000000000000000000
 TEST[DATE|TIME] timestamp:              1438270389
-TEST[DATE|TIME] blockNumber:            78.99999
+TEST[DATE|TIME] blockNumber:            78.99999.0
 TEST[DATE|TIME] priceSource:            0 (eth-not-priced-pre-maker)
 TEST[DATE|TIME] --------------------------------------------------- 
 TEST[DATE|TIME] Trial balance:
@@ -309,8 +289,6 @@ TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] Block 84 is prior to deployment (3684349) of Maker. No fallback pricing method
 TEST[DATE|TIME] ===================================================
-TEST[DATE|TIME] ====> eth
-TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] Previous:               78
 TEST[DATE|TIME] Current:                84
 TEST[DATE|TIME] Next:                   90
@@ -319,7 +297,7 @@ TEST[DATE|TIME] sender:                 0x0000000000000000000000000000004d696e65
 TEST[DATE|TIME] asset:                  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
 TEST[DATE|TIME] hash:                   0x0000000000000000000000000000000000000000000000000000000000000000
 TEST[DATE|TIME] timestamp:              1438270408
-TEST[DATE|TIME] blockNumber:            84.99999
+TEST[DATE|TIME] blockNumber:            84.99999.0
 TEST[DATE|TIME] priceSource:            0 (eth-not-priced-pre-maker)
 TEST[DATE|TIME] --------------------------------------------------- 
 TEST[DATE|TIME] Trial balance:
@@ -339,8 +317,6 @@ TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] Block 90 is prior to deployment (3684349) of Maker. No fallback pricing method
 TEST[DATE|TIME] ===================================================
-TEST[DATE|TIME] ====> eth
-TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] Previous:               84
 TEST[DATE|TIME] Current:                90
 TEST[DATE|TIME] Next:                   94
@@ -349,7 +325,7 @@ TEST[DATE|TIME] sender:                 0x0000000000000000000000000000004d696e65
 TEST[DATE|TIME] asset:                  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
 TEST[DATE|TIME] hash:                   0x0000000000000000000000000000000000000000000000000000000000000000
 TEST[DATE|TIME] timestamp:              1438270422
-TEST[DATE|TIME] blockNumber:            90.99999
+TEST[DATE|TIME] blockNumber:            90.99999.0
 TEST[DATE|TIME] priceSource:            0 (eth-not-priced-pre-maker)
 TEST[DATE|TIME] --------------------------------------------------- 
 TEST[DATE|TIME] Trial balance:
@@ -369,8 +345,6 @@ TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] Block 94 is prior to deployment (3684349) of Maker. No fallback pricing method
 TEST[DATE|TIME] ===================================================
-TEST[DATE|TIME] ====> eth
-TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] Previous:               90
 TEST[DATE|TIME] Current:                94
 TEST[DATE|TIME] Next:                   95
@@ -379,7 +353,7 @@ TEST[DATE|TIME] sender:                 0x0000000000000000000000000000004d696e65
 TEST[DATE|TIME] asset:                  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
 TEST[DATE|TIME] hash:                   0x0000000000000000000000000000000000000000000000000000000000000000
 TEST[DATE|TIME] timestamp:              1438270431
-TEST[DATE|TIME] blockNumber:            94.99999
+TEST[DATE|TIME] blockNumber:            94.99999.0
 TEST[DATE|TIME] priceSource:            0 (eth-not-priced-pre-maker)
 TEST[DATE|TIME] --------------------------------------------------- 
 TEST[DATE|TIME] Trial balance:
@@ -400,17 +374,17 @@ TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
 ----
 Results in ./accounting_to_cache_out.file
-blockNumber	transactionIndex	logIndex	transactionHash	timestamp	date	asset	symbol	decimals	spotPrice	priceSource	accountedFor	sender	recipient	begBal	amountNet	endBal	reconciled	totalIn	amountIn	internalIn	selfDestructIn	minerBaseRewardIn	minerNephewRewardIn	minerTxFeeIn	minerUncleRewardIn	prefundIn	totalOut	amountOut	internalOut	selfDestructOut	gasOut	totalOutLessGas	prevBal	begBalDiff	endBalDiff	endBalCalc	correctingReason
-13	99999	0	0x0000000000000000000000000000000000000000000000000000000000000000	1438270158	2015-07-30 15:29:18 UTC	0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee	WEI	18	0	eth-not-priced-pre-maker	0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c	0x0000000000000000000000000000004d696e6572	0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c	0	5000000000000000000	5000000000000000000	true	5000000000000000000	0	0	0	5000000000000000000	0	0	0	0	0	0	0	0	0	0	0	0	0	5000000000000000000	
-22	99999	0	0x0000000000000000000000000000000000000000000000000000000000000000	1438270204	2015-07-30 15:30:04 UTC	0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee	WEI	18	0	eth-not-priced-pre-maker	0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c	0x0000000000000000000000000000004d696e6572	0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c	5000000000000000000	5000000000000000000	10000000000000000000	true	5000000000000000000	0	0	0	5000000000000000000	0	0	0	0	0	0	0	0	0	0	5000000000000000000	0	0	10000000000000000000	
-37	99998	0	0x0000000000000000000000000000000000000000000000000000000000000000	1438270267	2015-07-30 15:31:07 UTC	0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee	WEI	18	0	eth-not-priced-pre-maker	0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c	0x000000000000000000000000000000556e636c65	0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c	10000000000000000000	3750000000000000000	13750000000000000000	true	3750000000000000000	0	0	0	0	0	0	3750000000000000000	0	0	0	0	0	0	0	10000000000000000000	0	0	13750000000000000000	
-39	99999	0	0x0000000000000000000000000000000000000000000000000000000000000000	1438270272	2015-07-30 15:31:12 UTC	0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee	WEI	18	0	eth-not-priced-pre-maker	0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c	0x0000000000000000000000000000004d696e6572	0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c	13750000000000000000	5000000000000000000	18750000000000000000	true	5000000000000000000	0	0	0	5000000000000000000	0	0	0	0	0	0	0	0	0	0	13750000000000000000	0	0	18750000000000000000	
-43	99999	0	0x0000000000000000000000000000000000000000000000000000000000000000	1438270279	2015-07-30 15:31:19 UTC	0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee	WEI	18	0	eth-not-priced-pre-maker	0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c	0x0000000000000000000000000000004d696e6572	0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c	18750000000000000000	5000000000000000000	23750000000000000000	true	5000000000000000000	0	0	0	5000000000000000000	0	0	0	0	0	0	0	0	0	0	18750000000000000000	0	0	23750000000000000000	
-53	99999	0	0x0000000000000000000000000000000000000000000000000000000000000000	1438270312	2015-07-30 15:31:52 UTC	0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee	WEI	18	0	eth-not-priced-pre-maker	0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c	0x0000000000000000000000000000004d696e6572	0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c	23750000000000000000	5000000000000000000	28750000000000000000	true	5000000000000000000	0	0	0	5000000000000000000	0	0	0	0	0	0	0	0	0	0	23750000000000000000	0	0	28750000000000000000	
-55	99998	0	0x0000000000000000000000000000000000000000000000000000000000000000	1438270320	2015-07-30 15:32:00 UTC	0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee	WEI	18	0	eth-not-priced-pre-maker	0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c	0x000000000000000000000000000000556e636c65	0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c	28750000000000000000	3750000000000000000	32500000000000000000	true	3750000000000000000	0	0	0	0	0	0	3750000000000000000	0	0	0	0	0	0	0	28750000000000000000	0	0	32500000000000000000	
-64	99999	0	0x0000000000000000000000000000000000000000000000000000000000000000	1438270345	2015-07-30 15:32:25 UTC	0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee	WEI	18	0	eth-not-priced-pre-maker	0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c	0x0000000000000000000000000000004d696e6572	0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c	32500000000000000000	5000000000000000000	37500000000000000000	true	5000000000000000000	0	0	0	5000000000000000000	0	0	0	0	0	0	0	0	0	0	32500000000000000000	0	0	37500000000000000000	
-67	99999	0	0x0000000000000000000000000000000000000000000000000000000000000000	1438270366	2015-07-30 15:32:46 UTC	0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee	WEI	18	0	eth-not-priced-pre-maker	0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c	0x0000000000000000000000000000004d696e6572	0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c	37500000000000000000	5000000000000000000	42500000000000000000	true	5000000000000000000	0	0	0	5000000000000000000	0	0	0	0	0	0	0	0	0	0	37500000000000000000	0	0	42500000000000000000	
-78	99999	0	0x0000000000000000000000000000000000000000000000000000000000000000	1438270389	2015-07-30 15:33:09 UTC	0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee	WEI	18	0	eth-not-priced-pre-maker	0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c	0x0000000000000000000000000000004d696e6572	0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c	42500000000000000000	5156250000000000000	47656250000000000000	true	5156250000000000000	0	0	0	5000000000000000000	156250000000000000	0	0	0	0	0	0	0	0	0	42500000000000000000	0	0	47656250000000000000	
-84	99999	0	0x0000000000000000000000000000000000000000000000000000000000000000	1438270408	2015-07-30 15:33:28 UTC	0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee	WEI	18	0	eth-not-priced-pre-maker	0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c	0x0000000000000000000000000000004d696e6572	0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c	47656250000000000000	5000000000000000000	52656250000000000000	true	5000000000000000000	0	0	0	5000000000000000000	0	0	0	0	0	0	0	0	0	0	47656250000000000000	0	0	52656250000000000000	
-90	99999	0	0x0000000000000000000000000000000000000000000000000000000000000000	1438270422	2015-07-30 15:33:42 UTC	0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee	WEI	18	0	eth-not-priced-pre-maker	0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c	0x0000000000000000000000000000004d696e6572	0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c	52656250000000000000	5000000000000000000	57656250000000000000	true	5000000000000000000	0	0	0	5000000000000000000	0	0	0	0	0	0	0	0	0	0	52656250000000000000	0	0	57656250000000000000	
-94	99999	0	0x0000000000000000000000000000000000000000000000000000000000000000	1438270431	2015-07-30 15:33:51 UTC	0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee	WEI	18	0	eth-not-priced-pre-maker	0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c	0x0000000000000000000000000000004d696e6572	0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c	57656250000000000000	5156250000000000000	62812500000000000000	true	5156250000000000000	0	0	0	5000000000000000000	156250000000000000	0	0	0	0	0	0	0	0	0	57656250000000000000	0	0	62812500000000000000	
+blockNumber	transactionIndex	logIndex	transactionHash	timestamp	date	asset	assetName	symbol	decimals	spotPrice	priceSource	accountedFor	accountedForName	sender	recipient	begBal	amountNet	endBal	reconciled	totalIn	amountIn	internalIn	selfDestructIn	minerBaseRewardIn	minerNephewRewardIn	minerTxFeeIn	minerUncleRewardIn	prefundIn	totalOut	amountOut	internalOut	selfDestructOut	gasOut	totalOutLessGas	prevBal	begBalDiff	endBalDiff	endBalCalc	correctingReason
+13	99999	0	0x0000000000000000000000000000000000000000000000000000000000000000	1438270158	2015-07-30 15:29:18 UTC	0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee	ETH	WEI	18	0	eth-not-priced-pre-maker	0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c	Miner_0010_505	0x0000000000000000000000000000004d696e6572	0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c	0	5000000000000000000	5000000000000000000	true	5000000000000000000	0	0	0	5000000000000000000	0	0	0	0	0	0	0	0	0	0	0	0	0	5000000000000000000	
+22	99999	0	0x0000000000000000000000000000000000000000000000000000000000000000	1438270204	2015-07-30 15:30:04 UTC	0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee	ETH	WEI	18	0	eth-not-priced-pre-maker	0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c	Miner_0010_505	0x0000000000000000000000000000004d696e6572	0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c	5000000000000000000	5000000000000000000	10000000000000000000	true	5000000000000000000	0	0	0	5000000000000000000	0	0	0	0	0	0	0	0	0	0	5000000000000000000	0	0	10000000000000000000	
+37	99998	0	0x0000000000000000000000000000000000000000000000000000000000000000	1438270267	2015-07-30 15:31:07 UTC	0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee	ETH	WEI	18	0	eth-not-priced-pre-maker	0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c	Miner_0010_505	0x000000000000000000000000000000556e636c65	0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c	10000000000000000000	3750000000000000000	13750000000000000000	true	3750000000000000000	0	0	0	0	0	0	3750000000000000000	0	0	0	0	0	0	0	10000000000000000000	0	0	13750000000000000000	
+39	99999	0	0x0000000000000000000000000000000000000000000000000000000000000000	1438270272	2015-07-30 15:31:12 UTC	0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee	ETH	WEI	18	0	eth-not-priced-pre-maker	0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c	Miner_0010_505	0x0000000000000000000000000000004d696e6572	0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c	13750000000000000000	5000000000000000000	18750000000000000000	true	5000000000000000000	0	0	0	5000000000000000000	0	0	0	0	0	0	0	0	0	0	13750000000000000000	0	0	18750000000000000000	
+43	99999	0	0x0000000000000000000000000000000000000000000000000000000000000000	1438270279	2015-07-30 15:31:19 UTC	0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee	ETH	WEI	18	0	eth-not-priced-pre-maker	0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c	Miner_0010_505	0x0000000000000000000000000000004d696e6572	0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c	18750000000000000000	5000000000000000000	23750000000000000000	true	5000000000000000000	0	0	0	5000000000000000000	0	0	0	0	0	0	0	0	0	0	18750000000000000000	0	0	23750000000000000000	
+53	99999	0	0x0000000000000000000000000000000000000000000000000000000000000000	1438270312	2015-07-30 15:31:52 UTC	0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee	ETH	WEI	18	0	eth-not-priced-pre-maker	0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c	Miner_0010_505	0x0000000000000000000000000000004d696e6572	0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c	23750000000000000000	5000000000000000000	28750000000000000000	true	5000000000000000000	0	0	0	5000000000000000000	0	0	0	0	0	0	0	0	0	0	23750000000000000000	0	0	28750000000000000000	
+55	99998	0	0x0000000000000000000000000000000000000000000000000000000000000000	1438270320	2015-07-30 15:32:00 UTC	0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee	ETH	WEI	18	0	eth-not-priced-pre-maker	0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c	Miner_0010_505	0x000000000000000000000000000000556e636c65	0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c	28750000000000000000	3750000000000000000	32500000000000000000	true	3750000000000000000	0	0	0	0	0	0	3750000000000000000	0	0	0	0	0	0	0	28750000000000000000	0	0	32500000000000000000	
+64	99999	0	0x0000000000000000000000000000000000000000000000000000000000000000	1438270345	2015-07-30 15:32:25 UTC	0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee	ETH	WEI	18	0	eth-not-priced-pre-maker	0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c	Miner_0010_505	0x0000000000000000000000000000004d696e6572	0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c	32500000000000000000	5000000000000000000	37500000000000000000	true	5000000000000000000	0	0	0	5000000000000000000	0	0	0	0	0	0	0	0	0	0	32500000000000000000	0	0	37500000000000000000	
+67	99999	0	0x0000000000000000000000000000000000000000000000000000000000000000	1438270366	2015-07-30 15:32:46 UTC	0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee	ETH	WEI	18	0	eth-not-priced-pre-maker	0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c	Miner_0010_505	0x0000000000000000000000000000004d696e6572	0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c	37500000000000000000	5000000000000000000	42500000000000000000	true	5000000000000000000	0	0	0	5000000000000000000	0	0	0	0	0	0	0	0	0	0	37500000000000000000	0	0	42500000000000000000	
+78	99999	0	0x0000000000000000000000000000000000000000000000000000000000000000	1438270389	2015-07-30 15:33:09 UTC	0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee	ETH	WEI	18	0	eth-not-priced-pre-maker	0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c	Miner_0010_505	0x0000000000000000000000000000004d696e6572	0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c	42500000000000000000	5156250000000000000	47656250000000000000	true	5156250000000000000	0	0	0	5000000000000000000	156250000000000000	0	0	0	0	0	0	0	0	0	42500000000000000000	0	0	47656250000000000000	
+84	99999	0	0x0000000000000000000000000000000000000000000000000000000000000000	1438270408	2015-07-30 15:33:28 UTC	0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee	ETH	WEI	18	0	eth-not-priced-pre-maker	0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c	Miner_0010_505	0x0000000000000000000000000000004d696e6572	0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c	47656250000000000000	5000000000000000000	52656250000000000000	true	5000000000000000000	0	0	0	5000000000000000000	0	0	0	0	0	0	0	0	0	0	47656250000000000000	0	0	52656250000000000000	
+90	99999	0	0x0000000000000000000000000000000000000000000000000000000000000000	1438270422	2015-07-30 15:33:42 UTC	0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee	ETH	WEI	18	0	eth-not-priced-pre-maker	0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c	Miner_0010_505	0x0000000000000000000000000000004d696e6572	0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c	52656250000000000000	5000000000000000000	57656250000000000000	true	5000000000000000000	0	0	0	5000000000000000000	0	0	0	0	0	0	0	0	0	0	52656250000000000000	0	0	57656250000000000000	
+94	99999	0	0x0000000000000000000000000000000000000000000000000000000000000000	1438270431	2015-07-30 15:33:51 UTC	0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee	ETH	WEI	18	0	eth-not-priced-pre-maker	0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c	Miner_0010_505	0x0000000000000000000000000000004d696e6572	0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c	57656250000000000000	5156250000000000000	62812500000000000000	true	5156250000000000000	0	0	0	5000000000000000000	156250000000000000	0	0	0	0	0	0	0	0	0	57656250000000000000	0	0	62812500000000000000	

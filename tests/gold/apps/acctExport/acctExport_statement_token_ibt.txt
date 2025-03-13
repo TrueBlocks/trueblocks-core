@@ -1,24 +1,21 @@
-chifra export  0xec3ef464bf821c3b10a18adf9ac7177a628e87cc --accounting --statements --first_block 7005600 --last_block 7005780 --ether --fmt json --output statement_token_ibt_out.file
+chifra export  0xec3ef464bf821c3b10a18adf9ac7177a628e87cc --accounting --statements --first_block 7005600 --last_block 7005780 --fmt json --output statement_token_ibt_out.file
 TEST[DATE|TIME] Addrs:  [0xec3ef464bf821c3b10a18adf9ac7177a628e87cc]
 TEST[DATE|TIME] Accounting:  true
 TEST[DATE|TIME] Statements:  true
 TEST[DATE|TIME] FirstBlock:  7005600
 TEST[DATE|TIME] LastBlock:  7005780
-TEST[DATE|TIME] Ether:  true
 TEST[DATE|TIME] OutputFn:  statement_token_ibt_out.file
 TEST[DATE|TIME] Caps:  cache,decache,ether
 TEST[DATE|TIME] Format:  json
 INFO[DATE|TIME] { "outputFilename": "--output_filename--" }
 TEST[DATE|TIME] Block 7005646 is prior to deployment (10000835) of Uniswap V2. No other source for tokens prior to UniSwap
 TEST[DATE|TIME] ===================================================
-TEST[DATE|TIME] ====> token
-TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] Previous:               7005645
 TEST[DATE|TIME] Current:                7005646
 TEST[DATE|TIME] Next:                   7005654
 TEST[DATE|TIME] accountedFor:           0xec3ef464bf821c3b10a18adf9ac7177a628e87cc
 TEST[DATE|TIME] sender:                 0x78f6e9dd3ab00c5c43bfb58d8d23b6149db13237  ==>  0xec3ef464bf821c3b10a18adf9ac7177a628e87cc
-TEST[DATE|TIME] asset:                  0x5c2c629feefcc07b338e97e39c73d2db33a85548 (0x5c2c) decimals: 18
+TEST[DATE|TIME] asset:                  0x5c2c629feefcc07b338e97e39c73d2db33a85548 (OCC1) decimals: 18
 TEST[DATE|TIME] hash:                   0xea8b6bf39f8fe343ad1fbb95ad9a2dd695bee9de33d1ccfb79552fc0bf40b92f
 TEST[DATE|TIME] timestamp:              1546554524
 TEST[DATE|TIME] blockNumber:            7005646.182.42
@@ -41,14 +38,12 @@ TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] Block 7005654 is prior to deployment (10000835) of Uniswap V2. No other source for tokens prior to UniSwap
 TEST[DATE|TIME] ===================================================
-TEST[DATE|TIME] ====> token
-TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] Previous:               7005646
 TEST[DATE|TIME] Current:                7005654
 TEST[DATE|TIME] Next:                   7005662
 TEST[DATE|TIME] accountedFor:           0xec3ef464bf821c3b10a18adf9ac7177a628e87cc
 TEST[DATE|TIME] sender:                 0x78f6e9dd3ab00c5c43bfb58d8d23b6149db13237  ==>  0xec3ef464bf821c3b10a18adf9ac7177a628e87cc
-TEST[DATE|TIME] asset:                  0x5c2c629feefcc07b338e97e39c73d2db33a85548 (0x5c2c) decimals: 18
+TEST[DATE|TIME] asset:                  0x5c2c629feefcc07b338e97e39c73d2db33a85548 (OCC1) decimals: 18
 TEST[DATE|TIME] hash:                   0x234186f8fab2fb4ca1222031ad6d0b41d5a55b3d0e934fb2b47059f7a394433f
 TEST[DATE|TIME] timestamp:              1546554605
 TEST[DATE|TIME] blockNumber:            7005654.54.32
@@ -71,14 +66,12 @@ TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] Block 7005662 is prior to deployment (10000835) of Uniswap V2. No other source for tokens prior to UniSwap
 TEST[DATE|TIME] ===================================================
-TEST[DATE|TIME] ====> token
-TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] Previous:               7005654
 TEST[DATE|TIME] Current:                7005662
 TEST[DATE|TIME] Next:                   7005737
 TEST[DATE|TIME] accountedFor:           0xec3ef464bf821c3b10a18adf9ac7177a628e87cc
 TEST[DATE|TIME] sender:                 0x78f6e9dd3ab00c5c43bfb58d8d23b6149db13237  ==>  0xec3ef464bf821c3b10a18adf9ac7177a628e87cc
-TEST[DATE|TIME] asset:                  0x5c2c629feefcc07b338e97e39c73d2db33a85548 (0x5c2c) decimals: 18
+TEST[DATE|TIME] asset:                  0x5c2c629feefcc07b338e97e39c73d2db33a85548 (OCC1) decimals: 18
 TEST[DATE|TIME] hash:                   0xfa8eef26c445913833a6ace11e27df3821598b9aeb4896eb41213999e89ece7a
 TEST[DATE|TIME] timestamp:              1546554763
 TEST[DATE|TIME] blockNumber:            7005662.5.5
@@ -99,28 +92,15 @@ TEST[DATE|TIME]    amountIn:            1377.663523
 TEST[DATE|TIME]    material:            true
 TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
-TEST[DATE|TIME] A possible nullTransfer
-TEST[DATE|TIME]   nLogs:             1
-TEST[DATE|TIME]     lotsOfLogs:      --> false
-TEST[DATE|TIME]   Sender.IsZero:     0x28adfa7a3ab67fb19410beabb1c1bf880fef0541 false
-TEST[DATE|TIME]   or Sender == To:   false
-TEST[DATE|TIME]     mayBeAirdrop:    --> false
-TEST[DATE|TIME]   EndBal-BegBal:     1
-TEST[DATE|TIME]   Material:          true
-TEST[DATE|TIME]     noBalanceChange: --> false
-TEST[DATE|TIME]   ---> Not a nullTransfer
-TEST[DATE|TIME] Needs correction for token transfer
 TEST[DATE|TIME] Correcting token transfer for unknown income or outflow
 TEST[DATE|TIME] Block 7005737 is prior to deployment (10000835) of Uniswap V2. No other source for tokens prior to UniSwap
-TEST[DATE|TIME] ===================================================
-TEST[DATE|TIME] ====> token
 TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] Previous:               7005662
 TEST[DATE|TIME] Current:                7005737
 TEST[DATE|TIME] Next:                   7005737
 TEST[DATE|TIME] accountedFor:           0xec3ef464bf821c3b10a18adf9ac7177a628e87cc
 TEST[DATE|TIME] sender:                 0x28adfa7a3ab67fb19410beabb1c1bf880fef0541  ==>  0xec3ef464bf821c3b10a18adf9ac7177a628e87cc
-TEST[DATE|TIME] asset:                  0x5c2c629feefcc07b338e97e39c73d2db33a85548 (0x5c2c) decimals: 18
+TEST[DATE|TIME] asset:                  0x5c2c629feefcc07b338e97e39c73d2db33a85548 (OCC1) decimals: 18
 TEST[DATE|TIME] hash:                   0x968d9ef3eee9d9526784622726cef4f23712dff17a7dc639f0a1ef79c8f89002
 TEST[DATE|TIME] timestamp:              1546555962
 TEST[DATE|TIME] blockNumber:            7005737.27.17
@@ -139,53 +119,43 @@ TEST[DATE|TIME]    rollingBalance:      0
 TEST[DATE|TIME] --------------------------------------------------- 
 TEST[DATE|TIME]    amountIn:            1787.395981
 TEST[DATE|TIME]    correctingOut:       -3016.109787
-TEST[DATE|TIME]    correctingReason:    endbal
+TEST[DATE|TIME]    correctingReason:    endbal-out
 TEST[DATE|TIME]    material:            true
 TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
-TEST[DATE|TIME] A possible nullTransfer
-TEST[DATE|TIME]   nLogs:             1
-TEST[DATE|TIME]     lotsOfLogs:      --> false
-TEST[DATE|TIME]   Sender.IsZero:     0x28adfa7a3ab67fb19410beabb1c1bf880fef0541 false
-TEST[DATE|TIME]   or Sender == To:   false
-TEST[DATE|TIME]     mayBeAirdrop:    --> false
-TEST[DATE|TIME]   EndBal-BegBal:     1
-TEST[DATE|TIME]   Material:          true
-TEST[DATE|TIME]     noBalanceChange: --> false
-TEST[DATE|TIME]   ---> Not a nullTransfer
-TEST[DATE|TIME] Needs correction for token transfer
+TEST[DATE|TIME] Correcting token transfer for unknown income or outflow
 TEST[DATE|TIME] Correcting token transfer for unknown income or outflow
 TEST[DATE|TIME] Block 7005737 is prior to deployment (10000835) of Uniswap V2. No other source for tokens prior to UniSwap
-TEST[DATE|TIME] ===================================================
-TEST[DATE|TIME] ====> token
 TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] Previous:               7005737
 TEST[DATE|TIME] Current:                7005737
 TEST[DATE|TIME] Next:                   7005738
 TEST[DATE|TIME] accountedFor:           0xec3ef464bf821c3b10a18adf9ac7177a628e87cc
 TEST[DATE|TIME] sender:                 0x28adfa7a3ab67fb19410beabb1c1bf880fef0541  ==>  0xec3ef464bf821c3b10a18adf9ac7177a628e87cc
-TEST[DATE|TIME] asset:                  0x5c2c629feefcc07b338e97e39c73d2db33a85548 (0x5c2c) decimals: 18
+TEST[DATE|TIME] asset:                  0x5c2c629feefcc07b338e97e39c73d2db33a85548 (OCC1) decimals: 18
 TEST[DATE|TIME] hash:                   0xff5bdd0900bdbcf80948e102c349a494ad5f409a1d27e4ea6199334cf3399cdf
 TEST[DATE|TIME] timestamp:              1546555962
 TEST[DATE|TIME] blockNumber:            7005737.30.20
 TEST[DATE|TIME] priceSource:            0 (token-not-priced-pre-uni)
 TEST[DATE|TIME] --------------------------------------------------- 
 TEST[DATE|TIME] Trial balance:
-TEST[DATE|TIME]    prevBal:             71040.040864
-TEST[DATE|TIME]    begBal:              71040.040864 (0)
-TEST[DATE|TIME]    totalIn:             3016.109787
-TEST[DATE|TIME]    totalOut:            -1787.395981
-TEST[DATE|TIME]    amountNet:           4803.505768
+TEST[DATE|TIME]    prevBal:             75843.546632
+TEST[DATE|TIME]    begBal:              71040.040864 (6032.219574)
+TEST[DATE|TIME]    totalIn:             6032.219574
+TEST[DATE|TIME]    totalOut:            -4803.505768
+TEST[DATE|TIME]    amountNet:           10835.725342
 TEST[DATE|TIME]                        ======================= 
-TEST[DATE|TIME]    endBal:              75843.546632 (0)
-TEST[DATE|TIME]    endBalCalc:          75843.546632
+TEST[DATE|TIME]    endBal:              75843.546632 (-4803.505768)
+TEST[DATE|TIME]    endBalCalc:          81875.766206
 TEST[DATE|TIME]    rollingBalance:      0
 TEST[DATE|TIME] --------------------------------------------------- 
 TEST[DATE|TIME]    amountIn:            3016.109787
-TEST[DATE|TIME]    correctingOut:       -1787.395981
-TEST[DATE|TIME]    correctingReason:    endbal
+TEST[DATE|TIME]    correctingIn:        3016.109787
+TEST[DATE|TIME]    correctingOut:       -4803.505768
+TEST[DATE|TIME]    correctingReason:    begbal-out-endbal-in
 TEST[DATE|TIME]    material:            true
-TEST[DATE|TIME]    reconciled:          true
+TEST[DATE|TIME]    reconciled:          false
+TEST[DATE|TIME]  ^^ we need to fix this ^^
 TEST[DATE|TIME] ---------------------------------------------------
 ----
 Results in ./statement_token_ibt_out.file
@@ -194,330 +164,210 @@ Results in ./statement_token_ibt_out.file
     {
       "accountedFor": "0xec3ef464bf821c3b10a18adf9ac7177a628e87cc",
       "amountIn": "3016109787000000000000",
-      "amountInEth": "3016.109787",
       "amountNet": "3016109787000000000000",
-      "amountNetEth": "3016.109787",
       "amountOut": "0",
-      "amountOutEth": "0",
       "asset": "0x5c2c629feefcc07b338e97e39c73d2db33a85548",
-      "symbol": "0x5c2c",
       "begBal": "64663282872000000000000",
       "begBalDiff": "0",
-      "begBalDiffEth": "0",
-      "begBalEth": "64663.282872",
       "blockNumber": 7005646,
       "correctingIn": "0",
-      "correctingInEth": "0",
       "correctingOut": "0",
-      "correctingOutEth": "0",
       "correctingReason": "",
       "date": "2019-01-03 22:28:44 UTC",
       "decimals": 18,
       "endBal": "67679392659000000000000",
       "endBalCalc": "67679392659000000000000",
-      "endBalCalcEth": "67679.392659",
       "endBalDiff": "0",
-      "endBalDiffEth": "0",
-      "endBalEth": "67679.392659",
       "gasOut": "0",
-      "gasOutEth": "0",
       "internalIn": "0",
-      "internalInEth": "0",
       "internalOut": "0",
-      "internalOutEth": "0",
       "logIndex": 42,
       "minerBaseRewardIn": "0",
-      "minerBaseRewardInEth": "0",
       "minerNephewRewardIn": "0",
-      "minerNephewRewardInEth": "0",
       "minerTxFeeIn": "0",
-      "minerTxFeeInEth": "0",
       "minerUncleRewardIn": "0",
-      "minerUncleRewardInEth": "0",
       "prefundIn": "0",
-      "prefundInEth": "0",
       "prevBal": "64663282872000000000000",
-      "prevBalEth": "64663.282872",
       "priceSource": "token-not-priced-pre-uni",
       "recipient": "0xec3ef464bf821c3b10a18adf9ac7177a628e87cc",
       "reconciled": true,
       "selfDestructIn": "0",
-      "selfDestructInEth": "0",
       "selfDestructOut": "0",
-      "selfDestructOutEth": "0",
       "sender": "0x78f6e9dd3ab00c5c43bfb58d8d23b6149db13237",
       "spotPrice": 0,
+      "symbol": "OCC1",
       "timestamp": 1546554524,
       "totalIn": "3016109787000000000000",
-      "totalInEth": "3016.109787",
       "totalOut": "0",
-      "totalOutEth": "0",
       "totalOutLessGas": "0",
-      "totalOutLessGasEth": "0",
       "transactionHash": "0xea8b6bf39f8fe343ad1fbb95ad9a2dd695bee9de33d1ccfb79552fc0bf40b92f",
       "transactionIndex": 182
     },
     {
       "accountedFor": "0xec3ef464bf821c3b10a18adf9ac7177a628e87cc",
       "amountIn": "1982984682000000000000",
-      "amountInEth": "1982.984682",
       "amountNet": "1982984682000000000000",
-      "amountNetEth": "1982.984682",
       "amountOut": "0",
-      "amountOutEth": "0",
       "asset": "0x5c2c629feefcc07b338e97e39c73d2db33a85548",
-      "symbol": "0x5c2c",
       "begBal": "67679392659000000000000",
       "begBalDiff": "0",
-      "begBalDiffEth": "0",
-      "begBalEth": "67679.392659",
       "blockNumber": 7005654,
       "correctingIn": "0",
-      "correctingInEth": "0",
       "correctingOut": "0",
-      "correctingOutEth": "0",
       "correctingReason": "",
       "date": "2019-01-03 22:30:05 UTC",
       "decimals": 18,
       "endBal": "69662377341000000000000",
       "endBalCalc": "69662377341000000000000",
-      "endBalCalcEth": "69662.377341",
       "endBalDiff": "0",
-      "endBalDiffEth": "0",
-      "endBalEth": "69662.377341",
       "gasOut": "0",
-      "gasOutEth": "0",
       "internalIn": "0",
-      "internalInEth": "0",
       "internalOut": "0",
-      "internalOutEth": "0",
       "logIndex": 32,
       "minerBaseRewardIn": "0",
-      "minerBaseRewardInEth": "0",
       "minerNephewRewardIn": "0",
-      "minerNephewRewardInEth": "0",
       "minerTxFeeIn": "0",
-      "minerTxFeeInEth": "0",
       "minerUncleRewardIn": "0",
-      "minerUncleRewardInEth": "0",
       "prefundIn": "0",
-      "prefundInEth": "0",
       "prevBal": "67679392659000000000000",
-      "prevBalEth": "67679.392659",
       "priceSource": "token-not-priced-pre-uni",
       "recipient": "0xec3ef464bf821c3b10a18adf9ac7177a628e87cc",
       "reconciled": true,
       "selfDestructIn": "0",
-      "selfDestructInEth": "0",
       "selfDestructOut": "0",
-      "selfDestructOutEth": "0",
       "sender": "0x78f6e9dd3ab00c5c43bfb58d8d23b6149db13237",
       "spotPrice": 0,
+      "symbol": "OCC1",
       "timestamp": 1546554605,
       "totalIn": "1982984682000000000000",
-      "totalInEth": "1982.984682",
       "totalOut": "0",
-      "totalOutEth": "0",
       "totalOutLessGas": "0",
-      "totalOutLessGasEth": "0",
       "transactionHash": "0x234186f8fab2fb4ca1222031ad6d0b41d5a55b3d0e934fb2b47059f7a394433f",
       "transactionIndex": 54
     },
     {
       "accountedFor": "0xec3ef464bf821c3b10a18adf9ac7177a628e87cc",
       "amountIn": "1377663523000000000000",
-      "amountInEth": "1377.663523",
       "amountNet": "1377663523000000000000",
-      "amountNetEth": "1377.663523",
       "amountOut": "0",
-      "amountOutEth": "0",
       "asset": "0x5c2c629feefcc07b338e97e39c73d2db33a85548",
-      "symbol": "0x5c2c",
       "begBal": "69662377341000000000000",
       "begBalDiff": "0",
-      "begBalDiffEth": "0",
-      "begBalEth": "69662.377341",
       "blockNumber": 7005662,
       "correctingIn": "0",
-      "correctingInEth": "0",
       "correctingOut": "0",
-      "correctingOutEth": "0",
       "correctingReason": "",
       "date": "2019-01-03 22:32:43 UTC",
       "decimals": 18,
       "endBal": "71040040864000000000000",
       "endBalCalc": "71040040864000000000000",
-      "endBalCalcEth": "71040.040864",
       "endBalDiff": "0",
-      "endBalDiffEth": "0",
-      "endBalEth": "71040.040864",
       "gasOut": "0",
-      "gasOutEth": "0",
       "internalIn": "0",
-      "internalInEth": "0",
       "internalOut": "0",
-      "internalOutEth": "0",
       "logIndex": 5,
       "minerBaseRewardIn": "0",
-      "minerBaseRewardInEth": "0",
       "minerNephewRewardIn": "0",
-      "minerNephewRewardInEth": "0",
       "minerTxFeeIn": "0",
-      "minerTxFeeInEth": "0",
       "minerUncleRewardIn": "0",
-      "minerUncleRewardInEth": "0",
       "prefundIn": "0",
-      "prefundInEth": "0",
       "prevBal": "69662377341000000000000",
-      "prevBalEth": "69662.377341",
       "priceSource": "token-not-priced-pre-uni",
       "recipient": "0xec3ef464bf821c3b10a18adf9ac7177a628e87cc",
       "reconciled": true,
       "selfDestructIn": "0",
-      "selfDestructInEth": "0",
       "selfDestructOut": "0",
-      "selfDestructOutEth": "0",
       "sender": "0x78f6e9dd3ab00c5c43bfb58d8d23b6149db13237",
       "spotPrice": 0,
+      "symbol": "OCC1",
       "timestamp": 1546554763,
       "totalIn": "1377663523000000000000",
-      "totalInEth": "1377.663523",
       "totalOut": "0",
-      "totalOutEth": "0",
       "totalOutLessGas": "0",
-      "totalOutLessGasEth": "0",
       "transactionHash": "0xfa8eef26c445913833a6ace11e27df3821598b9aeb4896eb41213999e89ece7a",
       "transactionIndex": 5
     },
     {
       "accountedFor": "0xec3ef464bf821c3b10a18adf9ac7177a628e87cc",
       "amountIn": "1787395981000000000000",
-      "amountInEth": "1787.395981",
       "amountNet": "4803505768000000000000",
-      "amountNetEth": "4803.505768",
       "amountOut": "0",
-      "amountOutEth": "0",
       "asset": "0x5c2c629feefcc07b338e97e39c73d2db33a85548",
-      "symbol": "0x5c2c",
       "begBal": "71040040864000000000000",
       "begBalDiff": "0",
-      "begBalDiffEth": "0",
-      "begBalEth": "71040.040864",
       "blockNumber": 7005737,
       "correctingIn": "0",
-      "correctingInEth": "0",
       "correctingOut": "-3016109787000000000000",
-      "correctingOutEth": "-3016.109787",
-      "correctingReason": "endbal",
+      "correctingReason": "endbal-out",
       "date": "2019-01-03 22:52:42 UTC",
       "decimals": 18,
       "endBal": "75843546632000000000000",
       "endBalCalc": "75843546632000000000000",
-      "endBalCalcEth": "75843.546632",
       "endBalDiff": "0",
-      "endBalDiffEth": "0",
-      "endBalEth": "75843.546632",
       "gasOut": "0",
-      "gasOutEth": "0",
       "internalIn": "0",
-      "internalInEth": "0",
       "internalOut": "0",
-      "internalOutEth": "0",
       "logIndex": 17,
       "minerBaseRewardIn": "0",
-      "minerBaseRewardInEth": "0",
       "minerNephewRewardIn": "0",
-      "minerNephewRewardInEth": "0",
       "minerTxFeeIn": "0",
-      "minerTxFeeInEth": "0",
       "minerUncleRewardIn": "0",
-      "minerUncleRewardInEth": "0",
       "prefundIn": "0",
-      "prefundInEth": "0",
       "prevBal": "71040040864000000000000",
-      "prevBalEth": "71040.040864",
       "priceSource": "token-not-priced-pre-uni",
       "recipient": "0xec3ef464bf821c3b10a18adf9ac7177a628e87cc",
       "reconciled": true,
       "selfDestructIn": "0",
-      "selfDestructInEth": "0",
       "selfDestructOut": "0",
-      "selfDestructOutEth": "0",
       "sender": "0x28adfa7a3ab67fb19410beabb1c1bf880fef0541",
       "spotPrice": 0,
+      "symbol": "OCC1",
       "timestamp": 1546555962,
       "totalIn": "1787395981000000000000",
-      "totalInEth": "1787.395981",
       "totalOut": "-3016109787000000000000",
-      "totalOutEth": "-3016.109787",
       "totalOutLessGas": "-3016109787000000000000",
-      "totalOutLessGasEth": "-3016.109787",
       "transactionHash": "0x968d9ef3eee9d9526784622726cef4f23712dff17a7dc639f0a1ef79c8f89002",
       "transactionIndex": 27
     },
     {
       "accountedFor": "0xec3ef464bf821c3b10a18adf9ac7177a628e87cc",
       "amountIn": "3016109787000000000000",
-      "amountInEth": "3016.109787",
       "amountNet": "4803505768000000000000",
-      "amountNetEth": "4803.505768",
       "amountOut": "0",
-      "amountOutEth": "0",
       "asset": "0x5c2c629feefcc07b338e97e39c73d2db33a85548",
-      "symbol": "0x5c2c",
       "begBal": "71040040864000000000000",
       "begBalDiff": "0",
-      "begBalDiffEth": "0",
-      "begBalEth": "71040.040864",
       "blockNumber": 7005737,
       "correctingIn": "0",
-      "correctingInEth": "0",
       "correctingOut": "-1787395981000000000000",
-      "correctingOutEth": "-1787.395981",
       "correctingReason": "endbal",
       "date": "2019-01-03 22:52:42 UTC",
       "decimals": 18,
       "endBal": "75843546632000000000000",
       "endBalCalc": "75843546632000000000000",
-      "endBalCalcEth": "75843.546632",
       "endBalDiff": "0",
-      "endBalDiffEth": "0",
-      "endBalEth": "75843.546632",
       "gasOut": "0",
-      "gasOutEth": "0",
       "internalIn": "0",
-      "internalInEth": "0",
       "internalOut": "0",
-      "internalOutEth": "0",
       "logIndex": 20,
       "minerBaseRewardIn": "0",
-      "minerBaseRewardInEth": "0",
       "minerNephewRewardIn": "0",
-      "minerNephewRewardInEth": "0",
       "minerTxFeeIn": "0",
-      "minerTxFeeInEth": "0",
       "minerUncleRewardIn": "0",
-      "minerUncleRewardInEth": "0",
       "prefundIn": "0",
-      "prefundInEth": "0",
       "prevBal": "71040040864000000000000",
-      "prevBalEth": "71040.040864",
       "priceSource": "token-not-priced-pre-uni",
       "recipient": "0xec3ef464bf821c3b10a18adf9ac7177a628e87cc",
       "reconciled": true,
       "selfDestructIn": "0",
-      "selfDestructInEth": "0",
       "selfDestructOut": "0",
-      "selfDestructOutEth": "0",
       "sender": "0x28adfa7a3ab67fb19410beabb1c1bf880fef0541",
       "spotPrice": 0,
+      "symbol": "OCC1",
       "timestamp": 1546555962,
       "totalIn": "3016109787000000000000",
-      "totalInEth": "3016.109787",
       "totalOut": "-1787395981000000000000",
-      "totalOutEth": "-1787.395981",
       "totalOutLessGas": "-1787395981000000000000",
-      "totalOutLessGasEth": "-1787.395981",
       "transactionHash": "0xff5bdd0900bdbcf80948e102c349a494ad5f409a1d27e4ea6199334cf3399cdf",
       "transactionIndex": 30
     }
