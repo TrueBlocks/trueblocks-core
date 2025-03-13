@@ -11,7 +11,6 @@ TEST[DATE|TIME] OutputFn:  transfer_failed_2572_2_out.file
 TEST[DATE|TIME] Caps:  cache,decache,ether
 TEST[DATE|TIME] Format:  json
 INFO[DATE|TIME] { "outputFilename": "--output_filename--" }
-TEST[DATE|TIME] transfer: 11670419 91 195 0xc713e5e149d5d0715dcd1c156a020976e7e56b88 0x65b0d5e1dc0dee0704f53f660aa865c72e986fc7 -14922878243871414864 
 ----
 Results in ./transfer_failed_2572_2_out.file
 {

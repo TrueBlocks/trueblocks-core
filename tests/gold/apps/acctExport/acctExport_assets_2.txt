@@ -7,9 +7,6 @@ TEST[DATE|TIME] OutputFn:  assets_2_out.file
 TEST[DATE|TIME] Caps:  cache,decache,ether
 TEST[DATE|TIME] Format:  json
 INFO[DATE|TIME] { "outputFilename": "--output_filename--" }
-TEST[DATE|TIME] transfer: 0 270 0 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0x08166f02313feae18bb044e7877c808b55b5bf58 1970000000000000000000 
-TEST[DATE|TIME] transfer: 46685 0 0 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0x08166f02313feae18bb044e7877c808b55b5bf58 -5010500000000000000 
-TEST[DATE|TIME] transfer: 46709 0 0 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0x08166f02313feae18bb044e7877c808b55b5bf58 -1964900000000000000000 
 ----
 Results in ./assets_2_out.file
 {

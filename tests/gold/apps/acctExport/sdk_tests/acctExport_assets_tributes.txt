@@ -8,11 +8,6 @@ FirstBlock:  8769018
 LastBlock:  8769053
 Caps:  cache,decache,ether
 Format:  json
-transfer: 8769019 124 0 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0x868b8fd259abfcfdf9634c343593b34ef359641d 25000000000000000 
-transfer: 8769029 80 61 0x0ba45a8b5d5575935b8158a88c631e9f9c95a2e5 0x868b8fd259abfcfdf9634c343593b34ef359641d 85000000000000000000 
-transfer: 8769052 73 0 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0x868b8fd259abfcfdf9634c343593b34ef359641d -247180000000000 
-transfer: 8769052 74 0 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0x868b8fd259abfcfdf9634c343593b34ef359641d -702230000000000 
-transfer: 8769052 74 73 0x0ba45a8b5d5575935b8158a88c631e9f9c95a2e5 0x868b8fd259abfcfdf9634c343593b34ef359641d -85000000000000000000 
 {
   "data": [
     {

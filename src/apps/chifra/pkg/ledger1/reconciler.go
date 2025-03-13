@@ -3,7 +3,6 @@ package ledger1
 import (
 	"encoding/json"
 	"fmt"
-	"sort"
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
@@ -242,86 +241,4 @@ func (r *Reconciler1) addStatement(results *[]types.Statement, stmt *types.State
 		logger.Warn(t, "statement at ", fmt.Sprintf("%d.%d.%d", stmt.BlockNumber, stmt.TransactionIndex, stmt.LogIndex), " does not reconcile.")
 	}
 	*results = append(*results, *stmt)
-}
-
-// GetTransfers returns a statement from a given transaction
-func (r *Reconciler1) GetTransfers(trans *types.Transaction) ([]types.Transfer, error) {
-	var statements []types.Statement
-	if types.AssetOfInterest(r.Opts.AssetFilters, base.FAKE_ETH_ADDRESS) {
-		var stmt *types.Statement
-		if r.Opts.UseTraces {
-			if traces, err := r.Connection.GetTracesByTransactionHash(trans.Hash.Hex(), trans); err != nil {
-				return nil, err
-			} else {
-				if s, err := trans.FetchStatementFromTraces(traces, r.Opts.AccountFor, r.Opts.AsEther); err != nil {
-					return nil, err
-				} else {
-					stmt = s
-				}
-			}
-		} else {
-			var err error
-			if stmt, err = trans.FetchStatement(r.Opts.AsEther, base.FAKE_ETH_ADDRESS, r.Opts.AccountFor); err != nil {
-				return nil, err
-			}
-		}
-		// Append only if the statement is material
-		if stmt.IsMaterial() {
-			statements = append(statements, *stmt)
-		}
-	}
-
-	if trans.Receipt != nil {
-		if receiptStatements, err := trans.Receipt.FetchStatements(r.Opts.AccountFor, r.Opts.AssetFilters, r.Opts.AppFilters); err != nil {
-			return nil, err
-		} else {
-			for _, stmt := range receiptStatements {
-				if r.RemoveAirdrops && r.SkipAirdrop(stmt.Asset) {
-					continue
-				} else if stmt.IsMaterial() {
-					statements = append(statements, stmt)
-				}
-			}
-		}
-	}
-
-	return convertToTransfers(statements)
-}
-
-func convertToTransfers(statements []types.Statement) ([]types.Transfer, error) {
-	transfers := make([]types.Transfer, 0, len(statements)*2)
-	for _, stmnt := range statements {
-		t := types.Transfer{
-			Asset:            stmnt.Asset,
-			Holder:           stmnt.AccountedFor,
-			Amount:           *stmnt.AmountNet(),
-			BlockNumber:      stmnt.BlockNumber,
-			TransactionIndex: stmnt.TransactionIndex,
-			LogIndex:         stmnt.LogIndex,
-			Decimals:         stmnt.Decimals,
-			CorrectingReason: stmnt.CorrectingReason,
-		}
-		if !t.Amount.Equal(base.ZeroWei) {
-			transfers = append(transfers, t)
-		}
-	}
-
-	if base.IsTestMode() {
-		sort.Slice(transfers, func(i, j int) bool {
-			if transfers[i].BlockNumber == transfers[j].BlockNumber {
-				if transfers[i].TransactionIndex == transfers[j].TransactionIndex {
-					return transfers[i].LogIndex < transfers[j].LogIndex
-				}
-				return transfers[i].TransactionIndex < transfers[j].TransactionIndex
-			}
-			return transfers[i].BlockNumber < transfers[j].BlockNumber
-		})
-		for _, t := range transfers {
-			if !t.Amount.Equal(base.ZeroWei) {
-				logger.TestLog(true, "transfer:", t.BlockNumber, t.TransactionIndex, t.LogIndex, t.Asset, t.Holder, t.Amount.Text(10), t.CorrectingReason)
-			}
-		}
-	}
-
-	return transfers, nil
 }

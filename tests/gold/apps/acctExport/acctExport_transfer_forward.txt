@@ -9,14 +9,6 @@ TEST[DATE|TIME] OutputFn:  transfer_forward_out.file
 TEST[DATE|TIME] Caps:  cache,decache,ether
 TEST[DATE|TIME] Format:  json
 INFO[DATE|TIME] { "outputFilename": "--output_filename--" }
-TEST[DATE|TIME] transfer: 8769019 124 0 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0x868b8fd259abfcfdf9634c343593b34ef359641d 25000000000000000 
-TEST[DATE|TIME] transfer: 8769029 80 61 0x0ba45a8b5d5575935b8158a88c631e9f9c95a2e5 0x868b8fd259abfcfdf9634c343593b34ef359641d 85000000000000000000 
-TEST[DATE|TIME] transfer: 8769052 73 0 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0x868b8fd259abfcfdf9634c343593b34ef359641d -247180000000000 
-TEST[DATE|TIME] transfer: 8769052 74 0 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0x868b8fd259abfcfdf9634c343593b34ef359641d -702230000000000 
-TEST[DATE|TIME] transfer: 8769052 74 73 0x0ba45a8b5d5575935b8158a88c631e9f9c95a2e5 0x868b8fd259abfcfdf9634c343593b34ef359641d -85000000000000000000 
-TEST[DATE|TIME] transfer: 8769064 131 0 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0x868b8fd259abfcfdf9634c343593b34ef359641d 450562200000000000 
-TEST[DATE|TIME] transfer: 8769130 51 0 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0x868b8fd259abfcfdf9634c343593b34ef359641d -100021000000000000 
-TEST[DATE|TIME] transfer: 8769141 27 0 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0x868b8fd259abfcfdf9634c343593b34ef359641d -374591790000000000 
 ----
 Results in ./transfer_forward_out.file
 {
