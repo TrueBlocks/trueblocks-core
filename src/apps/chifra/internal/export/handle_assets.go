@@ -109,14 +109,6 @@ func (opts *ExportOptions) HandleAssets(rCtx *output.RenderCtx, monitorArray []m
 							return txArray[i].BlockNumber < txArray[j].BlockNumber
 						})
 
-						apps := make([]types.Appearance, 0, len(thisMap))
-						for _, tx := range txArray {
-							apps = append(apps, types.Appearance{
-								BlockNumber:      uint32(tx.BlockNumber),
-								TransactionIndex: uint32(tx.TransactionIndex),
-							})
-						}
-
 						ledgerOpts := &ledger1.ReconcilerOptions{
 							AccountFor:   mon.Address,
 							FirstBlock:   opts.FirstBlock,
@@ -130,26 +122,8 @@ func (opts *ExportOptions) HandleAssets(rCtx *output.RenderCtx, monitorArray []m
 
 						recon = ledger1.NewReconciler(opts.Conn, ledgerOpts)
 						items := make([]types.Transfer, 0, len(thisMap))
-						for i, tx := range txArray {
-							// Note: apps and txArray are the same list, so we can use the index from txArray
-							prev := uint32(0)
-							if apps[i].BlockNumber > 0 {
-								prev = apps[i].BlockNumber - 1
-							}
-							if i > 0 {
-								prev = apps[i-1].BlockNumber
-							}
-							next := apps[i].BlockNumber + 1
-							if i < len(apps)-1 {
-								next = apps[i+1].BlockNumber
-							}
-							pos := &types.AppPosition{
-								Prev:  base.Blknum(prev),
-								Next:  base.Blknum(next),
-								First: i == 0,
-								Last:  i == len(apps)-1,
-							}
-							if transfers, err := recon.GetTransfers(pos, tx); err != nil {
+						for _, tx := range txArray {
+							if transfers, err := recon.GetTransfers(tx); err != nil {
 								errorChan <- err
 
 							} else if len(transfers) > 0 {

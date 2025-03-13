@@ -245,7 +245,7 @@ func (r *Reconciler1) addStatement(results *[]types.Statement, stmt *types.State
 }
 
 // GetTransfers returns a statement from a given transaction
-func (r *Reconciler1) GetTransfers(pos *types.AppPosition, trans *types.Transaction) ([]types.Transfer, error) {
+func (r *Reconciler1) GetTransfers(trans *types.Transaction) ([]types.Transfer, error) {
 	var statements []types.Statement
 	if types.AssetOfInterest(r.Opts.AssetFilters, base.FAKE_ETH_ADDRESS) {
 		var stmt *types.Statement
