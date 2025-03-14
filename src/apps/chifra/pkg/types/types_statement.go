@@ -46,7 +46,6 @@ type Statement struct {
 	PrevBal             base.Wei       `json:"prevBal,omitempty"`
 	PriceSource         string         `json:"priceSource"`
 	Recipient           base.Address   `json:"recipient"`
-	RollingBalance      base.Wei       `json:"rollingBalance,omitempty"`
 	SelfDestructIn      base.Wei       `json:"selfDestructIn,omitempty"`
 	SelfDestructOut     base.Wei       `json:"selfDestructOut,omitempty"`
 	Sender              base.Address   `json:"sender"`
@@ -332,11 +331,6 @@ func (s *Statement) MarshalCache(writer io.Writer) (err error) {
 		return err
 	}
 
-	// RollingBalance
-	if err = base.WriteValue(writer, &s.RollingBalance); err != nil {
-		return err
-	}
-
 	// SelfDestructIn
 	if err = base.WriteValue(writer, &s.SelfDestructIn); err != nil {
 		return err
@@ -500,11 +494,6 @@ func (s *Statement) UnmarshalCache(fileVersion uint64, reader io.Reader) (err er
 		return err
 	}
 
-	// RollingBalance
-	if err = base.ReadValue(reader, &s.RollingBalance, fileVersion); err != nil {
-		return err
-	}
-
 	// SelfDestructIn
 	if err = base.ReadValue(reader, &s.SelfDestructIn, fileVersion); err != nil {
 		return err
@@ -662,35 +651,35 @@ func (s *Statement) IsStableCoin() bool {
 	return stables[s.Asset]
 }
 
-func (stmt *Statement) CorrectBegEndBal() bool {
-	reasons := []string{}
+func (stmt *Statement) CorrectBeginBalance() bool {
 	if !stmt.BegBalDiff().Equal(base.ZeroWei) {
 		logger.TestLog(true, "Correcting beginning balance")
 		if stmt.BegBalDiff().LessThan(base.ZeroWei) {
-			reasons = append(reasons, "begbal-in")
+			stmt.CorrectingReason = "begbal-in"
 			val := new(base.Wei).Add(&stmt.CorrectingIn, stmt.BegBalDiff())
 			stmt.CorrectingIn = *val
 		} else {
-			reasons = append(reasons, "begbal-out")
+			stmt.CorrectingReason = "begbal-out"
 			val := new(base.Wei).Add(&stmt.CorrectingOut, stmt.BegBalDiff())
 			stmt.CorrectingOut = *val
 		}
 	}
+	return stmt.Reconciled()
+}
 
+func (stmt *Statement) CorrectEndBalance() bool {
 	if !stmt.EndBalDiff().Equal(base.ZeroWei) {
 		logger.TestLog(true, "Correcting ending balance")
 		if stmt.EndBalDiff().LessThan(base.ZeroWei) {
-			reasons = append(reasons, "endbal-out")
+			stmt.CorrectingReason = "endbal-out"
 			val := new(base.Wei).Add(&stmt.CorrectingOut, stmt.EndBalDiff())
 			stmt.CorrectingOut = *val
 		} else {
-			reasons = append(reasons, "endbal-in")
+			stmt.CorrectingReason = "endbal-in"
 			val := new(base.Wei).Add(&stmt.CorrectingIn, stmt.EndBalDiff())
 			stmt.CorrectingIn = *val
 		}
 	}
-
-	stmt.CorrectingReason = strings.Join(reasons, "-")
 	return stmt.Reconciled()
 }
 

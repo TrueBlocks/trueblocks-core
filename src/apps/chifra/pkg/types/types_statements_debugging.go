@@ -55,7 +55,6 @@ func (s *Statement) DebugStatement(pos *AppPosition) {
 	reportL("                       =======================")
 	report2("   endBal:             ", &s.EndBal, s.BegBalDiff())
 	report1("   endBalCalc:         ", s.EndBalCalc())
-	report1("   rollingBalance:     ", &s.RollingBalance)
 	reportL("---------------------------------------------------")
 	reportE("   amountIn:           ", &s.AmountIn)
 	reportE("   internalIn:         ", &s.InternalIn)

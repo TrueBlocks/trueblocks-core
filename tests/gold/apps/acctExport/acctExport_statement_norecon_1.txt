@@ -1,0 +1,279 @@
+chifra export  trueblocks.eth --accounting --statements --first_block 9278039 --last_block 9279454 --fmt json --asset 0x6b175474e89094c44da98b954eedeac495271d0f
+TEST[DATE|TIME] Addrs:  [0xf503017d7baf7fbc0fff7492b751025c6a78179b]
+TEST[DATE|TIME] Accounting:  true
+TEST[DATE|TIME] Statements:  true
+TEST[DATE|TIME] Asset:  [0x6b175474e89094c44da98b954eedeac495271d0f]
+TEST[DATE|TIME] FirstBlock:  9278039
+TEST[DATE|TIME] LastBlock:  9279454
+TEST[DATE|TIME] Caps:  cache,decache,ether
+TEST[DATE|TIME] Format:  json
+TEST[DATE|TIME] ------------------------------------
+TEST[DATE|TIME] # Reason: token
+TEST[DATE|TIME] Trial balance for  0x6b175474e89094c44da98b954eedeac495271d0f 0xf503017d7baf7fbc0fff7492b751025c6a78179b at block 9278039
+TEST[DATE|TIME] ------------------------------------
+TEST[DATE|TIME] XXXNot found  0x6b175474e89094c44da98b954eedeac495271d0f
+TEST[DATE|TIME] Using block-1 balance for  0x6b175474e89094c44da98b954eedeac495271d0f at block 0 of 0
+TEST[DATE|TIME] pos: 9278038 9278039 9279447 true false
+TEST[DATE|TIME] EndBalCalc: 710402300000000002000 1000000000000000000 711402300000000002000
+TEST[DATE|TIME] Inserting  0x6b175474e89094c44da98b954eedeac495271d0f at block 9278039 of 711402300000000002000
+TEST[DATE|TIME] Found  0x6b175474e89094c44da98b954eedeac495271d0f at block 9278039 of 711402300000000002000
+TEST[DATE|TIME] =========================================================
+TEST[DATE|TIME] ===> PRICING FOR 0x6b175474e89094c44da98b954eedeac495271d0f (DAI) 
+TEST[DATE|TIME] =========================================================
+TEST[DATE|TIME] stable-coin
+TEST[DATE|TIME] ===================================================
+TEST[DATE|TIME] Previous:               9278038
+TEST[DATE|TIME] Current:                9278039
+TEST[DATE|TIME] Next:                   9279447
+TEST[DATE|TIME] accountedFor:           0xf503017d7baf7fbc0fff7492b751025c6a78179b
+TEST[DATE|TIME] sender:                 0x9fd0c742d81b6f08817f3ef11d09cb4a9f54ee5f  ==>  0xf503017d7baf7fbc0fff7492b751025c6a78179b
+TEST[DATE|TIME] asset:                  0x6b175474e89094c44da98b954eedeac495271d0f (DAI) decimals: 18
+TEST[DATE|TIME] hash:                   0xb84e8076d288138fea71b58c0bbb54385d6091efbd04da55b1f4ccb9547b4cae
+TEST[DATE|TIME] timestamp:              1578990024
+TEST[DATE|TIME] blockNumber:            9278039.26.38
+TEST[DATE|TIME] priceSource:            1 (stable-coin)
+TEST[DATE|TIME] --------------------------------------------------- 
+TEST[DATE|TIME] Trial balance:
+TEST[DATE|TIME]    prevBal:             710.402300000000002
+TEST[DATE|TIME]    begBal:              710.402300000000002 (0)
+TEST[DATE|TIME]    totalIn:             1
+TEST[DATE|TIME]    totalOut:            0
+TEST[DATE|TIME]    amountNet:           1
+TEST[DATE|TIME]                        ======================= 
+TEST[DATE|TIME]    endBal:              711.402300000000002 (0)
+TEST[DATE|TIME]    endBalCalc:          711.402300000000002
+TEST[DATE|TIME]    rollingBalance:      0
+TEST[DATE|TIME] --------------------------------------------------- 
+TEST[DATE|TIME]    amountIn:            1
+TEST[DATE|TIME]    material:            true
+TEST[DATE|TIME]    reconciled:          true
+TEST[DATE|TIME] ---------------------------------------------------
+TEST[DATE|TIME] ----------Done  true  --------------------------
+TEST[DATE|TIME] 
+TEST[DATE|TIME] ------------------------------------
+TEST[DATE|TIME] # Reason: token
+TEST[DATE|TIME] Trial balance for  0x6b175474e89094c44da98b954eedeac495271d0f 0xf503017d7baf7fbc0fff7492b751025c6a78179b at block 9279453
+TEST[DATE|TIME] ------------------------------------
+TEST[DATE|TIME] XXXFound  0x6b175474e89094c44da98b954eedeac495271d0f at block 9278039 of 711402300000000002000
+TEST[DATE|TIME] Querying at block 9278039 for 0x6b175474e89094c44da98b954eedeac495271d0f 0xf503017d7baf7fbc0fff7492b751025c6a78179b
+TEST[DATE|TIME] Different block  0x6b175474e89094c44da98b954eedeac495271d0f at block 9278039 and 9279453 of 711402300000000002000
+TEST[DATE|TIME] pos: 9278039 9279453 9279454 false true
+TEST[DATE|TIME] Correcting ending balance
+TEST[DATE|TIME] EndBalCalc: 711402300000000002000 -950000000000000000 710452300000000002000
+TEST[DATE|TIME] Inserting  0x6b175474e89094c44da98b954eedeac495271d0f at block 9279453 of 710452300000000002000
+TEST[DATE|TIME] Found  0x6b175474e89094c44da98b954eedeac495271d0f at block 9279453 of 710452300000000002000
+TEST[DATE|TIME] =========================================================
+TEST[DATE|TIME] ===> PRICING FOR 0x6b175474e89094c44da98b954eedeac495271d0f (DAI) 
+TEST[DATE|TIME] =========================================================
+TEST[DATE|TIME] stable-coin
+TEST[DATE|TIME] ===================================================
+TEST[DATE|TIME] Previous:               9278039
+TEST[DATE|TIME] Current:                9279453
+TEST[DATE|TIME] Next:                   9279454
+TEST[DATE|TIME] accountedFor:           0xf503017d7baf7fbc0fff7492b751025c6a78179b
+TEST[DATE|TIME] sender:                 0xf503017d7baf7fbc0fff7492b751025c6a78179b  ==>  0x9fd0c742d81b6f08817f3ef11d09cb4a9f54ee5f
+TEST[DATE|TIME] asset:                  0x6b175474e89094c44da98b954eedeac495271d0f (DAI) decimals: 18
+TEST[DATE|TIME] hash:                   0x552336e351a18ac319b5f63489abec2c41fb0a41003fd3c6e1e476eb122f279f
+TEST[DATE|TIME] timestamp:              1579008474
+TEST[DATE|TIME] blockNumber:            9279453.208.43
+TEST[DATE|TIME] priceSource:            1 (stable-coin)
+TEST[DATE|TIME] --------------------------------------------------- 
+TEST[DATE|TIME] Trial balance:
+TEST[DATE|TIME]    prevBal:             711.402300000000002
+TEST[DATE|TIME]    begBal:              711.402300000000002 (0)
+TEST[DATE|TIME]    totalIn:             0
+TEST[DATE|TIME]    totalOut:            0.95
+TEST[DATE|TIME]    amountNet:           -0.05
+TEST[DATE|TIME]                        ======================= 
+TEST[DATE|TIME]    endBal:              710.452300000000002 (0)
+TEST[DATE|TIME]    endBalCalc:          710.452300000000002
+TEST[DATE|TIME]    rollingBalance:      0
+TEST[DATE|TIME] --------------------------------------------------- 
+TEST[DATE|TIME]    amountOut:           0.95
+TEST[DATE|TIME]    correctingIn:        0.05
+TEST[DATE|TIME]    correctingReason:    endbal-out
+TEST[DATE|TIME]    material:            true
+TEST[DATE|TIME]    reconciled:          true
+TEST[DATE|TIME] ---------------------------------------------------
+TEST[DATE|TIME] ----------Done  true  --------------------------
+TEST[DATE|TIME] 
+TEST[DATE|TIME] ------------------------------------
+TEST[DATE|TIME] # Reason: token
+TEST[DATE|TIME] Trial balance for  0x6b175474e89094c44da98b954eedeac495271d0f 0xf503017d7baf7fbc0fff7492b751025c6a78179b at block 9279453
+TEST[DATE|TIME] ------------------------------------
+TEST[DATE|TIME] XXXFound  0x6b175474e89094c44da98b954eedeac495271d0f at block 9279453 of 710452300000000002000
+TEST[DATE|TIME] Same block  0x6b175474e89094c44da98b954eedeac495271d0f at block 9279453 and 9279453 of 710452300000000002000
+TEST[DATE|TIME] pos: 9279453 9279453 9279454 false true
+TEST[DATE|TIME] Correcting ending balance
+TEST[DATE|TIME] EndBalCalc: 710402300000000002000 -5000000000000000 710402300000000002000
+TEST[DATE|TIME] Inserting  0x6b175474e89094c44da98b954eedeac495271d0f at block 9279453 of 710402300000000002000
+TEST[DATE|TIME] Found  0x6b175474e89094c44da98b954eedeac495271d0f at block 9279453 of 710402300000000002000
+TEST[DATE|TIME] =========================================================
+TEST[DATE|TIME] ===> PRICING FOR 0x6b175474e89094c44da98b954eedeac495271d0f (DAI) 
+TEST[DATE|TIME] =========================================================
+TEST[DATE|TIME] stable-coin
+TEST[DATE|TIME] ===================================================
+TEST[DATE|TIME] Previous:               9279453
+TEST[DATE|TIME] Current:                9279453
+TEST[DATE|TIME] Next:                   9279454
+TEST[DATE|TIME] accountedFor:           0xf503017d7baf7fbc0fff7492b751025c6a78179b
+TEST[DATE|TIME] sender:                 0xf503017d7baf7fbc0fff7492b751025c6a78179b  ==>  0x00de4b13153673bcae2616b67bf822500d325fc3
+TEST[DATE|TIME] asset:                  0x6b175474e89094c44da98b954eedeac495271d0f (DAI) decimals: 18
+TEST[DATE|TIME] hash:                   0x552336e351a18ac319b5f63489abec2c41fb0a41003fd3c6e1e476eb122f279f
+TEST[DATE|TIME] timestamp:              1579008474
+TEST[DATE|TIME] blockNumber:            9279453.208.44
+TEST[DATE|TIME] priceSource:            1 (stable-coin)
+TEST[DATE|TIME] --------------------------------------------------- 
+TEST[DATE|TIME] Trial balance:
+TEST[DATE|TIME]    prevBal:             710.452300000000002
+TEST[DATE|TIME]    begBal:              710.452300000000002 (0)
+TEST[DATE|TIME]    totalIn:             0
+TEST[DATE|TIME]    totalOut:            0.05
+TEST[DATE|TIME]    amountNet:           0
+TEST[DATE|TIME]                        ======================= 
+TEST[DATE|TIME]    endBal:              710.402300000000002 (0)
+TEST[DATE|TIME]    endBalCalc:          710.402300000000002
+TEST[DATE|TIME]    rollingBalance:      0
+TEST[DATE|TIME] --------------------------------------------------- 
+TEST[DATE|TIME]    correctingout:       0.05
+TEST[DATE|TIME]    amountOut:           0.05
+TEST[DATE|TIME]    correctingReason:    endbal-in
+TEST[DATE|TIME]    material:            true
+TEST[DATE|TIME]    reconciled:          true
+TEST[DATE|TIME] ---------------------------------------------------
+TEST[DATE|TIME] ----------Done  true  --------------------------
+TEST[DATE|TIME] 
+WARN[DATE|TIME] Token statement at   9279453.208.44 0x6b175474e89094c44da98b954eedeac495271d0f 0xf503017d7baf7fbc0fff7492b751025c6a78179b did not reconcile. 
+{
+  "data": [
+    {
+      "accountedFor": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
+      "amountIn": "1000000000000000000",
+      "amountNet": "1000000000000000000",
+      "amountOut": "0",
+      "asset": "0x6b175474e89094c44da98b954eedeac495271d0f",
+      "assetName": "Dai Stablecoin",
+      "begBal": "710402300000000002000",
+      "begBalDiff": "0",
+      "blockNumber": 9278039,
+      "correctingIn": "0",
+      "correctingOut": "0",
+      "correctingReason": "",
+      "date": "2020-01-14 08:20:24 UTC",
+      "decimals": 18,
+      "endBal": "711402300000000002000",
+      "endBalCalc": "711402300000000002000",
+      "endBalDiff": "0",
+      "gasOut": "0",
+      "internalIn": "0",
+      "internalOut": "0",
+      "logIndex": 38,
+      "minerBaseRewardIn": "0",
+      "minerNephewRewardIn": "0",
+      "minerTxFeeIn": "0",
+      "minerUncleRewardIn": "0",
+      "prefundIn": "0",
+      "prevBal": "710402300000000002000",
+      "priceSource": "stable-coin",
+      "recipient": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
+      "reconciled": true,
+      "selfDestructIn": "0",
+      "selfDestructOut": "0",
+      "sender": "0x9fd0c742d81b6f08817f3ef11d09cb4a9f54ee5f",
+      "spotPrice": 1,
+      "symbol": "DAI",
+      "timestamp": 1578990024,
+      "totalIn": "1000000000000000000",
+      "totalOut": "0",
+      "totalOutLessGas": "0",
+      "transactionHash": "0xb84e8076d288138fea71b58c0bbb54385d6091efbd04da55b1f4ccb9547b4cae",
+      "transactionIndex": 26
+    },
+    {
+      "accountedFor": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
+      "amountIn": "0",
+      "amountNet": "-950000000000000000",
+      "amountOut": "950000000000000000",
+      "asset": "0x6b175474e89094c44da98b954eedeac495271d0f",
+      "assetName": "Dai Stablecoin",
+      "begBal": "711402300000000002000",
+      "begBalDiff": "0",
+      "blockNumber": 9279453,
+      "correctingIn": "0",
+      "correctingOut": "0",
+      "correctingReason": "",
+      "date": "2020-01-14 13:27:54 UTC",
+      "decimals": 18,
+      "endBal": "710452300000000002000",
+      "endBalCalc": "710452300000000002000",
+      "endBalDiff": "0",
+      "gasOut": "0",
+      "internalIn": "0",
+      "internalOut": "0",
+      "logIndex": 43,
+      "minerBaseRewardIn": "0",
+      "minerNephewRewardIn": "0",
+      "minerTxFeeIn": "0",
+      "minerUncleRewardIn": "0",
+      "prefundIn": "0",
+      "prevBal": "711402300000000002000",
+      "priceSource": "stable-coin",
+      "recipient": "0x9fd0c742d81b6f08817f3ef11d09cb4a9f54ee5f",
+      "reconciled": true,
+      "selfDestructIn": "0",
+      "selfDestructOut": "0",
+      "sender": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
+      "spotPrice": 1,
+      "symbol": "DAI",
+      "timestamp": 1579008474,
+      "totalIn": "0",
+      "totalOut": "950000000000000000",
+      "totalOutLessGas": "950000000000000000",
+      "transactionHash": "0x552336e351a18ac319b5f63489abec2c41fb0a41003fd3c6e1e476eb122f279f",
+      "transactionIndex": 208
+    },
+    {
+      "accountedFor": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
+      "amountIn": "0",
+      "amountNet": "-50000000000000000",
+      "amountOut": "50000000000000000",
+      "asset": "0x6b175474e89094c44da98b954eedeac495271d0f",
+      "assetName": "Dai Stablecoin",
+      "begBal": "710452300000000002000",
+      "begBalDiff": "0",
+      "blockNumber": 9279453,
+      "correctingIn": "",
+      "correctingOut": "0",
+      "correctingReason": "endbal-in",
+      "date": "2020-01-14 13:27:54 UTC",
+      "decimals": 18,
+      "endBal": "710402300000000002000",
+      "endBalCalc": "710402300000000002000",
+      "endBalDiff": "",
+      "gasOut": "0",
+      "internalIn": "0",
+      "internalOut": "0",
+      "logIndex": 44,
+      "minerBaseRewardIn": "0",
+      "minerNephewRewardIn": "0",
+      "minerTxFeeIn": "0",
+      "minerUncleRewardIn": "0",
+      "prefundIn": "0",
+      "prevBal": "710452300000000002000",
+      "priceSource": "stable-coin",
+      "recipient": "0x00de4b13153673bcae2616b67bf822500d325fc3",
+      "reconciled": true,
+      "selfDestructIn": "0",
+      "selfDestructOut": "0",
+      "sender": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
+      "spotPrice": 1,
+      "symbol": "DAI",
+      "timestamp": 1579008474,
+      "totalIn": "",
+      "totalOut": "50000000000000000",
+      "totalOutLessGas": "50000000000000000",
+      "transactionHash": "0x552336e351a18ac319b5f63489abec2c41fb0a41003fd3c6e1e476eb122f279f",
+      "transactionIndex": 208
+    }
+  ]
+}

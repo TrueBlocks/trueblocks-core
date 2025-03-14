@@ -1,0 +1,292 @@
+export?addrs=trueblocks.eth&accounting&statements&firstBlock=9278039&lastBlock=9279454&asset=0x6b175474e89094c44da98b954eedeac495271d0f
+Args: [addrs=trueblocks.eth accounting statements firstBlock=9278039 lastBlock=9279454 asset=0x6b175474e89094c44da98b954eedeac495271d0f]
+Opts: {"addrs":["trueblocks.eth"],"accounting":true,"statements":true,"asset":["0x6b175474e89094c44da98b954eedeac495271d0f"],"firstBlock":9278039,"lastBlock":9279454}
+Addrs:  [0xf503017d7baf7fbc0fff7492b751025c6a78179b]
+Accounting:  true
+Statements:  true
+Asset:  [0x6b175474e89094c44da98b954eedeac495271d0f]
+FirstBlock:  9278039
+LastBlock:  9279454
+Caps:  cache,decache,ether
+Format:  json
+------------------------------------
+# Reason: token
+Trial balance for  0x6b175474e89094c44da98b954eedeac495271d0f 0xf503017d7baf7fbc0fff7492b751025c6a78179b at block 9278039
+------------------------------------
+XXXNot found  0x6b175474e89094c44da98b954eedeac495271d0f
+Using block-1 balance for  0x6b175474e89094c44da98b954eedeac495271d0f at block 0 of 0
+pos: 9278038 9278039 9279447 true false
+EndBalCalc: 710402300000000002000 1000000000000000000 711402300000000002000
+Inserting  0x6b175474e89094c44da98b954eedeac495271d0f at block 9278039 of 711402300000000002000
+Found  0x6b175474e89094c44da98b954eedeac495271d0f at block 9278039 of 711402300000000002000
+=========================================================
+===> PRICING FOR 0x6b175474e89094c44da98b954eedeac495271d0f (DAI) 
+=========================================================
+stable-coin
+===================================================
+Previous:               9278038
+Current:                9278039
+Next:                   9279447
+accountedFor:           0xf503017d7baf7fbc0fff7492b751025c6a78179b
+sender:                 0x9fd0c742d81b6f08817f3ef11d09cb4a9f54ee5f  ==>  0xf503017d7baf7fbc0fff7492b751025c6a78179b
+asset:                  0x6b175474e89094c44da98b954eedeac495271d0f (DAI) decimals: 18
+hash:                   0xb84e8076d288138fea71b58c0bbb54385d6091efbd04da55b1f4ccb9547b4cae
+timestamp:              1578990024
+blockNumber:            9278039.26.38
+priceSource:            1 (stable-coin)
+--------------------------------------------------- 
+Trial balance:
+   prevBal:             710.402300000000002
+   begBal:              710.402300000000002 (0)
+   totalIn:             1
+   totalOut:            0
+   amountNet:           1
+                       ======================= 
+   endBal:              711.402300000000002 (0)
+   endBalCalc:          711.402300000000002
+   rollingBalance:      0
+--------------------------------------------------- 
+   amountIn:            1
+   material:            true
+   reconciled:          true
+---------------------------------------------------
+----------Done  true  --------------------------
+
+------------------------------------
+# Reason: token
+Trial balance for  0x6b175474e89094c44da98b954eedeac495271d0f 0xf503017d7baf7fbc0fff7492b751025c6a78179b at block 9279453
+------------------------------------
+XXXFound  0x6b175474e89094c44da98b954eedeac495271d0f at block 9278039 of 711402300000000002000
+Querying at block 9278039 for 0x6b175474e89094c44da98b954eedeac495271d0f 0xf503017d7baf7fbc0fff7492b751025c6a78179b
+Different block  0x6b175474e89094c44da98b954eedeac495271d0f at block 9278039 and 9279453 of 711402300000000002000
+pos: 9278039 9279453 9279454 false true
+Correcting ending balance
+EndBalCalc: 711402300000000002000 -1000000000000000000 710402300000000002000
+Inserting  0x6b175474e89094c44da98b954eedeac495271d0f at block 9279453 of 710402300000000002000
+Found  0x6b175474e89094c44da98b954eedeac495271d0f at block 9279453 of 710402300000000002000
+=========================================================
+===> PRICING FOR 0x6b175474e89094c44da98b954eedeac495271d0f (DAI) 
+=========================================================
+stable-coin
+===================================================
+Previous:               9278039
+Current:                9279453
+Next:                   9279454
+accountedFor:           0xf503017d7baf7fbc0fff7492b751025c6a78179b
+sender:                 0xf503017d7baf7fbc0fff7492b751025c6a78179b  ==>  0x9fd0c742d81b6f08817f3ef11d09cb4a9f54ee5f
+asset:                  0x6b175474e89094c44da98b954eedeac495271d0f (DAI) decimals: 18
+hash:                   0x552336e351a18ac319b5f63489abec2c41fb0a41003fd3c6e1e476eb122f279f
+timestamp:              1579008474
+blockNumber:            9279453.208.43
+priceSource:            1 (stable-coin)
+--------------------------------------------------- 
+Trial balance:
+   prevBal:             711.402300000000002
+   begBal:              711.402300000000002 (0)
+   totalIn:             0
+   totalOut:            1
+   amountNet:           -1
+                       ======================= 
+   endBal:              710.402300000000002 (0)
+   endBalCalc:          710.402300000000002
+   rollingBalance:      0
+--------------------------------------------------- 
+   amountOut:           0.95
+   correctingOut:       0.05
+   correctingReason:    endbal-out
+   material:            true
+   reconciled:          true
+---------------------------------------------------
+----------Done  true  --------------------------
+
+------------------------------------
+# Reason: token
+Trial balance for  0x6b175474e89094c44da98b954eedeac495271d0f 0xf503017d7baf7fbc0fff7492b751025c6a78179b at block 9279453
+------------------------------------
+XXXFound  0x6b175474e89094c44da98b954eedeac495271d0f at block 9279453 of 710402300000000002000
+Same block  0x6b175474e89094c44da98b954eedeac495271d0f at block 9279453 and 9279453 of 710402300000000002000
+pos: 9279453 9279453 9279454 false true
+Correcting ending balance
+EndBalCalc: 710402300000000002000 -100000000000000000 710302300000000002000
+Inserting  0x6b175474e89094c44da98b954eedeac495271d0f at block 9279453 of 710302300000000002000
+Found  0x6b175474e89094c44da98b954eedeac495271d0f at block 9279453 of 710302300000000002000
+=========================================================
+===> PRICING FOR 0x6b175474e89094c44da98b954eedeac495271d0f (DAI) 
+=========================================================
+stable-coin
+===================================================
+Previous:               9279453
+Current:                9279453
+Next:                   9279454
+accountedFor:           0xf503017d7baf7fbc0fff7492b751025c6a78179b
+sender:                 0xf503017d7baf7fbc0fff7492b751025c6a78179b  ==>  0x00de4b13153673bcae2616b67bf822500d325fc3
+asset:                  0x6b175474e89094c44da98b954eedeac495271d0f (DAI) decimals: 18
+hash:                   0x552336e351a18ac319b5f63489abec2c41fb0a41003fd3c6e1e476eb122f279f
+timestamp:              1579008474
+blockNumber:            9279453.208.44
+priceSource:            1 (stable-coin)
+--------------------------------------------------- 
+Trial balance:
+   prevBal:             710.402300000000002
+   begBal:              710.402300000000002 (-0.1)
+   totalIn:             -0.05
+   totalOut:            0.05
+   amountNet:           -0.1
+                       ======================= 
+   endBal:              710.402300000000002 (0)
+   endBalCalc:          710.302300000000002
+   rollingBalance:      0
+--------------------------------------------------- 
+   correctingIn:        -0.05
+   amountOut:           0.05
+   correctingReason:    endbal-in
+   material:            true
+   reconciled:          false
+ ^^ we need to fix this ^^
+---------------------------------------------------
+----------Done  false  --------------------------
+
+[33mToken statement at   9279453.208.44 0x6b175474e89094c44da98b954eedeac495271d0f 0xf503017d7baf7fbc0fff7492b751025c6a78179b did not reconcile. 
+[0m{
+  "data": [
+    {
+      "accountedFor": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
+      "amountIn": "1000000000000000000",
+      "amountNet": "1000000000000000000",
+      "amountOut": "0",
+      "asset": "0x6b175474e89094c44da98b954eedeac495271d0f",
+      "assetName": "Dai Stablecoin",
+      "begBal": "710402300000000002000",
+      "begBalDiff": "0",
+      "blockNumber": 9278039,
+      "correctingIn": "0",
+      "correctingOut": "0",
+      "correctingReason": "",
+      "date": "2020-01-14 08:20:24 UTC",
+      "decimals": 18,
+      "endBal": "711402300000000002000",
+      "endBalCalc": "711402300000000002000",
+      "endBalDiff": "0",
+      "gasOut": "0",
+      "internalIn": "0",
+      "internalOut": "0",
+      "logIndex": 38,
+      "minerBaseRewardIn": "0",
+      "minerNephewRewardIn": "0",
+      "minerTxFeeIn": "0",
+      "minerUncleRewardIn": "0",
+      "prefundIn": "0",
+      "prevBal": "710402300000000002000",
+      "priceSource": "stable-coin",
+      "recipient": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
+      "reconciled": true,
+      "selfDestructIn": "0",
+      "selfDestructOut": "0",
+      "sender": "0x9fd0c742d81b6f08817f3ef11d09cb4a9f54ee5f",
+      "spotPrice": 1,
+      "symbol": "DAI",
+      "timestamp": 1578990024,
+      "totalIn": "1000000000000000000",
+      "totalOut": "0",
+      "totalOutLessGas": "0",
+      "transactionHash": "0xb84e8076d288138fea71b58c0bbb54385d6091efbd04da55b1f4ccb9547b4cae",
+      "transactionIndex": 26
+    },
+    {
+      "accountedFor": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
+      "amountIn": "0",
+      "amountNet": "-950000000000000000",
+      "amountOut": "950000000000000000",
+      "asset": "0x6b175474e89094c44da98b954eedeac495271d0f",
+      "assetName": "Dai Stablecoin",
+      "begBal": "711402300000000002000",
+      "begBalDiff": "0",
+      "blockNumber": 9279453,
+      "correctingIn": "0",
+      "correctingOut": "0",
+      "correctingReason": "endbal-out",
+      "date": "2020-01-14 13:27:54 UTC",
+      "decimals": 18,
+      "endBal": "710452300000000002000",
+      "endBalCalc": "710452300000000002000",
+      "endBalDiff": "0",
+      "gasOut": "0",
+      "internalIn": "0",
+      "internalOut": "0",
+      "logIndex": 43,
+      "minerBaseRewardIn": "0",
+      "minerNephewRewardIn": "0",
+      "minerTxFeeIn": "0",
+      "minerUncleRewardIn": "0",
+      "prefundIn": "0",
+      "prevBal": "711402300000000002000",
+      "priceSource": "stable-coin",
+      "recipient": "0x9fd0c742d81b6f08817f3ef11d09cb4a9f54ee5f",
+      "reconciled": true,
+      "selfDestructIn": "0",
+      "selfDestructOut": "0",
+      "sender": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
+      "spotPrice": 1,
+      "symbol": "DAI",
+      "timestamp": 1579008474,
+      "totalIn": "0",
+      "totalOut": "950000000000000000",
+      "totalOutLessGas": "950000000000000000",
+      "transactionHash": "0x552336e351a18ac319b5f63489abec2c41fb0a41003fd3c6e1e476eb122f279f",
+      "transactionIndex": 208
+    },
+    {
+      "accountedFor": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
+      "amountIn": "0",
+      "amountNet": "-50000000000000000",
+      "amountOut": "50000000000000000",
+      "asset": "0x6b175474e89094c44da98b954eedeac495271d0f",
+      "assetName": "Dai Stablecoin",
+      "begBal": "710452300000000002000",
+      "begBalDiff": "0",
+      "blockNumber": 9279453,
+      "correctingIn": "",
+      "correctingOut": "0",
+      "correctingReason": "endbal-in",
+      "date": "2020-01-14 13:27:54 UTC",
+      "decimals": 18,
+      "endBal": "710402300000000002000",
+      "endBalCalc": "710402300000000002000",
+      "endBalDiff": "",
+      "gasOut": "0",
+      "internalIn": "0",
+      "internalOut": "0",
+      "logIndex": 44,
+      "minerBaseRewardIn": "0",
+      "minerNephewRewardIn": "0",
+      "minerTxFeeIn": "0",
+      "minerUncleRewardIn": "0",
+      "prefundIn": "0",
+      "prevBal": "710452300000000002000",
+      "priceSource": "stable-coin",
+      "recipient": "0x00de4b13153673bcae2616b67bf822500d325fc3",
+      "reconciled": false,
+      "selfDestructIn": "0",
+      "selfDestructOut": "0",
+      "sender": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
+      "spotPrice": 1,
+      "symbol": "DAI",
+      "timestamp": 1579008474,
+      "totalIn": "",
+      "totalOut": "50000000000000000",
+      "totalOutLessGas": "50000000000000000",
+      "transactionHash": "0x552336e351a18ac319b5f63489abec2c41fb0a41003fd3c6e1e476eb122f279f",
+      "transactionIndex": 208
+    }
+  ],
+  "meta": {
+    "client": "0xdeadbeef",
+    "finalized": "0xdeadbeef",
+    "staging": "0xdeadbeef",
+    "ripe": "0xdeadbeef",
+    "unripe": "0xdeadbeef",
+    "chainId": 1,
+    "networkId": 1,
+    "chain": "mainnet"
+  }
+}

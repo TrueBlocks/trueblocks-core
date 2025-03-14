@@ -1,0 +1,24 @@
+chifra export  trueblocks.eth --accounting --assets --first_block 9278039 --last_block 9279454 --fmt json
+TEST[DATE|TIME] Addrs:  [0xf503017d7baf7fbc0fff7492b751025c6a78179b]
+TEST[DATE|TIME] Accounting:  true
+TEST[DATE|TIME] Assets:  true
+TEST[DATE|TIME] FirstBlock:  9278039
+TEST[DATE|TIME] LastBlock:  9279454
+TEST[DATE|TIME] Caps:  cache,decache,ether
+TEST[DATE|TIME] Format:  json
+{
+  "data": [
+    {
+      "address": "0x6b175474e89094c44da98b954eedeac495271d0f",
+      "decimals": 18,
+      "name": "Dai Stablecoin",
+      "symbol": "DAI"
+    },
+    {
+      "address": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+      "decimals": 18,
+      "name": "ETH",
+      "symbol": "ETH"
+    }
+  ]
+}

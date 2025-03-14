@@ -215,7 +215,6 @@ Statements consist of the following fields:
 | endBalDiff          | endBal - endBalCalc, if non-zero, the reconciliation failed (calculated)                                                              | int256    |
 | endBalCalc          | begBal + amountNet (calculated)                                                                                                       | int256    |
 | correctingReason    | the reason for the correcting entries, if any                                                                                         | string    |
-| rollingBalance      | a rolling balance used to help debug intra-block reconciliations                                                                      | int256    |
 
 ## Transfer
 

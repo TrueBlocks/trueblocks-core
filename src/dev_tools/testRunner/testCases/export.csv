@@ -187,6 +187,7 @@ broken   ,both ,fast  ,export   ,apps ,acctExport ,statement_failed_2572_1 ,y   
 broken   ,both ,fast  ,export   ,apps ,acctExport ,accounting_intra_tokens ,y    ,addrs = 0x6aED588ca2052CCFC907Db8c24dF4B7B95A29A5E & max_records = 3 & accounting & fmt = json
 broken   ,both ,fast  ,export   ,apps ,acctExport ,statement_token_ibt     ,y    ,addrs = 0xec3ef464bf821c3b10a18adf9ac7177a628e87cc & accounting & statements & first_block = 7005600 & last_block = 7005780 & fmt = json
 broken   ,both ,fast  ,export   ,apps ,acctExport ,statement_token_ibt_2   ,y    ,addrs = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & accounting & statements & first_block = 12704456 & last_block = 12705893 & fmt = json & max_records = 4000
+new      ,both, fast  ,export   ,apps ,acctExport ,statement_norecon_1     ,y    ,addrs = trueblocks.eth & accounting & statements & first_block = 9278039 & last_block = 9279454 & fmt = json & asset = 0x6b175474e89094c44da98b954eedeac495271d0f
 
 # Testing --accounting --transfers
 on       ,both ,fast  ,export   ,apps ,acctExport ,transfer_nft           ,y    ,addrs = trueblocks.eth & accounting & transfers & first_block = 8876230 & last_block = 9024186 & fmt = json
@@ -206,6 +207,7 @@ on       ,both ,fast  ,export   ,apps ,acctExport ,transfer_failed_2572_2 ,y    
 on       ,both ,fast  ,export   ,apps ,acctExport ,transfer_token_ibt     ,y    ,addrs = 0xec3ef464bf821c3b10a18adf9ac7177a628e87cc & accounting & transfers & first_block = 7005600 & last_block = 7005780 & ether & fmt = json
 on       ,both ,fast  ,export   ,apps ,acctExport ,transfer_token_ibt_2   ,y    ,addrs = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & accounting & transfers & first_block = 12704456 & last_block = 12705893 & ether & fmt = json & max_records = 9
 on       ,both ,fast  ,export   ,apps ,acctExport ,transfer_2_asset_filt  ,y    ,addrs = trueblocks.eth & accounting & transfers & ether & asset = 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee & asset = 0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359 & fmt = csv & first_block = 8856476 & last_block = 9193814
+new      ,both, fast  ,export   ,apps ,acctExport ,transfer_norecon_1     ,y    ,addrs = trueblocks.eth & accounting & transfers & first_block = 9278039 & last_block = 9279454 & fmt = json & asset = 0x6b175474e89094c44da98b954eedeac495271d0f
 
 # Testing --accounting --assets
 on       ,both ,fast  ,export   ,apps ,acctExport ,assets_nft           ,y    ,addrs = trueblocks.eth & accounting & assets & first_block = 8876230 & last_block = 9024186 & fmt = json
@@ -225,6 +227,7 @@ on       ,both ,fast  ,export   ,apps ,acctExport ,assets_failed_2572_2 ,y    ,a
 on       ,both ,fast  ,export   ,apps ,acctExport ,assets_token_ibt     ,y    ,addrs = 0xec3ef464bf821c3b10a18adf9ac7177a628e87cc & accounting & assets & first_block = 7005600 & last_block = 7005780 & ether & fmt = json
 on       ,both ,fast  ,export   ,apps ,acctExport ,assets_token_ibt_2   ,y    ,addrs = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & accounting & assets & first_block = 12704456 & last_block = 12705893 & ether & fmt = json & max_records = 9
 on       ,both ,fast  ,export   ,apps ,acctExport ,assets_2_asset_filt  ,y    ,addrs = trueblocks.eth & accounting & assets & ether & fmt = csv & first_block = 8856476 & last_block = 9193814
+new      ,both, fast  ,export   ,apps ,acctExport ,assets_norecon_1     ,y    ,addrs = trueblocks.eth & accounting & assets & first_block = 9278039 & last_block = 9279454 & fmt = json
 
 # Not tested for chifra export
 # chifra export --cache

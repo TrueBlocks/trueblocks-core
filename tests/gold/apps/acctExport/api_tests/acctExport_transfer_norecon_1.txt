@@ -1,0 +1,42 @@
+export?addrs=trueblocks.eth&accounting&transfers&firstBlock=9278039&lastBlock=9279454&fmt=json&asset=0x6b175474e89094c44da98b954eedeac495271d0f
+{
+  "data": [
+    {
+      "amount": "1000000000000000000",
+      "asset": "0x6b175474e89094c44da98b954eedeac495271d0f",
+      "assetName": "Dai Stablecoin",
+      "blockNumber": 9278039,
+      "holder": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
+      "logIndex": 38,
+      "transactionIndex": 26
+    },
+    {
+      "amount": "-950000000000000000",
+      "asset": "0x6b175474e89094c44da98b954eedeac495271d0f",
+      "assetName": "Dai Stablecoin",
+      "blockNumber": 9279453,
+      "holder": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
+      "logIndex": 43,
+      "transactionIndex": 208
+    },
+    {
+      "amount": "-50000000000000000",
+      "asset": "0x6b175474e89094c44da98b954eedeac495271d0f",
+      "assetName": "Dai Stablecoin",
+      "blockNumber": 9279453,
+      "holder": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
+      "logIndex": 44,
+      "transactionIndex": 208
+    }
+  ],
+  "meta": {
+    "client": "0xdeadbeef",
+    "finalized": "0xdeadbeef",
+    "staging": "0xdeadbeef",
+    "ripe": "0xdeadbeef",
+    "unripe": "0xdeadbeef",
+    "chainId": 1,
+    "networkId": 1,
+    "chain": "mainnet"
+  }
+}

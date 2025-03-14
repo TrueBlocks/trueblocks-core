@@ -6,7 +6,6 @@ import (
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/names"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/pricing"
@@ -125,7 +124,8 @@ func (r *Reconciler1) trialBalance(reason string, trans *types.Transaction, stmt
 			stmt.CorrectForNullTransfer()
 		}
 		if !stmt.Reconciled() {
-			stmt.CorrectBegEndBal()
+			stmt.CorrectBeginBalance()
+			stmt.CorrectEndBalance()
 		}
 	}
 
@@ -207,7 +207,9 @@ func (r *Reconciler1) GetStatements(pos *types.AppPosition, trans *types.Transac
 				return nil, err
 			} else {
 				if stmt, err := trans.FetchStatementFromTraces(traces, r.Opts.AccountFor, r.Opts.AsEther); err != nil {
-					logger.Warn(colors.Yellow+"Statement at ", fmt.Sprintf("%d.%d", trans.BlockNumber, trans.TransactionIndex), " does not reconcile."+colors.Off)
+					// logger.Warn(colors.Yellow+"Statement at ", fmt.Sprintf("%d.%d", trans.BlockNumber, trans.TransactionIndex), " does not reconcile."+colors.Off)
+					// TODO: Silent fail?
+					logger.Error(err.Error())
 				} else {
 					if _, err = r.trialBalance("trace-tx", trans, stmt, pos); err != nil {
 						return nil, err
@@ -259,6 +261,7 @@ func (r *Reconciler1) GetStatements(pos *types.AppPosition, trans *types.Transac
 
 				if _, err := r.trialBalance("token", trans, stmt, pos); err != nil {
 					// TODO: Silent fail?
+					logger.Error(err.Error())
 					continue
 				} else {
 					// if reconciled {
@@ -279,11 +282,11 @@ func (r *Reconciler1) GetStatements(pos *types.AppPosition, trans *types.Transac
 }
 
 func ReportProgress(stmt *types.Statement) {
-	msg := fmt.Sprintf("Ether statement at % 9d.%d.%d", stmt.BlockNumber, stmt.TransactionIndex, stmt.LogIndex)
+	msg := fmt.Sprintf("Ether statement at % 9d.%d.%d %s %s", stmt.BlockNumber, stmt.TransactionIndex, stmt.LogIndex, stmt.Asset.Hex(), stmt.Holder.Hex())
 	if !stmt.IsEth() {
-		msg = fmt.Sprintf("Token statement at % 9d.%d.%d", stmt.BlockNumber, stmt.TransactionIndex, stmt.LogIndex)
+		msg = fmt.Sprintf("Token statement at % 9d.%d.%d %s %s", stmt.BlockNumber, stmt.TransactionIndex, stmt.LogIndex, stmt.Asset.Hex(), stmt.Holder.Hex())
 	}
-	spacer := strings.Repeat(" ", 100-len(msg))
+	spacer := strings.Repeat(" ", 100-base.Min(100, len(msg)))
 	if !stmt.Reconciled() {
 		// logger.Progress(true, colors.Green+msg+" reconciled.", colors.Off, spacer)
 		// } else {

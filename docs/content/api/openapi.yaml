@@ -3403,10 +3403,6 @@ components:
           type: string
           format: string
           description: "the reason for the correcting entries, if any"
-        rollingBalance:
-          type: string
-          format: int256
-          description: "a rolling balance used to help debug intra-block reconciliations"
     transfer:
       description: "a movement of an asset from one address to another (derived from a transaction or a log)"
       type: object

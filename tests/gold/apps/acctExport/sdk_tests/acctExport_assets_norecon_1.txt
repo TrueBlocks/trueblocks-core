@@ -1,0 +1,36 @@
+export?addrs=trueblocks.eth&accounting&assets&firstBlock=9278039&lastBlock=9279454
+Args: [addrs=trueblocks.eth accounting assets firstBlock=9278039 lastBlock=9279454]
+Opts: {"addrs":["trueblocks.eth"],"accounting":true,"assets":true,"firstBlock":9278039,"lastBlock":9279454}
+Addrs:  [0xf503017d7baf7fbc0fff7492b751025c6a78179b]
+Accounting:  true
+Assets:  true
+FirstBlock:  9278039
+LastBlock:  9279454
+Caps:  cache,decache,ether
+Format:  json
+{
+  "data": [
+    {
+      "address": "0x6b175474e89094c44da98b954eedeac495271d0f",
+      "decimals": 18,
+      "name": "Dai Stablecoin",
+      "symbol": "DAI"
+    },
+    {
+      "address": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+      "decimals": 18,
+      "name": "ETH",
+      "symbol": "ETH"
+    }
+  ],
+  "meta": {
+    "client": "0xdeadbeef",
+    "finalized": "0xdeadbeef",
+    "staging": "0xdeadbeef",
+    "ripe": "0xdeadbeef",
+    "unripe": "0xdeadbeef",
+    "chainId": 1,
+    "networkId": 1,
+    "chain": "mainnet"
+  }
+}
