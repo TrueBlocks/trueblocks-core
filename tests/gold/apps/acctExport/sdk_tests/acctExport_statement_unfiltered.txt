@@ -8,6 +8,16 @@ FirstBlock:  8860513
 LastBlock:  8860531
 Caps:  cache,decache,ether
 Format:  json
+------------------------------------
+# Reason: first-tx
+Trial balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0xf503017d7baf7fbc0fff7492b751025c6a78179b at block 8860513
+------------------------------------
+XXXNot found  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+Using block-1 balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 0 of 0
+pos: 8860512 8860513 8860529 true false
+EndBalCalc: 4999744015000000000 -34017000000000 4999709998000000000
+Inserting  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 8860513 of 4999709998000000000
+Found  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 8860513 of 4999709998000000000
 Block 8860513 is prior to deployment (10000835) of Uniswap V2. Falling back to Maker (0x729d19f657bd0614b4985cf1d82531c67569197b)
 =========================================================
 ===> PRICING FOR 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) using Maker
@@ -48,6 +58,18 @@ Trial balance:
    material:            true
    reconciled:          true
 ---------------------------------------------------
+----------Done  true  --------------------------
+
+------------------------------------
+# Reason: token
+Trial balance for  0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359 0xf503017d7baf7fbc0fff7492b751025c6a78179b at block 8860513
+------------------------------------
+XXXNot found  0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359
+Using block-1 balance for  0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359 at block 0 of 0
+pos: 8860512 8860513 8860529 true false
+EndBalCalc: 7500000000000000000000 -500000000000000000000 7000000000000000000000
+Inserting  0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359 at block 8860513 of 7000000000000000000000
+Found  0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359 at block 8860513 of 7000000000000000000000
 =========================================================
 ===> PRICING FOR 0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359 (DAI) 
 =========================================================
@@ -79,6 +101,19 @@ Trial balance:
    material:            true
    reconciled:          true
 ---------------------------------------------------
+----------Done  true  --------------------------
+
+------------------------------------
+# Reason: first-tx
+Trial balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0xf503017d7baf7fbc0fff7492b751025c6a78179b at block 8860529
+------------------------------------
+XXXFound  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 8860513 of 4999709998000000000
+Querying at block 8860513 for 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0xf503017d7baf7fbc0fff7492b751025c6a78179b
+Different block  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 8860513 and 8860529 of 4999709998000000000
+pos: 8860513 8860529 8860531 false false
+EndBalCalc: 4999709998000000000 -46049000000000 4999663949000000000
+Inserting  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 8860529 of 4999663949000000000
+Found  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 8860529 of 4999663949000000000
 Block 8860529 is prior to deployment (10000835) of Uniswap V2. Falling back to Maker (0x729d19f657bd0614b4985cf1d82531c67569197b)
 =========================================================
 ===> PRICING FOR 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) using Maker
@@ -119,6 +154,19 @@ Trial balance:
    material:            true
    reconciled:          true
 ---------------------------------------------------
+----------Done  true  --------------------------
+
+------------------------------------
+# Reason: first-tx
+Trial balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0xf503017d7baf7fbc0fff7492b751025c6a78179b at block 8860531
+------------------------------------
+XXXFound  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 8860529 of 4999663949000000000
+Querying at block 8860529 for 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0xf503017d7baf7fbc0fff7492b751025c6a78179b
+Different block  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 8860529 and 8860531 of 4999663949000000000
+pos: 8860529 8860531 8860532 false true
+EndBalCalc: 4999663949000000000 -24541000000000 4999639408000000000
+Inserting  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 8860531 of 4999639408000000000
+Found  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 8860531 of 4999639408000000000
 Block 8860531 is prior to deployment (10000835) of Uniswap V2. Falling back to Maker (0x729d19f657bd0614b4985cf1d82531c67569197b)
 =========================================================
 ===> PRICING FOR 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) using Maker
@@ -159,6 +207,19 @@ Trial balance:
    material:            true
    reconciled:          true
 ---------------------------------------------------
+----------Done  true  --------------------------
+
+------------------------------------
+# Reason: token
+Trial balance for  0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359 0xf503017d7baf7fbc0fff7492b751025c6a78179b at block 8860531
+------------------------------------
+XXXFound  0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359 at block 8860513 of 7000000000000000000000
+Querying at block 8860513 for 0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359 0xf503017d7baf7fbc0fff7492b751025c6a78179b
+Different block  0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359 at block 8860513 and 8860531 of 7000000000000000000000
+pos: 8860513 8860531 8860532 false true
+EndBalCalc: 7000000000000000000000 -7000000000000000000000 0
+Inserting  0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359 at block 8860531 of 0
+Found  0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359 at block 8860531 of 0
 =========================================================
 ===> PRICING FOR 0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359 (DAI) 
 =========================================================
@@ -190,6 +251,8 @@ Trial balance:
    material:            true
    reconciled:          true
 ---------------------------------------------------
+----------Done  true  --------------------------
+
 {
   "data": [
     {

@@ -20,6 +20,7 @@ func (trans *Transaction) FetchStatement(asEther bool, asset, holder base.Addres
 
 	stmt := &Statement{
 		AccountedFor:     holder,
+		Holder:           holder,
 		Asset:            asset,
 		Symbol:           sym,
 		Decimals:         18,
@@ -190,6 +191,7 @@ func (log *Log) FetchStatement(accountedFor base.Address) (*Statement, error) {
 		}
 		stmt := &Statement{
 			AccountedFor:     accountedFor,
+			Holder:           accountedFor,
 			Sender:           sender,
 			Recipient:        recipient,
 			BlockNumber:      normalized.BlockNumber,

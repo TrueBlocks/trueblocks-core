@@ -7,6 +7,16 @@ Statements:  true
 LastBlock:  100
 Caps:  cache,decache,ether
 Format:  json
+------------------------------------
+# Reason: first-tx
+Trial balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c at block 13
+------------------------------------
+XXXNot found  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+Using block-1 balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 0 of 0
+pos: 12 13 22 true false
+EndBalCalc: 0 5000000000000000000 5000000000000000000
+Inserting  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 13 of 5000000000000000000
+Found  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 13 of 5000000000000000000
 Block 13 is prior to deployment (3684349) of Maker. No fallback pricing method
 ===================================================
 Previous:               12
@@ -35,6 +45,19 @@ Trial balance:
    material:            true
    reconciled:          true
 ---------------------------------------------------
+----------Done  true  --------------------------
+
+------------------------------------
+# Reason: first-tx
+Trial balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c at block 22
+------------------------------------
+XXXFound  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 13 of 5000000000000000000
+Querying at block 13 for 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c
+Different block  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 13 and 22 of 5000000000000000000
+pos: 13 22 37 false false
+EndBalCalc: 5000000000000000000 5000000000000000000 10000000000000000000
+Inserting  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 22 of 10000000000000000000
+Found  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 22 of 10000000000000000000
 Block 22 is prior to deployment (3684349) of Maker. No fallback pricing method
 ===================================================
 Previous:               13
@@ -63,6 +86,19 @@ Trial balance:
    material:            true
    reconciled:          true
 ---------------------------------------------------
+----------Done  true  --------------------------
+
+------------------------------------
+# Reason: first-tx
+Trial balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c at block 37
+------------------------------------
+XXXFound  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 22 of 10000000000000000000
+Querying at block 22 for 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c
+Different block  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 22 and 37 of 10000000000000000000
+pos: 22 37 39 false false
+EndBalCalc: 10000000000000000000 3750000000000000000 13750000000000000000
+Inserting  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 37 of 13750000000000000000
+Found  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 37 of 13750000000000000000
 Block 37 is prior to deployment (3684349) of Maker. No fallback pricing method
 ===================================================
 Previous:               22
@@ -91,6 +127,19 @@ Trial balance:
    material:            true
    reconciled:          true
 ---------------------------------------------------
+----------Done  true  --------------------------
+
+------------------------------------
+# Reason: first-tx
+Trial balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c at block 39
+------------------------------------
+XXXFound  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 37 of 13750000000000000000
+Querying at block 37 for 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c
+Different block  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 37 and 39 of 13750000000000000000
+pos: 37 39 43 false false
+EndBalCalc: 13750000000000000000 5000000000000000000 18750000000000000000
+Inserting  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 39 of 18750000000000000000
+Found  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 39 of 18750000000000000000
 Block 39 is prior to deployment (3684349) of Maker. No fallback pricing method
 ===================================================
 Previous:               37
@@ -119,6 +168,19 @@ Trial balance:
    material:            true
    reconciled:          true
 ---------------------------------------------------
+----------Done  true  --------------------------
+
+------------------------------------
+# Reason: first-tx
+Trial balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c at block 43
+------------------------------------
+XXXFound  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 39 of 18750000000000000000
+Querying at block 39 for 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c
+Different block  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 39 and 43 of 18750000000000000000
+pos: 39 43 53 false false
+EndBalCalc: 18750000000000000000 5000000000000000000 23750000000000000000
+Inserting  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 43 of 23750000000000000000
+Found  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 43 of 23750000000000000000
 Block 43 is prior to deployment (3684349) of Maker. No fallback pricing method
 ===================================================
 Previous:               39
@@ -147,6 +209,19 @@ Trial balance:
    material:            true
    reconciled:          true
 ---------------------------------------------------
+----------Done  true  --------------------------
+
+------------------------------------
+# Reason: first-tx
+Trial balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c at block 53
+------------------------------------
+XXXFound  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 43 of 23750000000000000000
+Querying at block 43 for 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c
+Different block  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 43 and 53 of 23750000000000000000
+pos: 43 53 55 false false
+EndBalCalc: 23750000000000000000 5000000000000000000 28750000000000000000
+Inserting  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 53 of 28750000000000000000
+Found  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 53 of 28750000000000000000
 Block 53 is prior to deployment (3684349) of Maker. No fallback pricing method
 ===================================================
 Previous:               43
@@ -175,6 +250,19 @@ Trial balance:
    material:            true
    reconciled:          true
 ---------------------------------------------------
+----------Done  true  --------------------------
+
+------------------------------------
+# Reason: first-tx
+Trial balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c at block 55
+------------------------------------
+XXXFound  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 53 of 28750000000000000000
+Querying at block 53 for 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c
+Different block  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 53 and 55 of 28750000000000000000
+pos: 53 55 64 false false
+EndBalCalc: 28750000000000000000 3750000000000000000 32500000000000000000
+Inserting  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 55 of 32500000000000000000
+Found  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 55 of 32500000000000000000
 Block 55 is prior to deployment (3684349) of Maker. No fallback pricing method
 ===================================================
 Previous:               53
@@ -203,6 +291,19 @@ Trial balance:
    material:            true
    reconciled:          true
 ---------------------------------------------------
+----------Done  true  --------------------------
+
+------------------------------------
+# Reason: first-tx
+Trial balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c at block 64
+------------------------------------
+XXXFound  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 55 of 32500000000000000000
+Querying at block 55 for 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c
+Different block  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 55 and 64 of 32500000000000000000
+pos: 55 64 67 false false
+EndBalCalc: 32500000000000000000 5000000000000000000 37500000000000000000
+Inserting  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 64 of 37500000000000000000
+Found  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 64 of 37500000000000000000
 Block 64 is prior to deployment (3684349) of Maker. No fallback pricing method
 ===================================================
 Previous:               55
@@ -231,6 +332,19 @@ Trial balance:
    material:            true
    reconciled:          true
 ---------------------------------------------------
+----------Done  true  --------------------------
+
+------------------------------------
+# Reason: first-tx
+Trial balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c at block 67
+------------------------------------
+XXXFound  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 64 of 37500000000000000000
+Querying at block 64 for 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c
+Different block  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 64 and 67 of 37500000000000000000
+pos: 64 67 78 false false
+EndBalCalc: 37500000000000000000 5000000000000000000 42500000000000000000
+Inserting  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 67 of 42500000000000000000
+Found  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 67 of 42500000000000000000
 Block 67 is prior to deployment (3684349) of Maker. No fallback pricing method
 ===================================================
 Previous:               64
@@ -259,6 +373,19 @@ Trial balance:
    material:            true
    reconciled:          true
 ---------------------------------------------------
+----------Done  true  --------------------------
+
+------------------------------------
+# Reason: first-tx
+Trial balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c at block 78
+------------------------------------
+XXXFound  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 67 of 42500000000000000000
+Querying at block 67 for 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c
+Different block  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 67 and 78 of 42500000000000000000
+pos: 67 78 84 false false
+EndBalCalc: 42500000000000000000 5156250000000000000 47656250000000000000
+Inserting  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 78 of 47656250000000000000
+Found  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 78 of 47656250000000000000
 Block 78 is prior to deployment (3684349) of Maker. No fallback pricing method
 ===================================================
 Previous:               67
@@ -288,6 +415,19 @@ Trial balance:
    material:            true
    reconciled:          true
 ---------------------------------------------------
+----------Done  true  --------------------------
+
+------------------------------------
+# Reason: first-tx
+Trial balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c at block 84
+------------------------------------
+XXXFound  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 78 of 47656250000000000000
+Querying at block 78 for 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c
+Different block  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 78 and 84 of 47656250000000000000
+pos: 78 84 90 false false
+EndBalCalc: 47656250000000000000 5000000000000000000 52656250000000000000
+Inserting  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 84 of 52656250000000000000
+Found  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 84 of 52656250000000000000
 Block 84 is prior to deployment (3684349) of Maker. No fallback pricing method
 ===================================================
 Previous:               78
@@ -316,6 +456,19 @@ Trial balance:
    material:            true
    reconciled:          true
 ---------------------------------------------------
+----------Done  true  --------------------------
+
+------------------------------------
+# Reason: first-tx
+Trial balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c at block 90
+------------------------------------
+XXXFound  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 84 of 52656250000000000000
+Querying at block 84 for 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c
+Different block  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 84 and 90 of 52656250000000000000
+pos: 84 90 94 false false
+EndBalCalc: 52656250000000000000 5000000000000000000 57656250000000000000
+Inserting  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 90 of 57656250000000000000
+Found  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 90 of 57656250000000000000
 Block 90 is prior to deployment (3684349) of Maker. No fallback pricing method
 ===================================================
 Previous:               84
@@ -344,6 +497,19 @@ Trial balance:
    material:            true
    reconciled:          true
 ---------------------------------------------------
+----------Done  true  --------------------------
+
+------------------------------------
+# Reason: first-tx
+Trial balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c at block 94
+------------------------------------
+XXXFound  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 90 of 57656250000000000000
+Querying at block 90 for 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c
+Different block  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 90 and 94 of 57656250000000000000
+pos: 90 94 95 false true
+EndBalCalc: 57656250000000000000 5156250000000000000 62812500000000000000
+Inserting  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 94 of 62812500000000000000
+Found  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 94 of 62812500000000000000
 Block 94 is prior to deployment (3684349) of Maker. No fallback pricing method
 ===================================================
 Previous:               90
@@ -373,6 +539,8 @@ Trial balance:
    material:            true
    reconciled:          true
 ---------------------------------------------------
+----------Done  true  --------------------------
+
 {
   "data": [
     {

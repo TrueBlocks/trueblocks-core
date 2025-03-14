@@ -6,6 +6,16 @@ TEST[DATE|TIME] OutputFn:  accounting_wei_1_out.file
 TEST[DATE|TIME] Caps:  cache,decache,ether
 TEST[DATE|TIME] Format:  json
 INFO[DATE|TIME] { "outputFilename": "--output_filename--" }
+INFO[DATE|TIME] ------------------------------------
+INFO[DATE|TIME] # Reason: first-tx
+INFO[DATE|TIME] Trial balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0x001d14804b399c6ef80e64576f657660804fec0b at block 0
+INFO[DATE|TIME] ------------------------------------
+INFO[DATE|TIME] XXXNot found  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+INFO[DATE|TIME] Using block-1 balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 0 of 0
+INFO[DATE|TIME] pos: 0 0 202249 true false
+INFO[DATE|TIME] EndBalCalc: 0 4200000000000000000000 4200000000000000000000
+INFO[DATE|TIME] Inserting  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 0 of 4200000000000000000000
+INFO[DATE|TIME] Found  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 0 of 4200000000000000000000
 TEST[DATE|TIME] Block 0 is prior to deployment (3684349) of Maker. No fallback pricing method
 TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] Previous:               0
@@ -34,6 +44,19 @@ TEST[DATE|TIME]    prefundIn:           4200
 TEST[DATE|TIME]    material:            true
 TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
+INFO[DATE|TIME] ----------Done  true  --------------------------
+INFO[DATE|TIME] 
+INFO[DATE|TIME] ------------------------------------
+INFO[DATE|TIME] # Reason: first-tx
+INFO[DATE|TIME] Trial balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0x001d14804b399c6ef80e64576f657660804fec0b at block 202249
+INFO[DATE|TIME] ------------------------------------
+INFO[DATE|TIME] XXXFound  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 0 of 4200000000000000000000
+INFO[DATE|TIME] Querying at block 0 for 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0x001d14804b399c6ef80e64576f657660804fec0b
+INFO[DATE|TIME] Different block  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 0 and 202249 of 4200000000000000000000
+INFO[DATE|TIME] pos: 0 202249 1501459 false false
+INFO[DATE|TIME] EndBalCalc: 4200000000000000000000 -4199925320679510922664 74679320489077336
+INFO[DATE|TIME] Inserting  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 202249 of 74679320489077336
+INFO[DATE|TIME] Found  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 202249 of 74679320489077336
 TEST[DATE|TIME] Block 202249 is prior to deployment (3684349) of Maker. No fallback pricing method
 TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] Previous:               0
@@ -63,6 +86,19 @@ TEST[DATE|TIME]    gasOut:              0.025320679510922664
 TEST[DATE|TIME]    material:            true
 TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
+INFO[DATE|TIME] ----------Done  true  --------------------------
+INFO[DATE|TIME] 
+INFO[DATE|TIME] ------------------------------------
+INFO[DATE|TIME] # Reason: first-tx
+INFO[DATE|TIME] Trial balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0x001d14804b399c6ef80e64576f657660804fec0b at block 1501459
+INFO[DATE|TIME] ------------------------------------
+INFO[DATE|TIME] XXXFound  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 202249 of 74679320489077336
+INFO[DATE|TIME] Querying at block 202249 for 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0x001d14804b399c6ef80e64576f657660804fec0b
+INFO[DATE|TIME] Different block  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 202249 and 1501459 of 74679320489077336
+INFO[DATE|TIME] pos: 202249 1501459 1501460 false true
+INFO[DATE|TIME] EndBalCalc: 74679320489077336 -74679320489077336 0
+INFO[DATE|TIME] Inserting  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 1501459 of 0
+INFO[DATE|TIME] Found  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 1501459 of 0
 TEST[DATE|TIME] Block 1501459 is prior to deployment (3684349) of Maker. No fallback pricing method
 TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] Previous:               202249
@@ -92,6 +128,8 @@ TEST[DATE|TIME]    gasOut:              0.00042
 TEST[DATE|TIME]    material:            true
 TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
+INFO[DATE|TIME] ----------Done  true  --------------------------
+INFO[DATE|TIME] 
 ----
 Results in ./accounting_wei_1_out.file
 {

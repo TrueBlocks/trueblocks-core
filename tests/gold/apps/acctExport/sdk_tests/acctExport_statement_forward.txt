@@ -7,6 +7,16 @@ Statements:  true
 LastBlock:  8769141
 Caps:  cache,decache,ether
 Format:  json
+------------------------------------
+# Reason: first-tx
+Trial balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0x868b8fd259abfcfdf9634c343593b34ef359641d at block 8769019
+------------------------------------
+XXXNot found  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+Using block-1 balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 0 of 0
+pos: 8769018 8769019 8769029 true false
+EndBalCalc: 0 25000000000000000 25000000000000000
+Inserting  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 8769019 of 25000000000000000
+Found  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 8769019 of 25000000000000000
 Block 8769019 is prior to deployment (10000835) of Uniswap V2. Falling back to Maker (0x729d19f657bd0614b4985cf1d82531c67569197b)
 =========================================================
 ===> PRICING FOR 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) using Maker
@@ -47,9 +57,32 @@ Trial balance:
    material:            true
    reconciled:          true
 ---------------------------------------------------
+----------Done  true  --------------------------
+
+------------------------------------
+# Reason: first-tx
+Trial balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0x868b8fd259abfcfdf9634c343593b34ef359641d at block 8769029
+------------------------------------
+XXXFound  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 8769019 of 25000000000000000
+Querying at block 8769019 for 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0x868b8fd259abfcfdf9634c343593b34ef359641d
+Different block  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 8769019 and 8769029 of 25000000000000000
+pos: 8769019 8769029 8769052 false false
+EndBalCalc: 25000000000000000 0 25000000000000000
+Inserting  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 8769029 of 25000000000000000
+Found  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 8769029 of 25000000000000000
+------------------------------------
+# Reason: token
+Trial balance for  0x0ba45a8b5d5575935b8158a88c631e9f9c95a2e5 0x868b8fd259abfcfdf9634c343593b34ef359641d at block 8769029
+------------------------------------
+XXXNot found  0x0ba45a8b5d5575935b8158a88c631e9f9c95a2e5
+Using block-1 balance for  0x0ba45a8b5d5575935b8158a88c631e9f9c95a2e5 at block 0 of 0
+pos: 8769028 8769029 8769052 false false
+EndBalCalc: 0 85000000000000000000 85000000000000000000
+Inserting  0x0ba45a8b5d5575935b8158a88c631e9f9c95a2e5 at block 8769029 of 85000000000000000000
+Found  0x0ba45a8b5d5575935b8158a88c631e9f9c95a2e5 at block 8769029 of 85000000000000000000
 Block 8769029 is prior to deployment (10000835) of Uniswap V2. No other source for tokens prior to UniSwap
 ===================================================
-Previous:               8769019
+Previous:               8769028
 Current:                8769029
 Next:                   8769052
 accountedFor:           0x868b8fd259abfcfdf9634c343593b34ef359641d
@@ -75,49 +108,20 @@ Trial balance:
    material:            true
    reconciled:          true
 ---------------------------------------------------
-Block 8769052 is prior to deployment (10000835) of Uniswap V2. Falling back to Maker (0x729d19f657bd0614b4985cf1d82531c67569197b)
-=========================================================
-===> PRICING FOR 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) using Maker
-=========================================================
-blockNumber:         8769052
-source1 (uni/mkr):   0x729d19f657bd0614b4985cf1d82531c67569197b
-str0 (call):         peek()
-str1 (call/data):    0x0000000000000000000000000000000000000000000000096b794ada83c08000
-int0:                17376500000000000000000000
-int1:                17376500
-bigPrice:            173.765
-price:               173.765
-source:              maker
-===================================================
-Previous:               8769029
-Current:                8769052
-Next:                   8769052
-accountedFor:           0x868b8fd259abfcfdf9634c343593b34ef359641d
-sender:                 0x868b8fd259abfcfdf9634c343593b34ef359641d  ==>  0x0ba45a8b5d5575935b8158a88c631e9f9c95a2e5
-asset:                  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
-hash:                   0x66cdceb982decd5c899ee7a608468eed3b0032b7f146bdef7a96ec0dfecfcc1d
-timestamp:              1571458005
-blockNumber:            8769052.73.0
-priceSource:            173.765 (maker)
---------------------------------------------------- 
-Trial balance:
-   prevBal:             0.025
-   begBal:              0.025 (0.00070223)
-   totalIn:             0
-   totalOut:            0.00024718
-   amountNet:           -0.00024718
-                       ======================= 
-   endBal:              0.02405059 (0)
-   endBalCalc:          0.02475282
-   rollingBalance:      0
---------------------------------------------------- 
-   gasOut:              0.00024718
-   material:            true
-   reconciled:          false
- ^^ we need to fix this ^^
----------------------------------------------------
-Correcting token transfer for unknown income or outflow
-Correcting token transfer for unknown income or outflow
+----------Done  true  --------------------------
+
+------------------------------------
+# Reason: first-tx
+Trial balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0x868b8fd259abfcfdf9634c343593b34ef359641d at block 8769052
+------------------------------------
+XXXFound  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 8769029 of 25000000000000000
+Querying at block 8769029 for 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0x868b8fd259abfcfdf9634c343593b34ef359641d
+Different block  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 8769029 and 8769052 of 25000000000000000
+pos: 8769029 8769052 8769052 false false
+resets endbal from 24050590000000000 24752820000000000
+EndBalCalc: 25000000000000000 -247180000000000 24752820000000000
+Inserting  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 8769052 of 24752820000000000
+Found  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 8769052 of 24752820000000000
 Block 8769052 is prior to deployment (10000835) of Uniswap V2. Falling back to Maker (0x729d19f657bd0614b4985cf1d82531c67569197b)
 =========================================================
 ===> PRICING FOR 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) using Maker
@@ -147,106 +151,82 @@ Trial balance:
    prevBal:             0.025
    begBal:              0.025 (0)
    totalIn:             0
-   totalOut:            0.00094941
-   amountNet:           -0.00094941
+   totalOut:            0.00024718
+   amountNet:           -0.00024718
+                       ======================= 
+   endBal:              0.02475282 (0)
+   endBalCalc:          0.02475282
+   rollingBalance:      0
+--------------------------------------------------- 
+   gasOut:              0.00024718
+   material:            true
+   reconciled:          true
+---------------------------------------------------
+----------Done  true  --------------------------
+
+------------------------------------
+# Reason: first-tx
+Trial balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0x868b8fd259abfcfdf9634c343593b34ef359641d at block 8769052
+------------------------------------
+XXXFound  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 8769052 of 24752820000000000
+Same block  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 8769052 and 8769052 of 24752820000000000
+pos: 8769052 8769052 8769064 false false
+EndBalCalc: 24752820000000000 -702230000000000 24050590000000000
+Inserting  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 8769052 of 24050590000000000
+Found  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 8769052 of 24050590000000000
+Block 8769052 is prior to deployment (10000835) of Uniswap V2. Falling back to Maker (0x729d19f657bd0614b4985cf1d82531c67569197b)
+=========================================================
+===> PRICING FOR 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) using Maker
+=========================================================
+blockNumber:         8769052
+source1 (uni/mkr):   0x729d19f657bd0614b4985cf1d82531c67569197b
+str0 (call):         peek()
+str1 (call/data):    0x0000000000000000000000000000000000000000000000096b794ada83c08000
+int0:                17376500000000000000000000
+int1:                17376500
+bigPrice:            173.765
+price:               173.765
+source:              maker
+===================================================
+Previous:               8769052
+Current:                8769052
+Next:                   8769064
+accountedFor:           0x868b8fd259abfcfdf9634c343593b34ef359641d
+sender:                 0x868b8fd259abfcfdf9634c343593b34ef359641d  ==>  0x2a0c0dbecc7e4d658f48e01e3fa353f44050c208
+asset:                  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
+hash:                   0x90feb158340931c051ccb4def6112b6d46794f739499d7255b5109481b991265
+timestamp:              1571458005
+blockNumber:            8769052.74.0
+priceSource:            173.765 (maker)
+--------------------------------------------------- 
+Trial balance:
+   prevBal:             0.02475282
+   begBal:              0.02475282 (0)
+   totalIn:             0
+   totalOut:            0.00070223
+   amountNet:           -0.00070223
                        ======================= 
    endBal:              0.02405059 (0)
    endBalCalc:          0.02405059
    rollingBalance:      0
 --------------------------------------------------- 
-   correctingOut:       0.00070223
-   gasOut:              0.00024718
-   correctingReason:    intra-block? endbal
+   gasOut:              0.00070223
    material:            true
    reconciled:          true
 ---------------------------------------------------
-Block 8769052 is prior to deployment (10000835) of Uniswap V2. Falling back to Maker (0x729d19f657bd0614b4985cf1d82531c67569197b)
-=========================================================
-===> PRICING FOR 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) using Maker
-=========================================================
-blockNumber:         8769052
-source1 (uni/mkr):   0x729d19f657bd0614b4985cf1d82531c67569197b
-str0 (call):         peek()
-str1 (call/data):    0x0000000000000000000000000000000000000000000000096b794ada83c08000
-int0:                17376500000000000000000000
-int1:                17376500
-bigPrice:            173.765
-price:               173.765
-source:              maker
-===================================================
-Previous:               8769052
-Current:                8769052
-Next:                   8769064
-accountedFor:           0x868b8fd259abfcfdf9634c343593b34ef359641d
-sender:                 0x868b8fd259abfcfdf9634c343593b34ef359641d  ==>  0x2a0c0dbecc7e4d658f48e01e3fa353f44050c208
-asset:                  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
-hash:                   0x90feb158340931c051ccb4def6112b6d46794f739499d7255b5109481b991265
-timestamp:              1571458005
-blockNumber:            8769052.74.0
-priceSource:            173.765 (maker)
---------------------------------------------------- 
-Trial balance:
-   prevBal:             0.02405059
-   begBal:              0.025 (0.00024718)
-   totalIn:             0
-   totalOut:            0.00070223
-   amountNet:           -0.00070223
-                       ======================= 
-   endBal:              0.02405059 (0.00094941)
-   endBalCalc:          0.02429777
-   rollingBalance:      0
---------------------------------------------------- 
-   gasOut:              0.00070223
-   material:            true
-   reconciled:          false
- ^^ we need to fix this ^^
----------------------------------------------------
-Correcting token transfer for unknown income or outflow
-Correcting token transfer for unknown income or outflow
-Block 8769052 is prior to deployment (10000835) of Uniswap V2. Falling back to Maker (0x729d19f657bd0614b4985cf1d82531c67569197b)
-=========================================================
-===> PRICING FOR 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) using Maker
-=========================================================
-blockNumber:         8769052
-source1 (uni/mkr):   0x729d19f657bd0614b4985cf1d82531c67569197b
-str0 (call):         peek()
-str1 (call/data):    0x0000000000000000000000000000000000000000000000096b794ada83c08000
-int0:                17376500000000000000000000
-int1:                17376500
-bigPrice:            173.765
-price:               173.765
-source:              maker
-===================================================
-Previous:               8769052
-Current:                8769052
-Next:                   8769064
-accountedFor:           0x868b8fd259abfcfdf9634c343593b34ef359641d
-sender:                 0x868b8fd259abfcfdf9634c343593b34ef359641d  ==>  0x2a0c0dbecc7e4d658f48e01e3fa353f44050c208
-asset:                  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
-hash:                   0x90feb158340931c051ccb4def6112b6d46794f739499d7255b5109481b991265
-timestamp:              1571458005
-blockNumber:            8769052.74.0
-priceSource:            173.765 (maker)
---------------------------------------------------- 
-Trial balance:
-   prevBal:             0.02405059
-   begBal:              0.025 (-0.00140446)
-   totalIn:             -0.00070223
-   totalOut:            0.00165164
-   amountNet:           -0.00235387
-                       ======================= 
-   endBal:              0.02405059 (0.00094941)
-   endBalCalc:          0.02264613
-   rollingBalance:      0
---------------------------------------------------- 
-   correctingIn:        -0.00070223
-   correctingOut:       0.00094941
-   gasOut:              0.00070223
-   correctingReason:    intra-block? begbal-endbal
-   material:            true
-   reconciled:          false
- ^^ we need to fix this ^^
----------------------------------------------------
+----------Done  true  --------------------------
+
+------------------------------------
+# Reason: token
+Trial balance for  0x0ba45a8b5d5575935b8158a88c631e9f9c95a2e5 0x868b8fd259abfcfdf9634c343593b34ef359641d at block 8769052
+------------------------------------
+XXXFound  0x0ba45a8b5d5575935b8158a88c631e9f9c95a2e5 at block 8769029 of 85000000000000000000
+Querying at block 8769029 for 0x0ba45a8b5d5575935b8158a88c631e9f9c95a2e5 0x868b8fd259abfcfdf9634c343593b34ef359641d
+Different block  0x0ba45a8b5d5575935b8158a88c631e9f9c95a2e5 at block 8769029 and 8769052 of 85000000000000000000
+pos: 8769029 8769052 8769064 false false
+EndBalCalc: 85000000000000000000 -85000000000000000000 0
+Inserting  0x0ba45a8b5d5575935b8158a88c631e9f9c95a2e5 at block 8769052 of 0
+Found  0x0ba45a8b5d5575935b8158a88c631e9f9c95a2e5 at block 8769052 of 0
 Block 8769052 is prior to deployment (10000835) of Uniswap V2. No other source for tokens prior to UniSwap
 ===================================================
 Previous:               8769029
@@ -275,48 +255,31 @@ Trial balance:
    material:            true
    reconciled:          true
 ---------------------------------------------------
-Correcting token transfer for unknown income or outflow
-Block 8769064 is prior to deployment (10000835) of Uniswap V2. Falling back to Maker (0x729d19f657bd0614b4985cf1d82531c67569197b)
-=========================================================
-===> PRICING FOR 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) using Maker
-=========================================================
-blockNumber:         8769064
-source1 (uni/mkr):   0x729d19f657bd0614b4985cf1d82531c67569197b
-str0 (call):         peek()
-str1 (call/data):    0x0000000000000000000000000000000000000000000000096bae95462b620000
-int0:                17378000000000000000000000
-int1:                17378000
-bigPrice:            173.78
-price:               173.78
-source:              maker
-===================================================
-Previous:               8769064
-Current:                8769064
-Next:                   8769064
-accountedFor:           0x868b8fd259abfcfdf9634c343593b34ef359641d
-sender:                 0xa7a7899d944fe658c4b0a1803bab2f490bd3849e  ==>  0x2a0c0dbecc7e4d658f48e01e3fa353f44050c208
-asset:                  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
-hash:                   0x07b939fa3dbb62bc7fc6d2c408d53f15ecca50a54d57fe7bab23f5df1f274033
-timestamp:              1571458209
-blockNumber:            8769064.130.0
-priceSource:            173.78 (maker)
---------------------------------------------------- 
-Trial balance:
-   prevBal:             0.02405059
-   begBal:              0.02405059 (0)
-   totalIn:             0
-   totalOut:            -0.4505622
-   amountNet:           0.4505622
-                       ======================= 
-   endBal:              0.47461279 (0)
-   endBalCalc:          0.47461279
-   rollingBalance:      0
---------------------------------------------------- 
-   correctingOut:       -0.4505622
-   correctingReason:    endbal-out
-   material:            true
-   reconciled:          true
----------------------------------------------------
+----------Done  true  --------------------------
+
+------------------------------------
+# Reason: first-tx
+Trial balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0x868b8fd259abfcfdf9634c343593b34ef359641d at block 8769064
+------------------------------------
+XXXFound  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 8769052 of 24050590000000000
+Querying at block 8769052 for 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0x868b8fd259abfcfdf9634c343593b34ef359641d
+Different block  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 8769052 and 8769064 of 24050590000000000
+pos: 8769052 8769064 8769064 false false
+resets endbal from 474612790000000000 24050590000000000
+EndBalCalc: 24050590000000000 0 24050590000000000
+Inserting  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 8769064 of 24050590000000000
+Found  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 8769064 of 24050590000000000
+------------------------------------
+# Reason: first-tx
+Trial balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0x868b8fd259abfcfdf9634c343593b34ef359641d at block 8769064
+------------------------------------
+XXXFound  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 8769064 of 24050590000000000
+Same block  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 8769064 and 8769064 of 24050590000000000
+pos: 8769064 8769064 8769130 false false
+Correcting ending balance
+EndBalCalc: 24050590000000000 450562200000000000 474612790000000000
+Inserting  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 8769064 of 474612790000000000
+Found  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 8769064 of 474612790000000000
 Block 8769064 is prior to deployment (10000835) of Uniswap V2. Falling back to Maker (0x729d19f657bd0614b4985cf1d82531c67569197b)
 =========================================================
 ===> PRICING FOR 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) using Maker
@@ -335,7 +298,7 @@ Previous:               8769064
 Current:                8769064
 Next:                   8769130
 accountedFor:           0x868b8fd259abfcfdf9634c343593b34ef359641d
-sender:                 0x2a0c0dbecc7e4d658f48e01e3fa353f44050c208  ==>  0x868b8fd259abfcfdf9634c343593b34ef359641d
+sender:                 0xa7a7899d944fe658c4b0a1803bab2f490bd3849e  ==>  0x2a0c0dbecc7e4d658f48e01e3fa353f44050c208
 asset:                  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
 hash:                   0x0934c85fb30abe84acbc26afe3f209593dbe97aac6c205569b88b90376c65033
 timestamp:              1571458209
@@ -345,18 +308,32 @@ priceSource:            173.78 (maker)
 Trial balance:
    prevBal:             0.02405059
    begBal:              0.02405059 (0)
-   totalIn:             0.4505622
-   totalOut:            0
+   totalIn:             0
+   totalOut:            -0.4505622
    amountNet:           0.4505622
                        ======================= 
    endBal:              0.47461279 (0)
    endBalCalc:          0.47461279
    rollingBalance:      0
 --------------------------------------------------- 
-   internalIn:          0.4505622
+   correctingOut:       -0.4505622
+   correctingReason:    endbal-out
    material:            true
    reconciled:          true
 ---------------------------------------------------
+----------Done  true  --------------------------
+
+------------------------------------
+# Reason: first-tx
+Trial balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0x868b8fd259abfcfdf9634c343593b34ef359641d at block 8769130
+------------------------------------
+XXXFound  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 8769064 of 474612790000000000
+Querying at block 8769064 for 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0x868b8fd259abfcfdf9634c343593b34ef359641d
+Different block  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 8769064 and 8769130 of 474612790000000000
+pos: 8769064 8769130 8769141 false false
+EndBalCalc: 474612790000000000 -100021000000000000 374591790000000000
+Inserting  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 8769130 of 374591790000000000
+Found  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 8769130 of 374591790000000000
 Block 8769130 is prior to deployment (10000835) of Uniswap V2. Falling back to Maker (0x729d19f657bd0614b4985cf1d82531c67569197b)
 =========================================================
 ===> PRICING FOR 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) using Maker
@@ -398,6 +375,19 @@ Trial balance:
    material:            true
    reconciled:          true
 ---------------------------------------------------
+----------Done  true  --------------------------
+
+------------------------------------
+# Reason: first-tx
+Trial balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0x868b8fd259abfcfdf9634c343593b34ef359641d at block 8769141
+------------------------------------
+XXXFound  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 8769130 of 374591790000000000
+Querying at block 8769130 for 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0x868b8fd259abfcfdf9634c343593b34ef359641d
+Different block  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 8769130 and 8769141 of 374591790000000000
+pos: 8769130 8769141 8769142 false true
+EndBalCalc: 374591790000000000 -374591790000000000 0
+Inserting  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 8769141 of 0
+Found  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 8769141 of 0
 Block 8769141 is prior to deployment (10000835) of Uniswap V2. Falling back to Maker (0x729d19f657bd0614b4985cf1d82531c67569197b)
 =========================================================
 ===> PRICING FOR 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) using Maker
@@ -439,6 +429,8 @@ Trial balance:
    material:            true
    reconciled:          true
 ---------------------------------------------------
+----------Done  true  --------------------------
+
 {
   "data": [
     {
@@ -530,22 +522,65 @@ Trial balance:
     {
       "accountedFor": "0x868b8fd259abfcfdf9634c343593b34ef359641d",
       "amountIn": "0",
-      "amountNet": "949410000000000",
+      "amountNet": "-247180000000000",
       "amountOut": "0",
       "asset": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
       "assetName": "ETH",
       "begBal": "25000000000000000",
-      "begBalDiff": "247180000000000",
+      "begBalDiff": "0",
       "blockNumber": 8769052,
-      "correctingIn": "1196590000000000",
+      "correctingIn": "0",
       "correctingOut": "0",
-      "correctingReason": "begbal-in-endbal-in",
+      "correctingReason": "",
+      "date": "2019-10-19 04:06:45 UTC",
+      "decimals": 18,
+      "endBal": "24752820000000000",
+      "endBalCalc": "24752820000000000",
+      "endBalDiff": "0",
+      "gasOut": "247180000000000",
+      "internalIn": "0",
+      "internalOut": "0",
+      "logIndex": 0,
+      "minerBaseRewardIn": "0",
+      "minerNephewRewardIn": "0",
+      "minerTxFeeIn": "0",
+      "minerUncleRewardIn": "0",
+      "prefundIn": "0",
+      "prevBal": "25000000000000000",
+      "priceSource": "maker",
+      "recipient": "0x0ba45a8b5d5575935b8158a88c631e9f9c95a2e5",
+      "reconciled": true,
+      "selfDestructIn": "0",
+      "selfDestructOut": "0",
+      "sender": "0x868b8fd259abfcfdf9634c343593b34ef359641d",
+      "spotPrice": 173.765,
+      "symbol": "WEI",
+      "timestamp": 1571458005,
+      "totalIn": "0",
+      "totalOut": "247180000000000",
+      "totalOutLessGas": "0",
+      "transactionHash": "0x66cdceb982decd5c899ee7a608468eed3b0032b7f146bdef7a96ec0dfecfcc1d",
+      "transactionIndex": 73
+    },
+    {
+      "accountedFor": "0x868b8fd259abfcfdf9634c343593b34ef359641d",
+      "amountIn": "0",
+      "amountNet": "-702230000000000",
+      "amountOut": "0",
+      "asset": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+      "assetName": "ETH",
+      "begBal": "24752820000000000",
+      "begBalDiff": "0",
+      "blockNumber": 8769052,
+      "correctingIn": "0",
+      "correctingOut": "0",
+      "correctingReason": "",
       "date": "2019-10-19 04:06:45 UTC",
       "decimals": 18,
       "endBal": "24050590000000000",
-      "endBalCalc": "25949410000000000",
-      "endBalDiff": "1898820000000000",
-      "gasOut": "247180000000000",
+      "endBalCalc": "24050590000000000",
+      "endBalDiff": "0",
+      "gasOut": "702230000000000",
       "internalIn": "0",
       "internalOut": "0",
       "logIndex": 0,
@@ -556,58 +591,15 @@ Trial balance:
       "prefundIn": "0",
       "prevBal": "24752820000000000",
       "priceSource": "maker",
-      "recipient": "0x0ba45a8b5d5575935b8158a88c631e9f9c95a2e5",
-      "reconciled": false,
-      "selfDestructIn": "0",
-      "selfDestructOut": "0",
-      "sender": "0x868b8fd259abfcfdf9634c343593b34ef359641d",
-      "spotPrice": 173.765,
-      "symbol": "WEI",
-      "timestamp": 1571458005,
-      "totalIn": "1196590000000000",
-      "totalOut": "247180000000000",
-      "totalOutLessGas": "0",
-      "transactionHash": "0x66cdceb982decd5c899ee7a608468eed3b0032b7f146bdef7a96ec0dfecfcc1d",
-      "transactionIndex": 73
-    },
-    {
-      "accountedFor": "0x868b8fd259abfcfdf9634c343593b34ef359641d",
-      "amountIn": "0",
-      "amountNet": "949410000000000",
-      "amountOut": "0",
-      "asset": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
-      "assetName": "ETH",
-      "begBal": "25000000000000000",
-      "begBalDiff": "702230000000000",
-      "blockNumber": 8769052,
-      "correctingIn": "1651640000000000",
-      "correctingOut": "0",
-      "correctingReason": "begbal-in-endbal-in",
-      "date": "2019-10-19 04:06:45 UTC",
-      "decimals": 18,
-      "endBal": "24050590000000000",
-      "endBalCalc": "25949410000000000",
-      "endBalDiff": "1898820000000000",
-      "gasOut": "702230000000000",
-      "internalIn": "0",
-      "internalOut": "0",
-      "logIndex": 0,
-      "minerBaseRewardIn": "0",
-      "minerNephewRewardIn": "0",
-      "minerTxFeeIn": "0",
-      "minerUncleRewardIn": "0",
-      "prefundIn": "0",
-      "prevBal": "24297770000000000",
-      "priceSource": "maker",
       "recipient": "0x2a0c0dbecc7e4d658f48e01e3fa353f44050c208",
-      "reconciled": false,
+      "reconciled": true,
       "selfDestructIn": "0",
       "selfDestructOut": "0",
       "sender": "0x868b8fd259abfcfdf9634c343593b34ef359641d",
       "spotPrice": 173.765,
       "symbol": "WEI",
       "timestamp": 1571458005,
-      "totalIn": "1651640000000000",
+      "totalIn": "0",
       "totalOut": "702230000000000",
       "totalOutLessGas": "0",
       "transactionHash": "0x90feb158340931c051ccb4def6112b6d46794f739499d7255b5109481b991265",
@@ -696,49 +688,6 @@ Trial balance:
       "totalIn": "0",
       "totalOut": "-450562200000000000",
       "totalOutLessGas": "-450562200000000000",
-      "transactionHash": "0x07b939fa3dbb62bc7fc6d2c408d53f15ecca50a54d57fe7bab23f5df1f274033",
-      "transactionIndex": 130
-    },
-    {
-      "accountedFor": "0x868b8fd259abfcfdf9634c343593b34ef359641d",
-      "amountIn": "0",
-      "amountNet": "450562200000000000",
-      "amountOut": "0",
-      "asset": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
-      "assetName": "ETH",
-      "begBal": "24050590000000000",
-      "begBalDiff": "0",
-      "blockNumber": 8769064,
-      "correctingIn": "0",
-      "correctingOut": "0",
-      "correctingReason": "",
-      "date": "2019-10-19 04:10:09 UTC",
-      "decimals": 18,
-      "endBal": "474612790000000000",
-      "endBalCalc": "474612790000000000",
-      "endBalDiff": "0",
-      "gasOut": "0",
-      "internalIn": "450562200000000000",
-      "internalOut": "0",
-      "logIndex": 0,
-      "minerBaseRewardIn": "0",
-      "minerNephewRewardIn": "0",
-      "minerTxFeeIn": "0",
-      "minerUncleRewardIn": "0",
-      "prefundIn": "0",
-      "prevBal": "24050590000000000",
-      "priceSource": "maker",
-      "recipient": "0x868b8fd259abfcfdf9634c343593b34ef359641d",
-      "reconciled": true,
-      "selfDestructIn": "0",
-      "selfDestructOut": "0",
-      "sender": "0x2a0c0dbecc7e4d658f48e01e3fa353f44050c208",
-      "spotPrice": 173.78,
-      "symbol": "WEI",
-      "timestamp": 1571458209,
-      "totalIn": "450562200000000000",
-      "totalOut": "0",
-      "totalOutLessGas": "0",
       "transactionHash": "0x0934c85fb30abe84acbc26afe3f209593dbe97aac6c205569b88b90376c65033",
       "transactionIndex": 131
     },

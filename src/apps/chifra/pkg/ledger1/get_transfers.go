@@ -37,9 +37,7 @@ func (r *Reconciler1) GetTransfers(trans *types.Transaction) ([]types.Transfer, 
 			return nil, err
 		} else {
 			for _, stmt := range receiptStatements {
-				if r.RemoveAirdrops && r.SkipAirdrop(stmt.Asset) {
-					continue
-				} else if stmt.IsMaterial() {
+				if stmt.IsMaterial() {
 					statements = append(statements, stmt)
 				}
 			}

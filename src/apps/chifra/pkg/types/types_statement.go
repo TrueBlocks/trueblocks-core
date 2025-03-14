@@ -560,6 +560,18 @@ func (s *Statement) FinishUnmarshal(fileVersion uint64) {
 // EXISTING_CODE
 //
 
+var (
+	sai  = base.HexToAddress("0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359")
+	dai  = base.HexToAddress("0x6b175474e89094c44da98b954eedeac495271d0f")
+	usdc = base.HexToAddress("0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48")
+	usdt = base.HexToAddress("0xdac17f958d2ee523a2206206994597c13d831ec7")
+)
+
+type AppPosition struct {
+	Prev, Current, Next base.Blknum
+	First, Last         bool
+}
+
 func (s *Statement) TotalIn() *base.Wei {
 	vals := []base.Wei{
 		s.AmountIn,
@@ -640,13 +652,6 @@ func (s *Statement) IsEth() bool {
 	return s.Asset == base.FAKE_ETH_ADDRESS
 }
 
-var (
-	sai  = base.HexToAddress("0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359")
-	dai  = base.HexToAddress("0x6b175474e89094c44da98b954eedeac495271d0f")
-	usdc = base.HexToAddress("0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48")
-	usdt = base.HexToAddress("0xdac17f958d2ee523a2206206994597c13d831ec7")
-)
-
 func (s *Statement) IsStableCoin() bool {
 	stables := map[base.Address]bool{
 		sai:  true,
@@ -657,112 +662,36 @@ func (s *Statement) IsStableCoin() bool {
 	return stables[s.Asset]
 }
 
-type AppPosition struct {
-	Prev, Next  base.Blknum
-	First, Last bool
-}
-
-func (s *Statement) DebugStatement(pos *AppPosition) {
-	reportE := func(msg string, val *base.Wei) {
-		isZero := func(val *base.Wei) bool {
-			return val.Cmp(base.NewWei(0)) == 0
+func (stmt *Statement) CorrectBegEndBal() bool {
+	reasons := []string{}
+	if !stmt.BegBalDiff().Equal(base.ZeroWei) {
+		logger.TestLog(true, "Correcting beginning balance")
+		if stmt.BegBalDiff().LessThan(base.ZeroWei) {
+			reasons = append(reasons, "begbal-in")
+			val := new(base.Wei).Add(&stmt.CorrectingIn, stmt.BegBalDiff())
+			stmt.CorrectingIn = *val
+		} else {
+			reasons = append(reasons, "begbal-out")
+			val := new(base.Wei).Add(&stmt.CorrectingOut, stmt.BegBalDiff())
+			stmt.CorrectingOut = *val
 		}
-		logger.TestLog(!isZero(val), msg, val.ToEtherStr(18))
 	}
 
-	report2 := func(msg string, v1 *base.Wei, v2 *base.Wei) {
-		s := ""
-		if v1 != nil {
-			s = v1.ToEtherStr(18)
+	if !stmt.EndBalDiff().Equal(base.ZeroWei) {
+		logger.TestLog(true, "Correcting ending balance")
+		if stmt.EndBalDiff().LessThan(base.ZeroWei) {
+			reasons = append(reasons, "endbal-out")
+			val := new(base.Wei).Add(&stmt.CorrectingOut, stmt.EndBalDiff())
+			stmt.CorrectingOut = *val
+		} else {
+			reasons = append(reasons, "endbal-in")
+			val := new(base.Wei).Add(&stmt.CorrectingIn, stmt.EndBalDiff())
+			stmt.CorrectingIn = *val
 		}
-		if v2 != nil {
-			s += " (" + v2.ToEtherStr(18) + ")"
-		}
-		logger.TestLog(true, msg, s)
 	}
 
-	reportL := func(msg string) {
-		report2(msg, nil, nil)
-	}
-
-	report1 := func(msg string, val *base.Wei) {
-		report2(msg, val, nil)
-	}
-
-	logger.TestLog(true, "===================================================")
-	logger.TestLog(true, "Previous:              ", pos.Prev)
-	logger.TestLog(true, "Current:               ", s.BlockNumber)
-	logger.TestLog(true, "Next:                  ", pos.Next)
-	logger.TestLog(true, "accountedFor:          ", s.AccountedFor)
-	logger.TestLog(true, "sender:                ", s.Sender, " ==> ", s.Recipient)
-	logger.TestLog(true, "asset:                 ", s.Asset, "("+s.Symbol+")", fmt.Sprintf("decimals: %d", s.Decimals))
-	logger.TestLog(true, "hash:                  ", s.TransactionHash)
-	logger.TestLog(true, "timestamp:             ", s.Timestamp)
-	logger.TestLog(true, fmt.Sprintf("blockNumber:            %d.%d.%d", s.BlockNumber, s.TransactionIndex, s.LogIndex))
-	logger.TestLog(true, "priceSource:           ", s.SpotPrice, "("+s.PriceSource+")")
-	reportL("---------------------------------------------------")
-	logger.TestLog(true, "Trial balance:")
-	report1("   prevBal:            ", &s.PrevBal)
-	report2("   begBal:             ", &s.BegBal, s.EndBalDiff())
-	report1("   totalIn:            ", s.TotalIn())
-	report1("   totalOut:           ", s.TotalOut())
-	report1("   amountNet:          ", s.AmountNet())
-	reportL("                       =======================")
-	report2("   endBal:             ", &s.EndBal, s.BegBalDiff())
-	report1("   endBalCalc:         ", s.EndBalCalc())
-	report1("   rollingBalance:     ", &s.RollingBalance)
-	reportL("---------------------------------------------------")
-	reportE("   amountIn:           ", &s.AmountIn)
-	reportE("   internalIn:         ", &s.InternalIn)
-	reportE("   minerBaseRewardIn:  ", &s.MinerBaseRewardIn)
-	reportE("   minerNephewRewardIn:", &s.MinerNephewRewardIn)
-	reportE("   minerTxFeeIn:       ", &s.MinerTxFeeIn)
-	reportE("   minerUncleRewardIn: ", &s.MinerUncleRewardIn)
-	reportE("   correctingIn:       ", &s.CorrectingIn)
-	reportE("   prefundIn:          ", &s.PrefundIn)
-	reportE("   selfDestructIn:     ", &s.SelfDestructIn)
-	reportE("   amountOut:          ", &s.AmountOut)
-	reportE("   internalOut:        ", &s.InternalOut)
-	reportE("   correctingOut:      ", &s.CorrectingOut)
-	reportE("   selfDestructOut:    ", &s.SelfDestructOut)
-	reportE("   gasOut:             ", &s.GasOut)
-	logger.TestLog(s.CorrectingReason != "", "   correctingReason:   ", s.CorrectingReason)
-	logger.TestLog(true, "   material:           ", s.IsMaterial())
-	logger.TestLog(true, "   reconciled:         ", s.Reconciled())
-	if !s.Reconciled() {
-		// TODO: BOGUS - FIX THIS
-		logger.TestLog(true, " ^^ we need to fix this ^^")
-	}
-	logger.TestLog(true, "---------------------------------------------------")
-}
-
-type NullTest struct {
-	NLogs int
-	To    base.Address
-}
-
-func (s *Statement) IsNullTransfer(nLogs int, to base.Address) bool {
-	lotsOfLogs := nLogs > 10
-	mayBeAirdrop := s.Sender.IsZero() || s.Sender == to
-	if !lotsOfLogs && !mayBeAirdrop {
-		return false
-	}
-
-	hasBalanceChange := !s.IsMaterial() || !s.EndBal.Equal(&s.BegBal)
-	if hasBalanceChange {
-		return false
-	}
-
-	logger.TestLog(true, "A possible nullTransfer")
-	logger.TestLog(true, "  nLogs:            ", nLogs)
-	logger.TestLog(true, "    lotsOfLogs:      -->", lotsOfLogs)
-	logger.TestLog(true, "  Sender.IsZero:    ", s.Sender, s.Sender.IsZero())
-	logger.TestLog(true, "  or Sender == To:  ", s.Sender == to)
-	logger.TestLog(true, "    mayBeAirdrop:    -->", mayBeAirdrop)
-	logger.TestLog(true, "  EndBal-BegBal:    ", s.EndBal.Cmp(&s.BegBal))
-	logger.TestLog(true, "  Material:         ", s.IsMaterial())
-	logger.TestLog(true, "    hasBalanceChange: -->", hasBalanceChange)
-	return true
+	stmt.CorrectingReason = strings.Join(reasons, "-")
+	return stmt.Reconciled()
 }
 
 // EXISTING_CODE

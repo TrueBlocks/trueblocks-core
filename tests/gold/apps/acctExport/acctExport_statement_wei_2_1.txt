@@ -1,4 +1,4 @@
-chifra export  0x05a56e2d52c817161883f50c441c3228cfe54d9f --accounting --statements --fmt json --first_record 0 --max_records 15 --output statement_wei_2_1_out.file
+chifra export  0x05a56e2d52c817161883f50c441c3228cfe54d9f --accounting --statements --fmt json --max_records 15 --output statement_wei_2_1_out.file
 TEST[DATE|TIME] Addrs:  [0x05a56e2d52c817161883f50c441c3228cfe54d9f]
 TEST[DATE|TIME] Accounting:  true
 TEST[DATE|TIME] Statements:  true
@@ -7,6 +7,16 @@ TEST[DATE|TIME] OutputFn:  statement_wei_2_1_out.file
 TEST[DATE|TIME] Caps:  cache,decache,ether
 TEST[DATE|TIME] Format:  json
 INFO[DATE|TIME] { "outputFilename": "--output_filename--" }
+INFO[DATE|TIME] ------------------------------------
+INFO[DATE|TIME] # Reason: first-tx
+INFO[DATE|TIME] Trial balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0x05a56e2d52c817161883f50c441c3228cfe54d9f at block 1
+INFO[DATE|TIME] ------------------------------------
+INFO[DATE|TIME] XXXNot found  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+INFO[DATE|TIME] Using block-1 balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 0 of 0
+INFO[DATE|TIME] pos: 0 1 5 true false
+INFO[DATE|TIME] EndBalCalc: 0 5000000000000000000 5000000000000000000
+INFO[DATE|TIME] Inserting  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 1 of 5000000000000000000
+INFO[DATE|TIME] Found  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 1 of 5000000000000000000
 TEST[DATE|TIME] Block 1 is prior to deployment (3684349) of Maker. No fallback pricing method
 TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] Previous:               0
@@ -35,6 +45,19 @@ TEST[DATE|TIME]    minerBaseRewardIn:   5
 TEST[DATE|TIME]    material:            true
 TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
+INFO[DATE|TIME] ----------Done  true  --------------------------
+INFO[DATE|TIME] 
+INFO[DATE|TIME] ------------------------------------
+INFO[DATE|TIME] # Reason: first-tx
+INFO[DATE|TIME] Trial balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0x05a56e2d52c817161883f50c441c3228cfe54d9f at block 5
+INFO[DATE|TIME] ------------------------------------
+INFO[DATE|TIME] XXXFound  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 1 of 5000000000000000000
+INFO[DATE|TIME] Querying at block 1 for 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0x05a56e2d52c817161883f50c441c3228cfe54d9f
+INFO[DATE|TIME] Different block  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 1 and 5 of 5000000000000000000
+INFO[DATE|TIME] pos: 1 5 56 false false
+INFO[DATE|TIME] EndBalCalc: 5000000000000000000 5000000000000000000 10000000000000000000
+INFO[DATE|TIME] Inserting  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 5 of 10000000000000000000
+INFO[DATE|TIME] Found  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 5 of 10000000000000000000
 TEST[DATE|TIME] Block 5 is prior to deployment (3684349) of Maker. No fallback pricing method
 TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] Previous:               1
@@ -63,6 +86,19 @@ TEST[DATE|TIME]    minerBaseRewardIn:   5
 TEST[DATE|TIME]    material:            true
 TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
+INFO[DATE|TIME] ----------Done  true  --------------------------
+INFO[DATE|TIME] 
+INFO[DATE|TIME] ------------------------------------
+INFO[DATE|TIME] # Reason: first-tx
+INFO[DATE|TIME] Trial balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0x05a56e2d52c817161883f50c441c3228cfe54d9f at block 56
+INFO[DATE|TIME] ------------------------------------
+INFO[DATE|TIME] XXXFound  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 5 of 10000000000000000000
+INFO[DATE|TIME] Querying at block 5 for 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0x05a56e2d52c817161883f50c441c3228cfe54d9f
+INFO[DATE|TIME] Different block  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 5 and 56 of 10000000000000000000
+INFO[DATE|TIME] pos: 5 56 235 false false
+INFO[DATE|TIME] EndBalCalc: 10000000000000000000 3750000000000000000 13750000000000000000
+INFO[DATE|TIME] Inserting  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 56 of 13750000000000000000
+INFO[DATE|TIME] Found  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 56 of 13750000000000000000
 TEST[DATE|TIME] Block 56 is prior to deployment (3684349) of Maker. No fallback pricing method
 TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] Previous:               5
@@ -91,6 +127,19 @@ TEST[DATE|TIME]    minerUncleRewardIn:  3.75
 TEST[DATE|TIME]    material:            true
 TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
+INFO[DATE|TIME] ----------Done  true  --------------------------
+INFO[DATE|TIME] 
+INFO[DATE|TIME] ------------------------------------
+INFO[DATE|TIME] # Reason: first-tx
+INFO[DATE|TIME] Trial balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0x05a56e2d52c817161883f50c441c3228cfe54d9f at block 235
+INFO[DATE|TIME] ------------------------------------
+INFO[DATE|TIME] XXXFound  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 56 of 13750000000000000000
+INFO[DATE|TIME] Querying at block 56 for 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0x05a56e2d52c817161883f50c441c3228cfe54d9f
+INFO[DATE|TIME] Different block  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 56 and 235 of 13750000000000000000
+INFO[DATE|TIME] pos: 56 235 247 false false
+INFO[DATE|TIME] EndBalCalc: 13750000000000000000 5000000000000000000 18750000000000000000
+INFO[DATE|TIME] Inserting  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 235 of 18750000000000000000
+INFO[DATE|TIME] Found  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 235 of 18750000000000000000
 TEST[DATE|TIME] Block 235 is prior to deployment (3684349) of Maker. No fallback pricing method
 TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] Previous:               56
@@ -119,6 +168,19 @@ TEST[DATE|TIME]    minerBaseRewardIn:   5
 TEST[DATE|TIME]    material:            true
 TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
+INFO[DATE|TIME] ----------Done  true  --------------------------
+INFO[DATE|TIME] 
+INFO[DATE|TIME] ------------------------------------
+INFO[DATE|TIME] # Reason: first-tx
+INFO[DATE|TIME] Trial balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0x05a56e2d52c817161883f50c441c3228cfe54d9f at block 247
+INFO[DATE|TIME] ------------------------------------
+INFO[DATE|TIME] XXXFound  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 235 of 18750000000000000000
+INFO[DATE|TIME] Querying at block 235 for 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0x05a56e2d52c817161883f50c441c3228cfe54d9f
+INFO[DATE|TIME] Different block  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 235 and 247 of 18750000000000000000
+INFO[DATE|TIME] pos: 235 247 348 false false
+INFO[DATE|TIME] EndBalCalc: 18750000000000000000 3125000000000000000 21875000000000000000
+INFO[DATE|TIME] Inserting  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 247 of 21875000000000000000
+INFO[DATE|TIME] Found  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 247 of 21875000000000000000
 TEST[DATE|TIME] Block 247 is prior to deployment (3684349) of Maker. No fallback pricing method
 TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] Previous:               235
@@ -147,6 +209,19 @@ TEST[DATE|TIME]    minerUncleRewardIn:  3.125
 TEST[DATE|TIME]    material:            true
 TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
+INFO[DATE|TIME] ----------Done  true  --------------------------
+INFO[DATE|TIME] 
+INFO[DATE|TIME] ------------------------------------
+INFO[DATE|TIME] # Reason: first-tx
+INFO[DATE|TIME] Trial balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0x05a56e2d52c817161883f50c441c3228cfe54d9f at block 348
+INFO[DATE|TIME] ------------------------------------
+INFO[DATE|TIME] XXXFound  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 247 of 21875000000000000000
+INFO[DATE|TIME] Querying at block 247 for 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0x05a56e2d52c817161883f50c441c3228cfe54d9f
+INFO[DATE|TIME] Different block  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 247 and 348 of 21875000000000000000
+INFO[DATE|TIME] pos: 247 348 500 false false
+INFO[DATE|TIME] EndBalCalc: 21875000000000000000 5000000000000000000 26875000000000000000
+INFO[DATE|TIME] Inserting  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 348 of 26875000000000000000
+INFO[DATE|TIME] Found  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 348 of 26875000000000000000
 TEST[DATE|TIME] Block 348 is prior to deployment (3684349) of Maker. No fallback pricing method
 TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] Previous:               247
@@ -175,6 +250,19 @@ TEST[DATE|TIME]    minerBaseRewardIn:   5
 TEST[DATE|TIME]    material:            true
 TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
+INFO[DATE|TIME] ----------Done  true  --------------------------
+INFO[DATE|TIME] 
+INFO[DATE|TIME] ------------------------------------
+INFO[DATE|TIME] # Reason: first-tx
+INFO[DATE|TIME] Trial balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0x05a56e2d52c817161883f50c441c3228cfe54d9f at block 500
+INFO[DATE|TIME] ------------------------------------
+INFO[DATE|TIME] XXXFound  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 348 of 26875000000000000000
+INFO[DATE|TIME] Querying at block 348 for 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0x05a56e2d52c817161883f50c441c3228cfe54d9f
+INFO[DATE|TIME] Different block  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 348 and 500 of 26875000000000000000
+INFO[DATE|TIME] pos: 348 500 563 false false
+INFO[DATE|TIME] EndBalCalc: 26875000000000000000 3750000000000000000 30625000000000000000
+INFO[DATE|TIME] Inserting  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 500 of 30625000000000000000
+INFO[DATE|TIME] Found  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 500 of 30625000000000000000
 TEST[DATE|TIME] Block 500 is prior to deployment (3684349) of Maker. No fallback pricing method
 TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] Previous:               348
@@ -203,6 +291,19 @@ TEST[DATE|TIME]    minerUncleRewardIn:  3.75
 TEST[DATE|TIME]    material:            true
 TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
+INFO[DATE|TIME] ----------Done  true  --------------------------
+INFO[DATE|TIME] 
+INFO[DATE|TIME] ------------------------------------
+INFO[DATE|TIME] # Reason: first-tx
+INFO[DATE|TIME] Trial balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0x05a56e2d52c817161883f50c441c3228cfe54d9f at block 563
+INFO[DATE|TIME] ------------------------------------
+INFO[DATE|TIME] XXXFound  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 500 of 30625000000000000000
+INFO[DATE|TIME] Querying at block 500 for 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0x05a56e2d52c817161883f50c441c3228cfe54d9f
+INFO[DATE|TIME] Different block  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 500 and 563 of 30625000000000000000
+INFO[DATE|TIME] pos: 500 563 987 false false
+INFO[DATE|TIME] EndBalCalc: 30625000000000000000 3750000000000000000 34375000000000000000
+INFO[DATE|TIME] Inserting  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 563 of 34375000000000000000
+INFO[DATE|TIME] Found  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 563 of 34375000000000000000
 TEST[DATE|TIME] Block 563 is prior to deployment (3684349) of Maker. No fallback pricing method
 TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] Previous:               500
@@ -231,6 +332,19 @@ TEST[DATE|TIME]    minerUncleRewardIn:  3.75
 TEST[DATE|TIME]    material:            true
 TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
+INFO[DATE|TIME] ----------Done  true  --------------------------
+INFO[DATE|TIME] 
+INFO[DATE|TIME] ------------------------------------
+INFO[DATE|TIME] # Reason: first-tx
+INFO[DATE|TIME] Trial balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0x05a56e2d52c817161883f50c441c3228cfe54d9f at block 987
+INFO[DATE|TIME] ------------------------------------
+INFO[DATE|TIME] XXXFound  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 563 of 34375000000000000000
+INFO[DATE|TIME] Querying at block 563 for 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0x05a56e2d52c817161883f50c441c3228cfe54d9f
+INFO[DATE|TIME] Different block  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 563 and 987 of 34375000000000000000
+INFO[DATE|TIME] pos: 563 987 1450 false false
+INFO[DATE|TIME] EndBalCalc: 34375000000000000000 2500000000000000000 36875000000000000000
+INFO[DATE|TIME] Inserting  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 987 of 36875000000000000000
+INFO[DATE|TIME] Found  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 987 of 36875000000000000000
 TEST[DATE|TIME] Block 987 is prior to deployment (3684349) of Maker. No fallback pricing method
 TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] Previous:               563
@@ -259,6 +373,19 @@ TEST[DATE|TIME]    minerUncleRewardIn:  2.5
 TEST[DATE|TIME]    material:            true
 TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
+INFO[DATE|TIME] ----------Done  true  --------------------------
+INFO[DATE|TIME] 
+INFO[DATE|TIME] ------------------------------------
+INFO[DATE|TIME] # Reason: first-tx
+INFO[DATE|TIME] Trial balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0x05a56e2d52c817161883f50c441c3228cfe54d9f at block 1450
+INFO[DATE|TIME] ------------------------------------
+INFO[DATE|TIME] XXXFound  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 987 of 36875000000000000000
+INFO[DATE|TIME] Querying at block 987 for 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0x05a56e2d52c817161883f50c441c3228cfe54d9f
+INFO[DATE|TIME] Different block  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 987 and 1450 of 36875000000000000000
+INFO[DATE|TIME] pos: 987 1450 1580 false false
+INFO[DATE|TIME] EndBalCalc: 36875000000000000000 5156250000000000000 42031250000000000000
+INFO[DATE|TIME] Inserting  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 1450 of 42031250000000000000
+INFO[DATE|TIME] Found  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 1450 of 42031250000000000000
 TEST[DATE|TIME] Block 1450 is prior to deployment (3684349) of Maker. No fallback pricing method
 TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] Previous:               987
@@ -288,6 +415,19 @@ TEST[DATE|TIME]    minerNephewRewardIn: 0.15625
 TEST[DATE|TIME]    material:            true
 TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
+INFO[DATE|TIME] ----------Done  true  --------------------------
+INFO[DATE|TIME] 
+INFO[DATE|TIME] ------------------------------------
+INFO[DATE|TIME] # Reason: first-tx
+INFO[DATE|TIME] Trial balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0x05a56e2d52c817161883f50c441c3228cfe54d9f at block 1580
+INFO[DATE|TIME] ------------------------------------
+INFO[DATE|TIME] XXXFound  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 1450 of 42031250000000000000
+INFO[DATE|TIME] Querying at block 1450 for 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0x05a56e2d52c817161883f50c441c3228cfe54d9f
+INFO[DATE|TIME] Different block  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 1450 and 1580 of 42031250000000000000
+INFO[DATE|TIME] pos: 1450 1580 1586 false false
+INFO[DATE|TIME] EndBalCalc: 42031250000000000000 3750000000000000000 45781250000000000000
+INFO[DATE|TIME] Inserting  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 1580 of 45781250000000000000
+INFO[DATE|TIME] Found  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 1580 of 45781250000000000000
 TEST[DATE|TIME] Block 1580 is prior to deployment (3684349) of Maker. No fallback pricing method
 TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] Previous:               1450
@@ -316,6 +456,19 @@ TEST[DATE|TIME]    minerUncleRewardIn:  3.75
 TEST[DATE|TIME]    material:            true
 TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
+INFO[DATE|TIME] ----------Done  true  --------------------------
+INFO[DATE|TIME] 
+INFO[DATE|TIME] ------------------------------------
+INFO[DATE|TIME] # Reason: first-tx
+INFO[DATE|TIME] Trial balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0x05a56e2d52c817161883f50c441c3228cfe54d9f at block 1586
+INFO[DATE|TIME] ------------------------------------
+INFO[DATE|TIME] XXXFound  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 1580 of 45781250000000000000
+INFO[DATE|TIME] Querying at block 1580 for 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0x05a56e2d52c817161883f50c441c3228cfe54d9f
+INFO[DATE|TIME] Different block  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 1580 and 1586 of 45781250000000000000
+INFO[DATE|TIME] pos: 1580 1586 1861 false false
+INFO[DATE|TIME] EndBalCalc: 45781250000000000000 3750000000000000000 49531250000000000000
+INFO[DATE|TIME] Inserting  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 1586 of 49531250000000000000
+INFO[DATE|TIME] Found  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 1586 of 49531250000000000000
 TEST[DATE|TIME] Block 1586 is prior to deployment (3684349) of Maker. No fallback pricing method
 TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] Previous:               1580
@@ -344,6 +497,19 @@ TEST[DATE|TIME]    minerUncleRewardIn:  3.75
 TEST[DATE|TIME]    material:            true
 TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
+INFO[DATE|TIME] ----------Done  true  --------------------------
+INFO[DATE|TIME] 
+INFO[DATE|TIME] ------------------------------------
+INFO[DATE|TIME] # Reason: first-tx
+INFO[DATE|TIME] Trial balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0x05a56e2d52c817161883f50c441c3228cfe54d9f at block 1861
+INFO[DATE|TIME] ------------------------------------
+INFO[DATE|TIME] XXXFound  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 1586 of 49531250000000000000
+INFO[DATE|TIME] Querying at block 1586 for 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0x05a56e2d52c817161883f50c441c3228cfe54d9f
+INFO[DATE|TIME] Different block  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 1586 and 1861 of 49531250000000000000
+INFO[DATE|TIME] pos: 1586 1861 1912 false false
+INFO[DATE|TIME] EndBalCalc: 49531250000000000000 5000000000000000000 54531250000000000000
+INFO[DATE|TIME] Inserting  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 1861 of 54531250000000000000
+INFO[DATE|TIME] Found  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 1861 of 54531250000000000000
 TEST[DATE|TIME] Block 1861 is prior to deployment (3684349) of Maker. No fallback pricing method
 TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] Previous:               1586
@@ -372,6 +538,19 @@ TEST[DATE|TIME]    minerBaseRewardIn:   5
 TEST[DATE|TIME]    material:            true
 TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
+INFO[DATE|TIME] ----------Done  true  --------------------------
+INFO[DATE|TIME] 
+INFO[DATE|TIME] ------------------------------------
+INFO[DATE|TIME] # Reason: first-tx
+INFO[DATE|TIME] Trial balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0x05a56e2d52c817161883f50c441c3228cfe54d9f at block 1912
+INFO[DATE|TIME] ------------------------------------
+INFO[DATE|TIME] XXXFound  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 1861 of 54531250000000000000
+INFO[DATE|TIME] Querying at block 1861 for 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0x05a56e2d52c817161883f50c441c3228cfe54d9f
+INFO[DATE|TIME] Different block  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 1861 and 1912 of 54531250000000000000
+INFO[DATE|TIME] pos: 1861 1912 2057 false false
+INFO[DATE|TIME] EndBalCalc: 54531250000000000000 3750000000000000000 58281250000000000000
+INFO[DATE|TIME] Inserting  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 1912 of 58281250000000000000
+INFO[DATE|TIME] Found  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 1912 of 58281250000000000000
 TEST[DATE|TIME] Block 1912 is prior to deployment (3684349) of Maker. No fallback pricing method
 TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] Previous:               1861
@@ -400,6 +579,19 @@ TEST[DATE|TIME]    minerUncleRewardIn:  3.75
 TEST[DATE|TIME]    material:            true
 TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
+INFO[DATE|TIME] ----------Done  true  --------------------------
+INFO[DATE|TIME] 
+INFO[DATE|TIME] ------------------------------------
+INFO[DATE|TIME] # Reason: first-tx
+INFO[DATE|TIME] Trial balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0x05a56e2d52c817161883f50c441c3228cfe54d9f at block 2057
+INFO[DATE|TIME] ------------------------------------
+INFO[DATE|TIME] XXXFound  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 1912 of 58281250000000000000
+INFO[DATE|TIME] Querying at block 1912 for 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0x05a56e2d52c817161883f50c441c3228cfe54d9f
+INFO[DATE|TIME] Different block  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 1912 and 2057 of 58281250000000000000
+INFO[DATE|TIME] pos: 1912 2057 2256 false false
+INFO[DATE|TIME] EndBalCalc: 58281250000000000000 5000000000000000000 63281250000000000000
+INFO[DATE|TIME] Inserting  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 2057 of 63281250000000000000
+INFO[DATE|TIME] Found  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 2057 of 63281250000000000000
 TEST[DATE|TIME] Block 2057 is prior to deployment (3684349) of Maker. No fallback pricing method
 TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] Previous:               1912
@@ -428,6 +620,19 @@ TEST[DATE|TIME]    minerBaseRewardIn:   5
 TEST[DATE|TIME]    material:            true
 TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
+INFO[DATE|TIME] ----------Done  true  --------------------------
+INFO[DATE|TIME] 
+INFO[DATE|TIME] ------------------------------------
+INFO[DATE|TIME] # Reason: first-tx
+INFO[DATE|TIME] Trial balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0x05a56e2d52c817161883f50c441c3228cfe54d9f at block 2256
+INFO[DATE|TIME] ------------------------------------
+INFO[DATE|TIME] XXXFound  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 2057 of 63281250000000000000
+INFO[DATE|TIME] Querying at block 2057 for 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0x05a56e2d52c817161883f50c441c3228cfe54d9f
+INFO[DATE|TIME] Different block  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 2057 and 2256 of 63281250000000000000
+INFO[DATE|TIME] pos: 2057 2256 2392 false false
+INFO[DATE|TIME] EndBalCalc: 63281250000000000000 5000000000000000000 68281250000000000000
+INFO[DATE|TIME] Inserting  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 2256 of 68281250000000000000
+INFO[DATE|TIME] Found  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 2256 of 68281250000000000000
 TEST[DATE|TIME] Block 2256 is prior to deployment (3684349) of Maker. No fallback pricing method
 TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] Previous:               2057
@@ -456,6 +661,19 @@ TEST[DATE|TIME]    minerBaseRewardIn:   5
 TEST[DATE|TIME]    material:            true
 TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
+INFO[DATE|TIME] ----------Done  true  --------------------------
+INFO[DATE|TIME] 
+INFO[DATE|TIME] ------------------------------------
+INFO[DATE|TIME] # Reason: first-tx
+INFO[DATE|TIME] Trial balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0x05a56e2d52c817161883f50c441c3228cfe54d9f at block 2392
+INFO[DATE|TIME] ------------------------------------
+INFO[DATE|TIME] XXXFound  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 2256 of 68281250000000000000
+INFO[DATE|TIME] Querying at block 2256 for 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0x05a56e2d52c817161883f50c441c3228cfe54d9f
+INFO[DATE|TIME] Different block  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 2256 and 2392 of 68281250000000000000
+INFO[DATE|TIME] pos: 2256 2392 2516 false false
+INFO[DATE|TIME] EndBalCalc: 68281250000000000000 5156250000000000000 73437500000000000000
+INFO[DATE|TIME] Inserting  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 2392 of 73437500000000000000
+INFO[DATE|TIME] Found  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 2392 of 73437500000000000000
 TEST[DATE|TIME] Block 2392 is prior to deployment (3684349) of Maker. No fallback pricing method
 TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] Previous:               2256
@@ -485,6 +703,19 @@ TEST[DATE|TIME]    minerNephewRewardIn: 0.15625
 TEST[DATE|TIME]    material:            true
 TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
+INFO[DATE|TIME] ----------Done  true  --------------------------
+INFO[DATE|TIME] 
+INFO[DATE|TIME] ------------------------------------
+INFO[DATE|TIME] # Reason: first-tx
+INFO[DATE|TIME] Trial balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0x05a56e2d52c817161883f50c441c3228cfe54d9f at block 2516
+INFO[DATE|TIME] ------------------------------------
+INFO[DATE|TIME] XXXFound  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 2392 of 73437500000000000000
+INFO[DATE|TIME] Querying at block 2392 for 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0x05a56e2d52c817161883f50c441c3228cfe54d9f
+INFO[DATE|TIME] Different block  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 2392 and 2516 of 73437500000000000000
+INFO[DATE|TIME] pos: 2392 2516 3962 false false
+INFO[DATE|TIME] EndBalCalc: 73437500000000000000 3750000000000000000 77187500000000000000
+INFO[DATE|TIME] Inserting  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 2516 of 77187500000000000000
+INFO[DATE|TIME] Found  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 2516 of 77187500000000000000
 TEST[DATE|TIME] Block 2516 is prior to deployment (3684349) of Maker. No fallback pricing method
 TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] Previous:               2392
@@ -513,6 +744,19 @@ TEST[DATE|TIME]    minerUncleRewardIn:  3.75
 TEST[DATE|TIME]    material:            true
 TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
+INFO[DATE|TIME] ----------Done  true  --------------------------
+INFO[DATE|TIME] 
+INFO[DATE|TIME] ------------------------------------
+INFO[DATE|TIME] # Reason: first-tx
+INFO[DATE|TIME] Trial balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0x05a56e2d52c817161883f50c441c3228cfe54d9f at block 3962
+INFO[DATE|TIME] ------------------------------------
+INFO[DATE|TIME] XXXFound  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 2516 of 77187500000000000000
+INFO[DATE|TIME] Querying at block 2516 for 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0x05a56e2d52c817161883f50c441c3228cfe54d9f
+INFO[DATE|TIME] Different block  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 2516 and 3962 of 77187500000000000000
+INFO[DATE|TIME] pos: 2516 3962 4256 false false
+INFO[DATE|TIME] EndBalCalc: 77187500000000000000 3750000000000000000 80937500000000000000
+INFO[DATE|TIME] Inserting  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 3962 of 80937500000000000000
+INFO[DATE|TIME] Found  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 3962 of 80937500000000000000
 TEST[DATE|TIME] Block 3962 is prior to deployment (3684349) of Maker. No fallback pricing method
 TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] Previous:               2516
@@ -541,6 +785,19 @@ TEST[DATE|TIME]    minerUncleRewardIn:  3.75
 TEST[DATE|TIME]    material:            true
 TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
+INFO[DATE|TIME] ----------Done  true  --------------------------
+INFO[DATE|TIME] 
+INFO[DATE|TIME] ------------------------------------
+INFO[DATE|TIME] # Reason: first-tx
+INFO[DATE|TIME] Trial balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0x05a56e2d52c817161883f50c441c3228cfe54d9f at block 4256
+INFO[DATE|TIME] ------------------------------------
+INFO[DATE|TIME] XXXFound  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 3962 of 80937500000000000000
+INFO[DATE|TIME] Querying at block 3962 for 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0x05a56e2d52c817161883f50c441c3228cfe54d9f
+INFO[DATE|TIME] Different block  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 3962 and 4256 of 80937500000000000000
+INFO[DATE|TIME] pos: 3962 4256 4257 false true
+INFO[DATE|TIME] EndBalCalc: 80937500000000000000 3750000000000000000 84687500000000000000
+INFO[DATE|TIME] Inserting  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 4256 of 84687500000000000000
+INFO[DATE|TIME] Found  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 4256 of 84687500000000000000
 TEST[DATE|TIME] Block 4256 is prior to deployment (3684349) of Maker. No fallback pricing method
 TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] Previous:               3962
@@ -569,6 +826,8 @@ TEST[DATE|TIME]    minerUncleRewardIn:  3.75
 TEST[DATE|TIME]    material:            true
 TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
+INFO[DATE|TIME] ----------Done  true  --------------------------
+INFO[DATE|TIME] 
 ----
 Results in ./statement_wei_2_1_out.file
 {

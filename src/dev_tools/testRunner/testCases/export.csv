@@ -8,7 +8,6 @@ on       ,both ,fast  ,export   ,apps ,acctExport ,cnt_w_apps              ,y   
 on       ,both ,fast  ,export   ,apps ,acctExport ,cnt_w_receipts          ,y    ,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & count & receipts & last_block = 15508000
 on       ,both ,fast  ,export   ,apps ,acctExport ,cnt_w_logs              ,y    ,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & count & logs & last_block = 15508000
 on       ,both ,fast  ,export   ,apps ,acctExport ,cnt_w_traces            ,y    ,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & count & traces & last_block = 15508000
-neigh    ,both ,fast  ,export   ,apps ,acctExport ,cnt_w_neighbors         ,y    ,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & count & neighbors & last_block = 15508000
 
 # Testing --appearances and the _record and _block options
 on       ,both ,fast  ,export   ,apps ,acctExport ,100_export_n            ,n    ,addrs = 0x05a56e2d52c817161883f50c441c3228cfe54d9f & appearances & fmt = txt & max_records = 100
@@ -45,6 +44,7 @@ on       ,both ,fast  ,export   ,apps ,acctExport ,export_receipts         ,y   
 on       ,both ,fast  ,export   ,apps ,acctExport ,export_receipts_v       ,y    ,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & max_records = 3 & receipts & fmt = json & verbose
 
 # Testing --neighbors (disabled)
+neigh    ,both ,fast  ,export   ,apps ,acctExport ,cnt_w_neighbors         ,y    ,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & count & neighbors & last_block = 15508000
 neigh    ,both ,fast  ,export   ,apps ,acctExport ,neighbor1               ,y    ,addrs = 0xbb9bc244d798123fde783fcc1c72d3bb8c189413 & max_records = 3 & neighbors
 neigh    ,both ,fast  ,export   ,apps ,acctExport ,neighbor2               ,y    ,addrs = 0xbb9bc244d798123fde783fcc1c72d3bb8c189413 & max_records = 3 & neighbors
 neigh    ,both ,fast  ,export   ,apps ,acctExport ,neighbor3               ,y    ,addrs = 0xffeac0305ede3a915295ec8e61c7f881006f4474 & neighbors & first_block = 0 & last_block = 10
@@ -178,13 +178,13 @@ on       ,both ,fast  ,export   ,apps ,acctExport ,statement_unfiltered    ,y   
 on       ,both ,fast  ,export   ,apps ,acctExport ,accounting_to_cache     ,y    ,addrs = 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c & accounting & statements & last_block = 100
 on       ,both ,fast  ,export   ,apps ,acctExport ,statement_filtered      ,y    ,addrs = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & accounting & statements & first_block = 8860513 & last_block = 8860531 & asset = 0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359 & fmt = json
 on       ,both ,fast  ,export   ,apps ,acctExport ,statement_filter_traces ,y    ,addrs = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & accounting & statements & traces & first_block = 8860513 & last_block = 8860531 & asset = 0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359 & fmt = json
-on       ,both ,fast  ,export   ,apps ,acctExport ,statement_wei_2_1      ,y    ,addrs = 0x05a56e2d52c817161883f50c441c3228cfe54d9f & accounting & statements & fmt = json & first_record = 0 & max_records = 15
+on       ,both ,fast  ,export   ,apps ,acctExport ,statement_wei_2_1      ,y    ,addrs = 0x05a56e2d52c817161883f50c441c3228cfe54d9f & accounting & statements & fmt = json & max_records = 15
 on       ,both ,fast  ,export   ,apps ,acctExport ,statement_tributes      ,y    ,addrs = 0x868b8fd259abfcfdf9634c343593b34ef359641d & accounting & statements & first_block = 8769018 & last_block = 8769053 & fmt = json & asset = 0x0ba45a8b5d5575935b8158a88c631e9f9c95a2e5
 on       ,both ,fast  ,export   ,apps ,acctExport ,statement_failed_2572_2 ,y    ,addrs = 0x65b0d5e1dc0dee0704f53f660aa865c72e986fc7 & accounting & statements & asset = 0xc713e5e149d5d0715dcd1c156a020976e7e56b88 & fmt = json & first_block = 11670418 & last_block = 11670420 & max_records = 40
 on       ,both ,fast  ,export   ,apps ,acctExport ,statement_2_asset_filt  ,y    ,addrs = trueblocks.eth & accounting & statements & asset = 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee & asset = 0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359 & fmt = csv & first_block = 8856476 & last_block = 9193814
-broken   ,both ,fast  ,export   ,apps ,acctExport ,statement_forward       ,y    ,addrs = 0x868b8fd259abfcfdf9634c343593b34ef359641d & accounting & statements & last_block = 8769141 & fmt = json
+on       ,both ,fast  ,export   ,apps ,acctExport ,statement_forward       ,y    ,addrs = 0x868b8fd259abfcfdf9634c343593b34ef359641d & accounting & statements & last_block = 8769141 & fmt = json
 broken   ,both ,fast  ,export   ,apps ,acctExport ,statement_failed_2572_1 ,y    ,addrs = 0x054993ab0f2b1acc0fdc65405ee203b4271bebe6 & accounting & statements & asset = 0xf5b2c59f6db42ffcdfc1625999c81fdf17953384 & fmt = json & last_block = 15549163 & max_records = 40
-broken   ,both ,fast  ,export   ,apps ,acctExport ,accounting_intra_tokens ,y    ,addrs = 0x6aED588ca2052CCFC907Db8c24dF4B7B95A29A5E & max_records = 3 & first_record = 683 & accounting & fmt = json
+broken   ,both ,fast  ,export   ,apps ,acctExport ,accounting_intra_tokens ,y    ,addrs = 0x6aED588ca2052CCFC907Db8c24dF4B7B95A29A5E & max_records = 3 & accounting & fmt = json
 broken   ,both ,fast  ,export   ,apps ,acctExport ,statement_token_ibt     ,y    ,addrs = 0xec3ef464bf821c3b10a18adf9ac7177a628e87cc & accounting & statements & first_block = 7005600 & last_block = 7005780 & fmt = json
 broken   ,both ,fast  ,export   ,apps ,acctExport ,statement_token_ibt_2   ,y    ,addrs = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & accounting & statements & first_block = 12704456 & last_block = 12705893 & fmt = json & max_records = 4000
 
@@ -198,7 +198,7 @@ on       ,both ,fast  ,export   ,apps ,acctExport ,transfer_3_bad         ,y    
 on       ,both ,fast  ,export   ,apps ,acctExport ,transfer_unfiltered    ,y    ,addrs = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & accounting & transfers & first_block = 8860513 & last_block = 8860531 & ether & fmt = json
 on       ,both ,fast  ,export   ,apps ,acctExport ,transfer_filtered      ,y    ,addrs = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & accounting & transfers & first_block = 8860513 & last_block = 8860531 & ether & asset = 0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359 & fmt = json
 on       ,both ,fast  ,export   ,apps ,acctExport ,transfer_filter_traces ,y    ,addrs = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & accounting & transfers & traces & first_block = 8860513 & last_block = 8860531 & ether & asset = 0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359 & fmt = json
-on       ,both ,fast  ,export   ,apps ,acctExport ,transfer_wei_2_1       ,y    ,addrs = 0x05a56e2d52c817161883f50c441c3228cfe54d9f & accounting & transfers & fmt = json & first_record = 0 & max_records = 15
+on       ,both ,fast  ,export   ,apps ,acctExport ,transfer_wei_2_1       ,y    ,addrs = 0x05a56e2d52c817161883f50c441c3228cfe54d9f & accounting & transfers & fmt = json & max_records = 15
 on       ,both ,fast  ,export   ,apps ,acctExport ,transfer_forward       ,y    ,addrs = 0x868b8fd259abfcfdf9634c343593b34ef359641d & accounting & transfers & traces & last_block = 8769141 & ether & fmt = json
 on       ,both ,fast  ,export   ,apps ,acctExport ,transfer_tributes      ,y    ,addrs = 0x868b8fd259abfcfdf9634c343593b34ef359641d & accounting & transfers & first_block = 8769018 & last_block = 8769053 & fmt = json & asset = 0x0ba45a8b5d5575935b8158a88c631e9f9c95a2e5
 on       ,both ,fast  ,export   ,apps ,acctExport ,transfer_failed_2572_1 ,y    ,addrs = 0x054993ab0f2b1acc0fdc65405ee203b4271bebe6 & accounting & transfers & ether & asset = 0xf5b2c59f6db42ffcdfc1625999c81fdf17953384 & fmt = json & last_block = 15549163 & max_records = 40
@@ -217,7 +217,7 @@ on       ,both ,fast  ,export   ,apps ,acctExport ,assets_3_bad         ,y    ,a
 on       ,both ,fast  ,export   ,apps ,acctExport ,assets_unfiltered    ,y    ,addrs = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & accounting & assets & first_block = 8860513 & last_block = 8860531 & ether & fmt = json
 on       ,both ,fast  ,export   ,apps ,acctExport ,assets_filtered      ,y    ,addrs = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & accounting & assets & first_block = 8860513 & last_block = 8860531 & ether & fmt = json
 on       ,both ,fast  ,export   ,apps ,acctExport ,assets_filter_traces ,y    ,addrs = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & accounting & assets & traces & first_block = 8860513 & last_block = 8860531 & ether & fmt = json
-on       ,both ,fast  ,export   ,apps ,acctExport ,assets_wei_2_1       ,y    ,addrs = 0x05a56e2d52c817161883f50c441c3228cfe54d9f & accounting & assets & fmt = json & first_record = 0 & max_records = 15
+on       ,both ,fast  ,export   ,apps ,acctExport ,assets_wei_2_1       ,y    ,addrs = 0x05a56e2d52c817161883f50c441c3228cfe54d9f & accounting & assets & fmt = json & max_records = 15
 on       ,both ,fast  ,export   ,apps ,acctExport ,assets_forward       ,y    ,addrs = 0x868b8fd259abfcfdf9634c343593b34ef359641d & accounting & assets & traces & last_block = 8769141 & ether & fmt = json
 on       ,both ,fast  ,export   ,apps ,acctExport ,assets_tributes      ,y    ,addrs = 0x868b8fd259abfcfdf9634c343593b34ef359641d & accounting & assets & first_block = 8769018 & last_block = 8769053 & fmt = json
 on       ,both ,fast  ,export   ,apps ,acctExport ,assets_failed_2572_1 ,y    ,addrs = 0x054993ab0f2b1acc0fdc65405ee203b4271bebe6 & accounting & assets & ether & fmt = json & last_block = 15549163 & max_records = 40

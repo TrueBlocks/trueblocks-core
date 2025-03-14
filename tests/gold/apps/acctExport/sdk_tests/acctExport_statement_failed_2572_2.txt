@@ -10,7 +10,17 @@ FirstBlock:  11670418
 LastBlock:  11670420
 Caps:  cache,decache,ether
 Format:  json
-Correcting token transfer for unknown income or outflow
+------------------------------------
+# Reason: token
+Trial balance for  0xc713e5e149d5d0715dcd1c156a020976e7e56b88 0x65b0d5e1dc0dee0704f53f660aa865c72e986fc7 at block 11670419
+------------------------------------
+XXXNot found  0xc713e5e149d5d0715dcd1c156a020976e7e56b88
+Using block-1 balance for  0xc713e5e149d5d0715dcd1c156a020976e7e56b88 at block 0 of 0
+pos: 11670418 11670419 11670420 true true
+Correcting ending balance
+EndBalCalc: 14922878205530494041 -14922878205530494041 0
+Inserting  0xc713e5e149d5d0715dcd1c156a020976e7e56b88 at block 11670419 of 0
+Found  0xc713e5e149d5d0715dcd1c156a020976e7e56b88 at block 11670419 of 0
 =========================================================
 ===> PRICING FOR 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) using Uniswap
 =========================================================
@@ -57,6 +67,8 @@ Trial balance:
    material:            true
    reconciled:          true
 ---------------------------------------------------
+----------Done  true  --------------------------
+
 {
   "data": [
     {

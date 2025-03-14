@@ -7,6 +7,16 @@ TEST[DATE|TIME] OutputFn:  statement_forward_out.file
 TEST[DATE|TIME] Caps:  cache,decache,ether
 TEST[DATE|TIME] Format:  json
 INFO[DATE|TIME] { "outputFilename": "--output_filename--" }
+INFO[DATE|TIME] ------------------------------------
+INFO[DATE|TIME] # Reason: first-tx
+INFO[DATE|TIME] Trial balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0x868b8fd259abfcfdf9634c343593b34ef359641d at block 8769019
+INFO[DATE|TIME] ------------------------------------
+INFO[DATE|TIME] XXXNot found  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+INFO[DATE|TIME] Using block-1 balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 0 of 0
+INFO[DATE|TIME] pos: 8769018 8769019 8769029 true false
+INFO[DATE|TIME] EndBalCalc: 0 25000000000000000 25000000000000000
+INFO[DATE|TIME] Inserting  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 8769019 of 25000000000000000
+INFO[DATE|TIME] Found  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 8769019 of 25000000000000000
 TEST[DATE|TIME] Block 8769019 is prior to deployment (10000835) of Uniswap V2. Falling back to Maker (0x729d19f657bd0614b4985cf1d82531c67569197b)
 TEST[DATE|TIME] =========================================================
 TEST[DATE|TIME] ===> PRICING FOR 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) using Maker
@@ -47,9 +57,32 @@ TEST[DATE|TIME]    amountIn:            0.025
 TEST[DATE|TIME]    material:            true
 TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
+INFO[DATE|TIME] ----------Done  true  --------------------------
+INFO[DATE|TIME] 
+INFO[DATE|TIME] ------------------------------------
+INFO[DATE|TIME] # Reason: first-tx
+INFO[DATE|TIME] Trial balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0x868b8fd259abfcfdf9634c343593b34ef359641d at block 8769029
+INFO[DATE|TIME] ------------------------------------
+INFO[DATE|TIME] XXXFound  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 8769019 of 25000000000000000
+INFO[DATE|TIME] Querying at block 8769019 for 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0x868b8fd259abfcfdf9634c343593b34ef359641d
+INFO[DATE|TIME] Different block  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 8769019 and 8769029 of 25000000000000000
+INFO[DATE|TIME] pos: 8769019 8769029 8769052 false false
+INFO[DATE|TIME] EndBalCalc: 25000000000000000 0 25000000000000000
+INFO[DATE|TIME] Inserting  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 8769029 of 25000000000000000
+INFO[DATE|TIME] Found  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 8769029 of 25000000000000000
+INFO[DATE|TIME] ------------------------------------
+INFO[DATE|TIME] # Reason: token
+INFO[DATE|TIME] Trial balance for  0x0ba45a8b5d5575935b8158a88c631e9f9c95a2e5 0x868b8fd259abfcfdf9634c343593b34ef359641d at block 8769029
+INFO[DATE|TIME] ------------------------------------
+INFO[DATE|TIME] XXXNot found  0x0ba45a8b5d5575935b8158a88c631e9f9c95a2e5
+INFO[DATE|TIME] Using block-1 balance for  0x0ba45a8b5d5575935b8158a88c631e9f9c95a2e5 at block 0 of 0
+INFO[DATE|TIME] pos: 8769028 8769029 8769052 false false
+INFO[DATE|TIME] EndBalCalc: 0 85000000000000000000 85000000000000000000
+INFO[DATE|TIME] Inserting  0x0ba45a8b5d5575935b8158a88c631e9f9c95a2e5 at block 8769029 of 85000000000000000000
+INFO[DATE|TIME] Found  0x0ba45a8b5d5575935b8158a88c631e9f9c95a2e5 at block 8769029 of 85000000000000000000
 TEST[DATE|TIME] Block 8769029 is prior to deployment (10000835) of Uniswap V2. No other source for tokens prior to UniSwap
 TEST[DATE|TIME] ===================================================
-TEST[DATE|TIME] Previous:               8769019
+TEST[DATE|TIME] Previous:               8769028
 TEST[DATE|TIME] Current:                8769029
 TEST[DATE|TIME] Next:                   8769052
 TEST[DATE|TIME] accountedFor:           0x868b8fd259abfcfdf9634c343593b34ef359641d
@@ -75,6 +108,20 @@ TEST[DATE|TIME]    amountIn:            85
 TEST[DATE|TIME]    material:            true
 TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
+INFO[DATE|TIME] ----------Done  true  --------------------------
+INFO[DATE|TIME] 
+INFO[DATE|TIME] ------------------------------------
+INFO[DATE|TIME] # Reason: first-tx
+INFO[DATE|TIME] Trial balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0x868b8fd259abfcfdf9634c343593b34ef359641d at block 8769052
+INFO[DATE|TIME] ------------------------------------
+INFO[DATE|TIME] XXXFound  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 8769029 of 25000000000000000
+INFO[DATE|TIME] Querying at block 8769029 for 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0x868b8fd259abfcfdf9634c343593b34ef359641d
+INFO[DATE|TIME] Different block  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 8769029 and 8769052 of 25000000000000000
+INFO[DATE|TIME] pos: 8769029 8769052 8769052 false false
+INFO[DATE|TIME] resets endbal from 24050590000000000 24752820000000000
+INFO[DATE|TIME] EndBalCalc: 25000000000000000 -247180000000000 24752820000000000
+INFO[DATE|TIME] Inserting  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 8769052 of 24752820000000000
+INFO[DATE|TIME] Found  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 8769052 of 24752820000000000
 TEST[DATE|TIME] Block 8769052 is prior to deployment (10000835) of Uniswap V2. Falling back to Maker (0x729d19f657bd0614b4985cf1d82531c67569197b)
 TEST[DATE|TIME] =========================================================
 TEST[DATE|TIME] ===> PRICING FOR 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) using Maker
@@ -102,22 +149,31 @@ TEST[DATE|TIME] priceSource:            173.765 (maker)
 TEST[DATE|TIME] --------------------------------------------------- 
 TEST[DATE|TIME] Trial balance:
 TEST[DATE|TIME]    prevBal:             0.025
-TEST[DATE|TIME]    begBal:              0.025 (0.00070223)
+TEST[DATE|TIME]    begBal:              0.025 (0)
 TEST[DATE|TIME]    totalIn:             0
 TEST[DATE|TIME]    totalOut:            0.00024718
 TEST[DATE|TIME]    amountNet:           -0.00024718
 TEST[DATE|TIME]                        ======================= 
-TEST[DATE|TIME]    endBal:              0.02405059 (0)
+TEST[DATE|TIME]    endBal:              0.02475282 (0)
 TEST[DATE|TIME]    endBalCalc:          0.02475282
 TEST[DATE|TIME]    rollingBalance:      0
 TEST[DATE|TIME] --------------------------------------------------- 
 TEST[DATE|TIME]    gasOut:              0.00024718
 TEST[DATE|TIME]    material:            true
-TEST[DATE|TIME]    reconciled:          false
-TEST[DATE|TIME]  ^^ we need to fix this ^^
+TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
-TEST[DATE|TIME] Correcting token transfer for unknown income or outflow
-TEST[DATE|TIME] Correcting token transfer for unknown income or outflow
+INFO[DATE|TIME] ----------Done  true  --------------------------
+INFO[DATE|TIME] 
+INFO[DATE|TIME] ------------------------------------
+INFO[DATE|TIME] # Reason: first-tx
+INFO[DATE|TIME] Trial balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0x868b8fd259abfcfdf9634c343593b34ef359641d at block 8769052
+INFO[DATE|TIME] ------------------------------------
+INFO[DATE|TIME] XXXFound  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 8769052 of 24752820000000000
+INFO[DATE|TIME] Same block  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 8769052 and 8769052 of 24752820000000000
+INFO[DATE|TIME] pos: 8769052 8769052 8769064 false false
+INFO[DATE|TIME] EndBalCalc: 24752820000000000 -702230000000000 24050590000000000
+INFO[DATE|TIME] Inserting  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 8769052 of 24050590000000000
+INFO[DATE|TIME] Found  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 8769052 of 24050590000000000
 TEST[DATE|TIME] Block 8769052 is prior to deployment (10000835) of Uniswap V2. Falling back to Maker (0x729d19f657bd0614b4985cf1d82531c67569197b)
 TEST[DATE|TIME] =========================================================
 TEST[DATE|TIME] ===> PRICING FOR 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) using Maker
@@ -134,119 +190,43 @@ TEST[DATE|TIME] source:              maker
 TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] Previous:               8769052
 TEST[DATE|TIME] Current:                8769052
-TEST[DATE|TIME] Next:                   8769052
+TEST[DATE|TIME] Next:                   8769064
 TEST[DATE|TIME] accountedFor:           0x868b8fd259abfcfdf9634c343593b34ef359641d
-TEST[DATE|TIME] sender:                 0x868b8fd259abfcfdf9634c343593b34ef359641d  ==>  0x0ba45a8b5d5575935b8158a88c631e9f9c95a2e5
+TEST[DATE|TIME] sender:                 0x868b8fd259abfcfdf9634c343593b34ef359641d  ==>  0x2a0c0dbecc7e4d658f48e01e3fa353f44050c208
 TEST[DATE|TIME] asset:                  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
-TEST[DATE|TIME] hash:                   0x66cdceb982decd5c899ee7a608468eed3b0032b7f146bdef7a96ec0dfecfcc1d
+TEST[DATE|TIME] hash:                   0x90feb158340931c051ccb4def6112b6d46794f739499d7255b5109481b991265
 TEST[DATE|TIME] timestamp:              1571458005
-TEST[DATE|TIME] blockNumber:            8769052.73.0
+TEST[DATE|TIME] blockNumber:            8769052.74.0
 TEST[DATE|TIME] priceSource:            173.765 (maker)
 TEST[DATE|TIME] --------------------------------------------------- 
 TEST[DATE|TIME] Trial balance:
 TEST[DATE|TIME]    prevBal:             0.02475282
-TEST[DATE|TIME]    begBal:              0.025 (0.00189882)
-TEST[DATE|TIME]    totalIn:             0.00119659
-TEST[DATE|TIME]    totalOut:            0.00024718
-TEST[DATE|TIME]    amountNet:           0.00094941
-TEST[DATE|TIME]                        ======================= 
-TEST[DATE|TIME]    endBal:              0.02405059 (0.00024718)
-TEST[DATE|TIME]    endBalCalc:          0.02594941
-TEST[DATE|TIME]    rollingBalance:      0
-TEST[DATE|TIME] --------------------------------------------------- 
-TEST[DATE|TIME]    correctingIn:        0.00119659
-TEST[DATE|TIME]    gasOut:              0.00024718
-TEST[DATE|TIME]    correctingReason:    begbal-in-endbal-in
-TEST[DATE|TIME]    material:            true
-TEST[DATE|TIME]    reconciled:          false
-TEST[DATE|TIME]  ^^ we need to fix this ^^
-TEST[DATE|TIME] ---------------------------------------------------
-TEST[DATE|TIME] Block 8769052 is prior to deployment (10000835) of Uniswap V2. Falling back to Maker (0x729d19f657bd0614b4985cf1d82531c67569197b)
-TEST[DATE|TIME] =========================================================
-TEST[DATE|TIME] ===> PRICING FOR 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) using Maker
-TEST[DATE|TIME] =========================================================
-TEST[DATE|TIME] blockNumber:         8769052
-TEST[DATE|TIME] source1 (uni/mkr):   0x729d19f657bd0614b4985cf1d82531c67569197b
-TEST[DATE|TIME] str0 (call):         peek()
-TEST[DATE|TIME] str1 (call/data):    0x0000000000000000000000000000000000000000000000096b794ada83c08000
-TEST[DATE|TIME] int0:                17376500000000000000000000
-TEST[DATE|TIME] int1:                17376500
-TEST[DATE|TIME] bigPrice:            173.765
-TEST[DATE|TIME] price:               173.765
-TEST[DATE|TIME] source:              maker
-TEST[DATE|TIME] ===================================================
-TEST[DATE|TIME] Previous:               8769052
-TEST[DATE|TIME] Current:                8769052
-TEST[DATE|TIME] Next:                   8769064
-TEST[DATE|TIME] accountedFor:           0x868b8fd259abfcfdf9634c343593b34ef359641d
-TEST[DATE|TIME] sender:                 0x868b8fd259abfcfdf9634c343593b34ef359641d  ==>  0x2a0c0dbecc7e4d658f48e01e3fa353f44050c208
-TEST[DATE|TIME] asset:                  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
-TEST[DATE|TIME] hash:                   0x90feb158340931c051ccb4def6112b6d46794f739499d7255b5109481b991265
-TEST[DATE|TIME] timestamp:              1571458005
-TEST[DATE|TIME] blockNumber:            8769052.74.0
-TEST[DATE|TIME] priceSource:            173.765 (maker)
-TEST[DATE|TIME] --------------------------------------------------- 
-TEST[DATE|TIME] Trial balance:
-TEST[DATE|TIME]    prevBal:             0.02594941
-TEST[DATE|TIME]    begBal:              0.025 (0.00024718)
+TEST[DATE|TIME]    begBal:              0.02475282 (0)
 TEST[DATE|TIME]    totalIn:             0
 TEST[DATE|TIME]    totalOut:            0.00070223
 TEST[DATE|TIME]    amountNet:           -0.00070223
 TEST[DATE|TIME]                        ======================= 
-TEST[DATE|TIME]    endBal:              0.02405059 (-0.00094941)
-TEST[DATE|TIME]    endBalCalc:          0.02429777
+TEST[DATE|TIME]    endBal:              0.02405059 (0)
+TEST[DATE|TIME]    endBalCalc:          0.02405059
 TEST[DATE|TIME]    rollingBalance:      0
 TEST[DATE|TIME] --------------------------------------------------- 
 TEST[DATE|TIME]    gasOut:              0.00070223
 TEST[DATE|TIME]    material:            true
-TEST[DATE|TIME]    reconciled:          false
-TEST[DATE|TIME]  ^^ we need to fix this ^^
+TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
-TEST[DATE|TIME] Correcting token transfer for unknown income or outflow
-TEST[DATE|TIME] Correcting token transfer for unknown income or outflow
-TEST[DATE|TIME] Block 8769052 is prior to deployment (10000835) of Uniswap V2. Falling back to Maker (0x729d19f657bd0614b4985cf1d82531c67569197b)
-TEST[DATE|TIME] =========================================================
-TEST[DATE|TIME] ===> PRICING FOR 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) using Maker
-TEST[DATE|TIME] =========================================================
-TEST[DATE|TIME] blockNumber:         8769052
-TEST[DATE|TIME] source1 (uni/mkr):   0x729d19f657bd0614b4985cf1d82531c67569197b
-TEST[DATE|TIME] str0 (call):         peek()
-TEST[DATE|TIME] str1 (call/data):    0x0000000000000000000000000000000000000000000000096b794ada83c08000
-TEST[DATE|TIME] int0:                17376500000000000000000000
-TEST[DATE|TIME] int1:                17376500
-TEST[DATE|TIME] bigPrice:            173.765
-TEST[DATE|TIME] price:               173.765
-TEST[DATE|TIME] source:              maker
-TEST[DATE|TIME] ===================================================
-TEST[DATE|TIME] Previous:               8769052
-TEST[DATE|TIME] Current:                8769052
-TEST[DATE|TIME] Next:                   8769064
-TEST[DATE|TIME] accountedFor:           0x868b8fd259abfcfdf9634c343593b34ef359641d
-TEST[DATE|TIME] sender:                 0x868b8fd259abfcfdf9634c343593b34ef359641d  ==>  0x2a0c0dbecc7e4d658f48e01e3fa353f44050c208
-TEST[DATE|TIME] asset:                  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
-TEST[DATE|TIME] hash:                   0x90feb158340931c051ccb4def6112b6d46794f739499d7255b5109481b991265
-TEST[DATE|TIME] timestamp:              1571458005
-TEST[DATE|TIME] blockNumber:            8769052.74.0
-TEST[DATE|TIME] priceSource:            173.765 (maker)
-TEST[DATE|TIME] --------------------------------------------------- 
-TEST[DATE|TIME] Trial balance:
-TEST[DATE|TIME]    prevBal:             0.02429777
-TEST[DATE|TIME]    begBal:              0.025 (0.00189882)
-TEST[DATE|TIME]    totalIn:             0.00165164
-TEST[DATE|TIME]    totalOut:            0.00070223
-TEST[DATE|TIME]    amountNet:           0.00094941
-TEST[DATE|TIME]                        ======================= 
-TEST[DATE|TIME]    endBal:              0.02405059 (0.00070223)
-TEST[DATE|TIME]    endBalCalc:          0.02594941
-TEST[DATE|TIME]    rollingBalance:      0
-TEST[DATE|TIME] --------------------------------------------------- 
-TEST[DATE|TIME]    correctingIn:        0.00165164
-TEST[DATE|TIME]    gasOut:              0.00070223
-TEST[DATE|TIME]    correctingReason:    begbal-in-endbal-in
-TEST[DATE|TIME]    material:            true
-TEST[DATE|TIME]    reconciled:          false
-TEST[DATE|TIME]  ^^ we need to fix this ^^
-TEST[DATE|TIME] ---------------------------------------------------
+INFO[DATE|TIME] ----------Done  true  --------------------------
+INFO[DATE|TIME] 
+INFO[DATE|TIME] ------------------------------------
+INFO[DATE|TIME] # Reason: token
+INFO[DATE|TIME] Trial balance for  0x0ba45a8b5d5575935b8158a88c631e9f9c95a2e5 0x868b8fd259abfcfdf9634c343593b34ef359641d at block 8769052
+INFO[DATE|TIME] ------------------------------------
+INFO[DATE|TIME] XXXFound  0x0ba45a8b5d5575935b8158a88c631e9f9c95a2e5 at block 8769029 of 85000000000000000000
+INFO[DATE|TIME] Querying at block 8769029 for 0x0ba45a8b5d5575935b8158a88c631e9f9c95a2e5 0x868b8fd259abfcfdf9634c343593b34ef359641d
+INFO[DATE|TIME] Different block  0x0ba45a8b5d5575935b8158a88c631e9f9c95a2e5 at block 8769029 and 8769052 of 85000000000000000000
+INFO[DATE|TIME] pos: 8769029 8769052 8769064 false false
+INFO[DATE|TIME] EndBalCalc: 85000000000000000000 -85000000000000000000 0
+INFO[DATE|TIME] Inserting  0x0ba45a8b5d5575935b8158a88c631e9f9c95a2e5 at block 8769052 of 0
+INFO[DATE|TIME] Found  0x0ba45a8b5d5575935b8158a88c631e9f9c95a2e5 at block 8769052 of 0
 TEST[DATE|TIME] Block 8769052 is prior to deployment (10000835) of Uniswap V2. No other source for tokens prior to UniSwap
 TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] Previous:               8769029
@@ -275,48 +255,31 @@ TEST[DATE|TIME]    amountOut:           85
 TEST[DATE|TIME]    material:            true
 TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
-TEST[DATE|TIME] Correcting token transfer for unknown income or outflow
-TEST[DATE|TIME] Block 8769064 is prior to deployment (10000835) of Uniswap V2. Falling back to Maker (0x729d19f657bd0614b4985cf1d82531c67569197b)
-TEST[DATE|TIME] =========================================================
-TEST[DATE|TIME] ===> PRICING FOR 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) using Maker
-TEST[DATE|TIME] =========================================================
-TEST[DATE|TIME] blockNumber:         8769064
-TEST[DATE|TIME] source1 (uni/mkr):   0x729d19f657bd0614b4985cf1d82531c67569197b
-TEST[DATE|TIME] str0 (call):         peek()
-TEST[DATE|TIME] str1 (call/data):    0x0000000000000000000000000000000000000000000000096bae95462b620000
-TEST[DATE|TIME] int0:                17378000000000000000000000
-TEST[DATE|TIME] int1:                17378000
-TEST[DATE|TIME] bigPrice:            173.78
-TEST[DATE|TIME] price:               173.78
-TEST[DATE|TIME] source:              maker
-TEST[DATE|TIME] ===================================================
-TEST[DATE|TIME] Previous:               8769064
-TEST[DATE|TIME] Current:                8769064
-TEST[DATE|TIME] Next:                   8769064
-TEST[DATE|TIME] accountedFor:           0x868b8fd259abfcfdf9634c343593b34ef359641d
-TEST[DATE|TIME] sender:                 0xa7a7899d944fe658c4b0a1803bab2f490bd3849e  ==>  0x2a0c0dbecc7e4d658f48e01e3fa353f44050c208
-TEST[DATE|TIME] asset:                  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
-TEST[DATE|TIME] hash:                   0x07b939fa3dbb62bc7fc6d2c408d53f15ecca50a54d57fe7bab23f5df1f274033
-TEST[DATE|TIME] timestamp:              1571458209
-TEST[DATE|TIME] blockNumber:            8769064.130.0
-TEST[DATE|TIME] priceSource:            173.78 (maker)
-TEST[DATE|TIME] --------------------------------------------------- 
-TEST[DATE|TIME] Trial balance:
-TEST[DATE|TIME]    prevBal:             0.02405059
-TEST[DATE|TIME]    begBal:              0.02405059 (0)
-TEST[DATE|TIME]    totalIn:             0
-TEST[DATE|TIME]    totalOut:            -0.4505622
-TEST[DATE|TIME]    amountNet:           0.4505622
-TEST[DATE|TIME]                        ======================= 
-TEST[DATE|TIME]    endBal:              0.47461279 (0)
-TEST[DATE|TIME]    endBalCalc:          0.47461279
-TEST[DATE|TIME]    rollingBalance:      0
-TEST[DATE|TIME] --------------------------------------------------- 
-TEST[DATE|TIME]    correctingOut:       -0.4505622
-TEST[DATE|TIME]    correctingReason:    endbal-out
-TEST[DATE|TIME]    material:            true
-TEST[DATE|TIME]    reconciled:          true
-TEST[DATE|TIME] ---------------------------------------------------
+INFO[DATE|TIME] ----------Done  true  --------------------------
+INFO[DATE|TIME] 
+INFO[DATE|TIME] ------------------------------------
+INFO[DATE|TIME] # Reason: first-tx
+INFO[DATE|TIME] Trial balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0x868b8fd259abfcfdf9634c343593b34ef359641d at block 8769064
+INFO[DATE|TIME] ------------------------------------
+INFO[DATE|TIME] XXXFound  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 8769052 of 24050590000000000
+INFO[DATE|TIME] Querying at block 8769052 for 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0x868b8fd259abfcfdf9634c343593b34ef359641d
+INFO[DATE|TIME] Different block  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 8769052 and 8769064 of 24050590000000000
+INFO[DATE|TIME] pos: 8769052 8769064 8769064 false false
+INFO[DATE|TIME] resets endbal from 474612790000000000 24050590000000000
+INFO[DATE|TIME] EndBalCalc: 24050590000000000 0 24050590000000000
+INFO[DATE|TIME] Inserting  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 8769064 of 24050590000000000
+INFO[DATE|TIME] Found  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 8769064 of 24050590000000000
+INFO[DATE|TIME] ------------------------------------
+INFO[DATE|TIME] # Reason: first-tx
+INFO[DATE|TIME] Trial balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0x868b8fd259abfcfdf9634c343593b34ef359641d at block 8769064
+INFO[DATE|TIME] ------------------------------------
+INFO[DATE|TIME] XXXFound  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 8769064 of 24050590000000000
+INFO[DATE|TIME] Same block  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 8769064 and 8769064 of 24050590000000000
+INFO[DATE|TIME] pos: 8769064 8769064 8769130 false false
+TEST[DATE|TIME] Correcting ending balance
+INFO[DATE|TIME] EndBalCalc: 24050590000000000 450562200000000000 474612790000000000
+INFO[DATE|TIME] Inserting  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 8769064 of 474612790000000000
+INFO[DATE|TIME] Found  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 8769064 of 474612790000000000
 TEST[DATE|TIME] Block 8769064 is prior to deployment (10000835) of Uniswap V2. Falling back to Maker (0x729d19f657bd0614b4985cf1d82531c67569197b)
 TEST[DATE|TIME] =========================================================
 TEST[DATE|TIME] ===> PRICING FOR 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) using Maker
@@ -335,7 +298,7 @@ TEST[DATE|TIME] Previous:               8769064
 TEST[DATE|TIME] Current:                8769064
 TEST[DATE|TIME] Next:                   8769130
 TEST[DATE|TIME] accountedFor:           0x868b8fd259abfcfdf9634c343593b34ef359641d
-TEST[DATE|TIME] sender:                 0x2a0c0dbecc7e4d658f48e01e3fa353f44050c208  ==>  0x868b8fd259abfcfdf9634c343593b34ef359641d
+TEST[DATE|TIME] sender:                 0xa7a7899d944fe658c4b0a1803bab2f490bd3849e  ==>  0x2a0c0dbecc7e4d658f48e01e3fa353f44050c208
 TEST[DATE|TIME] asset:                  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
 TEST[DATE|TIME] hash:                   0x0934c85fb30abe84acbc26afe3f209593dbe97aac6c205569b88b90376c65033
 TEST[DATE|TIME] timestamp:              1571458209
@@ -345,18 +308,32 @@ TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] Trial balance:
 TEST[DATE|TIME]    prevBal:             0.02405059
 TEST[DATE|TIME]    begBal:              0.02405059 (0)
-TEST[DATE|TIME]    totalIn:             0.4505622
-TEST[DATE|TIME]    totalOut:            0
+TEST[DATE|TIME]    totalIn:             0
+TEST[DATE|TIME]    totalOut:            -0.4505622
 TEST[DATE|TIME]    amountNet:           0.4505622
 TEST[DATE|TIME]                        ======================= 
 TEST[DATE|TIME]    endBal:              0.47461279 (0)
 TEST[DATE|TIME]    endBalCalc:          0.47461279
 TEST[DATE|TIME]    rollingBalance:      0
 TEST[DATE|TIME] --------------------------------------------------- 
-TEST[DATE|TIME]    internalIn:          0.4505622
+TEST[DATE|TIME]    correctingOut:       -0.4505622
+TEST[DATE|TIME]    correctingReason:    endbal-out
 TEST[DATE|TIME]    material:            true
 TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
+INFO[DATE|TIME] ----------Done  true  --------------------------
+INFO[DATE|TIME] 
+INFO[DATE|TIME] ------------------------------------
+INFO[DATE|TIME] # Reason: first-tx
+INFO[DATE|TIME] Trial balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0x868b8fd259abfcfdf9634c343593b34ef359641d at block 8769130
+INFO[DATE|TIME] ------------------------------------
+INFO[DATE|TIME] XXXFound  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 8769064 of 474612790000000000
+INFO[DATE|TIME] Querying at block 8769064 for 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0x868b8fd259abfcfdf9634c343593b34ef359641d
+INFO[DATE|TIME] Different block  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 8769064 and 8769130 of 474612790000000000
+INFO[DATE|TIME] pos: 8769064 8769130 8769141 false false
+INFO[DATE|TIME] EndBalCalc: 474612790000000000 -100021000000000000 374591790000000000
+INFO[DATE|TIME] Inserting  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 8769130 of 374591790000000000
+INFO[DATE|TIME] Found  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 8769130 of 374591790000000000
 TEST[DATE|TIME] Block 8769130 is prior to deployment (10000835) of Uniswap V2. Falling back to Maker (0x729d19f657bd0614b4985cf1d82531c67569197b)
 TEST[DATE|TIME] =========================================================
 TEST[DATE|TIME] ===> PRICING FOR 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) using Maker
@@ -398,6 +375,19 @@ TEST[DATE|TIME]    gasOut:              0.000021
 TEST[DATE|TIME]    material:            true
 TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
+INFO[DATE|TIME] ----------Done  true  --------------------------
+INFO[DATE|TIME] 
+INFO[DATE|TIME] ------------------------------------
+INFO[DATE|TIME] # Reason: first-tx
+INFO[DATE|TIME] Trial balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0x868b8fd259abfcfdf9634c343593b34ef359641d at block 8769141
+INFO[DATE|TIME] ------------------------------------
+INFO[DATE|TIME] XXXFound  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 8769130 of 374591790000000000
+INFO[DATE|TIME] Querying at block 8769130 for 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0x868b8fd259abfcfdf9634c343593b34ef359641d
+INFO[DATE|TIME] Different block  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 8769130 and 8769141 of 374591790000000000
+INFO[DATE|TIME] pos: 8769130 8769141 8769142 false true
+INFO[DATE|TIME] EndBalCalc: 374591790000000000 -374591790000000000 0
+INFO[DATE|TIME] Inserting  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 8769141 of 0
+INFO[DATE|TIME] Found  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 8769141 of 0
 TEST[DATE|TIME] Block 8769141 is prior to deployment (10000835) of Uniswap V2. Falling back to Maker (0x729d19f657bd0614b4985cf1d82531c67569197b)
 TEST[DATE|TIME] =========================================================
 TEST[DATE|TIME] ===> PRICING FOR 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) using Maker
@@ -439,6 +429,8 @@ TEST[DATE|TIME]    gasOut:              0.000021
 TEST[DATE|TIME]    material:            true
 TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
+INFO[DATE|TIME] ----------Done  true  --------------------------
+INFO[DATE|TIME] 
 ----
 Results in ./statement_forward_out.file
 {
@@ -544,7 +536,7 @@ Results in ./statement_forward_out.file
       "correctingReason": "",
       "date": "2019-10-19 04:06:45 UTC",
       "decimals": 18,
-      "endBal": "24050590000000000",
+      "endBal": "24752820000000000",
       "endBalCalc": "24752820000000000",
       "endBalDiff": "0",
       "gasOut": "247180000000000",
@@ -575,11 +567,11 @@ Results in ./statement_forward_out.file
     {
       "accountedFor": "0x868b8fd259abfcfdf9634c343593b34ef359641d",
       "amountIn": "0",
-      "amountNet": "-0.00070223",
+      "amountNet": "-702230000000000",
       "amountOut": "0",
       "asset": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
-      "symbol": "ETH",
-      "begBal": "0.02475282",
+      "assetName": "ETH",
+      "begBal": "24752820000000000",
       "begBalDiff": "0",
       "blockNumber": 8769052,
       "correctingIn": "0",
@@ -587,10 +579,10 @@ Results in ./statement_forward_out.file
       "correctingReason": "",
       "date": "2019-10-19 04:06:45 UTC",
       "decimals": 18,
-      "endBal": "0.02405059",
-      "endBalCalc": "0.02405059",
+      "endBal": "24050590000000000",
+      "endBalCalc": "24050590000000000",
       "endBalDiff": "0",
-      "gasOut": "0.00070223",
+      "gasOut": "702230000000000",
       "internalIn": "0",
       "internalOut": "0",
       "logIndex": 0,
@@ -599,7 +591,7 @@ Results in ./statement_forward_out.file
       "minerTxFeeIn": "0",
       "minerUncleRewardIn": "0",
       "prefundIn": "0",
-      "prevBal": "0.02475282",
+      "prevBal": "24752820000000000",
       "priceSource": "maker",
       "recipient": "0x2a0c0dbecc7e4d658f48e01e3fa353f44050c208",
       "reconciled": true,
@@ -610,7 +602,7 @@ Results in ./statement_forward_out.file
       "symbol": "WEI",
       "timestamp": 1571458005,
       "totalIn": "0",
-      "totalOut": "0.00070223",
+      "totalOut": "702230000000000",
       "totalOutLessGas": "0",
       "transactionHash": "0x90feb158340931c051ccb4def6112b6d46794f739499d7255b5109481b991265",
       "transactionIndex": 74
@@ -698,49 +690,6 @@ Results in ./statement_forward_out.file
       "totalIn": "0",
       "totalOut": "-450562200000000000",
       "totalOutLessGas": "-450562200000000000",
-      "transactionHash": "0x07b939fa3dbb62bc7fc6d2c408d53f15ecca50a54d57fe7bab23f5df1f274033",
-      "transactionIndex": 130
-    },
-    {
-      "accountedFor": "0x868b8fd259abfcfdf9634c343593b34ef359641d",
-      "amountIn": "0",
-      "amountNet": "450562200000000000",
-      "amountOut": "0",
-      "asset": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
-      "assetName": "ETH",
-      "begBal": "24050590000000000",
-      "begBalDiff": "0",
-      "blockNumber": 8769064,
-      "correctingIn": "0",
-      "correctingOut": "0",
-      "correctingReason": "",
-      "date": "2019-10-19 04:10:09 UTC",
-      "decimals": 18,
-      "endBal": "474612790000000000",
-      "endBalCalc": "474612790000000000",
-      "endBalDiff": "0",
-      "gasOut": "0",
-      "internalIn": "450562200000000000",
-      "internalOut": "0",
-      "logIndex": 0,
-      "minerBaseRewardIn": "0",
-      "minerNephewRewardIn": "0",
-      "minerTxFeeIn": "0",
-      "minerUncleRewardIn": "0",
-      "prefundIn": "0",
-      "prevBal": "24050590000000000",
-      "priceSource": "maker",
-      "recipient": "0x868b8fd259abfcfdf9634c343593b34ef359641d",
-      "reconciled": true,
-      "selfDestructIn": "0",
-      "selfDestructOut": "0",
-      "sender": "0x2a0c0dbecc7e4d658f48e01e3fa353f44050c208",
-      "spotPrice": 173.78,
-      "symbol": "WEI",
-      "timestamp": 1571458209,
-      "totalIn": "450562200000000000",
-      "totalOut": "0",
-      "totalOutLessGas": "0",
       "transactionHash": "0x0934c85fb30abe84acbc26afe3f209593dbe97aac6c205569b88b90376c65033",
       "transactionIndex": 131
     },

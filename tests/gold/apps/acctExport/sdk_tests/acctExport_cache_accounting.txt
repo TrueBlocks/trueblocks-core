@@ -10,6 +10,16 @@ Enabled:  statements, traces, transactions
 Cache:  true
 Caps:  cache,decache,ether
 Format:  json
+------------------------------------
+# Reason: first-tx
+Trial balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0x04fe1f0c597fbc65700f4fba6f87501edc20e665 at block 10277780
+------------------------------------
+XXXNot found  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+Using block-1 balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 0 of 0
+pos: 10277779 10277780 10277781 true true
+EndBalCalc: 6511482167631885 -1048360000000000 5463122167631885
+Inserting  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 10277780 of 5463122167631885
+Found  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 10277780 of 5463122167631885
 =========================================================
 ===> PRICING FOR 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) using Uniswap
 =========================================================
@@ -54,6 +64,18 @@ Trial balance:
    material:            true
    reconciled:          true
 ---------------------------------------------------
+----------Done  true  --------------------------
+
+------------------------------------
+# Reason: token
+Trial balance for  0xdac17f958d2ee523a2206206994597c13d831ec7 0x04fe1f0c597fbc65700f4fba6f87501edc20e665 at block 10277780
+------------------------------------
+XXXNot found  0xdac17f958d2ee523a2206206994597c13d831ec7
+Using block-1 balance for  0xdac17f958d2ee523a2206206994597c13d831ec7 at block 0 of 0
+pos: 10277779 10277780 10277781 true true
+EndBalCalc: 381000000 -381000000 0
+Inserting  0xdac17f958d2ee523a2206206994597c13d831ec7 at block 10277780 of 0
+Found  0xdac17f958d2ee523a2206206994597c13d831ec7 at block 10277780 of 0
 =========================================================
 ===> PRICING FOR 0xdac17f958d2ee523a2206206994597c13d831ec7 (USDT) 
 =========================================================
@@ -85,6 +107,8 @@ Trial balance:
    material:            true
    reconciled:          true
 ---------------------------------------------------
+----------Done  true  --------------------------
+
 {
   "data": [
     {

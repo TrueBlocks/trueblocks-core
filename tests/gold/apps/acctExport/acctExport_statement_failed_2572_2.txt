@@ -10,7 +10,17 @@ TEST[DATE|TIME] OutputFn:  statement_failed_2572_2_out.file
 TEST[DATE|TIME] Caps:  cache,decache,ether
 TEST[DATE|TIME] Format:  json
 INFO[DATE|TIME] { "outputFilename": "--output_filename--" }
-TEST[DATE|TIME] Correcting token transfer for unknown income or outflow
+INFO[DATE|TIME] ------------------------------------
+INFO[DATE|TIME] # Reason: token
+INFO[DATE|TIME] Trial balance for  0xc713e5e149d5d0715dcd1c156a020976e7e56b88 0x65b0d5e1dc0dee0704f53f660aa865c72e986fc7 at block 11670419
+INFO[DATE|TIME] ------------------------------------
+INFO[DATE|TIME] XXXNot found  0xc713e5e149d5d0715dcd1c156a020976e7e56b88
+INFO[DATE|TIME] Using block-1 balance for  0xc713e5e149d5d0715dcd1c156a020976e7e56b88 at block 0 of 0
+INFO[DATE|TIME] pos: 11670418 11670419 11670420 true true
+TEST[DATE|TIME] Correcting ending balance
+INFO[DATE|TIME] EndBalCalc: 14922878205530494041 -14922878205530494041 0
+INFO[DATE|TIME] Inserting  0xc713e5e149d5d0715dcd1c156a020976e7e56b88 at block 11670419 of 0
+INFO[DATE|TIME] Found  0xc713e5e149d5d0715dcd1c156a020976e7e56b88 at block 11670419 of 0
 TEST[DATE|TIME] =========================================================
 TEST[DATE|TIME] ===> PRICING FOR 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) using Uniswap
 TEST[DATE|TIME] =========================================================
@@ -57,6 +67,8 @@ TEST[DATE|TIME]    correctingReason:    endbal-out
 TEST[DATE|TIME]    material:            true
 TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
+INFO[DATE|TIME] ----------Done  true  --------------------------
+INFO[DATE|TIME] 
 ----
 Results in ./statement_failed_2572_2_out.file
 {

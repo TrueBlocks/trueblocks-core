@@ -92,10 +92,11 @@ func (opts *ExportOptions) HandleAccounting(rCtx *output.RenderCtx, monitorArray
 						next = apps[i+1].BlockNumber
 					}
 					pos := &types.AppPosition{
-						Prev:  base.Blknum(prev),
-						Next:  base.Blknum(next),
-						First: i == 0,
-						Last:  i == len(apps)-1,
+						Prev:    base.Blknum(prev),
+						Current: base.Blknum(apps[i].BlockNumber),
+						Next:    base.Blknum(next),
+						First:   i == 0,
+						Last:    i == len(apps)-1,
 					}
 					if err := visitAppearance(pos, &app); err != nil {
 						errorChan <- err

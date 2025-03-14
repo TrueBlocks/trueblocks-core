@@ -142,10 +142,11 @@ func (opts *ExportOptions) HandleStatements(rCtx *output.RenderCtx, monitorArray
 								next = apps[i+1].BlockNumber
 							}
 							pos := &types.AppPosition{
-								Prev:  base.Blknum(prev),
-								Next:  base.Blknum(next),
-								First: i == 0,
-								Last:  i == len(apps)-1,
+								Prev:    base.Blknum(prev),
+								Current: base.Blknum(tx.BlockNumber),
+								Next:    base.Blknum(next),
+								First:   i == 0,
+								Last:    i == len(apps)-1,
 							}
 							if statements, err := recon.GetStatements(pos, tx); err != nil {
 								errorChan <- err

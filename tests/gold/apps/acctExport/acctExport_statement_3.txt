@@ -7,6 +7,16 @@ TEST[DATE|TIME] OutputFn:  statement_3_out.file
 TEST[DATE|TIME] Caps:  cache,decache,ether
 TEST[DATE|TIME] Format:  json
 INFO[DATE|TIME] { "outputFilename": "--output_filename--" }
+INFO[DATE|TIME] ------------------------------------
+INFO[DATE|TIME] # Reason: first-tx
+INFO[DATE|TIME] Trial balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0x08166f02313feae18bb044e7877c808b55b5bf58 at block 0
+INFO[DATE|TIME] ------------------------------------
+INFO[DATE|TIME] XXXNot found  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+INFO[DATE|TIME] Using block-1 balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 0 of 0
+INFO[DATE|TIME] pos: 0 0 46685 true false
+INFO[DATE|TIME] EndBalCalc: 0 1970000000000000000000 1970000000000000000000
+INFO[DATE|TIME] Inserting  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 0 of 1970000000000000000000
+INFO[DATE|TIME] Found  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 0 of 1970000000000000000000
 TEST[DATE|TIME] Block 0 is prior to deployment (3684349) of Maker. No fallback pricing method
 TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] Previous:               0
@@ -35,6 +45,19 @@ TEST[DATE|TIME]    prefundIn:           1970
 TEST[DATE|TIME]    material:            true
 TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
+INFO[DATE|TIME] ----------Done  true  --------------------------
+INFO[DATE|TIME] 
+INFO[DATE|TIME] ------------------------------------
+INFO[DATE|TIME] # Reason: first-tx
+INFO[DATE|TIME] Trial balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0x08166f02313feae18bb044e7877c808b55b5bf58 at block 46685
+INFO[DATE|TIME] ------------------------------------
+INFO[DATE|TIME] XXXFound  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 0 of 1970000000000000000000
+INFO[DATE|TIME] Querying at block 0 for 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0x08166f02313feae18bb044e7877c808b55b5bf58
+INFO[DATE|TIME] Different block  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 0 and 46685 of 1970000000000000000000
+INFO[DATE|TIME] pos: 0 46685 46709 false false
+INFO[DATE|TIME] EndBalCalc: 1970000000000000000000 -5010500000000000000 1964989500000000000000
+INFO[DATE|TIME] Inserting  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 46685 of 1964989500000000000000
+INFO[DATE|TIME] Found  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 46685 of 1964989500000000000000
 TEST[DATE|TIME] Block 46685 is prior to deployment (3684349) of Maker. No fallback pricing method
 TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] Previous:               0
@@ -64,6 +87,19 @@ TEST[DATE|TIME]    gasOut:              0.0105
 TEST[DATE|TIME]    material:            true
 TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
+INFO[DATE|TIME] ----------Done  true  --------------------------
+INFO[DATE|TIME] 
+INFO[DATE|TIME] ------------------------------------
+INFO[DATE|TIME] # Reason: first-tx
+INFO[DATE|TIME] Trial balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0x08166f02313feae18bb044e7877c808b55b5bf58 at block 46709
+INFO[DATE|TIME] ------------------------------------
+INFO[DATE|TIME] XXXFound  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 46685 of 1964989500000000000000
+INFO[DATE|TIME] Querying at block 46685 for 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0x08166f02313feae18bb044e7877c808b55b5bf58
+INFO[DATE|TIME] Different block  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 46685 and 46709 of 1964989500000000000000
+INFO[DATE|TIME] pos: 46685 46709 46710 false true
+INFO[DATE|TIME] EndBalCalc: 1964989500000000000000 -1964900000000000000000 89500000000000000
+INFO[DATE|TIME] Inserting  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 46709 of 89500000000000000
+INFO[DATE|TIME] Found  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 46709 of 89500000000000000
 TEST[DATE|TIME] Block 46709 is prior to deployment (3684349) of Maker. No fallback pricing method
 TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] Previous:               46685
@@ -93,6 +129,8 @@ TEST[DATE|TIME]    gasOut:              0.0105
 TEST[DATE|TIME]    material:            true
 TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
+INFO[DATE|TIME] ----------Done  true  --------------------------
+INFO[DATE|TIME] 
 ----
 Results in ./statement_3_out.file
 {

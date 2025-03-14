@@ -9,9 +9,19 @@ FirstBlock:  8769018
 LastBlock:  8769053
 Caps:  cache,decache,ether
 Format:  json
+------------------------------------
+# Reason: token
+Trial balance for  0x0ba45a8b5d5575935b8158a88c631e9f9c95a2e5 0x868b8fd259abfcfdf9634c343593b34ef359641d at block 8769029
+------------------------------------
+XXXNot found  0x0ba45a8b5d5575935b8158a88c631e9f9c95a2e5
+Using block-1 balance for  0x0ba45a8b5d5575935b8158a88c631e9f9c95a2e5 at block 0 of 0
+pos: 8769028 8769029 8769052 false false
+EndBalCalc: 0 85000000000000000000 85000000000000000000
+Inserting  0x0ba45a8b5d5575935b8158a88c631e9f9c95a2e5 at block 8769029 of 85000000000000000000
+Found  0x0ba45a8b5d5575935b8158a88c631e9f9c95a2e5 at block 8769029 of 85000000000000000000
 Block 8769029 is prior to deployment (10000835) of Uniswap V2. No other source for tokens prior to UniSwap
 ===================================================
-Previous:               8769019
+Previous:               8769028
 Current:                8769029
 Next:                   8769052
 accountedFor:           0x868b8fd259abfcfdf9634c343593b34ef359641d
@@ -37,6 +47,19 @@ Trial balance:
    material:            true
    reconciled:          true
 ---------------------------------------------------
+----------Done  true  --------------------------
+
+------------------------------------
+# Reason: token
+Trial balance for  0x0ba45a8b5d5575935b8158a88c631e9f9c95a2e5 0x868b8fd259abfcfdf9634c343593b34ef359641d at block 8769052
+------------------------------------
+XXXFound  0x0ba45a8b5d5575935b8158a88c631e9f9c95a2e5 at block 8769029 of 85000000000000000000
+Querying at block 8769029 for 0x0ba45a8b5d5575935b8158a88c631e9f9c95a2e5 0x868b8fd259abfcfdf9634c343593b34ef359641d
+Different block  0x0ba45a8b5d5575935b8158a88c631e9f9c95a2e5 at block 8769029 and 8769052 of 85000000000000000000
+pos: 8769029 8769052 8769053 false true
+EndBalCalc: 85000000000000000000 -85000000000000000000 0
+Inserting  0x0ba45a8b5d5575935b8158a88c631e9f9c95a2e5 at block 8769052 of 0
+Found  0x0ba45a8b5d5575935b8158a88c631e9f9c95a2e5 at block 8769052 of 0
 Block 8769052 is prior to deployment (10000835) of Uniswap V2. No other source for tokens prior to UniSwap
 ===================================================
 Previous:               8769029
@@ -65,6 +88,8 @@ Trial balance:
    material:            true
    reconciled:          true
 ---------------------------------------------------
+----------Done  true  --------------------------
+
 {
   "data": [
     {

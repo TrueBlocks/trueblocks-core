@@ -6,6 +6,26 @@ TEST[DATE|TIME] FirstBlock:  8876230
 TEST[DATE|TIME] LastBlock:  9024186
 TEST[DATE|TIME] Caps:  cache,decache,ether
 TEST[DATE|TIME] Format:  json
+INFO[DATE|TIME] ------------------------------------
+INFO[DATE|TIME] # Reason: first-tx
+INFO[DATE|TIME] Trial balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0xf503017d7baf7fbc0fff7492b751025c6a78179b at block 8876232
+INFO[DATE|TIME] ------------------------------------
+INFO[DATE|TIME] XXXNot found  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+INFO[DATE|TIME] Using block-1 balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 0 of 0
+INFO[DATE|TIME] pos: 8876231 8876232 9000998 true false
+INFO[DATE|TIME] EndBalCalc: 4999534200000000000 0 4999534200000000000
+INFO[DATE|TIME] Inserting  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 8876232 of 4999534200000000000
+INFO[DATE|TIME] Found  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 8876232 of 4999534200000000000
+INFO[DATE|TIME] ------------------------------------
+INFO[DATE|TIME] # Reason: token
+INFO[DATE|TIME] Trial balance for  0xd53b50a6213ee7ff2fcc41a7cf69d22ded0a43b3 0xf503017d7baf7fbc0fff7492b751025c6a78179b at block 8876232
+INFO[DATE|TIME] ------------------------------------
+INFO[DATE|TIME] XXXNot found  0xd53b50a6213ee7ff2fcc41a7cf69d22ded0a43b3
+INFO[DATE|TIME] Using block-1 balance for  0xd53b50a6213ee7ff2fcc41a7cf69d22ded0a43b3 at block 0 of 0
+INFO[DATE|TIME] pos: 8876231 8876232 9000998 true false
+INFO[DATE|TIME] EndBalCalc: 0 22500000000000000000000 22500000000000000000000
+INFO[DATE|TIME] Inserting  0xd53b50a6213ee7ff2fcc41a7cf69d22ded0a43b3 at block 8876232 of 22500000000000000000000
+INFO[DATE|TIME] Found  0xd53b50a6213ee7ff2fcc41a7cf69d22ded0a43b3 at block 8876232 of 22500000000000000000000
 TEST[DATE|TIME] Block 8876232 is prior to deployment (10000835) of Uniswap V2. No other source for tokens prior to UniSwap
 TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] Previous:               8876231
@@ -34,6 +54,30 @@ TEST[DATE|TIME]    amountIn:            22500
 TEST[DATE|TIME]    material:            true
 TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
+INFO[DATE|TIME] ----------Done  true  --------------------------
+INFO[DATE|TIME] 
+INFO[DATE|TIME] ------------------------------------
+INFO[DATE|TIME] # Reason: first-tx
+INFO[DATE|TIME] Trial balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0xf503017d7baf7fbc0fff7492b751025c6a78179b at block 9000998
+INFO[DATE|TIME] ------------------------------------
+INFO[DATE|TIME] XXXFound  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 8876232 of 4999534200000000000
+INFO[DATE|TIME] Querying at block 8876232 for 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0xf503017d7baf7fbc0fff7492b751025c6a78179b
+INFO[DATE|TIME] Different block  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 8876232 and 9000998 of 4999534200000000000
+INFO[DATE|TIME] pos: 8876232 9000998 9024185 false false
+INFO[DATE|TIME] EndBalCalc: 4999534200000000000 0 4999534200000000000
+INFO[DATE|TIME] Inserting  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 9000998 of 4999534200000000000
+INFO[DATE|TIME] Found  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 9000998 of 4999534200000000000
+INFO[DATE|TIME] ------------------------------------
+INFO[DATE|TIME] # Reason: first-tx
+INFO[DATE|TIME] Trial balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0xf503017d7baf7fbc0fff7492b751025c6a78179b at block 9024185
+INFO[DATE|TIME] ------------------------------------
+INFO[DATE|TIME] XXXFound  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 9000998 of 4999534200000000000
+INFO[DATE|TIME] Querying at block 9000998 for 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0xf503017d7baf7fbc0fff7492b751025c6a78179b
+INFO[DATE|TIME] Different block  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 9000998 and 9024185 of 4999534200000000000
+INFO[DATE|TIME] pos: 9000998 9024185 9024186 false true
+INFO[DATE|TIME] EndBalCalc: 4999534200000000000 0 4999534200000000000
+INFO[DATE|TIME] Inserting  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 9024185 of 4999534200000000000
+INFO[DATE|TIME] Found  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 9024185 of 4999534200000000000
 {
   "data": [
     {
