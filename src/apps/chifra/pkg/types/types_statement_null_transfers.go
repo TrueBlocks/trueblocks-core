@@ -1,8 +1,6 @@
 package types
 
 import (
-	"fmt"
-
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 )
@@ -34,16 +32,6 @@ func (s *Statement) IsNullTransfer(nLogs int, to base.Address) bool {
 	logger.TestLog(true, "  Material:         ", s.IsMaterial())
 	logger.TestLog(true, "    hasBalanceChange: -->", hasBalanceChange)
 	return true
-}
-
-func (stmt *Statement) WarnIfUnreconciled() {
-	if !stmt.Reconciled() {
-		t := "Eth"
-		if !stmt.IsEth() {
-			t = "Token"
-		}
-		logger.Warn(fmt.Sprintf("%s statement at %d.%d.%d does not reconcile.", t, stmt.BlockNumber, stmt.TransactionIndex, stmt.LogIndex))
-	}
 }
 
 func (s *Statement) CorrectForNullTransfer() bool {

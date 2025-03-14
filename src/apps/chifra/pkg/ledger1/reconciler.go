@@ -3,6 +3,7 @@ package ledger1
 import (
 	"encoding/json"
 	"fmt"
+	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
@@ -11,7 +12,6 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/pricing"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
 type ReconcilerOptions struct {
@@ -59,46 +59,46 @@ func NewReconciler(conn *rpc.Connection, opts *ReconcilerOptions) *Reconciler1 {
 }
 
 func (r *Reconciler1) trialBalance(reason string, trans *types.Transaction, stmt *types.Statement, pos *types.AppPosition) (bool, error) {
-	logger.Info("------------------------------------")
-	logger.Info("# Reason:", reason)
-	logger.Info("Trial balance for ", stmt.Asset, stmt.Holder, "at block", trans.BlockNumber)
-	logger.Info("------------------------------------")
+	logger.TestLog(true, "------------------------------------")
+	logger.TestLog(true, "# Reason:", reason)
+	logger.TestLog(true, "Trial balance for ", stmt.Asset, stmt.Holder, "at block", trans.BlockNumber)
+	logger.TestLog(true, "------------------------------------")
 	var err error
 	if stmt.BegBal, stmt.EndBal, err = r.Connection.GetReconBalances(&rpc.BalanceOptions{
 		CurrBlk: trans.BlockNumber,
 		Asset:   stmt.Asset,
 		Holder:  stmt.AccountedFor,
 	}); err != nil {
-		logger.Info("----------err GetReconBalances --------------------------")
-		logger.Info()
+		logger.TestLog(true, "----------err GetReconBalances --------------------------")
+		logger.TestLog(true)
 		return false, err
 	}
 
 	if found, k := r.Running[stmt.Asset]; k {
-		logger.Info("XXXFound ", stmt.Asset, "at block", found.Prev, "of", found.Amount.Text(10))
+		logger.TestLog(true, "XXXFound ", stmt.Asset, "at block", found.Prev, "of", found.Amount.Text(10))
 	} else {
-		logger.Info("XXXNot found ", stmt.Asset)
+		logger.TestLog(true, "XXXNot found ", stmt.Asset)
 	}
 
 	if running, ok := r.Running[stmt.Asset]; ok {
-		// We've seen this asset before. Begining balance is either...
+		// We've seen this asset before. Beginning balance is either...
 		if running.Prev == trans.BlockNumber {
 			// ...(a) the last running balance (if we're in the same block), or...
-			logger.Info("Same block ", stmt.Asset, "at block", running.Prev, "and", trans.BlockNumber, "of", running.Amount.Text(10))
+			logger.TestLog(true, "Same block ", stmt.Asset, "at block", running.Prev, "and", trans.BlockNumber, "of", running.Amount.Text(10))
 			stmt.BegBal = running.Amount
 		} else {
 			// ...(b) the balance from the chain at the last appearance.
-			logger.Info("Querying at block", running.Prev, "for", stmt.Asset, stmt.Holder)
+			logger.TestLog(true, "Querying at block", running.Prev, "for", stmt.Asset, stmt.Holder)
 			if val, err := r.Connection.GetBalanceAtToken(stmt.Asset, stmt.Holder, running.Prev); err != nil {
-				logger.Info("----------err GetBalanceAtToken --------------------------")
-				logger.Info()
+				logger.TestLog(true, "----------err GetBalanceAtToken --------------------------")
+				logger.TestLog(true, "")
 				return false, err
 			} else {
 				if val == nil {
-					logger.Info("Different block (nil)", stmt.Asset, "at block", running.Prev, "and", trans.BlockNumber, "of", running.Amount.Text(10))
+					logger.TestLog(true, "Different block (nil)", stmt.Asset, "at block", running.Prev, "and", trans.BlockNumber, "of", running.Amount.Text(10))
 					stmt.BegBal = running.Amount
 				} else {
-					logger.Info("Different block ", stmt.Asset, "at block", running.Prev, "and", trans.BlockNumber, "of", val.Text(10))
+					logger.TestLog(true, "Different block ", stmt.Asset, "at block", running.Prev, "and", trans.BlockNumber, "of", val.Text(10))
 					stmt.BegBal = *val
 				}
 			}
@@ -109,14 +109,14 @@ func (r *Reconciler1) trialBalance(reason string, trans *types.Transaction, stmt
 	} else {
 		// We've never seen this asset before. Beginning balance is already queried (at blockNumber-1) and
 		// the previous balance is that beginning balance. Note that this will be zero if blockNumber is 0.
-		logger.Info("Using block-1 balance for ", stmt.Asset, "at block", running.Prev, "of", running.Amount.Text(10))
+		logger.TestLog(true, "Using block-1 balance for ", stmt.Asset, "at block", running.Prev, "of", running.Amount.Text(10))
 		stmt.PrevBal = stmt.BegBal
-		pos.Prev = base.Blknum(utils.Max(int(trans.BlockNumber), 1) - 1)
+		pos.Prev = base.Blknum(base.Max(int(trans.BlockNumber), 1) - 1)
 	}
 
-	logger.Info("pos:", pos.Prev, pos.Current, pos.Next, pos.First, pos.Last)
+	logger.TestLog(true, "pos:", pos.Prev, pos.Current, pos.Next, pos.First, pos.Last)
 	if pos.Current == pos.Next {
-		logger.Info("resets endbal from", stmt.EndBal.Text(10), stmt.EndBalCalc().Text(10))
+		logger.TestLog(true, "resets endbal from", stmt.EndBal.Text(10), stmt.EndBalCalc().Text(10))
 		stmt.EndBal = *stmt.EndBalCalc()
 	}
 
@@ -129,22 +129,22 @@ func (r *Reconciler1) trialBalance(reason string, trans *types.Transaction, stmt
 		}
 	}
 
-	logger.Info("EndBalCalc:", stmt.BegBal.Text(10), stmt.AmountNet().Text(10), stmt.EndBalCalc().Text(10))
+	logger.TestLog(true, "EndBalCalc:", stmt.BegBal.Text(10), stmt.AmountNet().Text(10), stmt.EndBalCalc().Text(10))
 	newEndBal := stmt.EndBalCalc() //new(base.Wei).Add(&stmt.BegBal, stmt.AmountNet())
-	logger.Info("Inserting ", stmt.Asset, "at block", trans.BlockNumber, "of", newEndBal.Text(10))
+	logger.TestLog(true, "Inserting ", stmt.Asset, "at block", trans.BlockNumber, "of", newEndBal.Text(10))
 	r.Running[stmt.Asset] = Running{
 		Amount: *newEndBal,
 		Prev:   trans.BlockNumber,
 	}
 	if found, k := r.Running[stmt.Asset]; k {
-		logger.Info("Found ", stmt.Asset, "at block", found.Prev, "of", found.Amount.Text(10))
+		logger.TestLog(true, "Found ", stmt.Asset, "at block", found.Prev, "of", found.Amount.Text(10))
 	} else {
-		logger.Info("Not found ", stmt.Asset)
+		logger.TestLog(true, "Not found ", stmt.Asset)
 	}
 
 	if !stmt.IsMaterial() {
-		// logger.Info("----------Not Material --------------------------")
-		// logger.Info()
+		// logger.TestLog(true, "----------Not Material --------------------------")
+		// logger.TestLog(true, "")
 		return stmt.Reconciled(), nil
 	}
 
@@ -153,12 +153,13 @@ func (r *Reconciler1) trialBalance(reason string, trans *types.Transaction, stmt
 		stmt.DebugStatement(pos)
 	}
 
-	logger.Info("----------Done ", stmt.Reconciled(), " --------------------------")
-	logger.Info()
+	logger.TestLog(true, "----------Done ", stmt.Reconciled(), " --------------------------")
+	logger.TestLog(true, "")
 	return stmt.Reconciled(), nil
 }
 
 func (r *Reconciler1) SkipAirdrop(addr base.Address) bool {
+	_ = addr
 	return false
 	// if name, found := r.Names[addr]; !found {
 	// 	return false
@@ -170,6 +171,19 @@ func (r *Reconciler1) SkipAirdrop(addr base.Address) bool {
 func (r *Reconciler1) GetStatements(pos *types.AppPosition, trans *types.Transaction) ([]types.Statement, error) {
 	results := make([]types.Statement, 0, 20)
 	if types.AssetOfInterest(r.Opts.AssetFilters, base.FAKE_ETH_ADDRESS) {
+		if r.Connection.Store != nil {
+			// walk.Cache_Statement
+			s := &types.StatementGroup{
+				Address:          base.FAKE_ETH_ADDRESS,
+				BlockNumber:      trans.BlockNumber,
+				TransactionIndex: trans.TransactionIndex,
+			}
+			if err := r.Connection.Store.Read(s); err == nil {
+				// success
+				return s.Statements, nil
+			}
+		}
+
 		reconciled := false
 		if !r.Opts.UseTraces {
 			if stmt, err := trans.FetchStatement(r.Opts.AsEther, base.FAKE_ETH_ADDRESS, r.Opts.AccountFor); err != nil {
@@ -180,7 +194,8 @@ func (r *Reconciler1) GetStatements(pos *types.AppPosition, trans *types.Transac
 					return nil, err
 				} else {
 					if reconciled && stmt.IsMaterial() {
-						stmt.WarnIfUnreconciled()
+						_ = r.WriteToCache(base.FAKE_ETH_ADDRESS, stmt, trans.Timestamp)
+						ReportProgress(stmt)
 						results = append(results, *stmt)
 					}
 				}
@@ -198,7 +213,8 @@ func (r *Reconciler1) GetStatements(pos *types.AppPosition, trans *types.Transac
 						return nil, err
 					} else {
 						if stmt.IsMaterial() { // append even if not reconciled
-							stmt.WarnIfUnreconciled()
+							_ = r.WriteToCache(base.FAKE_ETH_ADDRESS, stmt, trans.Timestamp)
+							ReportProgress(stmt)
 							results = append(results, *stmt)
 						}
 					}
@@ -212,6 +228,20 @@ func (r *Reconciler1) GetStatements(pos *types.AppPosition, trans *types.Transac
 			return nil, err
 		} else {
 			for _, s := range statements {
+				if r.Connection.Store != nil {
+					// walk.Cache_Statement
+					sg := &types.StatementGroup{
+						Address:          s.Asset,
+						BlockNumber:      trans.BlockNumber,
+						TransactionIndex: trans.TransactionIndex,
+					}
+					if err := r.Connection.Store.Read(sg); err == nil {
+						// success
+						results = append(results, sg.Statements...)
+						continue
+					}
+				}
+
 				stmt := &s
 				stmt.Symbol = stmt.Asset.DefaultSymbol()
 				stmt.Decimals = base.Value(18)
@@ -227,18 +257,18 @@ func (r *Reconciler1) GetStatements(pos *types.AppPosition, trans *types.Transac
 					}
 				}
 
-				if reconciled, err := r.trialBalance("token", trans, stmt, pos); err != nil {
+				if _, err := r.trialBalance("token", trans, stmt, pos); err != nil {
 					// TODO: Silent fail?
 					continue
 				} else {
-					if reconciled {
-						id := fmt.Sprintf(" %d.%d.%d", stmt.BlockNumber, stmt.TransactionIndex, stmt.LogIndex)
-						logger.Progress(true, colors.Green+"Transaction", id, "reconciled       "+colors.Off)
-					}
-
+					// if reconciled {
+					// 	id := fmt.Sprintf(" %d.%d.%d", stmt.BlockNumber, stmt.TransactionIndex, stmt.LogIndex)
+					// 	logger.Progress(true, colors.Green+"Transaction", id, "reconciled       "+colors.Off)
+					// }
 					// order matters - don't move
 					if stmt.IsMaterial() { // add even if not reconciled
-						stmt.WarnIfUnreconciled()
+						_ = r.WriteToCache(base.FAKE_ETH_ADDRESS, stmt, trans.Timestamp)
+						ReportProgress(stmt)
 						results = append(results, *stmt)
 					}
 				}
@@ -246,4 +276,34 @@ func (r *Reconciler1) GetStatements(pos *types.AppPosition, trans *types.Transac
 		}
 	}
 	return results, nil
+}
+
+func ReportProgress(stmt *types.Statement) {
+	msg := fmt.Sprintf("Ether statement at % 9d.%d.%d", stmt.BlockNumber, stmt.TransactionIndex, stmt.LogIndex)
+	if !stmt.IsEth() {
+		msg = fmt.Sprintf("Token statement at % 9d.%d.%d", stmt.BlockNumber, stmt.TransactionIndex, stmt.LogIndex)
+	}
+	spacer := strings.Repeat(" ", 100-len(msg))
+	if !stmt.Reconciled() {
+		// logger.Progress(true, colors.Green+msg+" reconciled.", colors.Off, spacer)
+		// } else {
+		logger.Warn(msg+" did not reconcile.", spacer)
+	}
+}
+
+func (r *Reconciler1) WriteToCache(addr base.Address, stmt *types.Statement, ts base.Timestamp) error {
+	// if !stmt.Reconciled() {
+	_ = addr
+	_ = stmt
+	_ = ts
+	return nil
+	// }
+
+	// sg := &types.StatementGroup{
+	// 	Address:          base.FAKE_ETH_ADDRESS,
+	// 	BlockNumber:      stmt.BlockNumber,
+	// 	TransactionIndex: stmt.TransactionIndex,
+	// 	Statements:       []types.Statement{*stmt},
+	// }
+	// return r.Connection.Store.WriteToCache(sg, walk.Cache_Statements, ts)
 }

@@ -6,7 +6,6 @@ go 1.23.1
 require (
 	github.com/alecthomas/participle/v2 v2.0.0
 	github.com/bykof/gostradamus v1.0.4
-	github.com/consensys/gnark-crypto v0.12.1
 	github.com/ethereum/go-ethereum v1.14.13
 	github.com/gocarina/gocsv v0.0.0-20230123225133-763e25b40669
 	github.com/gorilla/mux v1.8.0
@@ -31,6 +30,7 @@ require (
 	github.com/benbjohnson/clock v1.3.0 // indirect
 	github.com/bits-and-blooms/bitset v1.13.0 // indirect
 	github.com/consensys/bavard v0.1.13 // indirect
+	github.com/consensys/gnark-crypto v0.12.1 // indirect
 	github.com/crackcomm/go-gitignore v0.0.0-20170627025303-887ab5e44cc3 // indirect
 	github.com/crate-crypto/go-ipa v0.0.0-20240223125850-b1e8a79f509c // indirect
 	github.com/crate-crypto/go-kzg-4844 v1.0.0 // indirect
