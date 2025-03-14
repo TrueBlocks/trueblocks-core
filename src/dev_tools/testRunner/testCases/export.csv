@@ -160,8 +160,8 @@ on       ,both ,fast  ,export   ,apps ,acctExport ,accounting_wei_1        ,y   
 # reversed accounting does not work
 on       ,both ,fast  ,export   ,apps ,acctExport ,rev_not_rev_not_acct    ,y    ,addrs = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & last_block = 8856511 & fmt = json & ether & max_records = 10
 on       ,both ,fast  ,export   ,apps ,acctExport ,rev_rev_not_acct        ,y    ,addrs = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & last_block = 8856511 & fmt = json & ether & max_records = 10 & reversed
-reversed ,both ,fast  ,export   ,apps ,acctExport ,rev_not_rev_acct        ,y    ,addrs = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & last_block = 8856511 & fmt = json & ether & max_records = 10 & accounting
-reversed ,both ,fast  ,export   ,apps ,acctExport ,rev_rev_acct            ,y    ,addrs = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & last_block = 8856511 & fmt = json & ether & max_records = 10 & accounting & reversed
+on       ,both ,fast  ,export   ,apps ,acctExport ,rev_not_rev_acct        ,y    ,addrs = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & last_block = 8856511 & fmt = json & max_records = 10 & accounting
+on       ,both ,fast  ,export   ,apps ,acctExport ,rev_rev_acct            ,y    ,addrs = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & last_block = 8856511 & fmt = json & max_records = 10 & accounting & reversed
 
 # caching accounting
 on       ,both ,fast  ,export   ,apps ,acctExport ,cache_accounting        ,y    ,addrs = 0x04fe1f0c597fbc65700f4fba6f87501edc20e665 & first_block = 10277780 & last_block = 10278000 & accounting & cache & cache_traces

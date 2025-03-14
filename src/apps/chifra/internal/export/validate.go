@@ -185,7 +185,11 @@ func (opts *ExportOptions) validateExport() error {
 		}
 
 		if opts.FirstRecord != 0 {
-			return validate.Usage("The {0} option is only available with the {1} option.", "--first-record", "--accounting")
+			return validate.Usage("The {0} option is not available with the {1} option.", "--first-record", "--accounting")
+		}
+
+		if opts.Reversed {
+			return validate.Usage("The {0} option is not available with the {1} option.", "--reversed", "--accounting")
 		}
 
 	} else {

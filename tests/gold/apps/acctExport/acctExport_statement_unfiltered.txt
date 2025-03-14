@@ -8,16 +8,16 @@ TEST[DATE|TIME] OutputFn:  statement_unfiltered_out.file
 TEST[DATE|TIME] Caps:  cache,decache,ether
 TEST[DATE|TIME] Format:  json
 INFO[DATE|TIME] { "outputFilename": "--output_filename--" }
-INFO[DATE|TIME] ------------------------------------
-INFO[DATE|TIME] # Reason: first-tx
-INFO[DATE|TIME] Trial balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0xf503017d7baf7fbc0fff7492b751025c6a78179b at block 8860513
-INFO[DATE|TIME] ------------------------------------
-INFO[DATE|TIME] XXXNot found  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
-INFO[DATE|TIME] Using block-1 balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 0 of 0
-INFO[DATE|TIME] pos: 8860512 8860513 8860529 true false
-INFO[DATE|TIME] EndBalCalc: 4999744015000000000 -34017000000000 4999709998000000000
-INFO[DATE|TIME] Inserting  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 8860513 of 4999709998000000000
-INFO[DATE|TIME] Found  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 8860513 of 4999709998000000000
+TEST[DATE|TIME] ------------------------------------
+TEST[DATE|TIME] # Reason: first-tx
+TEST[DATE|TIME] Trial balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0xf503017d7baf7fbc0fff7492b751025c6a78179b at block 8860513
+TEST[DATE|TIME] ------------------------------------
+TEST[DATE|TIME] XXXNot found  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+TEST[DATE|TIME] Using block-1 balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 0 of 0
+TEST[DATE|TIME] pos: 8860512 8860513 8860529 true false
+TEST[DATE|TIME] EndBalCalc: 4999744015000000000 -34017000000000 4999709998000000000
+TEST[DATE|TIME] Inserting  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 8860513 of 4999709998000000000
+TEST[DATE|TIME] Found  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 8860513 of 4999709998000000000
 TEST[DATE|TIME] Block 8860513 is prior to deployment (10000835) of Uniswap V2. Falling back to Maker (0x729d19f657bd0614b4985cf1d82531c67569197b)
 TEST[DATE|TIME] =========================================================
 TEST[DATE|TIME] ===> PRICING FOR 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) using Maker
@@ -58,18 +58,18 @@ TEST[DATE|TIME]    gasOut:              0.000034017
 TEST[DATE|TIME]    material:            true
 TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
-INFO[DATE|TIME] ----------Done  true  --------------------------
-INFO[DATE|TIME] 
-INFO[DATE|TIME] ------------------------------------
-INFO[DATE|TIME] # Reason: token
-INFO[DATE|TIME] Trial balance for  0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359 0xf503017d7baf7fbc0fff7492b751025c6a78179b at block 8860513
-INFO[DATE|TIME] ------------------------------------
-INFO[DATE|TIME] XXXNot found  0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359
-INFO[DATE|TIME] Using block-1 balance for  0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359 at block 0 of 0
-INFO[DATE|TIME] pos: 8860512 8860513 8860529 true false
-INFO[DATE|TIME] EndBalCalc: 7500000000000000000000 -500000000000000000000 7000000000000000000000
-INFO[DATE|TIME] Inserting  0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359 at block 8860513 of 7000000000000000000000
-INFO[DATE|TIME] Found  0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359 at block 8860513 of 7000000000000000000000
+TEST[DATE|TIME] ----------Done  true  --------------------------
+TEST[DATE|TIME] 
+TEST[DATE|TIME] ------------------------------------
+TEST[DATE|TIME] # Reason: token
+TEST[DATE|TIME] Trial balance for  0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359 0xf503017d7baf7fbc0fff7492b751025c6a78179b at block 8860513
+TEST[DATE|TIME] ------------------------------------
+TEST[DATE|TIME] XXXNot found  0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359
+TEST[DATE|TIME] Using block-1 balance for  0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359 at block 0 of 0
+TEST[DATE|TIME] pos: 8860512 8860513 8860529 true false
+TEST[DATE|TIME] EndBalCalc: 7500000000000000000000 -500000000000000000000 7000000000000000000000
+TEST[DATE|TIME] Inserting  0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359 at block 8860513 of 7000000000000000000000
+TEST[DATE|TIME] Found  0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359 at block 8860513 of 7000000000000000000000
 TEST[DATE|TIME] =========================================================
 TEST[DATE|TIME] ===> PRICING FOR 0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359 (DAI) 
 TEST[DATE|TIME] =========================================================
@@ -101,19 +101,19 @@ TEST[DATE|TIME]    amountOut:           500
 TEST[DATE|TIME]    material:            true
 TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
-INFO[DATE|TIME] ----------Done  true  --------------------------
-INFO[DATE|TIME] 
-INFO[DATE|TIME] ------------------------------------
-INFO[DATE|TIME] # Reason: first-tx
-INFO[DATE|TIME] Trial balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0xf503017d7baf7fbc0fff7492b751025c6a78179b at block 8860529
-INFO[DATE|TIME] ------------------------------------
-INFO[DATE|TIME] XXXFound  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 8860513 of 4999709998000000000
-INFO[DATE|TIME] Querying at block 8860513 for 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0xf503017d7baf7fbc0fff7492b751025c6a78179b
-INFO[DATE|TIME] Different block  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 8860513 and 8860529 of 4999709998000000000
-INFO[DATE|TIME] pos: 8860513 8860529 8860531 false false
-INFO[DATE|TIME] EndBalCalc: 4999709998000000000 -46049000000000 4999663949000000000
-INFO[DATE|TIME] Inserting  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 8860529 of 4999663949000000000
-INFO[DATE|TIME] Found  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 8860529 of 4999663949000000000
+TEST[DATE|TIME] ----------Done  true  --------------------------
+TEST[DATE|TIME] 
+TEST[DATE|TIME] ------------------------------------
+TEST[DATE|TIME] # Reason: first-tx
+TEST[DATE|TIME] Trial balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0xf503017d7baf7fbc0fff7492b751025c6a78179b at block 8860529
+TEST[DATE|TIME] ------------------------------------
+TEST[DATE|TIME] XXXFound  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 8860513 of 4999709998000000000
+TEST[DATE|TIME] Querying at block 8860513 for 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0xf503017d7baf7fbc0fff7492b751025c6a78179b
+TEST[DATE|TIME] Different block  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 8860513 and 8860529 of 4999709998000000000
+TEST[DATE|TIME] pos: 8860513 8860529 8860531 false false
+TEST[DATE|TIME] EndBalCalc: 4999709998000000000 -46049000000000 4999663949000000000
+TEST[DATE|TIME] Inserting  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 8860529 of 4999663949000000000
+TEST[DATE|TIME] Found  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 8860529 of 4999663949000000000
 TEST[DATE|TIME] Block 8860529 is prior to deployment (10000835) of Uniswap V2. Falling back to Maker (0x729d19f657bd0614b4985cf1d82531c67569197b)
 TEST[DATE|TIME] =========================================================
 TEST[DATE|TIME] ===> PRICING FOR 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) using Maker
@@ -154,19 +154,19 @@ TEST[DATE|TIME]    gasOut:              0.000046049
 TEST[DATE|TIME]    material:            true
 TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
-INFO[DATE|TIME] ----------Done  true  --------------------------
-INFO[DATE|TIME] 
-INFO[DATE|TIME] ------------------------------------
-INFO[DATE|TIME] # Reason: first-tx
-INFO[DATE|TIME] Trial balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0xf503017d7baf7fbc0fff7492b751025c6a78179b at block 8860531
-INFO[DATE|TIME] ------------------------------------
-INFO[DATE|TIME] XXXFound  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 8860529 of 4999663949000000000
-INFO[DATE|TIME] Querying at block 8860529 for 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0xf503017d7baf7fbc0fff7492b751025c6a78179b
-INFO[DATE|TIME] Different block  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 8860529 and 8860531 of 4999663949000000000
-INFO[DATE|TIME] pos: 8860529 8860531 8860532 false true
-INFO[DATE|TIME] EndBalCalc: 4999663949000000000 -24541000000000 4999639408000000000
-INFO[DATE|TIME] Inserting  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 8860531 of 4999639408000000000
-INFO[DATE|TIME] Found  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 8860531 of 4999639408000000000
+TEST[DATE|TIME] ----------Done  true  --------------------------
+TEST[DATE|TIME] 
+TEST[DATE|TIME] ------------------------------------
+TEST[DATE|TIME] # Reason: first-tx
+TEST[DATE|TIME] Trial balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0xf503017d7baf7fbc0fff7492b751025c6a78179b at block 8860531
+TEST[DATE|TIME] ------------------------------------
+TEST[DATE|TIME] XXXFound  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 8860529 of 4999663949000000000
+TEST[DATE|TIME] Querying at block 8860529 for 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0xf503017d7baf7fbc0fff7492b751025c6a78179b
+TEST[DATE|TIME] Different block  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 8860529 and 8860531 of 4999663949000000000
+TEST[DATE|TIME] pos: 8860529 8860531 8860532 false true
+TEST[DATE|TIME] EndBalCalc: 4999663949000000000 -24541000000000 4999639408000000000
+TEST[DATE|TIME] Inserting  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 8860531 of 4999639408000000000
+TEST[DATE|TIME] Found  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 8860531 of 4999639408000000000
 TEST[DATE|TIME] Block 8860531 is prior to deployment (10000835) of Uniswap V2. Falling back to Maker (0x729d19f657bd0614b4985cf1d82531c67569197b)
 TEST[DATE|TIME] =========================================================
 TEST[DATE|TIME] ===> PRICING FOR 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) using Maker
@@ -207,19 +207,19 @@ TEST[DATE|TIME]    gasOut:              0.000024541
 TEST[DATE|TIME]    material:            true
 TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
-INFO[DATE|TIME] ----------Done  true  --------------------------
-INFO[DATE|TIME] 
-INFO[DATE|TIME] ------------------------------------
-INFO[DATE|TIME] # Reason: token
-INFO[DATE|TIME] Trial balance for  0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359 0xf503017d7baf7fbc0fff7492b751025c6a78179b at block 8860531
-INFO[DATE|TIME] ------------------------------------
-INFO[DATE|TIME] XXXFound  0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359 at block 8860513 of 7000000000000000000000
-INFO[DATE|TIME] Querying at block 8860513 for 0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359 0xf503017d7baf7fbc0fff7492b751025c6a78179b
-INFO[DATE|TIME] Different block  0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359 at block 8860513 and 8860531 of 7000000000000000000000
-INFO[DATE|TIME] pos: 8860513 8860531 8860532 false true
-INFO[DATE|TIME] EndBalCalc: 7000000000000000000000 -7000000000000000000000 0
-INFO[DATE|TIME] Inserting  0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359 at block 8860531 of 0
-INFO[DATE|TIME] Found  0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359 at block 8860531 of 0
+TEST[DATE|TIME] ----------Done  true  --------------------------
+TEST[DATE|TIME] 
+TEST[DATE|TIME] ------------------------------------
+TEST[DATE|TIME] # Reason: token
+TEST[DATE|TIME] Trial balance for  0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359 0xf503017d7baf7fbc0fff7492b751025c6a78179b at block 8860531
+TEST[DATE|TIME] ------------------------------------
+TEST[DATE|TIME] XXXFound  0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359 at block 8860513 of 7000000000000000000000
+TEST[DATE|TIME] Querying at block 8860513 for 0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359 0xf503017d7baf7fbc0fff7492b751025c6a78179b
+TEST[DATE|TIME] Different block  0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359 at block 8860513 and 8860531 of 7000000000000000000000
+TEST[DATE|TIME] pos: 8860513 8860531 8860532 false true
+TEST[DATE|TIME] EndBalCalc: 7000000000000000000000 -7000000000000000000000 0
+TEST[DATE|TIME] Inserting  0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359 at block 8860531 of 0
+TEST[DATE|TIME] Found  0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359 at block 8860531 of 0
 TEST[DATE|TIME] =========================================================
 TEST[DATE|TIME] ===> PRICING FOR 0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359 (DAI) 
 TEST[DATE|TIME] =========================================================
@@ -251,8 +251,8 @@ TEST[DATE|TIME]    amountOut:           7000
 TEST[DATE|TIME]    material:            true
 TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
-INFO[DATE|TIME] ----------Done  true  --------------------------
-INFO[DATE|TIME] 
+TEST[DATE|TIME] ----------Done  true  --------------------------
+TEST[DATE|TIME] 
 ----
 Results in ./statement_unfiltered_out.file
 {

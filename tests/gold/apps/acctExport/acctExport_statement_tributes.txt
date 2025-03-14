@@ -7,16 +7,16 @@ TEST[DATE|TIME] FirstBlock:  8769018
 TEST[DATE|TIME] LastBlock:  8769053
 TEST[DATE|TIME] Caps:  cache,decache,ether
 TEST[DATE|TIME] Format:  json
-INFO[DATE|TIME] ------------------------------------
-INFO[DATE|TIME] # Reason: token
-INFO[DATE|TIME] Trial balance for  0x0ba45a8b5d5575935b8158a88c631e9f9c95a2e5 0x868b8fd259abfcfdf9634c343593b34ef359641d at block 8769029
-INFO[DATE|TIME] ------------------------------------
-INFO[DATE|TIME] XXXNot found  0x0ba45a8b5d5575935b8158a88c631e9f9c95a2e5
-INFO[DATE|TIME] Using block-1 balance for  0x0ba45a8b5d5575935b8158a88c631e9f9c95a2e5 at block 0 of 0
-INFO[DATE|TIME] pos: 8769028 8769029 8769052 false false
-INFO[DATE|TIME] EndBalCalc: 0 85000000000000000000 85000000000000000000
-INFO[DATE|TIME] Inserting  0x0ba45a8b5d5575935b8158a88c631e9f9c95a2e5 at block 8769029 of 85000000000000000000
-INFO[DATE|TIME] Found  0x0ba45a8b5d5575935b8158a88c631e9f9c95a2e5 at block 8769029 of 85000000000000000000
+TEST[DATE|TIME] ------------------------------------
+TEST[DATE|TIME] # Reason: token
+TEST[DATE|TIME] Trial balance for  0x0ba45a8b5d5575935b8158a88c631e9f9c95a2e5 0x868b8fd259abfcfdf9634c343593b34ef359641d at block 8769029
+TEST[DATE|TIME] ------------------------------------
+TEST[DATE|TIME] XXXNot found  0x0ba45a8b5d5575935b8158a88c631e9f9c95a2e5
+TEST[DATE|TIME] Using block-1 balance for  0x0ba45a8b5d5575935b8158a88c631e9f9c95a2e5 at block 0 of 0
+TEST[DATE|TIME] pos: 8769028 8769029 8769052 false false
+TEST[DATE|TIME] EndBalCalc: 0 85000000000000000000 85000000000000000000
+TEST[DATE|TIME] Inserting  0x0ba45a8b5d5575935b8158a88c631e9f9c95a2e5 at block 8769029 of 85000000000000000000
+TEST[DATE|TIME] Found  0x0ba45a8b5d5575935b8158a88c631e9f9c95a2e5 at block 8769029 of 85000000000000000000
 TEST[DATE|TIME] Block 8769029 is prior to deployment (10000835) of Uniswap V2. No other source for tokens prior to UniSwap
 TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] Previous:               8769028
@@ -45,19 +45,19 @@ TEST[DATE|TIME]    amountIn:            85
 TEST[DATE|TIME]    material:            true
 TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
-INFO[DATE|TIME] ----------Done  true  --------------------------
-INFO[DATE|TIME] 
-INFO[DATE|TIME] ------------------------------------
-INFO[DATE|TIME] # Reason: token
-INFO[DATE|TIME] Trial balance for  0x0ba45a8b5d5575935b8158a88c631e9f9c95a2e5 0x868b8fd259abfcfdf9634c343593b34ef359641d at block 8769052
-INFO[DATE|TIME] ------------------------------------
-INFO[DATE|TIME] XXXFound  0x0ba45a8b5d5575935b8158a88c631e9f9c95a2e5 at block 8769029 of 85000000000000000000
-INFO[DATE|TIME] Querying at block 8769029 for 0x0ba45a8b5d5575935b8158a88c631e9f9c95a2e5 0x868b8fd259abfcfdf9634c343593b34ef359641d
-INFO[DATE|TIME] Different block  0x0ba45a8b5d5575935b8158a88c631e9f9c95a2e5 at block 8769029 and 8769052 of 85000000000000000000
-INFO[DATE|TIME] pos: 8769029 8769052 8769053 false true
-INFO[DATE|TIME] EndBalCalc: 85000000000000000000 -85000000000000000000 0
-INFO[DATE|TIME] Inserting  0x0ba45a8b5d5575935b8158a88c631e9f9c95a2e5 at block 8769052 of 0
-INFO[DATE|TIME] Found  0x0ba45a8b5d5575935b8158a88c631e9f9c95a2e5 at block 8769052 of 0
+TEST[DATE|TIME] ----------Done  true  --------------------------
+TEST[DATE|TIME] 
+TEST[DATE|TIME] ------------------------------------
+TEST[DATE|TIME] # Reason: token
+TEST[DATE|TIME] Trial balance for  0x0ba45a8b5d5575935b8158a88c631e9f9c95a2e5 0x868b8fd259abfcfdf9634c343593b34ef359641d at block 8769052
+TEST[DATE|TIME] ------------------------------------
+TEST[DATE|TIME] XXXFound  0x0ba45a8b5d5575935b8158a88c631e9f9c95a2e5 at block 8769029 of 85000000000000000000
+TEST[DATE|TIME] Querying at block 8769029 for 0x0ba45a8b5d5575935b8158a88c631e9f9c95a2e5 0x868b8fd259abfcfdf9634c343593b34ef359641d
+TEST[DATE|TIME] Different block  0x0ba45a8b5d5575935b8158a88c631e9f9c95a2e5 at block 8769029 and 8769052 of 85000000000000000000
+TEST[DATE|TIME] pos: 8769029 8769052 8769053 false true
+TEST[DATE|TIME] EndBalCalc: 85000000000000000000 -85000000000000000000 0
+TEST[DATE|TIME] Inserting  0x0ba45a8b5d5575935b8158a88c631e9f9c95a2e5 at block 8769052 of 0
+TEST[DATE|TIME] Found  0x0ba45a8b5d5575935b8158a88c631e9f9c95a2e5 at block 8769052 of 0
 TEST[DATE|TIME] Block 8769052 is prior to deployment (10000835) of Uniswap V2. No other source for tokens prior to UniSwap
 TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] Previous:               8769029
@@ -86,8 +86,8 @@ TEST[DATE|TIME]    amountOut:           85
 TEST[DATE|TIME]    material:            true
 TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
-INFO[DATE|TIME] ----------Done  true  --------------------------
-INFO[DATE|TIME] 
+TEST[DATE|TIME] ----------Done  true  --------------------------
+TEST[DATE|TIME] 
 {
   "data": [
     {
