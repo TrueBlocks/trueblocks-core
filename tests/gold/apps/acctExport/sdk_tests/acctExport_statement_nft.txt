@@ -50,7 +50,6 @@ Trial balance:
                        ======================= 
    endBal:              22500 (0)
    endBalCalc:          22500
-   rollingBalance:      0
 --------------------------------------------------- 
    amountIn:            22500
    material:            true

@@ -51,7 +51,6 @@ TEST[DATE|TIME]    amountNet:           5
 TEST[DATE|TIME]                        ======================= 
 TEST[DATE|TIME]    endBal:              5 (0)
 TEST[DATE|TIME]    endBalCalc:          5
-TEST[DATE|TIME]    rollingBalance:      0
 TEST[DATE|TIME] --------------------------------------------------- 
 TEST[DATE|TIME]    amountIn:            5
 TEST[DATE|TIME]    material:            true
@@ -115,7 +114,6 @@ TEST[DATE|TIME]    amountNet:           -0.01021
 TEST[DATE|TIME]                        ======================= 
 TEST[DATE|TIME]    endBal:              4.98979 (0)
 TEST[DATE|TIME]    endBalCalc:          4.98979
-TEST[DATE|TIME]    rollingBalance:      0
 TEST[DATE|TIME] --------------------------------------------------- 
 TEST[DATE|TIME]    amountOut:           0.01
 TEST[DATE|TIME]    gasOut:              0.00021
@@ -169,7 +167,6 @@ TEST[DATE|TIME]    amountNet:           0.01
 TEST[DATE|TIME]                        ======================= 
 TEST[DATE|TIME]    endBal:              4.99979 (0)
 TEST[DATE|TIME]    endBalCalc:          4.99979
-TEST[DATE|TIME]    rollingBalance:      0
 TEST[DATE|TIME] --------------------------------------------------- 
 TEST[DATE|TIME]    amountIn:            0.01
 TEST[DATE|TIME]    material:            true
@@ -223,7 +220,6 @@ TEST[DATE|TIME]    amountNet:           1
 TEST[DATE|TIME]                        ======================= 
 TEST[DATE|TIME]    endBal:              1 (0)
 TEST[DATE|TIME]    endBalCalc:          1
-TEST[DATE|TIME]    rollingBalance:      0
 TEST[DATE|TIME] --------------------------------------------------- 
 TEST[DATE|TIME]    amountIn:            1
 TEST[DATE|TIME]    material:            true
@@ -278,7 +274,6 @@ TEST[DATE|TIME]    amountNet:           4999
 TEST[DATE|TIME]                        ======================= 
 TEST[DATE|TIME]    endBal:              5000 (0)
 TEST[DATE|TIME]    endBalCalc:          5000
-TEST[DATE|TIME]    rollingBalance:      0
 TEST[DATE|TIME] --------------------------------------------------- 
 TEST[DATE|TIME]    amountIn:            4999
 TEST[DATE|TIME]    material:            true

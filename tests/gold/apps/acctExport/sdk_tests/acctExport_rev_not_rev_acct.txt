@@ -51,7 +51,6 @@ Trial balance:
                        ======================= 
    endBal:              5 (0)
    endBalCalc:          5
-   rollingBalance:      0
 --------------------------------------------------- 
    amountIn:            5
    material:            true
@@ -115,7 +114,6 @@ Trial balance:
                        ======================= 
    endBal:              4.98979 (0)
    endBalCalc:          4.98979
-   rollingBalance:      0
 --------------------------------------------------- 
    amountOut:           0.01
    gasOut:              0.00021
@@ -169,7 +167,6 @@ Trial balance:
                        ======================= 
    endBal:              4.99979 (0)
    endBalCalc:          4.99979
-   rollingBalance:      0
 --------------------------------------------------- 
    amountIn:            0.01
    material:            true
@@ -223,7 +220,6 @@ Trial balance:
                        ======================= 
    endBal:              1 (0)
    endBalCalc:          1
-   rollingBalance:      0
 --------------------------------------------------- 
    amountIn:            1
    material:            true
@@ -278,7 +274,6 @@ Trial balance:
                        ======================= 
    endBal:              5000 (0)
    endBalCalc:          5000
-   rollingBalance:      0
 --------------------------------------------------- 
    amountIn:            4999
    material:            true

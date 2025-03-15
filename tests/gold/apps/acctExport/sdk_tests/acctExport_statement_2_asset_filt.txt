@@ -54,7 +54,6 @@ Trial balance:
                        ======================= 
    endBal:              1 (0)
    endBalCalc:          1
-   rollingBalance:      0
 --------------------------------------------------- 
    amountIn:            1
    material:            true
@@ -109,7 +108,6 @@ Trial balance:
                        ======================= 
    endBal:              5000 (0)
    endBalCalc:          5000
-   rollingBalance:      0
 --------------------------------------------------- 
    amountIn:            4999
    material:            true
@@ -164,7 +162,6 @@ Trial balance:
                        ======================= 
    endBal:              7500 (0)
    endBalCalc:          7500
-   rollingBalance:      0
 --------------------------------------------------- 
    amountIn:            2500
    material:            true
@@ -217,7 +214,6 @@ Trial balance:
                        ======================= 
    endBal:              4.999744015 (0)
    endBalCalc:          4.999744015
-   rollingBalance:      0
 --------------------------------------------------- 
    gasOut:              0.000045985
    material:            true
@@ -270,7 +266,6 @@ Trial balance:
                        ======================= 
    endBal:              4.999709998 (0)
    endBalCalc:          4.999709998
-   rollingBalance:      0
 --------------------------------------------------- 
    gasOut:              0.000034017
    material:            true
@@ -314,7 +309,6 @@ Trial balance:
                        ======================= 
    endBal:              7000 (0)
    endBalCalc:          7000
-   rollingBalance:      0
 --------------------------------------------------- 
    amountOut:           500
    material:            true
@@ -367,7 +361,6 @@ Trial balance:
                        ======================= 
    endBal:              4.999663949 (0)
    endBalCalc:          4.999663949
-   rollingBalance:      0
 --------------------------------------------------- 
    gasOut:              0.000046049
    material:            true
@@ -420,7 +413,6 @@ Trial balance:
                        ======================= 
    endBal:              4.999639408 (0)
    endBalCalc:          4.999639408
-   rollingBalance:      0
 --------------------------------------------------- 
    gasOut:              0.000024541
    material:            true
@@ -464,7 +456,6 @@ Trial balance:
                        ======================= 
    endBal:              0 (0)
    endBalCalc:          0
-   rollingBalance:      0
 --------------------------------------------------- 
    amountOut:           7000
    material:            true
@@ -517,7 +508,6 @@ Trial balance:
                        ======================= 
    endBal:              4.9995342 (0)
    endBalCalc:          4.9995342
-   rollingBalance:      0
 --------------------------------------------------- 
    gasOut:              0.000105208
    material:            true
@@ -625,7 +615,6 @@ Trial balance:
                        ======================= 
    endBal:              5.0145342 (0)
    endBalCalc:          5.0145342
-   rollingBalance:      0
 --------------------------------------------------- 
    amountIn:            0.015
    material:            true
@@ -678,7 +667,6 @@ Trial balance:
                        ======================= 
    endBal:              4.98873507 (0)
    endBalCalc:          4.98873507
-   rollingBalance:      0
 --------------------------------------------------- 
    gasOut:              0.02579913
    material:            true
@@ -775,7 +763,6 @@ Trial balance:
                        ======================= 
    endBal:              4.988267124 (0)
    endBalCalc:          4.988267124
-   rollingBalance:      0
 --------------------------------------------------- 
    gasOut:              0.000467946
    material:            true
@@ -827,7 +814,6 @@ Trial balance:
                        ======================= 
    endBal:              4.98785098 (0)
    endBalCalc:          4.98785098
-   rollingBalance:      0
 --------------------------------------------------- 
    gasOut:              0.000416144
    material:            true
@@ -880,7 +866,6 @@ Trial balance:
                        ======================= 
    endBal:              4.987465771 (0)
    endBalCalc:          4.987465771
-   rollingBalance:      0
 --------------------------------------------------- 
    gasOut:              0.000385209
    material:            true
@@ -933,7 +918,6 @@ Trial balance:
                        ======================= 
    endBal:              4.987049531 (0)
    endBalCalc:          4.987049531
-   rollingBalance:      0
 --------------------------------------------------- 
    gasOut:              0.00041624
    material:            true

@@ -41,7 +41,6 @@ Trial balance:
                        ======================= 
    endBal:              85 (0)
    endBalCalc:          85
-   rollingBalance:      0
 --------------------------------------------------- 
    amountIn:            85
    material:            true
@@ -82,7 +81,6 @@ Trial balance:
                        ======================= 
    endBal:              0 (0)
    endBalCalc:          0
-   rollingBalance:      0
 --------------------------------------------------- 
    amountOut:           85
    material:            true

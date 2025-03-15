@@ -56,7 +56,6 @@ TEST[DATE|TIME]    amountNet:           -0.00104836
 TEST[DATE|TIME]                        ======================= 
 TEST[DATE|TIME]    endBal:              0.005463122167631885 (0)
 TEST[DATE|TIME]    endBalCalc:          0.005463122167631885
-TEST[DATE|TIME]    rollingBalance:      0
 TEST[DATE|TIME] --------------------------------------------------- 
 TEST[DATE|TIME]    gasOut:              0.00104836
 TEST[DATE|TIME]    material:            true
@@ -99,7 +98,6 @@ TEST[DATE|TIME]    amountNet:           -0.000000000381
 TEST[DATE|TIME]                        ======================= 
 TEST[DATE|TIME]    endBal:              0 (0)
 TEST[DATE|TIME]    endBalCalc:          0
-TEST[DATE|TIME]    rollingBalance:      0
 TEST[DATE|TIME] --------------------------------------------------- 
 TEST[DATE|TIME]    amountOut:           0.000000000381
 TEST[DATE|TIME]    material:            true

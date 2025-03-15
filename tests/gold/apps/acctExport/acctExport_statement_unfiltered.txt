@@ -52,7 +52,6 @@ TEST[DATE|TIME]    amountNet:           -0.000034017
 TEST[DATE|TIME]                        ======================= 
 TEST[DATE|TIME]    endBal:              4.999709998 (0)
 TEST[DATE|TIME]    endBalCalc:          4.999709998
-TEST[DATE|TIME]    rollingBalance:      0
 TEST[DATE|TIME] --------------------------------------------------- 
 TEST[DATE|TIME]    gasOut:              0.000034017
 TEST[DATE|TIME]    material:            true
@@ -95,7 +94,6 @@ TEST[DATE|TIME]    amountNet:           -500
 TEST[DATE|TIME]                        ======================= 
 TEST[DATE|TIME]    endBal:              7000 (0)
 TEST[DATE|TIME]    endBalCalc:          7000
-TEST[DATE|TIME]    rollingBalance:      0
 TEST[DATE|TIME] --------------------------------------------------- 
 TEST[DATE|TIME]    amountOut:           500
 TEST[DATE|TIME]    material:            true
@@ -148,7 +146,6 @@ TEST[DATE|TIME]    amountNet:           -0.000046049
 TEST[DATE|TIME]                        ======================= 
 TEST[DATE|TIME]    endBal:              4.999663949 (0)
 TEST[DATE|TIME]    endBalCalc:          4.999663949
-TEST[DATE|TIME]    rollingBalance:      0
 TEST[DATE|TIME] --------------------------------------------------- 
 TEST[DATE|TIME]    gasOut:              0.000046049
 TEST[DATE|TIME]    material:            true
@@ -201,7 +198,6 @@ TEST[DATE|TIME]    amountNet:           -0.000024541
 TEST[DATE|TIME]                        ======================= 
 TEST[DATE|TIME]    endBal:              4.999639408 (0)
 TEST[DATE|TIME]    endBalCalc:          4.999639408
-TEST[DATE|TIME]    rollingBalance:      0
 TEST[DATE|TIME] --------------------------------------------------- 
 TEST[DATE|TIME]    gasOut:              0.000024541
 TEST[DATE|TIME]    material:            true
@@ -245,7 +241,6 @@ TEST[DATE|TIME]    amountNet:           -7000
 TEST[DATE|TIME]                        ======================= 
 TEST[DATE|TIME]    endBal:              0 (0)
 TEST[DATE|TIME]    endBalCalc:          0
-TEST[DATE|TIME]    rollingBalance:      0
 TEST[DATE|TIME] --------------------------------------------------- 
 TEST[DATE|TIME]    amountOut:           7000
 TEST[DATE|TIME]    material:            true

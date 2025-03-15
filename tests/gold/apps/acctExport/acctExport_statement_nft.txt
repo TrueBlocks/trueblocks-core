@@ -48,7 +48,6 @@ TEST[DATE|TIME]    amountNet:           22500
 TEST[DATE|TIME]                        ======================= 
 TEST[DATE|TIME]    endBal:              22500 (0)
 TEST[DATE|TIME]    endBalCalc:          22500
-TEST[DATE|TIME]    rollingBalance:      0
 TEST[DATE|TIME] --------------------------------------------------- 
 TEST[DATE|TIME]    amountIn:            22500
 TEST[DATE|TIME]    material:            true

@@ -44,7 +44,6 @@ Trial balance:
                        ======================= 
    endBal:              7000 (0)
    endBalCalc:          7000
-   rollingBalance:      0
 --------------------------------------------------- 
    amountOut:           500
    material:            true
@@ -88,7 +87,6 @@ Trial balance:
                        ======================= 
    endBal:              0 (0)
    endBalCalc:          0
-   rollingBalance:      0
 --------------------------------------------------- 
    amountOut:           7000
    material:            true

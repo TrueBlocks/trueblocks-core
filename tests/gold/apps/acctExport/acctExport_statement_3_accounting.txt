@@ -38,7 +38,6 @@ TEST[DATE|TIME]    amountNet:           1970
 TEST[DATE|TIME]                        ======================= 
 TEST[DATE|TIME]    endBal:              1970 (0)
 TEST[DATE|TIME]    endBalCalc:          1970
-TEST[DATE|TIME]    rollingBalance:      0
 TEST[DATE|TIME] --------------------------------------------------- 
 TEST[DATE|TIME]    prefundIn:           1970
 TEST[DATE|TIME]    material:            true
@@ -79,7 +78,6 @@ TEST[DATE|TIME]    amountNet:           -5.0105
 TEST[DATE|TIME]                        ======================= 
 TEST[DATE|TIME]    endBal:              1964.9895 (0)
 TEST[DATE|TIME]    endBalCalc:          1964.9895
-TEST[DATE|TIME]    rollingBalance:      0
 TEST[DATE|TIME] --------------------------------------------------- 
 TEST[DATE|TIME]    amountOut:           5
 TEST[DATE|TIME]    gasOut:              0.0105
@@ -121,7 +119,6 @@ TEST[DATE|TIME]    amountNet:           -1964.9
 TEST[DATE|TIME]                        ======================= 
 TEST[DATE|TIME]    endBal:              0.0895 (0)
 TEST[DATE|TIME]    endBalCalc:          0.0895
-TEST[DATE|TIME]    rollingBalance:      0
 TEST[DATE|TIME] --------------------------------------------------- 
 TEST[DATE|TIME]    amountOut:           1964.8895
 TEST[DATE|TIME]    gasOut:              0.0105

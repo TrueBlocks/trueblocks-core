@@ -59,7 +59,6 @@ TEST[DATE|TIME]    amountNet:           -14.922878205530494041
 TEST[DATE|TIME]                        ======================= 
 TEST[DATE|TIME]    endBal:              0 (0)
 TEST[DATE|TIME]    endBalCalc:          0
-TEST[DATE|TIME]    rollingBalance:      0
 TEST[DATE|TIME] --------------------------------------------------- 
 TEST[DATE|TIME]    amountOut:           14.922878243871414864
 TEST[DATE|TIME]    correctingOut:       -0.000000038340920823

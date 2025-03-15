@@ -38,7 +38,6 @@ Trial balance:
                        ======================= 
    endBal:              4200 (0)
    endBalCalc:          4200
-   rollingBalance:      0
 --------------------------------------------------- 
    prefundIn:           4200
    material:            true
@@ -79,7 +78,6 @@ Trial balance:
                        ======================= 
    endBal:              0.074679320489077336 (0)
    endBalCalc:          0.074679320489077336
-   rollingBalance:      0
 --------------------------------------------------- 
    amountOut:           4199.9
    gasOut:              0.025320679510922664
@@ -121,7 +119,6 @@ Trial balance:
                        ======================= 
    endBal:              0 (0)
    endBalCalc:          0
-   rollingBalance:      0
 --------------------------------------------------- 
    amountOut:           0.074259320489077336
    gasOut:              0.00042
