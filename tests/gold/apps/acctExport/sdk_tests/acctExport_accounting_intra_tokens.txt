@@ -8,15 +8,15 @@ Caps:  cache,decache,ether
 Format:  json
 
 ------------------------------------
-~~~ GetStatements: 13960847.66 ~~~
+~~~ Entering: 13960847.66 ~~~
 ETH is of interest
-Attempting to reconcile at top level
+Attempting to reconcile at top level: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e
 ------------------------------------
 # Reason: top-level
 Trial balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e at stmt 13960847 66 0
 ------------------------------------
 Sender: false Recipient: true 0xe081abb7d9e327e89a13e65b3e2b6fcaf2eceb97 0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e 0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e
-adjustForIntraTransfer2 isToken: false isPrevSame: true isNextSame: false
+adjustForIntraTransfer2 isToken: false isPrevSame: false isNextSame: false
 XXXNot found  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
 Using block-1 balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 0 of 0
 Statement reconciles? true top-level
@@ -42,7 +42,7 @@ price:               3209.6174517192276
 source:              uniswap
 ===================================================
 Reason:                 top-level
-Previous:               13960847 66 ( true )
+Previous:               13960846 0 ( false )
 Current:                13960847 66 ( true )
 Next:                   14218245 11 ( false )
 accountedFor:           0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e
@@ -72,14 +72,14 @@ Trial balance:
 Statement is material and reconciled - appending
 Extracting statements from logs.
 There were no statements generated from logs.
-~~~ Leaving GetStatements: 13960847.66 ~~~
+~~~ Leaving: 13960847.66 ~~~
 ------------------------------------ 1 statements generated.
 
 
 ------------------------------------
-~~~ GetStatements: 14218245.11 ~~~
+~~~ Entering: 14218245.11 ~~~
 ETH is of interest
-Attempting to reconcile at top level
+Attempting to reconcile at top level: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e
 ------------------------------------
 # Reason: top-level
 Trial balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e at stmt 14218245 11 0
@@ -173,14 +173,14 @@ Trial balance:
 ----------Done  true  --------------------------
 
 Statement is material - appending. reconciled: true
-~~~ Leaving GetStatements: 14218245.11 ~~~
+~~~ Leaving: 14218245.11 ~~~
 ------------------------------------ 1 statements generated.
 
 
 ------------------------------------
-~~~ GetStatements: 14231553.18 ~~~
+~~~ Entering: 14231553.18 ~~~
 ETH is of interest
-Attempting to reconcile at top level
+Attempting to reconcile at top level: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e
 ------------------------------------
 # Reason: top-level
 Trial balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e at stmt 14231553 18 0
@@ -244,7 +244,7 @@ Trial balance:
 Statement is material and reconciled - appending
 Extracting statements from logs.
 There were no statements generated from logs.
-~~~ Leaving GetStatements: 14231553.18 ~~~
+~~~ Leaving: 14231553.18 ~~~
 ------------------------------------ 1 statements generated.
 
 {

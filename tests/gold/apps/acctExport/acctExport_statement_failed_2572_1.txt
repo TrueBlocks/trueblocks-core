@@ -31,182 +31,182 @@ TEST[DATE|TIME] 18: 12697324 88
 TEST[DATE|TIME] 19: 13193257 227
 TEST[DATE|TIME] 
 TEST[DATE|TIME] ------------------------------------
-TEST[DATE|TIME] ~~~ GetStatements: 10277683.200 ~~~
+TEST[DATE|TIME] ~~~ Entering: 10277683.200 ~~~
 TEST[DATE|TIME] ETH is NOT of interest
 TEST[DATE|TIME] Extracting statements from logs.
 TEST[DATE|TIME] There were no statements generated from logs.
-TEST[DATE|TIME] ~~~ Leaving GetStatements: 10277683.200 ~~~
+TEST[DATE|TIME] ~~~ Leaving: 10277683.200 ~~~
 TEST[DATE|TIME] ------------------------------------ 0 statements generated.
 TEST[DATE|TIME] 
 TEST[DATE|TIME] 
 TEST[DATE|TIME] ------------------------------------
-TEST[DATE|TIME] ~~~ GetStatements: 10277711.64 ~~~
+TEST[DATE|TIME] ~~~ Entering: 10277711.64 ~~~
 TEST[DATE|TIME] ETH is NOT of interest
 TEST[DATE|TIME] Extracting statements from logs.
 TEST[DATE|TIME] There were no statements generated from logs.
-TEST[DATE|TIME] ~~~ Leaving GetStatements: 10277711.64 ~~~
+TEST[DATE|TIME] ~~~ Leaving: 10277711.64 ~~~
 TEST[DATE|TIME] ------------------------------------ 0 statements generated.
 TEST[DATE|TIME] 
 TEST[DATE|TIME] 
 TEST[DATE|TIME] ------------------------------------
-TEST[DATE|TIME] ~~~ GetStatements: 10277776.94 ~~~
+TEST[DATE|TIME] ~~~ Entering: 10277776.94 ~~~
 TEST[DATE|TIME] ETH is NOT of interest
 TEST[DATE|TIME] Extracting statements from logs.
 TEST[DATE|TIME] There were no statements generated from logs.
-TEST[DATE|TIME] ~~~ Leaving GetStatements: 10277776.94 ~~~
+TEST[DATE|TIME] ~~~ Leaving: 10277776.94 ~~~
 TEST[DATE|TIME] ------------------------------------ 0 statements generated.
 TEST[DATE|TIME] 
 TEST[DATE|TIME] 
 TEST[DATE|TIME] ------------------------------------
-TEST[DATE|TIME] ~~~ GetStatements: 10277780.102 ~~~
+TEST[DATE|TIME] ~~~ Entering: 10277780.102 ~~~
 TEST[DATE|TIME] ETH is NOT of interest
 TEST[DATE|TIME] Extracting statements from logs.
 TEST[DATE|TIME] There were no statements generated from logs.
-TEST[DATE|TIME] ~~~ Leaving GetStatements: 10277780.102 ~~~
+TEST[DATE|TIME] ~~~ Leaving: 10277780.102 ~~~
 TEST[DATE|TIME] ------------------------------------ 0 statements generated.
 TEST[DATE|TIME] 
 TEST[DATE|TIME] 
 TEST[DATE|TIME] ------------------------------------
-TEST[DATE|TIME] ~~~ GetStatements: 10367593.194 ~~~
+TEST[DATE|TIME] ~~~ Entering: 10367593.194 ~~~
 TEST[DATE|TIME] ETH is NOT of interest
 TEST[DATE|TIME] Extracting statements from logs.
 TEST[DATE|TIME] There were no statements generated from logs.
-TEST[DATE|TIME] ~~~ Leaving GetStatements: 10367593.194 ~~~
+TEST[DATE|TIME] ~~~ Leaving: 10367593.194 ~~~
 TEST[DATE|TIME] ------------------------------------ 0 statements generated.
 TEST[DATE|TIME] 
 TEST[DATE|TIME] 
 TEST[DATE|TIME] ------------------------------------
-TEST[DATE|TIME] ~~~ GetStatements: 10367608.23 ~~~
+TEST[DATE|TIME] ~~~ Entering: 10367608.23 ~~~
 TEST[DATE|TIME] ETH is NOT of interest
 TEST[DATE|TIME] Extracting statements from logs.
 TEST[DATE|TIME] There were no statements generated from logs.
-TEST[DATE|TIME] ~~~ Leaving GetStatements: 10367608.23 ~~~
+TEST[DATE|TIME] ~~~ Leaving: 10367608.23 ~~~
 TEST[DATE|TIME] ------------------------------------ 0 statements generated.
 TEST[DATE|TIME] 
 TEST[DATE|TIME] 
 TEST[DATE|TIME] ------------------------------------
-TEST[DATE|TIME] ~~~ GetStatements: 10958509.72 ~~~
+TEST[DATE|TIME] ~~~ Entering: 10958509.72 ~~~
 TEST[DATE|TIME] ETH is NOT of interest
 TEST[DATE|TIME] Extracting statements from logs.
 TEST[DATE|TIME] There were no statements generated from logs.
-TEST[DATE|TIME] ~~~ Leaving GetStatements: 10958509.72 ~~~
+TEST[DATE|TIME] ~~~ Leaving: 10958509.72 ~~~
 TEST[DATE|TIME] ------------------------------------ 0 statements generated.
 TEST[DATE|TIME] 
 TEST[DATE|TIME] 
 TEST[DATE|TIME] ------------------------------------
-TEST[DATE|TIME] ~~~ GetStatements: 10958518.77 ~~~
+TEST[DATE|TIME] ~~~ Entering: 10958518.77 ~~~
 TEST[DATE|TIME] ETH is NOT of interest
 TEST[DATE|TIME] Extracting statements from logs.
 TEST[DATE|TIME] There were no statements generated from logs.
-TEST[DATE|TIME] ~~~ Leaving GetStatements: 10958518.77 ~~~
+TEST[DATE|TIME] ~~~ Leaving: 10958518.77 ~~~
 TEST[DATE|TIME] ------------------------------------ 0 statements generated.
 TEST[DATE|TIME] 
 TEST[DATE|TIME] 
 TEST[DATE|TIME] ------------------------------------
-TEST[DATE|TIME] ~~~ GetStatements: 10972535.102 ~~~
+TEST[DATE|TIME] ~~~ Entering: 10972535.102 ~~~
 TEST[DATE|TIME] ETH is NOT of interest
 TEST[DATE|TIME] Extracting statements from logs.
 TEST[DATE|TIME] There were no statements generated from logs.
-TEST[DATE|TIME] ~~~ Leaving GetStatements: 10972535.102 ~~~
+TEST[DATE|TIME] ~~~ Leaving: 10972535.102 ~~~
 TEST[DATE|TIME] ------------------------------------ 0 statements generated.
 TEST[DATE|TIME] 
 TEST[DATE|TIME] 
 TEST[DATE|TIME] ------------------------------------
-TEST[DATE|TIME] ~~~ GetStatements: 10972735.84 ~~~
+TEST[DATE|TIME] ~~~ Entering: 10972735.84 ~~~
 TEST[DATE|TIME] ETH is NOT of interest
 TEST[DATE|TIME] Extracting statements from logs.
 TEST[DATE|TIME] There were no statements generated from logs.
-TEST[DATE|TIME] ~~~ Leaving GetStatements: 10972735.84 ~~~
+TEST[DATE|TIME] ~~~ Leaving: 10972735.84 ~~~
 TEST[DATE|TIME] ------------------------------------ 0 statements generated.
 TEST[DATE|TIME] 
 TEST[DATE|TIME] 
 TEST[DATE|TIME] ------------------------------------
-TEST[DATE|TIME] ~~~ GetStatements: 11472274.222 ~~~
+TEST[DATE|TIME] ~~~ Entering: 11472274.222 ~~~
 TEST[DATE|TIME] ETH is NOT of interest
 TEST[DATE|TIME] Extracting statements from logs.
 TEST[DATE|TIME] There were no statements generated from logs.
-TEST[DATE|TIME] ~~~ Leaving GetStatements: 11472274.222 ~~~
+TEST[DATE|TIME] ~~~ Leaving: 11472274.222 ~~~
 TEST[DATE|TIME] ------------------------------------ 0 statements generated.
 TEST[DATE|TIME] 
 TEST[DATE|TIME] 
 TEST[DATE|TIME] ------------------------------------
-TEST[DATE|TIME] ~~~ GetStatements: 11947926.77 ~~~
+TEST[DATE|TIME] ~~~ Entering: 11947926.77 ~~~
 TEST[DATE|TIME] ETH is NOT of interest
 TEST[DATE|TIME] Extracting statements from logs.
 TEST[DATE|TIME] There were no statements generated from logs.
-TEST[DATE|TIME] ~~~ Leaving GetStatements: 11947926.77 ~~~
+TEST[DATE|TIME] ~~~ Leaving: 11947926.77 ~~~
 TEST[DATE|TIME] ------------------------------------ 0 statements generated.
 TEST[DATE|TIME] 
 TEST[DATE|TIME] 
 TEST[DATE|TIME] ------------------------------------
-TEST[DATE|TIME] ~~~ GetStatements: 12110203.88 ~~~
+TEST[DATE|TIME] ~~~ Entering: 12110203.88 ~~~
 TEST[DATE|TIME] ETH is NOT of interest
 TEST[DATE|TIME] Extracting statements from logs.
 TEST[DATE|TIME] There were no statements generated from logs.
-TEST[DATE|TIME] ~~~ Leaving GetStatements: 12110203.88 ~~~
+TEST[DATE|TIME] ~~~ Leaving: 12110203.88 ~~~
 TEST[DATE|TIME] ------------------------------------ 0 statements generated.
 TEST[DATE|TIME] 
 TEST[DATE|TIME] 
 TEST[DATE|TIME] ------------------------------------
-TEST[DATE|TIME] ~~~ GetStatements: 12517694.73 ~~~
+TEST[DATE|TIME] ~~~ Entering: 12517694.73 ~~~
 TEST[DATE|TIME] ETH is NOT of interest
 TEST[DATE|TIME] Extracting statements from logs.
 TEST[DATE|TIME] There were no statements generated from logs.
-TEST[DATE|TIME] ~~~ Leaving GetStatements: 12517694.73 ~~~
+TEST[DATE|TIME] ~~~ Leaving: 12517694.73 ~~~
 TEST[DATE|TIME] ------------------------------------ 0 statements generated.
 TEST[DATE|TIME] 
 TEST[DATE|TIME] 
 TEST[DATE|TIME] ------------------------------------
-TEST[DATE|TIME] ~~~ GetStatements: 12655959.195 ~~~
+TEST[DATE|TIME] ~~~ Entering: 12655959.195 ~~~
 TEST[DATE|TIME] ETH is NOT of interest
 TEST[DATE|TIME] Extracting statements from logs.
 TEST[DATE|TIME] There were no statements generated from logs.
-TEST[DATE|TIME] ~~~ Leaving GetStatements: 12655959.195 ~~~
+TEST[DATE|TIME] ~~~ Leaving: 12655959.195 ~~~
 TEST[DATE|TIME] ------------------------------------ 0 statements generated.
 TEST[DATE|TIME] 
 TEST[DATE|TIME] 
 TEST[DATE|TIME] ------------------------------------
-TEST[DATE|TIME] ~~~ GetStatements: 12697277.188 ~~~
+TEST[DATE|TIME] ~~~ Entering: 12697277.188 ~~~
 TEST[DATE|TIME] ETH is NOT of interest
 TEST[DATE|TIME] Extracting statements from logs.
 TEST[DATE|TIME] There were no statements generated from logs.
-TEST[DATE|TIME] ~~~ Leaving GetStatements: 12697277.188 ~~~
+TEST[DATE|TIME] ~~~ Leaving: 12697277.188 ~~~
 TEST[DATE|TIME] ------------------------------------ 0 statements generated.
 TEST[DATE|TIME] 
 TEST[DATE|TIME] 
 TEST[DATE|TIME] ------------------------------------
-TEST[DATE|TIME] ~~~ GetStatements: 12697303.99 ~~~
+TEST[DATE|TIME] ~~~ Entering: 12697303.99 ~~~
 TEST[DATE|TIME] ETH is NOT of interest
 TEST[DATE|TIME] Extracting statements from logs.
 TEST[DATE|TIME] There were no statements generated from logs.
-TEST[DATE|TIME] ~~~ Leaving GetStatements: 12697303.99 ~~~
+TEST[DATE|TIME] ~~~ Leaving: 12697303.99 ~~~
 TEST[DATE|TIME] ------------------------------------ 0 statements generated.
 TEST[DATE|TIME] 
 TEST[DATE|TIME] 
 TEST[DATE|TIME] ------------------------------------
-TEST[DATE|TIME] ~~~ GetStatements: 12697322.281 ~~~
+TEST[DATE|TIME] ~~~ Entering: 12697322.281 ~~~
 TEST[DATE|TIME] ETH is NOT of interest
 TEST[DATE|TIME] Extracting statements from logs.
 TEST[DATE|TIME] There were no statements generated from logs.
-TEST[DATE|TIME] ~~~ Leaving GetStatements: 12697322.281 ~~~
+TEST[DATE|TIME] ~~~ Leaving: 12697322.281 ~~~
 TEST[DATE|TIME] ------------------------------------ 0 statements generated.
 TEST[DATE|TIME] 
 TEST[DATE|TIME] 
 TEST[DATE|TIME] ------------------------------------
-TEST[DATE|TIME] ~~~ GetStatements: 12697324.88 ~~~
+TEST[DATE|TIME] ~~~ Entering: 12697324.88 ~~~
 TEST[DATE|TIME] ETH is NOT of interest
 TEST[DATE|TIME] Extracting statements from logs.
 TEST[DATE|TIME] There were no statements generated from logs.
-TEST[DATE|TIME] ~~~ Leaving GetStatements: 12697324.88 ~~~
+TEST[DATE|TIME] ~~~ Leaving: 12697324.88 ~~~
 TEST[DATE|TIME] ------------------------------------ 0 statements generated.
 TEST[DATE|TIME] 
 TEST[DATE|TIME] 
 TEST[DATE|TIME] ------------------------------------
-TEST[DATE|TIME] ~~~ GetStatements: 13193257.227 ~~~
+TEST[DATE|TIME] ~~~ Entering: 13193257.227 ~~~
 TEST[DATE|TIME] ETH is NOT of interest
 TEST[DATE|TIME] Extracting statements from logs.
 TEST[DATE|TIME] There were no statements generated from logs.
-TEST[DATE|TIME] ~~~ Leaving GetStatements: 13193257.227 ~~~
+TEST[DATE|TIME] ~~~ Leaving: 13193257.227 ~~~
 TEST[DATE|TIME] ------------------------------------ 0 statements generated.
 TEST[DATE|TIME] 
 TEST[DATE|TIME] 0: 13269886 45
@@ -225,124 +225,124 @@ TEST[DATE|TIME] 12: 14469880 33
 TEST[DATE|TIME] 13: 15549162 83
 TEST[DATE|TIME] 
 TEST[DATE|TIME] ------------------------------------
-TEST[DATE|TIME] ~~~ GetStatements: 13269886.45 ~~~
+TEST[DATE|TIME] ~~~ Entering: 13269886.45 ~~~
 TEST[DATE|TIME] ETH is NOT of interest
 TEST[DATE|TIME] Extracting statements from logs.
 TEST[DATE|TIME] There were no statements generated from logs.
-TEST[DATE|TIME] ~~~ Leaving GetStatements: 13269886.45 ~~~
+TEST[DATE|TIME] ~~~ Leaving: 13269886.45 ~~~
 TEST[DATE|TIME] ------------------------------------ 0 statements generated.
 TEST[DATE|TIME] 
 TEST[DATE|TIME] 
 TEST[DATE|TIME] ------------------------------------
-TEST[DATE|TIME] ~~~ GetStatements: 13269900.177 ~~~
+TEST[DATE|TIME] ~~~ Entering: 13269900.177 ~~~
 TEST[DATE|TIME] ETH is NOT of interest
 TEST[DATE|TIME] Extracting statements from logs.
 TEST[DATE|TIME] There were no statements generated from logs.
-TEST[DATE|TIME] ~~~ Leaving GetStatements: 13269900.177 ~~~
+TEST[DATE|TIME] ~~~ Leaving: 13269900.177 ~~~
 TEST[DATE|TIME] ------------------------------------ 0 statements generated.
 TEST[DATE|TIME] 
 TEST[DATE|TIME] 
 TEST[DATE|TIME] ------------------------------------
-TEST[DATE|TIME] ~~~ GetStatements: 13269973.178 ~~~
+TEST[DATE|TIME] ~~~ Entering: 13269973.178 ~~~
 TEST[DATE|TIME] ETH is NOT of interest
 TEST[DATE|TIME] Extracting statements from logs.
 TEST[DATE|TIME] There were no statements generated from logs.
-TEST[DATE|TIME] ~~~ Leaving GetStatements: 13269973.178 ~~~
+TEST[DATE|TIME] ~~~ Leaving: 13269973.178 ~~~
 TEST[DATE|TIME] ------------------------------------ 0 statements generated.
 TEST[DATE|TIME] 
 TEST[DATE|TIME] 
 TEST[DATE|TIME] ------------------------------------
-TEST[DATE|TIME] ~~~ GetStatements: 13772984.129 ~~~
+TEST[DATE|TIME] ~~~ Entering: 13772984.129 ~~~
 TEST[DATE|TIME] ETH is NOT of interest
 TEST[DATE|TIME] Extracting statements from logs.
 TEST[DATE|TIME] There were no statements generated from logs.
-TEST[DATE|TIME] ~~~ Leaving GetStatements: 13772984.129 ~~~
+TEST[DATE|TIME] ~~~ Leaving: 13772984.129 ~~~
 TEST[DATE|TIME] ------------------------------------ 0 statements generated.
 TEST[DATE|TIME] 
 TEST[DATE|TIME] 
 TEST[DATE|TIME] ------------------------------------
-TEST[DATE|TIME] ~~~ GetStatements: 14359849.140 ~~~
+TEST[DATE|TIME] ~~~ Entering: 14359849.140 ~~~
 TEST[DATE|TIME] ETH is NOT of interest
 TEST[DATE|TIME] Extracting statements from logs.
 TEST[DATE|TIME] There were no statements generated from logs.
-TEST[DATE|TIME] ~~~ Leaving GetStatements: 14359849.140 ~~~
+TEST[DATE|TIME] ~~~ Leaving: 14359849.140 ~~~
 TEST[DATE|TIME] ------------------------------------ 0 statements generated.
 TEST[DATE|TIME] 
 TEST[DATE|TIME] 
 TEST[DATE|TIME] ------------------------------------
-TEST[DATE|TIME] ~~~ GetStatements: 14359857.202 ~~~
+TEST[DATE|TIME] ~~~ Entering: 14359857.202 ~~~
 TEST[DATE|TIME] ETH is NOT of interest
 TEST[DATE|TIME] Extracting statements from logs.
 TEST[DATE|TIME] There were no statements generated from logs.
-TEST[DATE|TIME] ~~~ Leaving GetStatements: 14359857.202 ~~~
+TEST[DATE|TIME] ~~~ Leaving: 14359857.202 ~~~
 TEST[DATE|TIME] ------------------------------------ 0 statements generated.
 TEST[DATE|TIME] 
 TEST[DATE|TIME] 
 TEST[DATE|TIME] ------------------------------------
-TEST[DATE|TIME] ~~~ GetStatements: 14359877.153 ~~~
+TEST[DATE|TIME] ~~~ Entering: 14359877.153 ~~~
 TEST[DATE|TIME] ETH is NOT of interest
 TEST[DATE|TIME] Extracting statements from logs.
 TEST[DATE|TIME] There were no statements generated from logs.
-TEST[DATE|TIME] ~~~ Leaving GetStatements: 14359877.153 ~~~
+TEST[DATE|TIME] ~~~ Leaving: 14359877.153 ~~~
 TEST[DATE|TIME] ------------------------------------ 0 statements generated.
 TEST[DATE|TIME] 
 TEST[DATE|TIME] 
 TEST[DATE|TIME] ------------------------------------
-TEST[DATE|TIME] ~~~ GetStatements: 14360325.141 ~~~
+TEST[DATE|TIME] ~~~ Entering: 14360325.141 ~~~
 TEST[DATE|TIME] ETH is NOT of interest
 TEST[DATE|TIME] Extracting statements from logs.
 TEST[DATE|TIME] There were no statements generated from logs.
-TEST[DATE|TIME] ~~~ Leaving GetStatements: 14360325.141 ~~~
+TEST[DATE|TIME] ~~~ Leaving: 14360325.141 ~~~
 TEST[DATE|TIME] ------------------------------------ 0 statements generated.
 TEST[DATE|TIME] 
 TEST[DATE|TIME] 
 TEST[DATE|TIME] ------------------------------------
-TEST[DATE|TIME] ~~~ GetStatements: 14360361.80 ~~~
+TEST[DATE|TIME] ~~~ Entering: 14360361.80 ~~~
 TEST[DATE|TIME] ETH is NOT of interest
 TEST[DATE|TIME] Extracting statements from logs.
 TEST[DATE|TIME] There were no statements generated from logs.
-TEST[DATE|TIME] ~~~ Leaving GetStatements: 14360361.80 ~~~
+TEST[DATE|TIME] ~~~ Leaving: 14360361.80 ~~~
 TEST[DATE|TIME] ------------------------------------ 0 statements generated.
 TEST[DATE|TIME] 
 TEST[DATE|TIME] 
 TEST[DATE|TIME] ------------------------------------
-TEST[DATE|TIME] ~~~ GetStatements: 14366254.17 ~~~
+TEST[DATE|TIME] ~~~ Entering: 14366254.17 ~~~
 TEST[DATE|TIME] ETH is NOT of interest
 TEST[DATE|TIME] Extracting statements from logs.
 TEST[DATE|TIME] There were no statements generated from logs.
-TEST[DATE|TIME] ~~~ Leaving GetStatements: 14366254.17 ~~~
+TEST[DATE|TIME] ~~~ Leaving: 14366254.17 ~~~
 TEST[DATE|TIME] ------------------------------------ 0 statements generated.
 TEST[DATE|TIME] 
 TEST[DATE|TIME] 
 TEST[DATE|TIME] ------------------------------------
-TEST[DATE|TIME] ~~~ GetStatements: 14436713.58 ~~~
+TEST[DATE|TIME] ~~~ Entering: 14436713.58 ~~~
 TEST[DATE|TIME] ETH is NOT of interest
 TEST[DATE|TIME] Extracting statements from logs.
 TEST[DATE|TIME] There were no statements generated from logs.
-TEST[DATE|TIME] ~~~ Leaving GetStatements: 14436713.58 ~~~
+TEST[DATE|TIME] ~~~ Leaving: 14436713.58 ~~~
 TEST[DATE|TIME] ------------------------------------ 0 statements generated.
 TEST[DATE|TIME] 
 TEST[DATE|TIME] 
 TEST[DATE|TIME] ------------------------------------
-TEST[DATE|TIME] ~~~ GetStatements: 14436713.59 ~~~
+TEST[DATE|TIME] ~~~ Entering: 14436713.59 ~~~
 TEST[DATE|TIME] ETH is NOT of interest
 TEST[DATE|TIME] Extracting statements from logs.
 TEST[DATE|TIME] There were no statements generated from logs.
-TEST[DATE|TIME] ~~~ Leaving GetStatements: 14436713.59 ~~~
+TEST[DATE|TIME] ~~~ Leaving: 14436713.59 ~~~
 TEST[DATE|TIME] ------------------------------------ 0 statements generated.
 TEST[DATE|TIME] 
 TEST[DATE|TIME] 
 TEST[DATE|TIME] ------------------------------------
-TEST[DATE|TIME] ~~~ GetStatements: 14469880.33 ~~~
+TEST[DATE|TIME] ~~~ Entering: 14469880.33 ~~~
 TEST[DATE|TIME] ETH is NOT of interest
 TEST[DATE|TIME] Extracting statements from logs.
 TEST[DATE|TIME] There were no statements generated from logs.
-TEST[DATE|TIME] ~~~ Leaving GetStatements: 14469880.33 ~~~
+TEST[DATE|TIME] ~~~ Leaving: 14469880.33 ~~~
 TEST[DATE|TIME] ------------------------------------ 0 statements generated.
 TEST[DATE|TIME] 
 TEST[DATE|TIME] 
 TEST[DATE|TIME] ------------------------------------
-TEST[DATE|TIME] ~~~ GetStatements: 15549162.83 ~~~
+TEST[DATE|TIME] ~~~ Entering: 15549162.83 ~~~
 TEST[DATE|TIME] ETH is NOT of interest
 TEST[DATE|TIME] Extracting statements from logs.
 TEST[DATE|TIME] 1 statements generated from logs.
@@ -417,7 +417,7 @@ TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] ----------Done  true  --------------------------
 TEST[DATE|TIME] 
 TEST[DATE|TIME] Statement is material - appending. reconciled: true
-TEST[DATE|TIME] ~~~ Leaving GetStatements: 15549162.83 ~~~
+TEST[DATE|TIME] ~~~ Leaving: 15549162.83 ~~~
 TEST[DATE|TIME] ------------------------------------ 1 statements generated.
 TEST[DATE|TIME] 
 ----

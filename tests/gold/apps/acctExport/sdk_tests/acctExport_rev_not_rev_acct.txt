@@ -8,14 +8,16 @@ LastBlock:  8856511
 Caps:  cache,decache,ether
 Format:  json
 
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-~~~~~  8854723.61 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+------------------------------------
+~~~ Entering: 8854723.61 ~~~
+ETH is of interest
+Attempting to reconcile at top level: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-0xf503017d7baf7fbc0fff7492b751025c6a78179b
 ------------------------------------
 # Reason: top-level
 Trial balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0xf503017d7baf7fbc0fff7492b751025c6a78179b at stmt 8854723 61 0
 ------------------------------------
 Sender: false Recipient: true 0xbb984f85bd52d78eb2fbf2c5598bae7abb98c5bc 0xf503017d7baf7fbc0fff7492b751025c6a78179b 0xf503017d7baf7fbc0fff7492b751025c6a78179b
-adjustForIntraTransfer2 isToken: false isPrevSame: true isNextSame: false
+adjustForIntraTransfer2 isToken: false isPrevSame: false isNextSame: false
 XXXNot found  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
 Using block-1 balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 0 of 0
 Statement reconciles? true top-level
@@ -37,7 +39,7 @@ price:               181.5125
 source:              maker
 ===================================================
 Reason:                 top-level
-Previous:               8854723 61 ( true )
+Previous:               8854722 0 ( false )
 Current:                8854723 61 ( true )
 Next:                   8855603 121 ( false )
 accountedFor:           0xf503017d7baf7fbc0fff7492b751025c6a78179b
@@ -64,11 +66,17 @@ Trial balance:
 ---------------------------------------------------
 ----------Done  true  --------------------------
 
-No interesting log statements
-~okay~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Statement is material and reconciled - appending
+Extracting statements from logs.
+There were no statements generated from logs.
+~~~ Leaving: 8854723.61 ~~~
+------------------------------------ 1 statements generated.
 
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-~~~~~  8855603.121 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+------------------------------------
+~~~ Entering: 8855603.121 ~~~
+ETH is of interest
+Attempting to reconcile at top level: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-0xf503017d7baf7fbc0fff7492b751025c6a78179b
 ------------------------------------
 # Reason: top-level
 Trial balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0xf503017d7baf7fbc0fff7492b751025c6a78179b at stmt 8855603 121 0
@@ -83,11 +91,17 @@ Statement reconciles? true top-level
 EndBalCalc: 5000000000000000000 0 5000000000000000000
 Inserting  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 8855603 of 5000000000000000000
 Found  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 8855603 of 5000000000000000000
-No interesting log statements
-~okay~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Statement was not material
+Extracting statements from logs.
+There were no statements generated from logs.
+~~~ Leaving: 8855603.121 ~~~
+------------------------------------ 0 statements generated.
 
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-~~~~~  8856290.62 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+------------------------------------
+~~~ Entering: 8856290.62 ~~~
+ETH is of interest
+Attempting to reconcile at top level: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-0xf503017d7baf7fbc0fff7492b751025c6a78179b
 ------------------------------------
 # Reason: top-level
 Trial balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0xf503017d7baf7fbc0fff7492b751025c6a78179b at stmt 8856290 62 0
@@ -144,11 +158,17 @@ Trial balance:
 ---------------------------------------------------
 ----------Done  true  --------------------------
 
-No interesting log statements
-~okay~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Statement is material and reconciled - appending
+Extracting statements from logs.
+There were no statements generated from logs.
+~~~ Leaving: 8856290.62 ~~~
+------------------------------------ 1 statements generated.
 
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-~~~~~  8856316.91 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+------------------------------------
+~~~ Entering: 8856316.91 ~~~
+ETH is of interest
+Attempting to reconcile at top level: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-0xf503017d7baf7fbc0fff7492b751025c6a78179b
 ------------------------------------
 # Reason: top-level
 Trial balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0xf503017d7baf7fbc0fff7492b751025c6a78179b at stmt 8856316 91 0
@@ -204,11 +224,17 @@ Trial balance:
 ---------------------------------------------------
 ----------Done  true  --------------------------
 
-No interesting log statements
-~okay~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Statement is material and reconciled - appending
+Extracting statements from logs.
+There were no statements generated from logs.
+~~~ Leaving: 8856316.91 ~~~
+------------------------------------ 1 statements generated.
 
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-~~~~~  8856476.55 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+------------------------------------
+~~~ Entering: 8856476.55 ~~~
+ETH is of interest
+Attempting to reconcile at top level: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-0xf503017d7baf7fbc0fff7492b751025c6a78179b
 ------------------------------------
 # Reason: top-level
 Trial balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0xf503017d7baf7fbc0fff7492b751025c6a78179b at stmt 8856476 55 0
@@ -223,6 +249,9 @@ Statement reconciles? true top-level
 EndBalCalc: 4999790000000000000 0 4999790000000000000
 Inserting  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 8856476 of 4999790000000000000
 Found  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 8856476 of 4999790000000000000
+Statement was not material
+Extracting statements from logs.
+1 statements generated from logs.
 ------------------------------------
 # Reason: token
 Trial balance for  0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359 0xf503017d7baf7fbc0fff7492b751025c6a78179b at stmt 8856476 55 40
@@ -268,10 +297,15 @@ Trial balance:
 ---------------------------------------------------
 ----------Done  true  --------------------------
 
-~okay~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Statement is material - appending. reconciled: true
+~~~ Leaving: 8856476.55 ~~~
+------------------------------------ 1 statements generated.
 
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-~~~~~  8856511.161 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+------------------------------------
+~~~ Entering: 8856511.161 ~~~
+ETH is of interest
+Attempting to reconcile at top level: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-0xf503017d7baf7fbc0fff7492b751025c6a78179b
 ------------------------------------
 # Reason: top-level
 Trial balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0xf503017d7baf7fbc0fff7492b751025c6a78179b at stmt 8856511 161 0
@@ -286,6 +320,9 @@ Statement reconciles? true top-level
 EndBalCalc: 4999790000000000000 0 4999790000000000000
 Inserting  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 8856511 of 4999790000000000000
 Found  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 8856511 of 4999790000000000000
+Statement was not material
+Extracting statements from logs.
+1 statements generated from logs.
 ------------------------------------
 # Reason: token
 Trial balance for  0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359 0xf503017d7baf7fbc0fff7492b751025c6a78179b at stmt 8856511 161 94
@@ -332,7 +369,10 @@ Trial balance:
 ---------------------------------------------------
 ----------Done  true  --------------------------
 
-~okay~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Statement is material - appending. reconciled: true
+~~~ Leaving: 8856511.161 ~~~
+------------------------------------ 1 statements generated.
+
 {
   "data": [
     {

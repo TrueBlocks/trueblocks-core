@@ -13,16 +13,16 @@ TEST[DATE|TIME] 2: 8769052 73
 TEST[DATE|TIME] 3: 8769052 74
 TEST[DATE|TIME] 
 TEST[DATE|TIME] ------------------------------------
-TEST[DATE|TIME] ~~~ GetStatements: 8769019.124 ~~~
+TEST[DATE|TIME] ~~~ Entering: 8769019.124 ~~~
 TEST[DATE|TIME] ETH is NOT of interest
 TEST[DATE|TIME] Extracting statements from logs.
 TEST[DATE|TIME] There were no statements generated from logs.
-TEST[DATE|TIME] ~~~ Leaving GetStatements: 8769019.124 ~~~
+TEST[DATE|TIME] ~~~ Leaving: 8769019.124 ~~~
 TEST[DATE|TIME] ------------------------------------ 0 statements generated.
 TEST[DATE|TIME] 
 TEST[DATE|TIME] 
 TEST[DATE|TIME] ------------------------------------
-TEST[DATE|TIME] ~~~ GetStatements: 8769029.80 ~~~
+TEST[DATE|TIME] ~~~ Entering: 8769029.80 ~~~
 TEST[DATE|TIME] ETH is NOT of interest
 TEST[DATE|TIME] Extracting statements from logs.
 TEST[DATE|TIME] 1 statements generated from logs.
@@ -69,21 +69,21 @@ TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] ----------Done  true  --------------------------
 TEST[DATE|TIME] 
 TEST[DATE|TIME] Statement is material - appending. reconciled: true
-TEST[DATE|TIME] ~~~ Leaving GetStatements: 8769029.80 ~~~
+TEST[DATE|TIME] ~~~ Leaving: 8769029.80 ~~~
 TEST[DATE|TIME] ------------------------------------ 1 statements generated.
 TEST[DATE|TIME] 
 TEST[DATE|TIME] 
 TEST[DATE|TIME] ------------------------------------
-TEST[DATE|TIME] ~~~ GetStatements: 8769052.73 ~~~
+TEST[DATE|TIME] ~~~ Entering: 8769052.73 ~~~
 TEST[DATE|TIME] ETH is NOT of interest
 TEST[DATE|TIME] Extracting statements from logs.
 TEST[DATE|TIME] There were no statements generated from logs.
-TEST[DATE|TIME] ~~~ Leaving GetStatements: 8769052.73 ~~~
+TEST[DATE|TIME] ~~~ Leaving: 8769052.73 ~~~
 TEST[DATE|TIME] ------------------------------------ 0 statements generated.
 TEST[DATE|TIME] 
 TEST[DATE|TIME] 
 TEST[DATE|TIME] ------------------------------------
-TEST[DATE|TIME] ~~~ GetStatements: 8769052.74 ~~~
+TEST[DATE|TIME] ~~~ Entering: 8769052.74 ~~~
 TEST[DATE|TIME] ETH is NOT of interest
 TEST[DATE|TIME] Extracting statements from logs.
 TEST[DATE|TIME] 1 statements generated from logs.
@@ -131,7 +131,7 @@ TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] ----------Done  true  --------------------------
 TEST[DATE|TIME] 
 TEST[DATE|TIME] Statement is material - appending. reconciled: true
-TEST[DATE|TIME] ~~~ Leaving GetStatements: 8769052.74 ~~~
+TEST[DATE|TIME] ~~~ Leaving: 8769052.74 ~~~
 TEST[DATE|TIME] ------------------------------------ 1 statements generated.
 TEST[DATE|TIME] 
 {

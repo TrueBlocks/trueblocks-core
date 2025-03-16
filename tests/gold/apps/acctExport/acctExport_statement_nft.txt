@@ -11,9 +11,9 @@ TEST[DATE|TIME] 1: 9000998 70
 TEST[DATE|TIME] 2: 9024185 29
 TEST[DATE|TIME] 
 TEST[DATE|TIME] ------------------------------------
-TEST[DATE|TIME] ~~~ GetStatements: 8876232.84 ~~~
+TEST[DATE|TIME] ~~~ Entering: 8876232.84 ~~~
 TEST[DATE|TIME] ETH is of interest
-TEST[DATE|TIME] Attempting to reconcile at top level
+TEST[DATE|TIME] Attempting to reconcile at top level: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-0xf503017d7baf7fbc0fff7492b751025c6a78179b
 TEST[DATE|TIME] ------------------------------------
 TEST[DATE|TIME] # Reason: top-level
 TEST[DATE|TIME] Trial balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0xf503017d7baf7fbc0fff7492b751025c6a78179b at stmt 8876232 84 0
@@ -73,14 +73,14 @@ TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] ----------Done  true  --------------------------
 TEST[DATE|TIME] 
 TEST[DATE|TIME] Statement is material - appending. reconciled: true
-TEST[DATE|TIME] ~~~ Leaving GetStatements: 8876232.84 ~~~
+TEST[DATE|TIME] ~~~ Leaving: 8876232.84 ~~~
 TEST[DATE|TIME] ------------------------------------ 1 statements generated.
 TEST[DATE|TIME] 
 TEST[DATE|TIME] 
 TEST[DATE|TIME] ------------------------------------
-TEST[DATE|TIME] ~~~ GetStatements: 9000998.70 ~~~
+TEST[DATE|TIME] ~~~ Entering: 9000998.70 ~~~
 TEST[DATE|TIME] ETH is of interest
-TEST[DATE|TIME] Attempting to reconcile at top level
+TEST[DATE|TIME] Attempting to reconcile at top level: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-0xf503017d7baf7fbc0fff7492b751025c6a78179b
 TEST[DATE|TIME] ------------------------------------
 TEST[DATE|TIME] # Reason: top-level
 TEST[DATE|TIME] Trial balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0xf503017d7baf7fbc0fff7492b751025c6a78179b at stmt 9000998 70 0
@@ -98,14 +98,14 @@ TEST[DATE|TIME] Found  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 90009
 TEST[DATE|TIME] Statement was not material
 TEST[DATE|TIME] Extracting statements from logs.
 TEST[DATE|TIME] There were no statements generated from logs.
-TEST[DATE|TIME] ~~~ Leaving GetStatements: 9000998.70 ~~~
+TEST[DATE|TIME] ~~~ Leaving: 9000998.70 ~~~
 TEST[DATE|TIME] ------------------------------------ 0 statements generated.
 TEST[DATE|TIME] 
 TEST[DATE|TIME] 
 TEST[DATE|TIME] ------------------------------------
-TEST[DATE|TIME] ~~~ GetStatements: 9024185.29 ~~~
+TEST[DATE|TIME] ~~~ Entering: 9024185.29 ~~~
 TEST[DATE|TIME] ETH is of interest
-TEST[DATE|TIME] Attempting to reconcile at top level
+TEST[DATE|TIME] Attempting to reconcile at top level: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-0xf503017d7baf7fbc0fff7492b751025c6a78179b
 TEST[DATE|TIME] ------------------------------------
 TEST[DATE|TIME] # Reason: top-level
 TEST[DATE|TIME] Trial balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0xf503017d7baf7fbc0fff7492b751025c6a78179b at stmt 9024185 29 0
@@ -123,7 +123,7 @@ TEST[DATE|TIME] Found  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 90241
 TEST[DATE|TIME] Statement was not material
 TEST[DATE|TIME] Extracting statements from logs.
 TEST[DATE|TIME] There were no statements generated from logs.
-TEST[DATE|TIME] ~~~ Leaving GetStatements: 9024185.29 ~~~
+TEST[DATE|TIME] ~~~ Leaving: 9024185.29 ~~~
 TEST[DATE|TIME] ------------------------------------ 0 statements generated.
 TEST[DATE|TIME] 
 {

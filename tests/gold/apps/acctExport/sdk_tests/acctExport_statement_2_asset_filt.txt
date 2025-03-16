@@ -31,9 +31,9 @@ Format:  json
 19: 9193753 147
 
 ------------------------------------
-~~~ GetStatements: 8856476.55 ~~~
+~~~ Entering: 8856476.55 ~~~
 ETH is of interest
-Attempting to reconcile at top level
+Attempting to reconcile at top level: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-0xf503017d7baf7fbc0fff7492b751025c6a78179b
 ------------------------------------
 # Reason: top-level
 Trial balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0xf503017d7baf7fbc0fff7492b751025c6a78179b at stmt 8856476 55 0
@@ -96,14 +96,14 @@ Trial balance:
 ----------Done  true  --------------------------
 
 Statement is material - appending. reconciled: true
-~~~ Leaving GetStatements: 8856476.55 ~~~
+~~~ Leaving: 8856476.55 ~~~
 ------------------------------------ 1 statements generated.
 
 
 ------------------------------------
-~~~ GetStatements: 8856511.161 ~~~
+~~~ Entering: 8856511.161 ~~~
 ETH is of interest
-Attempting to reconcile at top level
+Attempting to reconcile at top level: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-0xf503017d7baf7fbc0fff7492b751025c6a78179b
 ------------------------------------
 # Reason: top-level
 Trial balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0xf503017d7baf7fbc0fff7492b751025c6a78179b at stmt 8856511 161 0
@@ -168,14 +168,14 @@ Trial balance:
 ----------Done  true  --------------------------
 
 Statement is material - appending. reconciled: true
-~~~ Leaving GetStatements: 8856511.161 ~~~
+~~~ Leaving: 8856511.161 ~~~
 ------------------------------------ 1 statements generated.
 
 
 ------------------------------------
-~~~ GetStatements: 8860434.21 ~~~
+~~~ Entering: 8860434.21 ~~~
 ETH is of interest
-Attempting to reconcile at top level
+Attempting to reconcile at top level: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-0xf503017d7baf7fbc0fff7492b751025c6a78179b
 ------------------------------------
 # Reason: top-level
 Trial balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0xf503017d7baf7fbc0fff7492b751025c6a78179b at stmt 8860434 21 0
@@ -240,14 +240,14 @@ Trial balance:
 ----------Done  true  --------------------------
 
 Statement is material - appending. reconciled: true
-~~~ Leaving GetStatements: 8860434.21 ~~~
+~~~ Leaving: 8860434.21 ~~~
 ------------------------------------ 1 statements generated.
 
 
 ------------------------------------
-~~~ GetStatements: 8860511.47 ~~~
+~~~ Entering: 8860511.47 ~~~
 ETH is of interest
-Attempting to reconcile at top level
+Attempting to reconcile at top level: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-0xf503017d7baf7fbc0fff7492b751025c6a78179b
 ------------------------------------
 # Reason: top-level
 Trial balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0xf503017d7baf7fbc0fff7492b751025c6a78179b at stmt 8860511 47 0
@@ -306,14 +306,14 @@ Trial balance:
 Statement is material and reconciled - appending
 Extracting statements from logs.
 There were no statements generated from logs.
-~~~ Leaving GetStatements: 8860511.47 ~~~
+~~~ Leaving: 8860511.47 ~~~
 ------------------------------------ 1 statements generated.
 
 
 ------------------------------------
-~~~ GetStatements: 8860513.85 ~~~
+~~~ Entering: 8860513.85 ~~~
 ETH is of interest
-Attempting to reconcile at top level
+Attempting to reconcile at top level: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-0xf503017d7baf7fbc0fff7492b751025c6a78179b
 ------------------------------------
 # Reason: top-level
 Trial balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0xf503017d7baf7fbc0fff7492b751025c6a78179b at stmt 8860513 85 0
@@ -419,14 +419,14 @@ Trial balance:
 ----------Done  true  --------------------------
 
 Statement is material - appending. reconciled: true
-~~~ Leaving GetStatements: 8860513.85 ~~~
+~~~ Leaving: 8860513.85 ~~~
 ------------------------------------ 2 statements generated.
 
 
 ------------------------------------
-~~~ GetStatements: 8860529.145 ~~~
+~~~ Entering: 8860529.145 ~~~
 ETH is of interest
-Attempting to reconcile at top level
+Attempting to reconcile at top level: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-0xf503017d7baf7fbc0fff7492b751025c6a78179b
 ------------------------------------
 # Reason: top-level
 Trial balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0xf503017d7baf7fbc0fff7492b751025c6a78179b at stmt 8860529 145 0
@@ -485,14 +485,14 @@ Trial balance:
 Statement is material and reconciled - appending
 Extracting statements from logs.
 There were no statements generated from logs.
-~~~ Leaving GetStatements: 8860529.145 ~~~
+~~~ Leaving: 8860529.145 ~~~
 ------------------------------------ 1 statements generated.
 
 
 ------------------------------------
-~~~ GetStatements: 8860531.152 ~~~
+~~~ Entering: 8860531.152 ~~~
 ETH is of interest
-Attempting to reconcile at top level
+Attempting to reconcile at top level: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-0xf503017d7baf7fbc0fff7492b751025c6a78179b
 ------------------------------------
 # Reason: top-level
 Trial balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0xf503017d7baf7fbc0fff7492b751025c6a78179b at stmt 8860531 152 0
@@ -598,14 +598,14 @@ Trial balance:
 ----------Done  true  --------------------------
 
 Statement is material - appending. reconciled: true
-~~~ Leaving GetStatements: 8860531.152 ~~~
+~~~ Leaving: 8860531.152 ~~~
 ------------------------------------ 2 statements generated.
 
 
 ------------------------------------
-~~~ GetStatements: 8867898.28 ~~~
+~~~ Entering: 8867898.28 ~~~
 ETH is of interest
-Attempting to reconcile at top level
+Attempting to reconcile at top level: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-0xf503017d7baf7fbc0fff7492b751025c6a78179b
 ------------------------------------
 # Reason: top-level
 Trial balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0xf503017d7baf7fbc0fff7492b751025c6a78179b at stmt 8867898 28 0
@@ -664,14 +664,14 @@ Trial balance:
 Statement is material and reconciled - appending
 Extracting statements from logs.
 There were no statements generated from logs.
-~~~ Leaving GetStatements: 8867898.28 ~~~
+~~~ Leaving: 8867898.28 ~~~
 ------------------------------------ 1 statements generated.
 
 
 ------------------------------------
-~~~ GetStatements: 8875684.148 ~~~
+~~~ Entering: 8875684.148 ~~~
 ETH is of interest
-Attempting to reconcile at top level
+Attempting to reconcile at top level: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-0xf503017d7baf7fbc0fff7492b751025c6a78179b
 ------------------------------------
 # Reason: top-level
 Trial balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0xf503017d7baf7fbc0fff7492b751025c6a78179b at stmt 8875684 148 0
@@ -689,14 +689,14 @@ Found  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 8875684 of 4999534200
 Statement was not material
 Extracting statements from logs.
 There were no statements generated from logs.
-~~~ Leaving GetStatements: 8875684.148 ~~~
+~~~ Leaving: 8875684.148 ~~~
 ------------------------------------ 0 statements generated.
 
 
 ------------------------------------
-~~~ GetStatements: 8876232.84 ~~~
+~~~ Entering: 8876232.84 ~~~
 ETH is of interest
-Attempting to reconcile at top level
+Attempting to reconcile at top level: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-0xf503017d7baf7fbc0fff7492b751025c6a78179b
 ------------------------------------
 # Reason: top-level
 Trial balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0xf503017d7baf7fbc0fff7492b751025c6a78179b at stmt 8876232 84 0
@@ -714,14 +714,14 @@ Found  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 8876232 of 4999534200
 Statement was not material
 Extracting statements from logs.
 There were no statements generated from logs.
-~~~ Leaving GetStatements: 8876232.84 ~~~
+~~~ Leaving: 8876232.84 ~~~
 ------------------------------------ 0 statements generated.
 
 
 ------------------------------------
-~~~ GetStatements: 9000998.70 ~~~
+~~~ Entering: 9000998.70 ~~~
 ETH is of interest
-Attempting to reconcile at top level
+Attempting to reconcile at top level: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-0xf503017d7baf7fbc0fff7492b751025c6a78179b
 ------------------------------------
 # Reason: top-level
 Trial balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0xf503017d7baf7fbc0fff7492b751025c6a78179b at stmt 9000998 70 0
@@ -739,14 +739,14 @@ Found  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 9000998 of 4999534200
 Statement was not material
 Extracting statements from logs.
 There were no statements generated from logs.
-~~~ Leaving GetStatements: 9000998.70 ~~~
+~~~ Leaving: 9000998.70 ~~~
 ------------------------------------ 0 statements generated.
 
 
 ------------------------------------
-~~~ GetStatements: 9024185.29 ~~~
+~~~ Entering: 9024185.29 ~~~
 ETH is of interest
-Attempting to reconcile at top level
+Attempting to reconcile at top level: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-0xf503017d7baf7fbc0fff7492b751025c6a78179b
 ------------------------------------
 # Reason: top-level
 Trial balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0xf503017d7baf7fbc0fff7492b751025c6a78179b at stmt 9024185 29 0
@@ -764,14 +764,14 @@ Found  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 9024185 of 4999534200
 Statement was not material
 Extracting statements from logs.
 There were no statements generated from logs.
-~~~ Leaving GetStatements: 9024185.29 ~~~
+~~~ Leaving: 9024185.29 ~~~
 ------------------------------------ 0 statements generated.
 
 
 ------------------------------------
-~~~ GetStatements: 9024196.41 ~~~
+~~~ Entering: 9024196.41 ~~~
 ETH is of interest
-Attempting to reconcile at top level
+Attempting to reconcile at top level: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-0xf503017d7baf7fbc0fff7492b751025c6a78179b
 ------------------------------------
 # Reason: top-level
 Trial balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0xf503017d7baf7fbc0fff7492b751025c6a78179b at stmt 9024196 41 0
@@ -789,14 +789,14 @@ Found  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 9024196 of 4999534200
 Statement was not material
 Extracting statements from logs.
 There were no statements generated from logs.
-~~~ Leaving GetStatements: 9024196.41 ~~~
+~~~ Leaving: 9024196.41 ~~~
 ------------------------------------ 0 statements generated.
 
 
 ------------------------------------
-~~~ GetStatements: 9024350.73 ~~~
+~~~ Entering: 9024350.73 ~~~
 ETH is of interest
-Attempting to reconcile at top level
+Attempting to reconcile at top level: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-0xf503017d7baf7fbc0fff7492b751025c6a78179b
 ------------------------------------
 # Reason: top-level
 Trial balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0xf503017d7baf7fbc0fff7492b751025c6a78179b at stmt 9024350 73 0
@@ -855,14 +855,14 @@ Trial balance:
 Statement is material and reconciled - appending
 Extracting statements from logs.
 There were no statements generated from logs.
-~~~ Leaving GetStatements: 9024350.73 ~~~
+~~~ Leaving: 9024350.73 ~~~
 ------------------------------------ 1 statements generated.
 
 
 ------------------------------------
-~~~ GetStatements: 9046970.71 ~~~
+~~~ Entering: 9046970.71 ~~~
 ETH is of interest
-Attempting to reconcile at top level
+Attempting to reconcile at top level: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-0xf503017d7baf7fbc0fff7492b751025c6a78179b
 ------------------------------------
 # Reason: top-level
 Trial balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0xf503017d7baf7fbc0fff7492b751025c6a78179b at stmt 9046970 71 0
@@ -921,14 +921,14 @@ Trial balance:
 Statement is material and reconciled - appending
 Extracting statements from logs.
 There were no statements generated from logs.
-~~~ Leaving GetStatements: 9046970.71 ~~~
+~~~ Leaving: 9046970.71 ~~~
 ------------------------------------ 1 statements generated.
 
 
 ------------------------------------
-~~~ GetStatements: 9061086.159 ~~~
+~~~ Entering: 9061086.159 ~~~
 ETH is of interest
-Attempting to reconcile at top level
+Attempting to reconcile at top level: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-0xf503017d7baf7fbc0fff7492b751025c6a78179b
 ------------------------------------
 # Reason: top-level
 Trial balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0xf503017d7baf7fbc0fff7492b751025c6a78179b at stmt 9061086 159 0
@@ -946,14 +946,14 @@ Found  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 9061086 of 4988735070
 Statement was not material
 Extracting statements from logs.
 There were no statements generated from logs.
-~~~ Leaving GetStatements: 9061086.159 ~~~
+~~~ Leaving: 9061086.159 ~~~
 ------------------------------------ 0 statements generated.
 
 
 ------------------------------------
-~~~ GetStatements: 9066048.62 ~~~
+~~~ Entering: 9066048.62 ~~~
 ETH is of interest
-Attempting to reconcile at top level
+Attempting to reconcile at top level: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-0xf503017d7baf7fbc0fff7492b751025c6a78179b
 ------------------------------------
 # Reason: top-level
 Trial balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0xf503017d7baf7fbc0fff7492b751025c6a78179b at stmt 9066048 62 0
@@ -971,14 +971,14 @@ Found  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 9066048 of 4988735070
 Statement was not material
 Extracting statements from logs.
 There were no statements generated from logs.
-~~~ Leaving GetStatements: 9066048.62 ~~~
+~~~ Leaving: 9066048.62 ~~~
 ------------------------------------ 0 statements generated.
 
 
 ------------------------------------
-~~~ GetStatements: 9136971.32 ~~~
+~~~ Entering: 9136971.32 ~~~
 ETH is of interest
-Attempting to reconcile at top level
+Attempting to reconcile at top level: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-0xf503017d7baf7fbc0fff7492b751025c6a78179b
 ------------------------------------
 # Reason: top-level
 Trial balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0xf503017d7baf7fbc0fff7492b751025c6a78179b at stmt 9136971 32 0
@@ -996,14 +996,14 @@ Found  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 9136971 of 4988735070
 Statement was not material
 Extracting statements from logs.
 There were no statements generated from logs.
-~~~ Leaving GetStatements: 9136971.32 ~~~
+~~~ Leaving: 9136971.32 ~~~
 ------------------------------------ 0 statements generated.
 
 
 ------------------------------------
-~~~ GetStatements: 9193234.2 ~~~
+~~~ Entering: 9193234.2 ~~~
 ETH is of interest
-Attempting to reconcile at top level
+Attempting to reconcile at top level: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-0xf503017d7baf7fbc0fff7492b751025c6a78179b
 ------------------------------------
 # Reason: top-level
 Trial balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0xf503017d7baf7fbc0fff7492b751025c6a78179b at stmt 9193234 2 0
@@ -1021,14 +1021,14 @@ Found  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 9193234 of 4988735070
 Statement was not material
 Extracting statements from logs.
 There were no statements generated from logs.
-~~~ Leaving GetStatements: 9193234.2 ~~~
+~~~ Leaving: 9193234.2 ~~~
 ------------------------------------ 0 statements generated.
 
 
 ------------------------------------
-~~~ GetStatements: 9193753.147 ~~~
+~~~ Entering: 9193753.147 ~~~
 ETH is of interest
-Attempting to reconcile at top level
+Attempting to reconcile at top level: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-0xf503017d7baf7fbc0fff7492b751025c6a78179b
 ------------------------------------
 # Reason: top-level
 Trial balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0xf503017d7baf7fbc0fff7492b751025c6a78179b at stmt 9193753 147 0
@@ -1087,7 +1087,7 @@ Trial balance:
 Statement is material and reconciled - appending
 Extracting statements from logs.
 There were no statements generated from logs.
-~~~ Leaving GetStatements: 9193753.147 ~~~
+~~~ Leaving: 9193753.147 ~~~
 ------------------------------------ 1 statements generated.
 
 0: 9193777 226
@@ -1095,9 +1095,9 @@ There were no statements generated from logs.
 2: 9193814 38
 
 ------------------------------------
-~~~ GetStatements: 9193777.226 ~~~
+~~~ Entering: 9193777.226 ~~~
 ETH is of interest
-Attempting to reconcile at top level
+Attempting to reconcile at top level: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-0xf503017d7baf7fbc0fff7492b751025c6a78179b
 ------------------------------------
 # Reason: top-level
 Trial balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0xf503017d7baf7fbc0fff7492b751025c6a78179b at stmt 9193777 226 0
@@ -1155,14 +1155,14 @@ Trial balance:
 Statement is material and reconciled - appending
 Extracting statements from logs.
 There were no statements generated from logs.
-~~~ Leaving GetStatements: 9193777.226 ~~~
+~~~ Leaving: 9193777.226 ~~~
 ------------------------------------ 1 statements generated.
 
 
 ------------------------------------
-~~~ GetStatements: 9193806.80 ~~~
+~~~ Entering: 9193806.80 ~~~
 ETH is of interest
-Attempting to reconcile at top level
+Attempting to reconcile at top level: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-0xf503017d7baf7fbc0fff7492b751025c6a78179b
 ------------------------------------
 # Reason: top-level
 Trial balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0xf503017d7baf7fbc0fff7492b751025c6a78179b at stmt 9193806 80 0
@@ -1221,14 +1221,14 @@ Trial balance:
 Statement is material and reconciled - appending
 Extracting statements from logs.
 There were no statements generated from logs.
-~~~ Leaving GetStatements: 9193806.80 ~~~
+~~~ Leaving: 9193806.80 ~~~
 ------------------------------------ 1 statements generated.
 
 
 ------------------------------------
-~~~ GetStatements: 9193814.38 ~~~
+~~~ Entering: 9193814.38 ~~~
 ETH is of interest
-Attempting to reconcile at top level
+Attempting to reconcile at top level: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-0xf503017d7baf7fbc0fff7492b751025c6a78179b
 ------------------------------------
 # Reason: top-level
 Trial balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0xf503017d7baf7fbc0fff7492b751025c6a78179b at stmt 9193814 38 0
@@ -1287,7 +1287,7 @@ Trial balance:
 Statement is material and reconciled - appending
 Extracting statements from logs.
 There were no statements generated from logs.
-~~~ Leaving GetStatements: 9193814.38 ~~~
+~~~ Leaving: 9193814.38 ~~~
 ------------------------------------ 1 statements generated.
 
 {

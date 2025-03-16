@@ -13,9 +13,9 @@ Format:  json
 2: 9024185 29
 
 ------------------------------------
-~~~ GetStatements: 8876232.84 ~~~
+~~~ Entering: 8876232.84 ~~~
 ETH is of interest
-Attempting to reconcile at top level
+Attempting to reconcile at top level: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-0xf503017d7baf7fbc0fff7492b751025c6a78179b
 ------------------------------------
 # Reason: top-level
 Trial balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0xf503017d7baf7fbc0fff7492b751025c6a78179b at stmt 8876232 84 0
@@ -75,14 +75,14 @@ Trial balance:
 ----------Done  true  --------------------------
 
 Statement is material - appending. reconciled: true
-~~~ Leaving GetStatements: 8876232.84 ~~~
+~~~ Leaving: 8876232.84 ~~~
 ------------------------------------ 1 statements generated.
 
 
 ------------------------------------
-~~~ GetStatements: 9000998.70 ~~~
+~~~ Entering: 9000998.70 ~~~
 ETH is of interest
-Attempting to reconcile at top level
+Attempting to reconcile at top level: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-0xf503017d7baf7fbc0fff7492b751025c6a78179b
 ------------------------------------
 # Reason: top-level
 Trial balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0xf503017d7baf7fbc0fff7492b751025c6a78179b at stmt 9000998 70 0
@@ -100,14 +100,14 @@ Found  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 9000998 of 4999534200
 Statement was not material
 Extracting statements from logs.
 There were no statements generated from logs.
-~~~ Leaving GetStatements: 9000998.70 ~~~
+~~~ Leaving: 9000998.70 ~~~
 ------------------------------------ 0 statements generated.
 
 
 ------------------------------------
-~~~ GetStatements: 9024185.29 ~~~
+~~~ Entering: 9024185.29 ~~~
 ETH is of interest
-Attempting to reconcile at top level
+Attempting to reconcile at top level: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-0xf503017d7baf7fbc0fff7492b751025c6a78179b
 ------------------------------------
 # Reason: top-level
 Trial balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0xf503017d7baf7fbc0fff7492b751025c6a78179b at stmt 9024185 29 0
@@ -125,7 +125,7 @@ Found  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 9024185 of 4999534200
 Statement was not material
 Extracting statements from logs.
 There were no statements generated from logs.
-~~~ Leaving GetStatements: 9024185.29 ~~~
+~~~ Leaving: 9024185.29 ~~~
 ------------------------------------ 0 statements generated.
 
 {

@@ -29,9 +29,9 @@ TEST[DATE|TIME] 18: 3962 99998
 TEST[DATE|TIME] 19: 4256 99998
 TEST[DATE|TIME] 
 TEST[DATE|TIME] ------------------------------------
-TEST[DATE|TIME] ~~~ GetStatements: 1.99999 ~~~
+TEST[DATE|TIME] ~~~ Entering: 1.99999 ~~~
 TEST[DATE|TIME] ETH is of interest
-TEST[DATE|TIME] Attempting to reconcile at top level
+TEST[DATE|TIME] Attempting to reconcile at top level: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] ------------------------------------
 TEST[DATE|TIME] # Reason: top-level
 TEST[DATE|TIME] Trial balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0x05a56e2d52c817161883f50c441c3228cfe54d9f at stmt 1 99999 0
@@ -76,14 +76,14 @@ TEST[DATE|TIME] ----------Done  true  --------------------------
 TEST[DATE|TIME] 
 TEST[DATE|TIME] Statement is material and reconciled - appending
 TEST[DATE|TIME] Transaction receipt is nil. No log statements.
-TEST[DATE|TIME] ~~~ Leaving GetStatements: 1.99999 ~~~
+TEST[DATE|TIME] ~~~ Leaving: 1.99999 ~~~
 TEST[DATE|TIME] ------------------------------------ 1 statements generated.
 TEST[DATE|TIME] 
 TEST[DATE|TIME] 
 TEST[DATE|TIME] ------------------------------------
-TEST[DATE|TIME] ~~~ GetStatements: 5.99999 ~~~
+TEST[DATE|TIME] ~~~ Entering: 5.99999 ~~~
 TEST[DATE|TIME] ETH is of interest
-TEST[DATE|TIME] Attempting to reconcile at top level
+TEST[DATE|TIME] Attempting to reconcile at top level: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] ------------------------------------
 TEST[DATE|TIME] # Reason: top-level
 TEST[DATE|TIME] Trial balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0x05a56e2d52c817161883f50c441c3228cfe54d9f at stmt 5 99999 0
@@ -129,14 +129,14 @@ TEST[DATE|TIME] ----------Done  true  --------------------------
 TEST[DATE|TIME] 
 TEST[DATE|TIME] Statement is material and reconciled - appending
 TEST[DATE|TIME] Transaction receipt is nil. No log statements.
-TEST[DATE|TIME] ~~~ Leaving GetStatements: 5.99999 ~~~
+TEST[DATE|TIME] ~~~ Leaving: 5.99999 ~~~
 TEST[DATE|TIME] ------------------------------------ 1 statements generated.
 TEST[DATE|TIME] 
 TEST[DATE|TIME] 
 TEST[DATE|TIME] ------------------------------------
-TEST[DATE|TIME] ~~~ GetStatements: 56.99998 ~~~
+TEST[DATE|TIME] ~~~ Entering: 56.99998 ~~~
 TEST[DATE|TIME] ETH is of interest
-TEST[DATE|TIME] Attempting to reconcile at top level
+TEST[DATE|TIME] Attempting to reconcile at top level: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] ------------------------------------
 TEST[DATE|TIME] # Reason: top-level
 TEST[DATE|TIME] Trial balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0x05a56e2d52c817161883f50c441c3228cfe54d9f at stmt 56 99998 0
@@ -182,14 +182,14 @@ TEST[DATE|TIME] ----------Done  true  --------------------------
 TEST[DATE|TIME] 
 TEST[DATE|TIME] Statement is material and reconciled - appending
 TEST[DATE|TIME] Transaction receipt is nil. No log statements.
-TEST[DATE|TIME] ~~~ Leaving GetStatements: 56.99998 ~~~
+TEST[DATE|TIME] ~~~ Leaving: 56.99998 ~~~
 TEST[DATE|TIME] ------------------------------------ 1 statements generated.
 TEST[DATE|TIME] 
 TEST[DATE|TIME] 
 TEST[DATE|TIME] ------------------------------------
-TEST[DATE|TIME] ~~~ GetStatements: 235.99999 ~~~
+TEST[DATE|TIME] ~~~ Entering: 235.99999 ~~~
 TEST[DATE|TIME] ETH is of interest
-TEST[DATE|TIME] Attempting to reconcile at top level
+TEST[DATE|TIME] Attempting to reconcile at top level: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] ------------------------------------
 TEST[DATE|TIME] # Reason: top-level
 TEST[DATE|TIME] Trial balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0x05a56e2d52c817161883f50c441c3228cfe54d9f at stmt 235 99999 0
@@ -235,14 +235,14 @@ TEST[DATE|TIME] ----------Done  true  --------------------------
 TEST[DATE|TIME] 
 TEST[DATE|TIME] Statement is material and reconciled - appending
 TEST[DATE|TIME] Transaction receipt is nil. No log statements.
-TEST[DATE|TIME] ~~~ Leaving GetStatements: 235.99999 ~~~
+TEST[DATE|TIME] ~~~ Leaving: 235.99999 ~~~
 TEST[DATE|TIME] ------------------------------------ 1 statements generated.
 TEST[DATE|TIME] 
 TEST[DATE|TIME] 
 TEST[DATE|TIME] ------------------------------------
-TEST[DATE|TIME] ~~~ GetStatements: 247.99998 ~~~
+TEST[DATE|TIME] ~~~ Entering: 247.99998 ~~~
 TEST[DATE|TIME] ETH is of interest
-TEST[DATE|TIME] Attempting to reconcile at top level
+TEST[DATE|TIME] Attempting to reconcile at top level: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] ------------------------------------
 TEST[DATE|TIME] # Reason: top-level
 TEST[DATE|TIME] Trial balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0x05a56e2d52c817161883f50c441c3228cfe54d9f at stmt 247 99998 0
@@ -288,14 +288,14 @@ TEST[DATE|TIME] ----------Done  true  --------------------------
 TEST[DATE|TIME] 
 TEST[DATE|TIME] Statement is material and reconciled - appending
 TEST[DATE|TIME] Transaction receipt is nil. No log statements.
-TEST[DATE|TIME] ~~~ Leaving GetStatements: 247.99998 ~~~
+TEST[DATE|TIME] ~~~ Leaving: 247.99998 ~~~
 TEST[DATE|TIME] ------------------------------------ 1 statements generated.
 TEST[DATE|TIME] 
 TEST[DATE|TIME] 
 TEST[DATE|TIME] ------------------------------------
-TEST[DATE|TIME] ~~~ GetStatements: 348.99999 ~~~
+TEST[DATE|TIME] ~~~ Entering: 348.99999 ~~~
 TEST[DATE|TIME] ETH is of interest
-TEST[DATE|TIME] Attempting to reconcile at top level
+TEST[DATE|TIME] Attempting to reconcile at top level: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] ------------------------------------
 TEST[DATE|TIME] # Reason: top-level
 TEST[DATE|TIME] Trial balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0x05a56e2d52c817161883f50c441c3228cfe54d9f at stmt 348 99999 0
@@ -341,14 +341,14 @@ TEST[DATE|TIME] ----------Done  true  --------------------------
 TEST[DATE|TIME] 
 TEST[DATE|TIME] Statement is material and reconciled - appending
 TEST[DATE|TIME] Transaction receipt is nil. No log statements.
-TEST[DATE|TIME] ~~~ Leaving GetStatements: 348.99999 ~~~
+TEST[DATE|TIME] ~~~ Leaving: 348.99999 ~~~
 TEST[DATE|TIME] ------------------------------------ 1 statements generated.
 TEST[DATE|TIME] 
 TEST[DATE|TIME] 
 TEST[DATE|TIME] ------------------------------------
-TEST[DATE|TIME] ~~~ GetStatements: 500.99998 ~~~
+TEST[DATE|TIME] ~~~ Entering: 500.99998 ~~~
 TEST[DATE|TIME] ETH is of interest
-TEST[DATE|TIME] Attempting to reconcile at top level
+TEST[DATE|TIME] Attempting to reconcile at top level: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] ------------------------------------
 TEST[DATE|TIME] # Reason: top-level
 TEST[DATE|TIME] Trial balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0x05a56e2d52c817161883f50c441c3228cfe54d9f at stmt 500 99998 0
@@ -394,14 +394,14 @@ TEST[DATE|TIME] ----------Done  true  --------------------------
 TEST[DATE|TIME] 
 TEST[DATE|TIME] Statement is material and reconciled - appending
 TEST[DATE|TIME] Transaction receipt is nil. No log statements.
-TEST[DATE|TIME] ~~~ Leaving GetStatements: 500.99998 ~~~
+TEST[DATE|TIME] ~~~ Leaving: 500.99998 ~~~
 TEST[DATE|TIME] ------------------------------------ 1 statements generated.
 TEST[DATE|TIME] 
 TEST[DATE|TIME] 
 TEST[DATE|TIME] ------------------------------------
-TEST[DATE|TIME] ~~~ GetStatements: 563.99998 ~~~
+TEST[DATE|TIME] ~~~ Entering: 563.99998 ~~~
 TEST[DATE|TIME] ETH is of interest
-TEST[DATE|TIME] Attempting to reconcile at top level
+TEST[DATE|TIME] Attempting to reconcile at top level: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] ------------------------------------
 TEST[DATE|TIME] # Reason: top-level
 TEST[DATE|TIME] Trial balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0x05a56e2d52c817161883f50c441c3228cfe54d9f at stmt 563 99998 0
@@ -447,14 +447,14 @@ TEST[DATE|TIME] ----------Done  true  --------------------------
 TEST[DATE|TIME] 
 TEST[DATE|TIME] Statement is material and reconciled - appending
 TEST[DATE|TIME] Transaction receipt is nil. No log statements.
-TEST[DATE|TIME] ~~~ Leaving GetStatements: 563.99998 ~~~
+TEST[DATE|TIME] ~~~ Leaving: 563.99998 ~~~
 TEST[DATE|TIME] ------------------------------------ 1 statements generated.
 TEST[DATE|TIME] 
 TEST[DATE|TIME] 
 TEST[DATE|TIME] ------------------------------------
-TEST[DATE|TIME] ~~~ GetStatements: 987.99998 ~~~
+TEST[DATE|TIME] ~~~ Entering: 987.99998 ~~~
 TEST[DATE|TIME] ETH is of interest
-TEST[DATE|TIME] Attempting to reconcile at top level
+TEST[DATE|TIME] Attempting to reconcile at top level: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] ------------------------------------
 TEST[DATE|TIME] # Reason: top-level
 TEST[DATE|TIME] Trial balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0x05a56e2d52c817161883f50c441c3228cfe54d9f at stmt 987 99998 0
@@ -500,14 +500,14 @@ TEST[DATE|TIME] ----------Done  true  --------------------------
 TEST[DATE|TIME] 
 TEST[DATE|TIME] Statement is material and reconciled - appending
 TEST[DATE|TIME] Transaction receipt is nil. No log statements.
-TEST[DATE|TIME] ~~~ Leaving GetStatements: 987.99998 ~~~
+TEST[DATE|TIME] ~~~ Leaving: 987.99998 ~~~
 TEST[DATE|TIME] ------------------------------------ 1 statements generated.
 TEST[DATE|TIME] 
 TEST[DATE|TIME] 
 TEST[DATE|TIME] ------------------------------------
-TEST[DATE|TIME] ~~~ GetStatements: 1450.99999 ~~~
+TEST[DATE|TIME] ~~~ Entering: 1450.99999 ~~~
 TEST[DATE|TIME] ETH is of interest
-TEST[DATE|TIME] Attempting to reconcile at top level
+TEST[DATE|TIME] Attempting to reconcile at top level: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] ------------------------------------
 TEST[DATE|TIME] # Reason: top-level
 TEST[DATE|TIME] Trial balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0x05a56e2d52c817161883f50c441c3228cfe54d9f at stmt 1450 99999 0
@@ -554,14 +554,14 @@ TEST[DATE|TIME] ----------Done  true  --------------------------
 TEST[DATE|TIME] 
 TEST[DATE|TIME] Statement is material and reconciled - appending
 TEST[DATE|TIME] Transaction receipt is nil. No log statements.
-TEST[DATE|TIME] ~~~ Leaving GetStatements: 1450.99999 ~~~
+TEST[DATE|TIME] ~~~ Leaving: 1450.99999 ~~~
 TEST[DATE|TIME] ------------------------------------ 1 statements generated.
 TEST[DATE|TIME] 
 TEST[DATE|TIME] 
 TEST[DATE|TIME] ------------------------------------
-TEST[DATE|TIME] ~~~ GetStatements: 1580.99998 ~~~
+TEST[DATE|TIME] ~~~ Entering: 1580.99998 ~~~
 TEST[DATE|TIME] ETH is of interest
-TEST[DATE|TIME] Attempting to reconcile at top level
+TEST[DATE|TIME] Attempting to reconcile at top level: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] ------------------------------------
 TEST[DATE|TIME] # Reason: top-level
 TEST[DATE|TIME] Trial balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0x05a56e2d52c817161883f50c441c3228cfe54d9f at stmt 1580 99998 0
@@ -607,14 +607,14 @@ TEST[DATE|TIME] ----------Done  true  --------------------------
 TEST[DATE|TIME] 
 TEST[DATE|TIME] Statement is material and reconciled - appending
 TEST[DATE|TIME] Transaction receipt is nil. No log statements.
-TEST[DATE|TIME] ~~~ Leaving GetStatements: 1580.99998 ~~~
+TEST[DATE|TIME] ~~~ Leaving: 1580.99998 ~~~
 TEST[DATE|TIME] ------------------------------------ 1 statements generated.
 TEST[DATE|TIME] 
 TEST[DATE|TIME] 
 TEST[DATE|TIME] ------------------------------------
-TEST[DATE|TIME] ~~~ GetStatements: 1586.99998 ~~~
+TEST[DATE|TIME] ~~~ Entering: 1586.99998 ~~~
 TEST[DATE|TIME] ETH is of interest
-TEST[DATE|TIME] Attempting to reconcile at top level
+TEST[DATE|TIME] Attempting to reconcile at top level: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] ------------------------------------
 TEST[DATE|TIME] # Reason: top-level
 TEST[DATE|TIME] Trial balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0x05a56e2d52c817161883f50c441c3228cfe54d9f at stmt 1586 99998 0
@@ -660,14 +660,14 @@ TEST[DATE|TIME] ----------Done  true  --------------------------
 TEST[DATE|TIME] 
 TEST[DATE|TIME] Statement is material and reconciled - appending
 TEST[DATE|TIME] Transaction receipt is nil. No log statements.
-TEST[DATE|TIME] ~~~ Leaving GetStatements: 1586.99998 ~~~
+TEST[DATE|TIME] ~~~ Leaving: 1586.99998 ~~~
 TEST[DATE|TIME] ------------------------------------ 1 statements generated.
 TEST[DATE|TIME] 
 TEST[DATE|TIME] 
 TEST[DATE|TIME] ------------------------------------
-TEST[DATE|TIME] ~~~ GetStatements: 1861.99999 ~~~
+TEST[DATE|TIME] ~~~ Entering: 1861.99999 ~~~
 TEST[DATE|TIME] ETH is of interest
-TEST[DATE|TIME] Attempting to reconcile at top level
+TEST[DATE|TIME] Attempting to reconcile at top level: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] ------------------------------------
 TEST[DATE|TIME] # Reason: top-level
 TEST[DATE|TIME] Trial balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0x05a56e2d52c817161883f50c441c3228cfe54d9f at stmt 1861 99999 0
@@ -713,14 +713,14 @@ TEST[DATE|TIME] ----------Done  true  --------------------------
 TEST[DATE|TIME] 
 TEST[DATE|TIME] Statement is material and reconciled - appending
 TEST[DATE|TIME] Transaction receipt is nil. No log statements.
-TEST[DATE|TIME] ~~~ Leaving GetStatements: 1861.99999 ~~~
+TEST[DATE|TIME] ~~~ Leaving: 1861.99999 ~~~
 TEST[DATE|TIME] ------------------------------------ 1 statements generated.
 TEST[DATE|TIME] 
 TEST[DATE|TIME] 
 TEST[DATE|TIME] ------------------------------------
-TEST[DATE|TIME] ~~~ GetStatements: 1912.99998 ~~~
+TEST[DATE|TIME] ~~~ Entering: 1912.99998 ~~~
 TEST[DATE|TIME] ETH is of interest
-TEST[DATE|TIME] Attempting to reconcile at top level
+TEST[DATE|TIME] Attempting to reconcile at top level: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] ------------------------------------
 TEST[DATE|TIME] # Reason: top-level
 TEST[DATE|TIME] Trial balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0x05a56e2d52c817161883f50c441c3228cfe54d9f at stmt 1912 99998 0
@@ -766,14 +766,14 @@ TEST[DATE|TIME] ----------Done  true  --------------------------
 TEST[DATE|TIME] 
 TEST[DATE|TIME] Statement is material and reconciled - appending
 TEST[DATE|TIME] Transaction receipt is nil. No log statements.
-TEST[DATE|TIME] ~~~ Leaving GetStatements: 1912.99998 ~~~
+TEST[DATE|TIME] ~~~ Leaving: 1912.99998 ~~~
 TEST[DATE|TIME] ------------------------------------ 1 statements generated.
 TEST[DATE|TIME] 
 TEST[DATE|TIME] 
 TEST[DATE|TIME] ------------------------------------
-TEST[DATE|TIME] ~~~ GetStatements: 2057.99999 ~~~
+TEST[DATE|TIME] ~~~ Entering: 2057.99999 ~~~
 TEST[DATE|TIME] ETH is of interest
-TEST[DATE|TIME] Attempting to reconcile at top level
+TEST[DATE|TIME] Attempting to reconcile at top level: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] ------------------------------------
 TEST[DATE|TIME] # Reason: top-level
 TEST[DATE|TIME] Trial balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0x05a56e2d52c817161883f50c441c3228cfe54d9f at stmt 2057 99999 0
@@ -819,14 +819,14 @@ TEST[DATE|TIME] ----------Done  true  --------------------------
 TEST[DATE|TIME] 
 TEST[DATE|TIME] Statement is material and reconciled - appending
 TEST[DATE|TIME] Transaction receipt is nil. No log statements.
-TEST[DATE|TIME] ~~~ Leaving GetStatements: 2057.99999 ~~~
+TEST[DATE|TIME] ~~~ Leaving: 2057.99999 ~~~
 TEST[DATE|TIME] ------------------------------------ 1 statements generated.
 TEST[DATE|TIME] 
 TEST[DATE|TIME] 
 TEST[DATE|TIME] ------------------------------------
-TEST[DATE|TIME] ~~~ GetStatements: 2256.99999 ~~~
+TEST[DATE|TIME] ~~~ Entering: 2256.99999 ~~~
 TEST[DATE|TIME] ETH is of interest
-TEST[DATE|TIME] Attempting to reconcile at top level
+TEST[DATE|TIME] Attempting to reconcile at top level: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] ------------------------------------
 TEST[DATE|TIME] # Reason: top-level
 TEST[DATE|TIME] Trial balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0x05a56e2d52c817161883f50c441c3228cfe54d9f at stmt 2256 99999 0
@@ -872,14 +872,14 @@ TEST[DATE|TIME] ----------Done  true  --------------------------
 TEST[DATE|TIME] 
 TEST[DATE|TIME] Statement is material and reconciled - appending
 TEST[DATE|TIME] Transaction receipt is nil. No log statements.
-TEST[DATE|TIME] ~~~ Leaving GetStatements: 2256.99999 ~~~
+TEST[DATE|TIME] ~~~ Leaving: 2256.99999 ~~~
 TEST[DATE|TIME] ------------------------------------ 1 statements generated.
 TEST[DATE|TIME] 
 TEST[DATE|TIME] 
 TEST[DATE|TIME] ------------------------------------
-TEST[DATE|TIME] ~~~ GetStatements: 2392.99999 ~~~
+TEST[DATE|TIME] ~~~ Entering: 2392.99999 ~~~
 TEST[DATE|TIME] ETH is of interest
-TEST[DATE|TIME] Attempting to reconcile at top level
+TEST[DATE|TIME] Attempting to reconcile at top level: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] ------------------------------------
 TEST[DATE|TIME] # Reason: top-level
 TEST[DATE|TIME] Trial balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0x05a56e2d52c817161883f50c441c3228cfe54d9f at stmt 2392 99999 0
@@ -926,14 +926,14 @@ TEST[DATE|TIME] ----------Done  true  --------------------------
 TEST[DATE|TIME] 
 TEST[DATE|TIME] Statement is material and reconciled - appending
 TEST[DATE|TIME] Transaction receipt is nil. No log statements.
-TEST[DATE|TIME] ~~~ Leaving GetStatements: 2392.99999 ~~~
+TEST[DATE|TIME] ~~~ Leaving: 2392.99999 ~~~
 TEST[DATE|TIME] ------------------------------------ 1 statements generated.
 TEST[DATE|TIME] 
 TEST[DATE|TIME] 
 TEST[DATE|TIME] ------------------------------------
-TEST[DATE|TIME] ~~~ GetStatements: 2516.99998 ~~~
+TEST[DATE|TIME] ~~~ Entering: 2516.99998 ~~~
 TEST[DATE|TIME] ETH is of interest
-TEST[DATE|TIME] Attempting to reconcile at top level
+TEST[DATE|TIME] Attempting to reconcile at top level: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] ------------------------------------
 TEST[DATE|TIME] # Reason: top-level
 TEST[DATE|TIME] Trial balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0x05a56e2d52c817161883f50c441c3228cfe54d9f at stmt 2516 99998 0
@@ -979,14 +979,14 @@ TEST[DATE|TIME] ----------Done  true  --------------------------
 TEST[DATE|TIME] 
 TEST[DATE|TIME] Statement is material and reconciled - appending
 TEST[DATE|TIME] Transaction receipt is nil. No log statements.
-TEST[DATE|TIME] ~~~ Leaving GetStatements: 2516.99998 ~~~
+TEST[DATE|TIME] ~~~ Leaving: 2516.99998 ~~~
 TEST[DATE|TIME] ------------------------------------ 1 statements generated.
 TEST[DATE|TIME] 
 TEST[DATE|TIME] 
 TEST[DATE|TIME] ------------------------------------
-TEST[DATE|TIME] ~~~ GetStatements: 3962.99998 ~~~
+TEST[DATE|TIME] ~~~ Entering: 3962.99998 ~~~
 TEST[DATE|TIME] ETH is of interest
-TEST[DATE|TIME] Attempting to reconcile at top level
+TEST[DATE|TIME] Attempting to reconcile at top level: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] ------------------------------------
 TEST[DATE|TIME] # Reason: top-level
 TEST[DATE|TIME] Trial balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0x05a56e2d52c817161883f50c441c3228cfe54d9f at stmt 3962 99998 0
@@ -1032,14 +1032,14 @@ TEST[DATE|TIME] ----------Done  true  --------------------------
 TEST[DATE|TIME] 
 TEST[DATE|TIME] Statement is material and reconciled - appending
 TEST[DATE|TIME] Transaction receipt is nil. No log statements.
-TEST[DATE|TIME] ~~~ Leaving GetStatements: 3962.99998 ~~~
+TEST[DATE|TIME] ~~~ Leaving: 3962.99998 ~~~
 TEST[DATE|TIME] ------------------------------------ 1 statements generated.
 TEST[DATE|TIME] 
 TEST[DATE|TIME] 
 TEST[DATE|TIME] ------------------------------------
-TEST[DATE|TIME] ~~~ GetStatements: 4256.99998 ~~~
+TEST[DATE|TIME] ~~~ Entering: 4256.99998 ~~~
 TEST[DATE|TIME] ETH is of interest
-TEST[DATE|TIME] Attempting to reconcile at top level
+TEST[DATE|TIME] Attempting to reconcile at top level: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] ------------------------------------
 TEST[DATE|TIME] # Reason: top-level
 TEST[DATE|TIME] Trial balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0x05a56e2d52c817161883f50c441c3228cfe54d9f at stmt 4256 99998 0
@@ -1085,7 +1085,7 @@ TEST[DATE|TIME] ----------Done  true  --------------------------
 TEST[DATE|TIME] 
 TEST[DATE|TIME] Statement is material and reconciled - appending
 TEST[DATE|TIME] Transaction receipt is nil. No log statements.
-TEST[DATE|TIME] ~~~ Leaving GetStatements: 4256.99998 ~~~
+TEST[DATE|TIME] ~~~ Leaving: 4256.99998 ~~~
 TEST[DATE|TIME] ------------------------------------ 1 statements generated.
 TEST[DATE|TIME] 
 ----

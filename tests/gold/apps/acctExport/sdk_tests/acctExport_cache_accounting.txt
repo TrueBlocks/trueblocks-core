@@ -11,14 +11,16 @@ Cache:  true
 Caps:  cache,decache,ether
 Format:  json
 
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-~~~~~  10277780.88 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+------------------------------------
+~~~ Entering: 10277780.88 ~~~
+ETH is of interest
+Attempting to reconcile at top level: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-0x04fe1f0c597fbc65700f4fba6f87501edc20e665
 ------------------------------------
 # Reason: top-level
 Trial balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0x04fe1f0c597fbc65700f4fba6f87501edc20e665 at stmt 10277780 88 0
 ------------------------------------
 Sender: true Recipient: false 0x04fe1f0c597fbc65700f4fba6f87501edc20e665 0xdac17f958d2ee523a2206206994597c13d831ec7 0x04fe1f0c597fbc65700f4fba6f87501edc20e665
-adjustForIntraTransfer2 isToken: false isPrevSame: true isNextSame: false
+adjustForIntraTransfer2 isToken: false isPrevSame: false isNextSame: false
 XXXNot found  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
 Using block-1 balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 0 of 0
 Statement reconciles? true top-level
@@ -44,7 +46,7 @@ price:               231.21081182360814
 source:              uniswap
 ===================================================
 Reason:                 top-level
-Previous:               10277780 88 ( true )
+Previous:               10277779 0 ( false )
 Current:                10277780 88 ( true )
 Next:                   10277781 0 ( false )
 accountedFor:           0x04fe1f0c597fbc65700f4fba6f87501edc20e665
@@ -71,12 +73,15 @@ Trial balance:
 ---------------------------------------------------
 ----------Done  true  --------------------------
 
+Statement is material and reconciled - appending
+Extracting statements from logs.
+1 statements generated from logs.
 ------------------------------------
 # Reason: token
 Trial balance for  0xdac17f958d2ee523a2206206994597c13d831ec7 0x04fe1f0c597fbc65700f4fba6f87501edc20e665 at stmt 10277780 88 103
 ------------------------------------
 Sender: true Recipient: false 0x04fe1f0c597fbc65700f4fba6f87501edc20e665 0x7fc3be02c7f18b24a98870c543fd0ec3c25f3ff9 0x04fe1f0c597fbc65700f4fba6f87501edc20e665
-adjustForIntraTransfer2 isToken: true isPrevSame: true isNextSame: false
+adjustForIntraTransfer2 isToken: true isPrevSame: false isNextSame: false
 XXXNot found  0xdac17f958d2ee523a2206206994597c13d831ec7
 Using block-1 balance for  0xdac17f958d2ee523a2206206994597c13d831ec7 at block 0 of 0
 Statement reconciles? true token
@@ -89,7 +94,7 @@ Found  0xdac17f958d2ee523a2206206994597c13d831ec7 at block 10277780 of 0
 stable-coin
 ===================================================
 Reason:                 token
-Previous:               10277780 88 ( true )
+Previous:               10277779 0 ( false )
 Current:                10277780 88 ( true )
 Next:                   10277781 0 ( false )
 accountedFor:           0x04fe1f0c597fbc65700f4fba6f87501edc20e665
@@ -116,7 +121,10 @@ Trial balance:
 ---------------------------------------------------
 ----------Done  true  --------------------------
 
-~okay~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Statement is material - appending. reconciled: true
+~~~ Leaving: 10277780.88 ~~~
+------------------------------------ 2 statements generated.
+
 {
   "data": [
     {

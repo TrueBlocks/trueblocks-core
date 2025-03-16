@@ -33,6 +33,7 @@ func (trans *Transaction) FetchStatement(asEther bool, asset, holder base.Addres
 		PriceSource:      "not-priced",
 	}
 
+	// logger.TestLog(true, "holder", holder, "sender", stmt.Sender)
 	if stmt.Sender == holder {
 		gasUsed := new(base.Wei)
 		if trans.Receipt != nil {
@@ -44,6 +45,7 @@ func (trans *Transaction) FetchStatement(asEther bool, asset, holder base.Addres
 		stmt.GasOut = *gasOut
 	}
 
+	// logger.TestLog(true, "holder", holder, "recipient", stmt.Recipient)
 	if stmt.Recipient == holder {
 		if stmt.BlockNumber == 0 {
 			stmt.PrefundIn = trans.Value

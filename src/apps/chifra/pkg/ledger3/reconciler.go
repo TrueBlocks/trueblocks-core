@@ -10,7 +10,7 @@ import (
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/ledger1"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/ledger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/names"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
@@ -18,7 +18,7 @@ import (
 )
 
 type Reconciler3 struct {
-	opts              *ledger1.ReconcilerOptions
+	opts              *ledger.ReconcilerOptions
 	names             map[base.Address]types.Name
 	hasStartBlock     bool
 	transfers         map[blockTxKey][]types.AssetTransfer
@@ -34,7 +34,7 @@ func (r *Reconciler3) String() string {
 	return string(bytes)
 }
 
-func NewReconciler(conn *rpc.Connection, opts *ledger1.ReconcilerOptions) *Reconciler3 {
+func NewReconciler(conn *rpc.Connection, opts *ledger.ReconcilerOptions) *Reconciler3 {
 	parts := types.Custom | types.Prefund | types.Regular
 	names, _ := names.LoadNamesMap(conn.Chain, parts, []string{})
 	return &Reconciler3{

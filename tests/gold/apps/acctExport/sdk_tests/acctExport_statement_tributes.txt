@@ -15,16 +15,16 @@ Format:  json
 3: 8769052 74
 
 ------------------------------------
-~~~ GetStatements: 8769019.124 ~~~
+~~~ Entering: 8769019.124 ~~~
 ETH is NOT of interest
 Extracting statements from logs.
 There were no statements generated from logs.
-~~~ Leaving GetStatements: 8769019.124 ~~~
+~~~ Leaving: 8769019.124 ~~~
 ------------------------------------ 0 statements generated.
 
 
 ------------------------------------
-~~~ GetStatements: 8769029.80 ~~~
+~~~ Entering: 8769029.80 ~~~
 ETH is NOT of interest
 Extracting statements from logs.
 1 statements generated from logs.
@@ -71,21 +71,21 @@ Trial balance:
 ----------Done  true  --------------------------
 
 Statement is material - appending. reconciled: true
-~~~ Leaving GetStatements: 8769029.80 ~~~
+~~~ Leaving: 8769029.80 ~~~
 ------------------------------------ 1 statements generated.
 
 
 ------------------------------------
-~~~ GetStatements: 8769052.73 ~~~
+~~~ Entering: 8769052.73 ~~~
 ETH is NOT of interest
 Extracting statements from logs.
 There were no statements generated from logs.
-~~~ Leaving GetStatements: 8769052.73 ~~~
+~~~ Leaving: 8769052.73 ~~~
 ------------------------------------ 0 statements generated.
 
 
 ------------------------------------
-~~~ GetStatements: 8769052.74 ~~~
+~~~ Entering: 8769052.74 ~~~
 ETH is NOT of interest
 Extracting statements from logs.
 1 statements generated from logs.
@@ -133,7 +133,7 @@ Trial balance:
 ----------Done  true  --------------------------
 
 Statement is material - appending. reconciled: true
-~~~ Leaving GetStatements: 8769052.74 ~~~
+~~~ Leaving: 8769052.74 ~~~
 ------------------------------------ 1 statements generated.
 
 {

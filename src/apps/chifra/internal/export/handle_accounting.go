@@ -9,7 +9,7 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/articulate"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/ledger1"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/ledger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/monitor"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
@@ -32,9 +32,9 @@ func (opts *ExportOptions) HandleAccounting(rCtx *output.RenderCtx, monitorArray
 		assetFilters = append(assetFilters, base.HexToAddress(asset))
 	}
 
-	var recon *ledger1.Reconciler1
+	var recon *ledger.Reconciler
 	fetchData := func(modelChan chan types.Modeler, errorChan chan error) {
-		visitAppearance := func(pos *types.AppNode, app *types.Appearance) error {
+		visitAppearance := func(node *types.AppNode, app *types.Appearance) error {
 			if tx, err := opts.Conn.GetTransactionByAppearance(app, false); err != nil {
 				errorChan <- err
 				return nil
@@ -48,7 +48,7 @@ func (opts *ExportOptions) HandleAccounting(rCtx *output.RenderCtx, monitorArray
 						}
 					}
 
-					if statements, err := recon.GetStatements(pos, tx); err != nil {
+					if statements, err := recon.GetStatements(node, tx); err != nil {
 						errorChan <- err
 
 					} else {
@@ -67,7 +67,7 @@ func (opts *ExportOptions) HandleAccounting(rCtx *output.RenderCtx, monitorArray
 				return
 
 			} else if !opts.NoZero || cnt > 0 {
-				ledgerOpts := &ledger1.ReconcilerOptions{
+				ledgerOpts := &ledger.ReconcilerOptions{
 					AccountFor:   mon.Address,
 					FirstBlock:   opts.FirstBlock,
 					LastBlock:    opts.LastBlock,
@@ -78,34 +78,20 @@ func (opts *ExportOptions) HandleAccounting(rCtx *output.RenderCtx, monitorArray
 					AppFilters:   filter,
 				}
 
-				recon = ledger1.NewReconciler(opts.Conn, ledgerOpts)
-				for i, app := range apps {
-					{
-						{
-							prev := &types.Appearance{BlockNumber: 0, TransactionIndex: 0}
-							if app.BlockNumber > 0 {
-								prev = &app
-							}
-							if i > 0 {
-								prev = &apps[i-1]
-							}
-							next := &types.Appearance{BlockNumber: app.BlockNumber + 1, TransactionIndex: 0}
-							if i < len(apps)-1 {
-								next = &apps[i+1]
-							}
-
-							pos := &types.AppNode{}
-							pos.SetPrev(prev)
-							pos.SetCur(&app)
-							pos.SetNext(next)
-
-							if err := visitAppearance(pos, &app); err != nil {
-								errorChan <- err
-								return
-							}
-						}
+				recon = ledger.NewReconciler(opts.Conn, ledgerOpts)
+				list, err := types.NewAppList(apps)
+				if err != nil {
+					errorChan <- err
+				}
+				i := -1
+				for node := list.Head; node != nil; node = node.Next() {
+					i++
+					if err := visitAppearance(node, &apps[i]); err != nil {
+						errorChan <- err
+						return
 					}
 				}
+
 			} else {
 				errorChan <- fmt.Errorf("no appearances found for %s", mon.Address.Hex())
 				continue

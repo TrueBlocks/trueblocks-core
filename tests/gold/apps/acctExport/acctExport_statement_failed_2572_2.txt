@@ -12,7 +12,7 @@ INFO[DATE|TIME] { "outputFilename": "--output_filename--" }
 TEST[DATE|TIME] 0: 11670419 91
 TEST[DATE|TIME] 
 TEST[DATE|TIME] ------------------------------------
-TEST[DATE|TIME] ~~~ GetStatements: 11670419.91 ~~~
+TEST[DATE|TIME] ~~~ Entering: 11670419.91 ~~~
 TEST[DATE|TIME] ETH is NOT of interest
 TEST[DATE|TIME] Extracting statements from logs.
 TEST[DATE|TIME] 1 statements generated from logs.
@@ -79,7 +79,7 @@ TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] ----------Done  true  --------------------------
 TEST[DATE|TIME] 
 TEST[DATE|TIME] Statement is material - appending. reconciled: true
-TEST[DATE|TIME] ~~~ Leaving GetStatements: 11670419.91 ~~~
+TEST[DATE|TIME] ~~~ Leaving: 11670419.91 ~~~
 TEST[DATE|TIME] ------------------------------------ 1 statements generated.
 TEST[DATE|TIME] 
 ----

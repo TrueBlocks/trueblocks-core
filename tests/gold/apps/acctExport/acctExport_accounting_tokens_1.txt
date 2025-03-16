@@ -9,8 +9,10 @@ TEST[DATE|TIME] Caps:  cache,decache,ether
 TEST[DATE|TIME] Format:  json
 INFO[DATE|TIME] { "outputFilename": "--output_filename--" }
 TEST[DATE|TIME] 
-TEST[DATE|TIME] ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-TEST[DATE|TIME] ~~~~~  0.2 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+TEST[DATE|TIME] ------------------------------------
+TEST[DATE|TIME] ~~~ Entering: 0.2 ~~~
+TEST[DATE|TIME] ETH is of interest
+TEST[DATE|TIME] Attempting to reconcile at top level: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-0x001d14804b399c6ef80e64576f657660804fec0b
 TEST[DATE|TIME] ------------------------------------
 TEST[DATE|TIME] # Reason: top-level
 TEST[DATE|TIME] Trial balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0x001d14804b399c6ef80e64576f657660804fec0b at stmt 0 2 0
@@ -53,10 +55,16 @@ TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] ----------Done  true  --------------------------
 TEST[DATE|TIME] 
-TEST[DATE|TIME] ~okay~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+TEST[DATE|TIME] Statement is material and reconciled - appending
+TEST[DATE|TIME] Transaction receipt is nil. No log statements.
+TEST[DATE|TIME] ~~~ Leaving: 0.2 ~~~
+TEST[DATE|TIME] ------------------------------------ 1 statements generated.
 TEST[DATE|TIME] 
-TEST[DATE|TIME] ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-TEST[DATE|TIME] ~~~~~  202249.0 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+TEST[DATE|TIME] 
+TEST[DATE|TIME] ------------------------------------
+TEST[DATE|TIME] ~~~ Entering: 202249.0 ~~~
+TEST[DATE|TIME] ETH is of interest
+TEST[DATE|TIME] Attempting to reconcile at top level: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-0x001d14804b399c6ef80e64576f657660804fec0b
 TEST[DATE|TIME] ------------------------------------
 TEST[DATE|TIME] # Reason: top-level
 TEST[DATE|TIME] Trial balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0x001d14804b399c6ef80e64576f657660804fec0b at stmt 202249 0 0
@@ -101,11 +109,17 @@ TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] ----------Done  true  --------------------------
 TEST[DATE|TIME] 
-TEST[DATE|TIME] No interesting log statements
-TEST[DATE|TIME] ~okay~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+TEST[DATE|TIME] Statement is material and reconciled - appending
+TEST[DATE|TIME] Extracting statements from logs.
+TEST[DATE|TIME] There were no statements generated from logs.
+TEST[DATE|TIME] ~~~ Leaving: 202249.0 ~~~
+TEST[DATE|TIME] ------------------------------------ 1 statements generated.
 TEST[DATE|TIME] 
-TEST[DATE|TIME] ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-TEST[DATE|TIME] ~~~~~  1501459.2 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+TEST[DATE|TIME] 
+TEST[DATE|TIME] ------------------------------------
+TEST[DATE|TIME] ~~~ Entering: 1501459.2 ~~~
+TEST[DATE|TIME] ETH is of interest
+TEST[DATE|TIME] Attempting to reconcile at top level: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-0x001d14804b399c6ef80e64576f657660804fec0b
 TEST[DATE|TIME] ------------------------------------
 TEST[DATE|TIME] # Reason: top-level
 TEST[DATE|TIME] Trial balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0x001d14804b399c6ef80e64576f657660804fec0b at stmt 1501459 2 0
@@ -150,8 +164,12 @@ TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] ----------Done  true  --------------------------
 TEST[DATE|TIME] 
-TEST[DATE|TIME] No interesting log statements
-TEST[DATE|TIME] ~okay~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+TEST[DATE|TIME] Statement is material and reconciled - appending
+TEST[DATE|TIME] Extracting statements from logs.
+TEST[DATE|TIME] There were no statements generated from logs.
+TEST[DATE|TIME] ~~~ Leaving: 1501459.2 ~~~
+TEST[DATE|TIME] ------------------------------------ 1 statements generated.
+TEST[DATE|TIME] 
 ----
 Results in ./accounting_tokens_1_out.file
 {

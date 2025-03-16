@@ -10,7 +10,7 @@ import (
 	"sort"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/ledger1"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/ledger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/monitor"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
@@ -33,7 +33,7 @@ func (opts *ExportOptions) HandleAssets(rCtx *output.RenderCtx, monitorArray []m
 
 	assetMap := make(map[base.Address]types.Name)
 
-	var recon *ledger1.Reconciler1
+	var recon *ledger.Reconciler
 	fetchData := func(modelChan chan types.Modeler, errorChan chan error) {
 		for _, mon := range monitorArray {
 			if apps, cnt, err := mon.ReadAndFilterAppearances(filter, false /* withCount */); err != nil {
@@ -109,7 +109,7 @@ func (opts *ExportOptions) HandleAssets(rCtx *output.RenderCtx, monitorArray []m
 							return txArray[i].BlockNumber < txArray[j].BlockNumber
 						})
 
-						ledgerOpts := &ledger1.ReconcilerOptions{
+						ledgerOpts := &ledger.ReconcilerOptions{
 							AccountFor:   mon.Address,
 							FirstBlock:   opts.FirstBlock,
 							LastBlock:    opts.LastBlock,
@@ -120,7 +120,7 @@ func (opts *ExportOptions) HandleAssets(rCtx *output.RenderCtx, monitorArray []m
 							AppFilters:   filter,
 						}
 
-						recon = ledger1.NewReconciler(opts.Conn, ledgerOpts)
+						recon = ledger.NewReconciler(opts.Conn, ledgerOpts)
 						items := make([]types.Transfer, 0, len(thisMap))
 						for _, tx := range txArray {
 							if transfers, err := recon.GetTransfers(tx); err != nil {

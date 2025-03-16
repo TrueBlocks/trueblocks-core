@@ -9,8 +9,10 @@ Ether:  true
 Caps:  cache,decache,ether
 Format:  json
 
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-~~~~~  0.2 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+------------------------------------
+~~~ Entering: 0.2 ~~~
+ETH is of interest
+Attempting to reconcile at top level: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-0x001d14804b399c6ef80e64576f657660804fec0b
 ------------------------------------
 # Reason: top-level
 Trial balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0x001d14804b399c6ef80e64576f657660804fec0b at stmt 0 2 0
@@ -53,10 +55,16 @@ Trial balance:
 ---------------------------------------------------
 ----------Done  true  --------------------------
 
-~okay~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Statement is material and reconciled - appending
+Transaction receipt is nil. No log statements.
+~~~ Leaving: 0.2 ~~~
+------------------------------------ 1 statements generated.
 
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-~~~~~  202249.0 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+------------------------------------
+~~~ Entering: 202249.0 ~~~
+ETH is of interest
+Attempting to reconcile at top level: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-0x001d14804b399c6ef80e64576f657660804fec0b
 ------------------------------------
 # Reason: top-level
 Trial balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0x001d14804b399c6ef80e64576f657660804fec0b at stmt 202249 0 0
@@ -101,11 +109,17 @@ Trial balance:
 ---------------------------------------------------
 ----------Done  true  --------------------------
 
-No interesting log statements
-~okay~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Statement is material and reconciled - appending
+Extracting statements from logs.
+There were no statements generated from logs.
+~~~ Leaving: 202249.0 ~~~
+------------------------------------ 1 statements generated.
 
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-~~~~~  1501459.2 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+------------------------------------
+~~~ Entering: 1501459.2 ~~~
+ETH is of interest
+Attempting to reconcile at top level: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-0x001d14804b399c6ef80e64576f657660804fec0b
 ------------------------------------
 # Reason: top-level
 Trial balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0x001d14804b399c6ef80e64576f657660804fec0b at stmt 1501459 2 0
@@ -150,8 +164,12 @@ Trial balance:
 ---------------------------------------------------
 ----------Done  true  --------------------------
 
-No interesting log statements
-~okay~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Statement is material and reconciled - appending
+Extracting statements from logs.
+There were no statements generated from logs.
+~~~ Leaving: 1501459.2 ~~~
+------------------------------------ 1 statements generated.
+
 {
   "data": [
     {

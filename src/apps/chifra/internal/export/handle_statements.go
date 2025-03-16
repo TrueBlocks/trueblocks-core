@@ -10,7 +10,7 @@ import (
 	"sort"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/ledger1"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/ledger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/monitor"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
@@ -31,7 +31,7 @@ func (opts *ExportOptions) HandleStatements(rCtx *output.RenderCtx, monitorArray
 		assetFilters = append(assetFilters, base.HexToAddress(asset))
 	}
 
-	var recon *ledger1.Reconciler1
+	var recon *ledger.Reconciler
 	fetchData := func(modelChan chan types.Modeler, errorChan chan error) {
 		for _, mon := range monitorArray {
 			if apps, cnt, err := mon.ReadAndFilterAppearances(filter, false /* withCount */); err != nil {
@@ -117,7 +117,7 @@ func (opts *ExportOptions) HandleStatements(rCtx *output.RenderCtx, monitorArray
 							apps = append(apps, app)
 						}
 
-						ledgerOpts := &ledger1.ReconcilerOptions{
+						ledgerOpts := &ledger.ReconcilerOptions{
 							AccountFor:   mon.Address,
 							FirstBlock:   opts.FirstBlock,
 							LastBlock:    opts.LastBlock,
@@ -128,24 +128,16 @@ func (opts *ExportOptions) HandleStatements(rCtx *output.RenderCtx, monitorArray
 							AppFilters:   filter,
 						}
 
-						recon = ledger1.NewReconciler(opts.Conn, ledgerOpts)
+						recon = ledger.NewReconciler(opts.Conn, ledgerOpts)
 						items := make([]types.Statement, 0, len(thisMap))
-						for i, app := range apps {
-							prev := (*types.Appearance)(nil)
-							if i > 0 {
-								prev = &apps[i-1]
-							}
-							next := &types.Appearance{BlockNumber: app.BlockNumber + 1, TransactionIndex: 0}
-							if i < len(apps)-1 {
-								next = &apps[i+1]
-							}
-
-							pos := &types.AppNode{}
-							pos.SetPrev(prev)
-							pos.SetCur(&app)
-							pos.SetNext(next)
-
-							if statements, err := recon.GetStatements(pos, txArray[i]); err != nil {
+						list, err := types.NewAppList(apps)
+						if err != nil {
+							errorChan <- err
+						}
+						i := -1
+						for node := list.Head; node != nil; node = node.Next() {
+							i++
+							if statements, err := recon.GetStatements(node, txArray[i]); err != nil {
 								errorChan <- err
 
 							} else if len(statements) > 0 {
