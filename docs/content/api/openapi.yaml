@@ -3302,7 +3302,7 @@ components:
         begBal:
           type: string
           format: int256
-          description: "the beginning balance of the asset prior to the transaction"
+          description: "the on-chain or running beginning balance prior to the transaction (see notes about intra-block reconciliations)"
         amountNet:
           type: string
           format: int256
@@ -3310,7 +3310,7 @@ components:
         endBal:
           type: string
           format: int256
-          description: "the on-chain balance of the asset (see notes about intra-block reconciliations)"
+          description: "the on-chain or running balance after the transaction (see notes about intra-block reconciliations)"
         reconciled:
           type: boolean
           format: boolean
@@ -3347,10 +3347,18 @@ components:
           type: string
           format: int256
           description: "the uncle reward if the miner who won the uncle block is the accountedFor address"
-        correctingIn:
+        correctBegBalIn:
           type: string
           format: int256
-          description: "for unreconciled token transfers only, the incoming amount needed to correct the transfer so it balances"
+          description: "for unreconciled transfers, increase in beginning balance need to match previous balance"
+        correctAmountIn:
+          type: string
+          format: int256
+          description: "for unreconciled transfers, increase in the amount of a transfer"
+        correctEndBalIn:
+          type: string
+          format: int256
+          description: "for unreconciled transfers, increase in ending balance need to match running balance or block balance"
         prefundIn:
           type: string
           format: int256
@@ -3367,10 +3375,18 @@ components:
           type: string
           format: int256
           description: "the value of any internal value transfers out of the accountedFor account"
-        correctingOut:
+        correctBegBalOut:
           type: string
           format: int256
-          description: "for unreconciled token transfers only, the outgoing amount needed to correct the transfer so it balances"
+          description: "for unreconciled transfers, decrease in beginning balance need to match previous balance"
+        correctAmountOut:
+          type: string
+          format: int256
+          description: "for unreconciled transfers, decrease in the amount of a transfer"
+        correctEndBalOut:
+          type: string
+          format: int256
+          description: "for unreconciled transfers, decrease in ending balance need to match running balance or block balance"
         selfDestructOut:
           type: string
           format: int256
@@ -3379,10 +3395,6 @@ components:
           type: string
           format: int256
           description: "if the transaction's original sender is the accountedFor address, the amount of gas expended"
-        totalOutLessGas:
-          type: string
-          format: int256
-          description: "totalOut - gasOut (calculated)"
         prevBal:
           type: string
           format: int256
@@ -3399,10 +3411,10 @@ components:
           type: string
           format: int256
           description: "begBal + amountNet (calculated)"
-        correctingReason:
+        correctingReasons:
           type: string
           format: string
-          description: "the reason for the correcting entries, if any"
+          description: "for unreconciled transfers, the reasons for the correcting entries, if any"
     transfer:
       description: "a movement of an asset from one address to another (derived from a transaction or a log)"
       type: object

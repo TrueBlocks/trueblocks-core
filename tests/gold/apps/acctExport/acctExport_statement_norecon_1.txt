@@ -9,11 +9,13 @@ TEST[DATE|TIME] Caps:  cache,decache,ether
 TEST[DATE|TIME] Format:  json
 TEST[DATE|TIME] ------------------------------------
 TEST[DATE|TIME] # Reason: token
-TEST[DATE|TIME] Trial balance for  0x6b175474e89094c44da98b954eedeac495271d0f 0xf503017d7baf7fbc0fff7492b751025c6a78179b at block 9278039
+TEST[DATE|TIME] Trial balance for  0x6b175474e89094c44da98b954eedeac495271d0f 0xf503017d7baf7fbc0fff7492b751025c6a78179b at stmt 9278039 26 38
 TEST[DATE|TIME] ------------------------------------
+TEST[DATE|TIME] Sender: false Recipient: true 0x9fd0c742d81b6f08817f3ef11d09cb4a9f54ee5f 0xf503017d7baf7fbc0fff7492b751025c6a78179b 0xf503017d7baf7fbc0fff7492b751025c6a78179b
+TEST[DATE|TIME] adjustForIntraTransfer2 isToken: true isPrevSame: false isNextSame: false
 TEST[DATE|TIME] XXXNot found  0x6b175474e89094c44da98b954eedeac495271d0f
 TEST[DATE|TIME] Using block-1 balance for  0x6b175474e89094c44da98b954eedeac495271d0f at block 0 of 0
-TEST[DATE|TIME] pos: 9278038 9278039 9279447 true false
+TEST[DATE|TIME] Statement reconciles? true token
 TEST[DATE|TIME] EndBalCalc: 710402300000000002000 1000000000000000000 711402300000000002000
 TEST[DATE|TIME] Inserting  0x6b175474e89094c44da98b954eedeac495271d0f at block 9278039 of 711402300000000002000
 TEST[DATE|TIME] Found  0x6b175474e89094c44da98b954eedeac495271d0f at block 9278039 of 711402300000000002000
@@ -22,9 +24,10 @@ TEST[DATE|TIME] ===> PRICING FOR 0x6b175474e89094c44da98b954eedeac495271d0f (DAI
 TEST[DATE|TIME] =========================================================
 TEST[DATE|TIME] stable-coin
 TEST[DATE|TIME] ===================================================
-TEST[DATE|TIME] Previous:               9278038
-TEST[DATE|TIME] Current:                9278039
-TEST[DATE|TIME] Next:                   9279447
+TEST[DATE|TIME] Reason:                 token
+TEST[DATE|TIME] Previous:               9278038 25 ( false )
+TEST[DATE|TIME] Current:                9278039 26 ( true )
+TEST[DATE|TIME] Next:                   9279447 73 ( false )
 TEST[DATE|TIME] accountedFor:           0xf503017d7baf7fbc0fff7492b751025c6a78179b
 TEST[DATE|TIME] sender:                 0x9fd0c742d81b6f08817f3ef11d09cb4a9f54ee5f  ==>  0xf503017d7baf7fbc0fff7492b751025c6a78179b
 TEST[DATE|TIME] asset:                  0x6b175474e89094c44da98b954eedeac495271d0f (DAI) decimals: 18
@@ -42,7 +45,6 @@ TEST[DATE|TIME]    amountNet:           1
 TEST[DATE|TIME]                        ======================= 
 TEST[DATE|TIME]    endBal:              711.402300000000002 (0)
 TEST[DATE|TIME]    endBalCalc:          711.402300000000002
-TEST[DATE|TIME]    rollingBalance:      0
 TEST[DATE|TIME] --------------------------------------------------- 
 TEST[DATE|TIME]    amountIn:            1
 TEST[DATE|TIME]    material:            true
@@ -52,13 +54,25 @@ TEST[DATE|TIME] ----------Done  true  --------------------------
 TEST[DATE|TIME] 
 TEST[DATE|TIME] ------------------------------------
 TEST[DATE|TIME] # Reason: token
-TEST[DATE|TIME] Trial balance for  0x6b175474e89094c44da98b954eedeac495271d0f 0xf503017d7baf7fbc0fff7492b751025c6a78179b at block 9279453
+TEST[DATE|TIME] Trial balance for  0x6b175474e89094c44da98b954eedeac495271d0f 0xf503017d7baf7fbc0fff7492b751025c6a78179b at stmt 9279453 208 43
 TEST[DATE|TIME] ------------------------------------
-TEST[DATE|TIME] XXXFound  0x6b175474e89094c44da98b954eedeac495271d0f at block 9278039 of 711402300000000002000
+TEST[DATE|TIME] Sender: true Recipient: false 0xf503017d7baf7fbc0fff7492b751025c6a78179b 0x9fd0c742d81b6f08817f3ef11d09cb4a9f54ee5f 0xf503017d7baf7fbc0fff7492b751025c6a78179b
+TEST[DATE|TIME] adjustForIntraTransfer1 isToken: true isPrevSame: false isNextSame: false
+TEST[DATE|TIME] XXXFound  running blkid: 9278039 txid: 0 logid: 0 amount: 711402300000000002000
 TEST[DATE|TIME] Querying at block 9278039 for 0x6b175474e89094c44da98b954eedeac495271d0f 0xf503017d7baf7fbc0fff7492b751025c6a78179b
 TEST[DATE|TIME] Different block  0x6b175474e89094c44da98b954eedeac495271d0f at block 9278039 and 9279453 of 711402300000000002000
-TEST[DATE|TIME] pos: 9278039 9279453 9279454 false true
-TEST[DATE|TIME] Correcting ending balance
+TEST[DATE|TIME] Correcting ending balance isLess: false isGreater: true diff: 50000000000000000
+TEST[DATE|TIME] correctEndBalIn: 0
+TEST[DATE|TIME] val: 50000000000000000
+TEST[DATE|TIME] correctEndBalIn: 50000000000000000
+TEST[DATE|TIME] 
+before,after3 + 0
+- 50000000000000000
++ 
+
+- endBalIn
+
+TEST[DATE|TIME] Statement reconciles? true token
 TEST[DATE|TIME] EndBalCalc: 711402300000000002000 -950000000000000000 710452300000000002000
 TEST[DATE|TIME] Inserting  0x6b175474e89094c44da98b954eedeac495271d0f at block 9279453 of 710452300000000002000
 TEST[DATE|TIME] Found  0x6b175474e89094c44da98b954eedeac495271d0f at block 9279453 of 710452300000000002000
@@ -67,9 +81,10 @@ TEST[DATE|TIME] ===> PRICING FOR 0x6b175474e89094c44da98b954eedeac495271d0f (DAI
 TEST[DATE|TIME] =========================================================
 TEST[DATE|TIME] stable-coin
 TEST[DATE|TIME] ===================================================
-TEST[DATE|TIME] Previous:               9278039
-TEST[DATE|TIME] Current:                9279453
-TEST[DATE|TIME] Next:                   9279454
+TEST[DATE|TIME] Reason:                 token
+TEST[DATE|TIME] Previous:               9279453 0 ( true )
+TEST[DATE|TIME] Current:                9279453 208 ( true )
+TEST[DATE|TIME] Next:                   9279454 209 ( false )
 TEST[DATE|TIME] accountedFor:           0xf503017d7baf7fbc0fff7492b751025c6a78179b
 TEST[DATE|TIME] sender:                 0xf503017d7baf7fbc0fff7492b751025c6a78179b  ==>  0x9fd0c742d81b6f08817f3ef11d09cb4a9f54ee5f
 TEST[DATE|TIME] asset:                  0x6b175474e89094c44da98b954eedeac495271d0f (DAI) decimals: 18
@@ -83,15 +98,14 @@ TEST[DATE|TIME]    prevBal:             711.402300000000002
 TEST[DATE|TIME]    begBal:              711.402300000000002 (0)
 TEST[DATE|TIME]    totalIn:             0
 TEST[DATE|TIME]    totalOut:            0.95
-TEST[DATE|TIME]    amountNet:           -0.05
+TEST[DATE|TIME]    amountNet:           -0.95
 TEST[DATE|TIME]                        ======================= 
 TEST[DATE|TIME]    endBal:              710.452300000000002 (0)
 TEST[DATE|TIME]    endBalCalc:          710.452300000000002
-TEST[DATE|TIME]    rollingBalance:      0
 TEST[DATE|TIME] --------------------------------------------------- 
+TEST[DATE|TIME]    correctEndBalIn:     0
 TEST[DATE|TIME]    amountOut:           0.95
-TEST[DATE|TIME]    correctingIn:        0.05
-TEST[DATE|TIME]    correctingReason:    endbal-out
+TEST[DATE|TIME]    correctingReasons:   
 TEST[DATE|TIME]    material:            true
 TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
@@ -99,15 +113,28 @@ TEST[DATE|TIME] ----------Done  true  --------------------------
 TEST[DATE|TIME] 
 TEST[DATE|TIME] ------------------------------------
 TEST[DATE|TIME] # Reason: token
-TEST[DATE|TIME] Trial balance for  0x6b175474e89094c44da98b954eedeac495271d0f 0xf503017d7baf7fbc0fff7492b751025c6a78179b at block 9279453
+TEST[DATE|TIME] Trial balance for  0x6b175474e89094c44da98b954eedeac495271d0f 0xf503017d7baf7fbc0fff7492b751025c6a78179b at stmt 9279453 208 44
 TEST[DATE|TIME] ------------------------------------
-TEST[DATE|TIME] XXXFound  0x6b175474e89094c44da98b954eedeac495271d0f at block 9279453 of 710452300000000002000
-TEST[DATE|TIME] Same block  0x6b175474e89094c44da98b954eedeac495271d0f at block 9279453 and 9279453 of 710452300000000002000
-TEST[DATE|TIME] pos: 9279453 9279453 9279454 false true
-TEST[DATE|TIME] Correcting ending balance
-TEST[DATE|TIME] EndBalCalc: 710402300000000002000 -5000000000000000 710402300000000002000
-TEST[DATE|TIME] Inserting  0x6b175474e89094c44da98b954eedeac495271d0f at block 9279453 of 710402300000000002000
-TEST[DATE|TIME] Found  0x6b175474e89094c44da98b954eedeac495271d0f at block 9279453 of 710402300000000002000
+TEST[DATE|TIME] Sender: true Recipient: false 0xf503017d7baf7fbc0fff7492b751025c6a78179b 0x00de4b13153673bcae2616b67bf822500d325fc3 0xf503017d7baf7fbc0fff7492b751025c6a78179b
+TEST[DATE|TIME] adjustForIntraTransfer1 isToken: true isPrevSame: false isNextSame: false
+TEST[DATE|TIME] XXXFound  running blkid: 9279453 txid: 0 logid: 0 amount: 710502300000000002000
+TEST[DATE|TIME] Same block  0x6b175474e89094c44da98b954eedeac495271d0f at block 9279453 and 9279453 of 710502300000000002000
+TEST[DATE|TIME] Correcting ending balance isLess: false isGreater: true diff: 50000000000000000
+TEST[DATE|TIME] correctEndBalIn: 0
+TEST[DATE|TIME] val: 50000000000000000
+TEST[DATE|TIME] correctEndBalIn: 50000000000000000
+TEST[DATE|TIME] 
+before,after3 + 0
+- 50000000000000000
++ 
+
+- endBalIn
+
+
+TEST[DATE|TIME] Statement reconciles? false token
+TEST[DATE|TIME] EndBalCalc: 710502300000000002000 0 710502300000000002000
+TEST[DATE|TIME] Inserting  0x6b175474e89094c44da98b954eedeac495271d0f at block 9279453 of 710502300000000002000
+TEST[DATE|TIME] Found  0x6b175474e89094c44da98b954eedeac495271d0f at block 9279453 of 710502300000000002000
 TEST[DATE|TIME] =========================================================
 TEST[DATE|TIME] ===> PRICING FOR 0x6b175474e89094c44da98b954eedeac495271d0f (DAI) 
 TEST[DATE|TIME] =========================================================
@@ -133,11 +160,10 @@ TEST[DATE|TIME]    amountNet:           0
 TEST[DATE|TIME]                        ======================= 
 TEST[DATE|TIME]    endBal:              710.402300000000002 (0)
 TEST[DATE|TIME]    endBalCalc:          710.402300000000002
-TEST[DATE|TIME]    rollingBalance:      0
 TEST[DATE|TIME] --------------------------------------------------- 
-TEST[DATE|TIME]    correctingout:       0.05
+TEST[DATE|TIME]    correctEndBalIn:     0
 TEST[DATE|TIME]    amountOut:           0.05
-TEST[DATE|TIME]    correctingReason:    endbal-in
+TEST[DATE|TIME]    correctingReasons:   endBalIn
 TEST[DATE|TIME]    material:            true
 TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
@@ -156,9 +182,13 @@ WARN[DATE|TIME] Token statement at   9279453.208.44 0x6b175474e89094c44da98b954e
       "begBal": "710402300000000002000",
       "begBalDiff": "0",
       "blockNumber": 9278039,
-      "correctingIn": "0",
-      "correctingOut": "0",
-      "correctingReason": "",
+      "correctAmountIn": "0",
+      "correctAmountOut": "0",
+      "correctBegBalIn": "0",
+      "correctBegBalOut": "0",
+      "correctEndBalIn": "0",
+      "correctEndBalOut": "0",
+      "correctingReasons": "",
       "date": "2020-01-14 08:20:24 UTC",
       "decimals": 18,
       "endBal": "711402300000000002000",
@@ -185,7 +215,6 @@ WARN[DATE|TIME] Token statement at   9279453.208.44 0x6b175474e89094c44da98b954e
       "timestamp": 1578990024,
       "totalIn": "1000000000000000000",
       "totalOut": "0",
-      "totalOutLessGas": "0",
       "transactionHash": "0xb84e8076d288138fea71b58c0bbb54385d6091efbd04da55b1f4ccb9547b4cae",
       "transactionIndex": 26
     },
@@ -199,9 +228,13 @@ WARN[DATE|TIME] Token statement at   9279453.208.44 0x6b175474e89094c44da98b954e
       "begBal": "711402300000000002000",
       "begBalDiff": "0",
       "blockNumber": 9279453,
-      "correctingIn": "0",
-      "correctingOut": "0",
-      "correctingReason": "",
+      "correctAmountIn": "0",
+      "correctAmountOut": "0",
+      "correctBegBalIn": "0",
+      "correctBegBalOut": "0",
+      "correctEndBalIn": "0",
+      "correctEndBalOut": "0",
+      "correctingReasons": "",
       "date": "2020-01-14 13:27:54 UTC",
       "decimals": 18,
       "endBal": "710452300000000002000",
@@ -228,7 +261,6 @@ WARN[DATE|TIME] Token statement at   9279453.208.44 0x6b175474e89094c44da98b954e
       "timestamp": 1579008474,
       "totalIn": "0",
       "totalOut": "950000000000000000",
-      "totalOutLessGas": "950000000000000000",
       "transactionHash": "0x552336e351a18ac319b5f63489abec2c41fb0a41003fd3c6e1e476eb122f279f",
       "transactionIndex": 208
     },
@@ -242,14 +274,18 @@ WARN[DATE|TIME] Token statement at   9279453.208.44 0x6b175474e89094c44da98b954e
       "begBal": "710452300000000002000",
       "begBalDiff": "0",
       "blockNumber": 9279453,
-      "correctingIn": "",
-      "correctingOut": "0",
-      "correctingReason": "endbal-in",
+      "correctAmountIn": "0",
+      "correctAmountOut": "0",
+      "correctBegBalIn": "0",
+      "correctBegBalOut": "0",
+      "correctEndBalIn": "",
+      "correctEndBalOut": "0",
+      "correctingReasons": "",
       "date": "2020-01-14 13:27:54 UTC",
       "decimals": 18,
       "endBal": "710402300000000002000",
       "endBalCalc": "710402300000000002000",
-      "endBalDiff": "",
+      "endBalDiff": "0",
       "gasOut": "0",
       "internalIn": "0",
       "internalOut": "0",
@@ -271,7 +307,6 @@ WARN[DATE|TIME] Token statement at   9279453.208.44 0x6b175474e89094c44da98b954e
       "timestamp": 1579008474,
       "totalIn": "",
       "totalOut": "50000000000000000",
-      "totalOutLessGas": "50000000000000000",
       "transactionHash": "0x552336e351a18ac319b5f63489abec2c41fb0a41003fd3c6e1e476eb122f279f",
       "transactionIndex": 208
     }

@@ -11,19 +11,22 @@ Caps:  cache,decache,ether
 Format:  json
 ------------------------------------
 # Reason: token
-Trial balance for  0x0ba45a8b5d5575935b8158a88c631e9f9c95a2e5 0x868b8fd259abfcfdf9634c343593b34ef359641d at block 8769029
+Trial balance for  0x0ba45a8b5d5575935b8158a88c631e9f9c95a2e5 0x868b8fd259abfcfdf9634c343593b34ef359641d at stmt 8769029 80 61
 ------------------------------------
+Sender: false Recipient: true 0x103348c47ffc3254aff761894e7c13ca0c680465 0x868b8fd259abfcfdf9634c343593b34ef359641d 0x868b8fd259abfcfdf9634c343593b34ef359641d
+adjustForIntraTransfer2 isToken: true isPrevSame: false isNextSame: false
 XXXNot found  0x0ba45a8b5d5575935b8158a88c631e9f9c95a2e5
 Using block-1 balance for  0x0ba45a8b5d5575935b8158a88c631e9f9c95a2e5 at block 0 of 0
-pos: 8769028 8769029 8769052 false false
+Statement reconciles? true token
 EndBalCalc: 0 85000000000000000000 85000000000000000000
 Inserting  0x0ba45a8b5d5575935b8158a88c631e9f9c95a2e5 at block 8769029 of 85000000000000000000
 Found  0x0ba45a8b5d5575935b8158a88c631e9f9c95a2e5 at block 8769029 of 85000000000000000000
 Block 8769029 is prior to deployment (10000835) of Uniswap V2. No other source for tokens prior to UniSwap
 ===================================================
-Previous:               8769028
-Current:                8769029
-Next:                   8769052
+Reason:                 token
+Previous:               8769028 79 ( false )
+Current:                8769029 80 ( true )
+Next:                   8769052 73 ( false )
 accountedFor:           0x868b8fd259abfcfdf9634c343593b34ef359641d
 sender:                 0x103348c47ffc3254aff761894e7c13ca0c680465  ==>  0x868b8fd259abfcfdf9634c343593b34ef359641d
 asset:                  0x0ba45a8b5d5575935b8158a88c631e9f9c95a2e5 (TRB) decimals: 18
@@ -50,20 +53,23 @@ Trial balance:
 
 ------------------------------------
 # Reason: token
-Trial balance for  0x0ba45a8b5d5575935b8158a88c631e9f9c95a2e5 0x868b8fd259abfcfdf9634c343593b34ef359641d at block 8769052
+Trial balance for  0x0ba45a8b5d5575935b8158a88c631e9f9c95a2e5 0x868b8fd259abfcfdf9634c343593b34ef359641d at stmt 8769052 74 73
 ------------------------------------
-XXXFound  0x0ba45a8b5d5575935b8158a88c631e9f9c95a2e5 at block 8769029 of 85000000000000000000
+Sender: true Recipient: false 0x868b8fd259abfcfdf9634c343593b34ef359641d 0x2a0c0dbecc7e4d658f48e01e3fa353f44050c208 0x868b8fd259abfcfdf9634c343593b34ef359641d
+adjustForIntraTransfer1 isToken: true isPrevSame: false isNextSame: false
+XXXFound  running blkid: 8769029 txid: 0 logid: 0 amount: 85000000000000000000
 Querying at block 8769029 for 0x0ba45a8b5d5575935b8158a88c631e9f9c95a2e5 0x868b8fd259abfcfdf9634c343593b34ef359641d
 Different block  0x0ba45a8b5d5575935b8158a88c631e9f9c95a2e5 at block 8769029 and 8769052 of 85000000000000000000
-pos: 8769029 8769052 8769053 false true
+Statement reconciles? true token
 EndBalCalc: 85000000000000000000 -85000000000000000000 0
 Inserting  0x0ba45a8b5d5575935b8158a88c631e9f9c95a2e5 at block 8769052 of 0
 Found  0x0ba45a8b5d5575935b8158a88c631e9f9c95a2e5 at block 8769052 of 0
 Block 8769052 is prior to deployment (10000835) of Uniswap V2. No other source for tokens prior to UniSwap
 ===================================================
-Previous:               8769029
-Current:                8769052
-Next:                   8769053
+Reason:                 token
+Previous:               8769029 0 ( false )
+Current:                8769052 74 ( true )
+Next:                   8769053 0 ( false )
 accountedFor:           0x868b8fd259abfcfdf9634c343593b34ef359641d
 sender:                 0x868b8fd259abfcfdf9634c343593b34ef359641d  ==>  0x2a0c0dbecc7e4d658f48e01e3fa353f44050c208
 asset:                  0x0ba45a8b5d5575935b8158a88c631e9f9c95a2e5 (TRB) decimals: 18
@@ -100,9 +106,13 @@ Trial balance:
       "begBal": "0",
       "begBalDiff": "0",
       "blockNumber": 8769029,
-      "correctingIn": "0",
-      "correctingOut": "0",
-      "correctingReason": "",
+      "correctAmountIn": "0",
+      "correctAmountOut": "0",
+      "correctBegBalIn": "0",
+      "correctBegBalOut": "0",
+      "correctEndBalIn": "0",
+      "correctEndBalOut": "0",
+      "correctingReasons": "",
       "date": "2019-10-19 04:00:49 UTC",
       "decimals": 18,
       "endBal": "85000000000000000000",
@@ -129,7 +139,6 @@ Trial balance:
       "timestamp": 1571457649,
       "totalIn": "85000000000000000000",
       "totalOut": "0",
-      "totalOutLessGas": "0",
       "transactionHash": "0x22f3135a1c2b201456a4770ef9c1ac65a759db3aebe5cb8ad36ad7373f48532f",
       "transactionIndex": 80
     },
@@ -143,9 +152,13 @@ Trial balance:
       "begBal": "85000000000000000000",
       "begBalDiff": "0",
       "blockNumber": 8769052,
-      "correctingIn": "0",
-      "correctingOut": "0",
-      "correctingReason": "",
+      "correctAmountIn": "0",
+      "correctAmountOut": "0",
+      "correctBegBalIn": "0",
+      "correctBegBalOut": "0",
+      "correctEndBalIn": "0",
+      "correctEndBalOut": "0",
+      "correctingReasons": "",
       "date": "2019-10-19 04:06:45 UTC",
       "decimals": 18,
       "endBal": "0",
@@ -172,7 +185,6 @@ Trial balance:
       "timestamp": 1571458005,
       "totalIn": "0",
       "totalOut": "85000000000000000000",
-      "totalOutLessGas": "85000000000000000000",
       "transactionHash": "0x90feb158340931c051ccb4def6112b6d46794f739499d7255b5109481b991265",
       "transactionIndex": 74
     }

@@ -9,20 +9,23 @@ TEST[DATE|TIME] Caps:  cache,decache,ether
 TEST[DATE|TIME] Format:  json
 INFO[DATE|TIME] { "outputFilename": "--output_filename--" }
 TEST[DATE|TIME] ------------------------------------
-TEST[DATE|TIME] # Reason: first-tx
-TEST[DATE|TIME] Trial balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0x08166f02313feae18bb044e7877c808b55b5bf58 at block 0
+TEST[DATE|TIME] # Reason: top-level
+TEST[DATE|TIME] Trial balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0x08166f02313feae18bb044e7877c808b55b5bf58 at stmt 0 270 0
 TEST[DATE|TIME] ------------------------------------
+TEST[DATE|TIME] Sender: false Recipient: true 0x0000000000000000000000000050726566756e64 0x08166f02313feae18bb044e7877c808b55b5bf58 0x08166f02313feae18bb044e7877c808b55b5bf58
+TEST[DATE|TIME] adjustForIntraTransfer2 isToken: false isPrevSame: true isNextSame: false
 TEST[DATE|TIME] XXXNot found  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
 TEST[DATE|TIME] Using block-1 balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 0 of 0
-TEST[DATE|TIME] pos: 0 0 46685 true false
+TEST[DATE|TIME] Statement reconciles? true top-level
 TEST[DATE|TIME] EndBalCalc: 0 1970000000000000000000 1970000000000000000000
 TEST[DATE|TIME] Inserting  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 0 of 1970000000000000000000
 TEST[DATE|TIME] Found  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 0 of 1970000000000000000000
 TEST[DATE|TIME] Block 0 is prior to deployment (3684349) of Maker. No fallback pricing method
 TEST[DATE|TIME] ===================================================
-TEST[DATE|TIME] Previous:               0
-TEST[DATE|TIME] Current:                0
-TEST[DATE|TIME] Next:                   46685
+TEST[DATE|TIME] Reason:                 top-level
+TEST[DATE|TIME] Previous:               0 269 ( true )
+TEST[DATE|TIME] Current:                0 270 ( true )
+TEST[DATE|TIME] Next:                   46685 0 ( false )
 TEST[DATE|TIME] accountedFor:           0x08166f02313feae18bb044e7877c808b55b5bf58
 TEST[DATE|TIME] sender:                 0x0000000000000000000000000050726566756e64  ==>  0x08166f02313feae18bb044e7877c808b55b5bf58
 TEST[DATE|TIME] asset:                  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (ETH) decimals: 18
@@ -48,21 +51,24 @@ TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] ----------Done  true  --------------------------
 TEST[DATE|TIME] 
 TEST[DATE|TIME] ------------------------------------
-TEST[DATE|TIME] # Reason: first-tx
-TEST[DATE|TIME] Trial balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0x08166f02313feae18bb044e7877c808b55b5bf58 at block 46685
+TEST[DATE|TIME] # Reason: top-level
+TEST[DATE|TIME] Trial balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0x08166f02313feae18bb044e7877c808b55b5bf58 at stmt 46685 0 0
 TEST[DATE|TIME] ------------------------------------
-TEST[DATE|TIME] XXXFound  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 0 of 1970000000000000000000
+TEST[DATE|TIME] Sender: true Recipient: false 0x08166f02313feae18bb044e7877c808b55b5bf58 0xad00b7a324f31351d397408c8c3952ea198317eb 0x08166f02313feae18bb044e7877c808b55b5bf58
+TEST[DATE|TIME] adjustForIntraTransfer1 isToken: false isPrevSame: false isNextSame: false
+TEST[DATE|TIME] XXXFound  running blkid: 0 txid: 0 logid: 0 amount: 1970000000000000000000
 TEST[DATE|TIME] Querying at block 0 for 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0x08166f02313feae18bb044e7877c808b55b5bf58
 TEST[DATE|TIME] Different block  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 0 and 46685 of 1970000000000000000000
-TEST[DATE|TIME] pos: 0 46685 46709 false false
+TEST[DATE|TIME] Statement reconciles? true top-level
 TEST[DATE|TIME] EndBalCalc: 1970000000000000000000 -5010500000000000000 1964989500000000000000
 TEST[DATE|TIME] Inserting  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 46685 of 1964989500000000000000
 TEST[DATE|TIME] Found  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 46685 of 1964989500000000000000
 TEST[DATE|TIME] Block 46685 is prior to deployment (3684349) of Maker. No fallback pricing method
 TEST[DATE|TIME] ===================================================
-TEST[DATE|TIME] Previous:               0
-TEST[DATE|TIME] Current:                46685
-TEST[DATE|TIME] Next:                   46709
+TEST[DATE|TIME] Reason:                 top-level
+TEST[DATE|TIME] Previous:               0 0 ( false )
+TEST[DATE|TIME] Current:                46685 0 ( true )
+TEST[DATE|TIME] Next:                   46709 0 ( false )
 TEST[DATE|TIME] accountedFor:           0x08166f02313feae18bb044e7877c808b55b5bf58
 TEST[DATE|TIME] sender:                 0x08166f02313feae18bb044e7877c808b55b5bf58  ==>  0xad00b7a324f31351d397408c8c3952ea198317eb
 TEST[DATE|TIME] asset:                  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (ETH) decimals: 18
@@ -89,21 +95,24 @@ TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] ----------Done  true  --------------------------
 TEST[DATE|TIME] 
 TEST[DATE|TIME] ------------------------------------
-TEST[DATE|TIME] # Reason: first-tx
-TEST[DATE|TIME] Trial balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0x08166f02313feae18bb044e7877c808b55b5bf58 at block 46709
+TEST[DATE|TIME] # Reason: top-level
+TEST[DATE|TIME] Trial balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0x08166f02313feae18bb044e7877c808b55b5bf58 at stmt 46709 0 0
 TEST[DATE|TIME] ------------------------------------
-TEST[DATE|TIME] XXXFound  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 46685 of 1964989500000000000000
+TEST[DATE|TIME] Sender: true Recipient: false 0x08166f02313feae18bb044e7877c808b55b5bf58 0xad00b7a324f31351d397408c8c3952ea198317eb 0x08166f02313feae18bb044e7877c808b55b5bf58
+TEST[DATE|TIME] adjustForIntraTransfer1 isToken: false isPrevSame: false isNextSame: false
+TEST[DATE|TIME] XXXFound  running blkid: 46685 txid: 0 logid: 0 amount: 1964989500000000000000
 TEST[DATE|TIME] Querying at block 46685 for 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0x08166f02313feae18bb044e7877c808b55b5bf58
 TEST[DATE|TIME] Different block  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 46685 and 46709 of 1964989500000000000000
-TEST[DATE|TIME] pos: 46685 46709 46710 false true
+TEST[DATE|TIME] Statement reconciles? true top-level
 TEST[DATE|TIME] EndBalCalc: 1964989500000000000000 -1964900000000000000000 89500000000000000
 TEST[DATE|TIME] Inserting  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 46709 of 89500000000000000
 TEST[DATE|TIME] Found  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 46709 of 89500000000000000
 TEST[DATE|TIME] Block 46709 is prior to deployment (3684349) of Maker. No fallback pricing method
 TEST[DATE|TIME] ===================================================
-TEST[DATE|TIME] Previous:               46685
-TEST[DATE|TIME] Current:                46709
-TEST[DATE|TIME] Next:                   46710
+TEST[DATE|TIME] Reason:                 top-level
+TEST[DATE|TIME] Previous:               46685 0 ( false )
+TEST[DATE|TIME] Current:                46709 0 ( true )
+TEST[DATE|TIME] Next:                   46710 0 ( false )
 TEST[DATE|TIME] accountedFor:           0x08166f02313feae18bb044e7877c808b55b5bf58
 TEST[DATE|TIME] sender:                 0x08166f02313feae18bb044e7877c808b55b5bf58  ==>  0xad00b7a324f31351d397408c8c3952ea198317eb
 TEST[DATE|TIME] asset:                  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (ETH) decimals: 18
@@ -149,11 +158,19 @@ Results in ./statement_2_ether_out.file
       "begBalDiffEth": "0",
       "begBalEth": "0",
       "blockNumber": 0,
-      "correctingIn": "0",
-      "correctingInEth": "0",
-      "correctingOut": "0",
-      "correctingOutEth": "0",
-      "correctingReason": "",
+      "correctAmountIn": "0",
+      "correctAmountInEth": "0",
+      "correctAmountOut": "0",
+      "correctAmountOutEth": "0",
+      "correctBegBalIn": "0",
+      "correctBegBalInEth": "0",
+      "correctBegBalOut": "0",
+      "correctBegBalOutEth": "0",
+      "correctEndBalIn": "0",
+      "correctEndBalInEth": "0",
+      "correctEndBalOut": "0",
+      "correctEndBalOutEth": "0",
+      "correctingReasons": "",
       "date": "2015-07-30 15:26:15 UTC",
       "decimals": 18,
       "endBal": "1970000000000000000000",
@@ -196,8 +213,6 @@ Results in ./statement_2_ether_out.file
       "totalInEth": "1970",
       "totalOut": "0",
       "totalOutEth": "0",
-      "totalOutLessGas": "0",
-      "totalOutLessGasEth": "0",
       "transactionHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
       "transactionIndex": 270
     },
@@ -217,11 +232,19 @@ Results in ./statement_2_ether_out.file
       "begBalDiffEth": "0",
       "begBalEth": "1970",
       "blockNumber": 46685,
-      "correctingIn": "0",
-      "correctingInEth": "0",
-      "correctingOut": "0",
-      "correctingOutEth": "0",
-      "correctingReason": "",
+      "correctAmountIn": "0",
+      "correctAmountInEth": "0",
+      "correctAmountOut": "0",
+      "correctAmountOutEth": "0",
+      "correctBegBalIn": "0",
+      "correctBegBalInEth": "0",
+      "correctBegBalOut": "0",
+      "correctBegBalOutEth": "0",
+      "correctEndBalIn": "0",
+      "correctEndBalInEth": "0",
+      "correctEndBalOut": "0",
+      "correctEndBalOutEth": "0",
+      "correctingReasons": "",
       "date": "2015-08-07 06:03:28 UTC",
       "decimals": 18,
       "endBal": "1964989500000000000000",
@@ -264,8 +287,6 @@ Results in ./statement_2_ether_out.file
       "totalInEth": "0",
       "totalOut": "5010500000000000000",
       "totalOutEth": "5.0105",
-      "totalOutLessGas": "5000000000000000000",
-      "totalOutLessGasEth": "5",
       "transactionHash": "0x10893338fa5633ab747450b8698457fb047098f87f78e98b3dbee3134067b6b8",
       "transactionIndex": 0
     },
@@ -285,11 +306,19 @@ Results in ./statement_2_ether_out.file
       "begBalDiffEth": "0",
       "begBalEth": "1964.9895",
       "blockNumber": 46709,
-      "correctingIn": "0",
-      "correctingInEth": "0",
-      "correctingOut": "0",
-      "correctingOutEth": "0",
-      "correctingReason": "",
+      "correctAmountIn": "0",
+      "correctAmountInEth": "0",
+      "correctAmountOut": "0",
+      "correctAmountOutEth": "0",
+      "correctBegBalIn": "0",
+      "correctBegBalInEth": "0",
+      "correctBegBalOut": "0",
+      "correctBegBalOutEth": "0",
+      "correctEndBalIn": "0",
+      "correctEndBalInEth": "0",
+      "correctEndBalOut": "0",
+      "correctEndBalOutEth": "0",
+      "correctingReasons": "",
       "date": "2015-08-07 06:10:54 UTC",
       "decimals": 18,
       "endBal": "89500000000000000",
@@ -332,8 +361,6 @@ Results in ./statement_2_ether_out.file
       "totalInEth": "0",
       "totalOut": "1964900000000000000000",
       "totalOutEth": "1964.9",
-      "totalOutLessGas": "1964889500000000000000",
-      "totalOutLessGasEth": "1964.8895",
       "transactionHash": "0x10d5c5f2386c6d6d93ca6b43fa25e8679971d07448db8d6c81d856ff3c3c001a",
       "transactionIndex": 0
     }

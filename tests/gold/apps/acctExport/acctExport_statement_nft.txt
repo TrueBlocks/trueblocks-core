@@ -7,30 +7,36 @@ TEST[DATE|TIME] LastBlock:  9024186
 TEST[DATE|TIME] Caps:  cache,decache,ether
 TEST[DATE|TIME] Format:  json
 TEST[DATE|TIME] ------------------------------------
-TEST[DATE|TIME] # Reason: first-tx
-TEST[DATE|TIME] Trial balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0xf503017d7baf7fbc0fff7492b751025c6a78179b at block 8876232
+TEST[DATE|TIME] # Reason: top-level
+TEST[DATE|TIME] Trial balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0xf503017d7baf7fbc0fff7492b751025c6a78179b at stmt 8876232 84 0
 TEST[DATE|TIME] ------------------------------------
+TEST[DATE|TIME] Not sender or recipient 0xf503017d7baf7fbc0fff7492b751025c6a78179b 0xb3e43abf014cb2d8cf8dc3d8c2e62157e6093343 0xac104c988ff9c90dafc7754b2fb9072e25f93507 top-level
+TEST[DATE|TIME] Sender: false Recipient: false 0xb3e43abf014cb2d8cf8dc3d8c2e62157e6093343 0xac104c988ff9c90dafc7754b2fb9072e25f93507 0xf503017d7baf7fbc0fff7492b751025c6a78179b
+TEST[DATE|TIME] adjustForIntraTransfer2 isToken: false isPrevSame: true isNextSame: false
 TEST[DATE|TIME] XXXNot found  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
 TEST[DATE|TIME] Using block-1 balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 0 of 0
-TEST[DATE|TIME] pos: 8876231 8876232 9000998 true false
+TEST[DATE|TIME] Statement reconciles? true top-level
 TEST[DATE|TIME] EndBalCalc: 4999534200000000000 0 4999534200000000000
 TEST[DATE|TIME] Inserting  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 8876232 of 4999534200000000000
 TEST[DATE|TIME] Found  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 8876232 of 4999534200000000000
 TEST[DATE|TIME] ------------------------------------
 TEST[DATE|TIME] # Reason: token
-TEST[DATE|TIME] Trial balance for  0xd53b50a6213ee7ff2fcc41a7cf69d22ded0a43b3 0xf503017d7baf7fbc0fff7492b751025c6a78179b at block 8876232
+TEST[DATE|TIME] Trial balance for  0xd53b50a6213ee7ff2fcc41a7cf69d22ded0a43b3 0xf503017d7baf7fbc0fff7492b751025c6a78179b at stmt 8876232 84 169
 TEST[DATE|TIME] ------------------------------------
+TEST[DATE|TIME] Sender: false Recipient: true 0x0 0xf503017d7baf7fbc0fff7492b751025c6a78179b 0xf503017d7baf7fbc0fff7492b751025c6a78179b
+TEST[DATE|TIME] adjustForIntraTransfer2 isToken: true isPrevSame: false isNextSame: false
 TEST[DATE|TIME] XXXNot found  0xd53b50a6213ee7ff2fcc41a7cf69d22ded0a43b3
 TEST[DATE|TIME] Using block-1 balance for  0xd53b50a6213ee7ff2fcc41a7cf69d22ded0a43b3 at block 0 of 0
-TEST[DATE|TIME] pos: 8876231 8876232 9000998 true false
+TEST[DATE|TIME] Statement reconciles? true token
 TEST[DATE|TIME] EndBalCalc: 0 22500000000000000000000 22500000000000000000000
 TEST[DATE|TIME] Inserting  0xd53b50a6213ee7ff2fcc41a7cf69d22ded0a43b3 at block 8876232 of 22500000000000000000000
 TEST[DATE|TIME] Found  0xd53b50a6213ee7ff2fcc41a7cf69d22ded0a43b3 at block 8876232 of 22500000000000000000000
 TEST[DATE|TIME] Block 8876232 is prior to deployment (10000835) of Uniswap V2. No other source for tokens prior to UniSwap
 TEST[DATE|TIME] ===================================================
-TEST[DATE|TIME] Previous:               8876231
-TEST[DATE|TIME] Current:                8876232
-TEST[DATE|TIME] Next:                   9000998
+TEST[DATE|TIME] Reason:                 token
+TEST[DATE|TIME] Previous:               8876231 83 ( false )
+TEST[DATE|TIME] Current:                8876232 84 ( true )
+TEST[DATE|TIME] Next:                   9000998 70 ( false )
 TEST[DATE|TIME] accountedFor:           0xf503017d7baf7fbc0fff7492b751025c6a78179b
 TEST[DATE|TIME] sender:                 0x0  ==>  0xf503017d7baf7fbc0fff7492b751025c6a78179b
 TEST[DATE|TIME] asset:                  0xd53b50a6213ee7ff2fcc41a7cf69d22ded0a43b3 (CSTK) decimals: 18
@@ -56,24 +62,30 @@ TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] ----------Done  true  --------------------------
 TEST[DATE|TIME] 
 TEST[DATE|TIME] ------------------------------------
-TEST[DATE|TIME] # Reason: first-tx
-TEST[DATE|TIME] Trial balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0xf503017d7baf7fbc0fff7492b751025c6a78179b at block 9000998
+TEST[DATE|TIME] # Reason: top-level
+TEST[DATE|TIME] Trial balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0xf503017d7baf7fbc0fff7492b751025c6a78179b at stmt 9000998 70 0
 TEST[DATE|TIME] ------------------------------------
-TEST[DATE|TIME] XXXFound  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 8876232 of 4999534200000000000
+TEST[DATE|TIME] Not sender or recipient 0xf503017d7baf7fbc0fff7492b751025c6a78179b 0x191167380d430036ca2cb067ab86b527e3d584ee 0x22c1f6050e56d2876009903609a2cc3fef83b415 top-level
+TEST[DATE|TIME] Sender: false Recipient: false 0x191167380d430036ca2cb067ab86b527e3d584ee 0x22c1f6050e56d2876009903609a2cc3fef83b415 0xf503017d7baf7fbc0fff7492b751025c6a78179b
+TEST[DATE|TIME] adjustForIntraTransfer1 isToken: false isPrevSame: false isNextSame: false
+TEST[DATE|TIME] XXXFound  running blkid: 8876232 txid: 0 logid: 0 amount: 4999534200000000000
 TEST[DATE|TIME] Querying at block 8876232 for 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0xf503017d7baf7fbc0fff7492b751025c6a78179b
 TEST[DATE|TIME] Different block  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 8876232 and 9000998 of 4999534200000000000
-TEST[DATE|TIME] pos: 8876232 9000998 9024185 false false
+TEST[DATE|TIME] Statement reconciles? true top-level
 TEST[DATE|TIME] EndBalCalc: 4999534200000000000 0 4999534200000000000
 TEST[DATE|TIME] Inserting  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 9000998 of 4999534200000000000
 TEST[DATE|TIME] Found  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 9000998 of 4999534200000000000
 TEST[DATE|TIME] ------------------------------------
-TEST[DATE|TIME] # Reason: first-tx
-TEST[DATE|TIME] Trial balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0xf503017d7baf7fbc0fff7492b751025c6a78179b at block 9024185
+TEST[DATE|TIME] # Reason: top-level
+TEST[DATE|TIME] Trial balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0xf503017d7baf7fbc0fff7492b751025c6a78179b at stmt 9024185 29 0
 TEST[DATE|TIME] ------------------------------------
-TEST[DATE|TIME] XXXFound  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 9000998 of 4999534200000000000
+TEST[DATE|TIME] Not sender or recipient 0xf503017d7baf7fbc0fff7492b751025c6a78179b 0x86672b33ca6723d6da4a5cb69901f909824bdcfa 0x7c43c2fc7738ad078931dbcd787c2577d2c0332f top-level
+TEST[DATE|TIME] Sender: false Recipient: false 0x86672b33ca6723d6da4a5cb69901f909824bdcfa 0x7c43c2fc7738ad078931dbcd787c2577d2c0332f 0xf503017d7baf7fbc0fff7492b751025c6a78179b
+TEST[DATE|TIME] adjustForIntraTransfer1 isToken: false isPrevSame: false isNextSame: false
+TEST[DATE|TIME] XXXFound  running blkid: 9000998 txid: 0 logid: 0 amount: 4999534200000000000
 TEST[DATE|TIME] Querying at block 9000998 for 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0xf503017d7baf7fbc0fff7492b751025c6a78179b
 TEST[DATE|TIME] Different block  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 9000998 and 9024185 of 4999534200000000000
-TEST[DATE|TIME] pos: 9000998 9024185 9024186 false true
+TEST[DATE|TIME] Statement reconciles? true top-level
 TEST[DATE|TIME] EndBalCalc: 4999534200000000000 0 4999534200000000000
 TEST[DATE|TIME] Inserting  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 9024185 of 4999534200000000000
 TEST[DATE|TIME] Found  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 9024185 of 4999534200000000000
@@ -89,9 +101,13 @@ TEST[DATE|TIME] Found  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 90241
       "begBal": "0",
       "begBalDiff": "0",
       "blockNumber": 8876232,
-      "correctingIn": "0",
-      "correctingOut": "0",
-      "correctingReason": "",
+      "correctAmountIn": "0",
+      "correctAmountOut": "0",
+      "correctBegBalIn": "0",
+      "correctBegBalOut": "0",
+      "correctEndBalIn": "0",
+      "correctEndBalOut": "0",
+      "correctingReasons": "",
       "date": "2019-11-05 07:18:48 UTC",
       "decimals": 18,
       "endBal": "22500000000000000000000",
@@ -118,7 +134,6 @@ TEST[DATE|TIME] Found  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 90241
       "timestamp": 1572938328,
       "totalIn": "22500000000000000000000",
       "totalOut": "0",
-      "totalOutLessGas": "0",
       "transactionHash": "0x389e24356a19c24cac14e99574553a33662099559921691fb592fba3232748fa",
       "transactionIndex": 84
     }

@@ -93,7 +93,7 @@ Trial balance:
 --------------------------------------------------- 
    amountOut:           0.95
    correctingOut:       0.05
-   correctingReason:    endbal-out
+   correctingReasons:   endbal-out
    material:            true
    reconciled:          true
 ---------------------------------------------------
@@ -139,7 +139,7 @@ Trial balance:
 --------------------------------------------------- 
    correctingIn:        -0.05
    amountOut:           0.05
-   correctingReason:    endbal-in
+   correctingReasons:   endbal-in
    material:            true
    reconciled:          false
  ^^ we need to fix this ^^
@@ -161,7 +161,7 @@ Trial balance:
       "blockNumber": 9278039,
       "correctingIn": "0",
       "correctingOut": "0",
-      "correctingReason": "",
+      "correctingReasons": "",
       "date": "2020-01-14 08:20:24 UTC",
       "decimals": 18,
       "endBal": "711402300000000002000",
@@ -204,7 +204,7 @@ Trial balance:
       "blockNumber": 9279453,
       "correctingIn": "0",
       "correctingOut": "0",
-      "correctingReason": "endbal-out",
+      "correctingReasons": "endbal-out",
       "date": "2020-01-14 13:27:54 UTC",
       "decimals": 18,
       "endBal": "710452300000000002000",
@@ -247,7 +247,7 @@ Trial balance:
       "blockNumber": 9279453,
       "correctingIn": "",
       "correctingOut": "0",
-      "correctingReason": "endbal-in",
+      "correctingReasons": "endbal-in",
       "date": "2020-01-14 13:27:54 UTC",
       "decimals": 18,
       "endBal": "710402300000000002000",

@@ -96,7 +96,7 @@ Trial balance:
 --------------------------------------------------- 
    correctingIn:        0.040597292342772669
    gasOut:              0.009143915636239443
-   correctingReason:    begbal-in-endbal-in
+   correctingReasons:   begBalIn-endBalIn
    material:            true
    reconciled:          false
  ^^ we need to fix this ^^

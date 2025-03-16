@@ -2,12 +2,13 @@ package types
 
 import (
 	"fmt"
+	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 )
 
-func (s *Statement) DebugStatement(pos *AppPosition) {
+func (s *Statement) DebugStatement(reason string, pos *AppPosition) {
 	reportE := func(msg string, val *base.Wei) {
 		isZero := func(val *base.Wei) bool {
 			return val.Cmp(base.NewWei(0)) == 0
@@ -35,9 +36,10 @@ func (s *Statement) DebugStatement(pos *AppPosition) {
 	}
 
 	logger.TestLog(true, "===================================================")
-	logger.TestLog(true, "Previous:              ", pos.Prev)
-	logger.TestLog(true, "Current:               ", s.BlockNumber)
-	logger.TestLog(true, "Next:                  ", pos.Next)
+	logger.TestLog(true, "Reason:                ", reason)
+	logger.TestLog(true, "Previous:              ", pos.Prev.BlockNumber, pos.Prev.TransactionIndex, "(", pos.IsSamePrev(reason), ")")
+	logger.TestLog(true, "Current:               ", pos.Current.BlockNumber, pos.Current.TransactionIndex, "(", pos.Current.BlockNumber == s.BlockNumber && pos.Current.TransactionIndex == s.TransactionIndex, ")")
+	logger.TestLog(true, "Next:                  ", pos.Next.BlockNumber, pos.Next.TransactionIndex, "(", pos.IsSameNext(reason), ")")
 	logger.TestLog(true, "accountedFor:          ", s.AccountedFor)
 	logger.TestLog(true, "sender:                ", s.Sender, " ==> ", s.Recipient)
 	logger.TestLog(true, "asset:                 ", s.Asset, "("+s.Symbol+")", fmt.Sprintf("decimals: %d", s.Decimals))
@@ -62,15 +64,19 @@ func (s *Statement) DebugStatement(pos *AppPosition) {
 	reportE("   minerNephewRewardIn:", &s.MinerNephewRewardIn)
 	reportE("   minerTxFeeIn:       ", &s.MinerTxFeeIn)
 	reportE("   minerUncleRewardIn: ", &s.MinerUncleRewardIn)
-	reportE("   correctingIn:       ", &s.CorrectingIn)
+	reportE("   correctBegBalIn:    ", &s.CorrectBegBalIn)
+	reportE("   correctAmountIn:    ", &s.CorrectAmountIn)
+	reportE("   correctEndBalIn:    ", &s.CorrectEndBalIn)
 	reportE("   prefundIn:          ", &s.PrefundIn)
 	reportE("   selfDestructIn:     ", &s.SelfDestructIn)
 	reportE("   amountOut:          ", &s.AmountOut)
 	reportE("   internalOut:        ", &s.InternalOut)
-	reportE("   correctingOut:      ", &s.CorrectingOut)
+	reportE("   correctBegBalOut:   ", &s.CorrectBegBalOut)
+	reportE("   correctAmountOut:   ", &s.CorrectAmountOut)
+	reportE("   correctEndBalOut:   ", &s.CorrectEndBalOut)
 	reportE("   selfDestructOut:    ", &s.SelfDestructOut)
 	reportE("   gasOut:             ", &s.GasOut)
-	logger.TestLog(s.CorrectingReason != "", "   correctingReason:   ", s.CorrectingReason)
+	logger.TestLog(len(s.CorrectingReasons) > 0, "   correctingReasons:  ", strings.Join(s.CorrectingReasons, "-"))
 	logger.TestLog(true, "   material:           ", s.IsMaterial())
 	logger.TestLog(true, "   reconciled:         ", s.Reconciled())
 	if !s.Reconciled() {

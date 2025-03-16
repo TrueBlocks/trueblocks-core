@@ -29,8 +29,7 @@ type Transfer struct {
 	LogIndex         base.Lognum  `json:"logIndex"`
 	TransactionIndex base.Txnum   `json:"transactionIndex"`
 	// EXISTING_CODE
-	Decimals         base.Value `json:"decimals"`
-	CorrectingReason string     `json:"correctingReason"`
+	Decimals base.Value `json:"decimals"`
 	// EXISTING_CODE
 }
 
@@ -197,20 +196,20 @@ func (s *Transfer) FinishUnmarshal(fileVersion uint64) {
 
 // EXISTING_CODE
 type AssetTransfer struct {
-	Amount           base.Wei `json:"amount"`
-	AmountIn         base.Wei
-	AmountOut        base.Wei
-	Asset            base.Address `json:"asset"`
-	BegBal           base.Wei
-	BlockNumber      base.Blknum `json:"blockNumber"`
-	CorrectingReason string      `json:"correctingReason"`
-	CorrectionId     base.Value  `json:"correctionId"`
-	Decimals         base.Value  `json:"decimals"`
-	EndBal           base.Wei
-	Holder           base.Address `json:"holder"`
-	LogIndex         base.Lognum  `json:"logIndex"`
-	StatementId      base.Value   `json:"statementId"`
-	TransactionIndex base.Txnum   `json:"transactionIndex"`
+	Amount            base.Wei `json:"amount"`
+	AmountIn          base.Wei
+	AmountOut         base.Wei
+	Asset             base.Address `json:"asset"`
+	BegBal            base.Wei
+	BlockNumber       base.Blknum `json:"blockNumber"`
+	CorrectingReasons []string    `json:"correctingReasons"`
+	CorrectionId      base.Value  `json:"correctionId"`
+	Decimals          base.Value  `json:"decimals"`
+	EndBal            base.Wei
+	Holder            base.Address `json:"holder"`
+	LogIndex          base.Lognum  `json:"logIndex"`
+	StatementId       base.Value   `json:"statementId"`
+	TransactionIndex  base.Txnum   `json:"transactionIndex"`
 }
 
 func (s *AssetTransfer) EndBalCalc() *base.Wei {
@@ -230,7 +229,6 @@ func NewAssetTransfer(t Transfer) AssetTransfer {
 		LogIndex:         t.LogIndex,
 		TransactionIndex: t.TransactionIndex,
 		Decimals:         t.Decimals,
-		CorrectingReason: t.CorrectingReason,
 	}
 }
 
@@ -249,7 +247,7 @@ func (s *AssetTransfer) Model(chain, format string, verbose bool, extraOpts map[
 		s.LogIndex,
 		s.StatementId,
 		s.CorrectionId,
-		s.CorrectingReason,
+		strings.Join(s.CorrectingReasons, "-"),
 		s.BegBal.Text(10),
 		s.AmountNet().Text(10),
 		calc.Text(10),

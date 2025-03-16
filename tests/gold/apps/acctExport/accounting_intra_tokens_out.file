@@ -66,7 +66,6 @@
           "blockNumber": 14933657,
           "correctingIn": "0",
           "correctingOut": "0",
-          "correctingReason": "",
           "date": "2022-06-09 16:55:34 UTC",
           "decimals": 18,
           "endBal": "568293581338250642905",
@@ -92,7 +91,6 @@
           "timestamp": 1654793734,
           "totalIn": "0",
           "totalOut": "9143915636239443",
-          "totalOutLessGas": "0",
           "transactionHash": "0xb00176827961c29b713960b7a91f438cea976381577b3989f0781d896d38df61",
           "transactionIndex": 302
         },
@@ -107,7 +105,6 @@
           "blockNumber": 14933657,
           "correctingIn": "0",
           "correctingOut": "0",
-          "correctingReason": "",
           "date": "2022-06-09 16:55:34 UTC",
           "decimals": 18,
           "endBal": "11248288842000000000000",
@@ -133,7 +130,6 @@
           "timestamp": 1654793734,
           "totalIn": "0",
           "totalOut": "73541760990000000000",
-          "totalOutLessGas": "73541760990000000000",
           "transactionHash": "0xb00176827961c29b713960b7a91f438cea976381577b3989f0781d896d38df61",
           "transactionIndex": 302
         }
@@ -211,7 +207,6 @@
           "blockNumber": 14933657,
           "correctingIn": "0",
           "correctingOut": "0",
-          "correctingReason": "",
           "date": "2022-06-09 16:55:34 UTC",
           "decimals": 18,
           "endBal": "568289950518793961953",
@@ -237,7 +232,6 @@
           "timestamp": 1654793734,
           "totalIn": "0",
           "totalOut": "3630819456680952",
-          "totalOutLessGas": "0",
           "transactionHash": "0x458ae31579274588f04850853ec71f67e1e21b2d4e72ada18fdc04352fc22295",
           "transactionIndex": 303
         },
@@ -252,7 +246,7 @@
           "blockNumber": 14933657,
           "correctingIn": "961090000000000",
           "correctingOut": "0",
-          "correctingReason": "endbal",
+          "correctingReasons": "endBal",
           "date": "2022-06-09 16:55:34 UTC",
           "decimals": 18,
           "endBal": "17951033980000000000",
@@ -279,7 +273,6 @@
           "timestamp": 1654793734,
           "totalIn": "0",
           "totalOut": "304442430000000000",
-          "totalOutLessGas": "304442430000000000",
           "transactionHash": "0x458ae31579274588f04850853ec71f67e1e21b2d4e72ada18fdc04352fc22295",
           "transactionIndex": 303
         }
@@ -357,7 +350,6 @@
           "blockNumber": 14933657,
           "correctingIn": "0",
           "correctingOut": "0",
-          "correctingReason": "",
           "date": "2022-06-09 16:55:34 UTC",
           "decimals": 18,
           "endBal": "568284263103508196068",
@@ -384,7 +376,6 @@
           "timestamp": 1654793734,
           "totalIn": "0",
           "totalOut": "5687415285765885",
-          "totalOutLessGas": "0",
           "transactionHash": "0x9c07595dec64bb699ef24c1c5e5579edba940fb9596e38bd4465f5c840393aae",
           "transactionIndex": 304
         },
@@ -399,7 +390,6 @@
           "blockNumber": 14933657,
           "correctingIn": "0",
           "correctingOut": "0",
-          "correctingReason": "",
           "date": "2022-06-09 16:55:34 UTC",
           "decimals": 18,
           "endBal": "791184699027030000000000",
@@ -426,7 +416,6 @@
           "timestamp": 1654793734,
           "totalIn": "0",
           "totalOut": "312679827610000000000",
-          "totalOutLessGas": "312679827610000000000",
           "transactionHash": "0x9c07595dec64bb699ef24c1c5e5579edba940fb9596e38bd4465f5c840393aae",
           "transactionIndex": 304
         }

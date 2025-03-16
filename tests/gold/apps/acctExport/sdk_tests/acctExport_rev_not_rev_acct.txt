@@ -8,12 +8,14 @@ LastBlock:  8856511
 Caps:  cache,decache,ether
 Format:  json
 ------------------------------------
-# Reason: first-tx
-Trial balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0xf503017d7baf7fbc0fff7492b751025c6a78179b at block 8854723
+# Reason: top-level
+Trial balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0xf503017d7baf7fbc0fff7492b751025c6a78179b at stmt 8854723 61 0
 ------------------------------------
+Sender: false Recipient: true 0xbb984f85bd52d78eb2fbf2c5598bae7abb98c5bc 0xf503017d7baf7fbc0fff7492b751025c6a78179b 0xf503017d7baf7fbc0fff7492b751025c6a78179b
+adjustForIntraTransfer2 isToken: false isPrevSame: true isNextSame: false
 XXXNot found  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
 Using block-1 balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 0 of 0
-pos: 8854722 8854723 8855603 true false
+Statement reconciles? true top-level
 EndBalCalc: 0 5000000000000000000 5000000000000000000
 Inserting  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 8854723 of 5000000000000000000
 Found  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 8854723 of 5000000000000000000
@@ -31,9 +33,10 @@ bigPrice:            181.5125
 price:               181.5125
 source:              maker
 ===================================================
-Previous:               8854722
-Current:                8854723
-Next:                   8855603
+Reason:                 top-level
+Previous:               8854722 60 ( false )
+Current:                8854723 61 ( true )
+Next:                   8855603 121 ( false )
 accountedFor:           0xf503017d7baf7fbc0fff7492b751025c6a78179b
 sender:                 0xbb984f85bd52d78eb2fbf2c5598bae7abb98c5bc  ==>  0xf503017d7baf7fbc0fff7492b751025c6a78179b
 asset:                  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -59,24 +62,29 @@ Trial balance:
 ----------Done  true  --------------------------
 
 ------------------------------------
-# Reason: first-tx
-Trial balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0xf503017d7baf7fbc0fff7492b751025c6a78179b at block 8855603
+# Reason: top-level
+Trial balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0xf503017d7baf7fbc0fff7492b751025c6a78179b at stmt 8855603 121 0
 ------------------------------------
-XXXFound  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 8854723 of 5000000000000000000
+Not sender or recipient 0xf503017d7baf7fbc0fff7492b751025c6a78179b 0x3b161d57f482cd2dfbb626f0307ef92b3b094fce 0x226159d592e2b063810a10ebf6dcbada94ed68b8 top-level
+Sender: false Recipient: false 0x3b161d57f482cd2dfbb626f0307ef92b3b094fce 0x226159d592e2b063810a10ebf6dcbada94ed68b8 0xf503017d7baf7fbc0fff7492b751025c6a78179b
+adjustForIntraTransfer1 isToken: false isPrevSame: false isNextSame: false
+XXXFound  running blkid: 8854723 txid: 0 logid: 0 amount: 5000000000000000000
 Querying at block 8854723 for 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0xf503017d7baf7fbc0fff7492b751025c6a78179b
 Different block  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 8854723 and 8855603 of 5000000000000000000
-pos: 8854723 8855603 8856290 false false
+Statement reconciles? true top-level
 EndBalCalc: 5000000000000000000 0 5000000000000000000
 Inserting  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 8855603 of 5000000000000000000
 Found  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 8855603 of 5000000000000000000
 ------------------------------------
-# Reason: first-tx
-Trial balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0xf503017d7baf7fbc0fff7492b751025c6a78179b at block 8856290
+# Reason: top-level
+Trial balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0xf503017d7baf7fbc0fff7492b751025c6a78179b at stmt 8856290 62 0
 ------------------------------------
-XXXFound  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 8855603 of 5000000000000000000
+Sender: true Recipient: false 0xf503017d7baf7fbc0fff7492b751025c6a78179b 0xb97073b754660bb356dfe12f78ae366d77dbc80f 0xf503017d7baf7fbc0fff7492b751025c6a78179b
+adjustForIntraTransfer1 isToken: false isPrevSame: false isNextSame: false
+XXXFound  running blkid: 8855603 txid: 0 logid: 0 amount: 5000000000000000000
 Querying at block 8855603 for 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0xf503017d7baf7fbc0fff7492b751025c6a78179b
 Different block  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 8855603 and 8856290 of 5000000000000000000
-pos: 8855603 8856290 8856316 false false
+Statement reconciles? true top-level
 EndBalCalc: 5000000000000000000 -10210000000000000 4989790000000000000
 Inserting  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 8856290 of 4989790000000000000
 Found  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 8856290 of 4989790000000000000
@@ -94,9 +102,10 @@ bigPrice:            184.1825
 price:               184.1825
 source:              maker
 ===================================================
-Previous:               8855603
-Current:                8856290
-Next:                   8856316
+Reason:                 top-level
+Previous:               8855603 0 ( false )
+Current:                8856290 62 ( true )
+Next:                   8856316 91 ( false )
 accountedFor:           0xf503017d7baf7fbc0fff7492b751025c6a78179b
 sender:                 0xf503017d7baf7fbc0fff7492b751025c6a78179b  ==>  0xb97073b754660bb356dfe12f78ae366d77dbc80f
 asset:                  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -123,13 +132,15 @@ Trial balance:
 ----------Done  true  --------------------------
 
 ------------------------------------
-# Reason: first-tx
-Trial balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0xf503017d7baf7fbc0fff7492b751025c6a78179b at block 8856316
+# Reason: top-level
+Trial balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0xf503017d7baf7fbc0fff7492b751025c6a78179b at stmt 8856316 91 0
 ------------------------------------
-XXXFound  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 8856290 of 4989790000000000000
+Sender: false Recipient: true 0xb97073b754660bb356dfe12f78ae366d77dbc80f 0xf503017d7baf7fbc0fff7492b751025c6a78179b 0xf503017d7baf7fbc0fff7492b751025c6a78179b
+adjustForIntraTransfer1 isToken: false isPrevSame: false isNextSame: false
+XXXFound  running blkid: 8856290 txid: 0 logid: 0 amount: 4989790000000000000
 Querying at block 8856290 for 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0xf503017d7baf7fbc0fff7492b751025c6a78179b
 Different block  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 8856290 and 8856316 of 4989790000000000000
-pos: 8856290 8856316 8856476 false false
+Statement reconciles? true top-level
 EndBalCalc: 4989790000000000000 10000000000000000 4999790000000000000
 Inserting  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 8856316 of 4999790000000000000
 Found  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 8856316 of 4999790000000000000
@@ -147,9 +158,10 @@ bigPrice:            184.1825
 price:               184.1825
 source:              maker
 ===================================================
-Previous:               8856290
-Current:                8856316
-Next:                   8856476
+Reason:                 top-level
+Previous:               8856290 0 ( false )
+Current:                8856316 91 ( true )
+Next:                   8856476 55 ( false )
 accountedFor:           0xf503017d7baf7fbc0fff7492b751025c6a78179b
 sender:                 0xb97073b754660bb356dfe12f78ae366d77dbc80f  ==>  0xf503017d7baf7fbc0fff7492b751025c6a78179b
 asset:                  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -175,23 +187,28 @@ Trial balance:
 ----------Done  true  --------------------------
 
 ------------------------------------
-# Reason: first-tx
-Trial balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0xf503017d7baf7fbc0fff7492b751025c6a78179b at block 8856476
+# Reason: top-level
+Trial balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0xf503017d7baf7fbc0fff7492b751025c6a78179b at stmt 8856476 55 0
 ------------------------------------
-XXXFound  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 8856316 of 4999790000000000000
+Not sender or recipient 0xf503017d7baf7fbc0fff7492b751025c6a78179b 0xeba60d324c2546459e1e9dd4c7e740ca80134588 0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359 top-level
+Sender: false Recipient: false 0xeba60d324c2546459e1e9dd4c7e740ca80134588 0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359 0xf503017d7baf7fbc0fff7492b751025c6a78179b
+adjustForIntraTransfer1 isToken: false isPrevSame: false isNextSame: false
+XXXFound  running blkid: 8856316 txid: 0 logid: 0 amount: 4999790000000000000
 Querying at block 8856316 for 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0xf503017d7baf7fbc0fff7492b751025c6a78179b
 Different block  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 8856316 and 8856476 of 4999790000000000000
-pos: 8856316 8856476 8856511 false false
+Statement reconciles? true top-level
 EndBalCalc: 4999790000000000000 0 4999790000000000000
 Inserting  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 8856476 of 4999790000000000000
 Found  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 8856476 of 4999790000000000000
 ------------------------------------
 # Reason: token
-Trial balance for  0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359 0xf503017d7baf7fbc0fff7492b751025c6a78179b at block 8856476
+Trial balance for  0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359 0xf503017d7baf7fbc0fff7492b751025c6a78179b at stmt 8856476 55 40
 ------------------------------------
+Sender: false Recipient: true 0xeba60d324c2546459e1e9dd4c7e740ca80134588 0xf503017d7baf7fbc0fff7492b751025c6a78179b 0xf503017d7baf7fbc0fff7492b751025c6a78179b
+adjustForIntraTransfer2 isToken: true isPrevSame: false isNextSame: false
 XXXNot found  0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359
 Using block-1 balance for  0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359 at block 0 of 0
-pos: 8856475 8856476 8856511 false false
+Statement reconciles? true token
 EndBalCalc: 0 1000000000000000000 1000000000000000000
 Inserting  0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359 at block 8856476 of 1000000000000000000
 Found  0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359 at block 8856476 of 1000000000000000000
@@ -200,9 +217,10 @@ Found  0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359 at block 8856476 of 1000000000
 =========================================================
 stable-coin
 ===================================================
-Previous:               8856475
-Current:                8856476
-Next:                   8856511
+Reason:                 token
+Previous:               8856475 54 ( false )
+Current:                8856476 55 ( true )
+Next:                   8856511 161 ( false )
 accountedFor:           0xf503017d7baf7fbc0fff7492b751025c6a78179b
 sender:                 0xeba60d324c2546459e1e9dd4c7e740ca80134588  ==>  0xf503017d7baf7fbc0fff7492b751025c6a78179b
 asset:                  0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359 (DAI) decimals: 18
@@ -228,24 +246,29 @@ Trial balance:
 ----------Done  true  --------------------------
 
 ------------------------------------
-# Reason: first-tx
-Trial balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0xf503017d7baf7fbc0fff7492b751025c6a78179b at block 8856511
+# Reason: top-level
+Trial balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0xf503017d7baf7fbc0fff7492b751025c6a78179b at stmt 8856511 161 0
 ------------------------------------
-XXXFound  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 8856476 of 4999790000000000000
+Not sender or recipient 0xf503017d7baf7fbc0fff7492b751025c6a78179b 0x8c492d5f763841767362d716e3e69511f0527791 0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359 top-level
+Sender: false Recipient: false 0x8c492d5f763841767362d716e3e69511f0527791 0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359 0xf503017d7baf7fbc0fff7492b751025c6a78179b
+adjustForIntraTransfer1 isToken: false isPrevSame: false isNextSame: false
+XXXFound  running blkid: 8856476 txid: 0 logid: 0 amount: 4999790000000000000
 Querying at block 8856476 for 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0xf503017d7baf7fbc0fff7492b751025c6a78179b
 Different block  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 8856476 and 8856511 of 4999790000000000000
-pos: 8856476 8856511 8856512 false true
+Statement reconciles? true top-level
 EndBalCalc: 4999790000000000000 0 4999790000000000000
 Inserting  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 8856511 of 4999790000000000000
 Found  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 8856511 of 4999790000000000000
 ------------------------------------
 # Reason: token
-Trial balance for  0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359 0xf503017d7baf7fbc0fff7492b751025c6a78179b at block 8856511
+Trial balance for  0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359 0xf503017d7baf7fbc0fff7492b751025c6a78179b at stmt 8856511 161 94
 ------------------------------------
-XXXFound  0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359 at block 8856476 of 1000000000000000000
+Sender: false Recipient: true 0x8c492d5f763841767362d716e3e69511f0527791 0xf503017d7baf7fbc0fff7492b751025c6a78179b 0xf503017d7baf7fbc0fff7492b751025c6a78179b
+adjustForIntraTransfer1 isToken: true isPrevSame: false isNextSame: false
+XXXFound  running blkid: 8856476 txid: 0 logid: 0 amount: 1000000000000000000
 Querying at block 8856476 for 0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359 0xf503017d7baf7fbc0fff7492b751025c6a78179b
 Different block  0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359 at block 8856476 and 8856511 of 1000000000000000000
-pos: 8856476 8856511 8856512 false true
+Statement reconciles? true token
 EndBalCalc: 1000000000000000000 4999000000000000000000 5000000000000000000000
 Inserting  0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359 at block 8856511 of 5000000000000000000000
 Found  0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359 at block 8856511 of 5000000000000000000000
@@ -254,9 +277,10 @@ Found  0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359 at block 8856511 of 5000000000
 =========================================================
 stable-coin
 ===================================================
-Previous:               8856476
-Current:                8856511
-Next:                   8856512
+Reason:                 token
+Previous:               8856476 0 ( false )
+Current:                8856511 161 ( true )
+Next:                   8856512 0 ( false )
 accountedFor:           0xf503017d7baf7fbc0fff7492b751025c6a78179b
 sender:                 0x8c492d5f763841767362d716e3e69511f0527791  ==>  0xf503017d7baf7fbc0fff7492b751025c6a78179b
 asset:                  0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359 (DAI) decimals: 18
@@ -311,9 +335,13 @@ Trial balance:
           "begBal": "0",
           "begBalDiff": "0",
           "blockNumber": 8854723,
-          "correctingIn": "0",
-          "correctingOut": "0",
-          "correctingReason": "",
+          "correctAmountIn": "0",
+          "correctAmountOut": "0",
+          "correctBegBalIn": "0",
+          "correctBegBalOut": "0",
+          "correctEndBalIn": "0",
+          "correctEndBalOut": "0",
+          "correctingReasons": "",
           "date": "2019-11-01 20:18:58 UTC",
           "decimals": 18,
           "endBal": "5000000000000000000",
@@ -340,7 +368,6 @@ Trial balance:
           "timestamp": 1572639538,
           "totalIn": "5000000000000000000",
           "totalOut": "0",
-          "totalOutLessGas": "0",
           "transactionHash": "0x1a898c5448b37f693343917ea40b7ad1c43b28a4ddd37af1bd6d0bb4a0c99891",
           "transactionIndex": 61
         }
@@ -451,9 +478,13 @@ Trial balance:
           "begBal": "5000000000000000000",
           "begBalDiff": "0",
           "blockNumber": 8856290,
-          "correctingIn": "0",
-          "correctingOut": "0",
-          "correctingReason": "",
+          "correctAmountIn": "0",
+          "correctAmountOut": "0",
+          "correctBegBalIn": "0",
+          "correctBegBalOut": "0",
+          "correctEndBalIn": "0",
+          "correctEndBalOut": "0",
+          "correctingReasons": "",
           "date": "2019-11-02 02:16:06 UTC",
           "decimals": 18,
           "endBal": "4989790000000000000",
@@ -480,7 +511,6 @@ Trial balance:
           "timestamp": 1572660966,
           "totalIn": "0",
           "totalOut": "10210000000000000",
-          "totalOutLessGas": "10000000000000000",
           "transactionHash": "0xb7d80298ad62d68f47a9e3faeaa78ca7888e33dc714707a83eb4dfbbcdc01b09",
           "transactionIndex": 62
         }
@@ -520,9 +550,13 @@ Trial balance:
           "begBal": "4989790000000000000",
           "begBalDiff": "0",
           "blockNumber": 8856316,
-          "correctingIn": "0",
-          "correctingOut": "0",
-          "correctingReason": "",
+          "correctAmountIn": "0",
+          "correctAmountOut": "0",
+          "correctBegBalIn": "0",
+          "correctBegBalOut": "0",
+          "correctEndBalIn": "0",
+          "correctEndBalOut": "0",
+          "correctingReasons": "",
           "date": "2019-11-02 02:19:35 UTC",
           "decimals": 18,
           "endBal": "4999790000000000000",
@@ -549,7 +583,6 @@ Trial balance:
           "timestamp": 1572661175,
           "totalIn": "10000000000000000",
           "totalOut": "0",
-          "totalOutLessGas": "0",
           "transactionHash": "0x6d62aaef0653a83fd9c876f58f04aaf1ce6a750699d34ed870dd171e3de2d80a",
           "transactionIndex": 91
         }
@@ -621,9 +654,13 @@ Trial balance:
           "begBal": "0",
           "begBalDiff": "0",
           "blockNumber": 8856476,
-          "correctingIn": "0",
-          "correctingOut": "0",
-          "correctingReason": "",
+          "correctAmountIn": "0",
+          "correctAmountOut": "0",
+          "correctBegBalIn": "0",
+          "correctBegBalOut": "0",
+          "correctEndBalIn": "0",
+          "correctEndBalOut": "0",
+          "correctingReasons": "",
           "date": "2019-11-02 02:56:10 UTC",
           "decimals": 18,
           "endBal": "1000000000000000000",
@@ -650,7 +687,6 @@ Trial balance:
           "timestamp": 1572663370,
           "totalIn": "1000000000000000000",
           "totalOut": "0",
-          "totalOutLessGas": "0",
           "transactionHash": "0x118f8d42e6b858427f6b54c1636a6ec1f72e0cf8941da03deffa55a3c2357204",
           "transactionIndex": 55
         }
@@ -722,9 +758,13 @@ Trial balance:
           "begBal": "1000000000000000000",
           "begBalDiff": "0",
           "blockNumber": 8856511,
-          "correctingIn": "0",
-          "correctingOut": "0",
-          "correctingReason": "",
+          "correctAmountIn": "0",
+          "correctAmountOut": "0",
+          "correctBegBalIn": "0",
+          "correctBegBalOut": "0",
+          "correctEndBalIn": "0",
+          "correctEndBalOut": "0",
+          "correctingReasons": "",
           "date": "2019-11-02 03:04:19 UTC",
           "decimals": 18,
           "endBal": "5000000000000000000000",
@@ -751,7 +791,6 @@ Trial balance:
           "timestamp": 1572663859,
           "totalIn": "4999000000000000000000",
           "totalOut": "0",
-          "totalOutLessGas": "0",
           "transactionHash": "0x973699ddd12186570c957369788e0128b1acc66c994685c5d3f52ef6b3b84fed",
           "transactionIndex": 161
         }

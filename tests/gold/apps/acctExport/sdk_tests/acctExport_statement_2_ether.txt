@@ -9,20 +9,23 @@ Ether:  true
 Caps:  cache,decache,ether
 Format:  json
 ------------------------------------
-# Reason: first-tx
-Trial balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0x08166f02313feae18bb044e7877c808b55b5bf58 at block 0
+# Reason: top-level
+Trial balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0x08166f02313feae18bb044e7877c808b55b5bf58 at stmt 0 270 0
 ------------------------------------
+Sender: false Recipient: true 0x0000000000000000000000000050726566756e64 0x08166f02313feae18bb044e7877c808b55b5bf58 0x08166f02313feae18bb044e7877c808b55b5bf58
+adjustForIntraTransfer2 isToken: false isPrevSame: true isNextSame: false
 XXXNot found  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
 Using block-1 balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 0 of 0
-pos: 0 0 46685 true false
+Statement reconciles? true top-level
 EndBalCalc: 0 1970000000000000000000 1970000000000000000000
 Inserting  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 0 of 1970000000000000000000
 Found  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 0 of 1970000000000000000000
 Block 0 is prior to deployment (3684349) of Maker. No fallback pricing method
 ===================================================
-Previous:               0
-Current:                0
-Next:                   46685
+Reason:                 top-level
+Previous:               0 269 ( true )
+Current:                0 270 ( true )
+Next:                   46685 0 ( false )
 accountedFor:           0x08166f02313feae18bb044e7877c808b55b5bf58
 sender:                 0x0000000000000000000000000050726566756e64  ==>  0x08166f02313feae18bb044e7877c808b55b5bf58
 asset:                  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (ETH) decimals: 18
@@ -48,21 +51,24 @@ Trial balance:
 ----------Done  true  --------------------------
 
 ------------------------------------
-# Reason: first-tx
-Trial balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0x08166f02313feae18bb044e7877c808b55b5bf58 at block 46685
+# Reason: top-level
+Trial balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0x08166f02313feae18bb044e7877c808b55b5bf58 at stmt 46685 0 0
 ------------------------------------
-XXXFound  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 0 of 1970000000000000000000
+Sender: true Recipient: false 0x08166f02313feae18bb044e7877c808b55b5bf58 0xad00b7a324f31351d397408c8c3952ea198317eb 0x08166f02313feae18bb044e7877c808b55b5bf58
+adjustForIntraTransfer1 isToken: false isPrevSame: false isNextSame: false
+XXXFound  running blkid: 0 txid: 0 logid: 0 amount: 1970000000000000000000
 Querying at block 0 for 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0x08166f02313feae18bb044e7877c808b55b5bf58
 Different block  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 0 and 46685 of 1970000000000000000000
-pos: 0 46685 46709 false false
+Statement reconciles? true top-level
 EndBalCalc: 1970000000000000000000 -5010500000000000000 1964989500000000000000
 Inserting  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 46685 of 1964989500000000000000
 Found  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 46685 of 1964989500000000000000
 Block 46685 is prior to deployment (3684349) of Maker. No fallback pricing method
 ===================================================
-Previous:               0
-Current:                46685
-Next:                   46709
+Reason:                 top-level
+Previous:               0 0 ( false )
+Current:                46685 0 ( true )
+Next:                   46709 0 ( false )
 accountedFor:           0x08166f02313feae18bb044e7877c808b55b5bf58
 sender:                 0x08166f02313feae18bb044e7877c808b55b5bf58  ==>  0xad00b7a324f31351d397408c8c3952ea198317eb
 asset:                  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (ETH) decimals: 18
@@ -89,21 +95,24 @@ Trial balance:
 ----------Done  true  --------------------------
 
 ------------------------------------
-# Reason: first-tx
-Trial balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0x08166f02313feae18bb044e7877c808b55b5bf58 at block 46709
+# Reason: top-level
+Trial balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0x08166f02313feae18bb044e7877c808b55b5bf58 at stmt 46709 0 0
 ------------------------------------
-XXXFound  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 46685 of 1964989500000000000000
+Sender: true Recipient: false 0x08166f02313feae18bb044e7877c808b55b5bf58 0xad00b7a324f31351d397408c8c3952ea198317eb 0x08166f02313feae18bb044e7877c808b55b5bf58
+adjustForIntraTransfer1 isToken: false isPrevSame: false isNextSame: false
+XXXFound  running blkid: 46685 txid: 0 logid: 0 amount: 1964989500000000000000
 Querying at block 46685 for 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0x08166f02313feae18bb044e7877c808b55b5bf58
 Different block  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 46685 and 46709 of 1964989500000000000000
-pos: 46685 46709 46710 false true
+Statement reconciles? true top-level
 EndBalCalc: 1964989500000000000000 -1964900000000000000000 89500000000000000
 Inserting  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 46709 of 89500000000000000
 Found  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 46709 of 89500000000000000
 Block 46709 is prior to deployment (3684349) of Maker. No fallback pricing method
 ===================================================
-Previous:               46685
-Current:                46709
-Next:                   46710
+Reason:                 top-level
+Previous:               46685 0 ( false )
+Current:                46709 0 ( true )
+Next:                   46710 0 ( false )
 accountedFor:           0x08166f02313feae18bb044e7877c808b55b5bf58
 sender:                 0x08166f02313feae18bb044e7877c808b55b5bf58  ==>  0xad00b7a324f31351d397408c8c3952ea198317eb
 asset:                  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (ETH) decimals: 18
@@ -147,11 +156,19 @@ Trial balance:
       "begBalDiffEth": "0",
       "begBalEth": "0",
       "blockNumber": 0,
-      "correctingIn": "0",
-      "correctingInEth": "0",
-      "correctingOut": "0",
-      "correctingOutEth": "0",
-      "correctingReason": "",
+      "correctAmountIn": "0",
+      "correctAmountInEth": "0",
+      "correctAmountOut": "0",
+      "correctAmountOutEth": "0",
+      "correctBegBalIn": "0",
+      "correctBegBalInEth": "0",
+      "correctBegBalOut": "0",
+      "correctBegBalOutEth": "0",
+      "correctEndBalIn": "0",
+      "correctEndBalInEth": "0",
+      "correctEndBalOut": "0",
+      "correctEndBalOutEth": "0",
+      "correctingReasons": "",
       "date": "2015-07-30 15:26:15 UTC",
       "decimals": 18,
       "endBal": "1970000000000000000000",
@@ -194,8 +211,6 @@ Trial balance:
       "totalInEth": "1970",
       "totalOut": "0",
       "totalOutEth": "0",
-      "totalOutLessGas": "0",
-      "totalOutLessGasEth": "0",
       "transactionHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
       "transactionIndex": 270
     },
@@ -215,11 +230,19 @@ Trial balance:
       "begBalDiffEth": "0",
       "begBalEth": "1970",
       "blockNumber": 46685,
-      "correctingIn": "0",
-      "correctingInEth": "0",
-      "correctingOut": "0",
-      "correctingOutEth": "0",
-      "correctingReason": "",
+      "correctAmountIn": "0",
+      "correctAmountInEth": "0",
+      "correctAmountOut": "0",
+      "correctAmountOutEth": "0",
+      "correctBegBalIn": "0",
+      "correctBegBalInEth": "0",
+      "correctBegBalOut": "0",
+      "correctBegBalOutEth": "0",
+      "correctEndBalIn": "0",
+      "correctEndBalInEth": "0",
+      "correctEndBalOut": "0",
+      "correctEndBalOutEth": "0",
+      "correctingReasons": "",
       "date": "2015-08-07 06:03:28 UTC",
       "decimals": 18,
       "endBal": "1964989500000000000000",
@@ -262,8 +285,6 @@ Trial balance:
       "totalInEth": "0",
       "totalOut": "5010500000000000000",
       "totalOutEth": "5.0105",
-      "totalOutLessGas": "5000000000000000000",
-      "totalOutLessGasEth": "5",
       "transactionHash": "0x10893338fa5633ab747450b8698457fb047098f87f78e98b3dbee3134067b6b8",
       "transactionIndex": 0
     },
@@ -283,11 +304,19 @@ Trial balance:
       "begBalDiffEth": "0",
       "begBalEth": "1964.9895",
       "blockNumber": 46709,
-      "correctingIn": "0",
-      "correctingInEth": "0",
-      "correctingOut": "0",
-      "correctingOutEth": "0",
-      "correctingReason": "",
+      "correctAmountIn": "0",
+      "correctAmountInEth": "0",
+      "correctAmountOut": "0",
+      "correctAmountOutEth": "0",
+      "correctBegBalIn": "0",
+      "correctBegBalInEth": "0",
+      "correctBegBalOut": "0",
+      "correctBegBalOutEth": "0",
+      "correctEndBalIn": "0",
+      "correctEndBalInEth": "0",
+      "correctEndBalOut": "0",
+      "correctEndBalOutEth": "0",
+      "correctingReasons": "",
       "date": "2015-08-07 06:10:54 UTC",
       "decimals": 18,
       "endBal": "89500000000000000",
@@ -330,8 +359,6 @@ Trial balance:
       "totalInEth": "0",
       "totalOut": "1964900000000000000000",
       "totalOutEth": "1964.9",
-      "totalOutLessGas": "1964889500000000000000",
-      "totalOutLessGasEth": "1964.8895",
       "transactionHash": "0x10d5c5f2386c6d6d93ca6b43fa25e8679971d07448db8d6c81d856ff3c3c001a",
       "transactionIndex": 0
     }

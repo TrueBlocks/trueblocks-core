@@ -67,7 +67,7 @@ func (r *Reconciler3) correctingEntry(reason string, onChain, curBal base.Wei, p
 	correctionDiff := *new(base.Wei).Sub(&onChain, &curBal)
 	correction.BegBal = curBal
 	correction.EndBal = onChain
-	correction.CorrectingReason = reason
+	correction.CorrectingReasons = append(correction.CorrectingReasons, reason)
 	correction.AmountIn = *base.ZeroWei
 	correction.AmountOut = *base.ZeroWei
 	if correctionDiff.Cmp(base.ZeroWei) > 0 {

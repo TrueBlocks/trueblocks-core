@@ -61,7 +61,7 @@ Trial balance:
 --------------------------------------------------- 
    correctingIn:        2017
    correctingOut:       2017
-   correctingReason:    null-transfer
+   correctingReasons:   null-transfer
    material:            true
    reconciled:          true
 ---------------------------------------------------
@@ -79,7 +79,7 @@ Trial balance:
       "blockNumber": 15549162,
       "correctingIn": "2017000000000000000000",
       "correctingOut": "2017000000000000000000",
-      "correctingReason": "null-transfer",
+      "correctingReasons": "null-transfer",
       "date": "2022-09-16 22:32:11 UTC",
       "decimals": 18,
       "endBal": "2017044745122853478376",

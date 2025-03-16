@@ -128,27 +128,29 @@ func (opts *ExportOptions) HandleStatements(rCtx *output.RenderCtx, monitorArray
 
 						recon = ledger1.NewReconciler(opts.Conn, ledgerOpts)
 						items := make([]types.Statement, 0, len(thisMap))
-						for i, tx := range txArray {
-							// Note: apps and txArray are the same list, so we can use the index from txArray
-							prev := uint32(0)
-							if apps[i].BlockNumber > 0 {
-								prev = apps[i].BlockNumber - 1
+						for i, app := range apps {
+							prev := types.NewAppearance2(&types.Appearance{BlockNumber: 0, TransactionIndex: 0})
+							if app.BlockNumber > 0 {
+								prev = types.NewAppearance2(&app)
 							}
 							if i > 0 {
-								prev = apps[i-1].BlockNumber
+								prev = types.NewAppearance2(&apps[i-1])
 							}
-							next := apps[i].BlockNumber + 1
+							next := types.Appearance2{BlockNumber: base.Blknum(app.BlockNumber) + 1, TransactionIndex: 0}
 							if i < len(apps)-1 {
-								next = apps[i+1].BlockNumber
+								next = types.NewAppearance2(&apps[i+1])
+							}
+							app2 := types.Appearance2{
+								BlockNumber:      base.Blknum(app.BlockNumber),
+								TransactionIndex: base.Txnum(app.TransactionIndex),
 							}
 							pos := &types.AppPosition{
-								Prev:    base.Blknum(prev),
-								Current: base.Blknum(tx.BlockNumber),
-								Next:    base.Blknum(next),
-								First:   i == 0,
-								Last:    i == len(apps)-1,
+								Prev:    &prev,
+								Current: &app2,
+								Next:    &next,
 							}
-							if statements, err := recon.GetStatements(pos, tx); err != nil {
+
+							if statements, err := recon.GetStatements(pos, txArray[i]); err != nil {
 								errorChan <- err
 
 							} else if len(statements) > 0 {

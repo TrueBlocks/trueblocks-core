@@ -58,7 +58,6 @@ func convertToTransfers(statements []types.Statement) ([]types.Transfer, error) 
 			TransactionIndex: stmnt.TransactionIndex,
 			LogIndex:         stmnt.LogIndex,
 			Decimals:         stmnt.Decimals,
-			CorrectingReason: stmnt.CorrectingReason,
 		}
 		if !t.Amount.Equal(base.ZeroWei) {
 			transfers = append(transfers, t)

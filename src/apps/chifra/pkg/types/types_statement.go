@@ -29,9 +29,13 @@ type Statement struct {
 	Asset               base.Address   `json:"asset"`
 	BegBal              base.Wei       `json:"begBal"`
 	BlockNumber         base.Blknum    `json:"blockNumber"`
-	CorrectingIn        base.Wei       `json:"correctingIn,omitempty"`
-	CorrectingOut       base.Wei       `json:"correctingOut,omitempty"`
-	CorrectingReason    string         `json:"correctingReason,omitempty"`
+	CorrectAmountIn     base.Wei       `json:"correctAmountIn,omitempty"`
+	CorrectAmountOut    base.Wei       `json:"correctAmountOut,omitempty"`
+	CorrectBegBalIn     base.Wei       `json:"correctBegBalIn,omitempty"`
+	CorrectBegBalOut    base.Wei       `json:"correctBegBalOut,omitempty"`
+	CorrectEndBalIn     base.Wei       `json:"correctEndBalIn,omitempty"`
+	CorrectEndBalOut    base.Wei       `json:"correctEndBalOut,omitempty"`
+	CorrectingReasons   []string       `json:"correctingReasons,omitempty"`
 	Decimals            base.Value     `json:"decimals"`
 	EndBal              base.Wei       `json:"endBal"`
 	GasOut              base.Wei       `json:"gasOut,omitempty"`
@@ -66,6 +70,13 @@ func (s Statement) String() string {
 	return string(bytes)
 }
 
+func (s Statement) Report() string {
+	return fmt.Sprintf("%s,%s,%s,%s,%s,%s,%s\n",
+		s.CorrectAmountIn.Text(10), s.CorrectAmountOut.Text(10), s.CorrectBegBalIn.Text(10),
+		s.CorrectBegBalOut.Text(10), s.CorrectEndBalIn.Text(10), s.CorrectEndBalOut.Text(10),
+		strings.Join(s.CorrectingReasons, ","))
+}
+
 func (s *Statement) Model(chain, format string, verbose bool, extraOpts map[string]any) Model {
 	_ = chain
 	_ = format
@@ -76,91 +87,98 @@ func (s *Statement) Model(chain, format string, verbose bool, extraOpts map[stri
 
 	// EXISTING_CODE
 	model = map[string]any{
-		"blockNumber":         s.BlockNumber,
-		"transactionIndex":    s.TransactionIndex,
-		"logIndex":            s.LogIndex,
-		"transactionHash":     s.TransactionHash,
-		"timestamp":           s.Timestamp,
-		"date":                s.Date(),
-		"asset":               s.Asset,
-		"symbol":              s.Symbol,
-		"decimals":            s.Decimals,
-		"spotPrice":           s.SpotPrice,
-		"priceSource":         s.PriceSource,
 		"accountedFor":        s.AccountedFor,
-		"sender":              s.Sender,
-		"recipient":           s.Recipient,
-		"reconciled":          s.Reconciled(),
-		"correctingReason":    s.CorrectingReason,
-		"begBal":              s.BegBal.Text(10),
-		"amountNet":           s.AmountNet().Text(10),
-		"endBal":              s.EndBal.Text(10),
-		"totalIn":             s.TotalIn().Text(10),
 		"amountIn":            s.AmountIn.Text(10),
+		"amountNet":           s.AmountNet().Text(10),
+		"amountOut":           s.AmountOut.Text(10),
+		"asset":               s.Asset,
+		"begBal":              s.BegBal.Text(10),
+		"begBalDiff":          s.BegBalDiff().Text(10),
+		"blockNumber":         s.BlockNumber,
+		"correctAmountIn":     s.CorrectAmountIn.Text(10),
+		"correctAmountOut":    s.CorrectAmountOut.Text(10),
+		"correctBegBalIn":     s.CorrectBegBalIn.Text(10),
+		"correctBegBalOut":    s.CorrectBegBalOut.Text(10),
+		"correctEndBalIn":     s.CorrectEndBalIn.Text(10),
+		"correctEndBalOut":    s.CorrectEndBalOut.Text(10),
+		"correctingReasons":   strings.Join(s.CorrectingReasons, "-"),
+		"date":                s.Date(),
+		"decimals":            s.Decimals,
+		"endBal":              s.EndBal.Text(10),
+		"endBalCalc":          s.EndBalCalc().Text(10),
+		"endBalDiff":          s.EndBalDiff().Text(10),
+		"gasOut":              s.GasOut.Text(10),
 		"internalIn":          s.InternalIn.Text(10),
-		"selfDestructIn":      s.SelfDestructIn.Text(10),
+		"internalOut":         s.InternalOut.Text(10),
+		"logIndex":            s.LogIndex,
 		"minerBaseRewardIn":   s.MinerBaseRewardIn.Text(10),
 		"minerNephewRewardIn": s.MinerNephewRewardIn.Text(10),
 		"minerTxFeeIn":        s.MinerTxFeeIn.Text(10),
 		"minerUncleRewardIn":  s.MinerUncleRewardIn.Text(10),
-		"correctingIn":        s.CorrectingIn.Text(10),
 		"prefundIn":           s.PrefundIn.Text(10),
-		"totalOut":            s.TotalOut().Text(10),
-		"amountOut":           s.AmountOut.Text(10),
-		"internalOut":         s.InternalOut.Text(10),
-		"correctingOut":       s.CorrectingOut.Text(10),
-		"selfDestructOut":     s.SelfDestructOut.Text(10),
-		"gasOut":              s.GasOut.Text(10),
-		"totalOutLessGas":     s.TotalOutLessGas().Text(10),
-		"begBalDiff":          s.BegBalDiff().Text(10),
-		"endBalDiff":          s.EndBalDiff().Text(10),
-		"endBalCalc":          s.EndBalCalc().Text(10),
 		"prevBal":             s.PrevBal.Text(10),
+		"priceSource":         s.PriceSource,
+		"recipient":           s.Recipient,
+		"reconciled":          s.Reconciled(),
+		"selfDestructIn":      s.SelfDestructIn.Text(10),
+		"selfDestructOut":     s.SelfDestructOut.Text(10),
+		"sender":              s.Sender,
+		"spotPrice":           s.SpotPrice,
+		"symbol":              s.Symbol,
+		"timestamp":           s.Timestamp,
+		"totalIn":             s.TotalIn().Text(10),
+		"totalOut":            s.TotalOut().Text(10),
+		"transactionHash":     s.TransactionHash,
+		"transactionIndex":    s.TransactionIndex,
 	}
 
 	order = []string{
 		"blockNumber", "transactionIndex", "logIndex", "transactionHash", "timestamp", "date",
 		"asset", "symbol", "decimals", "spotPrice", "priceSource", "accountedFor",
 		"sender", "recipient", "begBal", "amountNet", "endBal", "reconciled",
-		"totalIn", "amountIn", "internalIn", "selfDestructIn", "minerBaseRewardIn", "minerNephewRewardIn",
+		"totalIn", "amountIn", "internalIn", "correctBegBalIn", "correctAmountIn", "correctEndBalIn",
+		"selfDestructIn", "minerBaseRewardIn", "minerNephewRewardIn",
 		"minerTxFeeIn", "minerUncleRewardIn", "prefundIn", "totalOut", "amountOut", "internalOut",
-		"selfDestructOut", "gasOut", "totalOutLessGas", "prevBal", "begBalDiff",
-		"endBalDiff", "endBalCalc", "correctingReason",
+		"correctBegBalOut", "correctAmountOut", "correctEndBalOut", "selfDestructOut",
+		"gasOut", "prevBal", "begBalDiff", "endBalDiff", "endBalCalc", "correctingReasons",
 	}
 
 	if extraOpts["ether"] == true {
 		decimals := int(s.Decimals)
-		model["begBalEth"] = s.BegBal.ToEtherStr(decimals)
-		model["amountNetEth"] = s.AmountNet().ToEtherStr(decimals)
-		model["endBalEth"] = s.EndBal.ToEtherStr(decimals)
-		model["totalInEth"] = s.TotalIn().ToEtherStr(decimals)
 		model["amountInEth"] = s.AmountIn.ToEtherStr(decimals)
+		model["amountNetEth"] = s.AmountNet().ToEtherStr(decimals)
+		model["amountOutEth"] = s.AmountOut.ToEtherStr(decimals)
+		model["begBalDiffEth"] = s.BegBalDiff().ToEtherStr(decimals)
+		model["begBalEth"] = s.BegBal.ToEtherStr(decimals)
+		model["correctAmountInEth"] = s.CorrectAmountIn.ToEtherStr(decimals)
+		model["correctAmountOutEth"] = s.CorrectAmountOut.ToEtherStr(decimals)
+		model["correctBegBalInEth"] = s.CorrectBegBalIn.ToEtherStr(decimals)
+		model["correctBegBalOutEth"] = s.CorrectBegBalOut.ToEtherStr(decimals)
+		model["correctEndBalInEth"] = s.CorrectEndBalIn.ToEtherStr(decimals)
+		model["correctEndBalOutEth"] = s.CorrectEndBalOut.ToEtherStr(decimals)
+		model["endBalCalcEth"] = s.EndBalCalc().ToEtherStr(decimals)
+		model["endBalDiffEth"] = s.EndBalDiff().ToEtherStr(decimals)
+		model["endBalEth"] = s.EndBal.ToEtherStr(decimals)
+		model["gasOutEth"] = s.GasOut.ToEtherStr(decimals)
 		model["internalInEth"] = s.InternalIn.ToEtherStr(decimals)
-		model["selfDestructInEth"] = s.SelfDestructIn.ToEtherStr(decimals)
+		model["internalOutEth"] = s.InternalOut.ToEtherStr(decimals)
 		model["minerBaseRewardInEth"] = s.MinerBaseRewardIn.ToEtherStr(decimals)
 		model["minerNephewRewardInEth"] = s.MinerNephewRewardIn.ToEtherStr(decimals)
 		model["minerTxFeeInEth"] = s.MinerTxFeeIn.ToEtherStr(decimals)
 		model["minerUncleRewardInEth"] = s.MinerUncleRewardIn.ToEtherStr(decimals)
-		model["correctingInEth"] = s.CorrectingIn.ToEtherStr(decimals)
 		model["prefundInEth"] = s.PrefundIn.ToEtherStr(decimals)
-		model["totalOutEth"] = s.TotalOut().ToEtherStr(decimals)
-		model["amountOutEth"] = s.AmountOut.ToEtherStr(decimals)
-		model["internalOutEth"] = s.InternalOut.ToEtherStr(decimals)
-		model["correctingOutEth"] = s.CorrectingOut.ToEtherStr(decimals)
-		model["selfDestructOutEth"] = s.SelfDestructOut.ToEtherStr(decimals)
-		model["gasOutEth"] = s.GasOut.ToEtherStr(decimals)
-		model["totalOutLessGasEth"] = s.TotalOutLessGas().ToEtherStr(decimals)
-		model["begBalDiffEth"] = s.BegBalDiff().ToEtherStr(decimals)
-		model["endBalDiffEth"] = s.EndBalDiff().ToEtherStr(decimals)
-		model["endBalCalcEth"] = s.EndBalCalc().ToEtherStr(decimals)
 		model["prevBalEth"] = s.PrevBal.ToEtherStr(decimals)
+		model["selfDestructInEth"] = s.SelfDestructIn.ToEtherStr(decimals)
+		model["selfDestructOutEth"] = s.SelfDestructOut.ToEtherStr(decimals)
+		model["totalInEth"] = s.TotalIn().ToEtherStr(decimals)
+		model["totalOutEth"] = s.TotalOut().ToEtherStr(decimals)
 		order = append(order, []string{"begBalEth", "amountNetEth", "endBalEth",
 			"totalInEth", "amountInEth", "internalInEth", "selfDestructInEth",
 			"minerBaseRewardInEth", "minerNephewRewardInEth", "minerTxFeeInEth",
-			"minerUncleRewardInEth", "correctingInEth", "prefundInEth",
-			"totalOutEth", "amountOutEth", "internalOutEth", "correctingOutEth",
-			"selfDestructOutEth", "gasOutEth", "totalOutLessGasEth", "begBalDiffEth",
-			"endBalDiffEth", "endBalCalcEth", "prevBalEth"}...)
+			"minerUncleRewardInEth", "correctBegBalInEth", "correctAmountInEth", "correctEndBalInEth",
+			"prefundInEth", "totalOutEth", "amountOutEth", "internalOutEth", "correctBegBalOutEth",
+			"correctAmountOutEth", "correctEndBalOutEth", "selfDestructOutEth", "gasOutEth",
+			"begBalDiffEth", "endBalDiffEth", "endBalCalcEth", "prevBalEth"}...)
 	}
 	if asset, loaded, found := nameAddress(extraOpts, s.Asset); found {
 		model["assetName"] = asset.Name
@@ -246,18 +264,38 @@ func (s *Statement) MarshalCache(writer io.Writer) (err error) {
 		return err
 	}
 
-	// CorrectingIn
-	if err = base.WriteValue(writer, &s.CorrectingIn); err != nil {
+	// CorrectAmountIn
+	if err = base.WriteValue(writer, &s.CorrectAmountIn); err != nil {
 		return err
 	}
 
-	// CorrectingOut
-	if err = base.WriteValue(writer, &s.CorrectingOut); err != nil {
+	// CorrectAmountOut
+	if err = base.WriteValue(writer, &s.CorrectAmountOut); err != nil {
 		return err
 	}
 
-	// CorrectingReason
-	if err = base.WriteValue(writer, s.CorrectingReason); err != nil {
+	// CorrectBegBalIn
+	if err = base.WriteValue(writer, &s.CorrectBegBalIn); err != nil {
+		return err
+	}
+
+	// CorrectBegBalOut
+	if err = base.WriteValue(writer, &s.CorrectBegBalOut); err != nil {
+		return err
+	}
+
+	// CorrectEndBalIn
+	if err = base.WriteValue(writer, &s.CorrectEndBalIn); err != nil {
+		return err
+	}
+
+	// CorrectEndBalOut
+	if err = base.WriteValue(writer, &s.CorrectEndBalOut); err != nil {
+		return err
+	}
+
+	// CorrectingReasons
+	if err = base.WriteValue(writer, s.CorrectingReasons); err != nil {
 		return err
 	}
 
@@ -409,18 +447,38 @@ func (s *Statement) UnmarshalCache(fileVersion uint64, reader io.Reader) (err er
 		return err
 	}
 
-	// CorrectingIn
-	if err = base.ReadValue(reader, &s.CorrectingIn, fileVersion); err != nil {
+	// CorrectAmountIn
+	if err = base.ReadValue(reader, &s.CorrectAmountIn, fileVersion); err != nil {
 		return err
 	}
 
-	// CorrectingOut
-	if err = base.ReadValue(reader, &s.CorrectingOut, fileVersion); err != nil {
+	// CorrectAmountOut
+	if err = base.ReadValue(reader, &s.CorrectAmountOut, fileVersion); err != nil {
 		return err
 	}
 
-	// CorrectingReason
-	if err = base.ReadValue(reader, &s.CorrectingReason, fileVersion); err != nil {
+	// CorrectBegBalIn
+	if err = base.ReadValue(reader, &s.CorrectBegBalIn, fileVersion); err != nil {
+		return err
+	}
+
+	// CorrectBegBalOut
+	if err = base.ReadValue(reader, &s.CorrectBegBalOut, fileVersion); err != nil {
+		return err
+	}
+
+	// CorrectEndBalIn
+	if err = base.ReadValue(reader, &s.CorrectEndBalIn, fileVersion); err != nil {
+		return err
+	}
+
+	// CorrectEndBalOut
+	if err = base.ReadValue(reader, &s.CorrectEndBalOut, fileVersion); err != nil {
+		return err
+	}
+
+	// CorrectingReasons
+	if err = base.ReadValue(reader, &s.CorrectingReasons, fileVersion); err != nil {
 		return err
 	}
 
@@ -557,59 +615,91 @@ var (
 )
 
 type AppPosition struct {
-	Prev, Current, Next base.Blknum
-	First, Last         bool
+	Prev    *Appearance2
+	Current *Appearance2
+	Next    *Appearance2
 }
 
-func (s *Statement) TotalIn() *base.Wei {
-	vals := []base.Wei{
-		s.AmountIn,
-		s.InternalIn,
-		s.SelfDestructIn,
-		s.MinerBaseRewardIn,
-		s.MinerNephewRewardIn,
-		s.MinerTxFeeIn,
-		s.MinerUncleRewardIn,
-		s.CorrectingIn,
-		s.PrefundIn,
+func (a *AppPosition) IsSamePrev(reason string) bool {
+	if reason == "token" {
+		return a.Prev.BlockNumber == a.Current.BlockNumber && a.Prev.TransactionIndex == a.Current.TransactionIndex
+	} else {
+		return a.Prev.BlockNumber == a.Current.BlockNumber
 	}
-
-	sum := base.NewWei(0)
-	for _, n := range vals {
-		sum = new(base.Wei).Add(sum, &n)
-	}
-
-	return sum
 }
 
-func (s *Statement) TotalOut() *base.Wei {
-	vals := []base.Wei{
-		s.AmountOut,
-		s.InternalOut,
-		s.CorrectingOut,
-		s.SelfDestructOut,
-		s.GasOut,
+func (a *AppPosition) IsSameNext(reason string) bool {
+	if reason == "token" {
+		return a.Current.BlockNumber == a.Next.BlockNumber && a.Current.TransactionIndex == a.Next.TransactionIndex
+	} else {
+		return a.Current.BlockNumber == a.Next.BlockNumber
 	}
-
-	sum := base.NewWei(0)
-	for _, n := range vals {
-		sum = new(base.Wei).Add(sum, &n)
-	}
-
-	return sum
 }
 
 func (s *Statement) IsMaterial() bool {
 	return s.TotalIn().Cmp(new(base.Wei)) != 0 || s.TotalOut().Cmp(new(base.Wei)) != 0
 }
 
-func (s *Statement) AmountNet() *base.Wei {
-	return new(base.Wei).Sub(s.TotalIn(), s.TotalOut())
+func (s *Statement) IsEth() bool {
+	return s.Asset == base.FAKE_ETH_ADDRESS
 }
 
-func (s *Statement) TotalOutLessGas() *base.Wei {
-	val := s.TotalOut()
-	return new(base.Wei).Sub(val, &s.GasOut)
+func (s *Statement) IsStableCoin() bool {
+	stables := map[base.Address]bool{
+		sai:  true,
+		dai:  true,
+		usdc: true,
+		usdt: true,
+	}
+	return stables[s.Asset]
+}
+
+func (stmt *Statement) CorrectBeginBalance() bool {
+	if stmt.BegBalDiff().Equal(base.ZeroWei) {
+		return stmt.Reconciled()
+	}
+
+	isLessThan := stmt.BegBalDiff().LessThan(base.ZeroWei)
+	isGreaterThan := stmt.BegBalDiff().GreaterThan(base.ZeroWei)
+	logger.TestLog(true, "Correcting beginning balance", isLessThan, isGreaterThan, stmt.BegBalDiff().Text(10))
+	if isLessThan {
+		stmt.CorrectingReasons = append(stmt.CorrectingReasons, "begBalIn")
+		val := new(base.Wei).Add(&stmt.CorrectBegBalIn, stmt.BegBalDiff())
+		stmt.CorrectBegBalIn = *val
+	} else if isGreaterThan {
+		stmt.CorrectingReasons = append(stmt.CorrectingReasons, "begBalOut")
+		val := new(base.Wei).Add(&stmt.CorrectBegBalOut, stmt.BegBalDiff())
+		stmt.CorrectBegBalOut = *val
+	}
+
+	return stmt.Reconciled()
+}
+
+func (stmt *Statement) CorrectEndBalance() bool {
+	if stmt.EndBalDiff().Equal(base.ZeroWei) {
+		return stmt.Reconciled()
+	}
+
+	isLessThan := stmt.EndBalDiff().LessThan(base.ZeroWei)
+	isGreaterThan := stmt.EndBalDiff().GreaterThan(base.ZeroWei)
+	logger.TestLog(true, "Correcting ending balance", "isLess:", isLessThan, "isGreater:", isGreaterThan, "diff:", stmt.EndBalDiff().Text(10))
+	if isLessThan {
+		stmt.CorrectingReasons = append(stmt.CorrectingReasons, "endBalIn")
+		val := new(base.Wei).Add(&stmt.CorrectEndBalIn, stmt.EndBalDiff())
+		stmt.CorrectEndBalIn = *val
+		logger.TestLog(true, "correctEndBalIn:", stmt.CorrectEndBalIn.Text(10))
+	} else if isGreaterThan {
+		val := new(base.Wei).Add(&stmt.CorrectEndBalOut, stmt.EndBalDiff())
+		stmt.CorrectEndBalOut = *val
+		stmt.CorrectingReasons = append(stmt.CorrectingReasons, "endBalOut")
+		logger.TestLog(true, "CorrectEndBalOut:", stmt.CorrectEndBalOut.Text(10))
+	}
+
+	return stmt.Reconciled()
+}
+
+func (s *Statement) AmountNet() *base.Wei {
+	return new(base.Wei).Sub(s.TotalIn(), s.TotalOut())
 }
 
 func (s *Statement) BegBalDiff() *base.Wei {
@@ -637,50 +727,46 @@ func (s *Statement) Reconciled() bool {
 	return (s.EndBalDiff().Equal(zero) && s.BegBalDiff().Equal(zero))
 }
 
-func (s *Statement) IsEth() bool {
-	return s.Asset == base.FAKE_ETH_ADDRESS
+func (s *Statement) TotalIn() *base.Wei {
+	vals := []base.Wei{
+		s.AmountIn,
+		s.InternalIn,
+		s.SelfDestructIn,
+		s.MinerBaseRewardIn,
+		s.MinerNephewRewardIn,
+		s.MinerTxFeeIn,
+		s.MinerUncleRewardIn,
+		s.CorrectBegBalIn,
+		s.CorrectAmountIn,
+		s.CorrectEndBalIn,
+		s.PrefundIn,
+	}
+
+	sum := base.NewWei(0)
+	for _, n := range vals {
+		sum = new(base.Wei).Add(sum, &n)
+	}
+
+	return sum
 }
 
-func (s *Statement) IsStableCoin() bool {
-	stables := map[base.Address]bool{
-		sai:  true,
-		dai:  true,
-		usdc: true,
-		usdt: true,
+func (s *Statement) TotalOut() *base.Wei {
+	vals := []base.Wei{
+		s.AmountOut,
+		s.InternalOut,
+		s.CorrectBegBalOut,
+		s.CorrectAmountOut,
+		s.CorrectEndBalOut,
+		s.SelfDestructOut,
+		s.GasOut,
 	}
-	return stables[s.Asset]
-}
 
-func (stmt *Statement) CorrectBeginBalance() bool {
-	if !stmt.BegBalDiff().Equal(base.ZeroWei) {
-		logger.TestLog(true, "Correcting beginning balance")
-		if stmt.BegBalDiff().LessThan(base.ZeroWei) {
-			stmt.CorrectingReason = "begbal-in"
-			val := new(base.Wei).Add(&stmt.CorrectingIn, stmt.BegBalDiff())
-			stmt.CorrectingIn = *val
-		} else {
-			stmt.CorrectingReason = "begbal-out"
-			val := new(base.Wei).Add(&stmt.CorrectingOut, stmt.BegBalDiff())
-			stmt.CorrectingOut = *val
-		}
+	sum := base.NewWei(0)
+	for _, n := range vals {
+		sum = new(base.Wei).Add(sum, &n)
 	}
-	return stmt.Reconciled()
-}
 
-func (stmt *Statement) CorrectEndBalance() bool {
-	if !stmt.EndBalDiff().Equal(base.ZeroWei) {
-		logger.TestLog(true, "Correcting ending balance")
-		if stmt.EndBalDiff().LessThan(base.ZeroWei) {
-			stmt.CorrectingReason = "endbal-out"
-			val := new(base.Wei).Add(&stmt.CorrectingOut, stmt.EndBalDiff())
-			stmt.CorrectingOut = *val
-		} else {
-			stmt.CorrectingReason = "endbal-in"
-			val := new(base.Wei).Add(&stmt.CorrectingIn, stmt.EndBalDiff())
-			stmt.CorrectingIn = *val
-		}
-	}
-	return stmt.Reconciled()
+	return sum
 }
 
 // EXISTING_CODE

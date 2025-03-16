@@ -39,8 +39,8 @@ func (s *Statement) CorrectForNullTransfer() bool {
 	amt := s.TotalIn() // use totalIn since this is the amount that was faked
 	s.AmountOut = *base.ZeroWei
 	s.AmountIn = *base.ZeroWei
-	s.CorrectingIn = *amt
-	s.CorrectingOut = *amt
-	s.CorrectingReason = "null-transfer"
+	s.CorrectAmountIn = *amt
+	s.CorrectAmountOut = *amt
+	s.CorrectingReasons = append(s.CorrectingReasons, "nullTransfer")
 	return s.Reconciled()
 }

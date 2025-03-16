@@ -154,6 +154,18 @@ func (s *Appearance) FinishUnmarshal(fileVersion uint64) {
 // EXISTING_CODE
 //
 
+type Appearance2 struct {
+	BlockNumber      base.Blknum
+	TransactionIndex base.Txnum
+}
+
+func NewAppearance2(app *Appearance) Appearance2 {
+	return Appearance2{
+		BlockNumber:      base.Blknum(app.BlockNumber),
+		TransactionIndex: base.Txnum(app.TransactionIndex),
+	}
+}
+
 func (s *Appearance) GetKey() string {
 	return fmt.Sprintf("%s\t%09d\t%05d", s.Address, s.BlockNumber, s.TransactionIndex)
 }
