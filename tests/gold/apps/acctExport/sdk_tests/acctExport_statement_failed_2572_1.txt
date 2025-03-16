@@ -9,6 +9,351 @@ Asset:  [0xf5b2c59f6db42ffcdfc1625999c81fdf17953384]
 LastBlock:  15549163
 Caps:  cache,decache,ether
 Format:  json
+0: 10277683 200
+1: 10277711 64
+2: 10277776 94
+3: 10277780 102
+4: 10367593 194
+5: 10367608 23
+6: 10958509 72
+7: 10958518 77
+8: 10972535 102
+9: 10972735 84
+10: 11472274 222
+11: 11947926 77
+12: 12110203 88
+13: 12517694 73
+14: 12655959 195
+15: 12697277 188
+16: 12697303 99
+17: 12697322 281
+18: 12697324 88
+19: 13193257 227
+
+------------------------------------
+~~~ GetStatements: 10277683.200 ~~~
+ETH is NOT of interest
+Extracting statements from logs.
+There were no statements generated from logs.
+~~~ Leaving GetStatements: 10277683.200 ~~~
+------------------------------------ 0 statements generated.
+
+
+------------------------------------
+~~~ GetStatements: 10277711.64 ~~~
+ETH is NOT of interest
+Extracting statements from logs.
+There were no statements generated from logs.
+~~~ Leaving GetStatements: 10277711.64 ~~~
+------------------------------------ 0 statements generated.
+
+
+------------------------------------
+~~~ GetStatements: 10277776.94 ~~~
+ETH is NOT of interest
+Extracting statements from logs.
+There were no statements generated from logs.
+~~~ Leaving GetStatements: 10277776.94 ~~~
+------------------------------------ 0 statements generated.
+
+
+------------------------------------
+~~~ GetStatements: 10277780.102 ~~~
+ETH is NOT of interest
+Extracting statements from logs.
+There were no statements generated from logs.
+~~~ Leaving GetStatements: 10277780.102 ~~~
+------------------------------------ 0 statements generated.
+
+
+------------------------------------
+~~~ GetStatements: 10367593.194 ~~~
+ETH is NOT of interest
+Extracting statements from logs.
+There were no statements generated from logs.
+~~~ Leaving GetStatements: 10367593.194 ~~~
+------------------------------------ 0 statements generated.
+
+
+------------------------------------
+~~~ GetStatements: 10367608.23 ~~~
+ETH is NOT of interest
+Extracting statements from logs.
+There were no statements generated from logs.
+~~~ Leaving GetStatements: 10367608.23 ~~~
+------------------------------------ 0 statements generated.
+
+
+------------------------------------
+~~~ GetStatements: 10958509.72 ~~~
+ETH is NOT of interest
+Extracting statements from logs.
+There were no statements generated from logs.
+~~~ Leaving GetStatements: 10958509.72 ~~~
+------------------------------------ 0 statements generated.
+
+
+------------------------------------
+~~~ GetStatements: 10958518.77 ~~~
+ETH is NOT of interest
+Extracting statements from logs.
+There were no statements generated from logs.
+~~~ Leaving GetStatements: 10958518.77 ~~~
+------------------------------------ 0 statements generated.
+
+
+------------------------------------
+~~~ GetStatements: 10972535.102 ~~~
+ETH is NOT of interest
+Extracting statements from logs.
+There were no statements generated from logs.
+~~~ Leaving GetStatements: 10972535.102 ~~~
+------------------------------------ 0 statements generated.
+
+
+------------------------------------
+~~~ GetStatements: 10972735.84 ~~~
+ETH is NOT of interest
+Extracting statements from logs.
+There were no statements generated from logs.
+~~~ Leaving GetStatements: 10972735.84 ~~~
+------------------------------------ 0 statements generated.
+
+
+------------------------------------
+~~~ GetStatements: 11472274.222 ~~~
+ETH is NOT of interest
+Extracting statements from logs.
+There were no statements generated from logs.
+~~~ Leaving GetStatements: 11472274.222 ~~~
+------------------------------------ 0 statements generated.
+
+
+------------------------------------
+~~~ GetStatements: 11947926.77 ~~~
+ETH is NOT of interest
+Extracting statements from logs.
+There were no statements generated from logs.
+~~~ Leaving GetStatements: 11947926.77 ~~~
+------------------------------------ 0 statements generated.
+
+
+------------------------------------
+~~~ GetStatements: 12110203.88 ~~~
+ETH is NOT of interest
+Extracting statements from logs.
+There were no statements generated from logs.
+~~~ Leaving GetStatements: 12110203.88 ~~~
+------------------------------------ 0 statements generated.
+
+
+------------------------------------
+~~~ GetStatements: 12517694.73 ~~~
+ETH is NOT of interest
+Extracting statements from logs.
+There were no statements generated from logs.
+~~~ Leaving GetStatements: 12517694.73 ~~~
+------------------------------------ 0 statements generated.
+
+
+------------------------------------
+~~~ GetStatements: 12655959.195 ~~~
+ETH is NOT of interest
+Extracting statements from logs.
+There were no statements generated from logs.
+~~~ Leaving GetStatements: 12655959.195 ~~~
+------------------------------------ 0 statements generated.
+
+
+------------------------------------
+~~~ GetStatements: 12697277.188 ~~~
+ETH is NOT of interest
+Extracting statements from logs.
+There were no statements generated from logs.
+~~~ Leaving GetStatements: 12697277.188 ~~~
+------------------------------------ 0 statements generated.
+
+
+------------------------------------
+~~~ GetStatements: 12697303.99 ~~~
+ETH is NOT of interest
+Extracting statements from logs.
+There were no statements generated from logs.
+~~~ Leaving GetStatements: 12697303.99 ~~~
+------------------------------------ 0 statements generated.
+
+
+------------------------------------
+~~~ GetStatements: 12697322.281 ~~~
+ETH is NOT of interest
+Extracting statements from logs.
+There were no statements generated from logs.
+~~~ Leaving GetStatements: 12697322.281 ~~~
+------------------------------------ 0 statements generated.
+
+
+------------------------------------
+~~~ GetStatements: 12697324.88 ~~~
+ETH is NOT of interest
+Extracting statements from logs.
+There were no statements generated from logs.
+~~~ Leaving GetStatements: 12697324.88 ~~~
+------------------------------------ 0 statements generated.
+
+
+------------------------------------
+~~~ GetStatements: 13193257.227 ~~~
+ETH is NOT of interest
+Extracting statements from logs.
+There were no statements generated from logs.
+~~~ Leaving GetStatements: 13193257.227 ~~~
+------------------------------------ 0 statements generated.
+
+0: 13269886 45
+1: 13269900 177
+2: 13269973 178
+3: 13772984 129
+4: 14359849 140
+5: 14359857 202
+6: 14359877 153
+7: 14360325 141
+8: 14360361 80
+9: 14366254 17
+10: 14436713 58
+11: 14436713 59
+12: 14469880 33
+13: 15549162 83
+
+------------------------------------
+~~~ GetStatements: 13269886.45 ~~~
+ETH is NOT of interest
+Extracting statements from logs.
+There were no statements generated from logs.
+~~~ Leaving GetStatements: 13269886.45 ~~~
+------------------------------------ 0 statements generated.
+
+
+------------------------------------
+~~~ GetStatements: 13269900.177 ~~~
+ETH is NOT of interest
+Extracting statements from logs.
+There were no statements generated from logs.
+~~~ Leaving GetStatements: 13269900.177 ~~~
+------------------------------------ 0 statements generated.
+
+
+------------------------------------
+~~~ GetStatements: 13269973.178 ~~~
+ETH is NOT of interest
+Extracting statements from logs.
+There were no statements generated from logs.
+~~~ Leaving GetStatements: 13269973.178 ~~~
+------------------------------------ 0 statements generated.
+
+
+------------------------------------
+~~~ GetStatements: 13772984.129 ~~~
+ETH is NOT of interest
+Extracting statements from logs.
+There were no statements generated from logs.
+~~~ Leaving GetStatements: 13772984.129 ~~~
+------------------------------------ 0 statements generated.
+
+
+------------------------------------
+~~~ GetStatements: 14359849.140 ~~~
+ETH is NOT of interest
+Extracting statements from logs.
+There were no statements generated from logs.
+~~~ Leaving GetStatements: 14359849.140 ~~~
+------------------------------------ 0 statements generated.
+
+
+------------------------------------
+~~~ GetStatements: 14359857.202 ~~~
+ETH is NOT of interest
+Extracting statements from logs.
+There were no statements generated from logs.
+~~~ Leaving GetStatements: 14359857.202 ~~~
+------------------------------------ 0 statements generated.
+
+
+------------------------------------
+~~~ GetStatements: 14359877.153 ~~~
+ETH is NOT of interest
+Extracting statements from logs.
+There were no statements generated from logs.
+~~~ Leaving GetStatements: 14359877.153 ~~~
+------------------------------------ 0 statements generated.
+
+
+------------------------------------
+~~~ GetStatements: 14360325.141 ~~~
+ETH is NOT of interest
+Extracting statements from logs.
+There were no statements generated from logs.
+~~~ Leaving GetStatements: 14360325.141 ~~~
+------------------------------------ 0 statements generated.
+
+
+------------------------------------
+~~~ GetStatements: 14360361.80 ~~~
+ETH is NOT of interest
+Extracting statements from logs.
+There were no statements generated from logs.
+~~~ Leaving GetStatements: 14360361.80 ~~~
+------------------------------------ 0 statements generated.
+
+
+------------------------------------
+~~~ GetStatements: 14366254.17 ~~~
+ETH is NOT of interest
+Extracting statements from logs.
+There were no statements generated from logs.
+~~~ Leaving GetStatements: 14366254.17 ~~~
+------------------------------------ 0 statements generated.
+
+
+------------------------------------
+~~~ GetStatements: 14436713.58 ~~~
+ETH is NOT of interest
+Extracting statements from logs.
+There were no statements generated from logs.
+~~~ Leaving GetStatements: 14436713.58 ~~~
+------------------------------------ 0 statements generated.
+
+
+------------------------------------
+~~~ GetStatements: 14436713.59 ~~~
+ETH is NOT of interest
+Extracting statements from logs.
+There were no statements generated from logs.
+~~~ Leaving GetStatements: 14436713.59 ~~~
+------------------------------------ 0 statements generated.
+
+
+------------------------------------
+~~~ GetStatements: 14469880.33 ~~~
+ETH is NOT of interest
+Extracting statements from logs.
+There were no statements generated from logs.
+~~~ Leaving GetStatements: 14469880.33 ~~~
+------------------------------------ 0 statements generated.
+
+
+------------------------------------
+~~~ GetStatements: 15549162.83 ~~~
+ETH is NOT of interest
+Extracting statements from logs.
+1 statements generated from logs.
+------------------------------------
+# Reason: token
+Trial balance for  0xf5b2c59f6db42ffcdfc1625999c81fdf17953384 0x054993ab0f2b1acc0fdc65405ee203b4271bebe6 at stmt 15549162 83 1774
+------------------------------------
+Sender: false Recipient: true 0xa27f25d6a8f876c8cdd506f6cc59f3166f2a494f 0x054993ab0f2b1acc0fdc65405ee203b4271bebe6 0x054993ab0f2b1acc0fdc65405ee203b4271bebe6
+adjustForIntraTransfer2 isToken: true isPrevSame: false isNextSame: false
+XXXNot found  0xf5b2c59f6db42ffcdfc1625999c81fdf17953384
+Using block-1 balance for  0xf5b2c59f6db42ffcdfc1625999c81fdf17953384 at block 0 of 0
 A possible nullTransfer
   nLogs:             1000
     lotsOfLogs:      --> true
@@ -19,6 +364,10 @@ A possible nullTransfer
   Material:          true
     hasBalanceChange: --> false
 Correcting token transfer for a null transfer
+Statement reconciles? true token
+EndBalCalc: 2017044745122853478376 0 2017044745122853478376
+Inserting  0xf5b2c59f6db42ffcdfc1625999c81fdf17953384 at block 15549162 of 2017044745122853478376
+Found  0xf5b2c59f6db42ffcdfc1625999c81fdf17953384 at block 15549162 of 2017044745122853478376
 =========================================================
 ===> PRICING FOR 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) using Uniswap
 =========================================================
@@ -37,9 +386,10 @@ bigPrice:            1440.1112570636812698
 price:               1440.1112570636813
 source:              uniswap
 ===================================================
-Previous:               14469880
-Current:                15549162
-Next:                   15549163
+Reason:                 token
+Previous:               14469880 33 ( false )
+Current:                15549162 83 ( true )
+Next:                   15549163 0 ( false )
 accountedFor:           0x054993ab0f2b1acc0fdc65405ee203b4271bebe6
 sender:                 0xa27f25d6a8f876c8cdd506f6cc59f3166f2a494f  ==>  0x054993ab0f2b1acc0fdc65405ee203b4271bebe6
 asset:                  0xf5b2c59f6db42ffcdfc1625999c81fdf17953384 (mdai.io) decimals: 18
@@ -57,14 +407,19 @@ Trial balance:
                        ======================= 
    endBal:              2017.044745122853478376 (0)
    endBalCalc:          2017.044745122853478376
-   rollingBalance:      0
 --------------------------------------------------- 
-   correctingIn:        2017
-   correctingOut:       2017
-   correctingReasons:   null-transfer
+   correctAmountIn:     2017
+   correctAmountOut:    2017
+   correctingReasons:   nullTransfer
    material:            true
    reconciled:          true
 ---------------------------------------------------
+----------Done  true  --------------------------
+
+Statement is material - appending. reconciled: true
+~~~ Leaving GetStatements: 15549162.83 ~~~
+------------------------------------ 1 statements generated.
+
 {
   "data": [
     {
@@ -77,9 +432,13 @@ Trial balance:
       "begBal": "2017044745122853478376",
       "begBalDiff": "0",
       "blockNumber": 15549162,
-      "correctingIn": "2017000000000000000000",
-      "correctingOut": "2017000000000000000000",
-      "correctingReasons": "null-transfer",
+      "correctAmountIn": "2017000000000000000000",
+      "correctAmountOut": "2017000000000000000000",
+      "correctBegBalIn": "0",
+      "correctBegBalOut": "0",
+      "correctEndBalIn": "0",
+      "correctEndBalOut": "0",
+      "correctingReasons": "nullTransfer",
       "date": "2022-09-16 22:32:11 UTC",
       "decimals": 18,
       "endBal": "2017044745122853478376",
@@ -106,7 +465,6 @@ Trial balance:
       "timestamp": 1663367531,
       "totalIn": "2017000000000000000000",
       "totalOut": "2017000000000000000000",
-      "totalOutLessGas": "2017000000000000000000",
       "transactionHash": "0x506e7978ba52886681b75797e4403579ba703b5f9df576a34602ada1709085fb",
       "transactionIndex": 83
     }

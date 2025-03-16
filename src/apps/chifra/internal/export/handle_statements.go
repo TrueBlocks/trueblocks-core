@@ -109,10 +109,12 @@ func (opts *ExportOptions) HandleStatements(rCtx *output.RenderCtx, monitorArray
 
 						apps := make([]types.Appearance, 0, len(thisMap))
 						for _, tx := range txArray {
-							apps = append(apps, types.Appearance{
+							app := types.Appearance{
 								BlockNumber:      uint32(tx.BlockNumber),
 								TransactionIndex: uint32(tx.TransactionIndex),
-							})
+							}
+							logger.TestLog(true, fmt.Sprintf("%d:", len(apps)), app.BlockNumber, app.TransactionIndex)
+							apps = append(apps, app)
 						}
 
 						ledgerOpts := &ledger1.ReconcilerOptions{
@@ -129,26 +131,19 @@ func (opts *ExportOptions) HandleStatements(rCtx *output.RenderCtx, monitorArray
 						recon = ledger1.NewReconciler(opts.Conn, ledgerOpts)
 						items := make([]types.Statement, 0, len(thisMap))
 						for i, app := range apps {
-							prev := types.NewAppearance2(&types.Appearance{BlockNumber: 0, TransactionIndex: 0})
-							if app.BlockNumber > 0 {
-								prev = types.NewAppearance2(&app)
-							}
+							prev := (*types.Appearance)(nil)
 							if i > 0 {
-								prev = types.NewAppearance2(&apps[i-1])
+								prev = &apps[i-1]
 							}
-							next := types.Appearance2{BlockNumber: base.Blknum(app.BlockNumber) + 1, TransactionIndex: 0}
+							next := &types.Appearance{BlockNumber: app.BlockNumber + 1, TransactionIndex: 0}
 							if i < len(apps)-1 {
-								next = types.NewAppearance2(&apps[i+1])
+								next = &apps[i+1]
 							}
-							app2 := types.Appearance2{
-								BlockNumber:      base.Blknum(app.BlockNumber),
-								TransactionIndex: base.Txnum(app.TransactionIndex),
-							}
-							pos := &types.AppPosition{
-								Prev:    &prev,
-								Current: &app2,
-								Next:    &next,
-							}
+
+							pos := &types.AppNode{}
+							pos.SetPrev(prev)
+							pos.SetCur(&app)
+							pos.SetNext(next)
 
 							if statements, err := recon.GetStatements(pos, txArray[i]); err != nil {
 								errorChan <- err

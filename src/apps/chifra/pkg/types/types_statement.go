@@ -614,28 +614,6 @@ var (
 	usdt = base.HexToAddress("0xdac17f958d2ee523a2206206994597c13d831ec7")
 )
 
-type AppPosition struct {
-	Prev    *Appearance2
-	Current *Appearance2
-	Next    *Appearance2
-}
-
-func (a *AppPosition) IsSamePrev(reason string) bool {
-	if reason == "token" {
-		return a.Prev.BlockNumber == a.Current.BlockNumber && a.Prev.TransactionIndex == a.Current.TransactionIndex
-	} else {
-		return a.Prev.BlockNumber == a.Current.BlockNumber
-	}
-}
-
-func (a *AppPosition) IsSameNext(reason string) bool {
-	if reason == "token" {
-		return a.Current.BlockNumber == a.Next.BlockNumber && a.Current.TransactionIndex == a.Next.TransactionIndex
-	} else {
-		return a.Current.BlockNumber == a.Next.BlockNumber
-	}
-}
-
 func (s *Statement) IsMaterial() bool {
 	return s.TotalIn().Cmp(new(base.Wei)) != 0 || s.TotalOut().Cmp(new(base.Wei)) != 0
 }

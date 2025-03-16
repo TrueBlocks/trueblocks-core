@@ -73,18 +73,19 @@ func (r *Reconciler1) SkipAirdrop(addr base.Address) bool {
 	// }
 }
 
-func (r *Reconciler1) adjustForIntraTransfer(reason string, pos *types.AppPosition, stmt *types.Statement, trans *types.Transaction) error {
+func (r *Reconciler1) adjustForIntraTransfer(reason string, pos *types.AppNode, stmt *types.Statement, trans *types.Transaction) (bool, error) {
 	isToken := reason == "token"
 
-	isPrevSame := pos.Prev.BlockNumber == pos.Current.BlockNumber
-	isNextSame := pos.Next.BlockNumber == pos.Current.BlockNumber
+	isPrevSame := pos.PrevBlock() == pos.CurBlock()
+	isNextSame := pos.NextBlock() == pos.CurBlock()
 	if isToken {
-		isNextSame = pos.Next.BlockNumber == pos.Current.BlockNumber && pos.Next.TransactionIndex == pos.Current.TransactionIndex
+		isNextSame = pos.NextBlock() == pos.CurBlock() && pos.NextTxId() == pos.CurTxId()
 	}
 
+	endCorrected := false
 	running, found := r.Running[stmt.Asset]
 	if found {
-		isPrevSame := running.PreviBlock == pos.Current.BlockNumber
+		isPrevSame := running.PreviBlock == pos.CurBlock()
 		if isToken {
 			isPrevSame = running.PreviBlock == stmt.BlockNumber && running.PreviTxId == stmt.TransactionIndex
 		}
@@ -102,7 +103,7 @@ func (r *Reconciler1) adjustForIntraTransfer(reason string, pos *types.AppPositi
 			if val, err := r.Connection.GetBalanceAtToken(stmt.Asset, stmt.Holder, running.PreviBlock); err != nil {
 				logger.TestLog(true, "----------err GetBalanceAtToken --------------------------")
 				logger.TestLog(true, "")
-				return err
+				return false, err
 			} else {
 				if val == nil {
 					logger.TestLog(true, "Different block (nil)", stmt.Asset, "at block", running.PreviBlock, "and", trans.BlockNumber, "of", running.Amount.Text(10))
@@ -115,8 +116,11 @@ func (r *Reconciler1) adjustForIntraTransfer(reason string, pos *types.AppPositi
 		}
 		// The previous balance is the running balance
 		stmt.PrevBal = running.Amount
-		pos.Prev.BlockNumber = running.PreviBlock
-		pos.Prev.TransactionIndex = running.PreviTxId
+		// pos.SetPrev(&types.Appearance{
+		// 	BlockNumber:      uint32(running.PreviBlock),
+		// 	TransactionIndex: uint32(running.PreviTxId),
+		// })
+
 	} else {
 		logger.TestLog(true, "adjustForIntraTransfer2", "isToken:", isToken, "isPrevSame:", isPrevSame, "isNextSame:", isNextSame)
 		logger.TestLog(true, "XXXNot found ", stmt.Asset)
@@ -124,17 +128,21 @@ func (r *Reconciler1) adjustForIntraTransfer(reason string, pos *types.AppPositi
 		// the previous balance is that beginning balance. Note that this will be zero if blockNumber is 0.
 		logger.TestLog(true, "Using block-1 balance for ", stmt.Asset, "at block", running.PreviBlock, "of", running.Amount.Text(10))
 		stmt.PrevBal = stmt.BegBal
-		pos.Prev.BlockNumber = base.Blknum(base.Max(int(trans.BlockNumber), 1) - 1)
-		pos.Prev.TransactionIndex = base.Blknum(base.Max(int(trans.TransactionIndex), 1) - 1)
+		// pos.SetPrev(&types.Appearance{
+		// 	BlockNumber:      base.Max(uint32(trans.BlockNumber), 1) - 1,
+		// 	TransactionIndex: base.Max(uint32(trans.TransactionIndex), 1) - 1,
+		// })
 	}
 
 	if isNextSame {
+		endCorrected = true
 		stmt.EndBal = *stmt.EndBalCalc()
 	}
-	return nil
+
+	return endCorrected, nil
 }
 
-func (r *Reconciler1) trialBalance(reason string, trans *types.Transaction, stmt *types.Statement, pos *types.AppPosition, correct bool) (bool, error) {
+func (r *Reconciler1) trialBalance(reason string, trans *types.Transaction, stmt *types.Statement, pos *types.AppNode, correct bool) (bool, error) {
 	logger.TestLog(true, "------------------------------------")
 	logger.TestLog(true, "# Reason:", reason)
 	logger.TestLog(true, "Trial balance for ", stmt.Asset, stmt.Holder, "at stmt", stmt.BlockNumber, stmt.TransactionIndex, stmt.LogIndex)
@@ -157,33 +165,24 @@ func (r *Reconciler1) trialBalance(reason string, trans *types.Transaction, stmt
 	}
 	logger.TestLog(true, "Sender:", isSender, "Recipient:", isRecipient, stmt.Sender, stmt.Recipient, stmt.AccountedFor)
 
-	if err := r.adjustForIntraTransfer(reason, pos, stmt, trans); err != nil {
+	if endCorrected, err := r.adjustForIntraTransfer(reason, pos, stmt, trans); err != nil {
 		return false, err
-	}
-
-	if correct && !stmt.Reconciled() {
-		before := stmt.Report()
-		if trans.Receipt != nil && stmt.IsNullTransfer(len(trans.Receipt.Logs), trans.To) {
-			stmt.CorrectForNullTransfer()
+	} else {
+		if endCorrected {
+			logger.TestLog(true, "end balance already corrected", stmt.BegBal.Text(10), stmt.AmountNet().Text(10), stmt.EndBal.Text(10), "==?", stmt.EndBalCalc().Text(10))
+		} else {
+			if correct && !stmt.Reconciled() {
+				if trans.Receipt != nil && stmt.IsNullTransfer(len(trans.Receipt.Logs), trans.To) {
+					stmt.CorrectForNullTransfer()
+				}
+				if !stmt.Reconciled() {
+					stmt.CorrectBeginBalance()
+					stmt.CorrectEndBalance()
+				}
+			} else if !stmt.Reconciled() {
+				logger.TestLog(true, "Not correcting unreconciled balances", reason)
+			}
 		}
-		// var after1, after2, after3 string
-		var after3 string
-		// after1 = stmt.Report()
-		if !stmt.Reconciled() {
-			stmt.CorrectBeginBalance()
-			// after2 = stmt.Report()
-			stmt.CorrectEndBalance()
-			after3 = stmt.Report()
-		}
-		// logger.TestLog(before != after1, "\nbefore,after1", ShowDiff(before, after1))
-		// logger.TestLog(before != after2, "\nbefore,after2", ShowDiff(before, after2))
-		logger.TestLog(before != after3, "\nbefore,after3", ShowDiff(before, after3))
-		// logger.TestLog(after1 != after2, "\nafter1,after2", ShowDiff(after1, after2))
-		// logger.TestLog(after1 != after3, "\nafter1,after3", ShowDiff(after1, after3))
-		// logger.TestLog(after2 != after3, "\nafter2,after3", ShowDiff(after2, after3))
-
-	} else if !stmt.Reconciled() {
-		logger.TestLog(true, "Not correcting unreconciled balances", reason)
 	}
 	logger.TestLog(true, "Statement reconciles?", stmt.Reconciled(), reason)
 
@@ -216,56 +215,173 @@ func (r *Reconciler1) trialBalance(reason string, trans *types.Transaction, stmt
 	return stmt.Reconciled(), nil
 }
 
-func (r *Reconciler1) GetStatements(pos *types.AppPosition, trans *types.Transaction) ([]types.Statement, error) {
+func (r *Reconciler1) GetStatements(pos *types.AppNode, trans *types.Transaction) ([]types.Statement, error) {
+	fail := func(n int) {
+		logger.TestLog(true, fmt.Sprintf("~fail %d~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~", n))
+	}
+
+	logger.TestLog(true, "")
+	logger.TestLog(true, "------------------------------------")
+	logger.TestLog(true, fmt.Sprintf("~~~ GetStatements: %d.%d ~~~", pos.CurBlock(), pos.CurTxId()))
 	results := make([]types.Statement, 0, 20)
 	if types.AssetOfInterest(r.Opts.AssetFilters, base.FAKE_ETH_ADDRESS) {
-		if r.Connection.Store != nil {
-			// walk.Cache_Statement
-			s := &types.StatementGroup{
-				Address:          base.FAKE_ETH_ADDRESS,
-				BlockNumber:      trans.BlockNumber,
-				TransactionIndex: trans.TransactionIndex,
-			}
-			if err := r.Connection.Store.Read(s); err == nil {
-				// success
-				return s.Statements, nil
-			}
-		}
+		logger.TestLog(true, "ETH is of interest")
+		// TODO: BOGUS - TURN BACK ON
+		// if r.Connection.Store != nil {
+		// 	// walk.Cache_Statement
+		// 	s := &types.StatementGroup{
+		// 		Address:          base.FAKE_ETH_ADDRESS,
+		// 		BlockNumber:      trans.BlockNumber,
+		// 		TransactionIndex: trans.TransactionIndex,
+		// 	}
+		// 	if err := r.Connection.Store.Read(s); err == nil {
+		// 		// success
+		// 		logger.TestLog(true, "~from cache~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
+		// 		return s.Statements, nil
+		// 	}
+		// }
 
-		reconciled := false
-		if !r.Opts.UseTraces {
-			if stmt, err := trans.FetchStatement(r.Opts.AsEther, base.FAKE_ETH_ADDRESS, r.Opts.AccountFor); err != nil {
+		if r.Opts.UseTraces {
+			logger.TestLog(true, "Skipping top-level - going right to traces")
+			if traces, err := r.Connection.GetTracesByTransactionHash(trans.Hash.Hex(), trans); err != nil {
+				fail(1)
 				return nil, err
 			} else {
-				var err error
-				if reconciled, err = r.trialBalance("top-level", trans, stmt, pos, false); err != nil {
+				if stmt, err := trans.FetchStatementFromTraces(traces, r.Opts.AccountFor, r.Opts.AsEther); err != nil {
+					fail(2)
+					logger.Error(err.Error())
+				} else {
+					logger.TestLog(true, "Fetched a single statement from traces")
+					if _, err = r.trialBalance("traces", trans, stmt, pos, true); err != nil {
+						fail(3)
+						return nil, err
+					} else {
+						if stmt.IsMaterial() { // append even if not reconciled
+							// TODO: BOGUS - TURN BACK ON
+							// _ = r.WriteToCache(base.FAKE_ETH_ADDRESS, stmt, trans.Timestamp)
+							// ReportProgress(stmt)
+							logger.TestLog(true, "Statement is material - appending. reconciled:", stmt.Reconciled())
+							results = append(results, *stmt)
+						} else {
+							logger.TestLog(true, "Statement was not material")
+						}
+					}
+				}
+			}
+		} else {
+			logger.TestLog(true, "Attempting to reconcile at top level")
+			if stmt, err := trans.FetchStatement(r.Opts.AsEther, base.FAKE_ETH_ADDRESS, r.Opts.AccountFor); err != nil {
+				fail(4)
+				return nil, err
+			} else {
+				if reconciled, err := r.trialBalance("top-level", trans, stmt, pos, false); err != nil {
+					fail(5)
 					return nil, err
 				} else {
-					if reconciled && stmt.IsMaterial() {
-						_ = r.WriteToCache(base.FAKE_ETH_ADDRESS, stmt, trans.Timestamp)
-						ReportProgress(stmt)
-						results = append(results, *stmt)
+					if reconciled {
+						if stmt.IsMaterial() {
+							// TODO: BOGUS - TURN BACK ON
+							// _ = r.WriteToCache(base.FAKE_ETH_ADDRESS, stmt, trans.Timestamp)
+							// ReportProgress(stmt)
+							logger.TestLog(true, "Statement is material and reconciled - appending")
+							results = append(results, *stmt)
+						} else {
+							logger.TestLog(true, "Statement was not material")
+						}
+					} else {
+						logger.TestLog(true, "Failed reconcile, decending into to traces")
+						if traces, err := r.Connection.GetTracesByTransactionHash(trans.Hash.Hex(), trans); err != nil {
+							fail(5)
+							return nil, err
+						} else {
+							if stmt, err := trans.FetchStatementFromTraces(traces, r.Opts.AccountFor, r.Opts.AsEther); err != nil {
+								fail(6)
+								logger.Error(err.Error())
+							} else {
+								logger.TestLog(true, "Fetched a single statement from traces")
+								if _, err = r.trialBalance("traces", trans, stmt, pos, true); err != nil {
+									fail(7)
+									return nil, err
+								} else {
+									if stmt.IsMaterial() { // append even if not reconciled
+										// TODO: BOGUS - TURN BACK ON
+										// _ = r.WriteToCache(base.FAKE_ETH_ADDRESS, stmt, trans.Timestamp)
+										// ReportProgress(stmt)
+										logger.TestLog(true, "Statement is material - appending. reconciled:", stmt.Reconciled())
+										results = append(results, *stmt)
+									} else {
+										logger.TestLog(true, "Statement was not material")
+									}
+								}
+							}
+						}
 					}
 				}
 			}
 		}
+	} else {
+		logger.TestLog(true, "ETH is NOT of interest")
+	}
 
-		if r.Opts.UseTraces || !reconciled {
-			if traces, err := r.Connection.GetTracesByTransactionHash(trans.Hash.Hex(), trans); err != nil {
-				return nil, err
+	if trans.Receipt == nil {
+		logger.TestLog(true, "Transaction receipt is nil. No log statements.")
+	} else {
+		logger.TestLog(true, "Extracting statements from logs.")
+		if statements, err := trans.Receipt.FetchStatements(r.Opts.AccountFor, r.Opts.AssetFilters, r.Opts.AppFilters); err != nil {
+			fail(8)
+			return nil, err
+		} else {
+			if len(statements) == 0 {
+				logger.TestLog(true, "There were no statements generated from logs.")
 			} else {
-				if stmt, err := trans.FetchStatementFromTraces(traces, r.Opts.AccountFor, r.Opts.AsEther); err != nil {
-					// logger.Warn(colors.Yellow+"Statement at ", fmt.Sprintf("%d.%d", trans.BlockNumber, trans.TransactionIndex), " does not reconcile."+colors.Off)
-					// TODO: Silent fail?
-					logger.Error(err.Error())
-				} else {
-					if _, err = r.trialBalance("traces", trans, stmt, pos, true); err != nil {
-						return nil, err
+				logger.TestLog(true, len(statements), "statements generated from logs.")
+				for _, s := range statements {
+					// TODO: BOGUS - TURN BACK ON
+					// if r.Connection.Store != nil {
+					// 	// walk.Cache_Statement
+					// 	sg := &types.StatementGroup{
+					// 		Address:          s.Asset,
+					// 		BlockNumber:      trans.BlockNumber,
+					// 		TransactionIndex: trans.TransactionIndex,
+					// 	}
+					// 	if err := r.Connection.Store.Read(sg); err == nil {
+					// 		// success
+					// 		results = append(results, sg.Statements...)
+					// 		continue
+					// 	}
+					// }
+
+					stmt := &s
+					stmt.Symbol = stmt.Asset.DefaultSymbol()
+					stmt.Decimals = base.Value(18)
+					if name, found := r.Names[stmt.Asset]; found {
+						// TODO: BOGUS - TURN BACK ON
+						// if r.RemoveAirdrops && r.SkipAirdrop(stmt.Asset) {
+						// 	logger.TestLog(true, "Removing airdrop for", stmt.Asset, "at block", stmt.BlockNumber, ".", stmt.TransactionIndex)
+						// 	continue
+						// }
+						if name.Symbol != "" {
+							stmt.Symbol = name.Symbol
+						}
+						if name.Decimals != 0 {
+							stmt.Decimals = base.Value(name.Decimals)
+						}
+					}
+
+					if _, err := r.trialBalance("token", trans, stmt, pos, true); err != nil {
+						fail(9)
+						logger.Error(err.Error())
+						continue
 					} else {
+						// order matters - don't move
 						if stmt.IsMaterial() { // append even if not reconciled
-							_ = r.WriteToCache(base.FAKE_ETH_ADDRESS, stmt, trans.Timestamp)
-							ReportProgress(stmt)
+							// TODO: BOGUS - TURN BACK ON
+							// _ = r.WriteToCache(base.FAKE_ETH_ADDRESS, stmt, trans.Timestamp)
+							// ReportProgress(stmt)
+							logger.TestLog(true, "Statement is material - appending. reconciled:", stmt.Reconciled())
 							results = append(results, *stmt)
+						} else {
+							logger.TestLog(true, "Statement was not material")
 						}
 					}
 				}
@@ -273,60 +389,9 @@ func (r *Reconciler1) GetStatements(pos *types.AppPosition, trans *types.Transac
 		}
 	}
 
-	if trans.Receipt != nil {
-		if statements, err := trans.Receipt.FetchStatements(r.Opts.AccountFor, r.Opts.AssetFilters, r.Opts.AppFilters); err != nil {
-			return nil, err
-		} else {
-			for _, s := range statements {
-				if r.Connection.Store != nil {
-					// walk.Cache_Statement
-					sg := &types.StatementGroup{
-						Address:          s.Asset,
-						BlockNumber:      trans.BlockNumber,
-						TransactionIndex: trans.TransactionIndex,
-					}
-					if err := r.Connection.Store.Read(sg); err == nil {
-						// success
-						results = append(results, sg.Statements...)
-						continue
-					}
-				}
-
-				stmt := &s
-				stmt.Symbol = stmt.Asset.DefaultSymbol()
-				stmt.Decimals = base.Value(18)
-				if name, found := r.Names[stmt.Asset]; found {
-					if r.RemoveAirdrops && r.SkipAirdrop(stmt.Asset) {
-						logger.TestLog(true, "Removing airdrop for", stmt.Asset, "at block", stmt.BlockNumber, ".", stmt.TransactionIndex)
-						continue
-					}
-					if name.Symbol != "" {
-						stmt.Symbol = name.Symbol
-					}
-					if name.Decimals != 0 {
-						stmt.Decimals = base.Value(name.Decimals)
-					}
-				}
-
-				if _, err := r.trialBalance("token", trans, stmt, pos, true); err != nil {
-					// TODO: Silent fail?
-					logger.Error(err.Error())
-					continue
-				} else {
-					// if reconciled {
-					// 	id := fmt.Sprintf(" %d.%d.%d", stmt.BlockNumber, stmt.TransactionIndex, stmt.LogIndex)
-					// 	logger.Progress(true, colors.Green+"Transaction", id, "reconciled       "+colors.Off)
-					// }
-					// order matters - don't move
-					if stmt.IsMaterial() { // add even if not reconciled
-						_ = r.WriteToCache(base.FAKE_ETH_ADDRESS, stmt, trans.Timestamp)
-						ReportProgress(stmt)
-						results = append(results, *stmt)
-					}
-				}
-			}
-		}
-	}
+	logger.TestLog(true, fmt.Sprintf("~~~ Leaving GetStatements: %d.%d ~~~", pos.CurBlock(), pos.CurTxId()))
+	logger.TestLog(true, "------------------------------------", len(results), "statements generated.")
+	logger.TestLog(true, "")
 	return results, nil
 }
 
@@ -360,67 +425,67 @@ func (r *Reconciler1) WriteToCache(addr base.Address, stmt *types.Statement, ts 
 	// return r.Connection.Store.WriteToCache(sg, walk.Cache_Statements, ts)
 }
 
-type DiffOp struct {
-	Op   string
-	Text string
-}
+// type DiffOp struct {
+// 	Op   string
+// 	Text string
+// }
 
-func diffLines(a, b []string) []DiffOp {
-	C := make([][]int, len(a)+1)
-	for i := range C {
-		C[i] = make([]int, len(b)+1)
-	}
+// func diffLines(a, b []string) []DiffOp {
+// 	C := make([][]int, len(a)+1)
+// 	for i := range C {
+// 		C[i] = make([]int, len(b)+1)
+// 	}
 
-	for i := 1; i <= len(a); i++ {
-		for j := 1; j <= len(b); j++ {
-			if a[i-1] == b[j-1] {
-				C[i][j] = C[i-1][j-1] + 1
-			} else {
-				if C[i-1][j] > C[i][j-1] {
-					C[i][j] = C[i-1][j]
-				} else {
-					C[i][j] = C[i][j-1]
-				}
-			}
-		}
-	}
+// 	for i := 1; i <= len(a); i++ {
+// 		for j := 1; j <= len(b); j++ {
+// 			if a[i-1] == b[j-1] {
+// 				C[i][j] = C[i-1][j-1] + 1
+// 			} else {
+// 				if C[i-1][j] > C[i][j-1] {
+// 					C[i][j] = C[i-1][j]
+// 				} else {
+// 					C[i][j] = C[i][j-1]
+// 				}
+// 			}
+// 		}
+// 	}
 
-	var diff []DiffOp
-	i, j := len(a), len(b)
-	for i > 0 || j > 0 {
-		if i > 0 && j > 0 && a[i-1] == b[j-1] {
-			diff = append([]DiffOp{{"equal", a[i-1]}}, diff...)
-			i--
-			j--
-		} else if i > 0 && (j == 0 || C[i-1][j] >= C[i][j-1]) {
-			diff = append([]DiffOp{{"delete", a[i-1]}}, diff...)
-			i--
-		} else if j > 0 && (i == 0 || C[i-1][j] < C[i][j-1]) {
-			diff = append([]DiffOp{{"insert", b[j-1]}}, diff...)
-			j--
-		}
-	}
-	return diff
-}
+// 	var diff []DiffOp
+// 	i, j := len(a), len(b)
+// 	for i > 0 || j > 0 {
+// 		if i > 0 && j > 0 && a[i-1] == b[j-1] {
+// 			diff = append([]DiffOp{{"equal", a[i-1]}}, diff...)
+// 			i--
+// 			j--
+// 		} else if i > 0 && (j == 0 || C[i-1][j] >= C[i][j-1]) {
+// 			diff = append([]DiffOp{{"delete", a[i-1]}}, diff...)
+// 			i--
+// 		} else if j > 0 && (i == 0 || C[i-1][j] < C[i][j-1]) {
+// 			diff = append([]DiffOp{{"insert", b[j-1]}}, diff...)
+// 			j--
+// 		}
+// 	}
+// 	return diff
+// }
 
-func formatDiff(diff []DiffOp) string {
-	var sb strings.Builder
-	for _, op := range diff {
-		switch op.Op {
-		// case "equal":
-		// 	sb.WriteString("  " + op.Text + "\n")
-		case "delete":
-			sb.WriteString("- " + op.Text + "\n")
-		case "insert":
-			sb.WriteString("+ " + op.Text + "\n")
-		}
-	}
-	return sb.String()
-}
+// func formatDiff(diff []DiffOp) string {
+// 	var sb strings.Builder
+// 	for _, op := range diff {
+// 		switch op.Op {
+// 		// case "equal":
+// 		// 	sb.WriteString("  " + op.Text + "\n")
+// 		case "delete":
+// 			sb.WriteString("- " + op.Text + "\n")
+// 		case "insert":
+// 			sb.WriteString("+ " + op.Text + "\n")
+// 		}
+// 	}
+// 	return sb.String()
+// }
 
-func ShowDiff(str1, str2 string) string {
-	lines1 := strings.Split(str1, ",")
-	lines2 := strings.Split(str2, ",")
-	diff := diffLines(lines2, lines1)
-	return formatDiff(diff)
-}
+// func ShowDiff(str1, str2 string) string {
+// 	lines1 := strings.Split(str1, ",")
+// 	lines2 := strings.Split(str2, ",")
+// 	diff := diffLines(lines2, lines1)
+// 	return formatDiff(diff)
+// }

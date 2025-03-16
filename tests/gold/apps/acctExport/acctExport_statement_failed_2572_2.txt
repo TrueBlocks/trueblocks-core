@@ -1,8 +1,7 @@
-chifra export  0x65b0d5e1dc0dee0704f53f660aa865c72e986fc7 --accounting --statements --asset 0xc713e5e149d5d0715dcd1c156a020976e7e56b88 --fmt json --first_block 11670418 --last_block 11670420 --max_records 40 --output statement_failed_2572_2_out.file
+chifra export  0x65b0d5e1dc0dee0704f53f660aa865c72e986fc7 --accounting --statements --asset 0xc713e5e149d5d0715dcd1c156a020976e7e56b88 --fmt json --first_block 11670418 --last_block 11670420 --output statement_failed_2572_2_out.file
 TEST[DATE|TIME] Addrs:  [0x65b0d5e1dc0dee0704f53f660aa865c72e986fc7]
 TEST[DATE|TIME] Accounting:  true
 TEST[DATE|TIME] Statements:  true
-TEST[DATE|TIME] MaxRecords:  40
 TEST[DATE|TIME] Asset:  [0xc713e5e149d5d0715dcd1c156a020976e7e56b88]
 TEST[DATE|TIME] FirstBlock:  11670418
 TEST[DATE|TIME] LastBlock:  11670420
@@ -10,24 +9,23 @@ TEST[DATE|TIME] OutputFn:  statement_failed_2572_2_out.file
 TEST[DATE|TIME] Caps:  cache,decache,ether
 TEST[DATE|TIME] Format:  json
 INFO[DATE|TIME] { "outputFilename": "--output_filename--" }
+TEST[DATE|TIME] 0: 11670419 91
+TEST[DATE|TIME] 
+TEST[DATE|TIME] ------------------------------------
+TEST[DATE|TIME] ~~~ GetStatements: 11670419.91 ~~~
+TEST[DATE|TIME] ETH is NOT of interest
+TEST[DATE|TIME] Extracting statements from logs.
+TEST[DATE|TIME] 1 statements generated from logs.
 TEST[DATE|TIME] ------------------------------------
 TEST[DATE|TIME] # Reason: token
 TEST[DATE|TIME] Trial balance for  0xc713e5e149d5d0715dcd1c156a020976e7e56b88 0x65b0d5e1dc0dee0704f53f660aa865c72e986fc7 at stmt 11670419 91 195
 TEST[DATE|TIME] ------------------------------------
 TEST[DATE|TIME] Sender: true Recipient: false 0x65b0d5e1dc0dee0704f53f660aa865c72e986fc7 0x0 0x65b0d5e1dc0dee0704f53f660aa865c72e986fc7
-TEST[DATE|TIME] adjustForIntraTransfer2 isToken: true isPrevSame: true isNextSame: false
+TEST[DATE|TIME] adjustForIntraTransfer2 isToken: true isPrevSame: false isNextSame: false
 TEST[DATE|TIME] XXXNot found  0xc713e5e149d5d0715dcd1c156a020976e7e56b88
 TEST[DATE|TIME] Using block-1 balance for  0xc713e5e149d5d0715dcd1c156a020976e7e56b88 at block 0 of 0
 TEST[DATE|TIME] Correcting ending balance isLess: true isGreater: false diff: -38340920823
 TEST[DATE|TIME] correctEndBalIn: -38340920823
-TEST[DATE|TIME] 
-before,after3 + 0
-- -38340920823
-+ 
-
-- endBalIn
-
-
 TEST[DATE|TIME] Statement reconciles? false token
 TEST[DATE|TIME] EndBalCalc: 14922878205530494041 -14922878282212335687 -76681841646
 TEST[DATE|TIME] Inserting  0xc713e5e149d5d0715dcd1c156a020976e7e56b88 at block 11670419 of -76681841646
@@ -51,7 +49,7 @@ TEST[DATE|TIME] price:               1237.8129236177363
 TEST[DATE|TIME] source:              uniswap
 TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] Reason:                 token
-TEST[DATE|TIME] Previous:               11670418 90 ( false )
+TEST[DATE|TIME] Previous:               11670418 0 ( false )
 TEST[DATE|TIME] Current:                11670419 91 ( true )
 TEST[DATE|TIME] Next:                   11670420 0 ( false )
 TEST[DATE|TIME] accountedFor:           0x65b0d5e1dc0dee0704f53f660aa865c72e986fc7
@@ -79,6 +77,10 @@ TEST[DATE|TIME]    material:            true
 TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] ----------Done  true  --------------------------
+TEST[DATE|TIME] 
+TEST[DATE|TIME] Statement is material - appending. reconciled: true
+TEST[DATE|TIME] ~~~ Leaving GetStatements: 11670419.91 ~~~
+TEST[DATE|TIME] ------------------------------------ 1 statements generated.
 TEST[DATE|TIME] 
 ----
 Results in ./statement_failed_2572_2_out.file

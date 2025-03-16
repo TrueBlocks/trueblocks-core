@@ -8,6 +8,9 @@ TEST[DATE|TIME] Enabled:  statements, traces, transactions
 TEST[DATE|TIME] Cache:  true
 TEST[DATE|TIME] Caps:  cache,decache,ether
 TEST[DATE|TIME] Format:  txt
+TEST[DATE|TIME] 
+TEST[DATE|TIME] ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+TEST[DATE|TIME] ~~~~~  10277780.88 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 TEST[DATE|TIME] ------------------------------------
 TEST[DATE|TIME] # Reason: top-level
 TEST[DATE|TIME] Trial balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0x04fe1f0c597fbc65700f4fba6f87501edc20e665 at stmt 10277780 88 0
@@ -39,7 +42,7 @@ TEST[DATE|TIME] price:               231.21081182360814
 TEST[DATE|TIME] source:              uniswap
 TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] Reason:                 top-level
-TEST[DATE|TIME] Previous:               10277779 87 ( false )
+TEST[DATE|TIME] Previous:               10277780 88 ( true )
 TEST[DATE|TIME] Current:                10277780 88 ( true )
 TEST[DATE|TIME] Next:                   10277781 0 ( false )
 TEST[DATE|TIME] accountedFor:           0x04fe1f0c597fbc65700f4fba6f87501edc20e665
@@ -71,7 +74,7 @@ TEST[DATE|TIME] # Reason: token
 TEST[DATE|TIME] Trial balance for  0xdac17f958d2ee523a2206206994597c13d831ec7 0x04fe1f0c597fbc65700f4fba6f87501edc20e665 at stmt 10277780 88 103
 TEST[DATE|TIME] ------------------------------------
 TEST[DATE|TIME] Sender: true Recipient: false 0x04fe1f0c597fbc65700f4fba6f87501edc20e665 0x7fc3be02c7f18b24a98870c543fd0ec3c25f3ff9 0x04fe1f0c597fbc65700f4fba6f87501edc20e665
-TEST[DATE|TIME] adjustForIntraTransfer2 isToken: true isPrevSame: false isNextSame: false
+TEST[DATE|TIME] adjustForIntraTransfer2 isToken: true isPrevSame: true isNextSame: false
 TEST[DATE|TIME] XXXNot found  0xdac17f958d2ee523a2206206994597c13d831ec7
 TEST[DATE|TIME] Using block-1 balance for  0xdac17f958d2ee523a2206206994597c13d831ec7 at block 0 of 0
 TEST[DATE|TIME] Statement reconciles? true token
@@ -84,7 +87,7 @@ TEST[DATE|TIME] =========================================================
 TEST[DATE|TIME] stable-coin
 TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] Reason:                 token
-TEST[DATE|TIME] Previous:               10277779 87 ( false )
+TEST[DATE|TIME] Previous:               10277780 88 ( true )
 TEST[DATE|TIME] Current:                10277780 88 ( true )
 TEST[DATE|TIME] Next:                   10277781 0 ( false )
 TEST[DATE|TIME] accountedFor:           0x04fe1f0c597fbc65700f4fba6f87501edc20e665
@@ -111,5 +114,6 @@ TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] ----------Done  true  --------------------------
 TEST[DATE|TIME] 
+TEST[DATE|TIME] ~okay~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 blockNumber	transactionIndex	timestamp	date	from	to	value	gasPrice	gasUsed	gasCost	hash	isError	encoding	compressedTx	type	ether
 10277780	88	1592323744	2020-06-16 16:09:04 UTC	0x04fe1f0c597fbc65700f4fba6f87501edc20e665	0xdac17f958d2ee523a2206206994597c13d831ec7	0	40000000000	26209	1048360000000000	0x898b6f4a308973eea278f316dff337d4ab6b07192701bbef8593979a3061c17a	false	0xa9059cbb	{name:transfer|inputs:{_to:0x7fc3be02c7f18b24a98870c543fd0ec3c25f3ff9|_value:381000000}}		0

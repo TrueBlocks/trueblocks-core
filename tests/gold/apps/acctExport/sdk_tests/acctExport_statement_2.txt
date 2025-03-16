@@ -7,6 +7,14 @@ Statements:  true
 LastBlock:  4000000
 Caps:  cache,decache,ether
 Format:  json
+0: 0 270
+1: 46685 0
+2: 46709 0
+
+------------------------------------
+~~~ GetStatements: 0.270 ~~~
+ETH is of interest
+Attempting to reconcile at top level
 ------------------------------------
 # Reason: top-level
 Trial balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0x08166f02313feae18bb044e7877c808b55b5bf58 at stmt 0 270 0
@@ -22,7 +30,7 @@ Found  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 0 of 1970000000000000
 Block 0 is prior to deployment (3684349) of Maker. No fallback pricing method
 ===================================================
 Reason:                 top-level
-Previous:               0 269 ( true )
+Previous:               0 0 ( true )
 Current:                0 270 ( true )
 Next:                   46685 0 ( false )
 accountedFor:           0x08166f02313feae18bb044e7877c808b55b5bf58
@@ -49,6 +57,16 @@ Trial balance:
 ---------------------------------------------------
 ----------Done  true  --------------------------
 
+Statement is material and reconciled - appending
+Transaction receipt is nil. No log statements.
+~~~ Leaving GetStatements: 0.270 ~~~
+------------------------------------ 1 statements generated.
+
+
+------------------------------------
+~~~ GetStatements: 46685.0 ~~~
+ETH is of interest
+Attempting to reconcile at top level
 ------------------------------------
 # Reason: top-level
 Trial balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0x08166f02313feae18bb044e7877c808b55b5bf58 at stmt 46685 0 0
@@ -65,7 +83,7 @@ Found  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 46685 of 196498950000
 Block 46685 is prior to deployment (3684349) of Maker. No fallback pricing method
 ===================================================
 Reason:                 top-level
-Previous:               0 0 ( false )
+Previous:               0 270 ( false )
 Current:                46685 0 ( true )
 Next:                   46709 0 ( false )
 accountedFor:           0x08166f02313feae18bb044e7877c808b55b5bf58
@@ -93,6 +111,17 @@ Trial balance:
 ---------------------------------------------------
 ----------Done  true  --------------------------
 
+Statement is material and reconciled - appending
+Extracting statements from logs.
+There were no statements generated from logs.
+~~~ Leaving GetStatements: 46685.0 ~~~
+------------------------------------ 1 statements generated.
+
+
+------------------------------------
+~~~ GetStatements: 46709.0 ~~~
+ETH is of interest
+Attempting to reconcile at top level
 ------------------------------------
 # Reason: top-level
 Trial balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0x08166f02313feae18bb044e7877c808b55b5bf58 at stmt 46709 0 0
@@ -136,6 +165,12 @@ Trial balance:
    reconciled:          true
 ---------------------------------------------------
 ----------Done  true  --------------------------
+
+Statement is material and reconciled - appending
+Extracting statements from logs.
+There were no statements generated from logs.
+~~~ Leaving GetStatements: 46709.0 ~~~
+------------------------------------ 1 statements generated.
 
 {
   "data": [

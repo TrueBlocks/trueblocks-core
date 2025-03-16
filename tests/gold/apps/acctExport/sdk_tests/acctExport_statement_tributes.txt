@@ -9,6 +9,25 @@ FirstBlock:  8769018
 LastBlock:  8769053
 Caps:  cache,decache,ether
 Format:  json
+0: 8769019 124
+1: 8769029 80
+2: 8769052 73
+3: 8769052 74
+
+------------------------------------
+~~~ GetStatements: 8769019.124 ~~~
+ETH is NOT of interest
+Extracting statements from logs.
+There were no statements generated from logs.
+~~~ Leaving GetStatements: 8769019.124 ~~~
+------------------------------------ 0 statements generated.
+
+
+------------------------------------
+~~~ GetStatements: 8769029.80 ~~~
+ETH is NOT of interest
+Extracting statements from logs.
+1 statements generated from logs.
 ------------------------------------
 # Reason: token
 Trial balance for  0x0ba45a8b5d5575935b8158a88c631e9f9c95a2e5 0x868b8fd259abfcfdf9634c343593b34ef359641d at stmt 8769029 80 61
@@ -24,7 +43,7 @@ Found  0x0ba45a8b5d5575935b8158a88c631e9f9c95a2e5 at block 8769029 of 8500000000
 Block 8769029 is prior to deployment (10000835) of Uniswap V2. No other source for tokens prior to UniSwap
 ===================================================
 Reason:                 token
-Previous:               8769028 79 ( false )
+Previous:               8769019 124 ( false )
 Current:                8769029 80 ( true )
 Next:                   8769052 73 ( false )
 accountedFor:           0x868b8fd259abfcfdf9634c343593b34ef359641d
@@ -51,6 +70,25 @@ Trial balance:
 ---------------------------------------------------
 ----------Done  true  --------------------------
 
+Statement is material - appending. reconciled: true
+~~~ Leaving GetStatements: 8769029.80 ~~~
+------------------------------------ 1 statements generated.
+
+
+------------------------------------
+~~~ GetStatements: 8769052.73 ~~~
+ETH is NOT of interest
+Extracting statements from logs.
+There were no statements generated from logs.
+~~~ Leaving GetStatements: 8769052.73 ~~~
+------------------------------------ 0 statements generated.
+
+
+------------------------------------
+~~~ GetStatements: 8769052.74 ~~~
+ETH is NOT of interest
+Extracting statements from logs.
+1 statements generated from logs.
 ------------------------------------
 # Reason: token
 Trial balance for  0x0ba45a8b5d5575935b8158a88c631e9f9c95a2e5 0x868b8fd259abfcfdf9634c343593b34ef359641d at stmt 8769052 74 73
@@ -67,7 +105,7 @@ Found  0x0ba45a8b5d5575935b8158a88c631e9f9c95a2e5 at block 8769052 of 0
 Block 8769052 is prior to deployment (10000835) of Uniswap V2. No other source for tokens prior to UniSwap
 ===================================================
 Reason:                 token
-Previous:               8769029 0 ( false )
+Previous:               8769052 73 ( false )
 Current:                8769052 74 ( true )
 Next:                   8769053 0 ( false )
 accountedFor:           0x868b8fd259abfcfdf9634c343593b34ef359641d
@@ -93,6 +131,10 @@ Trial balance:
    reconciled:          true
 ---------------------------------------------------
 ----------Done  true  --------------------------
+
+Statement is material - appending. reconciled: true
+~~~ Leaving GetStatements: 8769052.74 ~~~
+------------------------------------ 1 statements generated.
 
 {
   "data": [

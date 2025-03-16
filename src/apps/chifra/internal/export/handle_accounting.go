@@ -34,7 +34,7 @@ func (opts *ExportOptions) HandleAccounting(rCtx *output.RenderCtx, monitorArray
 
 	var recon *ledger1.Reconciler1
 	fetchData := func(modelChan chan types.Modeler, errorChan chan error) {
-		visitAppearance := func(pos *types.AppPosition, app *types.Appearance) error {
+		visitAppearance := func(pos *types.AppNode, app *types.Appearance) error {
 			if tx, err := opts.Conn.GetTransactionByAppearance(app, false); err != nil {
 				errorChan <- err
 				return nil
@@ -82,26 +82,22 @@ func (opts *ExportOptions) HandleAccounting(rCtx *output.RenderCtx, monitorArray
 				for i, app := range apps {
 					{
 						{
-							prev := types.NewAppearance2(&types.Appearance{BlockNumber: 0, TransactionIndex: 0})
+							prev := &types.Appearance{BlockNumber: 0, TransactionIndex: 0}
 							if app.BlockNumber > 0 {
-								prev = types.NewAppearance2(&app)
+								prev = &app
 							}
 							if i > 0 {
-								prev = types.NewAppearance2(&apps[i-1])
+								prev = &apps[i-1]
 							}
-							next := types.Appearance2{BlockNumber: base.Blknum(app.BlockNumber) + 1, TransactionIndex: 0}
+							next := &types.Appearance{BlockNumber: app.BlockNumber + 1, TransactionIndex: 0}
 							if i < len(apps)-1 {
-								next = types.NewAppearance2(&apps[i+1])
+								next = &apps[i+1]
 							}
-							app2 := types.Appearance2{
-								BlockNumber:      base.Blknum(app.BlockNumber),
-								TransactionIndex: base.Txnum(app.TransactionIndex),
-							}
-							pos := &types.AppPosition{
-								Prev:    &prev,
-								Current: &app2,
-								Next:    &next,
-							}
+
+							pos := &types.AppNode{}
+							pos.SetPrev(prev)
+							pos.SetCur(&app)
+							pos.SetNext(next)
 
 							if err := visitAppearance(pos, &app); err != nil {
 								errorChan <- err

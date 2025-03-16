@@ -6,6 +6,9 @@ Accounting:  true
 MaxRecords:  3
 Caps:  cache,decache,ether
 Format:  json
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~  0.2 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ------------------------------------
 # Reason: top-level
 Trial balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0x001d14804b399c6ef80e64576f657660804fec0b at stmt 0 2 0
@@ -21,7 +24,7 @@ Found  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 0 of 4200000000000000
 Block 0 is prior to deployment (3684349) of Maker. No fallback pricing method
 ===================================================
 Reason:                 top-level
-Previous:               0 1 ( true )
+Previous:               0 0 ( true )
 Current:                0 2 ( true )
 Next:                   202249 0 ( false )
 accountedFor:           0x001d14804b399c6ef80e64576f657660804fec0b
@@ -48,6 +51,10 @@ Trial balance:
 ---------------------------------------------------
 ----------Done  true  --------------------------
 
+~okay~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~  202249.0 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ------------------------------------
 # Reason: top-level
 Trial balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0x001d14804b399c6ef80e64576f657660804fec0b at stmt 202249 0 0
@@ -64,7 +71,7 @@ Found  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 202249 of 74679320489
 Block 202249 is prior to deployment (3684349) of Maker. No fallback pricing method
 ===================================================
 Reason:                 top-level
-Previous:               0 0 ( false )
+Previous:               0 2 ( false )
 Current:                202249 0 ( true )
 Next:                   1501459 2 ( false )
 accountedFor:           0x001d14804b399c6ef80e64576f657660804fec0b
@@ -92,6 +99,11 @@ Trial balance:
 ---------------------------------------------------
 ----------Done  true  --------------------------
 
+No interesting log statements
+~okay~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~  1501459.2 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ------------------------------------
 # Reason: top-level
 Trial balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0x001d14804b399c6ef80e64576f657660804fec0b at stmt 1501459 2 0
@@ -136,6 +148,8 @@ Trial balance:
 ---------------------------------------------------
 ----------Done  true  --------------------------
 
+No interesting log statements
+~okay~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 {
   "data": [
     {

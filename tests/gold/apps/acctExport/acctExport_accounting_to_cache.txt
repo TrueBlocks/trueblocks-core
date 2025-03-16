@@ -6,12 +6,30 @@ TEST[DATE|TIME] LastBlock:  100
 TEST[DATE|TIME] OutputFn:  accounting_to_cache_out.file
 TEST[DATE|TIME] Caps:  cache,decache,ether
 TEST[DATE|TIME] Format:  txt
+TEST[DATE|TIME] 0: 13 99999
+TEST[DATE|TIME] 1: 22 99999
+TEST[DATE|TIME] 2: 37 99998
+TEST[DATE|TIME] 3: 39 99999
+TEST[DATE|TIME] 4: 43 99999
+TEST[DATE|TIME] 5: 53 99999
+TEST[DATE|TIME] 6: 55 99998
+TEST[DATE|TIME] 7: 64 99999
+TEST[DATE|TIME] 8: 67 99999
+TEST[DATE|TIME] 9: 78 99999
+TEST[DATE|TIME] 10: 84 99999
+TEST[DATE|TIME] 11: 90 99999
+TEST[DATE|TIME] 12: 94 99999
+TEST[DATE|TIME] 
+TEST[DATE|TIME] ------------------------------------
+TEST[DATE|TIME] ~~~ GetStatements: 13.99999 ~~~
+TEST[DATE|TIME] ETH is of interest
+TEST[DATE|TIME] Attempting to reconcile at top level
 TEST[DATE|TIME] ------------------------------------
 TEST[DATE|TIME] # Reason: top-level
 TEST[DATE|TIME] Trial balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c at stmt 13 99999 0
 TEST[DATE|TIME] ------------------------------------
 TEST[DATE|TIME] Sender: false Recipient: true 0x0000000000000000000000000000004d696e6572 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c
-TEST[DATE|TIME] adjustForIntraTransfer2 isToken: false isPrevSame: true isNextSame: false
+TEST[DATE|TIME] adjustForIntraTransfer2 isToken: false isPrevSame: false isNextSame: false
 TEST[DATE|TIME] XXXNot found  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
 TEST[DATE|TIME] Using block-1 balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 0 of 0
 TEST[DATE|TIME] Statement reconciles? true top-level
@@ -21,7 +39,7 @@ TEST[DATE|TIME] Found  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 13 of
 TEST[DATE|TIME] Block 13 is prior to deployment (3684349) of Maker. No fallback pricing method
 TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] Reason:                 top-level
-TEST[DATE|TIME] Previous:               12 99998 ( false )
+TEST[DATE|TIME] Previous:               12 0 ( false )
 TEST[DATE|TIME] Current:                13 99999 ( true )
 TEST[DATE|TIME] Next:                   22 99999 ( false )
 TEST[DATE|TIME] accountedFor:           0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c
@@ -48,6 +66,16 @@ TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] ----------Done  true  --------------------------
 TEST[DATE|TIME] 
+TEST[DATE|TIME] Statement is material and reconciled - appending
+TEST[DATE|TIME] Transaction receipt is nil. No log statements.
+TEST[DATE|TIME] ~~~ Leaving GetStatements: 13.99999 ~~~
+TEST[DATE|TIME] ------------------------------------ 1 statements generated.
+TEST[DATE|TIME] 
+TEST[DATE|TIME] 
+TEST[DATE|TIME] ------------------------------------
+TEST[DATE|TIME] ~~~ GetStatements: 22.99999 ~~~
+TEST[DATE|TIME] ETH is of interest
+TEST[DATE|TIME] Attempting to reconcile at top level
 TEST[DATE|TIME] ------------------------------------
 TEST[DATE|TIME] # Reason: top-level
 TEST[DATE|TIME] Trial balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c at stmt 22 99999 0
@@ -64,7 +92,7 @@ TEST[DATE|TIME] Found  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 22 of
 TEST[DATE|TIME] Block 22 is prior to deployment (3684349) of Maker. No fallback pricing method
 TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] Reason:                 top-level
-TEST[DATE|TIME] Previous:               13 0 ( false )
+TEST[DATE|TIME] Previous:               13 99999 ( false )
 TEST[DATE|TIME] Current:                22 99999 ( true )
 TEST[DATE|TIME] Next:                   37 99998 ( false )
 TEST[DATE|TIME] accountedFor:           0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c
@@ -91,6 +119,16 @@ TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] ----------Done  true  --------------------------
 TEST[DATE|TIME] 
+TEST[DATE|TIME] Statement is material and reconciled - appending
+TEST[DATE|TIME] Transaction receipt is nil. No log statements.
+TEST[DATE|TIME] ~~~ Leaving GetStatements: 22.99999 ~~~
+TEST[DATE|TIME] ------------------------------------ 1 statements generated.
+TEST[DATE|TIME] 
+TEST[DATE|TIME] 
+TEST[DATE|TIME] ------------------------------------
+TEST[DATE|TIME] ~~~ GetStatements: 37.99998 ~~~
+TEST[DATE|TIME] ETH is of interest
+TEST[DATE|TIME] Attempting to reconcile at top level
 TEST[DATE|TIME] ------------------------------------
 TEST[DATE|TIME] # Reason: top-level
 TEST[DATE|TIME] Trial balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c at stmt 37 99998 0
@@ -107,7 +145,7 @@ TEST[DATE|TIME] Found  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 37 of
 TEST[DATE|TIME] Block 37 is prior to deployment (3684349) of Maker. No fallback pricing method
 TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] Reason:                 top-level
-TEST[DATE|TIME] Previous:               22 0 ( false )
+TEST[DATE|TIME] Previous:               22 99999 ( false )
 TEST[DATE|TIME] Current:                37 99998 ( true )
 TEST[DATE|TIME] Next:                   39 99999 ( false )
 TEST[DATE|TIME] accountedFor:           0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c
@@ -134,6 +172,16 @@ TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] ----------Done  true  --------------------------
 TEST[DATE|TIME] 
+TEST[DATE|TIME] Statement is material and reconciled - appending
+TEST[DATE|TIME] Transaction receipt is nil. No log statements.
+TEST[DATE|TIME] ~~~ Leaving GetStatements: 37.99998 ~~~
+TEST[DATE|TIME] ------------------------------------ 1 statements generated.
+TEST[DATE|TIME] 
+TEST[DATE|TIME] 
+TEST[DATE|TIME] ------------------------------------
+TEST[DATE|TIME] ~~~ GetStatements: 39.99999 ~~~
+TEST[DATE|TIME] ETH is of interest
+TEST[DATE|TIME] Attempting to reconcile at top level
 TEST[DATE|TIME] ------------------------------------
 TEST[DATE|TIME] # Reason: top-level
 TEST[DATE|TIME] Trial balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c at stmt 39 99999 0
@@ -150,7 +198,7 @@ TEST[DATE|TIME] Found  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 39 of
 TEST[DATE|TIME] Block 39 is prior to deployment (3684349) of Maker. No fallback pricing method
 TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] Reason:                 top-level
-TEST[DATE|TIME] Previous:               37 0 ( false )
+TEST[DATE|TIME] Previous:               37 99998 ( false )
 TEST[DATE|TIME] Current:                39 99999 ( true )
 TEST[DATE|TIME] Next:                   43 99999 ( false )
 TEST[DATE|TIME] accountedFor:           0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c
@@ -177,6 +225,16 @@ TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] ----------Done  true  --------------------------
 TEST[DATE|TIME] 
+TEST[DATE|TIME] Statement is material and reconciled - appending
+TEST[DATE|TIME] Transaction receipt is nil. No log statements.
+TEST[DATE|TIME] ~~~ Leaving GetStatements: 39.99999 ~~~
+TEST[DATE|TIME] ------------------------------------ 1 statements generated.
+TEST[DATE|TIME] 
+TEST[DATE|TIME] 
+TEST[DATE|TIME] ------------------------------------
+TEST[DATE|TIME] ~~~ GetStatements: 43.99999 ~~~
+TEST[DATE|TIME] ETH is of interest
+TEST[DATE|TIME] Attempting to reconcile at top level
 TEST[DATE|TIME] ------------------------------------
 TEST[DATE|TIME] # Reason: top-level
 TEST[DATE|TIME] Trial balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c at stmt 43 99999 0
@@ -193,7 +251,7 @@ TEST[DATE|TIME] Found  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 43 of
 TEST[DATE|TIME] Block 43 is prior to deployment (3684349) of Maker. No fallback pricing method
 TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] Reason:                 top-level
-TEST[DATE|TIME] Previous:               39 0 ( false )
+TEST[DATE|TIME] Previous:               39 99999 ( false )
 TEST[DATE|TIME] Current:                43 99999 ( true )
 TEST[DATE|TIME] Next:                   53 99999 ( false )
 TEST[DATE|TIME] accountedFor:           0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c
@@ -220,6 +278,16 @@ TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] ----------Done  true  --------------------------
 TEST[DATE|TIME] 
+TEST[DATE|TIME] Statement is material and reconciled - appending
+TEST[DATE|TIME] Transaction receipt is nil. No log statements.
+TEST[DATE|TIME] ~~~ Leaving GetStatements: 43.99999 ~~~
+TEST[DATE|TIME] ------------------------------------ 1 statements generated.
+TEST[DATE|TIME] 
+TEST[DATE|TIME] 
+TEST[DATE|TIME] ------------------------------------
+TEST[DATE|TIME] ~~~ GetStatements: 53.99999 ~~~
+TEST[DATE|TIME] ETH is of interest
+TEST[DATE|TIME] Attempting to reconcile at top level
 TEST[DATE|TIME] ------------------------------------
 TEST[DATE|TIME] # Reason: top-level
 TEST[DATE|TIME] Trial balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c at stmt 53 99999 0
@@ -236,7 +304,7 @@ TEST[DATE|TIME] Found  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 53 of
 TEST[DATE|TIME] Block 53 is prior to deployment (3684349) of Maker. No fallback pricing method
 TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] Reason:                 top-level
-TEST[DATE|TIME] Previous:               43 0 ( false )
+TEST[DATE|TIME] Previous:               43 99999 ( false )
 TEST[DATE|TIME] Current:                53 99999 ( true )
 TEST[DATE|TIME] Next:                   55 99998 ( false )
 TEST[DATE|TIME] accountedFor:           0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c
@@ -263,6 +331,16 @@ TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] ----------Done  true  --------------------------
 TEST[DATE|TIME] 
+TEST[DATE|TIME] Statement is material and reconciled - appending
+TEST[DATE|TIME] Transaction receipt is nil. No log statements.
+TEST[DATE|TIME] ~~~ Leaving GetStatements: 53.99999 ~~~
+TEST[DATE|TIME] ------------------------------------ 1 statements generated.
+TEST[DATE|TIME] 
+TEST[DATE|TIME] 
+TEST[DATE|TIME] ------------------------------------
+TEST[DATE|TIME] ~~~ GetStatements: 55.99998 ~~~
+TEST[DATE|TIME] ETH is of interest
+TEST[DATE|TIME] Attempting to reconcile at top level
 TEST[DATE|TIME] ------------------------------------
 TEST[DATE|TIME] # Reason: top-level
 TEST[DATE|TIME] Trial balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c at stmt 55 99998 0
@@ -279,7 +357,7 @@ TEST[DATE|TIME] Found  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 55 of
 TEST[DATE|TIME] Block 55 is prior to deployment (3684349) of Maker. No fallback pricing method
 TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] Reason:                 top-level
-TEST[DATE|TIME] Previous:               53 0 ( false )
+TEST[DATE|TIME] Previous:               53 99999 ( false )
 TEST[DATE|TIME] Current:                55 99998 ( true )
 TEST[DATE|TIME] Next:                   64 99999 ( false )
 TEST[DATE|TIME] accountedFor:           0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c
@@ -306,6 +384,16 @@ TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] ----------Done  true  --------------------------
 TEST[DATE|TIME] 
+TEST[DATE|TIME] Statement is material and reconciled - appending
+TEST[DATE|TIME] Transaction receipt is nil. No log statements.
+TEST[DATE|TIME] ~~~ Leaving GetStatements: 55.99998 ~~~
+TEST[DATE|TIME] ------------------------------------ 1 statements generated.
+TEST[DATE|TIME] 
+TEST[DATE|TIME] 
+TEST[DATE|TIME] ------------------------------------
+TEST[DATE|TIME] ~~~ GetStatements: 64.99999 ~~~
+TEST[DATE|TIME] ETH is of interest
+TEST[DATE|TIME] Attempting to reconcile at top level
 TEST[DATE|TIME] ------------------------------------
 TEST[DATE|TIME] # Reason: top-level
 TEST[DATE|TIME] Trial balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c at stmt 64 99999 0
@@ -322,7 +410,7 @@ TEST[DATE|TIME] Found  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 64 of
 TEST[DATE|TIME] Block 64 is prior to deployment (3684349) of Maker. No fallback pricing method
 TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] Reason:                 top-level
-TEST[DATE|TIME] Previous:               55 0 ( false )
+TEST[DATE|TIME] Previous:               55 99998 ( false )
 TEST[DATE|TIME] Current:                64 99999 ( true )
 TEST[DATE|TIME] Next:                   67 99999 ( false )
 TEST[DATE|TIME] accountedFor:           0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c
@@ -349,6 +437,16 @@ TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] ----------Done  true  --------------------------
 TEST[DATE|TIME] 
+TEST[DATE|TIME] Statement is material and reconciled - appending
+TEST[DATE|TIME] Transaction receipt is nil. No log statements.
+TEST[DATE|TIME] ~~~ Leaving GetStatements: 64.99999 ~~~
+TEST[DATE|TIME] ------------------------------------ 1 statements generated.
+TEST[DATE|TIME] 
+TEST[DATE|TIME] 
+TEST[DATE|TIME] ------------------------------------
+TEST[DATE|TIME] ~~~ GetStatements: 67.99999 ~~~
+TEST[DATE|TIME] ETH is of interest
+TEST[DATE|TIME] Attempting to reconcile at top level
 TEST[DATE|TIME] ------------------------------------
 TEST[DATE|TIME] # Reason: top-level
 TEST[DATE|TIME] Trial balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c at stmt 67 99999 0
@@ -365,7 +463,7 @@ TEST[DATE|TIME] Found  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 67 of
 TEST[DATE|TIME] Block 67 is prior to deployment (3684349) of Maker. No fallback pricing method
 TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] Reason:                 top-level
-TEST[DATE|TIME] Previous:               64 0 ( false )
+TEST[DATE|TIME] Previous:               64 99999 ( false )
 TEST[DATE|TIME] Current:                67 99999 ( true )
 TEST[DATE|TIME] Next:                   78 99999 ( false )
 TEST[DATE|TIME] accountedFor:           0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c
@@ -392,6 +490,16 @@ TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] ----------Done  true  --------------------------
 TEST[DATE|TIME] 
+TEST[DATE|TIME] Statement is material and reconciled - appending
+TEST[DATE|TIME] Transaction receipt is nil. No log statements.
+TEST[DATE|TIME] ~~~ Leaving GetStatements: 67.99999 ~~~
+TEST[DATE|TIME] ------------------------------------ 1 statements generated.
+TEST[DATE|TIME] 
+TEST[DATE|TIME] 
+TEST[DATE|TIME] ------------------------------------
+TEST[DATE|TIME] ~~~ GetStatements: 78.99999 ~~~
+TEST[DATE|TIME] ETH is of interest
+TEST[DATE|TIME] Attempting to reconcile at top level
 TEST[DATE|TIME] ------------------------------------
 TEST[DATE|TIME] # Reason: top-level
 TEST[DATE|TIME] Trial balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c at stmt 78 99999 0
@@ -408,7 +516,7 @@ TEST[DATE|TIME] Found  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 78 of
 TEST[DATE|TIME] Block 78 is prior to deployment (3684349) of Maker. No fallback pricing method
 TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] Reason:                 top-level
-TEST[DATE|TIME] Previous:               67 0 ( false )
+TEST[DATE|TIME] Previous:               67 99999 ( false )
 TEST[DATE|TIME] Current:                78 99999 ( true )
 TEST[DATE|TIME] Next:                   84 99999 ( false )
 TEST[DATE|TIME] accountedFor:           0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c
@@ -436,6 +544,16 @@ TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] ----------Done  true  --------------------------
 TEST[DATE|TIME] 
+TEST[DATE|TIME] Statement is material and reconciled - appending
+TEST[DATE|TIME] Transaction receipt is nil. No log statements.
+TEST[DATE|TIME] ~~~ Leaving GetStatements: 78.99999 ~~~
+TEST[DATE|TIME] ------------------------------------ 1 statements generated.
+TEST[DATE|TIME] 
+TEST[DATE|TIME] 
+TEST[DATE|TIME] ------------------------------------
+TEST[DATE|TIME] ~~~ GetStatements: 84.99999 ~~~
+TEST[DATE|TIME] ETH is of interest
+TEST[DATE|TIME] Attempting to reconcile at top level
 TEST[DATE|TIME] ------------------------------------
 TEST[DATE|TIME] # Reason: top-level
 TEST[DATE|TIME] Trial balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c at stmt 84 99999 0
@@ -452,7 +570,7 @@ TEST[DATE|TIME] Found  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 84 of
 TEST[DATE|TIME] Block 84 is prior to deployment (3684349) of Maker. No fallback pricing method
 TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] Reason:                 top-level
-TEST[DATE|TIME] Previous:               78 0 ( false )
+TEST[DATE|TIME] Previous:               78 99999 ( false )
 TEST[DATE|TIME] Current:                84 99999 ( true )
 TEST[DATE|TIME] Next:                   90 99999 ( false )
 TEST[DATE|TIME] accountedFor:           0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c
@@ -479,6 +597,16 @@ TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] ----------Done  true  --------------------------
 TEST[DATE|TIME] 
+TEST[DATE|TIME] Statement is material and reconciled - appending
+TEST[DATE|TIME] Transaction receipt is nil. No log statements.
+TEST[DATE|TIME] ~~~ Leaving GetStatements: 84.99999 ~~~
+TEST[DATE|TIME] ------------------------------------ 1 statements generated.
+TEST[DATE|TIME] 
+TEST[DATE|TIME] 
+TEST[DATE|TIME] ------------------------------------
+TEST[DATE|TIME] ~~~ GetStatements: 90.99999 ~~~
+TEST[DATE|TIME] ETH is of interest
+TEST[DATE|TIME] Attempting to reconcile at top level
 TEST[DATE|TIME] ------------------------------------
 TEST[DATE|TIME] # Reason: top-level
 TEST[DATE|TIME] Trial balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c at stmt 90 99999 0
@@ -495,7 +623,7 @@ TEST[DATE|TIME] Found  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 90 of
 TEST[DATE|TIME] Block 90 is prior to deployment (3684349) of Maker. No fallback pricing method
 TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] Reason:                 top-level
-TEST[DATE|TIME] Previous:               84 0 ( false )
+TEST[DATE|TIME] Previous:               84 99999 ( false )
 TEST[DATE|TIME] Current:                90 99999 ( true )
 TEST[DATE|TIME] Next:                   94 99999 ( false )
 TEST[DATE|TIME] accountedFor:           0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c
@@ -522,6 +650,16 @@ TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] ----------Done  true  --------------------------
 TEST[DATE|TIME] 
+TEST[DATE|TIME] Statement is material and reconciled - appending
+TEST[DATE|TIME] Transaction receipt is nil. No log statements.
+TEST[DATE|TIME] ~~~ Leaving GetStatements: 90.99999 ~~~
+TEST[DATE|TIME] ------------------------------------ 1 statements generated.
+TEST[DATE|TIME] 
+TEST[DATE|TIME] 
+TEST[DATE|TIME] ------------------------------------
+TEST[DATE|TIME] ~~~ GetStatements: 94.99999 ~~~
+TEST[DATE|TIME] ETH is of interest
+TEST[DATE|TIME] Attempting to reconcile at top level
 TEST[DATE|TIME] ------------------------------------
 TEST[DATE|TIME] # Reason: top-level
 TEST[DATE|TIME] Trial balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c at stmt 94 99999 0
@@ -538,7 +676,7 @@ TEST[DATE|TIME] Found  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 94 of
 TEST[DATE|TIME] Block 94 is prior to deployment (3684349) of Maker. No fallback pricing method
 TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] Reason:                 top-level
-TEST[DATE|TIME] Previous:               90 0 ( false )
+TEST[DATE|TIME] Previous:               90 99999 ( false )
 TEST[DATE|TIME] Current:                94 99999 ( true )
 TEST[DATE|TIME] Next:                   95 0 ( false )
 TEST[DATE|TIME] accountedFor:           0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c
@@ -565,6 +703,11 @@ TEST[DATE|TIME]    material:            true
 TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] ----------Done  true  --------------------------
+TEST[DATE|TIME] 
+TEST[DATE|TIME] Statement is material and reconciled - appending
+TEST[DATE|TIME] Transaction receipt is nil. No log statements.
+TEST[DATE|TIME] ~~~ Leaving GetStatements: 94.99999 ~~~
+TEST[DATE|TIME] ------------------------------------ 1 statements generated.
 TEST[DATE|TIME] 
 ----
 Results in ./accounting_to_cache_out.file

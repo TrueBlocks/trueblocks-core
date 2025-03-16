@@ -7,6 +7,10 @@ TEST[DATE|TIME] FirstBlock:  9278039
 TEST[DATE|TIME] LastBlock:  9279454
 TEST[DATE|TIME] Caps:  cache,decache,ether
 TEST[DATE|TIME] Format:  json
+TEST[DATE|TIME] 
+TEST[DATE|TIME] ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+TEST[DATE|TIME] ~~~~~  9278039.26 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+TEST[DATE|TIME] Skips ETH, not of interest
 TEST[DATE|TIME] ------------------------------------
 TEST[DATE|TIME] # Reason: token
 TEST[DATE|TIME] Trial balance for  0x6b175474e89094c44da98b954eedeac495271d0f 0xf503017d7baf7fbc0fff7492b751025c6a78179b at stmt 9278039 26 38
@@ -25,7 +29,7 @@ TEST[DATE|TIME] =========================================================
 TEST[DATE|TIME] stable-coin
 TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] Reason:                 token
-TEST[DATE|TIME] Previous:               9278038 25 ( false )
+TEST[DATE|TIME] Previous:               0 0 ( false )
 TEST[DATE|TIME] Current:                9278039 26 ( true )
 TEST[DATE|TIME] Next:                   9279447 73 ( false )
 TEST[DATE|TIME] accountedFor:           0xf503017d7baf7fbc0fff7492b751025c6a78179b
@@ -52,6 +56,17 @@ TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] ----------Done  true  --------------------------
 TEST[DATE|TIME] 
+TEST[DATE|TIME] ~okay~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+TEST[DATE|TIME] 
+TEST[DATE|TIME] ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+TEST[DATE|TIME] ~~~~~  9279447.73 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+TEST[DATE|TIME] Skips ETH, not of interest
+TEST[DATE|TIME] No interesting log statements
+TEST[DATE|TIME] ~okay~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+TEST[DATE|TIME] 
+TEST[DATE|TIME] ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+TEST[DATE|TIME] ~~~~~  9279453.208 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+TEST[DATE|TIME] Skips ETH, not of interest
 TEST[DATE|TIME] ------------------------------------
 TEST[DATE|TIME] # Reason: token
 TEST[DATE|TIME] Trial balance for  0x6b175474e89094c44da98b954eedeac495271d0f 0xf503017d7baf7fbc0fff7492b751025c6a78179b at stmt 9279453 208 43
@@ -62,16 +77,7 @@ TEST[DATE|TIME] XXXFound  running blkid: 9278039 txid: 0 logid: 0 amount: 711402
 TEST[DATE|TIME] Querying at block 9278039 for 0x6b175474e89094c44da98b954eedeac495271d0f 0xf503017d7baf7fbc0fff7492b751025c6a78179b
 TEST[DATE|TIME] Different block  0x6b175474e89094c44da98b954eedeac495271d0f at block 9278039 and 9279453 of 711402300000000002000
 TEST[DATE|TIME] Correcting ending balance isLess: false isGreater: true diff: 50000000000000000
-TEST[DATE|TIME] correctEndBalIn: 0
-TEST[DATE|TIME] val: 50000000000000000
-TEST[DATE|TIME] correctEndBalIn: 50000000000000000
-TEST[DATE|TIME] 
-before,after3 + 0
-- 50000000000000000
-+ 
-
-- endBalIn
-
+TEST[DATE|TIME] CorrectEndBalOut: 50000000000000000
 TEST[DATE|TIME] Statement reconciles? true token
 TEST[DATE|TIME] EndBalCalc: 711402300000000002000 -950000000000000000 710452300000000002000
 TEST[DATE|TIME] Inserting  0x6b175474e89094c44da98b954eedeac495271d0f at block 9279453 of 710452300000000002000

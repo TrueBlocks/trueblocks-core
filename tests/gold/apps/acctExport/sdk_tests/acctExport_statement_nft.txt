@@ -8,19 +8,30 @@ FirstBlock:  8876230
 LastBlock:  9024186
 Caps:  cache,decache,ether
 Format:  json
+0: 8876232 84
+1: 9000998 70
+2: 9024185 29
+
+------------------------------------
+~~~ GetStatements: 8876232.84 ~~~
+ETH is of interest
+Attempting to reconcile at top level
 ------------------------------------
 # Reason: top-level
 Trial balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0xf503017d7baf7fbc0fff7492b751025c6a78179b at stmt 8876232 84 0
 ------------------------------------
 Not sender or recipient 0xf503017d7baf7fbc0fff7492b751025c6a78179b 0xb3e43abf014cb2d8cf8dc3d8c2e62157e6093343 0xac104c988ff9c90dafc7754b2fb9072e25f93507 top-level
 Sender: false Recipient: false 0xb3e43abf014cb2d8cf8dc3d8c2e62157e6093343 0xac104c988ff9c90dafc7754b2fb9072e25f93507 0xf503017d7baf7fbc0fff7492b751025c6a78179b
-adjustForIntraTransfer2 isToken: false isPrevSame: true isNextSame: false
+adjustForIntraTransfer2 isToken: false isPrevSame: false isNextSame: false
 XXXNot found  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
 Using block-1 balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 0 of 0
 Statement reconciles? true top-level
 EndBalCalc: 4999534200000000000 0 4999534200000000000
 Inserting  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 8876232 of 4999534200000000000
 Found  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 8876232 of 4999534200000000000
+Statement was not material
+Extracting statements from logs.
+1 statements generated from logs.
 ------------------------------------
 # Reason: token
 Trial balance for  0xd53b50a6213ee7ff2fcc41a7cf69d22ded0a43b3 0xf503017d7baf7fbc0fff7492b751025c6a78179b at stmt 8876232 84 169
@@ -36,7 +47,7 @@ Found  0xd53b50a6213ee7ff2fcc41a7cf69d22ded0a43b3 at block 8876232 of 2250000000
 Block 8876232 is prior to deployment (10000835) of Uniswap V2. No other source for tokens prior to UniSwap
 ===================================================
 Reason:                 token
-Previous:               8876231 83 ( false )
+Previous:               8876231 0 ( false )
 Current:                8876232 84 ( true )
 Next:                   9000998 70 ( false )
 accountedFor:           0xf503017d7baf7fbc0fff7492b751025c6a78179b
@@ -63,6 +74,15 @@ Trial balance:
 ---------------------------------------------------
 ----------Done  true  --------------------------
 
+Statement is material - appending. reconciled: true
+~~~ Leaving GetStatements: 8876232.84 ~~~
+------------------------------------ 1 statements generated.
+
+
+------------------------------------
+~~~ GetStatements: 9000998.70 ~~~
+ETH is of interest
+Attempting to reconcile at top level
 ------------------------------------
 # Reason: top-level
 Trial balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0xf503017d7baf7fbc0fff7492b751025c6a78179b at stmt 9000998 70 0
@@ -77,6 +97,17 @@ Statement reconciles? true top-level
 EndBalCalc: 4999534200000000000 0 4999534200000000000
 Inserting  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 9000998 of 4999534200000000000
 Found  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 9000998 of 4999534200000000000
+Statement was not material
+Extracting statements from logs.
+There were no statements generated from logs.
+~~~ Leaving GetStatements: 9000998.70 ~~~
+------------------------------------ 0 statements generated.
+
+
+------------------------------------
+~~~ GetStatements: 9024185.29 ~~~
+ETH is of interest
+Attempting to reconcile at top level
 ------------------------------------
 # Reason: top-level
 Trial balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0xf503017d7baf7fbc0fff7492b751025c6a78179b at stmt 9024185 29 0
@@ -91,6 +122,12 @@ Statement reconciles? true top-level
 EndBalCalc: 4999534200000000000 0 4999534200000000000
 Inserting  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 9024185 of 4999534200000000000
 Found  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 9024185 of 4999534200000000000
+Statement was not material
+Extracting statements from logs.
+There were no statements generated from logs.
+~~~ Leaving GetStatements: 9024185.29 ~~~
+------------------------------------ 0 statements generated.
+
 {
   "data": [
     {

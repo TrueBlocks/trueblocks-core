@@ -7,6 +7,9 @@ MaxRecords:  10
 LastBlock:  8856511
 Caps:  cache,decache,ether
 Format:  json
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~  8854723.61 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ------------------------------------
 # Reason: top-level
 Trial balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0xf503017d7baf7fbc0fff7492b751025c6a78179b at stmt 8854723 61 0
@@ -34,7 +37,7 @@ price:               181.5125
 source:              maker
 ===================================================
 Reason:                 top-level
-Previous:               8854722 60 ( false )
+Previous:               8854723 61 ( true )
 Current:                8854723 61 ( true )
 Next:                   8855603 121 ( false )
 accountedFor:           0xf503017d7baf7fbc0fff7492b751025c6a78179b
@@ -61,6 +64,11 @@ Trial balance:
 ---------------------------------------------------
 ----------Done  true  --------------------------
 
+No interesting log statements
+~okay~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~  8855603.121 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ------------------------------------
 # Reason: top-level
 Trial balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0xf503017d7baf7fbc0fff7492b751025c6a78179b at stmt 8855603 121 0
@@ -75,6 +83,11 @@ Statement reconciles? true top-level
 EndBalCalc: 5000000000000000000 0 5000000000000000000
 Inserting  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 8855603 of 5000000000000000000
 Found  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 8855603 of 5000000000000000000
+No interesting log statements
+~okay~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~  8856290.62 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ------------------------------------
 # Reason: top-level
 Trial balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0xf503017d7baf7fbc0fff7492b751025c6a78179b at stmt 8856290 62 0
@@ -103,7 +116,7 @@ price:               184.1825
 source:              maker
 ===================================================
 Reason:                 top-level
-Previous:               8855603 0 ( false )
+Previous:               8855603 121 ( false )
 Current:                8856290 62 ( true )
 Next:                   8856316 91 ( false )
 accountedFor:           0xf503017d7baf7fbc0fff7492b751025c6a78179b
@@ -131,6 +144,11 @@ Trial balance:
 ---------------------------------------------------
 ----------Done  true  --------------------------
 
+No interesting log statements
+~okay~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~  8856316.91 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ------------------------------------
 # Reason: top-level
 Trial balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0xf503017d7baf7fbc0fff7492b751025c6a78179b at stmt 8856316 91 0
@@ -159,7 +177,7 @@ price:               184.1825
 source:              maker
 ===================================================
 Reason:                 top-level
-Previous:               8856290 0 ( false )
+Previous:               8856290 62 ( false )
 Current:                8856316 91 ( true )
 Next:                   8856476 55 ( false )
 accountedFor:           0xf503017d7baf7fbc0fff7492b751025c6a78179b
@@ -186,6 +204,11 @@ Trial balance:
 ---------------------------------------------------
 ----------Done  true  --------------------------
 
+No interesting log statements
+~okay~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~  8856476.55 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ------------------------------------
 # Reason: top-level
 Trial balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0xf503017d7baf7fbc0fff7492b751025c6a78179b at stmt 8856476 55 0
@@ -218,7 +241,7 @@ Found  0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359 at block 8856476 of 1000000000
 stable-coin
 ===================================================
 Reason:                 token
-Previous:               8856475 54 ( false )
+Previous:               8856316 91 ( false )
 Current:                8856476 55 ( true )
 Next:                   8856511 161 ( false )
 accountedFor:           0xf503017d7baf7fbc0fff7492b751025c6a78179b
@@ -245,6 +268,10 @@ Trial balance:
 ---------------------------------------------------
 ----------Done  true  --------------------------
 
+~okay~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~  8856511.161 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ------------------------------------
 # Reason: top-level
 Trial balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0xf503017d7baf7fbc0fff7492b751025c6a78179b at stmt 8856511 161 0
@@ -278,7 +305,7 @@ Found  0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359 at block 8856511 of 5000000000
 stable-coin
 ===================================================
 Reason:                 token
-Previous:               8856476 0 ( false )
+Previous:               8856476 55 ( false )
 Current:                8856511 161 ( true )
 Next:                   8856512 0 ( false )
 accountedFor:           0xf503017d7baf7fbc0fff7492b751025c6a78179b
@@ -305,6 +332,7 @@ Trial balance:
 ---------------------------------------------------
 ----------Done  true  --------------------------
 
+~okay~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 {
   "data": [
     {

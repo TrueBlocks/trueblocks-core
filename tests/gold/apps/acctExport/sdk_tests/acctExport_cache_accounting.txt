@@ -10,6 +10,9 @@ Enabled:  statements, traces, transactions
 Cache:  true
 Caps:  cache,decache,ether
 Format:  json
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~  10277780.88 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ------------------------------------
 # Reason: top-level
 Trial balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0x04fe1f0c597fbc65700f4fba6f87501edc20e665 at stmt 10277780 88 0
@@ -41,7 +44,7 @@ price:               231.21081182360814
 source:              uniswap
 ===================================================
 Reason:                 top-level
-Previous:               10277779 87 ( false )
+Previous:               10277780 88 ( true )
 Current:                10277780 88 ( true )
 Next:                   10277781 0 ( false )
 accountedFor:           0x04fe1f0c597fbc65700f4fba6f87501edc20e665
@@ -73,7 +76,7 @@ Trial balance:
 Trial balance for  0xdac17f958d2ee523a2206206994597c13d831ec7 0x04fe1f0c597fbc65700f4fba6f87501edc20e665 at stmt 10277780 88 103
 ------------------------------------
 Sender: true Recipient: false 0x04fe1f0c597fbc65700f4fba6f87501edc20e665 0x7fc3be02c7f18b24a98870c543fd0ec3c25f3ff9 0x04fe1f0c597fbc65700f4fba6f87501edc20e665
-adjustForIntraTransfer2 isToken: true isPrevSame: false isNextSame: false
+adjustForIntraTransfer2 isToken: true isPrevSame: true isNextSame: false
 XXXNot found  0xdac17f958d2ee523a2206206994597c13d831ec7
 Using block-1 balance for  0xdac17f958d2ee523a2206206994597c13d831ec7 at block 0 of 0
 Statement reconciles? true token
@@ -86,7 +89,7 @@ Found  0xdac17f958d2ee523a2206206994597c13d831ec7 at block 10277780 of 0
 stable-coin
 ===================================================
 Reason:                 token
-Previous:               10277779 87 ( false )
+Previous:               10277780 88 ( true )
 Current:                10277780 88 ( true )
 Next:                   10277781 0 ( false )
 accountedFor:           0x04fe1f0c597fbc65700f4fba6f87501edc20e665
@@ -113,6 +116,7 @@ Trial balance:
 ---------------------------------------------------
 ----------Done  true  --------------------------
 
+~okay~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 {
   "data": [
     {

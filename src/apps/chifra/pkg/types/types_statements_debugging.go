@@ -8,7 +8,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 )
 
-func (s *Statement) DebugStatement(reason string, pos *AppPosition) {
+func (s *Statement) DebugStatement(reason string, pos *AppNode) {
 	reportE := func(msg string, val *base.Wei) {
 		isZero := func(val *base.Wei) bool {
 			return val.Cmp(base.NewWei(0)) == 0
@@ -37,9 +37,9 @@ func (s *Statement) DebugStatement(reason string, pos *AppPosition) {
 
 	logger.TestLog(true, "===================================================")
 	logger.TestLog(true, "Reason:                ", reason)
-	logger.TestLog(true, "Previous:              ", pos.Prev.BlockNumber, pos.Prev.TransactionIndex, "(", pos.IsSamePrev(reason), ")")
-	logger.TestLog(true, "Current:               ", pos.Current.BlockNumber, pos.Current.TransactionIndex, "(", pos.Current.BlockNumber == s.BlockNumber && pos.Current.TransactionIndex == s.TransactionIndex, ")")
-	logger.TestLog(true, "Next:                  ", pos.Next.BlockNumber, pos.Next.TransactionIndex, "(", pos.IsSameNext(reason), ")")
+	logger.TestLog(true, "Previous:              ", pos.PrevBlock(), pos.PrevTxId(), "(", pos.IsSamePrev(reason), ")")
+	logger.TestLog(true, "Current:               ", pos.CurBlock(), pos.CurTxId(), "(", pos.CurBlock() == s.BlockNumber && pos.CurTxId() == s.TransactionIndex, ")")
+	logger.TestLog(true, "Next:                  ", pos.NextBlock(), pos.NextTxId(), "(", pos.IsSameNext(reason), ")")
 	logger.TestLog(true, "accountedFor:          ", s.AccountedFor)
 	logger.TestLog(true, "sender:                ", s.Sender, " ==> ", s.Recipient)
 	logger.TestLog(true, "asset:                 ", s.Asset, "("+s.Symbol+")", fmt.Sprintf("decimals: %d", s.Decimals))

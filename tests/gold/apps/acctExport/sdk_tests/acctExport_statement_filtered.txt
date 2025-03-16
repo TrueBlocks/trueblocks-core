@@ -9,12 +9,21 @@ FirstBlock:  8860513
 LastBlock:  8860531
 Caps:  cache,decache,ether
 Format:  json
+0: 8860513 85
+1: 8860529 145
+2: 8860531 152
+
+------------------------------------
+~~~ GetStatements: 8860513.85 ~~~
+ETH is NOT of interest
+Extracting statements from logs.
+1 statements generated from logs.
 ------------------------------------
 # Reason: token
 Trial balance for  0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359 0xf503017d7baf7fbc0fff7492b751025c6a78179b at stmt 8860513 85 84
 ------------------------------------
 Sender: true Recipient: false 0xf503017d7baf7fbc0fff7492b751025c6a78179b 0x30f938fed5de6e06a9a7cd2ac3517131c317b1e7 0xf503017d7baf7fbc0fff7492b751025c6a78179b
-adjustForIntraTransfer2 isToken: true isPrevSame: true isNextSame: false
+adjustForIntraTransfer2 isToken: true isPrevSame: false isNextSame: false
 XXXNot found  0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359
 Using block-1 balance for  0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359 at block 0 of 0
 Statement reconciles? true token
@@ -27,7 +36,7 @@ Found  0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359 at block 8860513 of 7000000000
 stable-coin
 ===================================================
 Reason:                 token
-Previous:               8860512 84 ( false )
+Previous:               8860512 0 ( false )
 Current:                8860513 85 ( true )
 Next:                   8860529 145 ( false )
 accountedFor:           0xf503017d7baf7fbc0fff7492b751025c6a78179b
@@ -54,6 +63,25 @@ Trial balance:
 ---------------------------------------------------
 ----------Done  true  --------------------------
 
+Statement is material - appending. reconciled: true
+~~~ Leaving GetStatements: 8860513.85 ~~~
+------------------------------------ 1 statements generated.
+
+
+------------------------------------
+~~~ GetStatements: 8860529.145 ~~~
+ETH is NOT of interest
+Extracting statements from logs.
+There were no statements generated from logs.
+~~~ Leaving GetStatements: 8860529.145 ~~~
+------------------------------------ 0 statements generated.
+
+
+------------------------------------
+~~~ GetStatements: 8860531.152 ~~~
+ETH is NOT of interest
+Extracting statements from logs.
+1 statements generated from logs.
 ------------------------------------
 # Reason: token
 Trial balance for  0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359 0xf503017d7baf7fbc0fff7492b751025c6a78179b at stmt 8860531 152 95
@@ -73,7 +101,7 @@ Found  0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359 at block 8860531 of 0
 stable-coin
 ===================================================
 Reason:                 token
-Previous:               8860513 0 ( false )
+Previous:               8860529 145 ( false )
 Current:                8860531 152 ( true )
 Next:                   8860532 0 ( false )
 accountedFor:           0xf503017d7baf7fbc0fff7492b751025c6a78179b
@@ -99,6 +127,10 @@ Trial balance:
    reconciled:          true
 ---------------------------------------------------
 ----------Done  true  --------------------------
+
+Statement is material - appending. reconciled: true
+~~~ Leaving GetStatements: 8860531.152 ~~~
+------------------------------------ 1 statements generated.
 
 {
   "data": [

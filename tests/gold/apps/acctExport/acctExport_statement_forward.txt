@@ -7,12 +7,25 @@ TEST[DATE|TIME] OutputFn:  statement_forward_out.file
 TEST[DATE|TIME] Caps:  cache,decache,ether
 TEST[DATE|TIME] Format:  json
 INFO[DATE|TIME] { "outputFilename": "--output_filename--" }
+TEST[DATE|TIME] 0: 8769019 124
+TEST[DATE|TIME] 1: 8769029 80
+TEST[DATE|TIME] 2: 8769052 73
+TEST[DATE|TIME] 3: 8769052 74
+TEST[DATE|TIME] 4: 8769064 130
+TEST[DATE|TIME] 5: 8769064 131
+TEST[DATE|TIME] 6: 8769130 51
+TEST[DATE|TIME] 7: 8769141 27
+TEST[DATE|TIME] 
+TEST[DATE|TIME] ------------------------------------
+TEST[DATE|TIME] ~~~ GetStatements: 8769019.124 ~~~
+TEST[DATE|TIME] ETH is of interest
+TEST[DATE|TIME] Attempting to reconcile at top level
 TEST[DATE|TIME] ------------------------------------
 TEST[DATE|TIME] # Reason: top-level
 TEST[DATE|TIME] Trial balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0x868b8fd259abfcfdf9634c343593b34ef359641d at stmt 8769019 124 0
 TEST[DATE|TIME] ------------------------------------
 TEST[DATE|TIME] Sender: false Recipient: true 0x103348c47ffc3254aff761894e7c13ca0c680465 0x868b8fd259abfcfdf9634c343593b34ef359641d 0x868b8fd259abfcfdf9634c343593b34ef359641d
-TEST[DATE|TIME] adjustForIntraTransfer2 isToken: false isPrevSame: true isNextSame: false
+TEST[DATE|TIME] adjustForIntraTransfer2 isToken: false isPrevSame: false isNextSame: false
 TEST[DATE|TIME] XXXNot found  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
 TEST[DATE|TIME] Using block-1 balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 0 of 0
 TEST[DATE|TIME] Statement reconciles? true top-level
@@ -34,7 +47,7 @@ TEST[DATE|TIME] price:               173.765
 TEST[DATE|TIME] source:              maker
 TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] Reason:                 top-level
-TEST[DATE|TIME] Previous:               8769018 123 ( false )
+TEST[DATE|TIME] Previous:               8769018 0 ( false )
 TEST[DATE|TIME] Current:                8769019 124 ( true )
 TEST[DATE|TIME] Next:                   8769029 80 ( false )
 TEST[DATE|TIME] accountedFor:           0x868b8fd259abfcfdf9634c343593b34ef359641d
@@ -61,6 +74,17 @@ TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] ----------Done  true  --------------------------
 TEST[DATE|TIME] 
+TEST[DATE|TIME] Statement is material and reconciled - appending
+TEST[DATE|TIME] Extracting statements from logs.
+TEST[DATE|TIME] There were no statements generated from logs.
+TEST[DATE|TIME] ~~~ Leaving GetStatements: 8769019.124 ~~~
+TEST[DATE|TIME] ------------------------------------ 1 statements generated.
+TEST[DATE|TIME] 
+TEST[DATE|TIME] 
+TEST[DATE|TIME] ------------------------------------
+TEST[DATE|TIME] ~~~ GetStatements: 8769029.80 ~~~
+TEST[DATE|TIME] ETH is of interest
+TEST[DATE|TIME] Attempting to reconcile at top level
 TEST[DATE|TIME] ------------------------------------
 TEST[DATE|TIME] # Reason: top-level
 TEST[DATE|TIME] Trial balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0x868b8fd259abfcfdf9634c343593b34ef359641d at stmt 8769029 80 0
@@ -75,6 +99,9 @@ TEST[DATE|TIME] Statement reconciles? true top-level
 TEST[DATE|TIME] EndBalCalc: 25000000000000000 0 25000000000000000
 TEST[DATE|TIME] Inserting  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 8769029 of 25000000000000000
 TEST[DATE|TIME] Found  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 8769029 of 25000000000000000
+TEST[DATE|TIME] Statement was not material
+TEST[DATE|TIME] Extracting statements from logs.
+TEST[DATE|TIME] 1 statements generated from logs.
 TEST[DATE|TIME] ------------------------------------
 TEST[DATE|TIME] # Reason: token
 TEST[DATE|TIME] Trial balance for  0x0ba45a8b5d5575935b8158a88c631e9f9c95a2e5 0x868b8fd259abfcfdf9634c343593b34ef359641d at stmt 8769029 80 61
@@ -90,7 +117,7 @@ TEST[DATE|TIME] Found  0x0ba45a8b5d5575935b8158a88c631e9f9c95a2e5 at block 87690
 TEST[DATE|TIME] Block 8769029 is prior to deployment (10000835) of Uniswap V2. No other source for tokens prior to UniSwap
 TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] Reason:                 token
-TEST[DATE|TIME] Previous:               8769028 79 ( false )
+TEST[DATE|TIME] Previous:               8769019 124 ( false )
 TEST[DATE|TIME] Current:                8769029 80 ( true )
 TEST[DATE|TIME] Next:                   8769052 73 ( false )
 TEST[DATE|TIME] accountedFor:           0x868b8fd259abfcfdf9634c343593b34ef359641d
@@ -117,6 +144,15 @@ TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] ----------Done  true  --------------------------
 TEST[DATE|TIME] 
+TEST[DATE|TIME] Statement is material - appending. reconciled: true
+TEST[DATE|TIME] ~~~ Leaving GetStatements: 8769029.80 ~~~
+TEST[DATE|TIME] ------------------------------------ 1 statements generated.
+TEST[DATE|TIME] 
+TEST[DATE|TIME] 
+TEST[DATE|TIME] ------------------------------------
+TEST[DATE|TIME] ~~~ GetStatements: 8769052.73 ~~~
+TEST[DATE|TIME] ETH is of interest
+TEST[DATE|TIME] Attempting to reconcile at top level
 TEST[DATE|TIME] ------------------------------------
 TEST[DATE|TIME] # Reason: top-level
 TEST[DATE|TIME] Trial balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0x868b8fd259abfcfdf9634c343593b34ef359641d at stmt 8769052 73 0
@@ -126,6 +162,7 @@ TEST[DATE|TIME] adjustForIntraTransfer1 isToken: false isPrevSame: false isNextS
 TEST[DATE|TIME] XXXFound  running blkid: 8769029 txid: 0 logid: 0 amount: 25000000000000000
 TEST[DATE|TIME] Querying at block 8769029 for 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0x868b8fd259abfcfdf9634c343593b34ef359641d
 TEST[DATE|TIME] Different block  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 8769029 and 8769052 of 25000000000000000
+TEST[DATE|TIME] end balance already corrected 25000000000000000 -247180000000000 24752820000000000 ==? 24752820000000000
 TEST[DATE|TIME] Statement reconciles? true top-level
 TEST[DATE|TIME] EndBalCalc: 25000000000000000 -247180000000000 24752820000000000
 TEST[DATE|TIME] Inserting  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 8769052 of 24752820000000000
@@ -145,7 +182,7 @@ TEST[DATE|TIME] price:               173.765
 TEST[DATE|TIME] source:              maker
 TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] Reason:                 top-level
-TEST[DATE|TIME] Previous:               8769029 0 ( false )
+TEST[DATE|TIME] Previous:               8769029 80 ( false )
 TEST[DATE|TIME] Current:                8769052 73 ( true )
 TEST[DATE|TIME] Next:                   8769052 74 ( true )
 TEST[DATE|TIME] accountedFor:           0x868b8fd259abfcfdf9634c343593b34ef359641d
@@ -172,6 +209,17 @@ TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] ----------Done  true  --------------------------
 TEST[DATE|TIME] 
+TEST[DATE|TIME] Statement is material and reconciled - appending
+TEST[DATE|TIME] Extracting statements from logs.
+TEST[DATE|TIME] There were no statements generated from logs.
+TEST[DATE|TIME] ~~~ Leaving GetStatements: 8769052.73 ~~~
+TEST[DATE|TIME] ------------------------------------ 1 statements generated.
+TEST[DATE|TIME] 
+TEST[DATE|TIME] 
+TEST[DATE|TIME] ------------------------------------
+TEST[DATE|TIME] ~~~ GetStatements: 8769052.74 ~~~
+TEST[DATE|TIME] ETH is of interest
+TEST[DATE|TIME] Attempting to reconcile at top level
 TEST[DATE|TIME] ------------------------------------
 TEST[DATE|TIME] # Reason: top-level
 TEST[DATE|TIME] Trial balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0x868b8fd259abfcfdf9634c343593b34ef359641d at stmt 8769052 74 0
@@ -199,7 +247,7 @@ TEST[DATE|TIME] price:               173.765
 TEST[DATE|TIME] source:              maker
 TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] Reason:                 top-level
-TEST[DATE|TIME] Previous:               8769052 0 ( true )
+TEST[DATE|TIME] Previous:               8769052 73 ( true )
 TEST[DATE|TIME] Current:                8769052 74 ( true )
 TEST[DATE|TIME] Next:                   8769064 130 ( false )
 TEST[DATE|TIME] accountedFor:           0x868b8fd259abfcfdf9634c343593b34ef359641d
@@ -226,6 +274,9 @@ TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] ----------Done  true  --------------------------
 TEST[DATE|TIME] 
+TEST[DATE|TIME] Statement is material and reconciled - appending
+TEST[DATE|TIME] Extracting statements from logs.
+TEST[DATE|TIME] 1 statements generated from logs.
 TEST[DATE|TIME] ------------------------------------
 TEST[DATE|TIME] # Reason: token
 TEST[DATE|TIME] Trial balance for  0x0ba45a8b5d5575935b8158a88c631e9f9c95a2e5 0x868b8fd259abfcfdf9634c343593b34ef359641d at stmt 8769052 74 73
@@ -242,7 +293,7 @@ TEST[DATE|TIME] Found  0x0ba45a8b5d5575935b8158a88c631e9f9c95a2e5 at block 87690
 TEST[DATE|TIME] Block 8769052 is prior to deployment (10000835) of Uniswap V2. No other source for tokens prior to UniSwap
 TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] Reason:                 token
-TEST[DATE|TIME] Previous:               8769029 0 ( false )
+TEST[DATE|TIME] Previous:               8769052 73 ( false )
 TEST[DATE|TIME] Current:                8769052 74 ( true )
 TEST[DATE|TIME] Next:                   8769064 130 ( false )
 TEST[DATE|TIME] accountedFor:           0x868b8fd259abfcfdf9634c343593b34ef359641d
@@ -269,6 +320,15 @@ TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] ----------Done  true  --------------------------
 TEST[DATE|TIME] 
+TEST[DATE|TIME] Statement is material - appending. reconciled: true
+TEST[DATE|TIME] ~~~ Leaving GetStatements: 8769052.74 ~~~
+TEST[DATE|TIME] ------------------------------------ 2 statements generated.
+TEST[DATE|TIME] 
+TEST[DATE|TIME] 
+TEST[DATE|TIME] ------------------------------------
+TEST[DATE|TIME] ~~~ GetStatements: 8769064.130 ~~~
+TEST[DATE|TIME] ETH is of interest
+TEST[DATE|TIME] Attempting to reconcile at top level
 TEST[DATE|TIME] ------------------------------------
 TEST[DATE|TIME] # Reason: top-level
 TEST[DATE|TIME] Trial balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0x868b8fd259abfcfdf9634c343593b34ef359641d at stmt 8769064 130 0
@@ -279,10 +339,22 @@ TEST[DATE|TIME] adjustForIntraTransfer1 isToken: false isPrevSame: false isNextS
 TEST[DATE|TIME] XXXFound  running blkid: 8769052 txid: 0 logid: 0 amount: 24050590000000000
 TEST[DATE|TIME] Querying at block 8769052 for 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0x868b8fd259abfcfdf9634c343593b34ef359641d
 TEST[DATE|TIME] Different block  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 8769052 and 8769064 of 24050590000000000
+TEST[DATE|TIME] end balance already corrected 24050590000000000 0 24050590000000000 ==? 24050590000000000
 TEST[DATE|TIME] Statement reconciles? true top-level
 TEST[DATE|TIME] EndBalCalc: 24050590000000000 0 24050590000000000
 TEST[DATE|TIME] Inserting  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 8769064 of 24050590000000000
 TEST[DATE|TIME] Found  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 8769064 of 24050590000000000
+TEST[DATE|TIME] Statement was not material
+TEST[DATE|TIME] Extracting statements from logs.
+TEST[DATE|TIME] There were no statements generated from logs.
+TEST[DATE|TIME] ~~~ Leaving GetStatements: 8769064.130 ~~~
+TEST[DATE|TIME] ------------------------------------ 0 statements generated.
+TEST[DATE|TIME] 
+TEST[DATE|TIME] 
+TEST[DATE|TIME] ------------------------------------
+TEST[DATE|TIME] ~~~ GetStatements: 8769064.131 ~~~
+TEST[DATE|TIME] ETH is of interest
+TEST[DATE|TIME] Attempting to reconcile at top level
 TEST[DATE|TIME] ------------------------------------
 TEST[DATE|TIME] # Reason: top-level
 TEST[DATE|TIME] Trial balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0x868b8fd259abfcfdf9634c343593b34ef359641d at stmt 8769064 131 0
@@ -297,6 +369,8 @@ TEST[DATE|TIME] Statement reconciles? false top-level
 TEST[DATE|TIME] EndBalCalc: 24050590000000000 0 24050590000000000
 TEST[DATE|TIME] Inserting  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 8769064 of 24050590000000000
 TEST[DATE|TIME] Found  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 8769064 of 24050590000000000
+TEST[DATE|TIME] Failed reconcile, decending into to traces
+TEST[DATE|TIME] Fetched a single statement from traces
 TEST[DATE|TIME] ------------------------------------
 TEST[DATE|TIME] # Reason: traces
 TEST[DATE|TIME] Trial balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0x868b8fd259abfcfdf9634c343593b34ef359641d at stmt 8769064 131 0
@@ -324,7 +398,7 @@ TEST[DATE|TIME] price:               173.78
 TEST[DATE|TIME] source:              maker
 TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] Reason:                 traces
-TEST[DATE|TIME] Previous:               8769064 0 ( true )
+TEST[DATE|TIME] Previous:               8769064 130 ( true )
 TEST[DATE|TIME] Current:                8769064 131 ( true )
 TEST[DATE|TIME] Next:                   8769130 51 ( false )
 TEST[DATE|TIME] accountedFor:           0x868b8fd259abfcfdf9634c343593b34ef359641d
@@ -351,6 +425,17 @@ TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] ----------Done  true  --------------------------
 TEST[DATE|TIME] 
+TEST[DATE|TIME] Statement is material - appending. reconciled: true
+TEST[DATE|TIME] Extracting statements from logs.
+TEST[DATE|TIME] There were no statements generated from logs.
+TEST[DATE|TIME] ~~~ Leaving GetStatements: 8769064.131 ~~~
+TEST[DATE|TIME] ------------------------------------ 1 statements generated.
+TEST[DATE|TIME] 
+TEST[DATE|TIME] 
+TEST[DATE|TIME] ------------------------------------
+TEST[DATE|TIME] ~~~ GetStatements: 8769130.51 ~~~
+TEST[DATE|TIME] ETH is of interest
+TEST[DATE|TIME] Attempting to reconcile at top level
 TEST[DATE|TIME] ------------------------------------
 TEST[DATE|TIME] # Reason: top-level
 TEST[DATE|TIME] Trial balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0x868b8fd259abfcfdf9634c343593b34ef359641d at stmt 8769130 51 0
@@ -379,7 +464,7 @@ TEST[DATE|TIME] price:               173.81
 TEST[DATE|TIME] source:              maker
 TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] Reason:                 top-level
-TEST[DATE|TIME] Previous:               8769064 0 ( false )
+TEST[DATE|TIME] Previous:               8769064 131 ( false )
 TEST[DATE|TIME] Current:                8769130 51 ( true )
 TEST[DATE|TIME] Next:                   8769141 27 ( false )
 TEST[DATE|TIME] accountedFor:           0x868b8fd259abfcfdf9634c343593b34ef359641d
@@ -407,6 +492,17 @@ TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] ----------Done  true  --------------------------
 TEST[DATE|TIME] 
+TEST[DATE|TIME] Statement is material and reconciled - appending
+TEST[DATE|TIME] Extracting statements from logs.
+TEST[DATE|TIME] There were no statements generated from logs.
+TEST[DATE|TIME] ~~~ Leaving GetStatements: 8769130.51 ~~~
+TEST[DATE|TIME] ------------------------------------ 1 statements generated.
+TEST[DATE|TIME] 
+TEST[DATE|TIME] 
+TEST[DATE|TIME] ------------------------------------
+TEST[DATE|TIME] ~~~ GetStatements: 8769141.27 ~~~
+TEST[DATE|TIME] ETH is of interest
+TEST[DATE|TIME] Attempting to reconcile at top level
 TEST[DATE|TIME] ------------------------------------
 TEST[DATE|TIME] # Reason: top-level
 TEST[DATE|TIME] Trial balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0x868b8fd259abfcfdf9634c343593b34ef359641d at stmt 8769141 27 0
@@ -435,7 +531,7 @@ TEST[DATE|TIME] price:               173.81
 TEST[DATE|TIME] source:              maker
 TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] Reason:                 top-level
-TEST[DATE|TIME] Previous:               8769130 0 ( false )
+TEST[DATE|TIME] Previous:               8769130 51 ( false )
 TEST[DATE|TIME] Current:                8769141 27 ( true )
 TEST[DATE|TIME] Next:                   8769142 0 ( false )
 TEST[DATE|TIME] accountedFor:           0x868b8fd259abfcfdf9634c343593b34ef359641d
@@ -462,6 +558,12 @@ TEST[DATE|TIME]    material:            true
 TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] ----------Done  true  --------------------------
+TEST[DATE|TIME] 
+TEST[DATE|TIME] Statement is material and reconciled - appending
+TEST[DATE|TIME] Extracting statements from logs.
+TEST[DATE|TIME] There were no statements generated from logs.
+TEST[DATE|TIME] ~~~ Leaving GetStatements: 8769141.27 ~~~
+TEST[DATE|TIME] ------------------------------------ 1 statements generated.
 TEST[DATE|TIME] 
 ----
 Results in ./statement_forward_out.file

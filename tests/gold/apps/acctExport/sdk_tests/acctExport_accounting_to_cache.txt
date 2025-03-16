@@ -7,12 +7,30 @@ Statements:  true
 LastBlock:  100
 Caps:  cache,decache,ether
 Format:  json
+0: 13 99999
+1: 22 99999
+2: 37 99998
+3: 39 99999
+4: 43 99999
+5: 53 99999
+6: 55 99998
+7: 64 99999
+8: 67 99999
+9: 78 99999
+10: 84 99999
+11: 90 99999
+12: 94 99999
+
+------------------------------------
+~~~ GetStatements: 13.99999 ~~~
+ETH is of interest
+Attempting to reconcile at top level
 ------------------------------------
 # Reason: top-level
 Trial balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c at stmt 13 99999 0
 ------------------------------------
 Sender: false Recipient: true 0x0000000000000000000000000000004d696e6572 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c
-adjustForIntraTransfer2 isToken: false isPrevSame: true isNextSame: false
+adjustForIntraTransfer2 isToken: false isPrevSame: false isNextSame: false
 XXXNot found  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
 Using block-1 balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 0 of 0
 Statement reconciles? true top-level
@@ -22,7 +40,7 @@ Found  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 13 of 500000000000000
 Block 13 is prior to deployment (3684349) of Maker. No fallback pricing method
 ===================================================
 Reason:                 top-level
-Previous:               12 99998 ( false )
+Previous:               12 0 ( false )
 Current:                13 99999 ( true )
 Next:                   22 99999 ( false )
 accountedFor:           0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c
@@ -49,6 +67,16 @@ Trial balance:
 ---------------------------------------------------
 ----------Done  true  --------------------------
 
+Statement is material and reconciled - appending
+Transaction receipt is nil. No log statements.
+~~~ Leaving GetStatements: 13.99999 ~~~
+------------------------------------ 1 statements generated.
+
+
+------------------------------------
+~~~ GetStatements: 22.99999 ~~~
+ETH is of interest
+Attempting to reconcile at top level
 ------------------------------------
 # Reason: top-level
 Trial balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c at stmt 22 99999 0
@@ -65,7 +93,7 @@ Found  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 22 of 100000000000000
 Block 22 is prior to deployment (3684349) of Maker. No fallback pricing method
 ===================================================
 Reason:                 top-level
-Previous:               13 0 ( false )
+Previous:               13 99999 ( false )
 Current:                22 99999 ( true )
 Next:                   37 99998 ( false )
 accountedFor:           0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c
@@ -92,6 +120,16 @@ Trial balance:
 ---------------------------------------------------
 ----------Done  true  --------------------------
 
+Statement is material and reconciled - appending
+Transaction receipt is nil. No log statements.
+~~~ Leaving GetStatements: 22.99999 ~~~
+------------------------------------ 1 statements generated.
+
+
+------------------------------------
+~~~ GetStatements: 37.99998 ~~~
+ETH is of interest
+Attempting to reconcile at top level
 ------------------------------------
 # Reason: top-level
 Trial balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c at stmt 37 99998 0
@@ -108,7 +146,7 @@ Found  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 37 of 137500000000000
 Block 37 is prior to deployment (3684349) of Maker. No fallback pricing method
 ===================================================
 Reason:                 top-level
-Previous:               22 0 ( false )
+Previous:               22 99999 ( false )
 Current:                37 99998 ( true )
 Next:                   39 99999 ( false )
 accountedFor:           0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c
@@ -135,6 +173,16 @@ Trial balance:
 ---------------------------------------------------
 ----------Done  true  --------------------------
 
+Statement is material and reconciled - appending
+Transaction receipt is nil. No log statements.
+~~~ Leaving GetStatements: 37.99998 ~~~
+------------------------------------ 1 statements generated.
+
+
+------------------------------------
+~~~ GetStatements: 39.99999 ~~~
+ETH is of interest
+Attempting to reconcile at top level
 ------------------------------------
 # Reason: top-level
 Trial balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c at stmt 39 99999 0
@@ -151,7 +199,7 @@ Found  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 39 of 187500000000000
 Block 39 is prior to deployment (3684349) of Maker. No fallback pricing method
 ===================================================
 Reason:                 top-level
-Previous:               37 0 ( false )
+Previous:               37 99998 ( false )
 Current:                39 99999 ( true )
 Next:                   43 99999 ( false )
 accountedFor:           0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c
@@ -178,6 +226,16 @@ Trial balance:
 ---------------------------------------------------
 ----------Done  true  --------------------------
 
+Statement is material and reconciled - appending
+Transaction receipt is nil. No log statements.
+~~~ Leaving GetStatements: 39.99999 ~~~
+------------------------------------ 1 statements generated.
+
+
+------------------------------------
+~~~ GetStatements: 43.99999 ~~~
+ETH is of interest
+Attempting to reconcile at top level
 ------------------------------------
 # Reason: top-level
 Trial balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c at stmt 43 99999 0
@@ -194,7 +252,7 @@ Found  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 43 of 237500000000000
 Block 43 is prior to deployment (3684349) of Maker. No fallback pricing method
 ===================================================
 Reason:                 top-level
-Previous:               39 0 ( false )
+Previous:               39 99999 ( false )
 Current:                43 99999 ( true )
 Next:                   53 99999 ( false )
 accountedFor:           0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c
@@ -221,6 +279,16 @@ Trial balance:
 ---------------------------------------------------
 ----------Done  true  --------------------------
 
+Statement is material and reconciled - appending
+Transaction receipt is nil. No log statements.
+~~~ Leaving GetStatements: 43.99999 ~~~
+------------------------------------ 1 statements generated.
+
+
+------------------------------------
+~~~ GetStatements: 53.99999 ~~~
+ETH is of interest
+Attempting to reconcile at top level
 ------------------------------------
 # Reason: top-level
 Trial balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c at stmt 53 99999 0
@@ -237,7 +305,7 @@ Found  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 53 of 287500000000000
 Block 53 is prior to deployment (3684349) of Maker. No fallback pricing method
 ===================================================
 Reason:                 top-level
-Previous:               43 0 ( false )
+Previous:               43 99999 ( false )
 Current:                53 99999 ( true )
 Next:                   55 99998 ( false )
 accountedFor:           0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c
@@ -264,6 +332,16 @@ Trial balance:
 ---------------------------------------------------
 ----------Done  true  --------------------------
 
+Statement is material and reconciled - appending
+Transaction receipt is nil. No log statements.
+~~~ Leaving GetStatements: 53.99999 ~~~
+------------------------------------ 1 statements generated.
+
+
+------------------------------------
+~~~ GetStatements: 55.99998 ~~~
+ETH is of interest
+Attempting to reconcile at top level
 ------------------------------------
 # Reason: top-level
 Trial balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c at stmt 55 99998 0
@@ -280,7 +358,7 @@ Found  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 55 of 325000000000000
 Block 55 is prior to deployment (3684349) of Maker. No fallback pricing method
 ===================================================
 Reason:                 top-level
-Previous:               53 0 ( false )
+Previous:               53 99999 ( false )
 Current:                55 99998 ( true )
 Next:                   64 99999 ( false )
 accountedFor:           0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c
@@ -307,6 +385,16 @@ Trial balance:
 ---------------------------------------------------
 ----------Done  true  --------------------------
 
+Statement is material and reconciled - appending
+Transaction receipt is nil. No log statements.
+~~~ Leaving GetStatements: 55.99998 ~~~
+------------------------------------ 1 statements generated.
+
+
+------------------------------------
+~~~ GetStatements: 64.99999 ~~~
+ETH is of interest
+Attempting to reconcile at top level
 ------------------------------------
 # Reason: top-level
 Trial balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c at stmt 64 99999 0
@@ -323,7 +411,7 @@ Found  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 64 of 375000000000000
 Block 64 is prior to deployment (3684349) of Maker. No fallback pricing method
 ===================================================
 Reason:                 top-level
-Previous:               55 0 ( false )
+Previous:               55 99998 ( false )
 Current:                64 99999 ( true )
 Next:                   67 99999 ( false )
 accountedFor:           0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c
@@ -350,6 +438,16 @@ Trial balance:
 ---------------------------------------------------
 ----------Done  true  --------------------------
 
+Statement is material and reconciled - appending
+Transaction receipt is nil. No log statements.
+~~~ Leaving GetStatements: 64.99999 ~~~
+------------------------------------ 1 statements generated.
+
+
+------------------------------------
+~~~ GetStatements: 67.99999 ~~~
+ETH is of interest
+Attempting to reconcile at top level
 ------------------------------------
 # Reason: top-level
 Trial balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c at stmt 67 99999 0
@@ -366,7 +464,7 @@ Found  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 67 of 425000000000000
 Block 67 is prior to deployment (3684349) of Maker. No fallback pricing method
 ===================================================
 Reason:                 top-level
-Previous:               64 0 ( false )
+Previous:               64 99999 ( false )
 Current:                67 99999 ( true )
 Next:                   78 99999 ( false )
 accountedFor:           0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c
@@ -393,6 +491,16 @@ Trial balance:
 ---------------------------------------------------
 ----------Done  true  --------------------------
 
+Statement is material and reconciled - appending
+Transaction receipt is nil. No log statements.
+~~~ Leaving GetStatements: 67.99999 ~~~
+------------------------------------ 1 statements generated.
+
+
+------------------------------------
+~~~ GetStatements: 78.99999 ~~~
+ETH is of interest
+Attempting to reconcile at top level
 ------------------------------------
 # Reason: top-level
 Trial balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c at stmt 78 99999 0
@@ -409,7 +517,7 @@ Found  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 78 of 476562500000000
 Block 78 is prior to deployment (3684349) of Maker. No fallback pricing method
 ===================================================
 Reason:                 top-level
-Previous:               67 0 ( false )
+Previous:               67 99999 ( false )
 Current:                78 99999 ( true )
 Next:                   84 99999 ( false )
 accountedFor:           0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c
@@ -437,6 +545,16 @@ Trial balance:
 ---------------------------------------------------
 ----------Done  true  --------------------------
 
+Statement is material and reconciled - appending
+Transaction receipt is nil. No log statements.
+~~~ Leaving GetStatements: 78.99999 ~~~
+------------------------------------ 1 statements generated.
+
+
+------------------------------------
+~~~ GetStatements: 84.99999 ~~~
+ETH is of interest
+Attempting to reconcile at top level
 ------------------------------------
 # Reason: top-level
 Trial balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c at stmt 84 99999 0
@@ -453,7 +571,7 @@ Found  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 84 of 526562500000000
 Block 84 is prior to deployment (3684349) of Maker. No fallback pricing method
 ===================================================
 Reason:                 top-level
-Previous:               78 0 ( false )
+Previous:               78 99999 ( false )
 Current:                84 99999 ( true )
 Next:                   90 99999 ( false )
 accountedFor:           0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c
@@ -480,6 +598,16 @@ Trial balance:
 ---------------------------------------------------
 ----------Done  true  --------------------------
 
+Statement is material and reconciled - appending
+Transaction receipt is nil. No log statements.
+~~~ Leaving GetStatements: 84.99999 ~~~
+------------------------------------ 1 statements generated.
+
+
+------------------------------------
+~~~ GetStatements: 90.99999 ~~~
+ETH is of interest
+Attempting to reconcile at top level
 ------------------------------------
 # Reason: top-level
 Trial balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c at stmt 90 99999 0
@@ -496,7 +624,7 @@ Found  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 90 of 576562500000000
 Block 90 is prior to deployment (3684349) of Maker. No fallback pricing method
 ===================================================
 Reason:                 top-level
-Previous:               84 0 ( false )
+Previous:               84 99999 ( false )
 Current:                90 99999 ( true )
 Next:                   94 99999 ( false )
 accountedFor:           0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c
@@ -523,6 +651,16 @@ Trial balance:
 ---------------------------------------------------
 ----------Done  true  --------------------------
 
+Statement is material and reconciled - appending
+Transaction receipt is nil. No log statements.
+~~~ Leaving GetStatements: 90.99999 ~~~
+------------------------------------ 1 statements generated.
+
+
+------------------------------------
+~~~ GetStatements: 94.99999 ~~~
+ETH is of interest
+Attempting to reconcile at top level
 ------------------------------------
 # Reason: top-level
 Trial balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c at stmt 94 99999 0
@@ -539,7 +677,7 @@ Found  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 94 of 628125000000000
 Block 94 is prior to deployment (3684349) of Maker. No fallback pricing method
 ===================================================
 Reason:                 top-level
-Previous:               90 0 ( false )
+Previous:               90 99999 ( false )
 Current:                94 99999 ( true )
 Next:                   95 0 ( false )
 accountedFor:           0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c
@@ -566,6 +704,11 @@ Trial balance:
    reconciled:          true
 ---------------------------------------------------
 ----------Done  true  --------------------------
+
+Statement is material and reconciled - appending
+Transaction receipt is nil. No log statements.
+~~~ Leaving GetStatements: 94.99999 ~~~
+------------------------------------ 1 statements generated.
 
 {
   "data": [
