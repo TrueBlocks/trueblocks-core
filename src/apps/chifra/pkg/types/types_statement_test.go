@@ -228,43 +228,44 @@ func TestCacheLocations(t *testing.T) {
 	}
 }
 
-// TODO: TURN THIS BACK ON - IMPORTANT TEST
-// func TestStatementGroupCache(t *testing.T) {
-// 	stmt := Statement{
-// 		AccountedFor:     base.HexToAddress("0xabcdefabcdefabcdefabcdefabcdefabcdefabcd"),
-// 		AmountIn:         *base.NewWei(1000000000000000000),
-// 		AmountOut:        *base.NewWei(500000000000000000),
-// 		Asset:            base.HexToAddress("0xdeadbeefdeadbeefdeadbeefdeadbeefdeadbeef"),
-// 		Symbol:           "TKN",
-// 		BegBal:           *base.NewWei(2000000000000000000),
-// 		BlockNumber:      100,
-// 		LogIndex:         1,
-// 		TransactionHash:  base.HexToHash("0x1111111111111111111111111111111111111111111111111111111111111111"),
-// 		TransactionIndex: 2,
-// 	}
+func TestStatementGroupCache(t *testing.T) {
+	stmt := Statement{
+		AccountedFor:     base.HexToAddress("0xabcdefabcdefabcdefabcdefabcdefabcdefabcd"),
+		AmountIn:         *base.NewWei(1000000000000000000),
+		AmountOut:        *base.NewWei(500000000000000000),
+		Asset:            base.HexToAddress("0xdeadbeefdeadbeefdeadbeefdeadbeefdeadbeef"),
+		Symbol:           "TKN",
+		BegBal:           *base.NewWei(2000000000000000000),
+		BlockNumber:      100,
+		LogIndex:         1,
+		TransactionHash:  base.HexToHash("0x1111111111111111111111111111111111111111111111111111111111111111"),
+		TransactionIndex: 2,
+	}
 
-// 	origGroup := StatementGroup{
-// 		BlockNumber:      100,
-// 		TransactionIndex: 2,
-// 		Address:          base.HexToAddress("0xabcdefabcdefabcdefabcdefabcdefabcdefabcd"),
-// 		Statements:       []Statement{stmt},
-// 	}
+	origGroup := StatementGroup{
+		BlockNumber:      100,
+		TransactionIndex: 2,
+		Address:          base.HexToAddress("0xabcdefabcdefabcdefabcdefabcdefabcdefabcd"),
+		Statements:       []Statement{stmt},
+	}
 
-// 	var buf bytes.Buffer
-// 	if err := origGroup.MarshalCache(&buf); err != nil {
-// 		t.Fatalf("MarshalCache failed: %v", err)
-// 	}
+	var buf bytes.Buffer
+	if err := origGroup.MarshalCache(&buf); err != nil {
+		t.Fatalf("MarshalCache failed: %v", err)
+	}
 
-// 	var newGroup StatementGroup
-// 	if err := newGroup.UnmarshalCache(1, &buf); err != nil {
-// 		t.Fatalf("UnmarshalCache failed: %v", err)
-// 	}
+	var newGroup StatementGroup
+	if err := newGroup.UnmarshalCache(1, &buf); err != nil {
+		t.Fatalf("UnmarshalCache failed: %v", err)
+	}
 
-// 	if !reflect.DeepEqual(origGroup.Statements, newGroup.Statements) {
-// 		t.Errorf("Unmarshaled statements do not match original.\nOriginal: %+v\nNew: %+v",
-// 			origGroup.Statements, newGroup.Statements)
-// 	}
-// }
+	s1 := origGroup.Statements[0].String()
+	s2 := newGroup.Statements[0].String()
+	if s1 != s2 {
+		t.Errorf("Unmarshaled statements do not match original.\nOri: %+v\nNew: %+v",
+			origGroup.Statements, newGroup.Statements)
+	}
+}
 
 // ---------------------------------------------------------------------------
 // Helper types for simulating errors during cache marshalling/unmarshalling
@@ -368,7 +369,7 @@ func TestStatementCacheRoundtrip(t *testing.T) {
 
 	// Compare the two statements.
 	if !reflect.DeepEqual(stmt, newStmt) {
-		t.Errorf("Roundtrip statement does not match original.\nOriginal: %+v\nNew: %+v", stmt, newStmt)
+		t.Errorf("Roundtrip statement does not match original.\nOri: %+v\nNew: %+v", stmt, newStmt)
 	}
 }
 
