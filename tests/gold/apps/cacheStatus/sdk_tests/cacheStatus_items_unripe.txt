@@ -1,6 +1,6 @@
 status?modes=unripe&maxRecords=100
 Args: [modes=unripe maxRecords=100]
-Opts: {"modes":131072,"maxRecords":100}
+Opts: {"modes":65536,"maxRecords":100}
 Modes:  [unripe]
 MaxRecords:  100
 Format:  json

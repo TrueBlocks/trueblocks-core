@@ -1,6 +1,6 @@
 status?modes=abis&modes=monitors&modes=slurps&maxRecords=100
 Args: [modes=abis modes=monitors modes=slurps maxRecords=100]
-Opts: {"modes":32768,"maxRecords":100}
+Opts: {"modes":16384,"maxRecords":100}
 Modes:  [slurps]
 MaxRecords:  100
 Format:  json

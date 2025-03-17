@@ -1,6 +1,6 @@
 status?modes=transfers&maxRecords=100
 Args: [modes=transfers maxRecords=100]
-Opts: {"modes":256,"maxRecords":100}
+Opts: {"modes":128,"maxRecords":100}
 Modes:  [transfers]
 MaxRecords:  100
 Format:  json

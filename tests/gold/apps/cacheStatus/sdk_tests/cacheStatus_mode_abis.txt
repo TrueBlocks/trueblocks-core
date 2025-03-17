@@ -1,6 +1,6 @@
 status?modes=abis&verbose&maxRecords=2
 Args: [modes=abis verbose maxRecords=2]
-Opts: {"modes":16384,"maxRecords":2,"verbose":true}
+Opts: {"modes":8192,"maxRecords":2,"verbose":true}
 Modes:  [abis]
 MaxRecords:  2
 Verbose:  true

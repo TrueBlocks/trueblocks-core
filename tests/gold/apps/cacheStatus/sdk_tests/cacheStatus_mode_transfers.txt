@@ -1,6 +1,6 @@
 status?modes=transfers&verbose&maxRecords=2
 Args: [modes=transfers verbose maxRecords=2]
-Opts: {"modes":256,"maxRecords":2,"verbose":true}
+Opts: {"modes":128,"maxRecords":2,"verbose":true}
 Modes:  [transfers]
 MaxRecords:  2
 Verbose:  true

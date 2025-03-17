@@ -1,6 +1,6 @@
 status?modes=monitors&verbose&maxRecords=2
 Args: [modes=monitors verbose maxRecords=2]
-Opts: {"modes":4096,"maxRecords":2,"verbose":true}
+Opts: {"modes":2048,"maxRecords":2,"verbose":true}
 Modes:  [monitors]
 MaxRecords:  2
 Verbose:  true

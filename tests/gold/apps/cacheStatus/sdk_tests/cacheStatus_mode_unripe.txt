@@ -1,6 +1,6 @@
 status?modes=unripe&verbose&maxRecords=2
 Args: [modes=unripe verbose maxRecords=2]
-Opts: {"modes":131072,"maxRecords":2,"verbose":true}
+Opts: {"modes":65536,"maxRecords":2,"verbose":true}
 Modes:  [unripe]
 MaxRecords:  2
 Verbose:  true
