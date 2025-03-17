@@ -17,7 +17,6 @@ TEST[DATE|TIME] Trial balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0x
 TEST[DATE|TIME] ------------------------------------
 TEST[DATE|TIME] Not sender or recipient 0xf503017d7baf7fbc0fff7492b751025c6a78179b 0x3c52683b24406d1821d9a83cabf9b91f15fde860 0x7d655c57f71464b6f83811c55d84009cd9f5221c top-level
 TEST[DATE|TIME] Sender: false Recipient: false 0x3c52683b24406d1821d9a83cabf9b91f15fde860 0x7d655c57f71464b6f83811c55d84009cd9f5221c 0xf503017d7baf7fbc0fff7492b751025c6a78179b
-TEST[DATE|TIME] adjustForIntraTransfer2 isToken: false isPrevSame: false isNextSame: false
 TEST[DATE|TIME] XXXNot found  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
 TEST[DATE|TIME] Using block-1 balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 0 of 0
 TEST[DATE|TIME] Not correcting unreconciled balances top-level
@@ -30,7 +29,6 @@ TEST[DATE|TIME] # Reason: traces
 TEST[DATE|TIME] Trial balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0xf503017d7baf7fbc0fff7492b751025c6a78179b at stmt 12704456 92 0
 TEST[DATE|TIME] ------------------------------------
 TEST[DATE|TIME] Sender: false Recipient: true 0x7d655c57f71464b6f83811c55d84009cd9f5221c 0xf503017d7baf7fbc0fff7492b751025c6a78179b 0xf503017d7baf7fbc0fff7492b751025c6a78179b
-TEST[DATE|TIME] adjustForIntraTransfer1 isToken: false isPrevSame: true isNextSame: false
 TEST[DATE|TIME] XXXFound  running blkid: 12704456 txid: 0 logid: 0 amount: 36711034261192445316
 TEST[DATE|TIME] Same block  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 12704456 and 12704456 of 36711034261192445316
 TEST[DATE|TIME] Statement reconciles? true traces
@@ -94,7 +92,6 @@ TEST[DATE|TIME] Trial balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0x
 TEST[DATE|TIME] ------------------------------------
 TEST[DATE|TIME] Not sender or recipient 0xf503017d7baf7fbc0fff7492b751025c6a78179b 0x467a755ba59267678e14e414ed214c3cea836498 0x7d655c57f71464b6f83811c55d84009cd9f5221c top-level
 TEST[DATE|TIME] Sender: false Recipient: false 0x467a755ba59267678e14e414ed214c3cea836498 0x7d655c57f71464b6f83811c55d84009cd9f5221c 0xf503017d7baf7fbc0fff7492b751025c6a78179b
-TEST[DATE|TIME] adjustForIntraTransfer1 isToken: false isPrevSame: false isNextSame: false
 TEST[DATE|TIME] XXXFound  running blkid: 12704456 txid: 0 logid: 0 amount: 36720534261192445316
 TEST[DATE|TIME] Querying at block 12704456 for 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0xf503017d7baf7fbc0fff7492b751025c6a78179b
 TEST[DATE|TIME] Different block  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 12704456 and 12704710 of 36720534261192445316
@@ -107,7 +104,6 @@ TEST[DATE|TIME] # Reason: token
 TEST[DATE|TIME] Trial balance for  0x6b175474e89094c44da98b954eedeac495271d0f 0xf503017d7baf7fbc0fff7492b751025c6a78179b at stmt 12704710 143 313
 TEST[DATE|TIME] ------------------------------------
 TEST[DATE|TIME] Sender: false Recipient: true 0x467a755ba59267678e14e414ed214c3cea836498 0xf503017d7baf7fbc0fff7492b751025c6a78179b 0xf503017d7baf7fbc0fff7492b751025c6a78179b
-TEST[DATE|TIME] adjustForIntraTransfer2 isToken: true isPrevSame: false isNextSame: false
 TEST[DATE|TIME] XXXNot found  0x6b175474e89094c44da98b954eedeac495271d0f
 TEST[DATE|TIME] Using block-1 balance for  0x6b175474e89094c44da98b954eedeac495271d0f at block 0 of 0
 TEST[DATE|TIME] Statement reconciles? true token
@@ -157,7 +153,6 @@ TEST[DATE|TIME] Trial balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0x
 TEST[DATE|TIME] ------------------------------------
 TEST[DATE|TIME] Not sender or recipient 0xf503017d7baf7fbc0fff7492b751025c6a78179b 0x5c04e7808455ee0e22c2773328c151d0dd79dc62 0x7d655c57f71464b6f83811c55d84009cd9f5221c top-level
 TEST[DATE|TIME] Sender: false Recipient: false 0x5c04e7808455ee0e22c2773328c151d0dd79dc62 0x7d655c57f71464b6f83811c55d84009cd9f5221c 0xf503017d7baf7fbc0fff7492b751025c6a78179b
-TEST[DATE|TIME] adjustForIntraTransfer1 isToken: false isPrevSame: false isNextSame: false
 TEST[DATE|TIME] XXXFound  running blkid: 12704710 txid: 0 logid: 0 amount: 36720534261192445316
 TEST[DATE|TIME] Querying at block 12704710 for 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0xf503017d7baf7fbc0fff7492b751025c6a78179b
 TEST[DATE|TIME] Different block  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 12704710 and 12704812 of 36720534261192445316
@@ -170,7 +165,6 @@ TEST[DATE|TIME] # Reason: token
 TEST[DATE|TIME] Trial balance for  0x6b175474e89094c44da98b954eedeac495271d0f 0xf503017d7baf7fbc0fff7492b751025c6a78179b at stmt 12704812 11 87
 TEST[DATE|TIME] ------------------------------------
 TEST[DATE|TIME] Sender: false Recipient: true 0x5c04e7808455ee0e22c2773328c151d0dd79dc62 0xf503017d7baf7fbc0fff7492b751025c6a78179b 0xf503017d7baf7fbc0fff7492b751025c6a78179b
-TEST[DATE|TIME] adjustForIntraTransfer1 isToken: true isPrevSame: false isNextSame: false
 TEST[DATE|TIME] XXXFound  running blkid: 12704710 txid: 0 logid: 0 amount: 1544921842513858802649
 TEST[DATE|TIME] Querying at block 12704710 for 0x6b175474e89094c44da98b954eedeac495271d0f 0xf503017d7baf7fbc0fff7492b751025c6a78179b
 TEST[DATE|TIME] Different block  0x6b175474e89094c44da98b954eedeac495271d0f at block 12704710 and 12704812 of 1544921842513858802649
@@ -221,7 +215,6 @@ TEST[DATE|TIME] Trial balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0x
 TEST[DATE|TIME] ------------------------------------
 TEST[DATE|TIME] Not sender or recipient 0xf503017d7baf7fbc0fff7492b751025c6a78179b 0xc7d0961e09ef783b02e951b3a0704236ae7cabb5 0x7d655c57f71464b6f83811c55d84009cd9f5221c top-level
 TEST[DATE|TIME] Sender: false Recipient: false 0xc7d0961e09ef783b02e951b3a0704236ae7cabb5 0x7d655c57f71464b6f83811c55d84009cd9f5221c 0xf503017d7baf7fbc0fff7492b751025c6a78179b
-TEST[DATE|TIME] adjustForIntraTransfer1 isToken: false isPrevSame: false isNextSame: false
 TEST[DATE|TIME] XXXFound  running blkid: 12704812 txid: 0 logid: 0 amount: 36720534261192445316
 TEST[DATE|TIME] Querying at block 12704812 for 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0xf503017d7baf7fbc0fff7492b751025c6a78179b
 TEST[DATE|TIME] Different block  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 12704812 and 12705275 of 36720534261192445316
@@ -234,7 +227,6 @@ TEST[DATE|TIME] # Reason: token
 TEST[DATE|TIME] Trial balance for  0x6b175474e89094c44da98b954eedeac495271d0f 0xf503017d7baf7fbc0fff7492b751025c6a78179b at stmt 12705275 212 337
 TEST[DATE|TIME] ------------------------------------
 TEST[DATE|TIME] Sender: false Recipient: true 0xc7d0961e09ef783b02e951b3a0704236ae7cabb5 0xf503017d7baf7fbc0fff7492b751025c6a78179b 0xf503017d7baf7fbc0fff7492b751025c6a78179b
-TEST[DATE|TIME] adjustForIntraTransfer1 isToken: true isPrevSame: false isNextSame: false
 TEST[DATE|TIME] XXXFound  running blkid: 12704812 txid: 0 logid: 0 amount: 1549921842513858802649
 TEST[DATE|TIME] Querying at block 12704812 for 0x6b175474e89094c44da98b954eedeac495271d0f 0xf503017d7baf7fbc0fff7492b751025c6a78179b
 TEST[DATE|TIME] Different block  0x6b175474e89094c44da98b954eedeac495271d0f at block 12704812 and 12705275 of 1549921842513858802649
@@ -284,7 +276,6 @@ TEST[DATE|TIME] # Reason: top-level
 TEST[DATE|TIME] Trial balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0xf503017d7baf7fbc0fff7492b751025c6a78179b at stmt 12705892 117 0
 TEST[DATE|TIME] ------------------------------------
 TEST[DATE|TIME] Sender: true Recipient: false 0xf503017d7baf7fbc0fff7492b751025c6a78179b 0x7d655c57f71464b6f83811c55d84009cd9f5221c 0xf503017d7baf7fbc0fff7492b751025c6a78179b
-TEST[DATE|TIME] adjustForIntraTransfer1 isToken: false isPrevSame: false isNextSame: false
 TEST[DATE|TIME] XXXFound  running blkid: 12705275 txid: 0 logid: 0 amount: 36720534261192445316
 TEST[DATE|TIME] Querying at block 12705275 for 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0xf503017d7baf7fbc0fff7492b751025c6a78179b
 TEST[DATE|TIME] Different block  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 12705275 and 12705892 of 36720534261192445316
@@ -343,7 +334,6 @@ TEST[DATE|TIME] # Reason: token
 TEST[DATE|TIME] Trial balance for  0x6b175474e89094c44da98b954eedeac495271d0f 0xf503017d7baf7fbc0fff7492b751025c6a78179b at stmt 12705892 117 286
 TEST[DATE|TIME] ------------------------------------
 TEST[DATE|TIME] Sender: true Recipient: false 0xf503017d7baf7fbc0fff7492b751025c6a78179b 0x6bf1eba9740441d0a8822eda4e116a74f850d81b 0xf503017d7baf7fbc0fff7492b751025c6a78179b
-TEST[DATE|TIME] adjustForIntraTransfer1 isToken: true isPrevSame: false isNextSame: false
 TEST[DATE|TIME] XXXFound  running blkid: 12705275 txid: 0 logid: 0 amount: 1553721842513858802649
 TEST[DATE|TIME] Querying at block 12705275 for 0x6b175474e89094c44da98b954eedeac495271d0f 0xf503017d7baf7fbc0fff7492b751025c6a78179b
 TEST[DATE|TIME] Different block  0x6b175474e89094c44da98b954eedeac495271d0f at block 12705275 and 12705892 of 1553721842513858802649
