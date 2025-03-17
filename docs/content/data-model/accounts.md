@@ -201,22 +201,22 @@ Statements consist of the following fields:
 | minerNephewRewardIn | the nephew reward if the miner is the accountedFor address                                                                            | int256    |
 | minerTxFeeIn        | the transaction fee reward if the miner is the accountedFor address                                                                   | int256    |
 | minerUncleRewardIn  | the uncle reward if the miner who won the uncle block is the accountedFor address                                                     | int256    |
+| correctBegBalIn     | for unreconciled transfers, increase in beginning balance need to match previous balance                                              | int256    |
+| correctAmountIn     | for unreconciled transfers, increase in the amount of a transfer                                                                      | int256    |
+| correctEndBalIn     | for unreconciled transfers, increase in ending balance need to match running balance or block balance                                 | int256    |
 | prefundIn           | at block zero (0) only, the amount of genesis income for the accountedFor address                                                     | int256    |
 | totalOut            | the sum of the following `Out` fields (calculated)                                                                                    | int256    |
 | amountOut           | the amount (in units of the asset) of regular outflow during this transaction                                                         | int256    |
 | internalOut         | the value of any internal value transfers out of the accountedFor account                                                             | int256    |
+| correctBegBalOut    | for unreconciled transfers, decrease in beginning balance need to match previous balance                                              | int256    |
+| correctAmountOut    | for unreconciled transfers, decrease in the amount of a transfer                                                                      | int256    |
+| correctEndBalOut    | for unreconciled transfers, decrease in ending balance need to match running balance or block balance                                 | int256    |
 | selfDestructOut     | the value of the self-destructed value out if the accountedFor address was self-destructed                                            | int256    |
 | gasOut              | if the transaction's original sender is the accountedFor address, the amount of gas expended                                          | int256    |
 | prevBal             | the account balance for the given asset for the previous reconciliation                                                               | int256    |
 | begBalDiff          | difference between expected beginning balance and balance at last reconciliation, if non-zero, the reconciliation failed (calculated) | int256    |
 | endBalDiff          | endBal - endBalCalc, if non-zero, the reconciliation failed (calculated)                                                              | int256    |
 | endBalCalc          | begBal + amountNet (calculated)                                                                                                       | int256    |
-| correctBegBalInc    | for unreconciled transfers, increase in beginning balance need to match previous balance                                              | int256    |
-| correctBegBalDec    | for unreconciled transfers, decrease in beginning balance need to match previous balance                                              | int256    |
-| correctEndBalInc    | for unreconciled transfers, increase in ending balance need to match running balance or block balance                                 | int256    |
-| correctAmountInc    | for unreconciled transfers, increase in the amount of a transfer                                                                      | int256    |
-| correctEndBalDec    | for unreconciled transfers, decrease in ending balance need to match running balance or block balance                                 | int256    |
-| correctAmountDec    | for unreconciled transfers, decrease in the amount of a transfer                                                                      | int256    |
 | correctingReasons   | for unreconciled transfers, the reasons for the correcting entries, if any                                                            | string[]  |
 
 ## Transfer

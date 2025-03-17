@@ -6,7 +6,7 @@ Accounting:  true
 CacheTraces:  true
 FirstBlock:  10277780
 LastBlock:  10278000
-Enabled:  statements, traces, transactions
+Enabled:  traces, transactions, transfers
 Cache:  true
 Caps:  cache,decache,ether
 Format:  json

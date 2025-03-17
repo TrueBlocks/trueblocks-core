@@ -40,7 +40,7 @@ const usageStatus = `status <mode> [mode...] [flags]
 
 Arguments:
   modes - the (optional) name of the binary cache to report on, terse otherwise
-    One or more of [ index | blooms | blocks | transactions | traces | logs | statements | transfers | results | state | tokens | monitors | names | abis | slurps | staging | unripe | maps | some | all ]`
+    One or more of [ index | blooms | blocks | transactions | traces | logs | transfers | results | state | tokens | monitors | names | abis | slurps | staging | unripe | maps | some | all ]`
 
 const longStatus = `Purpose:
   Report on the state of the internal binary caches.`

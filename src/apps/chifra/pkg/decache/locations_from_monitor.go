@@ -32,12 +32,6 @@ func LocationsFromAddressAndAppearances(address base.Address, apps []types.Appea
 			locations = append(locations, &types.LightBlock{
 				BlockNumber: bn,
 			})
-		case walk.Cache_Statements:
-			locations = append(locations, &types.StatementGroup{
-				Address:          address,
-				BlockNumber:      bn,
-				TransactionIndex: txid,
-			})
 		case walk.Cache_Transfers:
 			locations = append(locations, &types.TransferGroup{
 				BlockNumber:      bn,

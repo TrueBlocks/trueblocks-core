@@ -133,15 +133,6 @@ Format:  json
           "nFolders": 456,
           "path": "--paths--",
           "sizeInBytes": 789,
-          "type": "statementsCache"
-        },
-        {
-          "items": [],
-          "lastCached": "--lastCached--",
-          "nFiles": 123,
-          "nFolders": 456,
-          "path": "--paths--",
-          "sizeInBytes": 789,
           "type": "transfersCache"
         },
         {

@@ -37,7 +37,6 @@ sdkFuzzer export
 
 # //---------------------------------------------------------------------------------------------------
 # export        ==> LocationsFromAddrAppsAndCacheType       ==> [flags] <address> [address...] [topics...] [fourbytes...]
-# walk.Cache_Statements   ==> address,tx
 # walk.Cache_Traces       ==> tx
 # walk.Cache_Transactions ==> tx
 # walk.Cache_Receipts     ==> block

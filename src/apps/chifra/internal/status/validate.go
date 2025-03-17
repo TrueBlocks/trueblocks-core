@@ -22,7 +22,7 @@ func (opts *StatusOptions) validateStatus() error {
 		return validate.Usage("chain {0} is not properly configured.", chain)
 	}
 
-	options := `[index|blooms|blocks|transactions|traces|logs|statements|transfers|results|state|tokens|monitors|names|abis|slurps|staging|unripe|maps|some|all]`
+	options := `[index|blooms|blocks|transactions|traces|logs|transfers|results|state|tokens|monitors|names|abis|slurps|staging|unripe|maps|some|all]`
 	err := validate.ValidateEnumSlice("mode", opts.Modes, options)
 	if err != nil {
 		return err

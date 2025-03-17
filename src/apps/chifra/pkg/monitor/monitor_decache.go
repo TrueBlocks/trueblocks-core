@@ -20,7 +20,6 @@ func (mon *Monitor) Decache(conn *rpc.Connection, showProgress bool) (string, er
 	} else {
 		if cnt > 0 {
 			monitorCacheTypes := []walk.CacheType{
-				walk.Cache_Statements,
 				walk.Cache_Transfers,
 				walk.Cache_Traces,
 				walk.Cache_Transactions,

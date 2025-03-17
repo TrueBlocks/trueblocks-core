@@ -2519,7 +2519,6 @@ paths:
                 - transactions
                 - traces
                 - logs
-                - statements
                 - transfers
                 - results
                 - state
@@ -3412,8 +3411,9 @@ components:
           format: int256
           description: "begBal + amountNet (calculated)"
         correctingReasons:
-          type: string
-          format: string
+          type: array
+          items:
+            $ref: "#/components/schemas/string"
           description: "for unreconciled transfers, the reasons for the correcting entries, if any"
     transfer:
       description: "a movement of an asset from one address to another (derived from a transaction or a log)"

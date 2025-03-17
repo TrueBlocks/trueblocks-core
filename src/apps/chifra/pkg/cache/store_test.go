@@ -455,26 +455,6 @@ func TestWriteToCache(t *testing.T) {
 		}
 	})
 
-	t.Run("AdditionalConditionFails", func(t *testing.T) {
-		store, err := newTestStore(true, walk.Cache_Statements, true, 5000)
-		if err != nil {
-			t.Errorf("Failed to create store %v", err)
-		}
-		data := &testStoreData{Id: "5", Value: "test"}
-		finalTs := base.Timestamp(900)
-		allReconciled := false
-
-		err = store.WriteToCache(data, walk.Cache_Statements, finalTs, allReconciled)
-		if err != nil {
-			t.Errorf("Expected nil error, got %v", err)
-		}
-
-		readBack := &testStoreData{Id: "5"}
-		if err := store.Read(readBack); err == nil {
-			t.Errorf("Expected read to fail (no write occurred)")
-		}
-	})
-
 	t.Run("WriteFails", func(t *testing.T) {
 		store, err := newTestStore(true, walk.Cache_Results, true, 5000)
 		if err != nil {

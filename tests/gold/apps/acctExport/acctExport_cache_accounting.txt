@@ -4,7 +4,7 @@ TEST[DATE|TIME] Accounting:  true
 TEST[DATE|TIME] CacheTraces:  true
 TEST[DATE|TIME] FirstBlock:  10277780
 TEST[DATE|TIME] LastBlock:  10278000
-TEST[DATE|TIME] Enabled:  statements, traces, transactions
+TEST[DATE|TIME] Enabled:  traces, transactions, transfers
 TEST[DATE|TIME] Cache:  true
 TEST[DATE|TIME] Caps:  cache,decache,ether
 TEST[DATE|TIME] Format:  txt
