@@ -9,24 +9,28 @@ FirstBlock:  9278039
 LastBlock:  9279454
 Caps:  cache,decache,ether
 Format:  json
+0: 9278039 26
+1: 9279447 73
+2: 9279453 208
+
 ------------------------------------
-# Reason: token
-Trial balance for  0x6b175474e89094c44da98b954eedeac495271d0f 0xf503017d7baf7fbc0fff7492b751025c6a78179b at block 9278039
-------------------------------------
-XXXNot found  0x6b175474e89094c44da98b954eedeac495271d0f
-Using block-1 balance for  0x6b175474e89094c44da98b954eedeac495271d0f at block 0 of 0
-pos: 9278038 9278039 9279447 true false
-EndBalCalc: 710402300000000002000 1000000000000000000 711402300000000002000
-Inserting  0x6b175474e89094c44da98b954eedeac495271d0f at block 9278039 of 711402300000000002000
-Found  0x6b175474e89094c44da98b954eedeac495271d0f at block 9278039 of 711402300000000002000
+~~~ Entering: 9278039.26 ~~~
+ETH is NOT of interest
+Extracting statements from logs.
+1 statements generated from logs.
+XXX =============[ token ]======================
+XXX Case 1: Only statement in block
+XXX Block: 9278039 Tx: 26 Asset: 0x6b175474e89094c44da98b954eedeac495271d0f
+XXX FirstInBlock: true, LastInBlock: true
+XXX ================================================
 =========================================================
 ===> PRICING FOR 0x6b175474e89094c44da98b954eedeac495271d0f (DAI) 
 =========================================================
 stable-coin
 ===================================================
-Previous:               9278038
-Current:                9278039
-Next:                   9279447
+Previous:               9278038 0 ( true )
+Current:                9278039 26 ( true )
+Next:                   9279447 73 ( true )
 accountedFor:           0xf503017d7baf7fbc0fff7492b751025c6a78179b
 sender:                 0x9fd0c742d81b6f08817f3ef11d09cb4a9f54ee5f  ==>  0xf503017d7baf7fbc0fff7492b751025c6a78179b
 asset:                  0x6b175474e89094c44da98b954eedeac495271d0f (DAI) decimals: 18
@@ -44,34 +48,43 @@ Trial balance:
                        ======================= 
    endBal:              711.402300000000002 (0)
    endBalCalc:          711.402300000000002
-   rollingBalance:      0
 --------------------------------------------------- 
    amountIn:            1
    material:            true
    reconciled:          true
 ---------------------------------------------------
-----------Done  true  --------------------------
+Statement is material - appending. reconciled: true
+~~~ Leaving: 9278039.26 ~~~
+------------------------------------ 1 statements generated.
+
 
 ------------------------------------
-# Reason: token
-Trial balance for  0x6b175474e89094c44da98b954eedeac495271d0f 0xf503017d7baf7fbc0fff7492b751025c6a78179b at block 9279453
+~~~ Entering: 9279447.73 ~~~
+ETH is NOT of interest
+Extracting statements from logs.
+There were no statements generated from logs.
+~~~ Leaving: 9279447.73 ~~~
+------------------------------------ 0 statements generated.
+
+
 ------------------------------------
-XXXFound  0x6b175474e89094c44da98b954eedeac495271d0f at block 9278039 of 711402300000000002000
-Querying at block 9278039 for 0x6b175474e89094c44da98b954eedeac495271d0f 0xf503017d7baf7fbc0fff7492b751025c6a78179b
-Different block  0x6b175474e89094c44da98b954eedeac495271d0f at block 9278039 and 9279453 of 711402300000000002000
-pos: 9278039 9279453 9279454 false true
-Correcting ending balance
-EndBalCalc: 711402300000000002000 -1000000000000000000 710402300000000002000
-Inserting  0x6b175474e89094c44da98b954eedeac495271d0f at block 9279453 of 710402300000000002000
-Found  0x6b175474e89094c44da98b954eedeac495271d0f at block 9279453 of 710402300000000002000
+~~~ Entering: 9279453.208 ~~~
+ETH is NOT of interest
+Extracting statements from logs.
+2 statements generated from logs.
+XXX =============[ token ]======================
+XXX Case 3: First statement in block with more
+XXX Block: 9279453 Tx: 208 Asset: 0x6b175474e89094c44da98b954eedeac495271d0f
+XXX FirstInBlock: true, LastInBlock: false
+XXX ================================================
 =========================================================
 ===> PRICING FOR 0x6b175474e89094c44da98b954eedeac495271d0f (DAI) 
 =========================================================
 stable-coin
 ===================================================
-Previous:               9278039
-Current:                9279453
-Next:                   9279454
+Previous:               9279447 73 ( true )
+Current:                9279453 208 ( true )
+Next:                   9279454 0 ( true )
 accountedFor:           0xf503017d7baf7fbc0fff7492b751025c6a78179b
 sender:                 0xf503017d7baf7fbc0fff7492b751025c6a78179b  ==>  0x9fd0c742d81b6f08817f3ef11d09cb4a9f54ee5f
 asset:                  0x6b175474e89094c44da98b954eedeac495271d0f (DAI) decimals: 18
@@ -84,40 +97,30 @@ Trial balance:
    prevBal:             711.402300000000002
    begBal:              711.402300000000002 (0)
    totalIn:             0
-   totalOut:            1
-   amountNet:           -1
+   totalOut:            0.95
+   amountNet:           -0.95
                        ======================= 
-   endBal:              710.402300000000002 (0)
-   endBalCalc:          710.402300000000002
-   rollingBalance:      0
+   endBal:              710.452300000000002 (0)
+   endBalCalc:          710.452300000000002
 --------------------------------------------------- 
    amountOut:           0.95
-   correctingOut:       0.05
-   correctingReasons:   endbal-out
    material:            true
    reconciled:          true
 ---------------------------------------------------
-----------Done  true  --------------------------
-
-------------------------------------
-# Reason: token
-Trial balance for  0x6b175474e89094c44da98b954eedeac495271d0f 0xf503017d7baf7fbc0fff7492b751025c6a78179b at block 9279453
-------------------------------------
-XXXFound  0x6b175474e89094c44da98b954eedeac495271d0f at block 9279453 of 710402300000000002000
-Same block  0x6b175474e89094c44da98b954eedeac495271d0f at block 9279453 and 9279453 of 710402300000000002000
-pos: 9279453 9279453 9279454 false true
-Correcting ending balance
-EndBalCalc: 710402300000000002000 -100000000000000000 710302300000000002000
-Inserting  0x6b175474e89094c44da98b954eedeac495271d0f at block 9279453 of 710302300000000002000
-Found  0x6b175474e89094c44da98b954eedeac495271d0f at block 9279453 of 710302300000000002000
+Statement is material - appending. reconciled: true
+XXX =============[ token ]======================
+XXX Case 4: Last statement in block with prior
+XXX Block: 9279453 Tx: 208 Asset: 0x6b175474e89094c44da98b954eedeac495271d0f
+XXX FirstInBlock: false, LastInBlock: true
+XXX ================================================
 =========================================================
 ===> PRICING FOR 0x6b175474e89094c44da98b954eedeac495271d0f (DAI) 
 =========================================================
 stable-coin
 ===================================================
-Previous:               9279453
-Current:                9279453
-Next:                   9279454
+Previous:               9279447 73 ( true )
+Current:                9279453 208 ( true )
+Next:                   9279454 0 ( true )
 accountedFor:           0xf503017d7baf7fbc0fff7492b751025c6a78179b
 sender:                 0xf503017d7baf7fbc0fff7492b751025c6a78179b  ==>  0x00de4b13153673bcae2616b67bf822500d325fc3
 asset:                  0x6b175474e89094c44da98b954eedeac495271d0f (DAI) decimals: 18
@@ -127,27 +130,24 @@ blockNumber:            9279453.208.44
 priceSource:            1 (stable-coin)
 --------------------------------------------------- 
 Trial balance:
-   prevBal:             710.402300000000002
-   begBal:              710.402300000000002 (-0.1)
-   totalIn:             -0.05
+   prevBal:             710.452300000000002
+   begBal:              710.452300000000002 (0)
+   totalIn:             0
    totalOut:            0.05
-   amountNet:           -0.1
+   amountNet:           -0.05
                        ======================= 
    endBal:              710.402300000000002 (0)
-   endBalCalc:          710.302300000000002
-   rollingBalance:      0
+   endBalCalc:          710.402300000000002
 --------------------------------------------------- 
-   correctingIn:        -0.05
    amountOut:           0.05
-   correctingReasons:   endbal-in
    material:            true
-   reconciled:          false
- ^^ we need to fix this ^^
+   reconciled:          true
 ---------------------------------------------------
-----------Done  false  --------------------------
+Statement is material - appending. reconciled: true
+~~~ Leaving: 9279453.208 ~~~
+------------------------------------ 2 statements generated.
 
-[33mToken statement at   9279453.208.44 0x6b175474e89094c44da98b954eedeac495271d0f 0xf503017d7baf7fbc0fff7492b751025c6a78179b did not reconcile. 
-[0m{
+{
   "data": [
     {
       "accountedFor": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
@@ -159,8 +159,12 @@ Trial balance:
       "begBal": "710402300000000002000",
       "begBalDiff": "0",
       "blockNumber": 9278039,
-      "correctingIn": "0",
-      "correctingOut": "0",
+      "correctAmountIn": "0",
+      "correctAmountOut": "0",
+      "correctBegBalIn": "0",
+      "correctBegBalOut": "0",
+      "correctEndBalIn": "0",
+      "correctEndBalOut": "0",
       "correctingReasons": "",
       "date": "2020-01-14 08:20:24 UTC",
       "decimals": 18,
@@ -183,12 +187,12 @@ Trial balance:
       "selfDestructIn": "0",
       "selfDestructOut": "0",
       "sender": "0x9fd0c742d81b6f08817f3ef11d09cb4a9f54ee5f",
+      "senderName": "Grant 0233 Ethereumetl",
       "spotPrice": 1,
       "symbol": "DAI",
       "timestamp": 1578990024,
       "totalIn": "1000000000000000000",
       "totalOut": "0",
-      "totalOutLessGas": "0",
       "transactionHash": "0xb84e8076d288138fea71b58c0bbb54385d6091efbd04da55b1f4ccb9547b4cae",
       "transactionIndex": 26
     },
@@ -202,9 +206,13 @@ Trial balance:
       "begBal": "711402300000000002000",
       "begBalDiff": "0",
       "blockNumber": 9279453,
-      "correctingIn": "0",
-      "correctingOut": "0",
-      "correctingReasons": "endbal-out",
+      "correctAmountIn": "0",
+      "correctAmountOut": "0",
+      "correctBegBalIn": "0",
+      "correctBegBalOut": "0",
+      "correctEndBalIn": "0",
+      "correctEndBalOut": "0",
+      "correctingReasons": "",
       "date": "2020-01-14 13:27:54 UTC",
       "decimals": 18,
       "endBal": "710452300000000002000",
@@ -222,6 +230,7 @@ Trial balance:
       "prevBal": "711402300000000002000",
       "priceSource": "stable-coin",
       "recipient": "0x9fd0c742d81b6f08817f3ef11d09cb4a9f54ee5f",
+      "recipientName": "Grant 0233 Ethereumetl",
       "reconciled": true,
       "selfDestructIn": "0",
       "selfDestructOut": "0",
@@ -231,7 +240,6 @@ Trial balance:
       "timestamp": 1579008474,
       "totalIn": "0",
       "totalOut": "950000000000000000",
-      "totalOutLessGas": "950000000000000000",
       "transactionHash": "0x552336e351a18ac319b5f63489abec2c41fb0a41003fd3c6e1e476eb122f279f",
       "transactionIndex": 208
     },
@@ -245,14 +253,18 @@ Trial balance:
       "begBal": "710452300000000002000",
       "begBalDiff": "0",
       "blockNumber": 9279453,
-      "correctingIn": "",
-      "correctingOut": "0",
-      "correctingReasons": "endbal-in",
+      "correctAmountIn": "0",
+      "correctAmountOut": "0",
+      "correctBegBalIn": "0",
+      "correctBegBalOut": "0",
+      "correctEndBalIn": "0",
+      "correctEndBalOut": "0",
+      "correctingReasons": "",
       "date": "2020-01-14 13:27:54 UTC",
       "decimals": 18,
       "endBal": "710402300000000002000",
       "endBalCalc": "710402300000000002000",
-      "endBalDiff": "",
+      "endBalDiff": "0",
       "gasOut": "0",
       "internalIn": "0",
       "internalOut": "0",
@@ -265,16 +277,16 @@ Trial balance:
       "prevBal": "710452300000000002000",
       "priceSource": "stable-coin",
       "recipient": "0x00de4b13153673bcae2616b67bf822500d325fc3",
-      "reconciled": false,
+      "recipientName": "Gitcoin Maintainer",
+      "reconciled": true,
       "selfDestructIn": "0",
       "selfDestructOut": "0",
       "sender": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
       "spotPrice": 1,
       "symbol": "DAI",
       "timestamp": 1579008474,
-      "totalIn": "",
+      "totalIn": "0",
       "totalOut": "50000000000000000",
-      "totalOutLessGas": "50000000000000000",
       "transactionHash": "0x552336e351a18ac319b5f63489abec2c41fb0a41003fd3c6e1e476eb122f279f",
       "transactionIndex": 208
     }

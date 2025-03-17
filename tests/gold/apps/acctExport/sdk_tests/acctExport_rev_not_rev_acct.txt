@@ -12,18 +12,11 @@ Format:  json
 ~~~ Entering: 8854723.61 ~~~
 ETH is of interest
 Attempting to reconcile at top level: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-0xf503017d7baf7fbc0fff7492b751025c6a78179b
-------------------------------------
-# Reason: top-level
-Trial balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0xf503017d7baf7fbc0fff7492b751025c6a78179b at stmt 8854723 61 0
-------------------------------------
-Sender: false Recipient: true 0xbb984f85bd52d78eb2fbf2c5598bae7abb98c5bc 0xf503017d7baf7fbc0fff7492b751025c6a78179b 0xf503017d7baf7fbc0fff7492b751025c6a78179b
-adjustForIntraTransfer2 isToken: false isPrevSame: false isNextSame: false
-XXXNot found  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
-Using block-1 balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 0 of 0
-Statement reconciles? true top-level
-EndBalCalc: 0 5000000000000000000 5000000000000000000
-Inserting  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 8854723 of 5000000000000000000
-Found  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 8854723 of 5000000000000000000
+XXX =============[ top-level ]======================
+XXX Case 1: Only statement in block
+XXX Block: 8854723 Tx: 61 Asset: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+XXX FirstInBlock: true, LastInBlock: true
+XXX ================================================
 Block 8854723 is prior to deployment (10000835) of Uniswap V2. Falling back to Maker (0x729d19f657bd0614b4985cf1d82531c67569197b)
 =========================================================
 ===> PRICING FOR 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) using Maker
@@ -38,10 +31,9 @@ bigPrice:            181.5125
 price:               181.5125
 source:              maker
 ===================================================
-Reason:                 top-level
-Previous:               8854722 0 ( false )
+Previous:               8854722 0 ( true )
 Current:                8854723 61 ( true )
-Next:                   8855603 121 ( false )
+Next:                   8855603 121 ( true )
 accountedFor:           0xf503017d7baf7fbc0fff7492b751025c6a78179b
 sender:                 0xbb984f85bd52d78eb2fbf2c5598bae7abb98c5bc  ==>  0xf503017d7baf7fbc0fff7492b751025c6a78179b
 asset:                  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -64,8 +56,6 @@ Trial balance:
    material:            true
    reconciled:          true
 ---------------------------------------------------
-----------Done  true  --------------------------
-
 Statement is material and reconciled - appending
 Extracting statements from logs.
 There were no statements generated from logs.
@@ -77,20 +67,49 @@ There were no statements generated from logs.
 ~~~ Entering: 8855603.121 ~~~
 ETH is of interest
 Attempting to reconcile at top level: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-0xf503017d7baf7fbc0fff7492b751025c6a78179b
-------------------------------------
-# Reason: top-level
-Trial balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0xf503017d7baf7fbc0fff7492b751025c6a78179b at stmt 8855603 121 0
-------------------------------------
-Not sender or recipient 0xf503017d7baf7fbc0fff7492b751025c6a78179b 0x3b161d57f482cd2dfbb626f0307ef92b3b094fce 0x226159d592e2b063810a10ebf6dcbada94ed68b8 top-level
-Sender: false Recipient: false 0x3b161d57f482cd2dfbb626f0307ef92b3b094fce 0x226159d592e2b063810a10ebf6dcbada94ed68b8 0xf503017d7baf7fbc0fff7492b751025c6a78179b
-adjustForIntraTransfer1 isToken: false isPrevSame: false isNextSame: false
-XXXFound  running blkid: 8854723 txid: 0 logid: 0 amount: 5000000000000000000
-Querying at block 8854723 for 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0xf503017d7baf7fbc0fff7492b751025c6a78179b
-Different block  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 8854723 and 8855603 of 5000000000000000000
-Statement reconciles? true top-level
-EndBalCalc: 5000000000000000000 0 5000000000000000000
-Inserting  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 8855603 of 5000000000000000000
-Found  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 8855603 of 5000000000000000000
+XXX =============[ top-level ]======================
+XXX Case 1: Only statement in block
+XXX Block: 8855603 Tx: 121 Asset: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+XXX FirstInBlock: true, LastInBlock: true
+XXX ================================================
+Block 8855603 is prior to deployment (10000835) of Uniswap V2. Falling back to Maker (0x729d19f657bd0614b4985cf1d82531c67569197b)
+=========================================================
+===> PRICING FOR 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) using Maker
+=========================================================
+blockNumber:         8855603
+source1 (uni/mkr):   0x729d19f657bd0614b4985cf1d82531c67569197b
+str0 (call):         peek()
+str1 (call/data):    0x000000000000000000000000000000000000000000000009fc0bafe8c7624000
+int0:                18418250000000000000000000
+int1:                18418250
+bigPrice:            184.1825
+price:               184.1825
+source:              maker
+===================================================
+Previous:               8854723 61 ( true )
+Current:                8855603 121 ( true )
+Next:                   8856290 62 ( true )
+accountedFor:           0xf503017d7baf7fbc0fff7492b751025c6a78179b
+sender:                 0x3b161d57f482cd2dfbb626f0307ef92b3b094fce  ==>  0x226159d592e2b063810a10ebf6dcbada94ed68b8
+asset:                  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
+hash:                   0xecfbe561392a3b0ca8cd7557c7856a9202919d6bc8543538670736db159f1929
+timestamp:              1572651105
+blockNumber:            8855603.121.0
+priceSource:            184.1825 (maker)
+--------------------------------------------------- 
+Trial balance:
+   prevBal:             5
+   begBal:              5 (0)
+   totalIn:             0
+   totalOut:            0
+   amountNet:           0
+                       ======================= 
+   endBal:              5 (0)
+   endBalCalc:          5
+--------------------------------------------------- 
+   material:            false
+   reconciled:          true
+---------------------------------------------------
 Statement was not material
 Extracting statements from logs.
 There were no statements generated from logs.
@@ -102,19 +121,11 @@ There were no statements generated from logs.
 ~~~ Entering: 8856290.62 ~~~
 ETH is of interest
 Attempting to reconcile at top level: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-0xf503017d7baf7fbc0fff7492b751025c6a78179b
-------------------------------------
-# Reason: top-level
-Trial balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0xf503017d7baf7fbc0fff7492b751025c6a78179b at stmt 8856290 62 0
-------------------------------------
-Sender: true Recipient: false 0xf503017d7baf7fbc0fff7492b751025c6a78179b 0xb97073b754660bb356dfe12f78ae366d77dbc80f 0xf503017d7baf7fbc0fff7492b751025c6a78179b
-adjustForIntraTransfer1 isToken: false isPrevSame: false isNextSame: false
-XXXFound  running blkid: 8855603 txid: 0 logid: 0 amount: 5000000000000000000
-Querying at block 8855603 for 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0xf503017d7baf7fbc0fff7492b751025c6a78179b
-Different block  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 8855603 and 8856290 of 5000000000000000000
-Statement reconciles? true top-level
-EndBalCalc: 5000000000000000000 -10210000000000000 4989790000000000000
-Inserting  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 8856290 of 4989790000000000000
-Found  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 8856290 of 4989790000000000000
+XXX =============[ top-level ]======================
+XXX Case 1: Only statement in block
+XXX Block: 8856290 Tx: 62 Asset: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+XXX FirstInBlock: true, LastInBlock: true
+XXX ================================================
 Block 8856290 is prior to deployment (10000835) of Uniswap V2. Falling back to Maker (0x729d19f657bd0614b4985cf1d82531c67569197b)
 =========================================================
 ===> PRICING FOR 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) using Maker
@@ -129,10 +140,9 @@ bigPrice:            184.1825
 price:               184.1825
 source:              maker
 ===================================================
-Reason:                 top-level
-Previous:               8855603 121 ( false )
+Previous:               8855603 121 ( true )
 Current:                8856290 62 ( true )
-Next:                   8856316 91 ( false )
+Next:                   8856316 91 ( true )
 accountedFor:           0xf503017d7baf7fbc0fff7492b751025c6a78179b
 sender:                 0xf503017d7baf7fbc0fff7492b751025c6a78179b  ==>  0xb97073b754660bb356dfe12f78ae366d77dbc80f
 asset:                  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -156,8 +166,6 @@ Trial balance:
    material:            true
    reconciled:          true
 ---------------------------------------------------
-----------Done  true  --------------------------
-
 Statement is material and reconciled - appending
 Extracting statements from logs.
 There were no statements generated from logs.
@@ -169,19 +177,11 @@ There were no statements generated from logs.
 ~~~ Entering: 8856316.91 ~~~
 ETH is of interest
 Attempting to reconcile at top level: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-0xf503017d7baf7fbc0fff7492b751025c6a78179b
-------------------------------------
-# Reason: top-level
-Trial balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0xf503017d7baf7fbc0fff7492b751025c6a78179b at stmt 8856316 91 0
-------------------------------------
-Sender: false Recipient: true 0xb97073b754660bb356dfe12f78ae366d77dbc80f 0xf503017d7baf7fbc0fff7492b751025c6a78179b 0xf503017d7baf7fbc0fff7492b751025c6a78179b
-adjustForIntraTransfer1 isToken: false isPrevSame: false isNextSame: false
-XXXFound  running blkid: 8856290 txid: 0 logid: 0 amount: 4989790000000000000
-Querying at block 8856290 for 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0xf503017d7baf7fbc0fff7492b751025c6a78179b
-Different block  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 8856290 and 8856316 of 4989790000000000000
-Statement reconciles? true top-level
-EndBalCalc: 4989790000000000000 10000000000000000 4999790000000000000
-Inserting  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 8856316 of 4999790000000000000
-Found  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 8856316 of 4999790000000000000
+XXX =============[ top-level ]======================
+XXX Case 1: Only statement in block
+XXX Block: 8856316 Tx: 91 Asset: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+XXX FirstInBlock: true, LastInBlock: true
+XXX ================================================
 Block 8856316 is prior to deployment (10000835) of Uniswap V2. Falling back to Maker (0x729d19f657bd0614b4985cf1d82531c67569197b)
 =========================================================
 ===> PRICING FOR 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) using Maker
@@ -196,10 +196,9 @@ bigPrice:            184.1825
 price:               184.1825
 source:              maker
 ===================================================
-Reason:                 top-level
-Previous:               8856290 62 ( false )
+Previous:               8856290 62 ( true )
 Current:                8856316 91 ( true )
-Next:                   8856476 55 ( false )
+Next:                   8856476 55 ( true )
 accountedFor:           0xf503017d7baf7fbc0fff7492b751025c6a78179b
 sender:                 0xb97073b754660bb356dfe12f78ae366d77dbc80f  ==>  0xf503017d7baf7fbc0fff7492b751025c6a78179b
 asset:                  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -222,8 +221,6 @@ Trial balance:
    material:            true
    reconciled:          true
 ---------------------------------------------------
-----------Done  true  --------------------------
-
 Statement is material and reconciled - appending
 Extracting statements from logs.
 There were no statements generated from logs.
@@ -235,44 +232,65 @@ There were no statements generated from logs.
 ~~~ Entering: 8856476.55 ~~~
 ETH is of interest
 Attempting to reconcile at top level: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-0xf503017d7baf7fbc0fff7492b751025c6a78179b
-------------------------------------
-# Reason: top-level
-Trial balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0xf503017d7baf7fbc0fff7492b751025c6a78179b at stmt 8856476 55 0
-------------------------------------
-Not sender or recipient 0xf503017d7baf7fbc0fff7492b751025c6a78179b 0xeba60d324c2546459e1e9dd4c7e740ca80134588 0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359 top-level
-Sender: false Recipient: false 0xeba60d324c2546459e1e9dd4c7e740ca80134588 0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359 0xf503017d7baf7fbc0fff7492b751025c6a78179b
-adjustForIntraTransfer1 isToken: false isPrevSame: false isNextSame: false
-XXXFound  running blkid: 8856316 txid: 0 logid: 0 amount: 4999790000000000000
-Querying at block 8856316 for 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0xf503017d7baf7fbc0fff7492b751025c6a78179b
-Different block  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 8856316 and 8856476 of 4999790000000000000
-Statement reconciles? true top-level
-EndBalCalc: 4999790000000000000 0 4999790000000000000
-Inserting  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 8856476 of 4999790000000000000
-Found  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 8856476 of 4999790000000000000
+XXX =============[ top-level ]======================
+XXX Case 1: Only statement in block
+XXX Block: 8856476 Tx: 55 Asset: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+XXX FirstInBlock: true, LastInBlock: true
+XXX ================================================
+Block 8856476 is prior to deployment (10000835) of Uniswap V2. Falling back to Maker (0x729d19f657bd0614b4985cf1d82531c67569197b)
+=========================================================
+===> PRICING FOR 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) using Maker
+=========================================================
+blockNumber:         8856476
+source1 (uni/mkr):   0x729d19f657bd0614b4985cf1d82531c67569197b
+str0 (call):         peek()
+str1 (call/data):    0x000000000000000000000000000000000000000000000009fc0bafe8c7624000
+int0:                18418250000000000000000000
+int1:                18418250
+bigPrice:            184.1825
+price:               184.1825
+source:              maker
+===================================================
+Previous:               8856316 91 ( true )
+Current:                8856476 55 ( true )
+Next:                   8856511 161 ( true )
+accountedFor:           0xf503017d7baf7fbc0fff7492b751025c6a78179b
+sender:                 0xeba60d324c2546459e1e9dd4c7e740ca80134588  ==>  0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359
+asset:                  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
+hash:                   0x118f8d42e6b858427f6b54c1636a6ec1f72e0cf8941da03deffa55a3c2357204
+timestamp:              1572663370
+blockNumber:            8856476.55.0
+priceSource:            184.1825 (maker)
+--------------------------------------------------- 
+Trial balance:
+   prevBal:             4.99979
+   begBal:              4.99979 (0)
+   totalIn:             0
+   totalOut:            0
+   amountNet:           0
+                       ======================= 
+   endBal:              4.99979 (0)
+   endBalCalc:          4.99979
+--------------------------------------------------- 
+   material:            false
+   reconciled:          true
+---------------------------------------------------
 Statement was not material
 Extracting statements from logs.
 1 statements generated from logs.
-------------------------------------
-# Reason: token
-Trial balance for  0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359 0xf503017d7baf7fbc0fff7492b751025c6a78179b at stmt 8856476 55 40
-------------------------------------
-Sender: false Recipient: true 0xeba60d324c2546459e1e9dd4c7e740ca80134588 0xf503017d7baf7fbc0fff7492b751025c6a78179b 0xf503017d7baf7fbc0fff7492b751025c6a78179b
-adjustForIntraTransfer2 isToken: true isPrevSame: false isNextSame: false
-XXXNot found  0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359
-Using block-1 balance for  0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359 at block 0 of 0
-Statement reconciles? true token
-EndBalCalc: 0 1000000000000000000 1000000000000000000
-Inserting  0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359 at block 8856476 of 1000000000000000000
-Found  0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359 at block 8856476 of 1000000000000000000
+XXX =============[ token ]======================
+XXX Case 1: Only statement in block
+XXX Block: 8856476 Tx: 55 Asset: 0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359
+XXX FirstInBlock: true, LastInBlock: true
+XXX ================================================
 =========================================================
 ===> PRICING FOR 0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359 (DAI) 
 =========================================================
 stable-coin
 ===================================================
-Reason:                 token
-Previous:               8856316 91 ( false )
+Previous:               8856316 91 ( true )
 Current:                8856476 55 ( true )
-Next:                   8856511 161 ( false )
+Next:                   8856511 161 ( true )
 accountedFor:           0xf503017d7baf7fbc0fff7492b751025c6a78179b
 sender:                 0xeba60d324c2546459e1e9dd4c7e740ca80134588  ==>  0xf503017d7baf7fbc0fff7492b751025c6a78179b
 asset:                  0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359 (DAI) decimals: 18
@@ -295,8 +313,6 @@ Trial balance:
    material:            true
    reconciled:          true
 ---------------------------------------------------
-----------Done  true  --------------------------
-
 Statement is material - appending. reconciled: true
 ~~~ Leaving: 8856476.55 ~~~
 ------------------------------------ 1 statements generated.
@@ -306,45 +322,65 @@ Statement is material - appending. reconciled: true
 ~~~ Entering: 8856511.161 ~~~
 ETH is of interest
 Attempting to reconcile at top level: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-0xf503017d7baf7fbc0fff7492b751025c6a78179b
-------------------------------------
-# Reason: top-level
-Trial balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0xf503017d7baf7fbc0fff7492b751025c6a78179b at stmt 8856511 161 0
-------------------------------------
-Not sender or recipient 0xf503017d7baf7fbc0fff7492b751025c6a78179b 0x8c492d5f763841767362d716e3e69511f0527791 0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359 top-level
-Sender: false Recipient: false 0x8c492d5f763841767362d716e3e69511f0527791 0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359 0xf503017d7baf7fbc0fff7492b751025c6a78179b
-adjustForIntraTransfer1 isToken: false isPrevSame: false isNextSame: false
-XXXFound  running blkid: 8856476 txid: 0 logid: 0 amount: 4999790000000000000
-Querying at block 8856476 for 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0xf503017d7baf7fbc0fff7492b751025c6a78179b
-Different block  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 8856476 and 8856511 of 4999790000000000000
-Statement reconciles? true top-level
-EndBalCalc: 4999790000000000000 0 4999790000000000000
-Inserting  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 8856511 of 4999790000000000000
-Found  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 8856511 of 4999790000000000000
+XXX =============[ top-level ]======================
+XXX Case 1: Only statement in block
+XXX Block: 8856511 Tx: 161 Asset: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+XXX FirstInBlock: true, LastInBlock: true
+XXX ================================================
+Block 8856511 is prior to deployment (10000835) of Uniswap V2. Falling back to Maker (0x729d19f657bd0614b4985cf1d82531c67569197b)
+=========================================================
+===> PRICING FOR 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) using Maker
+=========================================================
+blockNumber:         8856511
+source1 (uni/mkr):   0x729d19f657bd0614b4985cf1d82531c67569197b
+str0 (call):         peek()
+str1 (call/data):    0x000000000000000000000000000000000000000000000009fc0bafe8c7624000
+int0:                18418250000000000000000000
+int1:                18418250
+bigPrice:            184.1825
+price:               184.1825
+source:              maker
+===================================================
+Previous:               8856476 55 ( true )
+Current:                8856511 161 ( true )
+Next:                   8856512 0 ( true )
+accountedFor:           0xf503017d7baf7fbc0fff7492b751025c6a78179b
+sender:                 0x8c492d5f763841767362d716e3e69511f0527791  ==>  0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359
+asset:                  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
+hash:                   0x973699ddd12186570c957369788e0128b1acc66c994685c5d3f52ef6b3b84fed
+timestamp:              1572663859
+blockNumber:            8856511.161.0
+priceSource:            184.1825 (maker)
+--------------------------------------------------- 
+Trial balance:
+   prevBal:             4.99979
+   begBal:              4.99979 (0)
+   totalIn:             0
+   totalOut:            0
+   amountNet:           0
+                       ======================= 
+   endBal:              4.99979 (0)
+   endBalCalc:          4.99979
+--------------------------------------------------- 
+   material:            false
+   reconciled:          true
+---------------------------------------------------
 Statement was not material
 Extracting statements from logs.
 1 statements generated from logs.
-------------------------------------
-# Reason: token
-Trial balance for  0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359 0xf503017d7baf7fbc0fff7492b751025c6a78179b at stmt 8856511 161 94
-------------------------------------
-Sender: false Recipient: true 0x8c492d5f763841767362d716e3e69511f0527791 0xf503017d7baf7fbc0fff7492b751025c6a78179b 0xf503017d7baf7fbc0fff7492b751025c6a78179b
-adjustForIntraTransfer1 isToken: true isPrevSame: false isNextSame: false
-XXXFound  running blkid: 8856476 txid: 0 logid: 0 amount: 1000000000000000000
-Querying at block 8856476 for 0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359 0xf503017d7baf7fbc0fff7492b751025c6a78179b
-Different block  0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359 at block 8856476 and 8856511 of 1000000000000000000
-Statement reconciles? true token
-EndBalCalc: 1000000000000000000 4999000000000000000000 5000000000000000000000
-Inserting  0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359 at block 8856511 of 5000000000000000000000
-Found  0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359 at block 8856511 of 5000000000000000000000
+XXX =============[ token ]======================
+XXX Case 1: Only statement in block
+XXX Block: 8856511 Tx: 161 Asset: 0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359
+XXX FirstInBlock: true, LastInBlock: true
+XXX ================================================
 =========================================================
 ===> PRICING FOR 0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359 (DAI) 
 =========================================================
 stable-coin
 ===================================================
-Reason:                 token
-Previous:               8856476 55 ( false )
+Previous:               8856476 55 ( true )
 Current:                8856511 161 ( true )
-Next:                   8856512 0 ( false )
+Next:                   8856512 0 ( true )
 accountedFor:           0xf503017d7baf7fbc0fff7492b751025c6a78179b
 sender:                 0x8c492d5f763841767362d716e3e69511f0527791  ==>  0xf503017d7baf7fbc0fff7492b751025c6a78179b
 asset:                  0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359 (DAI) decimals: 18
@@ -367,8 +403,6 @@ Trial balance:
    material:            true
    reconciled:          true
 ---------------------------------------------------
-----------Done  true  --------------------------
-
 Statement is material - appending. reconciled: true
 ~~~ Leaving: 8856511.161 ~~~
 ------------------------------------ 1 statements generated.

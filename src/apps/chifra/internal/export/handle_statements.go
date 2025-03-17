@@ -130,14 +130,14 @@ func (opts *ExportOptions) HandleStatements(rCtx *output.RenderCtx, monitorArray
 
 						recon = ledger.NewReconciler(opts.Conn, ledgerOpts)
 						items := make([]types.Statement, 0, len(thisMap))
-						list, err := types.NewAppList(apps)
+						list, err := types.NewAppList(apps, txArray)
 						if err != nil {
 							errorChan <- err
 						}
 						i := -1
 						for node := list.Head; node != nil; node = node.Next() {
 							i++
-							if statements, err := recon.GetStatements(node, txArray[i]); err != nil {
+							if statements, err := recon.GetStatements(node); err != nil {
 								errorChan <- err
 
 							} else if len(statements) > 0 {

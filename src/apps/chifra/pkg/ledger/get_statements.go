@@ -19,14 +19,14 @@ func (r *Reconciler) SkipAirdrop(addr base.Address) bool {
 	// }
 }
 
-func (r *Reconciler) GetStatements(node *types.AppNode, trans *types.Transaction) ([]types.Statement, error) {
+func (r *Reconciler) GetStatements(node *types.AppNode[types.Transaction]) ([]types.Statement, error) {
+	trans := node.Data()
 	fail := func(n int) {
 		logger.TestLog(true, fmt.Sprintf("~fail %d~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~", n))
 	}
 
-	logger.TestLog(true, "")
-	logger.TestLog(true, "------------------------------------")
-	logger.TestLog(true, fmt.Sprintf("~~~ Entering: %d.%d ~~~", node.CurBlock(), node.CurTxId()))
+	debugHeader(node)
+
 	results := make([]types.Statement, 0, 20)
 	if types.AssetOfInterest(r.Opts.AssetFilters, base.FAKE_ETH_ADDRESS) {
 		logger.TestLog(true, "ETH is of interest")
@@ -55,13 +55,13 @@ func (r *Reconciler) GetStatements(node *types.AppNode, trans *types.Transaction
 					logger.Error(err.Error())
 				} else {
 					logger.TestLog(true, "Fetched a single statement from traces")
-					if _, err = r.trialBalance("traces", trans, stmt, node, true); err != nil {
+					if _, err = r.trialBalance("traces", stmt, node, true); err != nil {
 						fail(3)
 						return nil, err
 					} else {
 						if stmt.IsMaterial() { // append even if not reconciled
 							_ = r.WriteToCache(base.FAKE_ETH_ADDRESS, stmt, trans.Timestamp)
-							ReportProgress(stmt)
+							ReportProgress(stmt, true)
 							logger.TestLog(true, "Statement is material - appending. reconciled:", stmt.Reconciled())
 							results = append(results, *stmt)
 						} else {
@@ -76,14 +76,14 @@ func (r *Reconciler) GetStatements(node *types.AppNode, trans *types.Transaction
 				fail(4)
 				return nil, err
 			} else {
-				if reconciled, err := r.trialBalance("top-level", trans, stmt, node, false); err != nil {
+				if reconciled, err := r.trialBalance("top-level", stmt, node, false); err != nil {
 					fail(5)
 					return nil, err
 				} else {
 					if reconciled {
 						if stmt.IsMaterial() {
 							_ = r.WriteToCache(base.FAKE_ETH_ADDRESS, stmt, trans.Timestamp)
-							ReportProgress(stmt)
+							ReportProgress(stmt, false)
 							logger.TestLog(true, "Statement is material and reconciled - appending")
 							results = append(results, *stmt)
 						} else {
@@ -100,13 +100,13 @@ func (r *Reconciler) GetStatements(node *types.AppNode, trans *types.Transaction
 								logger.Error(err.Error())
 							} else {
 								logger.TestLog(true, "Fetched a single statement from traces")
-								if _, err = r.trialBalance("traces", trans, stmt, node, true); err != nil {
+								if _, err = r.trialBalance("traces", stmt, node, true); err != nil {
 									fail(7)
 									return nil, err
 								} else {
 									if stmt.IsMaterial() { // append even if not reconciled
 										_ = r.WriteToCache(base.FAKE_ETH_ADDRESS, stmt, trans.Timestamp)
-										ReportProgress(stmt)
+										ReportProgress(stmt, true)
 										logger.TestLog(true, "Statement is material - appending. reconciled:", stmt.Reconciled())
 										results = append(results, *stmt)
 									} else {
@@ -166,7 +166,7 @@ func (r *Reconciler) GetStatements(node *types.AppNode, trans *types.Transaction
 						}
 					}
 
-					if _, err := r.trialBalance("token", trans, stmt, node, true); err != nil {
+					if _, err := r.trialBalance("token", stmt, node, true); err != nil {
 						fail(9)
 						logger.Error(err.Error())
 						continue
@@ -174,7 +174,7 @@ func (r *Reconciler) GetStatements(node *types.AppNode, trans *types.Transaction
 						// order matters - don't move
 						if stmt.IsMaterial() { // append even if not reconciled
 							_ = r.WriteToCache(base.FAKE_ETH_ADDRESS, stmt, trans.Timestamp)
-							ReportProgress(stmt)
+							ReportProgress(stmt, true)
 							logger.TestLog(true, "Statement is material - appending. reconciled:", stmt.Reconciled())
 							results = append(results, *stmt)
 						} else {
@@ -192,7 +192,7 @@ func (r *Reconciler) GetStatements(node *types.AppNode, trans *types.Transaction
 	return results, nil
 }
 
-func ReportProgress(stmt *types.Statement) {
+func ReportProgress(stmt *types.Statement, warn bool) {
 	msg := fmt.Sprintf("Ether statement at % 9d.%d.%d %s %s", stmt.BlockNumber, stmt.TransactionIndex, stmt.LogIndex, stmt.Asset.Hex(), stmt.Holder.Hex())
 	if !stmt.IsEth() {
 		msg = fmt.Sprintf("Token statement at % 9d.%d.%d %s %s", stmt.BlockNumber, stmt.TransactionIndex, stmt.LogIndex, stmt.Asset.Hex(), stmt.Holder.Hex())
@@ -201,7 +201,9 @@ func ReportProgress(stmt *types.Statement) {
 	if !stmt.Reconciled() {
 		// logger.Progress(true, colors.Green+msg+" reconciled.", colors.Off, spacer)
 		// } else {
-		logger.Warn(msg+" did not reconcile.", spacer)
+		if warn {
+			logger.Warn(msg+" did not reconcile.", spacer)
+		}
 	}
 }
 
@@ -220,4 +222,16 @@ func (r *Reconciler) WriteToCache(addr base.Address, stmt *types.Statement, ts b
 	// 	Statements:       []types.Statement{*stmt},
 	// }
 	// return r.Connection.Store.WriteToCache(sg, walk.Cache_Statements, ts)
+}
+
+func debugHeader(a *types.AppNode[types.Transaction]) {
+	logger.TestLog(true, "")
+	logger.TestLog(true, "------------------------------------")
+	logger.TestLog(true, fmt.Sprintf("~~~ Entering: %d.%d ~~~", a.CurBlock(), a.CurTxId()))
+	// logger.TestLog(true, "")
+	// logger.TestLog(true, "------------------------------------")
+	// // logger.TestLog(true, fmt.Sprintf("~~~ Entering: %d.%d ~~~", a.CurBlock(), a.CurTxId()))
+	// logger.TestLog(true, "         prev        cur         next        isHead  isTail  isFirst isLast")
+	// logger.TestLog(true, a.String())
+	// logger.TestLog(true, "------------------------------------")
 }

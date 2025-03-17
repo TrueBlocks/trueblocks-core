@@ -19,27 +19,19 @@ Format:  json
 ETH is NOT of interest
 Extracting statements from logs.
 1 statements generated from logs.
-------------------------------------
-# Reason: token
-Trial balance for  0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359 0xf503017d7baf7fbc0fff7492b751025c6a78179b at stmt 8860513 85 84
-------------------------------------
-Sender: true Recipient: false 0xf503017d7baf7fbc0fff7492b751025c6a78179b 0x30f938fed5de6e06a9a7cd2ac3517131c317b1e7 0xf503017d7baf7fbc0fff7492b751025c6a78179b
-adjustForIntraTransfer2 isToken: true isPrevSame: false isNextSame: false
-XXXNot found  0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359
-Using block-1 balance for  0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359 at block 0 of 0
-Statement reconciles? true token
-EndBalCalc: 7500000000000000000000 -500000000000000000000 7000000000000000000000
-Inserting  0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359 at block 8860513 of 7000000000000000000000
-Found  0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359 at block 8860513 of 7000000000000000000000
+XXX =============[ token ]======================
+XXX Case 1: Only statement in block
+XXX Block: 8860513 Tx: 85 Asset: 0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359
+XXX FirstInBlock: true, LastInBlock: true
+XXX ================================================
 =========================================================
 ===> PRICING FOR 0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359 (DAI) 
 =========================================================
 stable-coin
 ===================================================
-Reason:                 token
-Previous:               8860512 0 ( false )
+Previous:               8860512 0 ( true )
 Current:                8860513 85 ( true )
-Next:                   8860529 145 ( false )
+Next:                   8860529 145 ( true )
 accountedFor:           0xf503017d7baf7fbc0fff7492b751025c6a78179b
 sender:                 0xf503017d7baf7fbc0fff7492b751025c6a78179b  ==>  0x30f938fed5de6e06a9a7cd2ac3517131c317b1e7
 asset:                  0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359 (DAI) decimals: 18
@@ -62,8 +54,6 @@ Trial balance:
    material:            true
    reconciled:          true
 ---------------------------------------------------
-----------Done  true  --------------------------
-
 Statement is material - appending. reconciled: true
 ~~~ Leaving: 8860513.85 ~~~
 ------------------------------------ 1 statements generated.
@@ -83,28 +73,19 @@ There were no statements generated from logs.
 ETH is NOT of interest
 Extracting statements from logs.
 1 statements generated from logs.
-------------------------------------
-# Reason: token
-Trial balance for  0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359 0xf503017d7baf7fbc0fff7492b751025c6a78179b at stmt 8860531 152 95
-------------------------------------
-Sender: true Recipient: false 0xf503017d7baf7fbc0fff7492b751025c6a78179b 0x30f938fed5de6e06a9a7cd2ac3517131c317b1e7 0xf503017d7baf7fbc0fff7492b751025c6a78179b
-adjustForIntraTransfer1 isToken: true isPrevSame: false isNextSame: false
-XXXFound  running blkid: 8860513 txid: 0 logid: 0 amount: 7000000000000000000000
-Querying at block 8860513 for 0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359 0xf503017d7baf7fbc0fff7492b751025c6a78179b
-Different block  0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359 at block 8860513 and 8860531 of 7000000000000000000000
-Statement reconciles? true token
-EndBalCalc: 7000000000000000000000 -7000000000000000000000 0
-Inserting  0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359 at block 8860531 of 0
-Found  0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359 at block 8860531 of 0
+XXX =============[ token ]======================
+XXX Case 1: Only statement in block
+XXX Block: 8860531 Tx: 152 Asset: 0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359
+XXX FirstInBlock: true, LastInBlock: true
+XXX ================================================
 =========================================================
 ===> PRICING FOR 0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359 (DAI) 
 =========================================================
 stable-coin
 ===================================================
-Reason:                 token
-Previous:               8860529 145 ( false )
+Previous:               8860529 145 ( true )
 Current:                8860531 152 ( true )
-Next:                   8860532 0 ( false )
+Next:                   8860532 0 ( true )
 accountedFor:           0xf503017d7baf7fbc0fff7492b751025c6a78179b
 sender:                 0xf503017d7baf7fbc0fff7492b751025c6a78179b  ==>  0x30f938fed5de6e06a9a7cd2ac3517131c317b1e7
 asset:                  0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359 (DAI) decimals: 18
@@ -127,8 +108,6 @@ Trial balance:
    material:            true
    reconciled:          true
 ---------------------------------------------------
-----------Done  true  --------------------------
-
 Statement is material - appending. reconciled: true
 ~~~ Leaving: 8860531.152 ~~~
 ------------------------------------ 1 statements generated.
@@ -169,6 +148,7 @@ Statement is material - appending. reconciled: true
       "prevBal": "7500000000000000000000",
       "priceSource": "stable-coin",
       "recipient": "0x30f938fed5de6e06a9a7cd2ac3517131c317b1e7",
+      "recipientName": "Giveth Bridge",
       "reconciled": true,
       "selfDestructIn": "0",
       "selfDestructOut": "0",
@@ -215,6 +195,7 @@ Statement is material - appending. reconciled: true
       "prevBal": "7000000000000000000000",
       "priceSource": "stable-coin",
       "recipient": "0x30f938fed5de6e06a9a7cd2ac3517131c317b1e7",
+      "recipientName": "Giveth Bridge",
       "reconciled": true,
       "selfDestructIn": "0",
       "selfDestructOut": "0",

@@ -1,37 +1,28 @@
-export?addrs=0x65b0d5e1dc0dee0704f53f660aa865c72e986fc7&accounting&statements&asset=0xc713e5e149d5d0715dcd1c156a020976e7e56b88&firstBlock=11670418&lastBlock=11670420&maxRecords=40
-Args: [addrs=0x65b0d5e1dc0dee0704f53f660aa865c72e986fc7 accounting statements asset=0xc713e5e149d5d0715dcd1c156a020976e7e56b88 firstBlock=11670418 lastBlock=11670420 maxRecords=40]
-Opts: {"addrs":["0x65b0d5e1dc0dee0704f53f660aa865c72e986fc7"],"accounting":true,"statements":true,"maxRecords":40,"asset":["0xc713e5e149d5d0715dcd1c156a020976e7e56b88"],"firstBlock":11670418,"lastBlock":11670420}
+export?addrs=0x65b0d5e1dc0dee0704f53f660aa865c72e986fc7&accounting&statements&asset=0xc713e5e149d5d0715dcd1c156a020976e7e56b88&firstBlock=11670418&lastBlock=11670420
+Args: [addrs=0x65b0d5e1dc0dee0704f53f660aa865c72e986fc7 accounting statements asset=0xc713e5e149d5d0715dcd1c156a020976e7e56b88 firstBlock=11670418 lastBlock=11670420]
+Opts: {"addrs":["0x65b0d5e1dc0dee0704f53f660aa865c72e986fc7"],"accounting":true,"statements":true,"asset":["0xc713e5e149d5d0715dcd1c156a020976e7e56b88"],"firstBlock":11670418,"lastBlock":11670420}
 Addrs:  [0x65b0d5e1dc0dee0704f53f660aa865c72e986fc7]
 Accounting:  true
 Statements:  true
-MaxRecords:  40
 Asset:  [0xc713e5e149d5d0715dcd1c156a020976e7e56b88]
 FirstBlock:  11670418
 LastBlock:  11670420
 Caps:  cache,decache,ether
 Format:  json
+0: 11670419 91
+
 ------------------------------------
-# Reason: token
-Trial balance for  0xc713e5e149d5d0715dcd1c156a020976e7e56b88 0x65b0d5e1dc0dee0704f53f660aa865c72e986fc7 at stmt 11670419 91 195
-------------------------------------
-Sender: true Recipient: false 0x65b0d5e1dc0dee0704f53f660aa865c72e986fc7 0x0 0x65b0d5e1dc0dee0704f53f660aa865c72e986fc7
-adjustForIntraTransfer2 isToken: true isPrevSame: true isNextSame: false
-XXXNot found  0xc713e5e149d5d0715dcd1c156a020976e7e56b88
-Using block-1 balance for  0xc713e5e149d5d0715dcd1c156a020976e7e56b88 at block 0 of 0
-Correcting ending balance isLess: true isGreater: false diff: -38340920823
-correctEndBalIn: -38340920823
-
-before,after3 + 0
-- -38340920823
-+ 
-
-- endBalIn
-
-
-Statement reconciles? false token
-EndBalCalc: 14922878205530494041 -14922878282212335687 -76681841646
-Inserting  0xc713e5e149d5d0715dcd1c156a020976e7e56b88 at block 11670419 of -76681841646
-Found  0xc713e5e149d5d0715dcd1c156a020976e7e56b88 at block 11670419 of -76681841646
+~~~ Entering: 11670419.91 ~~~
+ETH is NOT of interest
+Extracting statements from logs.
+1 statements generated from logs.
+XXX =============[ token ]======================
+XXX Case 1: Only statement in block
+XXX Block: 11670419 Tx: 91 Asset: 0xc713e5e149d5d0715dcd1c156a020976e7e56b88
+XXX FirstInBlock: true, LastInBlock: true
+XXX ================================================
+Correcting ending balance diff: -38340920823 absDiff: 38340920823
+correctEndBalIn: 38340920823
 =========================================================
 ===> PRICING FOR 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) using Uniswap
 =========================================================
@@ -50,10 +41,9 @@ bigPrice:            1237.8129236177362007
 price:               1237.8129236177363
 source:              uniswap
 ===================================================
-Reason:                 token
-Previous:               11670418 90 ( false )
+Previous:               11670418 0 ( true )
 Current:                11670419 91 ( true )
-Next:                   11670420 0 ( false )
+Next:                   11670420 0 ( true )
 accountedFor:           0x65b0d5e1dc0dee0704f53f660aa865c72e986fc7
 sender:                 0x65b0d5e1dc0dee0704f53f660aa865c72e986fc7  ==>  0x0
 asset:                  0xc713e5e149d5d0715dcd1c156a020976e7e56b88 (aMKR) decimals: 18
@@ -65,20 +55,22 @@ priceSource:            0 (not-priced)
 Trial balance:
    prevBal:             14.922878205530494041
    begBal:              14.922878205530494041 (0)
-   totalIn:             0
-   totalOut:            14.922878205530494041
+   totalIn:             0.000000038340920823
+   totalOut:            14.922878243871414864
    amountNet:           -14.922878205530494041
                        ======================= 
    endBal:              0 (0)
    endBalCalc:          0
 --------------------------------------------------- 
+   correctEndBalIn:     0.000000038340920823
    amountOut:           14.922878243871414864
-   correctEndBalOut:    -0.000000038340920823
-   correctingReasons:   endBalOut
+   correctingReasons:   endBalIn
    material:            true
    reconciled:          true
 ---------------------------------------------------
-----------Done  true  --------------------------
+Statement is material - appending. reconciled: true
+~~~ Leaving: 11670419.91 ~~~
+------------------------------------ 1 statements generated.
 
 {
   "data": [
@@ -96,9 +88,9 @@ Trial balance:
       "correctAmountOut": "0",
       "correctBegBalIn": "0",
       "correctBegBalOut": "0",
-      "correctEndBalIn": "0",
-      "correctEndBalOut": "38340920823",
-      "correctingReasons": "endBalOut",
+      "correctEndBalIn": "38340920823",
+      "correctEndBalOut": "0",
+      "correctingReasons": "endBalIn",
       "date": "2021-01-17 04:01:58 UTC",
       "decimals": 18,
       "endBal": "0",
@@ -123,8 +115,8 @@ Trial balance:
       "spotPrice": 0,
       "symbol": "aMKR",
       "timestamp": 1610856118,
-      "totalIn": "0",
-      "totalOut": "14922878205530494041",
+      "totalIn": "38340920823",
+      "totalOut": "14922878243871414864",
       "transactionHash": "0x634799410165000edaf1b1e8e5e8055b39cdd534d3c3dc9738865d39adb5d888",
       "transactionIndex": 91
     }

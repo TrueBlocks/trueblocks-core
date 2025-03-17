@@ -346,14 +346,11 @@ There were no statements generated from logs.
 ETH is NOT of interest
 Extracting statements from logs.
 1 statements generated from logs.
-------------------------------------
-# Reason: token
-Trial balance for  0xf5b2c59f6db42ffcdfc1625999c81fdf17953384 0x054993ab0f2b1acc0fdc65405ee203b4271bebe6 at stmt 15549162 83 1774
-------------------------------------
-Sender: false Recipient: true 0xa27f25d6a8f876c8cdd506f6cc59f3166f2a494f 0x054993ab0f2b1acc0fdc65405ee203b4271bebe6 0x054993ab0f2b1acc0fdc65405ee203b4271bebe6
-adjustForIntraTransfer2 isToken: true isPrevSame: false isNextSame: false
-XXXNot found  0xf5b2c59f6db42ffcdfc1625999c81fdf17953384
-Using block-1 balance for  0xf5b2c59f6db42ffcdfc1625999c81fdf17953384 at block 0 of 0
+XXX =============[ token ]======================
+XXX Case 1: Only statement in block
+XXX Block: 15549162 Tx: 83 Asset: 0xf5b2c59f6db42ffcdfc1625999c81fdf17953384
+XXX FirstInBlock: true, LastInBlock: true
+XXX ================================================
 A possible nullTransfer
   nLogs:             1000
     lotsOfLogs:      --> true
@@ -364,10 +361,6 @@ A possible nullTransfer
   Material:          true
     hasBalanceChange: --> false
 Correcting token transfer for a null transfer
-Statement reconciles? true token
-EndBalCalc: 2017044745122853478376 0 2017044745122853478376
-Inserting  0xf5b2c59f6db42ffcdfc1625999c81fdf17953384 at block 15549162 of 2017044745122853478376
-Found  0xf5b2c59f6db42ffcdfc1625999c81fdf17953384 at block 15549162 of 2017044745122853478376
 =========================================================
 ===> PRICING FOR 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) using Uniswap
 =========================================================
@@ -386,10 +379,9 @@ bigPrice:            1440.1112570636812698
 price:               1440.1112570636813
 source:              uniswap
 ===================================================
-Reason:                 token
-Previous:               14469880 33 ( false )
+Previous:               14469880 33 ( true )
 Current:                15549162 83 ( true )
-Next:                   15549163 0 ( false )
+Next:                   15549163 0 ( true )
 accountedFor:           0x054993ab0f2b1acc0fdc65405ee203b4271bebe6
 sender:                 0xa27f25d6a8f876c8cdd506f6cc59f3166f2a494f  ==>  0x054993ab0f2b1acc0fdc65405ee203b4271bebe6
 asset:                  0xf5b2c59f6db42ffcdfc1625999c81fdf17953384 (mdai.io) decimals: 18
@@ -414,8 +406,6 @@ Trial balance:
    material:            true
    reconciled:          true
 ---------------------------------------------------
-----------Done  true  --------------------------
-
 Statement is material - appending. reconciled: true
 ~~~ Leaving: 15549162.83 ~~~
 ------------------------------------ 1 statements generated.

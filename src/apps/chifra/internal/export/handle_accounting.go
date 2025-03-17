@@ -34,7 +34,7 @@ func (opts *ExportOptions) HandleAccounting(rCtx *output.RenderCtx, monitorArray
 
 	var recon *ledger.Reconciler
 	fetchData := func(modelChan chan types.Modeler, errorChan chan error) {
-		visitAppearance := func(node *types.AppNode, app *types.Appearance) error {
+		visitAppearance := func(node *types.AppNode[types.Transaction], app *types.Appearance) error {
 			if tx, err := opts.Conn.GetTransactionByAppearance(app, false); err != nil {
 				errorChan <- err
 				return nil
@@ -48,7 +48,8 @@ func (opts *ExportOptions) HandleAccounting(rCtx *output.RenderCtx, monitorArray
 						}
 					}
 
-					if statements, err := recon.GetStatements(node, tx); err != nil {
+					node.SetData(tx)
+					if statements, err := recon.GetStatements(node); err != nil {
 						errorChan <- err
 
 					} else {
@@ -79,7 +80,7 @@ func (opts *ExportOptions) HandleAccounting(rCtx *output.RenderCtx, monitorArray
 				}
 
 				recon = ledger.NewReconciler(opts.Conn, ledgerOpts)
-				list, err := types.NewAppList(apps)
+				list, err := types.NewAppList[types.Transaction](apps, nil)
 				if err != nil {
 					errorChan <- err
 				}

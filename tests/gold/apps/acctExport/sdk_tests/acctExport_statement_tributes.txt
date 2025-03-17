@@ -28,24 +28,16 @@ There were no statements generated from logs.
 ETH is NOT of interest
 Extracting statements from logs.
 1 statements generated from logs.
-------------------------------------
-# Reason: token
-Trial balance for  0x0ba45a8b5d5575935b8158a88c631e9f9c95a2e5 0x868b8fd259abfcfdf9634c343593b34ef359641d at stmt 8769029 80 61
-------------------------------------
-Sender: false Recipient: true 0x103348c47ffc3254aff761894e7c13ca0c680465 0x868b8fd259abfcfdf9634c343593b34ef359641d 0x868b8fd259abfcfdf9634c343593b34ef359641d
-adjustForIntraTransfer2 isToken: true isPrevSame: false isNextSame: false
-XXXNot found  0x0ba45a8b5d5575935b8158a88c631e9f9c95a2e5
-Using block-1 balance for  0x0ba45a8b5d5575935b8158a88c631e9f9c95a2e5 at block 0 of 0
-Statement reconciles? true token
-EndBalCalc: 0 85000000000000000000 85000000000000000000
-Inserting  0x0ba45a8b5d5575935b8158a88c631e9f9c95a2e5 at block 8769029 of 85000000000000000000
-Found  0x0ba45a8b5d5575935b8158a88c631e9f9c95a2e5 at block 8769029 of 85000000000000000000
+XXX =============[ token ]======================
+XXX Case 1: Only statement in block
+XXX Block: 8769029 Tx: 80 Asset: 0x0ba45a8b5d5575935b8158a88c631e9f9c95a2e5
+XXX FirstInBlock: true, LastInBlock: true
+XXX ================================================
 Block 8769029 is prior to deployment (10000835) of Uniswap V2. No other source for tokens prior to UniSwap
 ===================================================
-Reason:                 token
-Previous:               8769019 124 ( false )
+Previous:               8769019 124 ( true )
 Current:                8769029 80 ( true )
-Next:                   8769052 73 ( false )
+Next:                   8769052 73 ( true )
 accountedFor:           0x868b8fd259abfcfdf9634c343593b34ef359641d
 sender:                 0x103348c47ffc3254aff761894e7c13ca0c680465  ==>  0x868b8fd259abfcfdf9634c343593b34ef359641d
 asset:                  0x0ba45a8b5d5575935b8158a88c631e9f9c95a2e5 (TRB) decimals: 18
@@ -68,8 +60,6 @@ Trial balance:
    material:            true
    reconciled:          true
 ---------------------------------------------------
-----------Done  true  --------------------------
-
 Statement is material - appending. reconciled: true
 ~~~ Leaving: 8769029.80 ~~~
 ------------------------------------ 1 statements generated.
@@ -89,25 +79,16 @@ There were no statements generated from logs.
 ETH is NOT of interest
 Extracting statements from logs.
 1 statements generated from logs.
-------------------------------------
-# Reason: token
-Trial balance for  0x0ba45a8b5d5575935b8158a88c631e9f9c95a2e5 0x868b8fd259abfcfdf9634c343593b34ef359641d at stmt 8769052 74 73
-------------------------------------
-Sender: true Recipient: false 0x868b8fd259abfcfdf9634c343593b34ef359641d 0x2a0c0dbecc7e4d658f48e01e3fa353f44050c208 0x868b8fd259abfcfdf9634c343593b34ef359641d
-adjustForIntraTransfer1 isToken: true isPrevSame: false isNextSame: false
-XXXFound  running blkid: 8769029 txid: 0 logid: 0 amount: 85000000000000000000
-Querying at block 8769029 for 0x0ba45a8b5d5575935b8158a88c631e9f9c95a2e5 0x868b8fd259abfcfdf9634c343593b34ef359641d
-Different block  0x0ba45a8b5d5575935b8158a88c631e9f9c95a2e5 at block 8769029 and 8769052 of 85000000000000000000
-Statement reconciles? true token
-EndBalCalc: 85000000000000000000 -85000000000000000000 0
-Inserting  0x0ba45a8b5d5575935b8158a88c631e9f9c95a2e5 at block 8769052 of 0
-Found  0x0ba45a8b5d5575935b8158a88c631e9f9c95a2e5 at block 8769052 of 0
+XXX =============[ token ]======================
+XXX Case 1: Only statement in block
+XXX Block: 8769052 Tx: 74 Asset: 0x0ba45a8b5d5575935b8158a88c631e9f9c95a2e5
+XXX FirstInBlock: true, LastInBlock: true
+XXX ================================================
 Block 8769052 is prior to deployment (10000835) of Uniswap V2. No other source for tokens prior to UniSwap
 ===================================================
-Reason:                 token
 Previous:               8769052 73 ( false )
 Current:                8769052 74 ( true )
-Next:                   8769053 0 ( false )
+Next:                   8769053 0 ( true )
 accountedFor:           0x868b8fd259abfcfdf9634c343593b34ef359641d
 sender:                 0x868b8fd259abfcfdf9634c343593b34ef359641d  ==>  0x2a0c0dbecc7e4d658f48e01e3fa353f44050c208
 asset:                  0x0ba45a8b5d5575935b8158a88c631e9f9c95a2e5 (TRB) decimals: 18
@@ -130,8 +111,6 @@ Trial balance:
    material:            true
    reconciled:          true
 ---------------------------------------------------
-----------Done  true  --------------------------
-
 Statement is material - appending. reconciled: true
 ~~~ Leaving: 8769052.74 ~~~
 ------------------------------------ 1 statements generated.
@@ -218,6 +197,7 @@ Statement is material - appending. reconciled: true
       "prevBal": "85000000000000000000",
       "priceSource": "token-not-priced-pre-uni",
       "recipient": "0x2a0c0dbecc7e4d658f48e01e3fa353f44050c208",
+      "recipientName": "IDEX",
       "reconciled": true,
       "selfDestructIn": "0",
       "selfDestructOut": "0",

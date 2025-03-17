@@ -16,24 +16,16 @@ Format:  json
 ~~~ Entering: 0.270 ~~~
 ETH is of interest
 Attempting to reconcile at top level: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-0x08166f02313feae18bb044e7877c808b55b5bf58
-------------------------------------
-# Reason: top-level
-Trial balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0x08166f02313feae18bb044e7877c808b55b5bf58 at stmt 0 270 0
-------------------------------------
-Sender: false Recipient: true 0x0000000000000000000000000050726566756e64 0x08166f02313feae18bb044e7877c808b55b5bf58 0x08166f02313feae18bb044e7877c808b55b5bf58
-adjustForIntraTransfer2 isToken: false isPrevSame: true isNextSame: false
-XXXNot found  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
-Using block-1 balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 0 of 0
-Statement reconciles? true top-level
-EndBalCalc: 0 1970000000000000000000 1970000000000000000000
-Inserting  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 0 of 1970000000000000000000
-Found  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 0 of 1970000000000000000000
+XXX =============[ top-level ]======================
+XXX Case 1: Only statement in block
+XXX Block: 0 Tx: 270 Asset: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+XXX FirstInBlock: true, LastInBlock: true
+XXX ================================================
 Block 0 is prior to deployment (3684349) of Maker. No fallback pricing method
 ===================================================
-Reason:                 top-level
-Previous:               0 0 ( true )
+Previous:               0 0 ( false )
 Current:                0 270 ( true )
-Next:                   46685 0 ( false )
+Next:                   46685 0 ( true )
 accountedFor:           0x08166f02313feae18bb044e7877c808b55b5bf58
 sender:                 0x0000000000000000000000000050726566756e64  ==>  0x08166f02313feae18bb044e7877c808b55b5bf58
 asset:                  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (ETH) decimals: 18
@@ -56,8 +48,6 @@ Trial balance:
    material:            true
    reconciled:          true
 ---------------------------------------------------
-----------Done  true  --------------------------
-
 Statement is material and reconciled - appending
 Transaction receipt is nil. No log statements.
 ~~~ Leaving: 0.270 ~~~
@@ -68,25 +58,16 @@ Transaction receipt is nil. No log statements.
 ~~~ Entering: 46685.0 ~~~
 ETH is of interest
 Attempting to reconcile at top level: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-0x08166f02313feae18bb044e7877c808b55b5bf58
-------------------------------------
-# Reason: top-level
-Trial balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0x08166f02313feae18bb044e7877c808b55b5bf58 at stmt 46685 0 0
-------------------------------------
-Sender: true Recipient: false 0x08166f02313feae18bb044e7877c808b55b5bf58 0xad00b7a324f31351d397408c8c3952ea198317eb 0x08166f02313feae18bb044e7877c808b55b5bf58
-adjustForIntraTransfer1 isToken: false isPrevSame: false isNextSame: false
-XXXFound  running blkid: 0 txid: 0 logid: 0 amount: 1970000000000000000000
-Querying at block 0 for 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0x08166f02313feae18bb044e7877c808b55b5bf58
-Different block  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 0 and 46685 of 1970000000000000000000
-Statement reconciles? true top-level
-EndBalCalc: 1970000000000000000000 -5010500000000000000 1964989500000000000000
-Inserting  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 46685 of 1964989500000000000000
-Found  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 46685 of 1964989500000000000000
+XXX =============[ top-level ]======================
+XXX Case 1: Only statement in block
+XXX Block: 46685 Tx: 0 Asset: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+XXX FirstInBlock: true, LastInBlock: true
+XXX ================================================
 Block 46685 is prior to deployment (3684349) of Maker. No fallback pricing method
 ===================================================
-Reason:                 top-level
-Previous:               0 270 ( false )
+Previous:               0 270 ( true )
 Current:                46685 0 ( true )
-Next:                   46709 0 ( false )
+Next:                   46709 0 ( true )
 accountedFor:           0x08166f02313feae18bb044e7877c808b55b5bf58
 sender:                 0x08166f02313feae18bb044e7877c808b55b5bf58  ==>  0xad00b7a324f31351d397408c8c3952ea198317eb
 asset:                  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (ETH) decimals: 18
@@ -110,8 +91,6 @@ Trial balance:
    material:            true
    reconciled:          true
 ---------------------------------------------------
-----------Done  true  --------------------------
-
 Statement is material and reconciled - appending
 Extracting statements from logs.
 There were no statements generated from logs.
@@ -123,25 +102,16 @@ There were no statements generated from logs.
 ~~~ Entering: 46709.0 ~~~
 ETH is of interest
 Attempting to reconcile at top level: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-0x08166f02313feae18bb044e7877c808b55b5bf58
-------------------------------------
-# Reason: top-level
-Trial balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0x08166f02313feae18bb044e7877c808b55b5bf58 at stmt 46709 0 0
-------------------------------------
-Sender: true Recipient: false 0x08166f02313feae18bb044e7877c808b55b5bf58 0xad00b7a324f31351d397408c8c3952ea198317eb 0x08166f02313feae18bb044e7877c808b55b5bf58
-adjustForIntraTransfer1 isToken: false isPrevSame: false isNextSame: false
-XXXFound  running blkid: 46685 txid: 0 logid: 0 amount: 1964989500000000000000
-Querying at block 46685 for 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0x08166f02313feae18bb044e7877c808b55b5bf58
-Different block  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 46685 and 46709 of 1964989500000000000000
-Statement reconciles? true top-level
-EndBalCalc: 1964989500000000000000 -1964900000000000000000 89500000000000000
-Inserting  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 46709 of 89500000000000000
-Found  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 46709 of 89500000000000000
+XXX =============[ top-level ]======================
+XXX Case 1: Only statement in block
+XXX Block: 46709 Tx: 0 Asset: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+XXX FirstInBlock: true, LastInBlock: true
+XXX ================================================
 Block 46709 is prior to deployment (3684349) of Maker. No fallback pricing method
 ===================================================
-Reason:                 top-level
-Previous:               46685 0 ( false )
+Previous:               46685 0 ( true )
 Current:                46709 0 ( true )
-Next:                   46710 0 ( false )
+Next:                   46710 0 ( true )
 accountedFor:           0x08166f02313feae18bb044e7877c808b55b5bf58
 sender:                 0x08166f02313feae18bb044e7877c808b55b5bf58  ==>  0xad00b7a324f31351d397408c8c3952ea198317eb
 asset:                  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (ETH) decimals: 18
@@ -165,8 +135,6 @@ Trial balance:
    material:            true
    reconciled:          true
 ---------------------------------------------------
-----------Done  true  --------------------------
-
 Statement is material and reconciled - appending
 Extracting statements from logs.
 There were no statements generated from logs.
@@ -233,6 +201,7 @@ There were no statements generated from logs.
       "prevBalEth": "0",
       "priceSource": "eth-not-priced-pre-maker",
       "recipient": "0x08166f02313feae18bb044e7877c808b55b5bf58",
+      "recipientName": "Prefund_0270",
       "reconciled": true,
       "selfDestructIn": "0",
       "selfDestructInEth": "0",
@@ -313,6 +282,7 @@ There were no statements generated from logs.
       "selfDestructOut": "0",
       "selfDestructOutEth": "0",
       "sender": "0x08166f02313feae18bb044e7877c808b55b5bf58",
+      "senderName": "Prefund_0270",
       "spotPrice": 0,
       "symbol": "ETH",
       "timestamp": 1438927408,
@@ -387,6 +357,7 @@ There were no statements generated from logs.
       "selfDestructOut": "0",
       "selfDestructOutEth": "0",
       "sender": "0x08166f02313feae18bb044e7877c808b55b5bf58",
+      "senderName": "Prefund_0270",
       "spotPrice": 0,
       "symbol": "ETH",
       "timestamp": 1438927854,

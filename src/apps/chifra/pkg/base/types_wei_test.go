@@ -2,6 +2,7 @@ package base
 
 import (
 	"bytes"
+	"fmt"
 	"math/big"
 	"strings"
 	"testing"
@@ -264,13 +265,13 @@ func TestWeiSerialization(t *testing.T) {
 	}
 
 	// Test MarshalText.
-	// NOTE: According to the implementation, MarshalText returns "0" if the local text var is empty.
+	// NOTE: MarshalText returns "0" if w is nil, otherwise returns the string representation of the value.
 	text, err := w.MarshalText()
 	if err != nil {
 		t.Errorf("MarshalText error: %v", err)
 	}
-	if string(text) != "0" {
-		t.Errorf("MarshalText: got %s; want 0 (per implementation)", string(text))
+	if string(text) != "12345" { // Changed from "0" to "12345"
+		t.Errorf("MarshalText: got %s; want 12345 (per implementation)", string(text))
 	}
 
 	// Test UnmarshalText.
@@ -349,5 +350,234 @@ func TestWeiSignAndNegation(t *testing.T) {
 	negWNeg := wNeg.Neg()
 	if negWNeg.String() != "10" {
 		t.Errorf("Neg(-10) = %s; want 10", negWNeg.String())
+	}
+}
+
+func TestWeiAbs(t *testing.T) {
+	largePositive := NewWei(1e18)
+	largeNegative := NewWei(-1e18)
+	tests := []struct {
+		name     string
+		input    *Wei
+		expected *Wei
+	}{
+		{
+			name:     "positive number",
+			input:    NewWei((100)),
+			expected: NewWei(100),
+		},
+		{
+			name:     "negative number",
+			input:    NewWei((-100)),
+			expected: NewWei((100)),
+		},
+		{
+			name:     "zero",
+			input:    NewWei((0)),
+			expected: NewWei((0)),
+		},
+		{
+			name:     "large positive number",
+			input:    largePositive,
+			expected: largePositive,
+		},
+		{
+			name:     "large negative number",
+			input:    largeNegative,
+			expected: largePositive,
+		},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			result := tt.input.Abs()
+			if result.Cmp(tt.expected) != 0 {
+				t.Errorf("Abs() = %v, want %v", result, tt.expected)
+			}
+		})
+	}
+}
+
+func TestWeiNil(t *testing.T) {
+	tests := []struct {
+		name     string
+		fn       func(*Wei) interface{}
+		expected interface{}
+	}{
+		{
+			name: "Abs",
+			fn: func(w *Wei) interface{} {
+				return w.Abs()
+			},
+			expected: (*Wei)(nil),
+		},
+		{
+			name: "Neg",
+			fn: func(w *Wei) interface{} {
+				return w.Neg()
+			},
+			expected: (*Wei)(nil),
+		},
+		{
+			name: "SetUint64",
+			fn: func(w *Wei) interface{} {
+				return w.SetUint64(42)
+			},
+			expected: (*Wei)(big.NewInt(42)),
+		},
+		{
+			name: "SetInt64",
+			fn: func(w *Wei) interface{} {
+				return w.SetInt64(-42)
+			},
+			expected: (*Wei)(big.NewInt(-42)),
+		},
+		{
+			name: "SetString",
+			fn: func(w *Wei) interface{} {
+				result, ok := w.SetString("123", 10)
+				if !ok {
+					return nil
+				}
+				return result
+			},
+			expected: (*Wei)(big.NewInt(123)),
+		},
+		{
+			name: "Uint64",
+			fn: func(w *Wei) interface{} {
+				return w.Uint64()
+			},
+			expected: uint64(0),
+		},
+		{
+			name: "Text",
+			fn: func(w *Wei) interface{} {
+				return w.Text(10)
+			},
+			expected: "0",
+		},
+		{
+			name: "Sub",
+			fn: func(w *Wei) interface{} {
+				return w.Sub(nil, NewWei(1))
+			},
+			expected: (*Wei)(nil),
+		},
+		{
+			name: "Mul",
+			fn: func(w *Wei) interface{} {
+				return w.Mul(nil, NewWei(2))
+			},
+			expected: (*Wei)(nil),
+		},
+		{
+			name: "Div",
+			fn: func(w *Wei) interface{} {
+				return w.Div(nil, NewWei(3))
+			},
+			expected: (*Wei)(nil),
+		},
+		{
+			name: "Quo",
+			fn: func(w *Wei) interface{} {
+				return w.Quo(nil, NewWei(4))
+			},
+			expected: (*Wei)(nil),
+		},
+		{
+			name: "Cmp",
+			fn: func(w *Wei) interface{} {
+				return w.Cmp(NewWei(5))
+			},
+			expected: -1,
+		},
+		{
+			name: "MarshalText",
+			fn: func(w *Wei) interface{} {
+				text, err := w.MarshalText()
+				if err != nil {
+					return err
+				}
+				return string(text)
+			},
+			expected: "0",
+		},
+		{
+			name: "UnmarshalText",
+			fn: func(w *Wei) interface{} {
+				err := w.UnmarshalText([]byte("123"))
+				return err
+			},
+			expected: fmt.Errorf("cannot unmarshal into nil Wei"),
+		},
+		{
+			name: "UnmarshalJSON",
+			fn: func(w *Wei) interface{} {
+				err := w.UnmarshalJSON([]byte(`"123"`))
+				return err
+			},
+			expected: fmt.Errorf("cannot unmarshal into nil Wei"),
+		},
+		{
+			name: "MarshalCache",
+			fn: func(w *Wei) interface{} {
+				buf := new(bytes.Buffer)
+				err := w.MarshalCache(buf)
+				if err != nil {
+					return err
+				}
+				return buf.Bytes()
+			},
+			expected: []byte{1, 0, 0, 0, 0, 0, 0, 0, 2},
+		},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			var w *Wei = nil
+			result := tt.fn(w)
+
+			switch expected := tt.expected.(type) {
+			case *Wei:
+				res, ok := result.(*Wei)
+				if !ok {
+					t.Errorf("%s() returned %T, want *Wei", tt.name, result)
+					return
+				}
+				if res == nil && expected == nil {
+					return
+				}
+				if res == nil || expected == nil {
+					t.Errorf("%s() = %v, want %v", tt.name, res, expected)
+					return
+				}
+				if (*big.Int)(res).Cmp((*big.Int)(expected)) != 0 {
+					t.Errorf("%s() = %v, want %v", tt.name, res, expected)
+				}
+			case uint64:
+				if result.(uint64) != expected {
+					t.Errorf("%s() = %v, want %v", tt.name, result, expected)
+				}
+			case int:
+				if result.(int) != expected {
+					t.Errorf("%s() = %v, want %v", tt.name, result, expected)
+				}
+			case string:
+				if result.(string) != expected {
+					t.Errorf("%s() = %v, want %v", tt.name, result, expected)
+				}
+			case error:
+				if result == nil || result.(error).Error() != expected.Error() {
+					t.Errorf("%s() error = %v, want %v", tt.name, result, expected)
+				}
+			case []byte:
+				if !bytes.Equal(result.([]byte), expected) {
+					t.Errorf("%s() = %v, want %v", tt.name, result, expected)
+				}
+			default:
+				t.Fatalf("unsupported expected type: %T", expected)
+			}
+		})
 	}
 }

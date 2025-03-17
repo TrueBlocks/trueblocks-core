@@ -1,131 +1,149 @@
 package types
 
 import (
+	"fmt"
+
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 )
 
-type AppNode struct {
-	prev    *AppNode
+type AppNode[T any] struct {
+	prev    *AppNode[T]
 	current *Appearance
-	next    *AppNode
+	next    *AppNode[T]
 	index   int
+	data    *T
 }
 
-func NewAppNode(appearance *Appearance) *AppNode {
-	return &AppNode{
+func NewAppNode[T any](appearance *Appearance, data *T) *AppNode[T] {
+	return &AppNode[T]{
 		prev:    nil,
 		current: appearance,
 		next:    nil,
 		index:   0,
+		data:    data,
 	}
 }
 
-func (a *AppNode) Index() int {
+func (a *AppNode[T]) String() string {
+	return fmt.Sprintf("AppNode: %d.%d %d.%d %d.%d %t %t %t %t",
+		a.PrevBlock(), a.PrevTxId(),
+		a.CurBlock(), a.CurTxId(),
+		a.NextBlock(), a.NextTxId(),
+		a.IsHead(), a.IsTail(),
+		a.IsFirstInBlock(), a.IsLastInBlock(),
+	)
+}
+
+func (a *AppNode[T]) Data() *T {
+	return a.data
+}
+
+func (a *AppNode[T]) SetData(data *T) {
+	a.data = data
+}
+
+func (a *AppNode[T]) Index() int {
 	return a.index
 }
 
-func (a *AppNode) Prev() *AppNode {
+func (a *AppNode[T]) IsHead() bool {
+	return a.prev == nil
+}
+
+func (a *AppNode[T]) IsTail() bool {
+	return a.next == nil
+}
+
+func (a *AppNode[T]) Prev() *AppNode[T] {
 	return a.prev
 }
 
-func (a *AppNode) PrevBlock() base.Blknum {
-	if a.prev != nil {
-		return base.Blknum(a.prev.current.BlockNumber)
+func (a *AppNode[T]) PrevBlock() base.Blknum {
+	if a.IsHead() {
+		return base.Blknum(base.Max(int(a.CurBlock()), 1) - 1)
 	}
-	return 0
+	return base.Blknum(a.prev.current.BlockNumber)
 }
 
-func (a *AppNode) PrevTxId() base.Txnum {
-	if a.prev != nil {
-		return base.Txnum(a.prev.current.TransactionIndex)
+func (a *AppNode[T]) PrevTxId() base.Txnum {
+	if a.IsHead() {
+		return 0
 	}
-	return 0
+	return base.Txnum(a.prev.current.TransactionIndex)
 }
 
-func (a *AppNode) Cur() *Appearance {
+func (a *AppNode[T]) Cur() *Appearance {
 	return a.current
 }
 
-func (a *AppNode) CurBlock() base.Blknum {
+func (a *AppNode[T]) CurBlock() base.Blknum {
 	if a.current != nil {
 		return base.Blknum(a.current.BlockNumber)
 	}
 	panic("should never happen: AppNode.current is nil")
 }
 
-func (a *AppNode) CurTxId() base.Txnum {
+func (a *AppNode[T]) CurTxId() base.Txnum {
 	if a.current != nil {
 		return base.Txnum(a.current.TransactionIndex)
 	}
 	panic("should never happen: AppNode.current is nil")
 }
 
-func (a *AppNode) Next() *AppNode {
+func (a *AppNode[T]) Next() *AppNode[T] {
 	return a.next
 }
 
-func (a *AppNode) NextBlock() base.Blknum {
+func (a *AppNode[T]) NextBlock() base.Blknum {
 	if a.next != nil {
 		return base.Blknum(a.next.current.BlockNumber)
 	}
 	return base.Blknum(a.current.BlockNumber + 1)
 }
 
-func (a *AppNode) NextTxId() base.Txnum {
+func (a *AppNode[T]) NextTxId() base.Txnum {
 	if a.next != nil {
 		return base.Txnum(a.next.current.TransactionIndex)
 	}
 	return 0
 }
 
-func (a *AppNode) IsSamePrev(reason string) bool {
-	if reason == "token" {
-		return a.PrevBlock() == a.CurBlock() && a.PrevTxId() == a.CurTxId()
-	}
-	return a.PrevBlock() == a.CurBlock()
+func (a *AppNode[T]) IsFirstInBlock() bool {
+	return a.PrevBlock() != a.CurBlock()
 }
 
-func (a *AppNode) IsSameNext(reason string) bool {
-	if reason == "token" {
-		return a.CurBlock() == a.NextBlock() && a.CurTxId() == a.NextTxId()
-	}
-	return a.CurBlock() == a.NextBlock()
+func (a *AppNode[T]) IsLastInBlock() bool {
+	return a.CurBlock() != a.NextBlock()
 }
 
-type AppList struct {
-	Head *AppNode
-	Tail *AppNode
+type AppList[T any] struct {
+	Head *AppNode[T]
+	Tail *AppNode[T]
 }
 
-func NewAppList(appearances []Appearance) (*AppList, error) {
+func NewAppList[T any](appearances []Appearance, dataItems []*T) (*AppList[T], error) {
 	if len(appearances) == 0 {
-		return &AppList{}, nil
+		return &AppList[T]{}, nil
 	}
 
-	list := &AppList{}
-	var prevNode *AppNode
+	list := &AppList[T]{}
+	var prevNode *AppNode[T]
 
 	for i, app := range appearances {
 		current := &Appearance{
 			BlockNumber:      app.BlockNumber,
 			TransactionIndex: app.TransactionIndex,
 		}
-		node := NewAppNode(current)
+		var data *T
+		if dataItems != nil && i < len(dataItems) {
+			data = dataItems[i]
+		}
+		node := NewAppNode(current, data)
 		node.index = i
 
 		if list.Head == nil {
 			list.Head = node
-			if app.BlockNumber == 0 {
-				prev := &Appearance{BlockNumber: 0, TransactionIndex: 0}
-				prevNode = NewAppNode(prev)
-				node.prev = prevNode
-			} else {
-				prev := &Appearance{BlockNumber: app.BlockNumber - 1, TransactionIndex: 0}
-				prevNode = NewAppNode(prev)
-				node.prev = prevNode
-			}
-		}
-		if prevNode != nil && node.prev == nil {
+		} else if prevNode != nil {
 			node.prev = prevNode
 			prevNode.next = node
 		}

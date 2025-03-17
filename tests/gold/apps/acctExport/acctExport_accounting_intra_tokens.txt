@@ -11,18 +11,11 @@ TEST[DATE|TIME] ------------------------------------
 TEST[DATE|TIME] ~~~ Entering: 13960847.66 ~~~
 TEST[DATE|TIME] ETH is of interest
 TEST[DATE|TIME] Attempting to reconcile at top level: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e
-TEST[DATE|TIME] ------------------------------------
-TEST[DATE|TIME] # Reason: top-level
-TEST[DATE|TIME] Trial balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e at stmt 13960847 66 0
-TEST[DATE|TIME] ------------------------------------
-TEST[DATE|TIME] Sender: false Recipient: true 0xe081abb7d9e327e89a13e65b3e2b6fcaf2eceb97 0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e 0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e
-TEST[DATE|TIME] adjustForIntraTransfer2 isToken: false isPrevSame: false isNextSame: false
-TEST[DATE|TIME] XXXNot found  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
-TEST[DATE|TIME] Using block-1 balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 0 of 0
-TEST[DATE|TIME] Statement reconciles? true top-level
-TEST[DATE|TIME] EndBalCalc: 0 371714047500000000000 371714047500000000000
-TEST[DATE|TIME] Inserting  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 13960847 of 371714047500000000000
-TEST[DATE|TIME] Found  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 13960847 of 371714047500000000000
+TEST[DATE|TIME] XXX =============[ top-level ]======================
+TEST[DATE|TIME] XXX Case 1: Only statement in block
+TEST[DATE|TIME] XXX Block: 13960847 Tx: 66 Asset: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+TEST[DATE|TIME] XXX FirstInBlock: true, LastInBlock: true
+TEST[DATE|TIME] XXX ================================================
 TEST[DATE|TIME] =========================================================
 TEST[DATE|TIME] ===> PRICING FOR 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) using Uniswap
 TEST[DATE|TIME] =========================================================
@@ -41,10 +34,9 @@ TEST[DATE|TIME] bigPrice:            3209.6174517192277884
 TEST[DATE|TIME] price:               3209.6174517192276
 TEST[DATE|TIME] source:              uniswap
 TEST[DATE|TIME] ===================================================
-TEST[DATE|TIME] Reason:                 top-level
-TEST[DATE|TIME] Previous:               13960846 0 ( false )
+TEST[DATE|TIME] Previous:               13960846 0 ( true )
 TEST[DATE|TIME] Current:                13960847 66 ( true )
-TEST[DATE|TIME] Next:                   14218245 11 ( false )
+TEST[DATE|TIME] Next:                   14218245 11 ( true )
 TEST[DATE|TIME] accountedFor:           0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e
 TEST[DATE|TIME] sender:                 0xe081abb7d9e327e89a13e65b3e2b6fcaf2eceb97  ==>  0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e
 TEST[DATE|TIME] asset:                  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -67,8 +59,6 @@ TEST[DATE|TIME]    amountIn:            371.7140475
 TEST[DATE|TIME]    material:            true
 TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
-TEST[DATE|TIME] ----------Done  true  --------------------------
-TEST[DATE|TIME] 
 TEST[DATE|TIME] Statement is material and reconciled - appending
 TEST[DATE|TIME] Extracting statements from logs.
 TEST[DATE|TIME] There were no statements generated from logs.
@@ -80,35 +70,61 @@ TEST[DATE|TIME] ------------------------------------
 TEST[DATE|TIME] ~~~ Entering: 14218245.11 ~~~
 TEST[DATE|TIME] ETH is of interest
 TEST[DATE|TIME] Attempting to reconcile at top level: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e
-TEST[DATE|TIME] ------------------------------------
-TEST[DATE|TIME] # Reason: top-level
-TEST[DATE|TIME] Trial balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e at stmt 14218245 11 0
-TEST[DATE|TIME] ------------------------------------
-TEST[DATE|TIME] Not sender or recipient 0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e 0xaca096d2e6492d7380c5d8e70d90e13eecc72dd4 0x0bc529c00c6401aef6d220be8c6ea1667f6ad93e top-level
-TEST[DATE|TIME] Sender: false Recipient: false 0xaca096d2e6492d7380c5d8e70d90e13eecc72dd4 0x0bc529c00c6401aef6d220be8c6ea1667f6ad93e 0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e
-TEST[DATE|TIME] adjustForIntraTransfer1 isToken: false isPrevSame: false isNextSame: false
-TEST[DATE|TIME] XXXFound  running blkid: 13960847 txid: 0 logid: 0 amount: 371714047500000000000
-TEST[DATE|TIME] Querying at block 13960847 for 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e
-TEST[DATE|TIME] Different block  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 13960847 and 14218245 of 371714047500000000000
-TEST[DATE|TIME] Statement reconciles? true top-level
-TEST[DATE|TIME] EndBalCalc: 371714047500000000000 0 371714047500000000000
-TEST[DATE|TIME] Inserting  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 14218245 of 371714047500000000000
-TEST[DATE|TIME] Found  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 14218245 of 371714047500000000000
+TEST[DATE|TIME] XXX =============[ top-level ]======================
+TEST[DATE|TIME] XXX Case 1: Only statement in block
+TEST[DATE|TIME] XXX Block: 14218245 Tx: 11 Asset: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+TEST[DATE|TIME] XXX FirstInBlock: true, LastInBlock: true
+TEST[DATE|TIME] XXX ================================================
+TEST[DATE|TIME] =========================================================
+TEST[DATE|TIME] ===> PRICING FOR 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) using Uniswap
+TEST[DATE|TIME] =========================================================
+TEST[DATE|TIME] blockNumber:         14218245
+TEST[DATE|TIME] source1 (uni/mkr):   0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f
+TEST[DATE|TIME] str0 (call):         getPair(0x6b175474e89094c44da98b954eedeac495271d0f, 0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2)
+TEST[DATE|TIME] source2 (pair):      0xa478c2975ab1ea89e8196811f51a7b7ade33eb11
+TEST[DATE|TIME] str1 (call/data):    getReserves()
+TEST[DATE|TIME] first:               0x6b175474e89094c44da98b954eedeac495271d0f
+TEST[DATE|TIME] second:              0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2
+TEST[DATE|TIME] reversed:            false
+TEST[DATE|TIME] float0:              15754279803486889124000000
+TEST[DATE|TIME] float1:              5130026023545145506300
+TEST[DATE|TIME] float2:              1
+TEST[DATE|TIME] bigPrice:            3070.9941296944470635
+TEST[DATE|TIME] price:               3070.994129694447
+TEST[DATE|TIME] source:              uniswap
+TEST[DATE|TIME] ===================================================
+TEST[DATE|TIME] Previous:               13960847 66 ( true )
+TEST[DATE|TIME] Current:                14218245 11 ( true )
+TEST[DATE|TIME] Next:                   14231553 18 ( true )
+TEST[DATE|TIME] accountedFor:           0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e
+TEST[DATE|TIME] sender:                 0xaca096d2e6492d7380c5d8e70d90e13eecc72dd4  ==>  0x0bc529c00c6401aef6d220be8c6ea1667f6ad93e
+TEST[DATE|TIME] asset:                  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
+TEST[DATE|TIME] hash:                   0x3d630cf5a1626382924429d936d1b95d5e31be1ead3773f490b9fb0e95497ce4
+TEST[DATE|TIME] timestamp:              1645029438
+TEST[DATE|TIME] blockNumber:            14218245.11.0
+TEST[DATE|TIME] priceSource:            3070.994129694447 (uniswap)
+TEST[DATE|TIME] --------------------------------------------------- 
+TEST[DATE|TIME] Trial balance:
+TEST[DATE|TIME]    prevBal:             371.7140475
+TEST[DATE|TIME]    begBal:              371.7140475 (0)
+TEST[DATE|TIME]    totalIn:             0
+TEST[DATE|TIME]    totalOut:            0
+TEST[DATE|TIME]    amountNet:           0
+TEST[DATE|TIME]                        ======================= 
+TEST[DATE|TIME]    endBal:              371.7140475 (0)
+TEST[DATE|TIME]    endBalCalc:          371.7140475
+TEST[DATE|TIME] --------------------------------------------------- 
+TEST[DATE|TIME]    material:            false
+TEST[DATE|TIME]    reconciled:          true
+TEST[DATE|TIME] ---------------------------------------------------
 TEST[DATE|TIME] Statement was not material
 TEST[DATE|TIME] Extracting statements from logs.
 TEST[DATE|TIME] 1 statements generated from logs.
-TEST[DATE|TIME] ------------------------------------
-TEST[DATE|TIME] # Reason: token
-TEST[DATE|TIME] Trial balance for  0x0bc529c00c6401aef6d220be8c6ea1667f6ad93e 0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e at stmt 14218245 11 3
-TEST[DATE|TIME] ------------------------------------
-TEST[DATE|TIME] Sender: false Recipient: true 0xaca096d2e6492d7380c5d8e70d90e13eecc72dd4 0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e 0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e
-TEST[DATE|TIME] adjustForIntraTransfer2 isToken: true isPrevSame: false isNextSame: false
-TEST[DATE|TIME] XXXNot found  0x0bc529c00c6401aef6d220be8c6ea1667f6ad93e
-TEST[DATE|TIME] Using block-1 balance for  0x0bc529c00c6401aef6d220be8c6ea1667f6ad93e at block 0 of 0
-TEST[DATE|TIME] Statement reconciles? true token
-TEST[DATE|TIME] EndBalCalc: 0 420000000000000000 420000000000000000
-TEST[DATE|TIME] Inserting  0x0bc529c00c6401aef6d220be8c6ea1667f6ad93e at block 14218245 of 420000000000000000
-TEST[DATE|TIME] Found  0x0bc529c00c6401aef6d220be8c6ea1667f6ad93e at block 14218245 of 420000000000000000
+TEST[DATE|TIME] XXX =============[ token ]======================
+TEST[DATE|TIME] XXX Case 1: Only statement in block
+TEST[DATE|TIME] XXX Block: 14218245 Tx: 11 Asset: 0x0bc529c00c6401aef6d220be8c6ea1667f6ad93e
+TEST[DATE|TIME] XXX FirstInBlock: true, LastInBlock: true
+TEST[DATE|TIME] XXX ================================================
 TEST[DATE|TIME] =========================================================
 TEST[DATE|TIME] ===> PRICING FOR 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) using Uniswap
 TEST[DATE|TIME] =========================================================
@@ -144,10 +160,9 @@ TEST[DATE|TIME] bigPrice:            0.13259721289761209049
 TEST[DATE|TIME] price:               407.2052624224116
 TEST[DATE|TIME] source:              uniswap
 TEST[DATE|TIME] ===================================================
-TEST[DATE|TIME] Reason:                 token
-TEST[DATE|TIME] Previous:               13960847 66 ( false )
+TEST[DATE|TIME] Previous:               13960847 66 ( true )
 TEST[DATE|TIME] Current:                14218245 11 ( true )
-TEST[DATE|TIME] Next:                   14231553 18 ( false )
+TEST[DATE|TIME] Next:                   14231553 18 ( true )
 TEST[DATE|TIME] accountedFor:           0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e
 TEST[DATE|TIME] sender:                 0xaca096d2e6492d7380c5d8e70d90e13eecc72dd4  ==>  0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e
 TEST[DATE|TIME] asset:                  0x0bc529c00c6401aef6d220be8c6ea1667f6ad93e (YFI) decimals: 18
@@ -170,8 +185,6 @@ TEST[DATE|TIME]    amountIn:            0.42
 TEST[DATE|TIME]    material:            true
 TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
-TEST[DATE|TIME] ----------Done  true  --------------------------
-TEST[DATE|TIME] 
 TEST[DATE|TIME] Statement is material - appending. reconciled: true
 TEST[DATE|TIME] ~~~ Leaving: 14218245.11 ~~~
 TEST[DATE|TIME] ------------------------------------ 1 statements generated.
@@ -181,19 +194,11 @@ TEST[DATE|TIME] ------------------------------------
 TEST[DATE|TIME] ~~~ Entering: 14231553.18 ~~~
 TEST[DATE|TIME] ETH is of interest
 TEST[DATE|TIME] Attempting to reconcile at top level: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e
-TEST[DATE|TIME] ------------------------------------
-TEST[DATE|TIME] # Reason: top-level
-TEST[DATE|TIME] Trial balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e at stmt 14231553 18 0
-TEST[DATE|TIME] ------------------------------------
-TEST[DATE|TIME] Sender: true Recipient: false 0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e 0x2e2ca259ffa7491e9222d6f7708e4a1a2b34aaef 0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e
-TEST[DATE|TIME] adjustForIntraTransfer1 isToken: false isPrevSame: false isNextSame: false
-TEST[DATE|TIME] XXXFound  running blkid: 14218245 txid: 0 logid: 0 amount: 371714047500000000000
-TEST[DATE|TIME] Querying at block 14218245 for 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e
-TEST[DATE|TIME] Different block  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 14218245 and 14231553 of 371714047500000000000
-TEST[DATE|TIME] Statement reconciles? true top-level
-TEST[DATE|TIME] EndBalCalc: 371714047500000000000 -1003516294286512000 370710531205713488000
-TEST[DATE|TIME] Inserting  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 14231553 of 370710531205713488000
-TEST[DATE|TIME] Found  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 14231553 of 370710531205713488000
+TEST[DATE|TIME] XXX =============[ top-level ]======================
+TEST[DATE|TIME] XXX Case 1: Only statement in block
+TEST[DATE|TIME] XXX Block: 14231553 Tx: 18 Asset: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+TEST[DATE|TIME] XXX FirstInBlock: true, LastInBlock: true
+TEST[DATE|TIME] XXX ================================================
 TEST[DATE|TIME] =========================================================
 TEST[DATE|TIME] ===> PRICING FOR 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) using Uniswap
 TEST[DATE|TIME] =========================================================
@@ -212,10 +217,9 @@ TEST[DATE|TIME] bigPrice:            2795.228363362755828
 TEST[DATE|TIME] price:               2795.2283633627558
 TEST[DATE|TIME] source:              uniswap
 TEST[DATE|TIME] ===================================================
-TEST[DATE|TIME] Reason:                 top-level
-TEST[DATE|TIME] Previous:               14218245 11 ( false )
+TEST[DATE|TIME] Previous:               14218245 11 ( true )
 TEST[DATE|TIME] Current:                14231553 18 ( true )
-TEST[DATE|TIME] Next:                   14231554 0 ( false )
+TEST[DATE|TIME] Next:                   14231554 0 ( true )
 TEST[DATE|TIME] accountedFor:           0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e
 TEST[DATE|TIME] sender:                 0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e  ==>  0x2e2ca259ffa7491e9222d6f7708e4a1a2b34aaef
 TEST[DATE|TIME] asset:                  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -239,8 +243,6 @@ TEST[DATE|TIME]    gasOut:              0.003516294286512
 TEST[DATE|TIME]    material:            true
 TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
-TEST[DATE|TIME] ----------Done  true  --------------------------
-TEST[DATE|TIME] 
 TEST[DATE|TIME] Statement is material and reconciled - appending
 TEST[DATE|TIME] Extracting statements from logs.
 TEST[DATE|TIME] There were no statements generated from logs.

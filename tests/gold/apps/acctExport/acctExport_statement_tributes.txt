@@ -26,24 +26,16 @@ TEST[DATE|TIME] ~~~ Entering: 8769029.80 ~~~
 TEST[DATE|TIME] ETH is NOT of interest
 TEST[DATE|TIME] Extracting statements from logs.
 TEST[DATE|TIME] 1 statements generated from logs.
-TEST[DATE|TIME] ------------------------------------
-TEST[DATE|TIME] # Reason: token
-TEST[DATE|TIME] Trial balance for  0x0ba45a8b5d5575935b8158a88c631e9f9c95a2e5 0x868b8fd259abfcfdf9634c343593b34ef359641d at stmt 8769029 80 61
-TEST[DATE|TIME] ------------------------------------
-TEST[DATE|TIME] Sender: false Recipient: true 0x103348c47ffc3254aff761894e7c13ca0c680465 0x868b8fd259abfcfdf9634c343593b34ef359641d 0x868b8fd259abfcfdf9634c343593b34ef359641d
-TEST[DATE|TIME] adjustForIntraTransfer2 isToken: true isPrevSame: false isNextSame: false
-TEST[DATE|TIME] XXXNot found  0x0ba45a8b5d5575935b8158a88c631e9f9c95a2e5
-TEST[DATE|TIME] Using block-1 balance for  0x0ba45a8b5d5575935b8158a88c631e9f9c95a2e5 at block 0 of 0
-TEST[DATE|TIME] Statement reconciles? true token
-TEST[DATE|TIME] EndBalCalc: 0 85000000000000000000 85000000000000000000
-TEST[DATE|TIME] Inserting  0x0ba45a8b5d5575935b8158a88c631e9f9c95a2e5 at block 8769029 of 85000000000000000000
-TEST[DATE|TIME] Found  0x0ba45a8b5d5575935b8158a88c631e9f9c95a2e5 at block 8769029 of 85000000000000000000
+TEST[DATE|TIME] XXX =============[ token ]======================
+TEST[DATE|TIME] XXX Case 1: Only statement in block
+TEST[DATE|TIME] XXX Block: 8769029 Tx: 80 Asset: 0x0ba45a8b5d5575935b8158a88c631e9f9c95a2e5
+TEST[DATE|TIME] XXX FirstInBlock: true, LastInBlock: true
+TEST[DATE|TIME] XXX ================================================
 TEST[DATE|TIME] Block 8769029 is prior to deployment (10000835) of Uniswap V2. No other source for tokens prior to UniSwap
 TEST[DATE|TIME] ===================================================
-TEST[DATE|TIME] Reason:                 token
-TEST[DATE|TIME] Previous:               8769019 124 ( false )
+TEST[DATE|TIME] Previous:               8769019 124 ( true )
 TEST[DATE|TIME] Current:                8769029 80 ( true )
-TEST[DATE|TIME] Next:                   8769052 73 ( false )
+TEST[DATE|TIME] Next:                   8769052 73 ( true )
 TEST[DATE|TIME] accountedFor:           0x868b8fd259abfcfdf9634c343593b34ef359641d
 TEST[DATE|TIME] sender:                 0x103348c47ffc3254aff761894e7c13ca0c680465  ==>  0x868b8fd259abfcfdf9634c343593b34ef359641d
 TEST[DATE|TIME] asset:                  0x0ba45a8b5d5575935b8158a88c631e9f9c95a2e5 (TRB) decimals: 18
@@ -66,8 +58,6 @@ TEST[DATE|TIME]    amountIn:            85
 TEST[DATE|TIME]    material:            true
 TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
-TEST[DATE|TIME] ----------Done  true  --------------------------
-TEST[DATE|TIME] 
 TEST[DATE|TIME] Statement is material - appending. reconciled: true
 TEST[DATE|TIME] ~~~ Leaving: 8769029.80 ~~~
 TEST[DATE|TIME] ------------------------------------ 1 statements generated.
@@ -87,25 +77,16 @@ TEST[DATE|TIME] ~~~ Entering: 8769052.74 ~~~
 TEST[DATE|TIME] ETH is NOT of interest
 TEST[DATE|TIME] Extracting statements from logs.
 TEST[DATE|TIME] 1 statements generated from logs.
-TEST[DATE|TIME] ------------------------------------
-TEST[DATE|TIME] # Reason: token
-TEST[DATE|TIME] Trial balance for  0x0ba45a8b5d5575935b8158a88c631e9f9c95a2e5 0x868b8fd259abfcfdf9634c343593b34ef359641d at stmt 8769052 74 73
-TEST[DATE|TIME] ------------------------------------
-TEST[DATE|TIME] Sender: true Recipient: false 0x868b8fd259abfcfdf9634c343593b34ef359641d 0x2a0c0dbecc7e4d658f48e01e3fa353f44050c208 0x868b8fd259abfcfdf9634c343593b34ef359641d
-TEST[DATE|TIME] adjustForIntraTransfer1 isToken: true isPrevSame: false isNextSame: false
-TEST[DATE|TIME] XXXFound  running blkid: 8769029 txid: 0 logid: 0 amount: 85000000000000000000
-TEST[DATE|TIME] Querying at block 8769029 for 0x0ba45a8b5d5575935b8158a88c631e9f9c95a2e5 0x868b8fd259abfcfdf9634c343593b34ef359641d
-TEST[DATE|TIME] Different block  0x0ba45a8b5d5575935b8158a88c631e9f9c95a2e5 at block 8769029 and 8769052 of 85000000000000000000
-TEST[DATE|TIME] Statement reconciles? true token
-TEST[DATE|TIME] EndBalCalc: 85000000000000000000 -85000000000000000000 0
-TEST[DATE|TIME] Inserting  0x0ba45a8b5d5575935b8158a88c631e9f9c95a2e5 at block 8769052 of 0
-TEST[DATE|TIME] Found  0x0ba45a8b5d5575935b8158a88c631e9f9c95a2e5 at block 8769052 of 0
+TEST[DATE|TIME] XXX =============[ token ]======================
+TEST[DATE|TIME] XXX Case 1: Only statement in block
+TEST[DATE|TIME] XXX Block: 8769052 Tx: 74 Asset: 0x0ba45a8b5d5575935b8158a88c631e9f9c95a2e5
+TEST[DATE|TIME] XXX FirstInBlock: true, LastInBlock: true
+TEST[DATE|TIME] XXX ================================================
 TEST[DATE|TIME] Block 8769052 is prior to deployment (10000835) of Uniswap V2. No other source for tokens prior to UniSwap
 TEST[DATE|TIME] ===================================================
-TEST[DATE|TIME] Reason:                 token
 TEST[DATE|TIME] Previous:               8769052 73 ( false )
 TEST[DATE|TIME] Current:                8769052 74 ( true )
-TEST[DATE|TIME] Next:                   8769053 0 ( false )
+TEST[DATE|TIME] Next:                   8769053 0 ( true )
 TEST[DATE|TIME] accountedFor:           0x868b8fd259abfcfdf9634c343593b34ef359641d
 TEST[DATE|TIME] sender:                 0x868b8fd259abfcfdf9634c343593b34ef359641d  ==>  0x2a0c0dbecc7e4d658f48e01e3fa353f44050c208
 TEST[DATE|TIME] asset:                  0x0ba45a8b5d5575935b8158a88c631e9f9c95a2e5 (TRB) decimals: 18
@@ -128,8 +109,6 @@ TEST[DATE|TIME]    amountOut:           85
 TEST[DATE|TIME]    material:            true
 TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
-TEST[DATE|TIME] ----------Done  true  --------------------------
-TEST[DATE|TIME] 
 TEST[DATE|TIME] Statement is material - appending. reconciled: true
 TEST[DATE|TIME] ~~~ Leaving: 8769052.74 ~~~
 TEST[DATE|TIME] ------------------------------------ 1 statements generated.
@@ -216,6 +195,7 @@ TEST[DATE|TIME]
       "prevBal": "85000000000000000000",
       "priceSource": "token-not-priced-pre-uni",
       "recipient": "0x2a0c0dbecc7e4d658f48e01e3fa353f44050c208",
+      "recipientName": "IDEX",
       "reconciled": true,
       "selfDestructIn": "0",
       "selfDestructOut": "0",

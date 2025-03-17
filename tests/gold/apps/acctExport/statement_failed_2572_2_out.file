@@ -14,9 +14,9 @@
       "correctAmountOut": "0",
       "correctBegBalIn": "0",
       "correctBegBalOut": "0",
-      "correctEndBalIn": "0",
-      "correctEndBalOut": "-38340920823",
-      "correctingReasons": "endBalOut",
+      "correctEndBalIn": "38340920823",
+      "correctEndBalOut": "0",
+      "correctingReasons": "endBalIn",
       "date": "2021-01-17 04:01:58 UTC",
       "decimals": 18,
       "endBal": "0",
@@ -41,8 +41,8 @@
       "spotPrice": 0,
       "symbol": "aMKR",
       "timestamp": 1610856118,
-      "totalIn": "0",
-      "totalOut": "14922878205530494041",
+      "totalIn": "38340920823",
+      "totalOut": "14922878243871414864",
       "transactionHash": "0x634799410165000edaf1b1e8e5e8055b39cdd534d3c3dc9738865d39adb5d888",
       "transactionIndex": 91
     }

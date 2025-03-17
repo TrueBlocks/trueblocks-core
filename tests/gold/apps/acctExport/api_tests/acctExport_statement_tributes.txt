@@ -81,6 +81,7 @@ export?addrs=0x868b8fd259abfcfdf9634c343593b34ef359641d&accounting&statements&fi
       "prevBal": "85000000000000000000",
       "priceSource": "token-not-priced-pre-uni",
       "recipient": "0x2a0c0dbecc7e4d658f48e01e3fa353f44050c208",
+      "recipientName": "IDEX",
       "reconciled": true,
       "selfDestructIn": "0",
       "selfDestructOut": "0",

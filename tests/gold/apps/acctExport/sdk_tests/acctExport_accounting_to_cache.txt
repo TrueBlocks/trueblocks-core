@@ -25,24 +25,16 @@ Format:  json
 ~~~ Entering: 13.99999 ~~~
 ETH is of interest
 Attempting to reconcile at top level: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c
-------------------------------------
-# Reason: top-level
-Trial balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c at stmt 13 99999 0
-------------------------------------
-Sender: false Recipient: true 0x0000000000000000000000000000004d696e6572 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c
-adjustForIntraTransfer2 isToken: false isPrevSame: false isNextSame: false
-XXXNot found  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
-Using block-1 balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 0 of 0
-Statement reconciles? true top-level
-EndBalCalc: 0 5000000000000000000 5000000000000000000
-Inserting  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 13 of 5000000000000000000
-Found  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 13 of 5000000000000000000
+XXX =============[ top-level ]======================
+XXX Case 1: Only statement in block
+XXX Block: 13 Tx: 99999 Asset: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+XXX FirstInBlock: true, LastInBlock: true
+XXX ================================================
 Block 13 is prior to deployment (3684349) of Maker. No fallback pricing method
 ===================================================
-Reason:                 top-level
-Previous:               12 0 ( false )
+Previous:               12 0 ( true )
 Current:                13 99999 ( true )
-Next:                   22 99999 ( false )
+Next:                   22 99999 ( true )
 accountedFor:           0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c
 sender:                 0x0000000000000000000000000000004d696e6572  ==>  0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c
 asset:                  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -65,8 +57,6 @@ Trial balance:
    material:            true
    reconciled:          true
 ---------------------------------------------------
-----------Done  true  --------------------------
-
 Statement is material and reconciled - appending
 Transaction receipt is nil. No log statements.
 ~~~ Leaving: 13.99999 ~~~
@@ -77,25 +67,16 @@ Transaction receipt is nil. No log statements.
 ~~~ Entering: 22.99999 ~~~
 ETH is of interest
 Attempting to reconcile at top level: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c
-------------------------------------
-# Reason: top-level
-Trial balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c at stmt 22 99999 0
-------------------------------------
-Sender: false Recipient: true 0x0000000000000000000000000000004d696e6572 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c
-adjustForIntraTransfer1 isToken: false isPrevSame: false isNextSame: false
-XXXFound  running blkid: 13 txid: 0 logid: 0 amount: 5000000000000000000
-Querying at block 13 for 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c
-Different block  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 13 and 22 of 5000000000000000000
-Statement reconciles? true top-level
-EndBalCalc: 5000000000000000000 5000000000000000000 10000000000000000000
-Inserting  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 22 of 10000000000000000000
-Found  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 22 of 10000000000000000000
+XXX =============[ top-level ]======================
+XXX Case 1: Only statement in block
+XXX Block: 22 Tx: 99999 Asset: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+XXX FirstInBlock: true, LastInBlock: true
+XXX ================================================
 Block 22 is prior to deployment (3684349) of Maker. No fallback pricing method
 ===================================================
-Reason:                 top-level
-Previous:               13 99999 ( false )
+Previous:               13 99999 ( true )
 Current:                22 99999 ( true )
-Next:                   37 99998 ( false )
+Next:                   37 99998 ( true )
 accountedFor:           0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c
 sender:                 0x0000000000000000000000000000004d696e6572  ==>  0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c
 asset:                  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -118,8 +99,6 @@ Trial balance:
    material:            true
    reconciled:          true
 ---------------------------------------------------
-----------Done  true  --------------------------
-
 Statement is material and reconciled - appending
 Transaction receipt is nil. No log statements.
 ~~~ Leaving: 22.99999 ~~~
@@ -130,25 +109,16 @@ Transaction receipt is nil. No log statements.
 ~~~ Entering: 37.99998 ~~~
 ETH is of interest
 Attempting to reconcile at top level: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c
-------------------------------------
-# Reason: top-level
-Trial balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c at stmt 37 99998 0
-------------------------------------
-Sender: false Recipient: true 0x000000000000000000000000000000556e636c65 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c
-adjustForIntraTransfer1 isToken: false isPrevSame: false isNextSame: false
-XXXFound  running blkid: 22 txid: 0 logid: 0 amount: 10000000000000000000
-Querying at block 22 for 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c
-Different block  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 22 and 37 of 10000000000000000000
-Statement reconciles? true top-level
-EndBalCalc: 10000000000000000000 3750000000000000000 13750000000000000000
-Inserting  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 37 of 13750000000000000000
-Found  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 37 of 13750000000000000000
+XXX =============[ top-level ]======================
+XXX Case 1: Only statement in block
+XXX Block: 37 Tx: 99998 Asset: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+XXX FirstInBlock: true, LastInBlock: true
+XXX ================================================
 Block 37 is prior to deployment (3684349) of Maker. No fallback pricing method
 ===================================================
-Reason:                 top-level
-Previous:               22 99999 ( false )
+Previous:               22 99999 ( true )
 Current:                37 99998 ( true )
-Next:                   39 99999 ( false )
+Next:                   39 99999 ( true )
 accountedFor:           0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c
 sender:                 0x000000000000000000000000000000556e636c65  ==>  0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c
 asset:                  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -171,8 +141,6 @@ Trial balance:
    material:            true
    reconciled:          true
 ---------------------------------------------------
-----------Done  true  --------------------------
-
 Statement is material and reconciled - appending
 Transaction receipt is nil. No log statements.
 ~~~ Leaving: 37.99998 ~~~
@@ -183,25 +151,16 @@ Transaction receipt is nil. No log statements.
 ~~~ Entering: 39.99999 ~~~
 ETH is of interest
 Attempting to reconcile at top level: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c
-------------------------------------
-# Reason: top-level
-Trial balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c at stmt 39 99999 0
-------------------------------------
-Sender: false Recipient: true 0x0000000000000000000000000000004d696e6572 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c
-adjustForIntraTransfer1 isToken: false isPrevSame: false isNextSame: false
-XXXFound  running blkid: 37 txid: 0 logid: 0 amount: 13750000000000000000
-Querying at block 37 for 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c
-Different block  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 37 and 39 of 13750000000000000000
-Statement reconciles? true top-level
-EndBalCalc: 13750000000000000000 5000000000000000000 18750000000000000000
-Inserting  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 39 of 18750000000000000000
-Found  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 39 of 18750000000000000000
+XXX =============[ top-level ]======================
+XXX Case 1: Only statement in block
+XXX Block: 39 Tx: 99999 Asset: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+XXX FirstInBlock: true, LastInBlock: true
+XXX ================================================
 Block 39 is prior to deployment (3684349) of Maker. No fallback pricing method
 ===================================================
-Reason:                 top-level
-Previous:               37 99998 ( false )
+Previous:               37 99998 ( true )
 Current:                39 99999 ( true )
-Next:                   43 99999 ( false )
+Next:                   43 99999 ( true )
 accountedFor:           0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c
 sender:                 0x0000000000000000000000000000004d696e6572  ==>  0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c
 asset:                  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -224,8 +183,6 @@ Trial balance:
    material:            true
    reconciled:          true
 ---------------------------------------------------
-----------Done  true  --------------------------
-
 Statement is material and reconciled - appending
 Transaction receipt is nil. No log statements.
 ~~~ Leaving: 39.99999 ~~~
@@ -236,25 +193,16 @@ Transaction receipt is nil. No log statements.
 ~~~ Entering: 43.99999 ~~~
 ETH is of interest
 Attempting to reconcile at top level: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c
-------------------------------------
-# Reason: top-level
-Trial balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c at stmt 43 99999 0
-------------------------------------
-Sender: false Recipient: true 0x0000000000000000000000000000004d696e6572 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c
-adjustForIntraTransfer1 isToken: false isPrevSame: false isNextSame: false
-XXXFound  running blkid: 39 txid: 0 logid: 0 amount: 18750000000000000000
-Querying at block 39 for 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c
-Different block  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 39 and 43 of 18750000000000000000
-Statement reconciles? true top-level
-EndBalCalc: 18750000000000000000 5000000000000000000 23750000000000000000
-Inserting  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 43 of 23750000000000000000
-Found  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 43 of 23750000000000000000
+XXX =============[ top-level ]======================
+XXX Case 1: Only statement in block
+XXX Block: 43 Tx: 99999 Asset: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+XXX FirstInBlock: true, LastInBlock: true
+XXX ================================================
 Block 43 is prior to deployment (3684349) of Maker. No fallback pricing method
 ===================================================
-Reason:                 top-level
-Previous:               39 99999 ( false )
+Previous:               39 99999 ( true )
 Current:                43 99999 ( true )
-Next:                   53 99999 ( false )
+Next:                   53 99999 ( true )
 accountedFor:           0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c
 sender:                 0x0000000000000000000000000000004d696e6572  ==>  0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c
 asset:                  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -277,8 +225,6 @@ Trial balance:
    material:            true
    reconciled:          true
 ---------------------------------------------------
-----------Done  true  --------------------------
-
 Statement is material and reconciled - appending
 Transaction receipt is nil. No log statements.
 ~~~ Leaving: 43.99999 ~~~
@@ -289,25 +235,16 @@ Transaction receipt is nil. No log statements.
 ~~~ Entering: 53.99999 ~~~
 ETH is of interest
 Attempting to reconcile at top level: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c
-------------------------------------
-# Reason: top-level
-Trial balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c at stmt 53 99999 0
-------------------------------------
-Sender: false Recipient: true 0x0000000000000000000000000000004d696e6572 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c
-adjustForIntraTransfer1 isToken: false isPrevSame: false isNextSame: false
-XXXFound  running blkid: 43 txid: 0 logid: 0 amount: 23750000000000000000
-Querying at block 43 for 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c
-Different block  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 43 and 53 of 23750000000000000000
-Statement reconciles? true top-level
-EndBalCalc: 23750000000000000000 5000000000000000000 28750000000000000000
-Inserting  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 53 of 28750000000000000000
-Found  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 53 of 28750000000000000000
+XXX =============[ top-level ]======================
+XXX Case 1: Only statement in block
+XXX Block: 53 Tx: 99999 Asset: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+XXX FirstInBlock: true, LastInBlock: true
+XXX ================================================
 Block 53 is prior to deployment (3684349) of Maker. No fallback pricing method
 ===================================================
-Reason:                 top-level
-Previous:               43 99999 ( false )
+Previous:               43 99999 ( true )
 Current:                53 99999 ( true )
-Next:                   55 99998 ( false )
+Next:                   55 99998 ( true )
 accountedFor:           0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c
 sender:                 0x0000000000000000000000000000004d696e6572  ==>  0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c
 asset:                  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -330,8 +267,6 @@ Trial balance:
    material:            true
    reconciled:          true
 ---------------------------------------------------
-----------Done  true  --------------------------
-
 Statement is material and reconciled - appending
 Transaction receipt is nil. No log statements.
 ~~~ Leaving: 53.99999 ~~~
@@ -342,25 +277,16 @@ Transaction receipt is nil. No log statements.
 ~~~ Entering: 55.99998 ~~~
 ETH is of interest
 Attempting to reconcile at top level: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c
-------------------------------------
-# Reason: top-level
-Trial balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c at stmt 55 99998 0
-------------------------------------
-Sender: false Recipient: true 0x000000000000000000000000000000556e636c65 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c
-adjustForIntraTransfer1 isToken: false isPrevSame: false isNextSame: false
-XXXFound  running blkid: 53 txid: 0 logid: 0 amount: 28750000000000000000
-Querying at block 53 for 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c
-Different block  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 53 and 55 of 28750000000000000000
-Statement reconciles? true top-level
-EndBalCalc: 28750000000000000000 3750000000000000000 32500000000000000000
-Inserting  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 55 of 32500000000000000000
-Found  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 55 of 32500000000000000000
+XXX =============[ top-level ]======================
+XXX Case 1: Only statement in block
+XXX Block: 55 Tx: 99998 Asset: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+XXX FirstInBlock: true, LastInBlock: true
+XXX ================================================
 Block 55 is prior to deployment (3684349) of Maker. No fallback pricing method
 ===================================================
-Reason:                 top-level
-Previous:               53 99999 ( false )
+Previous:               53 99999 ( true )
 Current:                55 99998 ( true )
-Next:                   64 99999 ( false )
+Next:                   64 99999 ( true )
 accountedFor:           0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c
 sender:                 0x000000000000000000000000000000556e636c65  ==>  0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c
 asset:                  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -383,8 +309,6 @@ Trial balance:
    material:            true
    reconciled:          true
 ---------------------------------------------------
-----------Done  true  --------------------------
-
 Statement is material and reconciled - appending
 Transaction receipt is nil. No log statements.
 ~~~ Leaving: 55.99998 ~~~
@@ -395,25 +319,16 @@ Transaction receipt is nil. No log statements.
 ~~~ Entering: 64.99999 ~~~
 ETH is of interest
 Attempting to reconcile at top level: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c
-------------------------------------
-# Reason: top-level
-Trial balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c at stmt 64 99999 0
-------------------------------------
-Sender: false Recipient: true 0x0000000000000000000000000000004d696e6572 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c
-adjustForIntraTransfer1 isToken: false isPrevSame: false isNextSame: false
-XXXFound  running blkid: 55 txid: 0 logid: 0 amount: 32500000000000000000
-Querying at block 55 for 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c
-Different block  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 55 and 64 of 32500000000000000000
-Statement reconciles? true top-level
-EndBalCalc: 32500000000000000000 5000000000000000000 37500000000000000000
-Inserting  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 64 of 37500000000000000000
-Found  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 64 of 37500000000000000000
+XXX =============[ top-level ]======================
+XXX Case 1: Only statement in block
+XXX Block: 64 Tx: 99999 Asset: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+XXX FirstInBlock: true, LastInBlock: true
+XXX ================================================
 Block 64 is prior to deployment (3684349) of Maker. No fallback pricing method
 ===================================================
-Reason:                 top-level
-Previous:               55 99998 ( false )
+Previous:               55 99998 ( true )
 Current:                64 99999 ( true )
-Next:                   67 99999 ( false )
+Next:                   67 99999 ( true )
 accountedFor:           0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c
 sender:                 0x0000000000000000000000000000004d696e6572  ==>  0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c
 asset:                  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -436,8 +351,6 @@ Trial balance:
    material:            true
    reconciled:          true
 ---------------------------------------------------
-----------Done  true  --------------------------
-
 Statement is material and reconciled - appending
 Transaction receipt is nil. No log statements.
 ~~~ Leaving: 64.99999 ~~~
@@ -448,25 +361,16 @@ Transaction receipt is nil. No log statements.
 ~~~ Entering: 67.99999 ~~~
 ETH is of interest
 Attempting to reconcile at top level: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c
-------------------------------------
-# Reason: top-level
-Trial balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c at stmt 67 99999 0
-------------------------------------
-Sender: false Recipient: true 0x0000000000000000000000000000004d696e6572 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c
-adjustForIntraTransfer1 isToken: false isPrevSame: false isNextSame: false
-XXXFound  running blkid: 64 txid: 0 logid: 0 amount: 37500000000000000000
-Querying at block 64 for 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c
-Different block  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 64 and 67 of 37500000000000000000
-Statement reconciles? true top-level
-EndBalCalc: 37500000000000000000 5000000000000000000 42500000000000000000
-Inserting  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 67 of 42500000000000000000
-Found  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 67 of 42500000000000000000
+XXX =============[ top-level ]======================
+XXX Case 1: Only statement in block
+XXX Block: 67 Tx: 99999 Asset: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+XXX FirstInBlock: true, LastInBlock: true
+XXX ================================================
 Block 67 is prior to deployment (3684349) of Maker. No fallback pricing method
 ===================================================
-Reason:                 top-level
-Previous:               64 99999 ( false )
+Previous:               64 99999 ( true )
 Current:                67 99999 ( true )
-Next:                   78 99999 ( false )
+Next:                   78 99999 ( true )
 accountedFor:           0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c
 sender:                 0x0000000000000000000000000000004d696e6572  ==>  0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c
 asset:                  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -489,8 +393,6 @@ Trial balance:
    material:            true
    reconciled:          true
 ---------------------------------------------------
-----------Done  true  --------------------------
-
 Statement is material and reconciled - appending
 Transaction receipt is nil. No log statements.
 ~~~ Leaving: 67.99999 ~~~
@@ -501,25 +403,16 @@ Transaction receipt is nil. No log statements.
 ~~~ Entering: 78.99999 ~~~
 ETH is of interest
 Attempting to reconcile at top level: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c
-------------------------------------
-# Reason: top-level
-Trial balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c at stmt 78 99999 0
-------------------------------------
-Sender: false Recipient: true 0x0000000000000000000000000000004d696e6572 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c
-adjustForIntraTransfer1 isToken: false isPrevSame: false isNextSame: false
-XXXFound  running blkid: 67 txid: 0 logid: 0 amount: 42500000000000000000
-Querying at block 67 for 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c
-Different block  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 67 and 78 of 42500000000000000000
-Statement reconciles? true top-level
-EndBalCalc: 42500000000000000000 5156250000000000000 47656250000000000000
-Inserting  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 78 of 47656250000000000000
-Found  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 78 of 47656250000000000000
+XXX =============[ top-level ]======================
+XXX Case 1: Only statement in block
+XXX Block: 78 Tx: 99999 Asset: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+XXX FirstInBlock: true, LastInBlock: true
+XXX ================================================
 Block 78 is prior to deployment (3684349) of Maker. No fallback pricing method
 ===================================================
-Reason:                 top-level
-Previous:               67 99999 ( false )
+Previous:               67 99999 ( true )
 Current:                78 99999 ( true )
-Next:                   84 99999 ( false )
+Next:                   84 99999 ( true )
 accountedFor:           0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c
 sender:                 0x0000000000000000000000000000004d696e6572  ==>  0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c
 asset:                  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -543,8 +436,6 @@ Trial balance:
    material:            true
    reconciled:          true
 ---------------------------------------------------
-----------Done  true  --------------------------
-
 Statement is material and reconciled - appending
 Transaction receipt is nil. No log statements.
 ~~~ Leaving: 78.99999 ~~~
@@ -555,25 +446,16 @@ Transaction receipt is nil. No log statements.
 ~~~ Entering: 84.99999 ~~~
 ETH is of interest
 Attempting to reconcile at top level: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c
-------------------------------------
-# Reason: top-level
-Trial balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c at stmt 84 99999 0
-------------------------------------
-Sender: false Recipient: true 0x0000000000000000000000000000004d696e6572 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c
-adjustForIntraTransfer1 isToken: false isPrevSame: false isNextSame: false
-XXXFound  running blkid: 78 txid: 0 logid: 0 amount: 47656250000000000000
-Querying at block 78 for 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c
-Different block  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 78 and 84 of 47656250000000000000
-Statement reconciles? true top-level
-EndBalCalc: 47656250000000000000 5000000000000000000 52656250000000000000
-Inserting  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 84 of 52656250000000000000
-Found  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 84 of 52656250000000000000
+XXX =============[ top-level ]======================
+XXX Case 1: Only statement in block
+XXX Block: 84 Tx: 99999 Asset: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+XXX FirstInBlock: true, LastInBlock: true
+XXX ================================================
 Block 84 is prior to deployment (3684349) of Maker. No fallback pricing method
 ===================================================
-Reason:                 top-level
-Previous:               78 99999 ( false )
+Previous:               78 99999 ( true )
 Current:                84 99999 ( true )
-Next:                   90 99999 ( false )
+Next:                   90 99999 ( true )
 accountedFor:           0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c
 sender:                 0x0000000000000000000000000000004d696e6572  ==>  0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c
 asset:                  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -596,8 +478,6 @@ Trial balance:
    material:            true
    reconciled:          true
 ---------------------------------------------------
-----------Done  true  --------------------------
-
 Statement is material and reconciled - appending
 Transaction receipt is nil. No log statements.
 ~~~ Leaving: 84.99999 ~~~
@@ -608,25 +488,16 @@ Transaction receipt is nil. No log statements.
 ~~~ Entering: 90.99999 ~~~
 ETH is of interest
 Attempting to reconcile at top level: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c
-------------------------------------
-# Reason: top-level
-Trial balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c at stmt 90 99999 0
-------------------------------------
-Sender: false Recipient: true 0x0000000000000000000000000000004d696e6572 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c
-adjustForIntraTransfer1 isToken: false isPrevSame: false isNextSame: false
-XXXFound  running blkid: 84 txid: 0 logid: 0 amount: 52656250000000000000
-Querying at block 84 for 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c
-Different block  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 84 and 90 of 52656250000000000000
-Statement reconciles? true top-level
-EndBalCalc: 52656250000000000000 5000000000000000000 57656250000000000000
-Inserting  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 90 of 57656250000000000000
-Found  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 90 of 57656250000000000000
+XXX =============[ top-level ]======================
+XXX Case 1: Only statement in block
+XXX Block: 90 Tx: 99999 Asset: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+XXX FirstInBlock: true, LastInBlock: true
+XXX ================================================
 Block 90 is prior to deployment (3684349) of Maker. No fallback pricing method
 ===================================================
-Reason:                 top-level
-Previous:               84 99999 ( false )
+Previous:               84 99999 ( true )
 Current:                90 99999 ( true )
-Next:                   94 99999 ( false )
+Next:                   94 99999 ( true )
 accountedFor:           0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c
 sender:                 0x0000000000000000000000000000004d696e6572  ==>  0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c
 asset:                  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -649,8 +520,6 @@ Trial balance:
    material:            true
    reconciled:          true
 ---------------------------------------------------
-----------Done  true  --------------------------
-
 Statement is material and reconciled - appending
 Transaction receipt is nil. No log statements.
 ~~~ Leaving: 90.99999 ~~~
@@ -661,25 +530,16 @@ Transaction receipt is nil. No log statements.
 ~~~ Entering: 94.99999 ~~~
 ETH is of interest
 Attempting to reconcile at top level: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c
-------------------------------------
-# Reason: top-level
-Trial balance for  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c at stmt 94 99999 0
-------------------------------------
-Sender: false Recipient: true 0x0000000000000000000000000000004d696e6572 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c
-adjustForIntraTransfer1 isToken: false isPrevSame: false isNextSame: false
-XXXFound  running blkid: 90 txid: 0 logid: 0 amount: 57656250000000000000
-Querying at block 90 for 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c
-Different block  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 90 and 94 of 57656250000000000000
-Statement reconciles? true top-level
-EndBalCalc: 57656250000000000000 5156250000000000000 62812500000000000000
-Inserting  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 94 of 62812500000000000000
-Found  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 94 of 62812500000000000000
+XXX =============[ top-level ]======================
+XXX Case 1: Only statement in block
+XXX Block: 94 Tx: 99999 Asset: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+XXX FirstInBlock: true, LastInBlock: true
+XXX ================================================
 Block 94 is prior to deployment (3684349) of Maker. No fallback pricing method
 ===================================================
-Reason:                 top-level
-Previous:               90 99999 ( false )
+Previous:               90 99999 ( true )
 Current:                94 99999 ( true )
-Next:                   95 0 ( false )
+Next:                   95 0 ( true )
 accountedFor:           0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c
 sender:                 0x0000000000000000000000000000004d696e6572  ==>  0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c
 asset:                  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -703,8 +563,6 @@ Trial balance:
    material:            true
    reconciled:          true
 ---------------------------------------------------
-----------Done  true  --------------------------
-
 Statement is material and reconciled - appending
 Transaction receipt is nil. No log statements.
 ~~~ Leaving: 94.99999 ~~~
@@ -747,6 +605,7 @@ Transaction receipt is nil. No log statements.
       "prevBal": "0",
       "priceSource": "eth-not-priced-pre-maker",
       "recipient": "0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c",
+      "recipientName": "Miner_0010_505",
       "reconciled": true,
       "selfDestructIn": "0",
       "selfDestructOut": "0",
@@ -794,6 +653,7 @@ Transaction receipt is nil. No log statements.
       "prevBal": "5000000000000000000",
       "priceSource": "eth-not-priced-pre-maker",
       "recipient": "0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c",
+      "recipientName": "Miner_0010_505",
       "reconciled": true,
       "selfDestructIn": "0",
       "selfDestructOut": "0",
@@ -841,6 +701,7 @@ Transaction receipt is nil. No log statements.
       "prevBal": "10000000000000000000",
       "priceSource": "eth-not-priced-pre-maker",
       "recipient": "0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c",
+      "recipientName": "Miner_0010_505",
       "reconciled": true,
       "selfDestructIn": "0",
       "selfDestructOut": "0",
@@ -888,6 +749,7 @@ Transaction receipt is nil. No log statements.
       "prevBal": "13750000000000000000",
       "priceSource": "eth-not-priced-pre-maker",
       "recipient": "0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c",
+      "recipientName": "Miner_0010_505",
       "reconciled": true,
       "selfDestructIn": "0",
       "selfDestructOut": "0",
@@ -935,6 +797,7 @@ Transaction receipt is nil. No log statements.
       "prevBal": "18750000000000000000",
       "priceSource": "eth-not-priced-pre-maker",
       "recipient": "0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c",
+      "recipientName": "Miner_0010_505",
       "reconciled": true,
       "selfDestructIn": "0",
       "selfDestructOut": "0",
@@ -982,6 +845,7 @@ Transaction receipt is nil. No log statements.
       "prevBal": "23750000000000000000",
       "priceSource": "eth-not-priced-pre-maker",
       "recipient": "0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c",
+      "recipientName": "Miner_0010_505",
       "reconciled": true,
       "selfDestructIn": "0",
       "selfDestructOut": "0",
@@ -1029,6 +893,7 @@ Transaction receipt is nil. No log statements.
       "prevBal": "28750000000000000000",
       "priceSource": "eth-not-priced-pre-maker",
       "recipient": "0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c",
+      "recipientName": "Miner_0010_505",
       "reconciled": true,
       "selfDestructIn": "0",
       "selfDestructOut": "0",
@@ -1076,6 +941,7 @@ Transaction receipt is nil. No log statements.
       "prevBal": "32500000000000000000",
       "priceSource": "eth-not-priced-pre-maker",
       "recipient": "0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c",
+      "recipientName": "Miner_0010_505",
       "reconciled": true,
       "selfDestructIn": "0",
       "selfDestructOut": "0",
@@ -1123,6 +989,7 @@ Transaction receipt is nil. No log statements.
       "prevBal": "37500000000000000000",
       "priceSource": "eth-not-priced-pre-maker",
       "recipient": "0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c",
+      "recipientName": "Miner_0010_505",
       "reconciled": true,
       "selfDestructIn": "0",
       "selfDestructOut": "0",
@@ -1170,6 +1037,7 @@ Transaction receipt is nil. No log statements.
       "prevBal": "42500000000000000000",
       "priceSource": "eth-not-priced-pre-maker",
       "recipient": "0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c",
+      "recipientName": "Miner_0010_505",
       "reconciled": true,
       "selfDestructIn": "0",
       "selfDestructOut": "0",
@@ -1217,6 +1085,7 @@ Transaction receipt is nil. No log statements.
       "prevBal": "47656250000000000000",
       "priceSource": "eth-not-priced-pre-maker",
       "recipient": "0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c",
+      "recipientName": "Miner_0010_505",
       "reconciled": true,
       "selfDestructIn": "0",
       "selfDestructOut": "0",
@@ -1264,6 +1133,7 @@ Transaction receipt is nil. No log statements.
       "prevBal": "52656250000000000000",
       "priceSource": "eth-not-priced-pre-maker",
       "recipient": "0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c",
+      "recipientName": "Miner_0010_505",
       "reconciled": true,
       "selfDestructIn": "0",
       "selfDestructOut": "0",
@@ -1311,6 +1181,7 @@ Transaction receipt is nil. No log statements.
       "prevBal": "57656250000000000000",
       "priceSource": "eth-not-priced-pre-maker",
       "recipient": "0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c",
+      "recipientName": "Miner_0010_505",
       "reconciled": true,
       "selfDestructIn": "0",
       "selfDestructOut": "0",

@@ -62,6 +62,8 @@ type Statement struct {
 	CorrectionId base.Value   `json:"correctionId"`
 	Holder       base.Address `json:"holder"`
 	StatementId  base.Value   `json:"statementId"`
+	BegSentinel  bool         `json:"-"`
+	EndSentinel  bool         `json:"-"`
 	// EXISTING_CODE
 }
 
@@ -180,20 +182,26 @@ func (s *Statement) Model(chain, format string, verbose bool, extraOpts map[stri
 			"correctAmountOutEth", "correctEndBalOutEth", "selfDestructOutEth", "gasOutEth",
 			"begBalDiffEth", "endBalDiffEth", "endBalCalcEth", "prevBalEth"}...)
 	}
-	if asset, loaded, found := nameAddress(extraOpts, s.Asset); found {
-		model["assetName"] = asset.Name
-		order = append(order, "assetName")
-	} else if loaded && format != "json" {
-		model["assetName"] = ""
-		order = append(order, "assetName")
+
+	for _, item := range []struct {
+		address   base.Address
+		keyPrefix string
+	}{
+		{s.Asset, "asset"},
+		{s.AccountedFor, "accountedFor"},
+		{s.Sender, "sender"},
+		{s.Recipient, "recipient"},
+	} {
+		key := item.keyPrefix + "Name"
+		if result, loaded, found := nameAddress(extraOpts, item.address); found {
+			model[key] = result.Name
+			order = append(order, key)
+		} else if loaded && format != "json" {
+			model[key] = ""
+			order = append(order, key)
+		}
 	}
-	if accountedFor, loaded, found := nameAddress(extraOpts, s.AccountedFor); found {
-		model["accountedForName"] = accountedFor.Name
-		order = append(order, "accountedForName")
-	} else if loaded && format != "json" {
-		model["accountedForName"] = ""
-		order = append(order, "accountedForName")
-	}
+
 	order = reorderOrdering(order)
 	// EXISTING_CODE
 
@@ -637,16 +645,16 @@ func (stmt *Statement) CorrectBeginBalance() bool {
 		return stmt.Reconciled()
 	}
 
-	isLessThan := stmt.BegBalDiff().LessThan(base.ZeroWei)
-	isGreaterThan := stmt.BegBalDiff().GreaterThan(base.ZeroWei)
-	logger.TestLog(true, "Correcting beginning balance", isLessThan, isGreaterThan, stmt.BegBalDiff().Text(10))
-	if isLessThan {
+	diff := stmt.BegBalDiff()
+	absDiff := diff.Abs()
+	logger.TestLog(true, "Correcting beginning balance", diff.Text(10), "absDiff:", absDiff.Text(10))
+	if stmt.BegBalDiff().LessThan(base.ZeroWei) { // begBal < expected, increase totalIn
 		stmt.CorrectingReasons = append(stmt.CorrectingReasons, "begBalIn")
-		val := new(base.Wei).Add(&stmt.CorrectBegBalIn, stmt.BegBalDiff())
+		val := new(base.Wei).Add(&stmt.CorrectBegBalIn, absDiff)
 		stmt.CorrectBegBalIn = *val
-	} else if isGreaterThan {
+	} else if stmt.BegBalDiff().GreaterThan(base.ZeroWei) { // begBal > expected, increase totalOut
 		stmt.CorrectingReasons = append(stmt.CorrectingReasons, "begBalOut")
-		val := new(base.Wei).Add(&stmt.CorrectBegBalOut, stmt.BegBalDiff())
+		val := new(base.Wei).Add(&stmt.CorrectBegBalOut, absDiff)
 		stmt.CorrectBegBalOut = *val
 	}
 
@@ -658,19 +666,19 @@ func (stmt *Statement) CorrectEndBalance() bool {
 		return stmt.Reconciled()
 	}
 
-	isLessThan := stmt.EndBalDiff().LessThan(base.ZeroWei)
-	isGreaterThan := stmt.EndBalDiff().GreaterThan(base.ZeroWei)
-	logger.TestLog(true, "Correcting ending balance", "isLess:", isLessThan, "isGreater:", isGreaterThan, "diff:", stmt.EndBalDiff().Text(10))
-	if isLessThan {
+	diff := stmt.EndBalDiff()
+	absDiff := diff.Abs()
+	logger.TestLog(true, "Correcting ending balance", "diff:", diff.Text(10), "absDiff:", absDiff.Text(10))
+	if stmt.EndBalDiff().GreaterThan(base.ZeroWei) { // endBal > endBalCalc, reduce totalOut
+		stmt.CorrectingReasons = append(stmt.CorrectingReasons, "endBalOut")
+		val := new(base.Wei).Add(&stmt.CorrectEndBalOut, absDiff)
+		stmt.CorrectEndBalOut = *val
+		logger.TestLog(true, "correctEndBalOut:", stmt.CorrectEndBalOut.Text(10))
+	} else if stmt.EndBalDiff().LessThan(base.ZeroWei) { // endBal < endBalCalc, increase totalIn
 		stmt.CorrectingReasons = append(stmt.CorrectingReasons, "endBalIn")
-		val := new(base.Wei).Add(&stmt.CorrectEndBalIn, stmt.EndBalDiff())
+		val := new(base.Wei).Add(&stmt.CorrectEndBalIn, absDiff)
 		stmt.CorrectEndBalIn = *val
 		logger.TestLog(true, "correctEndBalIn:", stmt.CorrectEndBalIn.Text(10))
-	} else if isGreaterThan {
-		val := new(base.Wei).Add(&stmt.CorrectEndBalOut, stmt.EndBalDiff())
-		stmt.CorrectEndBalOut = *val
-		stmt.CorrectingReasons = append(stmt.CorrectingReasons, "endBalOut")
-		logger.TestLog(true, "CorrectEndBalOut:", stmt.CorrectEndBalOut.Text(10))
 	}
 
 	return stmt.Reconciled()

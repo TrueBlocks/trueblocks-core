@@ -164,6 +164,10 @@ func (s *Receipt) FetchStatements(accountedFor base.Address, assetFilters []base
 			}
 		}
 	}
+	if len(statements) > 0 {
+		statements[0].BegSentinel = true
+		statements[len(statements)-1].EndSentinel = true
+	}
 	return statements, nil
 }
 
