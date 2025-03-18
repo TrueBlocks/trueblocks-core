@@ -3443,6 +3443,10 @@ components:
           type: string
           format: int256
           description: "a positive or negative (or zero) amount of the transfer in asset units"
+        decimals:
+          type: number
+          format: uint64
+          description: "the number of decimal places in the asset units"
     appearanceTable:
       description: "an appearance table for an address"
       type: object

@@ -25,11 +25,11 @@ type Transfer struct {
 	Amount           base.Wei     `json:"amount"`
 	Asset            base.Address `json:"asset"`
 	BlockNumber      base.Blknum  `json:"blockNumber"`
+	Decimals         uint64       `json:"decimals"`
 	Holder           base.Address `json:"holder"`
 	LogIndex         base.Lognum  `json:"logIndex"`
 	TransactionIndex base.Txnum   `json:"transactionIndex"`
 	// EXISTING_CODE
-	Decimals base.Value `json:"decimals"`
 	// EXISTING_CODE
 }
 
@@ -133,6 +133,11 @@ func (s *Transfer) MarshalCache(writer io.Writer) (err error) {
 		return err
 	}
 
+	// Decimals
+	if err = base.WriteValue(writer, s.Decimals); err != nil {
+		return err
+	}
+
 	// Holder
 	if err = base.WriteValue(writer, s.Holder); err != nil {
 		return err
@@ -168,6 +173,11 @@ func (s *Transfer) UnmarshalCache(fileVersion uint64, reader io.Reader) (err err
 
 	// BlockNumber
 	if err = base.ReadValue(reader, &s.BlockNumber, fileVersion); err != nil {
+		return err
+	}
+
+	// Decimals
+	if err = base.ReadValue(reader, &s.Decimals, fileVersion); err != nil {
 		return err
 	}
 
@@ -208,7 +218,7 @@ type AssetTransfer struct {
 	BlockNumber       base.Blknum `json:"blockNumber"`
 	CorrectingReasons []string    `json:"correctingReasons"`
 	CorrectionId      base.Value  `json:"correctionId"`
-	Decimals          base.Value  `json:"decimals"`
+	Decimals          uint64      `json:"decimals"`
 	EndBal            base.Wei
 	Holder            base.Address `json:"holder"`
 	LogIndex          base.Lognum  `json:"logIndex"`

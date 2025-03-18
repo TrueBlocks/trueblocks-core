@@ -237,6 +237,7 @@ Transfers consist of the following fields:
 | asset            | 0xeeee...eeee for ETH transfers, the token address otherwise           | address |
 | holder           | the address of the holder of the address                               | address |
 | amount           | a positive or negative (or zero) amount of the transfer in asset units | int256  |
+| decimals         | the number of decimal places in the asset units                        | uint64  |
 
 ## AppearanceTable
 
