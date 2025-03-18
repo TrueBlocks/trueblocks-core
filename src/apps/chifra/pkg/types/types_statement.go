@@ -62,6 +62,7 @@ type Statement struct {
 	StatementId  base.Value   `json:"statementId"`
 	BegSentinel  bool         `json:"-"`
 	EndSentinel  bool         `json:"-"`
+	Transaction  *Transaction `json:"-"`
 	// EXISTING_CODE
 }
 
@@ -361,6 +362,13 @@ func (s Statement) Report() string {
 		s.CorrectAmountIn.Text(10), s.CorrectAmountOut.Text(10), s.CorrectBegBalIn.Text(10),
 		s.CorrectBegBalOut.Text(10), s.CorrectEndBalIn.Text(10), s.CorrectEndBalOut.Text(10),
 		strings.Join(s.CorrectingReasons, ","))
+}
+
+func (s *Statement) Type() string {
+	if s.Asset == base.FAKE_ETH_ADDRESS {
+		return "eth"
+	}
+	return "token"
 }
 
 // EXISTING_CODE
