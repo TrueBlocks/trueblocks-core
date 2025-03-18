@@ -6,15 +6,22 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 )
 
+type NodeAppearance struct {
+	Type             string
+	BlockNumber      base.Blknum
+	TransactionIndex base.Txnum
+	LogIndex         base.Lognum
+}
+
 type AppNode[T any] struct {
 	prev    *AppNode[T]
-	current *Appearance
+	current *NodeAppearance
 	next    *AppNode[T]
 	index   int
 	data    *T
 }
 
-func NewAppNode[T any](appearance *Appearance, data *T) *AppNode[T] {
+func NewAppNode[T any](appearance *NodeAppearance, data *T) *AppNode[T] {
 	return &AppNode[T]{
 		prev:    nil,
 		current: appearance,
@@ -72,7 +79,7 @@ func (a *AppNode[T]) PrevTxId() base.Txnum {
 	return base.Txnum(a.prev.current.TransactionIndex)
 }
 
-func (a *AppNode[T]) Cur() *Appearance {
+func (a *AppNode[T]) Cur() *NodeAppearance {
 	return a.current
 }
 
@@ -121,24 +128,20 @@ type AppList[T any] struct {
 	Tail *AppNode[T]
 }
 
-func NewAppList[T any](appearances []Appearance, dataItems []*T) (*AppList[T], error) {
-	if len(appearances) == 0 {
+func NewAppList[T any](apps []NodeAppearance, dataItems []*T) (*AppList[T], error) {
+	if len(apps) == 0 {
 		return &AppList[T]{}, nil
 	}
 
 	list := &AppList[T]{}
 	var prevNode *AppNode[T]
 
-	for i, app := range appearances {
-		current := &Appearance{
-			BlockNumber:      app.BlockNumber,
-			TransactionIndex: app.TransactionIndex,
-		}
+	for i, app := range apps {
 		var data *T
 		if dataItems != nil && i < len(dataItems) {
 			data = dataItems[i]
 		}
-		node := NewAppNode(current, data)
+		node := NewAppNode(&app, data)
 		node.index = i
 
 		if list.Head == nil {
@@ -152,4 +155,27 @@ func NewAppList[T any](appearances []Appearance, dataItems []*T) (*AppList[T], e
 	}
 
 	return list, nil
+}
+
+func NewAppListFromApps[T any](apps []Appearance, dataItems []*T) (*AppList[T], error) {
+	nodeApps := make([]NodeAppearance, 0, len(apps))
+	for _, app := range apps {
+		nodeApps = append(nodeApps, NodeAppearance{
+			// Type:             app.Type,
+			BlockNumber:      base.Blknum(app.BlockNumber),
+			TransactionIndex: base.Txnum(app.TransactionIndex),
+			// LogIndex:         app.LogIndex,
+		})
+	}
+	return NewAppList(nodeApps, dataItems)
+}
+
+func (l *AppList[T]) Count() int {
+	count := 0
+	current := l.Head
+	for current != nil {
+		count++
+		current = current.Next()
+	}
+	return count
 }

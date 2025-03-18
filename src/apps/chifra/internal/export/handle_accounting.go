@@ -80,7 +80,7 @@ func (opts *ExportOptions) HandleAccounting(rCtx *output.RenderCtx, monitorArray
 				}
 
 				recon = ledger.NewReconciler(opts.Conn, ledgerOpts)
-				list, err := types.NewAppList[types.Transaction](apps, nil)
+				list, err := types.NewAppListFromApps[types.Transaction](apps, nil)
 				if err != nil {
 					errorChan <- err
 				}

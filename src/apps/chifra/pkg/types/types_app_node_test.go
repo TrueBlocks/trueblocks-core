@@ -7,7 +7,7 @@ import (
 )
 
 func TestAppNodeCreation(t *testing.T) {
-	app := &Appearance{BlockNumber: 100, TransactionIndex: 1}
+	app := &NodeAppearance{BlockNumber: 100, TransactionIndex: 1}
 	node := NewAppNode[Transaction](app, nil)
 
 	if node.current != app {
@@ -34,7 +34,7 @@ func TestAppNodeCreation(t *testing.T) {
 }
 
 func TestAppNodeAccessors(t *testing.T) {
-	app := &Appearance{BlockNumber: 100, TransactionIndex: 1}
+	app := &NodeAppearance{BlockNumber: 100, TransactionIndex: 1}
 	node := NewAppNode[Transaction](app, nil)
 
 	tests := []struct {
@@ -59,7 +59,7 @@ func TestAppNodeAccessors(t *testing.T) {
 		})
 	}
 
-	list, _ := NewAppList[Transaction]([]Appearance{
+	list, _ := NewAppList[Transaction]([]NodeAppearance{
 		{BlockNumber: 100, TransactionIndex: 1},
 		{BlockNumber: 100, TransactionIndex: 2},
 		{BlockNumber: 101, TransactionIndex: 0},
@@ -109,14 +109,14 @@ func TestAppNodeAccessors(t *testing.T) {
 		t.Errorf("Tail.Index() should be 2, got %d", tail.Index())
 	}
 	// TODO: Reenable this test
-	// zeroList, _ := NewAppList[Transaction]([]Appearance{{BlockNumber: 0, TransactionIndex: 1}}, nil)
+	// zeroList, _ := NewAppList[Transaction]([]NodeAppearance{{BlockNumber: 0, TransactionIndex: 1}}, nil)
 	// if zeroList.Head.Prev() != nil { // Updated: No prev at genesis
 	// 	t.Errorf("Zero block head should not have prev, got %v", zeroList.Head.Prev())
 	// }
 }
 
 func TestAppNodeIsSame(t *testing.T) {
-	list, _ := NewAppList[Transaction]([]Appearance{
+	list, _ := NewAppList[Transaction]([]NodeAppearance{
 		{BlockNumber: 100, TransactionIndex: 1},
 		{BlockNumber: 100, TransactionIndex: 2},
 		{BlockNumber: 101, TransactionIndex: 0},
@@ -157,48 +157,48 @@ func TestAppNodeIsSame(t *testing.T) {
 func TestNewAppList(t *testing.T) {
 	tests := []struct {
 		name        string
-		appearances []Appearance
-		wantHead    *Appearance
-		wantTail    *Appearance
+		appearances []NodeAppearance
+		wantHead    *NodeAppearance
+		wantTail    *NodeAppearance
 		wantErr     bool
 	}{
 		{
 			"EmptyList",
-			[]Appearance{},
+			[]NodeAppearance{},
 			nil,
 			nil,
 			false,
 		},
 		{
 			"SingleItem",
-			[]Appearance{{BlockNumber: 100, TransactionIndex: 1}},
-			&Appearance{BlockNumber: 100, TransactionIndex: 1},
-			&Appearance{BlockNumber: 100, TransactionIndex: 1},
+			[]NodeAppearance{{BlockNumber: 100, TransactionIndex: 1}},
+			&NodeAppearance{BlockNumber: 100, TransactionIndex: 1},
+			&NodeAppearance{BlockNumber: 100, TransactionIndex: 1},
 			false,
 		},
 		{
 			"MultipleItems",
-			[]Appearance{
+			[]NodeAppearance{
 				{BlockNumber: 100, TransactionIndex: 1},
 				{BlockNumber: 100, TransactionIndex: 2},
 				{BlockNumber: 101, TransactionIndex: 0},
 			},
-			&Appearance{BlockNumber: 100, TransactionIndex: 1},
-			&Appearance{BlockNumber: 101, TransactionIndex: 0},
+			&NodeAppearance{BlockNumber: 100, TransactionIndex: 1},
+			&NodeAppearance{BlockNumber: 101, TransactionIndex: 0},
 			false,
 		},
 		{
 			"SingleMaxValues",
-			[]Appearance{{BlockNumber: ^uint32(0), TransactionIndex: ^uint32(0)}},
-			&Appearance{BlockNumber: ^uint32(0), TransactionIndex: ^uint32(0)},
-			&Appearance{BlockNumber: ^uint32(0), TransactionIndex: ^uint32(0)},
+			[]NodeAppearance{{BlockNumber: ^base.Blknum(0), TransactionIndex: ^base.Txnum(0)}},
+			&NodeAppearance{BlockNumber: ^base.Blknum(0), TransactionIndex: ^base.Txnum(0)},
+			&NodeAppearance{BlockNumber: ^base.Blknum(0), TransactionIndex: ^base.Txnum(0)},
 			false,
 		},
 		{
 			"SingleZeroBlock",
-			[]Appearance{{BlockNumber: 0, TransactionIndex: 1}},
-			&Appearance{BlockNumber: 0, TransactionIndex: 1},
-			&Appearance{BlockNumber: 0, TransactionIndex: 1},
+			[]NodeAppearance{{BlockNumber: 0, TransactionIndex: 1}},
+			&NodeAppearance{BlockNumber: 0, TransactionIndex: 1},
+			&NodeAppearance{BlockNumber: 0, TransactionIndex: 1},
 			false,
 		},
 	}
@@ -253,9 +253,9 @@ func TestNewAppList(t *testing.T) {
 }
 
 func TestEdgeCaseAccessors(t *testing.T) {
-	list, _ := NewAppList[Transaction]([]Appearance{
+	list, _ := NewAppList[Transaction]([]NodeAppearance{
 		{BlockNumber: 0, TransactionIndex: 0},
-		{BlockNumber: ^uint32(0), TransactionIndex: ^uint32(0)},
+		{BlockNumber: ^base.Blknum(0), TransactionIndex: ^base.Txnum(0)},
 	}, nil)
 
 	head := list.Head
@@ -287,11 +287,11 @@ func TestEdgeCaseAccessors(t *testing.T) {
 	if tail.Next() != nil {
 		t.Errorf("Tail Next() should be nil, got %v", tail.Next())
 	}
-	if tail.Cur().BlockNumber != ^uint32(0) || tail.Cur().TransactionIndex != ^uint32(0) {
-		t.Errorf("Tail Cur() should be {%d, %d}, got %v", ^uint32(0), ^uint32(0), tail.Cur())
+	if tail.Cur().BlockNumber != ^base.Blknum(0) || tail.Cur().TransactionIndex != ^base.Txnum(0) {
+		t.Errorf("Tail Cur() should be {%d, %d}, got %v", ^base.Blknum(0), ^base.Txnum(0), tail.Cur())
 	}
 
-	emptyList, _ := NewAppList[Transaction]([]Appearance{}, nil)
+	emptyList, _ := NewAppList[Transaction]([]NodeAppearance{}, nil)
 	if emptyList.Head != nil {
 		t.Errorf("Empty list Head should be nil, got %v", emptyList.Head)
 	}
@@ -299,7 +299,7 @@ func TestEdgeCaseAccessors(t *testing.T) {
 		t.Errorf("Empty list Tail should be nil, got %v", emptyList.Tail)
 	}
 
-	nonZeroList, _ := NewAppList[Transaction]([]Appearance{{BlockNumber: 100, TransactionIndex: 1}}, nil)
+	nonZeroList, _ := NewAppList[Transaction]([]NodeAppearance{{BlockNumber: 100, TransactionIndex: 1}}, nil)
 	if nonZeroList.Head.Prev() != nil {
 		t.Errorf("Non-zero block head should be nil, got non-nil")
 		if nonZeroList.Head.Prev().CurBlock() != base.Blknum(99) || nonZeroList.Head.Prev().CurTxId() != 0 {
@@ -309,7 +309,7 @@ func TestEdgeCaseAccessors(t *testing.T) {
 }
 
 func TestListLinking(t *testing.T) {
-	list, _ := NewAppList[Transaction]([]Appearance{
+	list, _ := NewAppList[Transaction]([]NodeAppearance{
 		{BlockNumber: 100, TransactionIndex: 1},
 		{BlockNumber: 100, TransactionIndex: 2},
 		{BlockNumber: 101, TransactionIndex: 0},
@@ -343,7 +343,7 @@ func TestListLinking(t *testing.T) {
 		t.Errorf("First node should be head")
 	}
 
-	zeroList, _ := NewAppList[Transaction]([]Appearance{{BlockNumber: 0, TransactionIndex: 1}}, nil)
+	zeroList, _ := NewAppList[Transaction]([]NodeAppearance{{BlockNumber: 0, TransactionIndex: 1}}, nil)
 	if zeroList.Head.Prev() != nil { // Updated: No prev at genesis
 		t.Errorf("Zero block head should not have prev, got %v", zeroList.Head.Prev())
 	}
