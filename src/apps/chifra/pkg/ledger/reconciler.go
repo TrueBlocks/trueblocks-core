@@ -10,11 +10,14 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
+// AssetHolder Struct combining an asset and holder address to key the Running map for
+// balance tracking per asset-holder pair.
 type AssetHolder struct {
 	Asset  base.Address
 	Holder base.Address
 }
 
+// NewAssetHolderKey Creates a new AssetHolder key.
 func NewAssetHolderKey(asset, holder base.Address) AssetHolder {
 	return AssetHolder{Asset: asset, Holder: holder}
 }
