@@ -15,6 +15,7 @@ import (
 	"net/http"
 	"net/url"
 	"os"
+	"slices"
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
@@ -285,13 +286,7 @@ func (opts *ChunksOptions) shouldShow(obj types.AddrRecord) bool {
 	if opts.Mode == "addresses" || opts.Mode == "appearances" {
 		return opts.Globals.Verbose
 	}
-
-	for _, addr := range opts.Belongs {
-		if hexutil.Encode(obj.Address.Bytes()) == addr {
-			return true
-		}
-	}
-	return false
+	return slices.Contains(opts.Belongs, hexutil.Encode(obj.Address.Bytes()))
 }
 
 func GetChunkStats(chain, path string) (s types.ChunkStats, err error) {
