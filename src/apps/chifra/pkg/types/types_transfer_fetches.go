@@ -8,6 +8,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/topics"
 )
 
+// ------------------------------------------------------------------------------------------
 func (trans *Transaction) FetchTransfer(asEther bool, asset, holder base.Address) (*Statement, error) {
 	sym := "WEI"
 	if asEther {
@@ -18,7 +19,7 @@ func (trans *Transaction) FetchTransfer(asEther bool, asset, holder base.Address
 		to = trans.Receipt.ContractAddress
 	}
 
-	stmt := &Statement{
+	xfr := &Statement{
 		AccountedFor:     holder,
 		Holder:           holder,
 		Asset:            asset,
@@ -33,58 +34,58 @@ func (trans *Transaction) FetchTransfer(asEther bool, asset, holder base.Address
 		PriceSource:      "not-priced",
 	}
 
-	// logger.TestLog(true, "holder", holder, "sender", stmt.Sender)
-	if stmt.Sender == holder {
+	isSender, isRecipient := xfr.Sender == holder, xfr.Recipient == holder
+	if isSender {
 		gasUsed := new(base.Wei)
 		if trans.Receipt != nil {
 			gasUsed.SetUint64(uint64(trans.Receipt.GasUsed))
 		}
 		gasPrice := new(base.Wei).SetUint64(uint64(trans.GasPrice))
 		gasOut := new(base.Wei).Mul(gasUsed, gasPrice)
-		stmt.AmountOut = trans.Value
-		stmt.GasOut = *gasOut
+		xfr.AmountOut = trans.Value
+		xfr.GasOut = *gasOut
 	}
 
-	// logger.TestLog(true, "holder", holder, "recipient", stmt.Recipient)
-	if stmt.Recipient == holder {
-		if stmt.BlockNumber == 0 {
-			stmt.PrefundIn = trans.Value
+	if isRecipient {
+		if xfr.BlockNumber == 0 {
+			xfr.PrefundIn = trans.Value
 		} else {
 			if trans.Rewards != nil {
-				stmt.MinerBaseRewardIn = trans.Rewards.Block
-				stmt.MinerNephewRewardIn = trans.Rewards.Nephew
-				stmt.MinerTxFeeIn = trans.Rewards.TxFee
-				stmt.MinerUncleRewardIn = trans.Rewards.Uncle
+				xfr.MinerBaseRewardIn = trans.Rewards.Block
+				xfr.MinerNephewRewardIn = trans.Rewards.Nephew
+				xfr.MinerTxFeeIn = trans.Rewards.TxFee
+				xfr.MinerUncleRewardIn = trans.Rewards.Uncle
 			} else {
-				stmt.AmountIn = trans.Value
+				xfr.AmountIn = trans.Value
 			}
 		}
 	}
 
-	return stmt, nil
+	return xfr, nil
 }
 
-func (trans *Transaction) FetchTransferTraces(traces []Trace, accountedFor base.Address, asEther bool) (*Statement, error) {
-	if stmt, err := trans.FetchTransfer(asEther, base.FAKE_ETH_ADDRESS, accountedFor); err != nil {
+// ------------------------------------------------------------------------------------------
+func (trans *Transaction) FetchTransferTraces(traces []Trace, holder base.Address, asEther bool) (*Statement, error) {
+	if xfr, err := trans.FetchTransfer(asEther, base.FAKE_ETH_ADDRESS, holder); err != nil {
 		return nil, err
 
 	} else {
 		for i, trace := range traces {
-			// the first trace is identical to the transaction itself, so we can skip it
+			// skip over the first trace, we've already gotten its values from the transaction
 			if i > 0 {
-				// updates statement in place...
-				if err := trace.UpdateStatement(stmt); err != nil {
+				if err := trace.updateTransfer(xfr); err != nil {
 					return nil, err
 				}
 			}
 		}
-		return stmt, nil
+		return xfr, nil
 	}
 }
 
-func (t *Trace) UpdateStatement(stmt *Statement) error {
+// ------------------------------------------------------------------------------------------
+func (t *Trace) updateTransfer(xfr *Statement) error {
 	// delegate calls are not included in the transaction's gas cost, so we skip them
-	if t.Action.CallType == "delegatecall" && t.Action.To != stmt.AccountedFor {
+	if t.Action.CallType == "delegatecall" && t.Action.To != xfr.AccountedFor {
 		return nil
 	}
 
@@ -93,93 +94,99 @@ func (t *Trace) UpdateStatement(stmt *Statement) error {
 	}
 
 	// Do not collapse, more than one of these can be true at the same time
-	if t.Action.From == stmt.AccountedFor {
-		stmt.InternalOut = plusEq(&stmt.InternalOut, &t.Action.Value)
-		stmt.Sender = t.Action.From
+	if t.Action.From == xfr.AccountedFor {
+		xfr.InternalOut = plusEq(&xfr.InternalOut, &t.Action.Value)
+		xfr.Sender = t.Action.From
 		if t.Action.To.IsZero() {
 			if t.Result != nil {
-				stmt.Recipient = t.Result.Address
+				xfr.Recipient = t.Result.Address
 			}
 		} else {
-			stmt.Recipient = t.Action.To
+			xfr.Recipient = t.Action.To
 		}
 	}
 
-	if t.Action.To == stmt.AccountedFor {
-		stmt.InternalIn = plusEq(&stmt.InternalIn, &t.Action.Value)
-		stmt.Sender = t.Action.From
-		stmt.Recipient = t.Action.To
+	if t.Action.To == xfr.AccountedFor {
+		xfr.InternalIn = plusEq(&xfr.InternalIn, &t.Action.Value)
+		xfr.Sender = t.Action.From
+		xfr.Recipient = t.Action.To
 	}
 
-	if t.Action.SelfDestructed == stmt.AccountedFor {
-		stmt.SelfDestructOut = plusEq(&stmt.SelfDestructOut, &t.Action.Balance)
-		stmt.Sender = t.Action.SelfDestructed
-		if stmt.Sender.IsZero() {
-			stmt.Sender = t.Action.Address
+	if t.Action.SelfDestructed == xfr.AccountedFor {
+		xfr.SelfDestructOut = plusEq(&xfr.SelfDestructOut, &t.Action.Balance)
+		xfr.Sender = t.Action.SelfDestructed
+		if xfr.Sender.IsZero() {
+			xfr.Sender = t.Action.Address
 		}
-		stmt.Recipient = t.Action.RefundAddress
+		xfr.Recipient = t.Action.RefundAddress
 	}
 
-	if t.Action.RefundAddress == stmt.AccountedFor {
-		stmt.SelfDestructIn = plusEq(&stmt.SelfDestructIn, &t.Action.Balance)
-		stmt.Sender = t.Action.SelfDestructed
-		if stmt.Sender.IsZero() {
-			stmt.Sender = t.Action.Address
+	if t.Action.RefundAddress == xfr.AccountedFor {
+		xfr.SelfDestructIn = plusEq(&xfr.SelfDestructIn, &t.Action.Balance)
+		xfr.Sender = t.Action.SelfDestructed
+		if xfr.Sender.IsZero() {
+			xfr.Sender = t.Action.Address
 		}
-		stmt.Recipient = t.Action.RefundAddress
+		xfr.Recipient = t.Action.RefundAddress
 	}
 
-	if t.Action.Address == stmt.AccountedFor && !t.Action.RefundAddress.IsZero() {
-		stmt.SelfDestructOut = plusEq(&stmt.SelfDestructOut, &t.Action.Balance)
+	if t.Action.Address == xfr.AccountedFor && !t.Action.RefundAddress.IsZero() {
+		xfr.SelfDestructOut = plusEq(&xfr.SelfDestructOut, &t.Action.Balance)
 		// self destructed send
-		stmt.Sender = t.Action.Address
-		stmt.Recipient = t.Action.RefundAddress
+		xfr.Sender = t.Action.Address
+		xfr.Recipient = t.Action.RefundAddress
 	}
 
 	if t.Result != nil {
-		if t.Result.Address == stmt.AccountedFor {
-			stmt.InternalIn = plusEq(&stmt.InternalIn, &t.Action.Value)
-			stmt.Sender = t.Action.From
-			stmt.Recipient = t.Result.Address
+		if t.Result.Address == xfr.AccountedFor {
+			xfr.InternalIn = plusEq(&xfr.InternalIn, &t.Action.Value)
+			xfr.Sender = t.Action.From
+			xfr.Recipient = t.Result.Address
 		}
 	}
 
 	return nil
 }
 
-func (s *Receipt) FetchTransfers(accountedFor base.Address, assetFilters []base.Address, appFilter *AppearanceFilter) ([]Statement, error) {
-	statements := make([]Statement, 0, 20)
+// ------------------------------------------------------------------------------------------
+func (s *Receipt) FetchTransfers(holder base.Address, assetFilters []base.Address, appFilter *AppearanceFilter) ([]Statement, error) {
+	xfrs := make([]Statement, 0, 20)
 	for _, log := range s.Logs {
 		isTransfer := log.Topics[0] == topics.TransferTopic
 		isOfIterest := IsAssetOfInterest(log.Address, assetFilters)
-		passesFilter := appFilter.ApplyLogFilter(&log, []base.Address{accountedFor})
+		passesFilter := appFilter.ApplyLogFilter(&log, []base.Address{holder})
 		if isTransfer && isOfIterest && passesFilter {
-			if stmt, err := log.fetchTransfer(accountedFor); err != nil {
+			if xfr, err := log.fetchTransfer(holder); err != nil {
 				// TODO: silent fail?
 				continue
-			} else if stmt == nil {
+			} else if xfr == nil {
 				continue
+
 			} else {
-				statements = append(statements, *stmt)
+				xfrs = append(xfrs, *xfr)
 			}
 		}
 	}
-	if len(statements) > 0 {
-		statements[0].BegSentinel = true
-		statements[len(statements)-1].EndSentinel = true
+	if len(xfrs) > 0 {
+		xfrs[0].BegSentinel = true
+		xfrs[len(xfrs)-1].EndSentinel = true
 	}
-	return statements, nil
+
+	return xfrs, nil
 }
 
-func (log *Log) fetchTransfer(accountedFor base.Address) (*Statement, error) {
+// ------------------------------------------------------------------------------------------
+func (log *Log) fetchTransfer(holder base.Address) (*Statement, error) {
 	if normalized, err := NormalizeKnownLogs(log); err != nil {
 		return nil, err
+
 	} else if normalized.IsNFT() {
 		return nil, nil
+
 	} else {
 		sender := base.HexToAddress(normalized.Topics[1].Hex())
 		recipient := base.HexToAddress(normalized.Topics[2].Hex())
-		isSender, isRecipient := accountedFor == sender, accountedFor == recipient
+		isSender, isRecipient := holder == sender, holder == recipient
 		if !isSender && !isRecipient {
 			return nil, nil
 		}
@@ -189,33 +196,38 @@ func (log *Log) fetchTransfer(accountedFor base.Address) (*Statement, error) {
 		if amount == nil {
 			amount = base.ZeroWei
 		}
-		if accountedFor == sender {
+
+		// can be both
+		if isSender {
 			amountOut = *amount
 		}
-		if accountedFor == recipient {
+
+		// can be both
+		if isRecipient {
 			amountIn = *amount
 		}
-		stmt := &Statement{
-			AccountedFor:     accountedFor,
-			Holder:           accountedFor,
-			Sender:           sender,
-			Recipient:        recipient,
+
+		xfr := &Statement{
 			BlockNumber:      normalized.BlockNumber,
 			TransactionIndex: normalized.TransactionIndex,
 			LogIndex:         normalized.LogIndex,
-			TransactionHash:  normalized.TransactionHash,
-			Timestamp:        normalized.Timestamp,
+			Sender:           sender,
+			Recipient:        recipient,
 			Asset:            normalized.Address,
-			PriceSource:      "not-priced",
+			Holder:           holder,
 			AmountIn:         amountIn,
 			AmountOut:        amountOut,
 			Decimals:         18,
+			AccountedFor:     holder,
+			TransactionHash:  normalized.TransactionHash,
+			Timestamp:        normalized.Timestamp,
+			PriceSource:      "not-priced",
 		}
-		return stmt, nil
+		return xfr, nil
 	}
 }
 
-// ---------------------------------------------------------
+// ------------------------------------------------------------------------------------------
 func IsAssetOfInterest(needle base.Address, filters []base.Address) bool {
 	if len(filters) == 0 {
 		return true
