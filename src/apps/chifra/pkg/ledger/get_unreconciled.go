@@ -15,13 +15,13 @@ func (r *Reconciler) getUnreconciledTransfers(trans *types.Transaction) ([]*type
 				return nil, err
 			} else {
 				var err error
-				if xfr, err = trans.FetchTransferTraces(traces, r.Opts.AccountFor); err != nil {
+				if xfr, err = trans.ConvertTracesToTransfer(traces, r.Opts.AccountFor); err != nil {
 					return nil, err
 				}
 			}
 		} else {
 			var err error
-			if xfr, err = trans.FetchTransfer(r.Opts.AccountFor); err != nil {
+			if xfr, err = trans.ConvertToTransfer(r.Opts.AccountFor); err != nil {
 				return nil, err
 			}
 		}
@@ -32,7 +32,7 @@ func (r *Reconciler) getUnreconciledTransfers(trans *types.Transaction) ([]*type
 	}
 
 	if trans.Receipt != nil {
-		if logXfrs, err := trans.Receipt.FetchTransfers(r.Opts.AccountFor, r.Opts.AssetFilters, r.Opts.AppFilters); err != nil {
+		if logXfrs, err := trans.Receipt.ConvertToTranfers(r.Opts.AccountFor, r.Opts.AssetFilters, r.Opts.AppFilters); err != nil {
 			return nil, err
 		} else {
 			for _, logXfr := range logXfrs {

@@ -2,22 +2,11 @@ package ledger
 
 import (
 	"fmt"
-	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
-
-func (r *Reconciler) SkipAirdrop(addr base.Address) bool {
-	_ = addr
-	return false
-	// if name, found := r.Names[addr]; !found {
-	// 	return false
-	// } else {
-	// 	return name.IsAirdrop()
-	// }
-}
 
 func (r *Reconciler) GetStatements(node *types.AppNode[types.Transaction]) ([]types.Statement, error) {
 	trans := node.Data()
@@ -36,7 +25,7 @@ func (r *Reconciler) GetStatements(node *types.AppNode[types.Transaction]) ([]ty
 				fail(1)
 				return nil, err
 			} else {
-				if xfr, err := trans.FetchTransferTraces(traces, r.Opts.AccountFor); err != nil {
+				if xfr, err := trans.ConvertTracesToTransfer(traces, r.Opts.AccountFor); err != nil {
 					fail(2)
 					logger.Error(err.Error())
 				} else {
@@ -58,7 +47,7 @@ func (r *Reconciler) GetStatements(node *types.AppNode[types.Transaction]) ([]ty
 			}
 		} else {
 			logger.TestLog(true, fmt.Sprintf("Attempting to reconcile at top level: %s-%s", base.FAKE_ETH_ADDRESS.Hex(), r.Opts.AccountFor.Hex()))
-			if xfr, err := trans.FetchTransfer(r.Opts.AccountFor); err != nil {
+			if xfr, err := trans.ConvertToTransfer(r.Opts.AccountFor); err != nil {
 				fail(4)
 				return nil, err
 			} else {
@@ -81,7 +70,7 @@ func (r *Reconciler) GetStatements(node *types.AppNode[types.Transaction]) ([]ty
 							fail(5)
 							return nil, err
 						} else {
-							if xfr, err := trans.FetchTransferTraces(traces, r.Opts.AccountFor); err != nil {
+							if xfr, err := trans.ConvertTracesToTransfer(traces, r.Opts.AccountFor); err != nil {
 								fail(6)
 								logger.Error(err.Error())
 							} else {
@@ -113,7 +102,7 @@ func (r *Reconciler) GetStatements(node *types.AppNode[types.Transaction]) ([]ty
 		logger.TestLog(true, "Transaction receipt is nil. No log statements.")
 	} else {
 		logger.TestLog(true, "Extracting statements from logs.")
-		if xfrs, err := trans.Receipt.FetchTransfers(r.Opts.AccountFor, r.Opts.AssetFilters, r.Opts.AppFilters); err != nil {
+		if xfrs, err := trans.Receipt.ConvertToTranfers(r.Opts.AccountFor, r.Opts.AssetFilters, r.Opts.AppFilters); err != nil {
 			fail(8)
 			return nil, err
 
@@ -169,32 +158,4 @@ func (r *Reconciler) GetStatements(node *types.AppNode[types.Transaction]) ([]ty
 	logger.TestLog(true, "------------------------------------", len(results), "statements generated.")
 	logger.TestLog(true, "")
 	return results, nil
-}
-
-func ReportProgress(stmt *types.Statement, warn bool) {
-	msg := fmt.Sprintf("Ether statement at % 9d.%d.%d %s %s", stmt.BlockNumber, stmt.TransactionIndex, stmt.LogIndex, stmt.Asset.Hex(), stmt.Holder.Hex())
-	if !stmt.IsEth() {
-		msg = fmt.Sprintf("Token statement at % 9d.%d.%d %s %s", stmt.BlockNumber, stmt.TransactionIndex, stmt.LogIndex, stmt.Asset.Hex(), stmt.Holder.Hex())
-	}
-	spacer := strings.Repeat(" ", 100-base.Min(100, len(msg)))
-	if !stmt.Reconciled() {
-		// logger.Progress(true, colors.Green+msg+" reconciled.", colors.Off, spacer)
-		// } else {
-		if warn {
-			logger.Warn(msg+" did not reconcile.", spacer)
-		}
-	}
-}
-
-func debugHeader(a *types.AppNode[types.Transaction]) {
-	logger.TestLog(true, "")
-	logger.TestLog(true, "------------------------------------")
-	logger.TestLog(true, fmt.Sprintf("~~~ Entering: %d.%d ~~~", a.CurBlock(), a.CurTxId()))
-	// TODO: Better reporting?
-	// logger.TestLog(true, "")
-	// logger.TestLog(true, "------------------------------------")
-	// // logger.TestLog(true, fmt.Sprintf("~~~ Entering: %d.%d ~~~", a.CurBlock(), a.CurTxId()))
-	// logger.TestLog(true, "         prev        cur         next        isHead  isTail  isFirst isLast")
-	// logger.TestLog(true, a.String())
-	// logger.TestLog(true, "------------------------------------")
 }

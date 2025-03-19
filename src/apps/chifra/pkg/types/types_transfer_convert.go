@@ -9,7 +9,7 @@ import (
 )
 
 // ------------------------------------------------------------------------------------------
-func (trans *Transaction) FetchTransfer(holder base.Address) (*Transfer, error) {
+func (trans *Transaction) ConvertToTransfer(holder base.Address) (*Transfer, error) {
 	to := trans.To
 	if trans.To.IsZero() && trans.Receipt != nil && !trans.Receipt.ContractAddress.IsZero() {
 		to = trans.Receipt.ContractAddress
@@ -59,8 +59,8 @@ func (trans *Transaction) FetchTransfer(holder base.Address) (*Transfer, error) 
 }
 
 // ------------------------------------------------------------------------------------------
-func (trans *Transaction) FetchTransferTraces(traces []Trace, holder base.Address) (*Transfer, error) {
-	if xfr, err := trans.FetchTransfer(holder); err != nil {
+func (trans *Transaction) ConvertTracesToTransfer(traces []Trace, holder base.Address) (*Transfer, error) {
+	if xfr, err := trans.ConvertToTransfer(holder); err != nil {
 		return nil, err
 
 	} else {
@@ -143,7 +143,7 @@ func (t *Trace) updateTransfer(xfr *Transfer) error {
 }
 
 // ------------------------------------------------------------------------------------------
-func (s *Receipt) FetchTransfers(holder base.Address, assetFilters []base.Address, appFilter *AppearanceFilter) ([]*Transfer, error) {
+func (s *Receipt) ConvertToTranfers(holder base.Address, assetFilters []base.Address, appFilter *AppearanceFilter) ([]*Transfer, error) {
 	xfrs := make([]*Transfer, 0, 20)
 
 	for _, log := range s.Logs {
@@ -151,7 +151,7 @@ func (s *Receipt) FetchTransfers(holder base.Address, assetFilters []base.Addres
 		isOfIterest := IsAssetOfInterest(log.Address, assetFilters)
 		passesFilter := appFilter.ApplyLogFilter(&log, []base.Address{holder})
 		if isTransfer && isOfIterest && passesFilter {
-			if xfr, err := log.fetchTransfer(holder); err != nil {
+			if xfr, err := log.convertToTransfer(holder); err != nil {
 				return nil, err
 
 			} else if xfr == nil {
@@ -167,7 +167,7 @@ func (s *Receipt) FetchTransfers(holder base.Address, assetFilters []base.Addres
 }
 
 // ------------------------------------------------------------------------------------------
-func (log *Log) fetchTransfer(holder base.Address) (*Transfer, error) {
+func (log *Log) convertToTransfer(holder base.Address) (*Transfer, error) {
 	if normalized, err := NormalizeKnownLogs(log); err != nil {
 		return nil, err
 

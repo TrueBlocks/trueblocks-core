@@ -124,7 +124,7 @@ func parseCsv(filePath string) ([]TestCase, error) {
 			}
 
 			isEnabled := rec.Enabled == "on"
-			if len(enableMarks) > 0 {
+			if len(enableMarks) > 0 && enableMarks[0] != "" {
 				isEnabled = false
 				for _, mark := range enableMarks {
 					mark = strings.Trim(mark, " ")
