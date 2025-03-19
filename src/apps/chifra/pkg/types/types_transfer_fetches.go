@@ -8,7 +8,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/topics"
 )
 
-func (trans *Transaction) FetchStatement(asEther bool, asset, holder base.Address) (*Statement, error) {
+func (trans *Transaction) FetchTransfer(asEther bool, asset, holder base.Address) (*Statement, error) {
 	sym := "WEI"
 	if asEther {
 		sym = "ETH"
@@ -64,8 +64,8 @@ func (trans *Transaction) FetchStatement(asEther bool, asset, holder base.Addres
 	return stmt, nil
 }
 
-func (trans *Transaction) FetchStatementFromTraces(traces []Trace, accountedFor base.Address, asEther bool) (*Statement, error) {
-	if stmt, err := trans.FetchStatement(asEther, base.FAKE_ETH_ADDRESS, accountedFor); err != nil {
+func (trans *Transaction) FetchTransferTraces(traces []Trace, accountedFor base.Address, asEther bool) (*Statement, error) {
+	if stmt, err := trans.FetchTransfer(asEther, base.FAKE_ETH_ADDRESS, accountedFor); err != nil {
 		return nil, err
 
 	} else {
@@ -147,14 +147,14 @@ func (t *Trace) UpdateStatement(stmt *Statement) error {
 	return nil
 }
 
-func (s *Receipt) FetchStatements(accountedFor base.Address, assetFilters []base.Address, appFilter *AppearanceFilter) ([]Statement, error) {
+func (s *Receipt) FetchTransfers(accountedFor base.Address, assetFilters []base.Address, appFilter *AppearanceFilter) ([]Statement, error) {
 	statements := make([]Statement, 0, 20)
 	for _, log := range s.Logs {
 		isTransfer := log.Topics[0] == topics.TransferTopic
 		isOfIterest := IsAssetOfInterest(log.Address, assetFilters)
 		passesFilter := appFilter.ApplyLogFilter(&log, []base.Address{accountedFor})
 		if isTransfer && isOfIterest && passesFilter {
-			if stmt, err := log.FetchStatement(accountedFor); err != nil {
+			if stmt, err := log.fetchTransfer(accountedFor); err != nil {
 				// TODO: silent fail?
 				continue
 			} else if stmt == nil {
@@ -171,7 +171,7 @@ func (s *Receipt) FetchStatements(accountedFor base.Address, assetFilters []base
 	return statements, nil
 }
 
-func (log *Log) FetchStatement(accountedFor base.Address) (*Statement, error) {
+func (log *Log) fetchTransfer(accountedFor base.Address) (*Statement, error) {
 	if normalized, err := NormalizeKnownLogs(log); err != nil {
 		return nil, err
 	} else if normalized.IsNFT() {

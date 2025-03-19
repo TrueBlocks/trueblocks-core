@@ -43,6 +43,8 @@ type Transfer struct {
 	Sender              base.Address `json:"sender"`
 	TransactionIndex    base.Txnum   `json:"transactionIndex"`
 	// EXISTING_CODE
+	Log         *Log         `json:"log,omitempty"`
+	Transaction *Transaction `json:"transaction,omitempty"`
 	// EXISTING_CODE
 }
 
@@ -106,7 +108,7 @@ func (s *Transfer) Model(chain, format string, verbose bool, extraOpts map[strin
 }
 
 func (s *Transfer) CacheLocations() (string, string, string) {
-	paddedId := fmt.Sprintf("%09d-%05d", s.BlockNumber, s.TransactionIndex)
+	paddedId := fmt.Sprintf("%s-%s-%09d-%05d-%05d", s.Holder, s.Asset, s.BlockNumber, s.TransactionIndex, s.LogIndex)
 	parts := make([]string, 3)
 	parts[0] = paddedId[:2]
 	parts[1] = paddedId[2:4]
@@ -421,6 +423,10 @@ func (p *AssetTransfer) Reconciled() (base.Wei, base.Wei, bool, bool) {
 
 	tentativeEqual := checkVal.Equal(calc)
 	return tentativeDiff, checkpointDiff, tentativeEqual, false
+}
+
+func (s *Transfer) IsMaterial() bool {
+	return !s.TotalIn().IsZero() || !s.TotalOut().IsZero()
 }
 
 func (s *Transfer) AmountNet() *base.Wei {

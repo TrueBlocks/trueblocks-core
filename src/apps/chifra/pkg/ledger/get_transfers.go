@@ -7,7 +7,7 @@ import (
 
 // GetTransfers returns a statement from a given transaction
 func (r *Reconciler) GetTransfers(trans *types.Transaction) ([]*types.Transfer, error) {
-	if statements, err := r.getUnreconciledStatements(trans); err != nil {
+	if statements, err := r.getUnreconciledTransfers(trans); err != nil {
 		return nil, err
 	} else {
 		transfers := make([]*types.Transfer, 0, len(statements)*2)

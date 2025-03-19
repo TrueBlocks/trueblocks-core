@@ -225,7 +225,7 @@ var (
 )
 
 func (s *Statement) IsMaterial() bool {
-	return s.TotalIn().Cmp(new(base.Wei)) != 0 || s.TotalOut().Cmp(new(base.Wei)) != 0
+	return !s.TotalIn().IsZero() || !s.TotalOut().IsZero()
 }
 
 func (s *Statement) IsEth() bool {

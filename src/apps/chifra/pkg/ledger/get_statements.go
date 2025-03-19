@@ -36,10 +36,11 @@ func (r *Reconciler) GetStatements(node *types.AppNode[types.Transaction]) ([]ty
 				fail(1)
 				return nil, err
 			} else {
-				if stmt, err := trans.FetchStatementFromTraces(traces, r.Opts.AccountFor, r.Opts.AsEther); err != nil {
+				if xfr, err := trans.FetchTransferTraces(traces, r.Opts.AccountFor, r.Opts.AsEther); err != nil {
 					fail(2)
 					logger.Error(err.Error())
 				} else {
+					stmt := r.ConvertToStatement(xfr, trans)
 					logger.TestLog(true, "Fetched a single statement from traces")
 					if _, err = r.trialBalance("traces", stmt, node, true); err != nil {
 						fail(3)
@@ -57,10 +58,11 @@ func (r *Reconciler) GetStatements(node *types.AppNode[types.Transaction]) ([]ty
 			}
 		} else {
 			logger.TestLog(true, fmt.Sprintf("Attempting to reconcile at top level: %s-%s", base.FAKE_ETH_ADDRESS.Hex(), r.Opts.AccountFor.Hex()))
-			if stmt, err := trans.FetchStatement(r.Opts.AsEther, base.FAKE_ETH_ADDRESS, r.Opts.AccountFor); err != nil {
+			if xfr, err := trans.FetchTransfer(r.Opts.AsEther, base.FAKE_ETH_ADDRESS, r.Opts.AccountFor); err != nil {
 				fail(4)
 				return nil, err
 			} else {
+				stmt := r.ConvertToStatement(xfr, trans)
 				if reconciled, err := r.trialBalance("top-level", stmt, node, false); err != nil {
 					fail(5)
 					return nil, err
@@ -79,10 +81,11 @@ func (r *Reconciler) GetStatements(node *types.AppNode[types.Transaction]) ([]ty
 							fail(5)
 							return nil, err
 						} else {
-							if stmt, err := trans.FetchStatementFromTraces(traces, r.Opts.AccountFor, r.Opts.AsEther); err != nil {
+							if xfr, err := trans.FetchTransferTraces(traces, r.Opts.AccountFor, r.Opts.AsEther); err != nil {
 								fail(6)
 								logger.Error(err.Error())
 							} else {
+								stmt := r.ConvertToStatement(xfr, trans)
 								logger.TestLog(true, "Fetched a single statement from traces")
 								if _, err = r.trialBalance("traces", stmt, node, true); err != nil {
 									fail(7)
@@ -110,16 +113,18 @@ func (r *Reconciler) GetStatements(node *types.AppNode[types.Transaction]) ([]ty
 		logger.TestLog(true, "Transaction receipt is nil. No log statements.")
 	} else {
 		logger.TestLog(true, "Extracting statements from logs.")
-		if statements, err := trans.Receipt.FetchStatements(r.Opts.AccountFor, r.Opts.AssetFilters, r.Opts.AppFilters); err != nil {
+		if xfrs, err := trans.Receipt.FetchTransfers(r.Opts.AccountFor, r.Opts.AssetFilters, r.Opts.AppFilters); err != nil {
 			fail(8)
 			return nil, err
+
 		} else {
-			if len(statements) == 0 {
+			if len(xfrs) == 0 {
 				logger.TestLog(true, "There were no statements generated from logs.")
+
 			} else {
-				logger.TestLog(true, len(statements), "statements generated from logs.")
-				for _, s := range statements {
-					stmt := &s
+				logger.TestLog(true, len(xfrs), "statements generated from logs.")
+				for _, xfr := range xfrs {
+					stmt := r.ConvertToStatement(&xfr, trans)
 					stmt.Symbol = stmt.Asset.DefaultSymbol()
 					stmt.Decimals = base.Value(18)
 					if name, found := r.Names[stmt.Asset]; found {

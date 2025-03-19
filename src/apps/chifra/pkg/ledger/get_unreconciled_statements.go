@@ -5,44 +5,53 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
-// getUnreconciledStatements returns a list of statements from a given transaction
-func (r *Reconciler) getUnreconciledStatements(trans *types.Transaction) ([]*types.Statement, error) {
-	var statements []*types.Statement
+// getUnreconciledTransfers returns a list of transfers from a given transaction
+func (r *Reconciler) getUnreconciledTransfers(trans *types.Transaction) ([]*types.Statement, error) {
+	var xfrs []*types.Statement
 	if types.IsAssetOfInterest(base.FAKE_ETH_ADDRESS, r.Opts.AssetFilters) {
-		var stmt *types.Statement
+		var xfr *types.Statement
 		if r.Opts.UseTraces {
 			if traces, err := r.Connection.GetTracesByTransactionHash(trans.Hash.Hex(), trans); err != nil {
 				return nil, err
 			} else {
-				if s, err := trans.FetchStatementFromTraces(traces, r.Opts.AccountFor, r.Opts.AsEther); err != nil {
+				var err error
+				if xfr, err = trans.FetchTransferTraces(traces, r.Opts.AccountFor, r.Opts.AsEther); err != nil {
 					return nil, err
-				} else {
-					stmt = s
 				}
 			}
 		} else {
 			var err error
-			if stmt, err = trans.FetchStatement(r.Opts.AsEther, base.FAKE_ETH_ADDRESS, r.Opts.AccountFor); err != nil {
+			if xfr, err = trans.FetchTransfer(r.Opts.AsEther, base.FAKE_ETH_ADDRESS, r.Opts.AccountFor); err != nil {
 				return nil, err
 			}
 		}
 		// Append only if the statement is material
-		if stmt.IsMaterial() {
-			statements = append(statements, stmt)
+		if xfr.IsMaterial() {
+			xfrs = append(xfrs, xfr)
 		}
 	}
 
 	if trans.Receipt != nil {
-		if receiptStatements, err := trans.Receipt.FetchStatements(r.Opts.AccountFor, r.Opts.AssetFilters, r.Opts.AppFilters); err != nil {
+		if logXfrs, err := trans.Receipt.FetchTransfers(r.Opts.AccountFor, r.Opts.AssetFilters, r.Opts.AppFilters); err != nil {
 			return nil, err
 		} else {
-			for _, stmt := range receiptStatements {
-				if stmt.IsMaterial() {
-					statements = append(statements, &stmt)
+			for _, logXfr := range logXfrs {
+				if logXfr.IsMaterial() {
+					xfrs = append(xfrs, &logXfr)
 				}
 			}
 		}
 	}
 
-	return statements, nil
+	return xfrs, nil
+}
+
+func (r *Reconciler) ConvertToStatement(xfr *types.Statement, trans *types.Transaction) *types.Statement {
+	sym := "WEI"
+	if r.Opts.AsEther {
+		sym = "ETH"
+	}
+	stmt := xfr
+	stmt.Symbol = sym
+	return stmt
 }
