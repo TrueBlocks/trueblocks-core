@@ -63,6 +63,7 @@ type Statement struct {
 	BegSentinel  bool         `json:"-"`
 	EndSentinel  bool         `json:"-"`
 	Transaction  *Transaction `json:"-"`
+	Log          *Log         `json:"-"`
 	// EXISTING_CODE
 }
 

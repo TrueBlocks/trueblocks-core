@@ -36,8 +36,9 @@ func (r *Reconciler) getUnreconciledTransfers(trans *types.Transaction) ([]*type
 			return nil, err
 		} else {
 			for _, logXfr := range logXfrs {
+				logXfr.Transaction = trans
 				if logXfr.IsMaterial() {
-					xfrs = append(xfrs, &logXfr)
+					xfrs = append(xfrs, logXfr)
 				}
 			}
 		}

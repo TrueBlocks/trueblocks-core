@@ -17,6 +17,7 @@ func (trans *Transaction) FetchTransfer(holder base.Address) (*Statement, error)
 
 	xfr := &Statement{
 		Transaction:      trans,
+		Log:              nil,
 		BlockNumber:      trans.BlockNumber,
 		TransactionIndex: trans.TransactionIndex,
 		LogIndex:         0,
@@ -82,7 +83,7 @@ func (trans *Transaction) FetchTransferTraces(traces []Trace, holder base.Addres
 // ------------------------------------------------------------------------------------------
 func (t *Trace) updateTransfer(xfr *Statement) error {
 	// delegate calls are not included in the transaction's gas cost, so we skip them
-	if t.Action.CallType == "delegatecall" && t.Action.To != xfr.AccountedFor {
+	if t.Action.CallType == "delegatecall" && t.Action.To != xfr.Holder {
 		return nil
 	}
 
@@ -91,7 +92,7 @@ func (t *Trace) updateTransfer(xfr *Statement) error {
 	}
 
 	// Do not collapse, more than one of these can be true at the same time
-	if t.Action.From == xfr.AccountedFor {
+	if t.Action.From == xfr.Holder {
 		xfr.InternalOut = plusEq(&xfr.InternalOut, &t.Action.Value)
 		xfr.Sender = t.Action.From
 		if t.Action.To.IsZero() {
@@ -103,13 +104,13 @@ func (t *Trace) updateTransfer(xfr *Statement) error {
 		}
 	}
 
-	if t.Action.To == xfr.AccountedFor {
+	if t.Action.To == xfr.Holder {
 		xfr.InternalIn = plusEq(&xfr.InternalIn, &t.Action.Value)
 		xfr.Sender = t.Action.From
 		xfr.Recipient = t.Action.To
 	}
 
-	if t.Action.SelfDestructed == xfr.AccountedFor {
+	if t.Action.SelfDestructed == xfr.Holder {
 		xfr.SelfDestructOut = plusEq(&xfr.SelfDestructOut, &t.Action.Balance)
 		xfr.Sender = t.Action.SelfDestructed
 		if xfr.Sender.IsZero() {
@@ -118,7 +119,7 @@ func (t *Trace) updateTransfer(xfr *Statement) error {
 		xfr.Recipient = t.Action.RefundAddress
 	}
 
-	if t.Action.RefundAddress == xfr.AccountedFor {
+	if t.Action.RefundAddress == xfr.Holder {
 		xfr.SelfDestructIn = plusEq(&xfr.SelfDestructIn, &t.Action.Balance)
 		xfr.Sender = t.Action.SelfDestructed
 		if xfr.Sender.IsZero() {
@@ -127,7 +128,7 @@ func (t *Trace) updateTransfer(xfr *Statement) error {
 		xfr.Recipient = t.Action.RefundAddress
 	}
 
-	if t.Action.Address == xfr.AccountedFor && !t.Action.RefundAddress.IsZero() {
+	if t.Action.Address == xfr.Holder && !t.Action.RefundAddress.IsZero() {
 		xfr.SelfDestructOut = plusEq(&xfr.SelfDestructOut, &t.Action.Balance)
 		// self destructed send
 		xfr.Sender = t.Action.Address
@@ -135,7 +136,7 @@ func (t *Trace) updateTransfer(xfr *Statement) error {
 	}
 
 	if t.Result != nil {
-		if t.Result.Address == xfr.AccountedFor {
+		if t.Result.Address == xfr.Holder {
 			xfr.InternalIn = plusEq(&xfr.InternalIn, &t.Action.Value)
 			xfr.Sender = t.Action.From
 			xfr.Recipient = t.Result.Address
@@ -146,21 +147,21 @@ func (t *Trace) updateTransfer(xfr *Statement) error {
 }
 
 // ------------------------------------------------------------------------------------------
-func (s *Receipt) FetchTransfers(holder base.Address, assetFilters []base.Address, appFilter *AppearanceFilter) ([]Statement, error) {
-	xfrs := make([]Statement, 0, 20)
+func (s *Receipt) FetchTransfers(holder base.Address, assetFilters []base.Address, appFilter *AppearanceFilter) ([]*Statement, error) {
+	xfrs := make([]*Statement, 0, 20)
 	for _, log := range s.Logs {
 		isTransfer := log.Topics[0] == topics.TransferTopic
 		isOfIterest := IsAssetOfInterest(log.Address, assetFilters)
 		passesFilter := appFilter.ApplyLogFilter(&log, []base.Address{holder})
 		if isTransfer && isOfIterest && passesFilter {
 			if xfr, err := log.fetchTransfer(holder); err != nil {
-				// TODO: silent fail?
-				continue
+				return nil, err
+
 			} else if xfr == nil {
 				continue
 
 			} else {
-				xfrs = append(xfrs, *xfr)
+				xfrs = append(xfrs, xfr)
 			}
 		}
 	}
@@ -201,6 +202,7 @@ func (log *Log) fetchTransfer(holder base.Address) (*Statement, error) {
 		}
 
 		xfr := &Statement{
+			Log:              normalized,
 			BlockNumber:      normalized.BlockNumber,
 			TransactionIndex: normalized.TransactionIndex,
 			LogIndex:         normalized.LogIndex,

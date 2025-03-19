@@ -124,7 +124,7 @@ func (r *Reconciler) GetStatements(node *types.AppNode[types.Transaction]) ([]ty
 			} else {
 				logger.TestLog(true, len(xfrs), "statements generated from logs.")
 				for i, xfr := range xfrs {
-					stmt := r.ConvertToStatement(&xfr, trans)
+					stmt := r.ConvertToStatement(xfr, trans)
 					if i == 0 {
 						stmt.BegSentinel = true
 					}
