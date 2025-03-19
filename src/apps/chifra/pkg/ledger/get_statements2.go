@@ -5,6 +5,7 @@ import (
 )
 
 func (r *Reconciler) GetStatements2(node *types.AppNode[types.Transaction]) ([]types.Statement, error) {
+	_ = node
 	// trans := node.Data()
 	// failfail := func(n int) {
 	// 	logger.TestLog(true, fmt.Sprintf("~failfail %d~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~", n))
