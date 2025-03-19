@@ -3431,22 +3431,84 @@ components:
           type: number
           format: lognum
           description: "the zero-indexed position the log in the block, if applicable"
+        holder:
+          type: string
+          format: address
+          description: "the address of the holder of the asset"
         asset:
           type: string
           format: address
           description: "0xeeee...eeee for ETH transfers, the token address otherwise"
-        holder:
-          type: string
-          format: address
-          description: "the address of the holder of the address"
-        amount:
-          type: string
-          format: int256
-          description: "a positive or negative (or zero) amount of the transfer in asset units"
         decimals:
           type: number
           format: uint64
           description: "the number of decimal places in the asset units"
+        sender:
+          type: string
+          format: address
+          description: "the initiator of the transfer (the sender)"
+        recipient:
+          type: string
+          format: address
+          description: "the receiver of the transfer (the recipient)"
+        amountIn:
+          type: string
+          format: int256
+          description: "the top-level value of the incoming transfer for the holder address"
+        internalIn:
+          type: string
+          format: int256
+          description: "the internal value of the incoming transfer for the holder address"
+        minerBaseRewardIn:
+          type: string
+          format: int256
+          description: "the base fee reward if the miner is the holder address"
+        minerNephewRewardIn:
+          type: string
+          format: int256
+          description: "the nephew reward if the miner is the holder address"
+        minerTxFeeIn:
+          type: string
+          format: int256
+          description: "the transaction fee reward if the miner is the holder address"
+        minerUncleRewardIn:
+          type: string
+          format: int256
+          description: "the uncle reward if the miner who won the uncle block is the holder address"
+        prefundIn:
+          type: string
+          format: int256
+          description: "at block zero (0) only, the amount of genesis income for the holder address"
+        selfDestructIn:
+          type: string
+          format: int256
+          description: "the incoming value of a self-destruct if recipient is the holder address"
+        amountOut:
+          type: string
+          format: int256
+          description: "the amount (in units of the asset) of regular outflow during this transaction"
+        internalOut:
+          type: string
+          format: int256
+          description: "the value of any internal value transfers out of the holder account"
+        gasOut:
+          type: string
+          format: int256
+          description: "if the transaction's original sender is the holder address, the amount of gas expended"
+        selfDestructOut:
+          type: string
+          format: int256
+          description: "the outgoing value of a self-destruct if sender is the holder address"
+        transaction:
+          type: object
+          items:
+            $ref: "#/components/schemas/transaction"
+          description: "the transaction that triggered the transfer (calculated)"
+        log:
+          type: object
+          items:
+            $ref: "#/components/schemas/log"
+          description: "if a token transfer, the log that triggered the transfer (calculated)"
     appearanceTable:
       description: "an appearance table for an address"
       type: object

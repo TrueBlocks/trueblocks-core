@@ -119,7 +119,7 @@ func (opts *ExportOptions) HandleTransfers(rCtx *output.RenderCtx, monitorArray 
 						}
 
 						recon = ledger.NewReconciler(opts.Conn, ledgerOpts)
-						items := make([]types.Transfer, 0, len(thisMap))
+						items := make([]*types.Transfer, 0, len(thisMap))
 						for _, tx := range txArray {
 							if transfers, err := recon.GetTransfers(tx); err != nil {
 								errorChan <- err
@@ -146,7 +146,7 @@ func (opts *ExportOptions) HandleTransfers(rCtx *output.RenderCtx, monitorArray 
 							var passes bool
 							passes, finished = filter.ApplyCountFilter()
 							if passes {
-								modelChan <- &item
+								modelChan <- item
 							}
 							if finished {
 								break

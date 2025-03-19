@@ -229,15 +229,30 @@ The following commands produce and manage Transfers:
 
 Transfers consist of the following fields:
 
-| Field            | Description                                                            | Type    |
-| ---------------- | ---------------------------------------------------------------------- | ------- |
-| blockNumber      | the number of the block                                                | blknum  |
-| transactionIndex | the zero-indexed position of the transaction in the block              | txnum   |
-| logIndex         | the zero-indexed position the log in the block, if applicable          | lognum  |
-| asset            | 0xeeee...eeee for ETH transfers, the token address otherwise           | address |
-| holder           | the address of the holder of the address                               | address |
-| amount           | a positive or negative (or zero) amount of the transfer in asset units | int256  |
-| decimals         | the number of decimal places in the asset units                        | uint64  |
+| Field               | Description                                                                            | Type                                              |
+| ------------------- | -------------------------------------------------------------------------------------- | ------------------------------------------------- |
+| blockNumber         | the number of the block                                                                | blknum                                            |
+| transactionIndex    | the zero-indexed position of the transaction in the block                              | txnum                                             |
+| logIndex            | the zero-indexed position the log in the block, if applicable                          | lognum                                            |
+| holder              | the address of the holder of the asset                                                 | address                                           |
+| asset               | 0xeeee...eeee for ETH transfers, the token address otherwise                           | address                                           |
+| decimals            | the number of decimal places in the asset units                                        | uint64                                            |
+| sender              | the initiator of the transfer (the sender)                                             | address                                           |
+| recipient           | the receiver of the transfer (the recipient)                                           | address                                           |
+| amountIn            | the top-level value of the incoming transfer for the holder address                    | int256                                            |
+| internalIn          | the internal value of the incoming transfer for the holder address                     | int256                                            |
+| minerBaseRewardIn   | the base fee reward if the miner is the holder address                                 | int256                                            |
+| minerNephewRewardIn | the nephew reward if the miner is the holder address                                   | int256                                            |
+| minerTxFeeIn        | the transaction fee reward if the miner is the holder address                          | int256                                            |
+| minerUncleRewardIn  | the uncle reward if the miner who won the uncle block is the holder address            | int256                                            |
+| prefundIn           | at block zero (0) only, the amount of genesis income for the holder address            | int256                                            |
+| selfDestructIn      | the incoming value of a self-destruct if recipient is the holder address               | int256                                            |
+| amountOut           | the amount (in units of the asset) of regular outflow during this transaction          | int256                                            |
+| internalOut         | the value of any internal value transfers out of the holder account                    | int256                                            |
+| gasOut              | if the transaction's original sender is the holder address, the amount of gas expended | int256                                            |
+| selfDestructOut     | the outgoing value of a self-destruct if sender is the holder address                  | int256                                            |
+| transaction         | the transaction that triggered the transfer (calculated)                               | [Transaction](/data-model/chaindata/#transaction) |
+| log                 | if a token transfer, the log that triggered the transfer (calculated)                  | [Log](/data-model/chaindata/#log)                 |
 
 ## AppearanceTable
 

@@ -22,13 +22,26 @@ import (
 // EXISTING_CODE
 
 type Transfer struct {
-	Amount           base.Wei     `json:"amount"`
-	Asset            base.Address `json:"asset"`
-	BlockNumber      base.Blknum  `json:"blockNumber"`
-	Decimals         uint64       `json:"decimals"`
-	Holder           base.Address `json:"holder"`
-	LogIndex         base.Lognum  `json:"logIndex"`
-	TransactionIndex base.Txnum   `json:"transactionIndex"`
+	AmountIn            base.Wei     `json:"amountIn,omitempty"`
+	AmountOut           base.Wei     `json:"amountOut,omitempty"`
+	Asset               base.Address `json:"asset"`
+	BlockNumber         base.Blknum  `json:"blockNumber"`
+	Decimals            uint64       `json:"decimals"`
+	GasOut              base.Wei     `json:"gasOut,omitempty"`
+	Holder              base.Address `json:"holder"`
+	InternalIn          base.Wei     `json:"internalIn,omitempty"`
+	InternalOut         base.Wei     `json:"internalOut,omitempty"`
+	LogIndex            base.Lognum  `json:"logIndex"`
+	MinerBaseRewardIn   base.Wei     `json:"minerBaseRewardIn,omitempty"`
+	MinerNephewRewardIn base.Wei     `json:"minerNephewRewardIn,omitempty"`
+	MinerTxFeeIn        base.Wei     `json:"minerTxFeeIn,omitempty"`
+	MinerUncleRewardIn  base.Wei     `json:"minerUncleRewardIn,omitempty"`
+	PrefundIn           base.Wei     `json:"prefundIn,omitempty"`
+	Recipient           base.Address `json:"recipient"`
+	SelfDestructIn      base.Wei     `json:"selfDestructIn,omitempty"`
+	SelfDestructOut     base.Wei     `json:"selfDestructOut,omitempty"`
+	Sender              base.Address `json:"sender"`
+	TransactionIndex    base.Txnum   `json:"transactionIndex"`
 	// EXISTING_CODE
 	// EXISTING_CODE
 }
@@ -53,7 +66,7 @@ func (s *Transfer) Model(chain, format string, verbose bool, extraOpts map[strin
 		"logIndex":         s.LogIndex,
 		"asset":            s.Asset,
 		"holder":           s.Holder,
-		"amount":           s.Amount.Text(10),
+		"amount":           s.AmountNet().Text(10),
 	}
 
 	order = []string{
@@ -62,7 +75,7 @@ func (s *Transfer) Model(chain, format string, verbose bool, extraOpts map[strin
 
 	if extraOpts["ether"] == true {
 		decimals := int(s.Decimals)
-		model["amountEth"] = s.Amount.ToEtherStr(decimals)
+		model["amountEth"] = s.AmountNet().ToEtherStr(decimals)
 		order = append(order, []string{"amountEth"}...)
 	}
 
@@ -92,7 +105,7 @@ func (s *Transfer) Model(chain, format string, verbose bool, extraOpts map[strin
 	}
 }
 
-func (s *TransferGroup) CacheLocations() (string, string, string) {
+func (s *Transfer) CacheLocations() (string, string, string) {
 	paddedId := fmt.Sprintf("%09d-%05d", s.BlockNumber, s.TransactionIndex)
 	parts := make([]string, 3)
 	parts[0] = paddedId[:2]
@@ -103,23 +116,14 @@ func (s *TransferGroup) CacheLocations() (string, string, string) {
 	return directory, paddedId, "bin"
 }
 
-type TransferGroup struct {
-	BlockNumber      base.Blknum
-	TransactionIndex base.Txnum
-	Transfers        []Transfer
-}
-
-func (s *TransferGroup) MarshalCache(writer io.Writer) (err error) {
-	return base.WriteValue(writer, s.Transfers)
-}
-
-func (s *TransferGroup) UnmarshalCache(fileVersion uint64, reader io.Reader) (err error) {
-	return base.ReadValue(reader, &s.Transfers, fileVersion)
-}
-
 func (s *Transfer) MarshalCache(writer io.Writer) (err error) {
-	// Amount
-	if err = base.WriteValue(writer, &s.Amount); err != nil {
+	// AmountIn
+	if err = base.WriteValue(writer, &s.AmountIn); err != nil {
+		return err
+	}
+
+	// AmountOut
+	if err = base.WriteValue(writer, &s.AmountOut); err != nil {
 		return err
 	}
 
@@ -138,13 +142,73 @@ func (s *Transfer) MarshalCache(writer io.Writer) (err error) {
 		return err
 	}
 
+	// GasOut
+	if err = base.WriteValue(writer, &s.GasOut); err != nil {
+		return err
+	}
+
 	// Holder
 	if err = base.WriteValue(writer, s.Holder); err != nil {
 		return err
 	}
 
+	// InternalIn
+	if err = base.WriteValue(writer, &s.InternalIn); err != nil {
+		return err
+	}
+
+	// InternalOut
+	if err = base.WriteValue(writer, &s.InternalOut); err != nil {
+		return err
+	}
+
 	// LogIndex
 	if err = base.WriteValue(writer, s.LogIndex); err != nil {
+		return err
+	}
+
+	// MinerBaseRewardIn
+	if err = base.WriteValue(writer, &s.MinerBaseRewardIn); err != nil {
+		return err
+	}
+
+	// MinerNephewRewardIn
+	if err = base.WriteValue(writer, &s.MinerNephewRewardIn); err != nil {
+		return err
+	}
+
+	// MinerTxFeeIn
+	if err = base.WriteValue(writer, &s.MinerTxFeeIn); err != nil {
+		return err
+	}
+
+	// MinerUncleRewardIn
+	if err = base.WriteValue(writer, &s.MinerUncleRewardIn); err != nil {
+		return err
+	}
+
+	// PrefundIn
+	if err = base.WriteValue(writer, &s.PrefundIn); err != nil {
+		return err
+	}
+
+	// Recipient
+	if err = base.WriteValue(writer, s.Recipient); err != nil {
+		return err
+	}
+
+	// SelfDestructIn
+	if err = base.WriteValue(writer, &s.SelfDestructIn); err != nil {
+		return err
+	}
+
+	// SelfDestructOut
+	if err = base.WriteValue(writer, &s.SelfDestructOut); err != nil {
+		return err
+	}
+
+	// Sender
+	if err = base.WriteValue(writer, s.Sender); err != nil {
 		return err
 	}
 
@@ -161,8 +225,13 @@ func (s *Transfer) UnmarshalCache(fileVersion uint64, reader io.Reader) (err err
 	// EXISTING_CODE
 	// EXISTING_CODE
 
-	// Amount
-	if err = base.ReadValue(reader, &s.Amount, fileVersion); err != nil {
+	// AmountIn
+	if err = base.ReadValue(reader, &s.AmountIn, fileVersion); err != nil {
+		return err
+	}
+
+	// AmountOut
+	if err = base.ReadValue(reader, &s.AmountOut, fileVersion); err != nil {
 		return err
 	}
 
@@ -181,13 +250,73 @@ func (s *Transfer) UnmarshalCache(fileVersion uint64, reader io.Reader) (err err
 		return err
 	}
 
+	// GasOut
+	if err = base.ReadValue(reader, &s.GasOut, fileVersion); err != nil {
+		return err
+	}
+
 	// Holder
 	if err = base.ReadValue(reader, &s.Holder, fileVersion); err != nil {
 		return err
 	}
 
+	// InternalIn
+	if err = base.ReadValue(reader, &s.InternalIn, fileVersion); err != nil {
+		return err
+	}
+
+	// InternalOut
+	if err = base.ReadValue(reader, &s.InternalOut, fileVersion); err != nil {
+		return err
+	}
+
 	// LogIndex
 	if err = base.ReadValue(reader, &s.LogIndex, fileVersion); err != nil {
+		return err
+	}
+
+	// MinerBaseRewardIn
+	if err = base.ReadValue(reader, &s.MinerBaseRewardIn, fileVersion); err != nil {
+		return err
+	}
+
+	// MinerNephewRewardIn
+	if err = base.ReadValue(reader, &s.MinerNephewRewardIn, fileVersion); err != nil {
+		return err
+	}
+
+	// MinerTxFeeIn
+	if err = base.ReadValue(reader, &s.MinerTxFeeIn, fileVersion); err != nil {
+		return err
+	}
+
+	// MinerUncleRewardIn
+	if err = base.ReadValue(reader, &s.MinerUncleRewardIn, fileVersion); err != nil {
+		return err
+	}
+
+	// PrefundIn
+	if err = base.ReadValue(reader, &s.PrefundIn, fileVersion); err != nil {
+		return err
+	}
+
+	// Recipient
+	if err = base.ReadValue(reader, &s.Recipient, fileVersion); err != nil {
+		return err
+	}
+
+	// SelfDestructIn
+	if err = base.ReadValue(reader, &s.SelfDestructIn, fileVersion); err != nil {
+		return err
+	}
+
+	// SelfDestructOut
+	if err = base.ReadValue(reader, &s.SelfDestructOut, fileVersion); err != nil {
+		return err
+	}
+
+	// Sender
+	if err = base.ReadValue(reader, &s.Sender, fileVersion); err != nil {
 		return err
 	}
 
@@ -236,7 +365,7 @@ func (s *AssetTransfer) AmountNet() *base.Wei {
 
 func NewAssetTransfer(t Transfer) AssetTransfer {
 	return AssetTransfer{
-		Amount:           t.Amount,
+		Amount:           *t.AmountNet(),
 		Asset:            t.Asset,
 		BlockNumber:      t.BlockNumber,
 		Holder:           t.Holder,
@@ -292,6 +421,46 @@ func (p *AssetTransfer) Reconciled() (base.Wei, base.Wei, bool, bool) {
 
 	tentativeEqual := checkVal.Equal(calc)
 	return tentativeDiff, checkpointDiff, tentativeEqual, false
+}
+
+func (s *Transfer) AmountNet() *base.Wei {
+	return new(base.Wei).Sub(s.TotalIn(), s.TotalOut())
+}
+
+func (s *Transfer) TotalIn() *base.Wei {
+	vals := []base.Wei{
+		s.AmountIn,
+		s.InternalIn,
+		s.MinerBaseRewardIn,
+		s.MinerNephewRewardIn,
+		s.MinerTxFeeIn,
+		s.MinerUncleRewardIn,
+		s.PrefundIn,
+		s.SelfDestructIn,
+	}
+
+	sum := base.NewWei(0)
+	for _, n := range vals {
+		sum = new(base.Wei).Add(sum, &n)
+	}
+
+	return sum
+}
+
+func (s *Transfer) TotalOut() *base.Wei {
+	vals := []base.Wei{
+		s.AmountOut,
+		s.InternalOut,
+		s.GasOut,
+		s.SelfDestructOut,
+	}
+
+	sum := base.NewWei(0)
+	for _, n := range vals {
+		sum = new(base.Wei).Add(sum, &n)
+	}
+
+	return sum
 }
 
 // EXISTING_CODE

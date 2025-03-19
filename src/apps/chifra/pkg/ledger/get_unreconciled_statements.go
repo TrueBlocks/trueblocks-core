@@ -8,7 +8,7 @@ import (
 // getUnreconciledStatements returns a list of statements from a given transaction
 func (r *Reconciler) getUnreconciledStatements(trans *types.Transaction) ([]*types.Statement, error) {
 	var statements []*types.Statement
-	if types.AssetOfInterest(r.Opts.AssetFilters, base.FAKE_ETH_ADDRESS) {
+	if types.IsAssetOfInterest(base.FAKE_ETH_ADDRESS, r.Opts.AssetFilters) {
 		var stmt *types.Statement
 		if r.Opts.UseTraces {
 			if traces, err := r.Connection.GetTracesByTransactionHash(trans.Hash.Hex(), trans); err != nil {

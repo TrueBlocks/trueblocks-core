@@ -28,7 +28,7 @@ func (r *Reconciler) GetStatements(node *types.AppNode[types.Transaction]) ([]ty
 	debugHeader(node)
 
 	results := make([]types.Statement, 0, 20)
-	if types.AssetOfInterest(r.Opts.AssetFilters, base.FAKE_ETH_ADDRESS) {
+	if types.IsAssetOfInterest(base.FAKE_ETH_ADDRESS, r.Opts.AssetFilters) {
 		logger.TestLog(true, "ETH is of interest")
 		if r.Opts.UseTraces {
 			logger.TestLog(true, "Skipping top-level - going right to traces")

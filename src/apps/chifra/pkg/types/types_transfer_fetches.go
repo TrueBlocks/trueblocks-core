@@ -151,7 +151,7 @@ func (s *Receipt) FetchStatements(accountedFor base.Address, assetFilters []base
 	statements := make([]Statement, 0, 20)
 	for _, log := range s.Logs {
 		isTransfer := log.Topics[0] == topics.TransferTopic
-		isOfIterest := AssetOfInterest(assetFilters, log.Address)
+		isOfIterest := IsAssetOfInterest(log.Address, assetFilters)
 		passesFilter := appFilter.ApplyLogFilter(&log, []base.Address{accountedFor})
 		if isTransfer && isOfIterest && passesFilter {
 			if stmt, err := log.FetchStatement(accountedFor); err != nil {
@@ -216,7 +216,7 @@ func (log *Log) FetchStatement(accountedFor base.Address) (*Statement, error) {
 }
 
 // ---------------------------------------------------------
-func AssetOfInterest(filters []base.Address, needle base.Address) bool {
+func IsAssetOfInterest(needle base.Address, filters []base.Address) bool {
 	if len(filters) == 0 {
 		return true
 	}
