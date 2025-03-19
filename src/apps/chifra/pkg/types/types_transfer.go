@@ -469,4 +469,36 @@ func (s *Transfer) TotalOut() *base.Wei {
 	return sum
 }
 
+func (s *Transfer) ToStatement(trans *Transaction, holder base.Address, sym string) *Statement {
+	return &Statement{
+		Transaction:         trans,
+		Log:                 s.Log,
+		BlockNumber:         s.BlockNumber,
+		TransactionIndex:    s.TransactionIndex,
+		LogIndex:            s.LogIndex,
+		Sender:              s.Sender,
+		Recipient:           s.Recipient,
+		Asset:               s.Asset,
+		Symbol:              sym,
+		Decimals:            base.Value(s.Decimals),
+		Holder:              s.Holder,
+		AmountIn:            s.AmountIn,
+		InternalIn:          s.InternalIn,
+		MinerBaseRewardIn:   s.MinerBaseRewardIn,
+		MinerNephewRewardIn: s.MinerNephewRewardIn,
+		MinerTxFeeIn:        s.MinerTxFeeIn,
+		MinerUncleRewardIn:  s.MinerUncleRewardIn,
+		PrefundIn:           s.PrefundIn,
+		SelfDestructIn:      s.SelfDestructIn,
+		AmountOut:           s.AmountOut,
+		InternalOut:         s.InternalOut,
+		GasOut:              s.GasOut,
+		SelfDestructOut:     s.SelfDestructOut,
+		TransactionHash:     trans.Hash,
+		Timestamp:           trans.Timestamp,
+		AccountedFor:        holder,
+		PriceSource:         "not-priced",
+	}
+}
+
 // EXISTING_CODE

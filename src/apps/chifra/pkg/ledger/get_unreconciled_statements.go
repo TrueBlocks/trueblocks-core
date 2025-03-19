@@ -6,10 +6,10 @@ import (
 )
 
 // getUnreconciledTransfers returns a list of transfers from a given transaction
-func (r *Reconciler) getUnreconciledTransfers(trans *types.Transaction) ([]*types.Statement, error) {
-	var xfrs []*types.Statement
+func (r *Reconciler) getUnreconciledTransfers(trans *types.Transaction) ([]*types.Transfer, error) {
+	var xfrs []*types.Transfer
 	if types.IsAssetOfInterest(base.FAKE_ETH_ADDRESS, r.Opts.AssetFilters) {
-		var xfr *types.Statement
+		var xfr *types.Transfer
 		if r.Opts.UseTraces {
 			if traces, err := r.Connection.GetTracesByTransactionHash(trans.Hash.Hex(), trans); err != nil {
 				return nil, err
@@ -47,12 +47,11 @@ func (r *Reconciler) getUnreconciledTransfers(trans *types.Transaction) ([]*type
 	return xfrs, nil
 }
 
-func (r *Reconciler) ConvertToStatement(xfr *types.Statement, trans *types.Transaction) *types.Statement {
+func (r *Reconciler) ConvertToStatement(xfr *types.Transfer, trans *types.Transaction) *types.Statement {
 	sym := "WEI"
 	if r.Opts.AsEther {
 		sym = "ETH"
 	}
-	stmt := xfr
-	stmt.Symbol = sym
+	stmt := xfr.ToStatement(trans, xfr.Holder, sym)
 	return stmt
 }

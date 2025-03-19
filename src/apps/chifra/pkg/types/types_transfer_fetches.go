@@ -9,13 +9,13 @@ import (
 )
 
 // ------------------------------------------------------------------------------------------
-func (trans *Transaction) FetchTransfer(holder base.Address) (*Statement, error) {
+func (trans *Transaction) FetchTransfer(holder base.Address) (*Transfer, error) {
 	to := trans.To
 	if trans.To.IsZero() && trans.Receipt != nil && !trans.Receipt.ContractAddress.IsZero() {
 		to = trans.Receipt.ContractAddress
 	}
 
-	xfr := &Statement{
+	xfr := &Transfer{
 		Transaction:      trans,
 		Log:              nil,
 		BlockNumber:      trans.BlockNumber,
@@ -26,10 +26,6 @@ func (trans *Transaction) FetchTransfer(holder base.Address) (*Statement, error)
 		Holder:           holder,
 		Asset:            base.FAKE_ETH_ADDRESS,
 		Decimals:         18,
-		AccountedFor:     holder,
-		TransactionHash:  trans.Hash,
-		Timestamp:        trans.Timestamp,
-		PriceSource:      "not-priced",
 	}
 
 	isSender, isRecipient := xfr.Sender == holder, xfr.Recipient == holder
@@ -63,7 +59,7 @@ func (trans *Transaction) FetchTransfer(holder base.Address) (*Statement, error)
 }
 
 // ------------------------------------------------------------------------------------------
-func (trans *Transaction) FetchTransferTraces(traces []Trace, holder base.Address) (*Statement, error) {
+func (trans *Transaction) FetchTransferTraces(traces []Trace, holder base.Address) (*Transfer, error) {
 	if xfr, err := trans.FetchTransfer(holder); err != nil {
 		return nil, err
 
@@ -81,7 +77,7 @@ func (trans *Transaction) FetchTransferTraces(traces []Trace, holder base.Addres
 }
 
 // ------------------------------------------------------------------------------------------
-func (t *Trace) updateTransfer(xfr *Statement) error {
+func (t *Trace) updateTransfer(xfr *Transfer) error {
 	// delegate calls are not included in the transaction's gas cost, so we skip them
 	if t.Action.CallType == "delegatecall" && t.Action.To != xfr.Holder {
 		return nil
@@ -147,8 +143,9 @@ func (t *Trace) updateTransfer(xfr *Statement) error {
 }
 
 // ------------------------------------------------------------------------------------------
-func (s *Receipt) FetchTransfers(holder base.Address, assetFilters []base.Address, appFilter *AppearanceFilter) ([]*Statement, error) {
-	xfrs := make([]*Statement, 0, 20)
+func (s *Receipt) FetchTransfers(holder base.Address, assetFilters []base.Address, appFilter *AppearanceFilter) ([]*Transfer, error) {
+	xfrs := make([]*Transfer, 0, 20)
+
 	for _, log := range s.Logs {
 		isTransfer := log.Topics[0] == topics.TransferTopic
 		isOfIterest := IsAssetOfInterest(log.Address, assetFilters)
@@ -170,7 +167,7 @@ func (s *Receipt) FetchTransfers(holder base.Address, assetFilters []base.Addres
 }
 
 // ------------------------------------------------------------------------------------------
-func (log *Log) fetchTransfer(holder base.Address) (*Statement, error) {
+func (log *Log) fetchTransfer(holder base.Address) (*Transfer, error) {
 	if normalized, err := NormalizeKnownLogs(log); err != nil {
 		return nil, err
 
@@ -201,7 +198,7 @@ func (log *Log) fetchTransfer(holder base.Address) (*Statement, error) {
 			amountIn = *amount
 		}
 
-		xfr := &Statement{
+		xfr := &Transfer{
 			Log:              normalized,
 			BlockNumber:      normalized.BlockNumber,
 			TransactionIndex: normalized.TransactionIndex,
@@ -213,10 +210,6 @@ func (log *Log) fetchTransfer(holder base.Address) (*Statement, error) {
 			AmountIn:         amountIn,
 			AmountOut:        amountOut,
 			Decimals:         18,
-			AccountedFor:     holder,
-			TransactionHash:  normalized.TransactionHash,
-			Timestamp:        normalized.Timestamp,
-			PriceSource:      "not-priced",
 		}
 		return xfr, nil
 	}
