@@ -36,7 +36,7 @@ func (r *Reconciler) GetStatements(node *types.AppNode[types.Transaction]) ([]ty
 				fail(1)
 				return nil, err
 			} else {
-				if xfr, err := trans.FetchTransferTraces(traces, r.Opts.AccountFor, r.Opts.AsEther); err != nil {
+				if xfr, err := trans.FetchTransferTraces(traces, r.Opts.AccountFor); err != nil {
 					fail(2)
 					logger.Error(err.Error())
 				} else {
@@ -58,7 +58,7 @@ func (r *Reconciler) GetStatements(node *types.AppNode[types.Transaction]) ([]ty
 			}
 		} else {
 			logger.TestLog(true, fmt.Sprintf("Attempting to reconcile at top level: %s-%s", base.FAKE_ETH_ADDRESS.Hex(), r.Opts.AccountFor.Hex()))
-			if xfr, err := trans.FetchTransfer(r.Opts.AsEther, base.FAKE_ETH_ADDRESS, r.Opts.AccountFor); err != nil {
+			if xfr, err := trans.FetchTransfer(r.Opts.AccountFor); err != nil {
 				fail(4)
 				return nil, err
 			} else {
@@ -81,7 +81,7 @@ func (r *Reconciler) GetStatements(node *types.AppNode[types.Transaction]) ([]ty
 							fail(5)
 							return nil, err
 						} else {
-							if xfr, err := trans.FetchTransferTraces(traces, r.Opts.AccountFor, r.Opts.AsEther); err != nil {
+							if xfr, err := trans.FetchTransferTraces(traces, r.Opts.AccountFor); err != nil {
 								fail(6)
 								logger.Error(err.Error())
 							} else {
@@ -123,8 +123,14 @@ func (r *Reconciler) GetStatements(node *types.AppNode[types.Transaction]) ([]ty
 
 			} else {
 				logger.TestLog(true, len(xfrs), "statements generated from logs.")
-				for _, xfr := range xfrs {
+				for i, xfr := range xfrs {
 					stmt := r.ConvertToStatement(&xfr, trans)
+					if i == 0 {
+						stmt.BegSentinel = true
+					}
+					if i == len(xfrs)-1 {
+						stmt.EndSentinel = true
+					}
 					stmt.Symbol = stmt.Asset.DefaultSymbol()
 					stmt.Decimals = base.Value(18)
 					if name, found := r.Names[stmt.Asset]; found {

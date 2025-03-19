@@ -15,13 +15,13 @@ func (r *Reconciler) getUnreconciledTransfers(trans *types.Transaction) ([]*type
 				return nil, err
 			} else {
 				var err error
-				if xfr, err = trans.FetchTransferTraces(traces, r.Opts.AccountFor, r.Opts.AsEther); err != nil {
+				if xfr, err = trans.FetchTransferTraces(traces, r.Opts.AccountFor); err != nil {
 					return nil, err
 				}
 			}
 		} else {
 			var err error
-			if xfr, err = trans.FetchTransfer(r.Opts.AsEther, base.FAKE_ETH_ADDRESS, r.Opts.AccountFor); err != nil {
+			if xfr, err = trans.FetchTransfer(r.Opts.AccountFor); err != nil {
 				return nil, err
 			}
 		}

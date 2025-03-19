@@ -9,28 +9,25 @@ import (
 )
 
 // ------------------------------------------------------------------------------------------
-func (trans *Transaction) FetchTransfer(asEther bool, asset, holder base.Address) (*Statement, error) {
-	sym := "WEI"
-	if asEther {
-		sym = "ETH"
-	}
+func (trans *Transaction) FetchTransfer(holder base.Address) (*Statement, error) {
 	to := trans.To
 	if trans.To.IsZero() && trans.Receipt != nil && !trans.Receipt.ContractAddress.IsZero() {
 		to = trans.Receipt.ContractAddress
 	}
 
 	xfr := &Statement{
-		AccountedFor:     holder,
-		Holder:           holder,
-		Asset:            asset,
-		Symbol:           sym,
-		Decimals:         18,
+		Transaction:      trans,
 		BlockNumber:      trans.BlockNumber,
 		TransactionIndex: trans.TransactionIndex,
+		LogIndex:         0,
+		Recipient:        to,
+		Sender:           trans.From,
+		Holder:           holder,
+		Asset:            base.FAKE_ETH_ADDRESS,
+		Decimals:         18,
+		AccountedFor:     holder,
 		TransactionHash:  trans.Hash,
 		Timestamp:        trans.Timestamp,
-		Sender:           trans.From,
-		Recipient:        to,
 		PriceSource:      "not-priced",
 	}
 
@@ -65,8 +62,8 @@ func (trans *Transaction) FetchTransfer(asEther bool, asset, holder base.Address
 }
 
 // ------------------------------------------------------------------------------------------
-func (trans *Transaction) FetchTransferTraces(traces []Trace, holder base.Address, asEther bool) (*Statement, error) {
-	if xfr, err := trans.FetchTransfer(asEther, base.FAKE_ETH_ADDRESS, holder); err != nil {
+func (trans *Transaction) FetchTransferTraces(traces []Trace, holder base.Address) (*Statement, error) {
+	if xfr, err := trans.FetchTransfer(holder); err != nil {
 		return nil, err
 
 	} else {
@@ -166,10 +163,6 @@ func (s *Receipt) FetchTransfers(holder base.Address, assetFilters []base.Addres
 				xfrs = append(xfrs, *xfr)
 			}
 		}
-	}
-	if len(xfrs) > 0 {
-		xfrs[0].BegSentinel = true
-		xfrs[len(xfrs)-1].EndSentinel = true
 	}
 
 	return xfrs, nil
