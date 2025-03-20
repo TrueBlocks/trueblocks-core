@@ -11,8 +11,11 @@ Format:  json
     {
       "address": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
       "decimals": 18,
+      "isErc20": true,
       "name": "ETH",
-      "symbol": "ETH"
+      "source": "defipulse.com",
+      "symbol": "ETH",
+      "tags": "50-Ethereum"
     }
   ],
   "meta": {

@@ -5,7 +5,7 @@ export?addrs=0xec3ef464bf821c3b10a18adf9ac7177a628e87cc&accounting&assets&firstB
       "address": "0x5c2c629feefcc07b338e97e39c73d2db33a85548",
       "decimals": 18,
       "name": "0x5c2...548",
-      "symbol": ""
+      "tags": ""
     }
   ],
   "meta": {

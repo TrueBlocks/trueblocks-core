@@ -4,20 +4,31 @@ export?addrs=0x65b0d5e1dc0dee0704f53f660aa865c72e986fc7&accounting&assets&ether&
     {
       "address": "0x9f8f72aa9304c8b593d555f12ef6589cc3a579a2",
       "decimals": 18,
+      "isContract": true,
+      "isErc20": true,
       "name": "Maker",
-      "symbol": "MKR"
+      "source": "Giveth website",
+      "symbol": "MKR",
+      "tags": "50-Tokens:ERC20"
     },
     {
       "address": "0xc713e5e149d5d0715dcd1c156a020976e7e56b88",
       "decimals": 18,
+      "isContract": true,
+      "isErc20": true,
       "name": "Aave interest bearing MKR",
-      "symbol": "aMKR"
+      "source": "On chain",
+      "symbol": "aMKR",
+      "tags": "50-Tokens:ERC20"
     },
     {
       "address": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
       "decimals": 18,
+      "isErc20": true,
       "name": "ETH",
-      "symbol": "ETH"
+      "source": "defipulse.com",
+      "symbol": "ETH",
+      "tags": "50-Ethereum"
     }
   ],
   "meta": {

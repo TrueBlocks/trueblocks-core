@@ -4,14 +4,20 @@ export?addrs=0x868b8fd259abfcfdf9634c343593b34ef359641d&accounting&assets&traces
     {
       "address": "0x0ba45a8b5d5575935b8158a88c631e9f9c95a2e5",
       "decimals": 18,
+      "isContract": true,
       "name": "Tellor Tributes",
-      "symbol": "TRB"
+      "source": "On chain",
+      "symbol": "TRB",
+      "tags": "50-Tokens:ERC20"
     },
     {
       "address": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
       "decimals": 18,
+      "isErc20": true,
       "name": "ETH",
-      "symbol": "ETH"
+      "source": "defipulse.com",
+      "symbol": "ETH",
+      "tags": "50-Ethereum"
     }
   ],
   "meta": {

@@ -11,14 +11,21 @@ TEST[DATE|TIME] Format:  json
     {
       "address": "0x6b175474e89094c44da98b954eedeac495271d0f",
       "decimals": 18,
+      "isContract": true,
+      "isErc20": true,
       "name": "Dai Stablecoin",
-      "symbol": "DAI"
+      "source": "Giveth website",
+      "symbol": "DAI",
+      "tags": "50-Tokens:ERC20"
     },
     {
       "address": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
       "decimals": 18,
+      "isErc20": true,
       "name": "ETH",
-      "symbol": "ETH"
+      "source": "defipulse.com",
+      "symbol": "ETH",
+      "tags": "50-Ethereum"
     }
   ]
 }

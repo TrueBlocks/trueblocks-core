@@ -8,4 +8,4 @@
     produced_by = "export"
     contains = ""
     cache_type = "cacheable"
-    cache_by = "transfer"
+    cache_by = "tx"

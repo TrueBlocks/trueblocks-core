@@ -4,8 +4,12 @@ export?addrs=trueblocks.eth&accounting&assets&firstBlock=8876230&lastBlock=90241
     {
       "address": "0xd53b50a6213ee7ff2fcc41a7cf69d22ded0a43b3",
       "decimals": 18,
+      "isContract": true,
+      "isErc20": true,
       "name": "CommonsStackToken",
-      "symbol": "CSTK"
+      "source": "On chain",
+      "symbol": "CSTK",
+      "tags": "50-Tokens:ERC20"
     }
   ],
   "meta": {

@@ -17,7 +17,7 @@ Results in ./assets_token_ibt_out.file
       "address": "0x5c2c629feefcc07b338e97e39c73d2db33a85548",
       "decimals": 18,
       "name": "0x5c2...548",
-      "symbol": ""
+      "tags": ""
     }
   ]
 }

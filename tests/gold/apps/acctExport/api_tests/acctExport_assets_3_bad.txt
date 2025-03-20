@@ -4,8 +4,11 @@ export?addrs=0x08166f02313feae18bb044e7877c808b55b5bf58&assets&lastBlock=4000000
     {
       "address": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
       "decimals": 18,
+      "isErc20": true,
       "name": "ETH",
-      "symbol": "ETH"
+      "source": "defipulse.com",
+      "symbol": "ETH",
+      "tags": "50-Ethereum"
     }
   ],
   "meta": {

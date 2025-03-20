@@ -174,7 +174,9 @@ func (opts *ExportOptions) HandleAssets(rCtx *output.RenderCtx, monitorArray []m
 	}
 
 	extraOpts := map[string]any{
-		"single": "asset",
+		"articulate": opts.Articulate,
+		"export":     true,
+		"loadNames":  true,
 	}
 
 	return output.StreamMany(rCtx, fetchData, opts.Globals.OutputOptsWithExtra(extraOpts))

@@ -14,38 +14,61 @@ Format:  json
     {
       "address": "0x6b175474e89094c44da98b954eedeac495271d0f",
       "decimals": 18,
+      "isContract": true,
+      "isErc20": true,
       "name": "Dai Stablecoin",
-      "symbol": "DAI"
+      "source": "Giveth website",
+      "symbol": "DAI",
+      "tags": "50-Tokens:ERC20"
     },
     {
       "address": "0x8619c9194bf7212bcab69b8d58ad6ab872decd5c",
       "decimals": 18,
+      "isContract": true,
+      "isErc20": true,
       "name": "betbeb",
-      "symbol": "BEB"
+      "source": "On chain",
+      "symbol": "BEB",
+      "tags": "50-Tokens:ERC20"
     },
     {
       "address": "0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359",
       "decimals": 18,
+      "isContract": true,
+      "isErc20": true,
       "name": "Dai Stablecoin v1.0",
-      "symbol": "DAI"
+      "source": "On chain",
+      "symbol": "DAI",
+      "tags": "50-Tokens:ERC20"
     },
     {
       "address": "0xc12d1c73ee7dc3615ba4e37e4abfdbddfa38907e",
       "decimals": 8,
+      "isContract": true,
+      "isErc20": true,
       "name": "KickToken",
-      "symbol": "KICK"
+      "source": "On chain",
+      "symbol": "KICK",
+      "tags": "50-Tokens:ERC20"
     },
     {
       "address": "0xd53b50a6213ee7ff2fcc41a7cf69d22ded0a43b3",
       "decimals": 18,
+      "isContract": true,
+      "isErc20": true,
       "name": "CommonsStackToken",
-      "symbol": "CSTK"
+      "source": "On chain",
+      "symbol": "CSTK",
+      "tags": "50-Tokens:ERC20"
     },
     {
       "address": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
       "decimals": 18,
+      "isErc20": true,
       "name": "ETH",
-      "symbol": "ETH"
+      "source": "defipulse.com",
+      "symbol": "ETH",
+      "tags": "50-Ethereum"
     }
   ],
   "meta": {
