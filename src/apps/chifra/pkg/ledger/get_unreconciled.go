@@ -15,13 +15,13 @@ func (r *Reconciler) getUnreconciledTransfers(trans *types.Transaction) ([]*type
 				return nil, nil, err
 			} else {
 				var err error
-				if xfr, err = trans.ConvertTracesToTransfer(traces, r.Opts.AccountFor); err != nil {
+				if xfr, err = trans.TracesToTransfer(traces, r.Opts.AccountFor); err != nil {
 					return nil, nil, err
 				}
 			}
 		} else {
 			var err error
-			if xfr, err = trans.ConvertToTransfer(r.Opts.AccountFor); err != nil {
+			if xfr, err = trans.ToTransfer(r.Opts.AccountFor); err != nil {
 				return nil, nil, err
 			}
 		}
@@ -32,7 +32,7 @@ func (r *Reconciler) getUnreconciledTransfers(trans *types.Transaction) ([]*type
 	}
 
 	if trans.Receipt != nil {
-		if logXfrs, err := trans.Receipt.ConvertToTranfers(r.Opts.AccountFor, r.Opts.AssetFilters, r.Opts.AppFilters); err != nil {
+		if logXfrs, err := trans.Receipt.ToTranfers(r.Opts.AccountFor, r.Opts.AssetFilters, r.Opts.AppFilters); err != nil {
 			return nil, nil, err
 		} else {
 			for _, logXfr := range logXfrs {
@@ -45,8 +45,4 @@ func (r *Reconciler) getUnreconciledTransfers(trans *types.Transaction) ([]*type
 	}
 
 	return ethTransfers, tokenTransfers, nil
-}
-
-func (r *Reconciler) ConvertToStatement(xfr *types.Transfer, trans *types.Transaction) *types.Statement {
-	return xfr.ToStatement(trans, r.Opts.AsEther)
 }

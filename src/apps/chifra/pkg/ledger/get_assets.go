@@ -3,13 +3,10 @@ package ledger
 import (
 	"sort"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
 func (r *Reconciler) GetAssets(txs []*types.Transaction) ([]*types.Name, bool, error) {
-	assetMap := make(map[base.Address]types.Name)
-
 	ethTransfers, tokenTransfers, err := r.getTransfersInternal(txs)
 	if err != nil {
 		return nil, false, err
@@ -24,22 +21,22 @@ func (r *Reconciler) GetAssets(txs []*types.Transaction) ([]*types.Name, bool, e
 	})
 
 	finished := false
-	slice := make([]*types.Name, 0, len(assetMap))
+	newAssets := make([]*types.Name, 0, 50)
 	for _, item := range transfers {
 		var passes bool
 		passes, finished = r.Opts.AppFilters.ApplyCountFilter()
 		if passes {
-			if _, ok := assetMap[item.Asset]; !ok {
-				if name, ok := r.Names[item.Asset]; !ok {
+			if _, ok := r.AssetMap[item.Asset]; !ok {
+				var name types.Name
+				if name, ok = r.Names[item.Asset]; !ok {
 					name = types.Name{
 						Address:  item.Asset,
 						Name:     item.Asset.Display(3, 3),
 						Decimals: 18,
 					}
-					assetMap[item.Asset] = name
-				} else {
-					assetMap[item.Asset] = name
 				}
+				r.AssetMap[item.Asset] = &name
+				newAssets = append(newAssets, &name)
 			}
 		}
 		if finished {
@@ -47,15 +44,12 @@ func (r *Reconciler) GetAssets(txs []*types.Transaction) ([]*types.Name, bool, e
 		}
 	}
 
-	for _, name := range assetMap {
-		slice = append(slice, &name)
-	}
-	sort.Slice(slice, func(i, j int) bool {
+	sort.Slice(newAssets, func(i, j int) bool {
 		if r.Opts.Reversed {
 			i, j = j, i
 		}
-		return slice[i].Address.LessThan(slice[j].Address)
+		return newAssets[i].Address.LessThan(newAssets[j].Address)
 	})
 
-	return slice, finished, nil
+	return newAssets, finished, nil
 }

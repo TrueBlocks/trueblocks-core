@@ -31,9 +31,20 @@ func (opts *ExportOptions) HandleTransfers(rCtx *output.RenderCtx, monitorArray 
 		assetFilters = append(assetFilters, base.HexToAddress(asset))
 	}
 
-	var recon *ledger.Reconciler
 	fetchData := func(modelChan chan types.Modeler, errorChan chan error) {
 		for _, mon := range monitorArray {
+			ledgerOpts := &ledger.ReconcilerOptions{
+				AccountFor:   mon.Address,
+				FirstBlock:   opts.FirstBlock,
+				LastBlock:    opts.LastBlock,
+				AsEther:      opts.Globals.Ether,
+				UseTraces:    opts.Traces,
+				Reversed:     opts.Reversed,
+				AssetFilters: assetFilters,
+				AppFilters:   filter,
+			}
+			recon := ledger.NewReconciler(opts.Conn, ledgerOpts)
+
 			if apps, cnt, err := mon.ReadAndFilterAppearances(filter, false /* withCount */); err != nil {
 				errorChan <- err
 				rCtx.Cancel()
@@ -110,18 +121,6 @@ func (opts *ExportOptions) HandleTransfers(rCtx *output.RenderCtx, monitorArray 
 							return txArray[i].BlockNumber < txArray[j].BlockNumber
 						})
 
-						ledgerOpts := &ledger.ReconcilerOptions{
-							AccountFor:   mon.Address,
-							FirstBlock:   opts.FirstBlock,
-							LastBlock:    opts.LastBlock,
-							AsEther:      opts.Globals.Ether,
-							UseTraces:    opts.Traces,
-							Reversed:     opts.Reversed,
-							AssetFilters: assetFilters,
-							AppFilters:   filter,
-						}
-
-						recon = ledger.NewReconciler(opts.Conn, ledgerOpts)
 						items, done, err := recon.GetTransfers(txArray)
 						if err != nil {
 							errorChan <- err
