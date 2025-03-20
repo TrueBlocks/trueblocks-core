@@ -469,7 +469,11 @@ func (s *Transfer) TotalOut() *base.Wei {
 	return sum
 }
 
-func (s *Transfer) ToStatement(trans *Transaction, holder base.Address, sym string) *Statement {
+func (s *Transfer) ToStatement(trans *Transaction, asEther bool) *Statement {
+	sym := "WEI"
+	if asEther {
+		sym = "ETH"
+	}
 	return &Statement{
 		Transaction:         trans,
 		Log:                 s.Log,
@@ -478,6 +482,7 @@ func (s *Transfer) ToStatement(trans *Transaction, holder base.Address, sym stri
 		LogIndex:            s.LogIndex,
 		Sender:              s.Sender,
 		Recipient:           s.Recipient,
+		AccountedFor:        s.Holder,
 		Asset:               s.Asset,
 		Symbol:              sym,
 		Decimals:            base.Value(s.Decimals),
@@ -496,7 +501,6 @@ func (s *Transfer) ToStatement(trans *Transaction, holder base.Address, sym stri
 		SelfDestructOut:     s.SelfDestructOut,
 		TransactionHash:     trans.Hash,
 		Timestamp:           trans.Timestamp,
-		AccountedFor:        holder,
 		PriceSource:         "not-priced",
 	}
 }

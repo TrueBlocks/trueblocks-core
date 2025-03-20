@@ -64,11 +64,15 @@ func (trans *Transaction) ConvertTracesToTransfer(traces []Trace, holder base.Ad
 		return nil, err
 
 	} else {
+		wasModified := false
 		for i, trace := range traces {
 			// skip over the first trace, we've already gotten its values from the transaction
 			if i > 0 {
-				if err := trace.updateTransfer(xfr); err != nil {
+				if modified, err := trace.updateTransfer(xfr); err != nil {
 					return nil, err
+				} else {
+					wasModified = wasModified || modified
+					// logger.TestLog(modified, fmt.Sprintf("tx: %d.%d trace: %d of %d modifed transfer", trans.BlockNumber, trans.TransactionIndex, i, len(traces)))
 				}
 			}
 		}
@@ -77,10 +81,12 @@ func (trans *Transaction) ConvertTracesToTransfer(traces []Trace, holder base.Ad
 }
 
 // ------------------------------------------------------------------------------------------
-func (t *Trace) updateTransfer(xfr *Transfer) error {
+func (t *Trace) updateTransfer(xfr *Transfer) (bool, error) {
+	modified := false
+
 	// delegate calls are not included in the transaction's gas cost, so we skip them
 	if t.Action.CallType == "delegatecall" && t.Action.To != xfr.Holder {
-		return nil
+		return modified, nil
 	}
 
 	plusEq := func(a1, a2 *base.Wei) base.Wei {
@@ -98,12 +104,14 @@ func (t *Trace) updateTransfer(xfr *Transfer) error {
 		} else {
 			xfr.Recipient = t.Action.To
 		}
+		modified = true
 	}
 
 	if t.Action.To == xfr.Holder {
 		xfr.InternalIn = plusEq(&xfr.InternalIn, &t.Action.Value)
 		xfr.Sender = t.Action.From
 		xfr.Recipient = t.Action.To
+		modified = true
 	}
 
 	if t.Action.SelfDestructed == xfr.Holder {
@@ -113,6 +121,7 @@ func (t *Trace) updateTransfer(xfr *Transfer) error {
 			xfr.Sender = t.Action.Address
 		}
 		xfr.Recipient = t.Action.RefundAddress
+		modified = true
 	}
 
 	if t.Action.RefundAddress == xfr.Holder {
@@ -122,13 +131,14 @@ func (t *Trace) updateTransfer(xfr *Transfer) error {
 			xfr.Sender = t.Action.Address
 		}
 		xfr.Recipient = t.Action.RefundAddress
+		modified = true
 	}
 
 	if t.Action.Address == xfr.Holder && !t.Action.RefundAddress.IsZero() {
 		xfr.SelfDestructOut = plusEq(&xfr.SelfDestructOut, &t.Action.Balance)
-		// self destructed send
 		xfr.Sender = t.Action.Address
 		xfr.Recipient = t.Action.RefundAddress
+		modified = true
 	}
 
 	if t.Result != nil {
@@ -136,10 +146,11 @@ func (t *Trace) updateTransfer(xfr *Transfer) error {
 			xfr.InternalIn = plusEq(&xfr.InternalIn, &t.Action.Value)
 			xfr.Sender = t.Action.From
 			xfr.Recipient = t.Result.Address
+			modified = true
 		}
 	}
 
-	return nil
+	return modified, nil
 }
 
 // ------------------------------------------------------------------------------------------

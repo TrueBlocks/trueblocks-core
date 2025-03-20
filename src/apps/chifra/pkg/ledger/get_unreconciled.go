@@ -48,10 +48,5 @@ func (r *Reconciler) getUnreconciledTransfers(trans *types.Transaction) ([]*type
 }
 
 func (r *Reconciler) ConvertToStatement(xfr *types.Transfer, trans *types.Transaction) *types.Statement {
-	sym := "WEI"
-	if r.Opts.AsEther {
-		sym = "ETH"
-	}
-	stmt := xfr.ToStatement(trans, xfr.Holder, sym)
-	return stmt
+	return xfr.ToStatement(trans, r.Opts.AsEther)
 }
