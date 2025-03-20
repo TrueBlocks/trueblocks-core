@@ -54,13 +54,13 @@ func (r *Running) Amount() *base.Wei {
 }
 
 type Reconciler struct {
-	Connection     *rpc.Connection              `json:"-"`
-	Opts           *ReconcilerOptions           `json:"opts"`
-	Names          map[base.Address]types.Name  `json:"-"`
-	ShowDebugging  bool                         `json:"showDebugging"`
-	RemoveAirdrops bool                         `json:"removeAirdrops"`
-	Running        map[AssetHolder]Running      `json:"running"`
-	AssetMap       map[base.Address]*types.Name `json:"assetMap"`
+	Connection     *rpc.Connection             `json:"-"`
+	Opts           *ReconcilerOptions          `json:"opts"`
+	ShowDebugging  bool                        `json:"showDebugging"`
+	RemoveAirdrops bool                        `json:"removeAirdrops"`
+	Running        map[AssetHolder]Running     `json:"running"`
+	AssetMap       map[AssetHolder]*types.Name `json:"assetMap"`
+	Names          map[base.Address]types.Name `json:"-"`
 }
 
 func (r *Reconciler) String() string {
@@ -78,7 +78,7 @@ func NewReconciler(conn *rpc.Connection, opts *ReconcilerOptions) *Reconciler {
 		ShowDebugging:  true,
 		RemoveAirdrops: true,
 		Running:        make(map[AssetHolder]Running),
-		AssetMap:       make(map[base.Address]*types.Name),
+		AssetMap:       make(map[AssetHolder]*types.Name),
 	}
 	return r
 }

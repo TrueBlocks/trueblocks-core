@@ -26,7 +26,8 @@ func (r *Reconciler) GetAssets(txs []*types.Transaction) ([]*types.Name, bool, e
 		var passes bool
 		passes, finished = r.Opts.AppFilters.ApplyCountFilter()
 		if passes {
-			if _, ok := r.AssetMap[item.Asset]; !ok {
+			key := NewAssetHolderKey(item.Asset, r.Opts.AccountFor)
+			if _, ok := r.AssetMap[key]; !ok {
 				var name types.Name
 				if name, ok = r.Names[item.Asset]; !ok {
 					name = types.Name{
@@ -35,7 +36,7 @@ func (r *Reconciler) GetAssets(txs []*types.Transaction) ([]*types.Name, bool, e
 						Decimals: 18,
 					}
 				}
-				r.AssetMap[item.Asset] = &name
+				r.AssetMap[key] = &name
 				newAssets = append(newAssets, &name)
 			}
 		}
