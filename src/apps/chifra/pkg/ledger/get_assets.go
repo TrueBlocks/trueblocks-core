@@ -7,27 +7,25 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
-func (r *Reconciler) GetAssets(transactions []*types.Transaction) ([]*types.Name, bool, error) {
+func (r *Reconciler) GetAssets(txs []*types.Transaction) ([]*types.Name, bool, error) {
 	assetMap := make(map[base.Address]types.Name)
-	items := make([]*types.Transfer, 0)
-	for _, tx := range transactions {
-		if transfers, err := r.getUnreconciledTransfers(tx); err != nil {
-			return nil, false, err
-		} else if len(transfers) > 0 {
-			items = append(items, transfers...)
-		}
+
+	ethTransfers, tokenTransfers, err := r.getTransfersInternal(txs)
+	if err != nil {
+		return nil, false, err
 	}
 
-	sort.Slice(items, func(i, j int) bool {
+	transfers := append(ethTransfers, tokenTransfers...)
+	sort.Slice(transfers, func(i, j int) bool {
 		if r.Opts.Reversed {
 			i, j = j, i
 		}
-		return items[i].Asset.LessThan(items[j].Asset)
+		return transfers[i].Asset.LessThan(transfers[j].Asset)
 	})
 
 	finished := false
 	slice := make([]*types.Name, 0, len(assetMap))
-	for _, item := range items {
+	for _, item := range transfers {
 		var passes bool
 		passes, finished = r.Opts.AppFilters.ApplyCountFilter()
 		if passes {

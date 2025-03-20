@@ -15,9 +15,13 @@ Format:  json
 
 ------------------------------------
 ~~~ Entering: 8860513.85 ~~~
-ETH is NOT of interest
-Extracting statements from logs.
-1 statements generated from logs.
+First pass: Fetching unreconciled transfers
+Fetched 1 unreconciled transfers
+Second pass: Reconciling transfers
+Processing 1 log transfers
+Set BegSentinel for first log transfer
+Set EndSentinel for last log transfer
+Converted log transfer to statement for asset: 0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359
 XXX =============[ token ]======================
 XXX Case 1: Only statement in block
 XXX Block: 8860513 Tx: 85 Asset: 0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359
@@ -53,25 +57,30 @@ Trial balance:
    material:            true
    reconciled:          true
 ---------------------------------------------------
-Statement is material - appending. reconciled: true
+Log statement is material - appending. reconciled: true
 ~~~ Leaving: 8860513.85 ~~~
 ------------------------------------ 1 statements generated.
 
 
 ------------------------------------
 ~~~ Entering: 8860529.145 ~~~
-ETH is NOT of interest
-Extracting statements from logs.
-There were no statements generated from logs.
+First pass: Fetching unreconciled transfers
+Fetched 0 unreconciled transfers
+Second pass: Reconciling transfers
+No log transfers to process
 ~~~ Leaving: 8860529.145 ~~~
 ------------------------------------ 0 statements generated.
 
 
 ------------------------------------
 ~~~ Entering: 8860531.152 ~~~
-ETH is NOT of interest
-Extracting statements from logs.
-1 statements generated from logs.
+First pass: Fetching unreconciled transfers
+Fetched 1 unreconciled transfers
+Second pass: Reconciling transfers
+Processing 1 log transfers
+Set BegSentinel for first log transfer
+Set EndSentinel for last log transfer
+Converted log transfer to statement for asset: 0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359
 XXX =============[ token ]======================
 XXX Case 1: Only statement in block
 XXX Block: 8860531 Tx: 152 Asset: 0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359
@@ -107,7 +116,7 @@ Trial balance:
    material:            true
    reconciled:          true
 ---------------------------------------------------
-Statement is material - appending. reconciled: true
+Log statement is material - appending. reconciled: true
 ~~~ Leaving: 8860531.152 ~~~
 ------------------------------------ 1 statements generated.
 

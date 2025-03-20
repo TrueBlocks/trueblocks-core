@@ -14,8 +14,12 @@ Format:  json
 
 ------------------------------------
 ~~~ Entering: 10277780.88 ~~~
-ETH is of interest
-Attempting to reconcile at top level: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-0x04fe1f0c597fbc65700f4fba6f87501edc20e665
+First pass: Fetching unreconciled transfers
+Fetched 2 unreconciled transfers
+Second pass: Reconciling transfers
+Processing ETH transfer
+Converted ETH transfer to statement
+Attempting to reconcile top-level ETH transfer: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-0x04fe1f0c597fbc65700f4fba6f87501edc20e665
 XXX =============[ top-level ]======================
 XXX Case 1: Only statement in block
 XXX Block: 10277780 Tx: 88 Asset: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
@@ -64,9 +68,11 @@ Trial balance:
    material:            true
    reconciled:          true
 ---------------------------------------------------
-Statement is material and reconciled - appending
-Extracting statements from logs.
-1 statements generated from logs.
+Top-level statement is material and reconciled - appending
+Processing 1 log transfers
+Set BegSentinel for first log transfer
+Set EndSentinel for last log transfer
+Converted log transfer to statement for asset: 0xdac17f958d2ee523a2206206994597c13d831ec7
 XXX =============[ token ]======================
 XXX Case 1: Only statement in block
 XXX Block: 10277780 Tx: 88 Asset: 0xdac17f958d2ee523a2206206994597c13d831ec7
@@ -102,7 +108,7 @@ Trial balance:
    material:            true
    reconciled:          true
 ---------------------------------------------------
-Statement is material - appending. reconciled: true
+Log statement is material - appending. reconciled: true
 ~~~ Leaving: 10277780.88 ~~~
 ------------------------------------ 2 statements generated.
 

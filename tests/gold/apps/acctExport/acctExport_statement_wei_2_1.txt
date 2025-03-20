@@ -30,8 +30,12 @@ TEST[DATE|TIME] 19: 4256 99998
 TEST[DATE|TIME] 
 TEST[DATE|TIME] ------------------------------------
 TEST[DATE|TIME] ~~~ Entering: 1.99999 ~~~
-TEST[DATE|TIME] ETH is of interest
-TEST[DATE|TIME] Attempting to reconcile at top level: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-0x05a56e2d52c817161883f50c441c3228cfe54d9f
+TEST[DATE|TIME] First pass: Fetching unreconciled transfers
+TEST[DATE|TIME] Fetched 1 unreconciled transfers
+TEST[DATE|TIME] Second pass: Reconciling transfers
+TEST[DATE|TIME] Processing ETH transfer
+TEST[DATE|TIME] Converted ETH transfer to statement
+TEST[DATE|TIME] Attempting to reconcile top-level ETH transfer: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] XXX =============[ top-level ]======================
 TEST[DATE|TIME] XXX Case 1: Only statement in block
 TEST[DATE|TIME] XXX Block: 1 Tx: 99999 Asset: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
@@ -64,16 +68,20 @@ TEST[DATE|TIME]    minerBaseRewardIn:   5
 TEST[DATE|TIME]    material:            true
 TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
-TEST[DATE|TIME] Statement is material and reconciled - appending
-TEST[DATE|TIME] Transaction receipt is nil. No log statements.
+TEST[DATE|TIME] Top-level statement is material and reconciled - appending
+TEST[DATE|TIME] No log transfers to process
 TEST[DATE|TIME] ~~~ Leaving: 1.99999 ~~~
 TEST[DATE|TIME] ------------------------------------ 1 statements generated.
 TEST[DATE|TIME] 
 TEST[DATE|TIME] 
 TEST[DATE|TIME] ------------------------------------
 TEST[DATE|TIME] ~~~ Entering: 5.99999 ~~~
-TEST[DATE|TIME] ETH is of interest
-TEST[DATE|TIME] Attempting to reconcile at top level: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-0x05a56e2d52c817161883f50c441c3228cfe54d9f
+TEST[DATE|TIME] First pass: Fetching unreconciled transfers
+TEST[DATE|TIME] Fetched 1 unreconciled transfers
+TEST[DATE|TIME] Second pass: Reconciling transfers
+TEST[DATE|TIME] Processing ETH transfer
+TEST[DATE|TIME] Converted ETH transfer to statement
+TEST[DATE|TIME] Attempting to reconcile top-level ETH transfer: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] XXX =============[ top-level ]======================
 TEST[DATE|TIME] XXX Case 1: Only statement in block
 TEST[DATE|TIME] XXX Block: 5 Tx: 99999 Asset: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
@@ -106,16 +114,20 @@ TEST[DATE|TIME]    minerBaseRewardIn:   5
 TEST[DATE|TIME]    material:            true
 TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
-TEST[DATE|TIME] Statement is material and reconciled - appending
-TEST[DATE|TIME] Transaction receipt is nil. No log statements.
+TEST[DATE|TIME] Top-level statement is material and reconciled - appending
+TEST[DATE|TIME] No log transfers to process
 TEST[DATE|TIME] ~~~ Leaving: 5.99999 ~~~
 TEST[DATE|TIME] ------------------------------------ 1 statements generated.
 TEST[DATE|TIME] 
 TEST[DATE|TIME] 
 TEST[DATE|TIME] ------------------------------------
 TEST[DATE|TIME] ~~~ Entering: 56.99998 ~~~
-TEST[DATE|TIME] ETH is of interest
-TEST[DATE|TIME] Attempting to reconcile at top level: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-0x05a56e2d52c817161883f50c441c3228cfe54d9f
+TEST[DATE|TIME] First pass: Fetching unreconciled transfers
+TEST[DATE|TIME] Fetched 1 unreconciled transfers
+TEST[DATE|TIME] Second pass: Reconciling transfers
+TEST[DATE|TIME] Processing ETH transfer
+TEST[DATE|TIME] Converted ETH transfer to statement
+TEST[DATE|TIME] Attempting to reconcile top-level ETH transfer: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] XXX =============[ top-level ]======================
 TEST[DATE|TIME] XXX Case 1: Only statement in block
 TEST[DATE|TIME] XXX Block: 56 Tx: 99998 Asset: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
@@ -148,16 +160,20 @@ TEST[DATE|TIME]    minerUncleRewardIn:  3.75
 TEST[DATE|TIME]    material:            true
 TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
-TEST[DATE|TIME] Statement is material and reconciled - appending
-TEST[DATE|TIME] Transaction receipt is nil. No log statements.
+TEST[DATE|TIME] Top-level statement is material and reconciled - appending
+TEST[DATE|TIME] No log transfers to process
 TEST[DATE|TIME] ~~~ Leaving: 56.99998 ~~~
 TEST[DATE|TIME] ------------------------------------ 1 statements generated.
 TEST[DATE|TIME] 
 TEST[DATE|TIME] 
 TEST[DATE|TIME] ------------------------------------
 TEST[DATE|TIME] ~~~ Entering: 235.99999 ~~~
-TEST[DATE|TIME] ETH is of interest
-TEST[DATE|TIME] Attempting to reconcile at top level: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-0x05a56e2d52c817161883f50c441c3228cfe54d9f
+TEST[DATE|TIME] First pass: Fetching unreconciled transfers
+TEST[DATE|TIME] Fetched 1 unreconciled transfers
+TEST[DATE|TIME] Second pass: Reconciling transfers
+TEST[DATE|TIME] Processing ETH transfer
+TEST[DATE|TIME] Converted ETH transfer to statement
+TEST[DATE|TIME] Attempting to reconcile top-level ETH transfer: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] XXX =============[ top-level ]======================
 TEST[DATE|TIME] XXX Case 1: Only statement in block
 TEST[DATE|TIME] XXX Block: 235 Tx: 99999 Asset: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
@@ -190,16 +206,20 @@ TEST[DATE|TIME]    minerBaseRewardIn:   5
 TEST[DATE|TIME]    material:            true
 TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
-TEST[DATE|TIME] Statement is material and reconciled - appending
-TEST[DATE|TIME] Transaction receipt is nil. No log statements.
+TEST[DATE|TIME] Top-level statement is material and reconciled - appending
+TEST[DATE|TIME] No log transfers to process
 TEST[DATE|TIME] ~~~ Leaving: 235.99999 ~~~
 TEST[DATE|TIME] ------------------------------------ 1 statements generated.
 TEST[DATE|TIME] 
 TEST[DATE|TIME] 
 TEST[DATE|TIME] ------------------------------------
 TEST[DATE|TIME] ~~~ Entering: 247.99998 ~~~
-TEST[DATE|TIME] ETH is of interest
-TEST[DATE|TIME] Attempting to reconcile at top level: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-0x05a56e2d52c817161883f50c441c3228cfe54d9f
+TEST[DATE|TIME] First pass: Fetching unreconciled transfers
+TEST[DATE|TIME] Fetched 1 unreconciled transfers
+TEST[DATE|TIME] Second pass: Reconciling transfers
+TEST[DATE|TIME] Processing ETH transfer
+TEST[DATE|TIME] Converted ETH transfer to statement
+TEST[DATE|TIME] Attempting to reconcile top-level ETH transfer: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] XXX =============[ top-level ]======================
 TEST[DATE|TIME] XXX Case 1: Only statement in block
 TEST[DATE|TIME] XXX Block: 247 Tx: 99998 Asset: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
@@ -232,16 +252,20 @@ TEST[DATE|TIME]    minerUncleRewardIn:  3.125
 TEST[DATE|TIME]    material:            true
 TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
-TEST[DATE|TIME] Statement is material and reconciled - appending
-TEST[DATE|TIME] Transaction receipt is nil. No log statements.
+TEST[DATE|TIME] Top-level statement is material and reconciled - appending
+TEST[DATE|TIME] No log transfers to process
 TEST[DATE|TIME] ~~~ Leaving: 247.99998 ~~~
 TEST[DATE|TIME] ------------------------------------ 1 statements generated.
 TEST[DATE|TIME] 
 TEST[DATE|TIME] 
 TEST[DATE|TIME] ------------------------------------
 TEST[DATE|TIME] ~~~ Entering: 348.99999 ~~~
-TEST[DATE|TIME] ETH is of interest
-TEST[DATE|TIME] Attempting to reconcile at top level: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-0x05a56e2d52c817161883f50c441c3228cfe54d9f
+TEST[DATE|TIME] First pass: Fetching unreconciled transfers
+TEST[DATE|TIME] Fetched 1 unreconciled transfers
+TEST[DATE|TIME] Second pass: Reconciling transfers
+TEST[DATE|TIME] Processing ETH transfer
+TEST[DATE|TIME] Converted ETH transfer to statement
+TEST[DATE|TIME] Attempting to reconcile top-level ETH transfer: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] XXX =============[ top-level ]======================
 TEST[DATE|TIME] XXX Case 1: Only statement in block
 TEST[DATE|TIME] XXX Block: 348 Tx: 99999 Asset: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
@@ -274,16 +298,20 @@ TEST[DATE|TIME]    minerBaseRewardIn:   5
 TEST[DATE|TIME]    material:            true
 TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
-TEST[DATE|TIME] Statement is material and reconciled - appending
-TEST[DATE|TIME] Transaction receipt is nil. No log statements.
+TEST[DATE|TIME] Top-level statement is material and reconciled - appending
+TEST[DATE|TIME] No log transfers to process
 TEST[DATE|TIME] ~~~ Leaving: 348.99999 ~~~
 TEST[DATE|TIME] ------------------------------------ 1 statements generated.
 TEST[DATE|TIME] 
 TEST[DATE|TIME] 
 TEST[DATE|TIME] ------------------------------------
 TEST[DATE|TIME] ~~~ Entering: 500.99998 ~~~
-TEST[DATE|TIME] ETH is of interest
-TEST[DATE|TIME] Attempting to reconcile at top level: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-0x05a56e2d52c817161883f50c441c3228cfe54d9f
+TEST[DATE|TIME] First pass: Fetching unreconciled transfers
+TEST[DATE|TIME] Fetched 1 unreconciled transfers
+TEST[DATE|TIME] Second pass: Reconciling transfers
+TEST[DATE|TIME] Processing ETH transfer
+TEST[DATE|TIME] Converted ETH transfer to statement
+TEST[DATE|TIME] Attempting to reconcile top-level ETH transfer: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] XXX =============[ top-level ]======================
 TEST[DATE|TIME] XXX Case 1: Only statement in block
 TEST[DATE|TIME] XXX Block: 500 Tx: 99998 Asset: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
@@ -316,16 +344,20 @@ TEST[DATE|TIME]    minerUncleRewardIn:  3.75
 TEST[DATE|TIME]    material:            true
 TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
-TEST[DATE|TIME] Statement is material and reconciled - appending
-TEST[DATE|TIME] Transaction receipt is nil. No log statements.
+TEST[DATE|TIME] Top-level statement is material and reconciled - appending
+TEST[DATE|TIME] No log transfers to process
 TEST[DATE|TIME] ~~~ Leaving: 500.99998 ~~~
 TEST[DATE|TIME] ------------------------------------ 1 statements generated.
 TEST[DATE|TIME] 
 TEST[DATE|TIME] 
 TEST[DATE|TIME] ------------------------------------
 TEST[DATE|TIME] ~~~ Entering: 563.99998 ~~~
-TEST[DATE|TIME] ETH is of interest
-TEST[DATE|TIME] Attempting to reconcile at top level: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-0x05a56e2d52c817161883f50c441c3228cfe54d9f
+TEST[DATE|TIME] First pass: Fetching unreconciled transfers
+TEST[DATE|TIME] Fetched 1 unreconciled transfers
+TEST[DATE|TIME] Second pass: Reconciling transfers
+TEST[DATE|TIME] Processing ETH transfer
+TEST[DATE|TIME] Converted ETH transfer to statement
+TEST[DATE|TIME] Attempting to reconcile top-level ETH transfer: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] XXX =============[ top-level ]======================
 TEST[DATE|TIME] XXX Case 1: Only statement in block
 TEST[DATE|TIME] XXX Block: 563 Tx: 99998 Asset: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
@@ -358,16 +390,20 @@ TEST[DATE|TIME]    minerUncleRewardIn:  3.75
 TEST[DATE|TIME]    material:            true
 TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
-TEST[DATE|TIME] Statement is material and reconciled - appending
-TEST[DATE|TIME] Transaction receipt is nil. No log statements.
+TEST[DATE|TIME] Top-level statement is material and reconciled - appending
+TEST[DATE|TIME] No log transfers to process
 TEST[DATE|TIME] ~~~ Leaving: 563.99998 ~~~
 TEST[DATE|TIME] ------------------------------------ 1 statements generated.
 TEST[DATE|TIME] 
 TEST[DATE|TIME] 
 TEST[DATE|TIME] ------------------------------------
 TEST[DATE|TIME] ~~~ Entering: 987.99998 ~~~
-TEST[DATE|TIME] ETH is of interest
-TEST[DATE|TIME] Attempting to reconcile at top level: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-0x05a56e2d52c817161883f50c441c3228cfe54d9f
+TEST[DATE|TIME] First pass: Fetching unreconciled transfers
+TEST[DATE|TIME] Fetched 1 unreconciled transfers
+TEST[DATE|TIME] Second pass: Reconciling transfers
+TEST[DATE|TIME] Processing ETH transfer
+TEST[DATE|TIME] Converted ETH transfer to statement
+TEST[DATE|TIME] Attempting to reconcile top-level ETH transfer: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] XXX =============[ top-level ]======================
 TEST[DATE|TIME] XXX Case 1: Only statement in block
 TEST[DATE|TIME] XXX Block: 987 Tx: 99998 Asset: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
@@ -400,16 +436,20 @@ TEST[DATE|TIME]    minerUncleRewardIn:  2.5
 TEST[DATE|TIME]    material:            true
 TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
-TEST[DATE|TIME] Statement is material and reconciled - appending
-TEST[DATE|TIME] Transaction receipt is nil. No log statements.
+TEST[DATE|TIME] Top-level statement is material and reconciled - appending
+TEST[DATE|TIME] No log transfers to process
 TEST[DATE|TIME] ~~~ Leaving: 987.99998 ~~~
 TEST[DATE|TIME] ------------------------------------ 1 statements generated.
 TEST[DATE|TIME] 
 TEST[DATE|TIME] 
 TEST[DATE|TIME] ------------------------------------
 TEST[DATE|TIME] ~~~ Entering: 1450.99999 ~~~
-TEST[DATE|TIME] ETH is of interest
-TEST[DATE|TIME] Attempting to reconcile at top level: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-0x05a56e2d52c817161883f50c441c3228cfe54d9f
+TEST[DATE|TIME] First pass: Fetching unreconciled transfers
+TEST[DATE|TIME] Fetched 1 unreconciled transfers
+TEST[DATE|TIME] Second pass: Reconciling transfers
+TEST[DATE|TIME] Processing ETH transfer
+TEST[DATE|TIME] Converted ETH transfer to statement
+TEST[DATE|TIME] Attempting to reconcile top-level ETH transfer: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] XXX =============[ top-level ]======================
 TEST[DATE|TIME] XXX Case 1: Only statement in block
 TEST[DATE|TIME] XXX Block: 1450 Tx: 99999 Asset: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
@@ -443,16 +483,20 @@ TEST[DATE|TIME]    minerNephewRewardIn: 0.15625
 TEST[DATE|TIME]    material:            true
 TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
-TEST[DATE|TIME] Statement is material and reconciled - appending
-TEST[DATE|TIME] Transaction receipt is nil. No log statements.
+TEST[DATE|TIME] Top-level statement is material and reconciled - appending
+TEST[DATE|TIME] No log transfers to process
 TEST[DATE|TIME] ~~~ Leaving: 1450.99999 ~~~
 TEST[DATE|TIME] ------------------------------------ 1 statements generated.
 TEST[DATE|TIME] 
 TEST[DATE|TIME] 
 TEST[DATE|TIME] ------------------------------------
 TEST[DATE|TIME] ~~~ Entering: 1580.99998 ~~~
-TEST[DATE|TIME] ETH is of interest
-TEST[DATE|TIME] Attempting to reconcile at top level: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-0x05a56e2d52c817161883f50c441c3228cfe54d9f
+TEST[DATE|TIME] First pass: Fetching unreconciled transfers
+TEST[DATE|TIME] Fetched 1 unreconciled transfers
+TEST[DATE|TIME] Second pass: Reconciling transfers
+TEST[DATE|TIME] Processing ETH transfer
+TEST[DATE|TIME] Converted ETH transfer to statement
+TEST[DATE|TIME] Attempting to reconcile top-level ETH transfer: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] XXX =============[ top-level ]======================
 TEST[DATE|TIME] XXX Case 1: Only statement in block
 TEST[DATE|TIME] XXX Block: 1580 Tx: 99998 Asset: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
@@ -485,16 +529,20 @@ TEST[DATE|TIME]    minerUncleRewardIn:  3.75
 TEST[DATE|TIME]    material:            true
 TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
-TEST[DATE|TIME] Statement is material and reconciled - appending
-TEST[DATE|TIME] Transaction receipt is nil. No log statements.
+TEST[DATE|TIME] Top-level statement is material and reconciled - appending
+TEST[DATE|TIME] No log transfers to process
 TEST[DATE|TIME] ~~~ Leaving: 1580.99998 ~~~
 TEST[DATE|TIME] ------------------------------------ 1 statements generated.
 TEST[DATE|TIME] 
 TEST[DATE|TIME] 
 TEST[DATE|TIME] ------------------------------------
 TEST[DATE|TIME] ~~~ Entering: 1586.99998 ~~~
-TEST[DATE|TIME] ETH is of interest
-TEST[DATE|TIME] Attempting to reconcile at top level: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-0x05a56e2d52c817161883f50c441c3228cfe54d9f
+TEST[DATE|TIME] First pass: Fetching unreconciled transfers
+TEST[DATE|TIME] Fetched 1 unreconciled transfers
+TEST[DATE|TIME] Second pass: Reconciling transfers
+TEST[DATE|TIME] Processing ETH transfer
+TEST[DATE|TIME] Converted ETH transfer to statement
+TEST[DATE|TIME] Attempting to reconcile top-level ETH transfer: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] XXX =============[ top-level ]======================
 TEST[DATE|TIME] XXX Case 1: Only statement in block
 TEST[DATE|TIME] XXX Block: 1586 Tx: 99998 Asset: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
@@ -527,16 +575,20 @@ TEST[DATE|TIME]    minerUncleRewardIn:  3.75
 TEST[DATE|TIME]    material:            true
 TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
-TEST[DATE|TIME] Statement is material and reconciled - appending
-TEST[DATE|TIME] Transaction receipt is nil. No log statements.
+TEST[DATE|TIME] Top-level statement is material and reconciled - appending
+TEST[DATE|TIME] No log transfers to process
 TEST[DATE|TIME] ~~~ Leaving: 1586.99998 ~~~
 TEST[DATE|TIME] ------------------------------------ 1 statements generated.
 TEST[DATE|TIME] 
 TEST[DATE|TIME] 
 TEST[DATE|TIME] ------------------------------------
 TEST[DATE|TIME] ~~~ Entering: 1861.99999 ~~~
-TEST[DATE|TIME] ETH is of interest
-TEST[DATE|TIME] Attempting to reconcile at top level: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-0x05a56e2d52c817161883f50c441c3228cfe54d9f
+TEST[DATE|TIME] First pass: Fetching unreconciled transfers
+TEST[DATE|TIME] Fetched 1 unreconciled transfers
+TEST[DATE|TIME] Second pass: Reconciling transfers
+TEST[DATE|TIME] Processing ETH transfer
+TEST[DATE|TIME] Converted ETH transfer to statement
+TEST[DATE|TIME] Attempting to reconcile top-level ETH transfer: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] XXX =============[ top-level ]======================
 TEST[DATE|TIME] XXX Case 1: Only statement in block
 TEST[DATE|TIME] XXX Block: 1861 Tx: 99999 Asset: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
@@ -569,16 +621,20 @@ TEST[DATE|TIME]    minerBaseRewardIn:   5
 TEST[DATE|TIME]    material:            true
 TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
-TEST[DATE|TIME] Statement is material and reconciled - appending
-TEST[DATE|TIME] Transaction receipt is nil. No log statements.
+TEST[DATE|TIME] Top-level statement is material and reconciled - appending
+TEST[DATE|TIME] No log transfers to process
 TEST[DATE|TIME] ~~~ Leaving: 1861.99999 ~~~
 TEST[DATE|TIME] ------------------------------------ 1 statements generated.
 TEST[DATE|TIME] 
 TEST[DATE|TIME] 
 TEST[DATE|TIME] ------------------------------------
 TEST[DATE|TIME] ~~~ Entering: 1912.99998 ~~~
-TEST[DATE|TIME] ETH is of interest
-TEST[DATE|TIME] Attempting to reconcile at top level: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-0x05a56e2d52c817161883f50c441c3228cfe54d9f
+TEST[DATE|TIME] First pass: Fetching unreconciled transfers
+TEST[DATE|TIME] Fetched 1 unreconciled transfers
+TEST[DATE|TIME] Second pass: Reconciling transfers
+TEST[DATE|TIME] Processing ETH transfer
+TEST[DATE|TIME] Converted ETH transfer to statement
+TEST[DATE|TIME] Attempting to reconcile top-level ETH transfer: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] XXX =============[ top-level ]======================
 TEST[DATE|TIME] XXX Case 1: Only statement in block
 TEST[DATE|TIME] XXX Block: 1912 Tx: 99998 Asset: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
@@ -611,16 +667,20 @@ TEST[DATE|TIME]    minerUncleRewardIn:  3.75
 TEST[DATE|TIME]    material:            true
 TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
-TEST[DATE|TIME] Statement is material and reconciled - appending
-TEST[DATE|TIME] Transaction receipt is nil. No log statements.
+TEST[DATE|TIME] Top-level statement is material and reconciled - appending
+TEST[DATE|TIME] No log transfers to process
 TEST[DATE|TIME] ~~~ Leaving: 1912.99998 ~~~
 TEST[DATE|TIME] ------------------------------------ 1 statements generated.
 TEST[DATE|TIME] 
 TEST[DATE|TIME] 
 TEST[DATE|TIME] ------------------------------------
 TEST[DATE|TIME] ~~~ Entering: 2057.99999 ~~~
-TEST[DATE|TIME] ETH is of interest
-TEST[DATE|TIME] Attempting to reconcile at top level: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-0x05a56e2d52c817161883f50c441c3228cfe54d9f
+TEST[DATE|TIME] First pass: Fetching unreconciled transfers
+TEST[DATE|TIME] Fetched 1 unreconciled transfers
+TEST[DATE|TIME] Second pass: Reconciling transfers
+TEST[DATE|TIME] Processing ETH transfer
+TEST[DATE|TIME] Converted ETH transfer to statement
+TEST[DATE|TIME] Attempting to reconcile top-level ETH transfer: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] XXX =============[ top-level ]======================
 TEST[DATE|TIME] XXX Case 1: Only statement in block
 TEST[DATE|TIME] XXX Block: 2057 Tx: 99999 Asset: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
@@ -653,16 +713,20 @@ TEST[DATE|TIME]    minerBaseRewardIn:   5
 TEST[DATE|TIME]    material:            true
 TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
-TEST[DATE|TIME] Statement is material and reconciled - appending
-TEST[DATE|TIME] Transaction receipt is nil. No log statements.
+TEST[DATE|TIME] Top-level statement is material and reconciled - appending
+TEST[DATE|TIME] No log transfers to process
 TEST[DATE|TIME] ~~~ Leaving: 2057.99999 ~~~
 TEST[DATE|TIME] ------------------------------------ 1 statements generated.
 TEST[DATE|TIME] 
 TEST[DATE|TIME] 
 TEST[DATE|TIME] ------------------------------------
 TEST[DATE|TIME] ~~~ Entering: 2256.99999 ~~~
-TEST[DATE|TIME] ETH is of interest
-TEST[DATE|TIME] Attempting to reconcile at top level: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-0x05a56e2d52c817161883f50c441c3228cfe54d9f
+TEST[DATE|TIME] First pass: Fetching unreconciled transfers
+TEST[DATE|TIME] Fetched 1 unreconciled transfers
+TEST[DATE|TIME] Second pass: Reconciling transfers
+TEST[DATE|TIME] Processing ETH transfer
+TEST[DATE|TIME] Converted ETH transfer to statement
+TEST[DATE|TIME] Attempting to reconcile top-level ETH transfer: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] XXX =============[ top-level ]======================
 TEST[DATE|TIME] XXX Case 1: Only statement in block
 TEST[DATE|TIME] XXX Block: 2256 Tx: 99999 Asset: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
@@ -695,16 +759,20 @@ TEST[DATE|TIME]    minerBaseRewardIn:   5
 TEST[DATE|TIME]    material:            true
 TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
-TEST[DATE|TIME] Statement is material and reconciled - appending
-TEST[DATE|TIME] Transaction receipt is nil. No log statements.
+TEST[DATE|TIME] Top-level statement is material and reconciled - appending
+TEST[DATE|TIME] No log transfers to process
 TEST[DATE|TIME] ~~~ Leaving: 2256.99999 ~~~
 TEST[DATE|TIME] ------------------------------------ 1 statements generated.
 TEST[DATE|TIME] 
 TEST[DATE|TIME] 
 TEST[DATE|TIME] ------------------------------------
 TEST[DATE|TIME] ~~~ Entering: 2392.99999 ~~~
-TEST[DATE|TIME] ETH is of interest
-TEST[DATE|TIME] Attempting to reconcile at top level: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-0x05a56e2d52c817161883f50c441c3228cfe54d9f
+TEST[DATE|TIME] First pass: Fetching unreconciled transfers
+TEST[DATE|TIME] Fetched 1 unreconciled transfers
+TEST[DATE|TIME] Second pass: Reconciling transfers
+TEST[DATE|TIME] Processing ETH transfer
+TEST[DATE|TIME] Converted ETH transfer to statement
+TEST[DATE|TIME] Attempting to reconcile top-level ETH transfer: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] XXX =============[ top-level ]======================
 TEST[DATE|TIME] XXX Case 1: Only statement in block
 TEST[DATE|TIME] XXX Block: 2392 Tx: 99999 Asset: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
@@ -738,16 +806,20 @@ TEST[DATE|TIME]    minerNephewRewardIn: 0.15625
 TEST[DATE|TIME]    material:            true
 TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
-TEST[DATE|TIME] Statement is material and reconciled - appending
-TEST[DATE|TIME] Transaction receipt is nil. No log statements.
+TEST[DATE|TIME] Top-level statement is material and reconciled - appending
+TEST[DATE|TIME] No log transfers to process
 TEST[DATE|TIME] ~~~ Leaving: 2392.99999 ~~~
 TEST[DATE|TIME] ------------------------------------ 1 statements generated.
 TEST[DATE|TIME] 
 TEST[DATE|TIME] 
 TEST[DATE|TIME] ------------------------------------
 TEST[DATE|TIME] ~~~ Entering: 2516.99998 ~~~
-TEST[DATE|TIME] ETH is of interest
-TEST[DATE|TIME] Attempting to reconcile at top level: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-0x05a56e2d52c817161883f50c441c3228cfe54d9f
+TEST[DATE|TIME] First pass: Fetching unreconciled transfers
+TEST[DATE|TIME] Fetched 1 unreconciled transfers
+TEST[DATE|TIME] Second pass: Reconciling transfers
+TEST[DATE|TIME] Processing ETH transfer
+TEST[DATE|TIME] Converted ETH transfer to statement
+TEST[DATE|TIME] Attempting to reconcile top-level ETH transfer: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] XXX =============[ top-level ]======================
 TEST[DATE|TIME] XXX Case 1: Only statement in block
 TEST[DATE|TIME] XXX Block: 2516 Tx: 99998 Asset: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
@@ -780,16 +852,20 @@ TEST[DATE|TIME]    minerUncleRewardIn:  3.75
 TEST[DATE|TIME]    material:            true
 TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
-TEST[DATE|TIME] Statement is material and reconciled - appending
-TEST[DATE|TIME] Transaction receipt is nil. No log statements.
+TEST[DATE|TIME] Top-level statement is material and reconciled - appending
+TEST[DATE|TIME] No log transfers to process
 TEST[DATE|TIME] ~~~ Leaving: 2516.99998 ~~~
 TEST[DATE|TIME] ------------------------------------ 1 statements generated.
 TEST[DATE|TIME] 
 TEST[DATE|TIME] 
 TEST[DATE|TIME] ------------------------------------
 TEST[DATE|TIME] ~~~ Entering: 3962.99998 ~~~
-TEST[DATE|TIME] ETH is of interest
-TEST[DATE|TIME] Attempting to reconcile at top level: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-0x05a56e2d52c817161883f50c441c3228cfe54d9f
+TEST[DATE|TIME] First pass: Fetching unreconciled transfers
+TEST[DATE|TIME] Fetched 1 unreconciled transfers
+TEST[DATE|TIME] Second pass: Reconciling transfers
+TEST[DATE|TIME] Processing ETH transfer
+TEST[DATE|TIME] Converted ETH transfer to statement
+TEST[DATE|TIME] Attempting to reconcile top-level ETH transfer: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] XXX =============[ top-level ]======================
 TEST[DATE|TIME] XXX Case 1: Only statement in block
 TEST[DATE|TIME] XXX Block: 3962 Tx: 99998 Asset: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
@@ -822,16 +898,20 @@ TEST[DATE|TIME]    minerUncleRewardIn:  3.75
 TEST[DATE|TIME]    material:            true
 TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
-TEST[DATE|TIME] Statement is material and reconciled - appending
-TEST[DATE|TIME] Transaction receipt is nil. No log statements.
+TEST[DATE|TIME] Top-level statement is material and reconciled - appending
+TEST[DATE|TIME] No log transfers to process
 TEST[DATE|TIME] ~~~ Leaving: 3962.99998 ~~~
 TEST[DATE|TIME] ------------------------------------ 1 statements generated.
 TEST[DATE|TIME] 
 TEST[DATE|TIME] 
 TEST[DATE|TIME] ------------------------------------
 TEST[DATE|TIME] ~~~ Entering: 4256.99998 ~~~
-TEST[DATE|TIME] ETH is of interest
-TEST[DATE|TIME] Attempting to reconcile at top level: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-0x05a56e2d52c817161883f50c441c3228cfe54d9f
+TEST[DATE|TIME] First pass: Fetching unreconciled transfers
+TEST[DATE|TIME] Fetched 1 unreconciled transfers
+TEST[DATE|TIME] Second pass: Reconciling transfers
+TEST[DATE|TIME] Processing ETH transfer
+TEST[DATE|TIME] Converted ETH transfer to statement
+TEST[DATE|TIME] Attempting to reconcile top-level ETH transfer: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TEST[DATE|TIME] XXX =============[ top-level ]======================
 TEST[DATE|TIME] XXX Case 1: Only statement in block
 TEST[DATE|TIME] XXX Block: 4256 Tx: 99998 Asset: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
@@ -864,8 +944,8 @@ TEST[DATE|TIME]    minerUncleRewardIn:  3.75
 TEST[DATE|TIME]    material:            true
 TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
-TEST[DATE|TIME] Statement is material and reconciled - appending
-TEST[DATE|TIME] Transaction receipt is nil. No log statements.
+TEST[DATE|TIME] Top-level statement is material and reconciled - appending
+TEST[DATE|TIME] No log transfers to process
 TEST[DATE|TIME] ~~~ Leaving: 4256.99998 ~~~
 TEST[DATE|TIME] ------------------------------------ 1 statements generated.
 TEST[DATE|TIME] 

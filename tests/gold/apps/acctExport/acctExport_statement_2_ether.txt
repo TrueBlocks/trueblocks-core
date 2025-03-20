@@ -14,8 +14,12 @@ TEST[DATE|TIME] 2: 46709 0
 TEST[DATE|TIME] 
 TEST[DATE|TIME] ------------------------------------
 TEST[DATE|TIME] ~~~ Entering: 0.270 ~~~
-TEST[DATE|TIME] ETH is of interest
-TEST[DATE|TIME] Attempting to reconcile at top level: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-0x08166f02313feae18bb044e7877c808b55b5bf58
+TEST[DATE|TIME] First pass: Fetching unreconciled transfers
+TEST[DATE|TIME] Fetched 1 unreconciled transfers
+TEST[DATE|TIME] Second pass: Reconciling transfers
+TEST[DATE|TIME] Processing ETH transfer
+TEST[DATE|TIME] Converted ETH transfer to statement
+TEST[DATE|TIME] Attempting to reconcile top-level ETH transfer: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-0x08166f02313feae18bb044e7877c808b55b5bf58
 TEST[DATE|TIME] XXX =============[ top-level ]======================
 TEST[DATE|TIME] XXX Case 1: Only statement in block
 TEST[DATE|TIME] XXX Block: 0 Tx: 270 Asset: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
@@ -48,16 +52,20 @@ TEST[DATE|TIME]    prefundIn:           1970
 TEST[DATE|TIME]    material:            true
 TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
-TEST[DATE|TIME] Statement is material and reconciled - appending
-TEST[DATE|TIME] Transaction receipt is nil. No log statements.
+TEST[DATE|TIME] Top-level statement is material and reconciled - appending
+TEST[DATE|TIME] No log transfers to process
 TEST[DATE|TIME] ~~~ Leaving: 0.270 ~~~
 TEST[DATE|TIME] ------------------------------------ 1 statements generated.
 TEST[DATE|TIME] 
 TEST[DATE|TIME] 
 TEST[DATE|TIME] ------------------------------------
 TEST[DATE|TIME] ~~~ Entering: 46685.0 ~~~
-TEST[DATE|TIME] ETH is of interest
-TEST[DATE|TIME] Attempting to reconcile at top level: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-0x08166f02313feae18bb044e7877c808b55b5bf58
+TEST[DATE|TIME] First pass: Fetching unreconciled transfers
+TEST[DATE|TIME] Fetched 1 unreconciled transfers
+TEST[DATE|TIME] Second pass: Reconciling transfers
+TEST[DATE|TIME] Processing ETH transfer
+TEST[DATE|TIME] Converted ETH transfer to statement
+TEST[DATE|TIME] Attempting to reconcile top-level ETH transfer: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-0x08166f02313feae18bb044e7877c808b55b5bf58
 TEST[DATE|TIME] XXX =============[ top-level ]======================
 TEST[DATE|TIME] XXX Case 1: Only statement in block
 TEST[DATE|TIME] XXX Block: 46685 Tx: 0 Asset: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
@@ -91,17 +99,20 @@ TEST[DATE|TIME]    gasOut:              0.0105
 TEST[DATE|TIME]    material:            true
 TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
-TEST[DATE|TIME] Statement is material and reconciled - appending
-TEST[DATE|TIME] Extracting statements from logs.
-TEST[DATE|TIME] There were no statements generated from logs.
+TEST[DATE|TIME] Top-level statement is material and reconciled - appending
+TEST[DATE|TIME] No log transfers to process
 TEST[DATE|TIME] ~~~ Leaving: 46685.0 ~~~
 TEST[DATE|TIME] ------------------------------------ 1 statements generated.
 TEST[DATE|TIME] 
 TEST[DATE|TIME] 
 TEST[DATE|TIME] ------------------------------------
 TEST[DATE|TIME] ~~~ Entering: 46709.0 ~~~
-TEST[DATE|TIME] ETH is of interest
-TEST[DATE|TIME] Attempting to reconcile at top level: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-0x08166f02313feae18bb044e7877c808b55b5bf58
+TEST[DATE|TIME] First pass: Fetching unreconciled transfers
+TEST[DATE|TIME] Fetched 1 unreconciled transfers
+TEST[DATE|TIME] Second pass: Reconciling transfers
+TEST[DATE|TIME] Processing ETH transfer
+TEST[DATE|TIME] Converted ETH transfer to statement
+TEST[DATE|TIME] Attempting to reconcile top-level ETH transfer: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-0x08166f02313feae18bb044e7877c808b55b5bf58
 TEST[DATE|TIME] XXX =============[ top-level ]======================
 TEST[DATE|TIME] XXX Case 1: Only statement in block
 TEST[DATE|TIME] XXX Block: 46709 Tx: 0 Asset: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
@@ -135,9 +146,8 @@ TEST[DATE|TIME]    gasOut:              0.0105
 TEST[DATE|TIME]    material:            true
 TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
-TEST[DATE|TIME] Statement is material and reconciled - appending
-TEST[DATE|TIME] Extracting statements from logs.
-TEST[DATE|TIME] There were no statements generated from logs.
+TEST[DATE|TIME] Top-level statement is material and reconciled - appending
+TEST[DATE|TIME] No log transfers to process
 TEST[DATE|TIME] ~~~ Leaving: 46709.0 ~~~
 TEST[DATE|TIME] ------------------------------------ 1 statements generated.
 TEST[DATE|TIME] 

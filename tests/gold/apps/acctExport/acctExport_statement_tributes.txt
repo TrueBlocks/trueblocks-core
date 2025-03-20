@@ -14,18 +14,23 @@ TEST[DATE|TIME] 3: 8769052 74
 TEST[DATE|TIME] 
 TEST[DATE|TIME] ------------------------------------
 TEST[DATE|TIME] ~~~ Entering: 8769019.124 ~~~
-TEST[DATE|TIME] ETH is NOT of interest
-TEST[DATE|TIME] Extracting statements from logs.
-TEST[DATE|TIME] There were no statements generated from logs.
+TEST[DATE|TIME] First pass: Fetching unreconciled transfers
+TEST[DATE|TIME] Fetched 0 unreconciled transfers
+TEST[DATE|TIME] Second pass: Reconciling transfers
+TEST[DATE|TIME] No log transfers to process
 TEST[DATE|TIME] ~~~ Leaving: 8769019.124 ~~~
 TEST[DATE|TIME] ------------------------------------ 0 statements generated.
 TEST[DATE|TIME] 
 TEST[DATE|TIME] 
 TEST[DATE|TIME] ------------------------------------
 TEST[DATE|TIME] ~~~ Entering: 8769029.80 ~~~
-TEST[DATE|TIME] ETH is NOT of interest
-TEST[DATE|TIME] Extracting statements from logs.
-TEST[DATE|TIME] 1 statements generated from logs.
+TEST[DATE|TIME] First pass: Fetching unreconciled transfers
+TEST[DATE|TIME] Fetched 1 unreconciled transfers
+TEST[DATE|TIME] Second pass: Reconciling transfers
+TEST[DATE|TIME] Processing 1 log transfers
+TEST[DATE|TIME] Set BegSentinel for first log transfer
+TEST[DATE|TIME] Set EndSentinel for last log transfer
+TEST[DATE|TIME] Converted log transfer to statement for asset: 0x0ba45a8b5d5575935b8158a88c631e9f9c95a2e5
 TEST[DATE|TIME] XXX =============[ token ]======================
 TEST[DATE|TIME] XXX Case 1: Only statement in block
 TEST[DATE|TIME] XXX Block: 8769029 Tx: 80 Asset: 0x0ba45a8b5d5575935b8158a88c631e9f9c95a2e5
@@ -58,25 +63,30 @@ TEST[DATE|TIME]    amountIn:            85
 TEST[DATE|TIME]    material:            true
 TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
-TEST[DATE|TIME] Statement is material - appending. reconciled: true
+TEST[DATE|TIME] Log statement is material - appending. reconciled: true
 TEST[DATE|TIME] ~~~ Leaving: 8769029.80 ~~~
 TEST[DATE|TIME] ------------------------------------ 1 statements generated.
 TEST[DATE|TIME] 
 TEST[DATE|TIME] 
 TEST[DATE|TIME] ------------------------------------
 TEST[DATE|TIME] ~~~ Entering: 8769052.73 ~~~
-TEST[DATE|TIME] ETH is NOT of interest
-TEST[DATE|TIME] Extracting statements from logs.
-TEST[DATE|TIME] There were no statements generated from logs.
+TEST[DATE|TIME] First pass: Fetching unreconciled transfers
+TEST[DATE|TIME] Fetched 0 unreconciled transfers
+TEST[DATE|TIME] Second pass: Reconciling transfers
+TEST[DATE|TIME] No log transfers to process
 TEST[DATE|TIME] ~~~ Leaving: 8769052.73 ~~~
 TEST[DATE|TIME] ------------------------------------ 0 statements generated.
 TEST[DATE|TIME] 
 TEST[DATE|TIME] 
 TEST[DATE|TIME] ------------------------------------
 TEST[DATE|TIME] ~~~ Entering: 8769052.74 ~~~
-TEST[DATE|TIME] ETH is NOT of interest
-TEST[DATE|TIME] Extracting statements from logs.
-TEST[DATE|TIME] 1 statements generated from logs.
+TEST[DATE|TIME] First pass: Fetching unreconciled transfers
+TEST[DATE|TIME] Fetched 1 unreconciled transfers
+TEST[DATE|TIME] Second pass: Reconciling transfers
+TEST[DATE|TIME] Processing 1 log transfers
+TEST[DATE|TIME] Set BegSentinel for first log transfer
+TEST[DATE|TIME] Set EndSentinel for last log transfer
+TEST[DATE|TIME] Converted log transfer to statement for asset: 0x0ba45a8b5d5575935b8158a88c631e9f9c95a2e5
 TEST[DATE|TIME] XXX =============[ token ]======================
 TEST[DATE|TIME] XXX Case 1: Only statement in block
 TEST[DATE|TIME] XXX Block: 8769052 Tx: 74 Asset: 0x0ba45a8b5d5575935b8158a88c631e9f9c95a2e5
@@ -109,7 +119,7 @@ TEST[DATE|TIME]    amountOut:           85
 TEST[DATE|TIME]    material:            true
 TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
-TEST[DATE|TIME] Statement is material - appending. reconciled: true
+TEST[DATE|TIME] Log statement is material - appending. reconciled: true
 TEST[DATE|TIME] ~~~ Leaving: 8769052.74 ~~~
 TEST[DATE|TIME] ------------------------------------ 1 statements generated.
 TEST[DATE|TIME] 

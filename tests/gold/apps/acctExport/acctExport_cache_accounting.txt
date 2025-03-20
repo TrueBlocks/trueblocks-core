@@ -12,8 +12,12 @@ TEST[DATE|TIME] 0: 10277780 88
 TEST[DATE|TIME] 
 TEST[DATE|TIME] ------------------------------------
 TEST[DATE|TIME] ~~~ Entering: 10277780.88 ~~~
-TEST[DATE|TIME] ETH is of interest
-TEST[DATE|TIME] Attempting to reconcile at top level: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-0x04fe1f0c597fbc65700f4fba6f87501edc20e665
+TEST[DATE|TIME] First pass: Fetching unreconciled transfers
+TEST[DATE|TIME] Fetched 2 unreconciled transfers
+TEST[DATE|TIME] Second pass: Reconciling transfers
+TEST[DATE|TIME] Processing ETH transfer
+TEST[DATE|TIME] Converted ETH transfer to statement
+TEST[DATE|TIME] Attempting to reconcile top-level ETH transfer: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-0x04fe1f0c597fbc65700f4fba6f87501edc20e665
 TEST[DATE|TIME] XXX =============[ top-level ]======================
 TEST[DATE|TIME] XXX Case 1: Only statement in block
 TEST[DATE|TIME] XXX Block: 10277780 Tx: 88 Asset: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
@@ -62,9 +66,11 @@ TEST[DATE|TIME]    gasOut:              0.00104836
 TEST[DATE|TIME]    material:            true
 TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
-TEST[DATE|TIME] Statement is material and reconciled - appending
-TEST[DATE|TIME] Extracting statements from logs.
-TEST[DATE|TIME] 1 statements generated from logs.
+TEST[DATE|TIME] Top-level statement is material and reconciled - appending
+TEST[DATE|TIME] Processing 1 log transfers
+TEST[DATE|TIME] Set BegSentinel for first log transfer
+TEST[DATE|TIME] Set EndSentinel for last log transfer
+TEST[DATE|TIME] Converted log transfer to statement for asset: 0xdac17f958d2ee523a2206206994597c13d831ec7
 TEST[DATE|TIME] XXX =============[ token ]======================
 TEST[DATE|TIME] XXX Case 1: Only statement in block
 TEST[DATE|TIME] XXX Block: 10277780 Tx: 88 Asset: 0xdac17f958d2ee523a2206206994597c13d831ec7
@@ -100,7 +106,7 @@ TEST[DATE|TIME]    amountOut:           0.000000000381
 TEST[DATE|TIME]    material:            true
 TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
-TEST[DATE|TIME] Statement is material - appending. reconciled: true
+TEST[DATE|TIME] Log statement is material - appending. reconciled: true
 TEST[DATE|TIME] ~~~ Leaving: 10277780.88 ~~~
 TEST[DATE|TIME] ------------------------------------ 2 statements generated.
 TEST[DATE|TIME] 

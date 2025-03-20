@@ -7,33 +7,29 @@ import (
 )
 
 // GetTransfers returns a statement from a given transaction
-func (r *Reconciler) GetTransfers(transactions []*types.Transaction) ([]*types.Transfer, bool, error) {
-	items := make([]*types.Transfer, 0)
-
-	for _, tx := range transactions {
-		if transfers, err := r.getUnreconciledTransfers(tx); err != nil {
-			return nil, false, err
-		} else if len(transfers) > 0 {
-			items = append(items, transfers...)
-		}
+func (r *Reconciler) GetTransfers(txs []*types.Transaction) ([]*types.Transfer, bool, error) {
+	ethTransfers, tokenTransfers, err := r.getTransfersInternal(txs)
+	if err != nil {
+		return nil, false, err
 	}
 
-	sort.Slice(items, func(i, j int) bool {
+	transfers := append(ethTransfers, tokenTransfers...)
+	sort.Slice(transfers, func(i, j int) bool {
 		if r.Opts.Reversed {
 			i, j = j, i
 		}
-		if items[i].BlockNumber == items[j].BlockNumber {
-			if items[i].TransactionIndex == items[j].TransactionIndex {
-				return items[i].LogIndex < items[j].LogIndex
+		if transfers[i].BlockNumber == transfers[j].BlockNumber {
+			if transfers[i].TransactionIndex == transfers[j].TransactionIndex {
+				return transfers[i].LogIndex < transfers[j].LogIndex
 			}
-			return items[i].TransactionIndex < items[j].TransactionIndex
+			return transfers[i].TransactionIndex < transfers[j].TransactionIndex
 		}
-		return items[i].BlockNumber < items[j].BlockNumber
+		return transfers[i].BlockNumber < transfers[j].BlockNumber
 	})
 
 	finished := false
-	slice := make([]*types.Transfer, 0, len(items))
-	for _, item := range items {
+	slice := make([]*types.Transfer, 0, len(transfers))
+	for _, item := range transfers {
 		var passes bool
 		passes, finished = r.Opts.AppFilters.ApplyCountFilter()
 		if passes {

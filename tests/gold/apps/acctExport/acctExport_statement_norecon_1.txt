@@ -15,9 +15,13 @@ TEST[DATE|TIME] 2: 9279453 208
 TEST[DATE|TIME] 
 TEST[DATE|TIME] ------------------------------------
 TEST[DATE|TIME] ~~~ Entering: 9278039.26 ~~~
-TEST[DATE|TIME] ETH is NOT of interest
-TEST[DATE|TIME] Extracting statements from logs.
-TEST[DATE|TIME] 1 statements generated from logs.
+TEST[DATE|TIME] First pass: Fetching unreconciled transfers
+TEST[DATE|TIME] Fetched 1 unreconciled transfers
+TEST[DATE|TIME] Second pass: Reconciling transfers
+TEST[DATE|TIME] Processing 1 log transfers
+TEST[DATE|TIME] Set BegSentinel for first log transfer
+TEST[DATE|TIME] Set EndSentinel for last log transfer
+TEST[DATE|TIME] Converted log transfer to statement for asset: 0x6b175474e89094c44da98b954eedeac495271d0f
 TEST[DATE|TIME] XXX =============[ token ]======================
 TEST[DATE|TIME] XXX Case 1: Only statement in block
 TEST[DATE|TIME] XXX Block: 9278039 Tx: 26 Asset: 0x6b175474e89094c44da98b954eedeac495271d0f
@@ -53,25 +57,29 @@ TEST[DATE|TIME]    amountIn:            1
 TEST[DATE|TIME]    material:            true
 TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
-TEST[DATE|TIME] Statement is material - appending. reconciled: true
+TEST[DATE|TIME] Log statement is material - appending. reconciled: true
 TEST[DATE|TIME] ~~~ Leaving: 9278039.26 ~~~
 TEST[DATE|TIME] ------------------------------------ 1 statements generated.
 TEST[DATE|TIME] 
 TEST[DATE|TIME] 
 TEST[DATE|TIME] ------------------------------------
 TEST[DATE|TIME] ~~~ Entering: 9279447.73 ~~~
-TEST[DATE|TIME] ETH is NOT of interest
-TEST[DATE|TIME] Extracting statements from logs.
-TEST[DATE|TIME] There were no statements generated from logs.
+TEST[DATE|TIME] First pass: Fetching unreconciled transfers
+TEST[DATE|TIME] Fetched 0 unreconciled transfers
+TEST[DATE|TIME] Second pass: Reconciling transfers
+TEST[DATE|TIME] No log transfers to process
 TEST[DATE|TIME] ~~~ Leaving: 9279447.73 ~~~
 TEST[DATE|TIME] ------------------------------------ 0 statements generated.
 TEST[DATE|TIME] 
 TEST[DATE|TIME] 
 TEST[DATE|TIME] ------------------------------------
 TEST[DATE|TIME] ~~~ Entering: 9279453.208 ~~~
-TEST[DATE|TIME] ETH is NOT of interest
-TEST[DATE|TIME] Extracting statements from logs.
-TEST[DATE|TIME] 2 statements generated from logs.
+TEST[DATE|TIME] First pass: Fetching unreconciled transfers
+TEST[DATE|TIME] Fetched 2 unreconciled transfers
+TEST[DATE|TIME] Second pass: Reconciling transfers
+TEST[DATE|TIME] Processing 2 log transfers
+TEST[DATE|TIME] Set BegSentinel for first log transfer
+TEST[DATE|TIME] Converted log transfer to statement for asset: 0x6b175474e89094c44da98b954eedeac495271d0f
 TEST[DATE|TIME] XXX =============[ token ]======================
 TEST[DATE|TIME] XXX Case 3: First statement in block with more
 TEST[DATE|TIME] XXX Block: 9279453 Tx: 208 Asset: 0x6b175474e89094c44da98b954eedeac495271d0f
@@ -107,7 +115,9 @@ TEST[DATE|TIME]    amountOut:           0.95
 TEST[DATE|TIME]    material:            true
 TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
-TEST[DATE|TIME] Statement is material - appending. reconciled: true
+TEST[DATE|TIME] Log statement is material - appending. reconciled: true
+TEST[DATE|TIME] Set EndSentinel for last log transfer
+TEST[DATE|TIME] Converted log transfer to statement for asset: 0x6b175474e89094c44da98b954eedeac495271d0f
 TEST[DATE|TIME] XXX =============[ token ]======================
 TEST[DATE|TIME] XXX Case 4: Last statement in block with prior
 TEST[DATE|TIME] XXX Block: 9279453 Tx: 208 Asset: 0x6b175474e89094c44da98b954eedeac495271d0f
@@ -143,7 +153,7 @@ TEST[DATE|TIME]    amountOut:           0.05
 TEST[DATE|TIME]    material:            true
 TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
-TEST[DATE|TIME] Statement is material - appending. reconciled: true
+TEST[DATE|TIME] Log statement is material - appending. reconciled: true
 TEST[DATE|TIME] ~~~ Leaving: 9279453.208 ~~~
 TEST[DATE|TIME] ------------------------------------ 2 statements generated.
 TEST[DATE|TIME] 

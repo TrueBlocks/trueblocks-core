@@ -15,9 +15,13 @@ Format:  json
 
 ------------------------------------
 ~~~ Entering: 9278039.26 ~~~
-ETH is NOT of interest
-Extracting statements from logs.
-1 statements generated from logs.
+First pass: Fetching unreconciled transfers
+Fetched 1 unreconciled transfers
+Second pass: Reconciling transfers
+Processing 1 log transfers
+Set BegSentinel for first log transfer
+Set EndSentinel for last log transfer
+Converted log transfer to statement for asset: 0x6b175474e89094c44da98b954eedeac495271d0f
 XXX =============[ token ]======================
 XXX Case 1: Only statement in block
 XXX Block: 9278039 Tx: 26 Asset: 0x6b175474e89094c44da98b954eedeac495271d0f
@@ -53,25 +57,29 @@ Trial balance:
    material:            true
    reconciled:          true
 ---------------------------------------------------
-Statement is material - appending. reconciled: true
+Log statement is material - appending. reconciled: true
 ~~~ Leaving: 9278039.26 ~~~
 ------------------------------------ 1 statements generated.
 
 
 ------------------------------------
 ~~~ Entering: 9279447.73 ~~~
-ETH is NOT of interest
-Extracting statements from logs.
-There were no statements generated from logs.
+First pass: Fetching unreconciled transfers
+Fetched 0 unreconciled transfers
+Second pass: Reconciling transfers
+No log transfers to process
 ~~~ Leaving: 9279447.73 ~~~
 ------------------------------------ 0 statements generated.
 
 
 ------------------------------------
 ~~~ Entering: 9279453.208 ~~~
-ETH is NOT of interest
-Extracting statements from logs.
-2 statements generated from logs.
+First pass: Fetching unreconciled transfers
+Fetched 2 unreconciled transfers
+Second pass: Reconciling transfers
+Processing 2 log transfers
+Set BegSentinel for first log transfer
+Converted log transfer to statement for asset: 0x6b175474e89094c44da98b954eedeac495271d0f
 XXX =============[ token ]======================
 XXX Case 3: First statement in block with more
 XXX Block: 9279453 Tx: 208 Asset: 0x6b175474e89094c44da98b954eedeac495271d0f
@@ -107,7 +115,9 @@ Trial balance:
    material:            true
    reconciled:          true
 ---------------------------------------------------
-Statement is material - appending. reconciled: true
+Log statement is material - appending. reconciled: true
+Set EndSentinel for last log transfer
+Converted log transfer to statement for asset: 0x6b175474e89094c44da98b954eedeac495271d0f
 XXX =============[ token ]======================
 XXX Case 4: Last statement in block with prior
 XXX Block: 9279453 Tx: 208 Asset: 0x6b175474e89094c44da98b954eedeac495271d0f
@@ -143,7 +153,7 @@ Trial balance:
    material:            true
    reconciled:          true
 ---------------------------------------------------
-Statement is material - appending. reconciled: true
+Log statement is material - appending. reconciled: true
 ~~~ Leaving: 9279453.208 ~~~
 ------------------------------------ 2 statements generated.
 

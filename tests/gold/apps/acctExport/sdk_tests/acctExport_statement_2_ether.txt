@@ -14,8 +14,12 @@ Format:  json
 
 ------------------------------------
 ~~~ Entering: 0.270 ~~~
-ETH is of interest
-Attempting to reconcile at top level: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-0x08166f02313feae18bb044e7877c808b55b5bf58
+First pass: Fetching unreconciled transfers
+Fetched 1 unreconciled transfers
+Second pass: Reconciling transfers
+Processing ETH transfer
+Converted ETH transfer to statement
+Attempting to reconcile top-level ETH transfer: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-0x08166f02313feae18bb044e7877c808b55b5bf58
 XXX =============[ top-level ]======================
 XXX Case 1: Only statement in block
 XXX Block: 0 Tx: 270 Asset: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
@@ -48,16 +52,20 @@ Trial balance:
    material:            true
    reconciled:          true
 ---------------------------------------------------
-Statement is material and reconciled - appending
-Transaction receipt is nil. No log statements.
+Top-level statement is material and reconciled - appending
+No log transfers to process
 ~~~ Leaving: 0.270 ~~~
 ------------------------------------ 1 statements generated.
 
 
 ------------------------------------
 ~~~ Entering: 46685.0 ~~~
-ETH is of interest
-Attempting to reconcile at top level: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-0x08166f02313feae18bb044e7877c808b55b5bf58
+First pass: Fetching unreconciled transfers
+Fetched 1 unreconciled transfers
+Second pass: Reconciling transfers
+Processing ETH transfer
+Converted ETH transfer to statement
+Attempting to reconcile top-level ETH transfer: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-0x08166f02313feae18bb044e7877c808b55b5bf58
 XXX =============[ top-level ]======================
 XXX Case 1: Only statement in block
 XXX Block: 46685 Tx: 0 Asset: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
@@ -91,17 +99,20 @@ Trial balance:
    material:            true
    reconciled:          true
 ---------------------------------------------------
-Statement is material and reconciled - appending
-Extracting statements from logs.
-There were no statements generated from logs.
+Top-level statement is material and reconciled - appending
+No log transfers to process
 ~~~ Leaving: 46685.0 ~~~
 ------------------------------------ 1 statements generated.
 
 
 ------------------------------------
 ~~~ Entering: 46709.0 ~~~
-ETH is of interest
-Attempting to reconcile at top level: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-0x08166f02313feae18bb044e7877c808b55b5bf58
+First pass: Fetching unreconciled transfers
+Fetched 1 unreconciled transfers
+Second pass: Reconciling transfers
+Processing ETH transfer
+Converted ETH transfer to statement
+Attempting to reconcile top-level ETH transfer: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-0x08166f02313feae18bb044e7877c808b55b5bf58
 XXX =============[ top-level ]======================
 XXX Case 1: Only statement in block
 XXX Block: 46709 Tx: 0 Asset: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
@@ -135,9 +146,8 @@ Trial balance:
    material:            true
    reconciled:          true
 ---------------------------------------------------
-Statement is material and reconciled - appending
-Extracting statements from logs.
-There were no statements generated from logs.
+Top-level statement is material and reconciled - appending
+No log transfers to process
 ~~~ Leaving: 46709.0 ~~~
 ------------------------------------ 1 statements generated.
 

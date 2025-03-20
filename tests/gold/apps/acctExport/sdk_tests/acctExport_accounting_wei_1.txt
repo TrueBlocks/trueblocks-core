@@ -13,8 +13,12 @@ Format:  json
 
 ------------------------------------
 ~~~ Entering: 0.2 ~~~
-ETH is of interest
-Attempting to reconcile at top level: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-0x001d14804b399c6ef80e64576f657660804fec0b
+First pass: Fetching unreconciled transfers
+Fetched 1 unreconciled transfers
+Second pass: Reconciling transfers
+Processing ETH transfer
+Converted ETH transfer to statement
+Attempting to reconcile top-level ETH transfer: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-0x001d14804b399c6ef80e64576f657660804fec0b
 XXX =============[ top-level ]======================
 XXX Case 1: Only statement in block
 XXX Block: 0 Tx: 2 Asset: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
@@ -47,16 +51,20 @@ Trial balance:
    material:            true
    reconciled:          true
 ---------------------------------------------------
-Statement is material and reconciled - appending
-Transaction receipt is nil. No log statements.
+Top-level statement is material and reconciled - appending
+No log transfers to process
 ~~~ Leaving: 0.2 ~~~
 ------------------------------------ 1 statements generated.
 
 
 ------------------------------------
 ~~~ Entering: 202249.0 ~~~
-ETH is of interest
-Attempting to reconcile at top level: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-0x001d14804b399c6ef80e64576f657660804fec0b
+First pass: Fetching unreconciled transfers
+Fetched 1 unreconciled transfers
+Second pass: Reconciling transfers
+Processing ETH transfer
+Converted ETH transfer to statement
+Attempting to reconcile top-level ETH transfer: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-0x001d14804b399c6ef80e64576f657660804fec0b
 XXX =============[ top-level ]======================
 XXX Case 1: Only statement in block
 XXX Block: 202249 Tx: 0 Asset: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
@@ -90,17 +98,20 @@ Trial balance:
    material:            true
    reconciled:          true
 ---------------------------------------------------
-Statement is material and reconciled - appending
-Extracting statements from logs.
-There were no statements generated from logs.
+Top-level statement is material and reconciled - appending
+No log transfers to process
 ~~~ Leaving: 202249.0 ~~~
 ------------------------------------ 1 statements generated.
 
 
 ------------------------------------
 ~~~ Entering: 1501459.2 ~~~
-ETH is of interest
-Attempting to reconcile at top level: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-0x001d14804b399c6ef80e64576f657660804fec0b
+First pass: Fetching unreconciled transfers
+Fetched 1 unreconciled transfers
+Second pass: Reconciling transfers
+Processing ETH transfer
+Converted ETH transfer to statement
+Attempting to reconcile top-level ETH transfer: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-0x001d14804b399c6ef80e64576f657660804fec0b
 XXX =============[ top-level ]======================
 XXX Case 1: Only statement in block
 XXX Block: 1501459 Tx: 2 Asset: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
@@ -134,67 +145,18 @@ Trial balance:
    material:            true
    reconciled:          true
 ---------------------------------------------------
-Statement is material and reconciled - appending
-Extracting statements from logs.
-There were no statements generated from logs.
+Top-level statement is material and reconciled - appending
+No log transfers to process
 ~~~ Leaving: 1501459.2 ~~~
 ------------------------------------ 1 statements generated.
 
 
 ------------------------------------
 ~~~ Entering: 15507094.88 ~~~
-ETH is of interest
-Attempting to reconcile at top level: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-0x001d14804b399c6ef80e64576f657660804fec0b
-XXX =============[ top-level ]======================
-XXX Case 1: Only statement in block
-XXX Block: 15507094 Tx: 88 Asset: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
-XXX FirstInBlock: true, LastInBlock: true
-XXX ================================================
-=========================================================
-===> PRICING FOR 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) using Uniswap
-=========================================================
-blockNumber:         15507094
-source1 (uni/mkr):   0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f
-str0 (call):         getPair(0x6b175474e89094c44da98b954eedeac495271d0f, 0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2)
-source2 (pair):      0xa478c2975ab1ea89e8196811f51a7b7ade33eb11
-str1 (call/data):    getReserves()
-first:               0x6b175474e89094c44da98b954eedeac495271d0f
-second:              0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2
-reversed:            false
-float0:              7824604616367483695000000
-float1:              4508981089620692981200
-float2:              1
-bigPrice:            1735.3376429941313954
-price:               1735.3376429941313
-source:              uniswap
-===================================================
-Previous:               1501459 2 ( true )
-Current:                15507094 88 ( true )
-Next:                   15507095 0 ( true )
-accountedFor:           0x001d14804b399c6ef80e64576f657660804fec0b
-sender:                 0xed963059f74f17124943cf9c12bae8f7776c4e4c  ==>  0x98c7fa114b2fe921ba97f628e9dcb72890491721
-asset:                  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
-hash:                   0x8165e4c45cfe737052a8ecf998d70910b42c0c3e3c226499f6574be83c6a3a69
-timestamp:              1662788104
-blockNumber:            15507094.88.0
-priceSource:            1735.3376429941313 (uniswap)
---------------------------------------------------- 
-Trial balance:
-   prevBal:             0
-   begBal:              0 (0)
-   totalIn:             0
-   totalOut:            0
-   amountNet:           0
-                       ======================= 
-   endBal:              0 (0)
-   endBalCalc:          0
---------------------------------------------------- 
-   material:            false
-   reconciled:          true
----------------------------------------------------
-Statement was not material
-Extracting statements from logs.
-There were no statements generated from logs.
+First pass: Fetching unreconciled transfers
+Fetched 0 unreconciled transfers
+Second pass: Reconciling transfers
+No log transfers to process
 ~~~ Leaving: 15507094.88 ~~~
 ------------------------------------ 0 statements generated.
 
