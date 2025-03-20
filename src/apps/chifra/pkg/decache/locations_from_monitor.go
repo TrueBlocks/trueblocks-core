@@ -33,7 +33,7 @@ func LocationsFromAddressAndAppearances(address base.Address, apps []types.Appea
 			locations = append(locations, &types.LightBlock{
 				BlockNumber: bn,
 			})
-x
+			// x
 			// case walk.Cache_Transfers:
 			// 	locations = append(locations, &types.TransferGroup{
 			// 		BlockNumber:      bn,
