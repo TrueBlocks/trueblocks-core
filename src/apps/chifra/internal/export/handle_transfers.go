@@ -85,7 +85,7 @@ func (opts *ExportOptions) HandleTransfers(rCtx *output.RenderCtx, monitorArray 
 							}
 						}
 
-						// Set up and interate over the map calling iterFunc for each appearance
+						// Set up and iterate over the map calling iterFunc for each appearance
 						iterCtx, iterCancel := context.WithCancel(context.Background())
 						defer iterCancel()
 						errChan := make(chan error)
@@ -101,6 +101,9 @@ func (opts *ExportOptions) HandleTransfers(rCtx *output.RenderCtx, monitorArray 
 						}
 
 						sort.Slice(txArray, func(i, j int) bool {
+							if opts.Reversed {
+								i, j = j, i
+							}
 							if txArray[i].BlockNumber == txArray[j].BlockNumber {
 								return txArray[i].TransactionIndex < txArray[j].TransactionIndex
 							}
@@ -119,38 +122,19 @@ func (opts *ExportOptions) HandleTransfers(rCtx *output.RenderCtx, monitorArray 
 						}
 
 						recon = ledger.NewReconciler(opts.Conn, ledgerOpts)
-						items := make([]*types.Transfer, 0, len(thisMap))
-						for _, tx := range txArray {
-							if transfers, err := recon.GetTransfers(tx); err != nil {
-								errorChan <- err
-
-							} else if len(transfers) > 0 {
-								items = append(items, transfers...)
-							}
+						items, done, err := recon.GetTransfers(txArray)
+						if err != nil {
+							errorChan <- err
+							return
 						}
 
-						sort.Slice(items, func(i, j int) bool {
-							if opts.Reversed {
-								i, j = j, i
-							}
-							if items[i].BlockNumber == items[j].BlockNumber {
-								if items[i].TransactionIndex == items[j].TransactionIndex {
-									return items[i].LogIndex < items[j].LogIndex
-								}
-								return items[i].TransactionIndex < items[j].TransactionIndex
-							}
-							return items[i].BlockNumber < items[j].BlockNumber
-						})
-
 						for _, item := range items {
-							var passes bool
-							passes, finished = filter.ApplyCountFilter()
-							if passes {
-								modelChan <- item
-							}
-							if finished {
-								break
-							}
+							modelChan <- item
+						}
+
+						if done {
+							finished = true
+							break
 						}
 					}
 					bar.Finish(true /* newLine */)

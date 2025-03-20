@@ -1,6 +1,6 @@
 export?addrs=0xf503017d7baf7fbc0fff7492b751025c6a78179b&lastBlock=8856511&fmt=json&maxRecords=10&accounting&reversed
 {
   "errors": [
-    "The --reversed option is not available with the --accounting option."
+    "The --reversed option is not available with the accounting options."
   ]
 }

@@ -213,6 +213,7 @@ stmt     ,both ,fast  ,export   ,apps ,acctExport ,assets_3             ,y    ,a
 stmt     ,both ,fast  ,export   ,apps ,acctExport ,assets_3_bad         ,y    ,addrs = 0x08166f02313feae18bb044e7877c808b55b5bf58 & assets & last_block = 4000000 & fmt = json
 stmt     ,both ,fast  ,export   ,apps ,acctExport ,assets_unfiltered    ,y    ,addrs = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & accounting & assets & first_block = 8860513 & last_block = 8860531 & ether & fmt = json
 stmt     ,both ,fast  ,export   ,apps ,acctExport ,assets_filtered      ,y    ,addrs = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & accounting & assets & first_block = 8860513 & last_block = 8860531 & ether & fmt = json
+stmt     ,both ,fast  ,export   ,apps ,acctExport ,assets_filtered_rev  ,y    ,addrs = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & accounting & assets & first_block = 8860513 & last_block = 8860531 & ether & fmt = json & reversed
 stmt     ,both ,fast  ,export   ,apps ,acctExport ,assets_filter_traces ,y    ,addrs = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & accounting & assets & traces & first_block = 8860513 & last_block = 8860531 & ether & fmt = json
 stmt     ,both ,fast  ,export   ,apps ,acctExport ,assets_wei_2_1       ,y    ,addrs = 0x05a56e2d52c817161883f50c441c3228cfe54d9f & accounting & assets & fmt = json & max_records = 15
 stmt     ,both ,fast  ,export   ,apps ,acctExport ,assets_forward       ,y    ,addrs = 0x868b8fd259abfcfdf9634c343593b34ef359641d & accounting & assets & traces & last_block = 8769141 & ether & fmt = json

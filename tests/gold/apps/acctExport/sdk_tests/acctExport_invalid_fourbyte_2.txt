@@ -9,6 +9,6 @@ Caps:  cache,decache,ether
 Format:  json
 {
   "errors": [
-    "The --fourbyte option is only available when exporting or with the --accounting option."
+    "The --fourbyte option is not available with the --logs, --receipts, or --appearances options."
   ]
 }

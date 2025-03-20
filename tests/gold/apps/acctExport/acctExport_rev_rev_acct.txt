@@ -6,7 +6,7 @@ TEST[DATE|TIME] LastBlock:  8856511
 TEST[DATE|TIME] Accounting:  true
 TEST[DATE|TIME] Caps:  cache,decache,ether
 TEST[DATE|TIME] Format:  json
-Error: The --reversed option is not available with the --accounting option.
+Error: The --reversed option is not available with the accounting options.
 Usage:
   chifra export [flags] <address> [address...] [topics...] [fourbytes...]
 

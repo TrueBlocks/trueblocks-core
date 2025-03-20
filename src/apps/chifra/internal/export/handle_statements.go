@@ -34,19 +34,16 @@ func (opts *ExportOptions) HandleStatements(rCtx *output.RenderCtx, monitorArray
 	var recon *ledger.Reconciler
 	fetchData := func(modelChan chan types.Modeler, errorChan chan error) {
 		for _, mon := range monitorArray {
-			if apps, cnt, err := mon.ReadAndFilterAppearances(filter, false /* withCount */); err != nil {
+			if apps, cnt, err := mon.ReadAndFilterAppearances(filter, false); err != nil {
 				errorChan <- err
 				rCtx.Cancel()
-
 			} else if cnt == 0 {
 				errorChan <- fmt.Errorf("no blocks found for the query")
 				continue
-
 			} else {
 				if sliceOfMaps, _, err := types.AsSliceOfMaps[types.Transaction](apps, filter.Reversed); err != nil {
 					errorChan <- err
 					rCtx.Cancel()
-
 				} else {
 					showProgress := opts.Globals.ShowProgress()
 					bar := logger.NewBar(logger.BarOptions{
@@ -55,7 +52,6 @@ func (opts *ExportOptions) HandleStatements(rCtx *output.RenderCtx, monitorArray
 						Total:   int64(cnt),
 					})
 
-					// TODO: BOGUS - THIS IS NOT CONCURRENCY SAFE
 					finished := false
 					for _, thisMap := range sliceOfMaps {
 						if rCtx.WasCanceled() {
@@ -85,7 +81,6 @@ func (opts *ExportOptions) HandleStatements(rCtx *output.RenderCtx, monitorArray
 							}
 						}
 
-						// Set up and iterate over the map calling iterFunc for each appearance
 						iterCtx, iterCancel := context.WithCancel(context.Background())
 						defer iterCancel()
 						errChan := make(chan error)

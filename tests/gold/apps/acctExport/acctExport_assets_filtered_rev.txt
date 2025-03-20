@@ -1,13 +1,15 @@
-chifra export  chasewright.eth --accounting --statements --withdrawals --first_block 17048500 --last_block 18409900 --fmt json
-TEST[DATE|TIME] Addrs:  [0x0e39e47eebd12cc4d08b214a0037c63c78f1fc63]
-TEST[DATE|TIME] Statements:  true
-TEST[DATE|TIME] Withdrawals:  true
-TEST[DATE|TIME] FirstBlock:  17048500
-TEST[DATE|TIME] LastBlock:  18409900
+chifra export  0xf503017d7baf7fbc0fff7492b751025c6a78179b --accounting --assets --first_block 8860513 --last_block 8860531 --ether --fmt json --reversed --output assets_filtered_rev_out.file
+TEST[DATE|TIME] Addrs:  [0xf503017d7baf7fbc0fff7492b751025c6a78179b]
+TEST[DATE|TIME] Assets:  true
+TEST[DATE|TIME] Reversed:  true
+TEST[DATE|TIME] FirstBlock:  8860513
+TEST[DATE|TIME] LastBlock:  8860531
 TEST[DATE|TIME] Accounting:  true
+TEST[DATE|TIME] Ether:  true
+TEST[DATE|TIME] OutputFn:  assets_filtered_rev_out.file
 TEST[DATE|TIME] Caps:  cache,decache,ether
 TEST[DATE|TIME] Format:  json
-Error: Please choose only a single mode (--statements, --withdrawals, etc.)
+Error: The --reversed option is not available with the accounting options.
 Usage:
   chifra export [flags] <address> [address...] [topics...] [fourbytes...]
 
@@ -67,3 +69,6 @@ Notes:
   - The --decache option will remove all cache items (blocks, transactions, traces, etc.) for the given address(es).
   - The --withdrawals option is only available on certain chains. It is ignored otherwise.
   - The --traces option requires your RPC to provide trace data. See the README for more information.
+
+----
+Results in ./assets_filtered_rev_out.file

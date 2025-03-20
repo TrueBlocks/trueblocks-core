@@ -147,7 +147,7 @@ func (opts *ExportOptions) validateExport() error {
 
 	if len(opts.Fourbytes) > 0 {
 		if opts.Logs || opts.Receipts || opts.Appearances {
-			return validate.Usage("The {0} option is only available {1} option.", "--fourbyte", "when exporting or with the --accounting")
+			return validate.Usage("The {0} option is not available {1} options.", "--fourbyte", "with the --logs, --receipts, or --appearances")
 		}
 		for _, t := range opts.Fourbytes {
 			if !validate.IsValidFourByte(t) {
@@ -158,15 +158,15 @@ func (opts *ExportOptions) validateExport() error {
 
 	if opts.IsAccounting() {
 		if len(opts.Addrs) != 1 {
-			return validate.Usage("The {0} option allows only a single address.", "--accounting")
+			return validate.Usage("The {0} options allow only a single address.", "accounting")
 		}
 
 		if !opts.Conn.IsNodeArchive() {
-			return validate.Usage("The {0} option requires {1}.", "--accounting", "an archive node")
+			return validate.Usage("The {0} options requires {1}.", "accounting", "an archive node")
 		}
 
 		if opts.Globals.Chain != "mainnet" {
-			logger.Warn("The --accounting option reports a spotPrice of one for all assets on non-mainnet chains.")
+			logger.Warn("The accounting options report a spotPrice of 1.00 (one) for all assets on non-mainnet chains.")
 		}
 
 		if opts.Statements && opts.Transfers ||
@@ -182,11 +182,11 @@ func (opts *ExportOptions) validateExport() error {
 		}
 
 		if opts.FirstRecord != 0 {
-			return validate.Usage("The {0} option is not available with the {1} option.", "--first-record", "--accounting")
+			return validate.Usage("The {0} option is not available with the {1} options.", "--first-record", "accounting")
 		}
 
 		if opts.Reversed {
-			return validate.Usage("The {0} option is not available with the {1} option.", "--reversed", "--accounting")
+			return validate.Usage("The {0} option is not available with the {1} options.", "--reversed", "accounting")
 		}
 	} else {
 		if len(opts.Flow) > 0 {
@@ -243,7 +243,7 @@ func (opts *ExportOptions) tooMany() ([]string, bool) {
 		cnt++
 	}
 	if opts.Statements {
-		which = append(which, "--accounting")
+		which = append(which, "--statements")
 		cnt++
 	}
 	if opts.Transfers {

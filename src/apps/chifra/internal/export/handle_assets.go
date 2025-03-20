@@ -32,7 +32,6 @@ func (opts *ExportOptions) HandleAssets(rCtx *output.RenderCtx, monitorArray []m
 	}
 
 	assetMap := make(map[base.Address]types.Name)
-
 	var recon *ledger.Reconciler
 	fetchData := func(modelChan chan types.Modeler, errorChan chan error) {
 		for _, mon := range monitorArray {
@@ -87,7 +86,7 @@ func (opts *ExportOptions) HandleAssets(rCtx *output.RenderCtx, monitorArray []m
 							}
 						}
 
-						// Set up and interate over the map calling iterFunc for each appearance
+						// Set up and iterate over the map calling iterFunc for each appearance
 						iterCtx, iterCancel := context.WithCancel(context.Background())
 						defer iterCancel()
 						errChan := make(chan error)
@@ -103,6 +102,9 @@ func (opts *ExportOptions) HandleAssets(rCtx *output.RenderCtx, monitorArray []m
 						}
 
 						sort.Slice(txArray, func(i, j int) bool {
+							if opts.Reversed {
+								i, j = j, i
+							}
 							if txArray[i].BlockNumber == txArray[j].BlockNumber {
 								return txArray[i].TransactionIndex < txArray[j].TransactionIndex
 							}
@@ -121,50 +123,22 @@ func (opts *ExportOptions) HandleAssets(rCtx *output.RenderCtx, monitorArray []m
 						}
 
 						recon = ledger.NewReconciler(opts.Conn, ledgerOpts)
-						items := make([]*types.Transfer, 0, len(thisMap))
-						for _, tx := range txArray {
-							if transfers, err := recon.GetTransfers(tx); err != nil {
-								errorChan <- err
+						items, done, err := recon.GetAssets(txArray)
+						if err != nil {
+							errorChan <- err
+							return
+						}
 
-							} else if len(transfers) > 0 {
-								items = append(items, transfers...)
+						for _, item := range items {
+							if _, exists := assetMap[item.Address]; !exists {
+								assetMap[item.Address] = *item
+								modelChan <- item
 							}
 						}
 
-						sort.Slice(items, func(i, j int) bool {
-							if opts.Reversed {
-								i, j = j, i
-							}
-							return items[i].Asset.LessThan(items[j].Asset)
-						})
-
-						for _, item := range items {
-							var passes bool
-							passes, finished = filter.ApplyCountFilter()
-							if passes {
-								if _, ok := assetMap[item.Asset]; !ok {
-									// we've not seen this before -- report it
-									if name, ok := recon.Names[item.Asset]; !ok {
-										// TODO: we should use readContractAndClean (without updating
-										// TODO: the name database here.
-										// not found in global names map, build it
-										name = types.Name{
-											Address:  item.Asset,
-											Name:     item.Asset.Display(3, 3),
-											Decimals: 18,
-										}
-										modelChan <- &name
-										assetMap[item.Asset] = name
-									} else {
-										// found in asset map, send it
-										modelChan <- &name
-										assetMap[item.Asset] = name
-									}
-								}
-							}
-							if finished {
-								break
-							}
+						if done {
+							finished = true
+							break
 						}
 					}
 					bar.Finish(true /* newLine */)
