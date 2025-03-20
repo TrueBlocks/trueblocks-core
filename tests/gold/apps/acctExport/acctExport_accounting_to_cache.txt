@@ -1,8 +1,8 @@
 chifra export  0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c --accounting --statements --last_block 100 --output accounting_to_cache_out.file
 TEST[DATE|TIME] Addrs:  [0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c]
-TEST[DATE|TIME] Accounting:  true
 TEST[DATE|TIME] Statements:  true
 TEST[DATE|TIME] LastBlock:  100
+TEST[DATE|TIME] Accounting:  true
 TEST[DATE|TIME] OutputFn:  accounting_to_cache_out.file
 TEST[DATE|TIME] Caps:  cache,decache,ether
 TEST[DATE|TIME] Format:  txt

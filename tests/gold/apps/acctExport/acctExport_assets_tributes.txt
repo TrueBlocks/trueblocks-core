@@ -1,9 +1,9 @@
 chifra export  0x868b8fd259abfcfdf9634c343593b34ef359641d --accounting --assets --first_block 8769018 --last_block 8769053 --fmt json --output assets_tributes_out.file
 TEST[DATE|TIME] Addrs:  [0x868b8fd259abfcfdf9634c343593b34ef359641d]
-TEST[DATE|TIME] Accounting:  true
 TEST[DATE|TIME] Assets:  true
 TEST[DATE|TIME] FirstBlock:  8769018
 TEST[DATE|TIME] LastBlock:  8769053
+TEST[DATE|TIME] Accounting:  true
 TEST[DATE|TIME] OutputFn:  assets_tributes_out.file
 TEST[DATE|TIME] Caps:  cache,decache,ether
 TEST[DATE|TIME] Format:  json

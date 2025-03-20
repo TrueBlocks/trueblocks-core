@@ -1,11 +1,31 @@
 chifra export  0x6aED588ca2052CCFC907Db8c24dF4B7B95A29A5E --max_records 3 --accounting --fmt json --output accounting_intra_tokens_out.file
 TEST[DATE|TIME] Addrs:  [0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e]
-TEST[DATE|TIME] Accounting:  true
 TEST[DATE|TIME] MaxRecords:  3
+TEST[DATE|TIME] Accounting:  true
 TEST[DATE|TIME] OutputFn:  accounting_intra_tokens_out.file
 TEST[DATE|TIME] Caps:  cache,decache,ether
 TEST[DATE|TIME] Format:  json
 INFO[DATE|TIME] { "outputFilename": "--output_filename--" }
+TEST[DATE|TIME] 0: 13960847 66
+TEST[DATE|TIME] 1: 14218245 11
+TEST[DATE|TIME] 2: 14231553 18
+TEST[DATE|TIME] 3: 14258674 130
+TEST[DATE|TIME] 4: 14271011 355
+TEST[DATE|TIME] 5: 14271262 30
+TEST[DATE|TIME] 6: 14271515 128
+TEST[DATE|TIME] 7: 14276993 249
+TEST[DATE|TIME] 8: 14296398 98
+TEST[DATE|TIME] 9: 14304199 69
+TEST[DATE|TIME] 10: 14304289 8
+TEST[DATE|TIME] 11: 14310071 69
+TEST[DATE|TIME] 12: 14310827 166
+TEST[DATE|TIME] 13: 14316149 98
+TEST[DATE|TIME] 14: 14316157 253
+TEST[DATE|TIME] 15: 14322020 266
+TEST[DATE|TIME] 16: 14322028 199
+TEST[DATE|TIME] 17: 14323108 93
+TEST[DATE|TIME] 18: 14341057 158
+TEST[DATE|TIME] 19: 14341533 111
 TEST[DATE|TIME] 
 TEST[DATE|TIME] ------------------------------------
 TEST[DATE|TIME] ~~~ Entering: 13960847.66 ~~~
@@ -219,7 +239,7 @@ TEST[DATE|TIME] source:              uniswap
 TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] Previous:               14218245 11 ( true )
 TEST[DATE|TIME] Current:                14231553 18 ( true )
-TEST[DATE|TIME] Next:                   14231554 0 ( true )
+TEST[DATE|TIME] Next:                   14258674 130 ( true )
 TEST[DATE|TIME] accountedFor:           0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e
 TEST[DATE|TIME] sender:                 0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e  ==>  0x2e2ca259ffa7491e9222d6f7708e4a1a2b34aaef
 TEST[DATE|TIME] asset:                  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
@@ -249,266 +269,2063 @@ TEST[DATE|TIME] There were no statements generated from logs.
 TEST[DATE|TIME] ~~~ Leaving: 14231553.18 ~~~
 TEST[DATE|TIME] ------------------------------------ 1 statements generated.
 TEST[DATE|TIME] 
+TEST[DATE|TIME] 
+TEST[DATE|TIME] ------------------------------------
+TEST[DATE|TIME] ~~~ Entering: 14258674.130 ~~~
+TEST[DATE|TIME] ETH is of interest
+TEST[DATE|TIME] Attempting to reconcile at top level: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e
+TEST[DATE|TIME] XXX =============[ top-level ]======================
+TEST[DATE|TIME] XXX Case 1: Only statement in block
+TEST[DATE|TIME] XXX Block: 14258674 Tx: 130 Asset: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+TEST[DATE|TIME] XXX FirstInBlock: true, LastInBlock: true
+TEST[DATE|TIME] XXX ================================================
+TEST[DATE|TIME] =========================================================
+TEST[DATE|TIME] ===> PRICING FOR 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) using Uniswap
+TEST[DATE|TIME] =========================================================
+TEST[DATE|TIME] blockNumber:         14258674
+TEST[DATE|TIME] source1 (uni/mkr):   0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f
+TEST[DATE|TIME] str0 (call):         getPair(0x6b175474e89094c44da98b954eedeac495271d0f, 0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2)
+TEST[DATE|TIME] source2 (pair):      0xa478c2975ab1ea89e8196811f51a7b7ade33eb11
+TEST[DATE|TIME] str1 (call/data):    getReserves()
+TEST[DATE|TIME] first:               0x6b175474e89094c44da98b954eedeac495271d0f
+TEST[DATE|TIME] second:              0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2
+TEST[DATE|TIME] reversed:            false
+TEST[DATE|TIME] float0:              14980357925215561296000000
+TEST[DATE|TIME] float1:              5754334083011708314600
+TEST[DATE|TIME] float2:              1
+TEST[DATE|TIME] bigPrice:            2603.3173794065027067
+TEST[DATE|TIME] price:               2603.317379406503
+TEST[DATE|TIME] source:              uniswap
+TEST[DATE|TIME] ===================================================
+TEST[DATE|TIME] Previous:               14231553 18 ( true )
+TEST[DATE|TIME] Current:                14258674 130 ( true )
+TEST[DATE|TIME] Next:                   14271011 355 ( true )
+TEST[DATE|TIME] accountedFor:           0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e
+TEST[DATE|TIME] sender:                 0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e  ==>  0x2e2ca259ffa7491e9222d6f7708e4a1a2b34aaef
+TEST[DATE|TIME] asset:                  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
+TEST[DATE|TIME] hash:                   0x85153f1861fc5ac65ac7cc1f026895c88869bbb88e4bc86162330e15bcd691a2
+TEST[DATE|TIME] timestamp:              1645570391
+TEST[DATE|TIME] blockNumber:            14258674.130.0
+TEST[DATE|TIME] priceSource:            2603.317379406503 (uniswap)
+TEST[DATE|TIME] --------------------------------------------------- 
+TEST[DATE|TIME] Trial balance:
+TEST[DATE|TIME]    prevBal:             370.710531205713488
+TEST[DATE|TIME]    begBal:              370.710531205713488 (0)
+TEST[DATE|TIME]    totalIn:             0
+TEST[DATE|TIME]    totalOut:            5.002773671443592
+TEST[DATE|TIME]    amountNet:           -5.002773671443592
+TEST[DATE|TIME]                        ======================= 
+TEST[DATE|TIME]    endBal:              365.707757534269896 (0)
+TEST[DATE|TIME]    endBalCalc:          365.707757534269896
+TEST[DATE|TIME] --------------------------------------------------- 
+TEST[DATE|TIME]    amountOut:           5
+TEST[DATE|TIME]    gasOut:              0.002773671443592
+TEST[DATE|TIME]    material:            true
+TEST[DATE|TIME]    reconciled:          true
+TEST[DATE|TIME] ---------------------------------------------------
+TEST[DATE|TIME] Statement is material and reconciled - appending
+TEST[DATE|TIME] Extracting statements from logs.
+TEST[DATE|TIME] There were no statements generated from logs.
+TEST[DATE|TIME] ~~~ Leaving: 14258674.130 ~~~
+TEST[DATE|TIME] ------------------------------------ 1 statements generated.
+TEST[DATE|TIME] 
+TEST[DATE|TIME] 
+TEST[DATE|TIME] ------------------------------------
+TEST[DATE|TIME] ~~~ Entering: 14271011.355 ~~~
+TEST[DATE|TIME] ETH is of interest
+TEST[DATE|TIME] Attempting to reconcile at top level: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e
+TEST[DATE|TIME] XXX =============[ top-level ]======================
+TEST[DATE|TIME] XXX Case 1: Only statement in block
+TEST[DATE|TIME] XXX Block: 14271011 Tx: 355 Asset: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+TEST[DATE|TIME] XXX FirstInBlock: true, LastInBlock: true
+TEST[DATE|TIME] XXX ================================================
+TEST[DATE|TIME] =========================================================
+TEST[DATE|TIME] ===> PRICING FOR 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) using Uniswap
+TEST[DATE|TIME] =========================================================
+TEST[DATE|TIME] blockNumber:         14271011
+TEST[DATE|TIME] source1 (uni/mkr):   0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f
+TEST[DATE|TIME] str0 (call):         getPair(0x6b175474e89094c44da98b954eedeac495271d0f, 0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2)
+TEST[DATE|TIME] source2 (pair):      0xa478c2975ab1ea89e8196811f51a7b7ade33eb11
+TEST[DATE|TIME] str1 (call/data):    getReserves()
+TEST[DATE|TIME] first:               0x6b175474e89094c44da98b954eedeac495271d0f
+TEST[DATE|TIME] second:              0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2
+TEST[DATE|TIME] reversed:            false
+TEST[DATE|TIME] float0:              15124056752521465429000000
+TEST[DATE|TIME] float1:              5713234691098483623000
+TEST[DATE|TIME] float2:              1
+TEST[DATE|TIME] bigPrice:            2647.1968281095701088
+TEST[DATE|TIME] price:               2647.19682810957
+TEST[DATE|TIME] source:              uniswap
+TEST[DATE|TIME] ===================================================
+TEST[DATE|TIME] Previous:               14258674 130 ( true )
+TEST[DATE|TIME] Current:                14271011 355 ( true )
+TEST[DATE|TIME] Next:                   14271262 30 ( true )
+TEST[DATE|TIME] accountedFor:           0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e
+TEST[DATE|TIME] sender:                 0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e  ==>  0x2e554a62b0cfb8f64f96724da2f8b8d709881b81
+TEST[DATE|TIME] asset:                  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
+TEST[DATE|TIME] hash:                   0xec6c0485289a9adc3c14f0dc3d30a524bf8ccf4a201bb0ee521779c53dc25a4f
+TEST[DATE|TIME] timestamp:              1645735140
+TEST[DATE|TIME] blockNumber:            14271011.355.0
+TEST[DATE|TIME] priceSource:            2647.19682810957 (uniswap)
+TEST[DATE|TIME] --------------------------------------------------- 
+TEST[DATE|TIME] Trial balance:
+TEST[DATE|TIME]    prevBal:             365.707757534269896
+TEST[DATE|TIME]    begBal:              365.707757534269896 (0)
+TEST[DATE|TIME]    totalIn:             0
+TEST[DATE|TIME]    totalOut:            0.0074064407457346
+TEST[DATE|TIME]    amountNet:           -0.0074064407457346
+TEST[DATE|TIME]                        ======================= 
+TEST[DATE|TIME]    endBal:              365.7003510935241614 (0)
+TEST[DATE|TIME]    endBalCalc:          365.7003510935241614
+TEST[DATE|TIME] --------------------------------------------------- 
+TEST[DATE|TIME]    amountOut:           0.005
+TEST[DATE|TIME]    gasOut:              0.0024064407457346
+TEST[DATE|TIME]    material:            true
+TEST[DATE|TIME]    reconciled:          true
+TEST[DATE|TIME] ---------------------------------------------------
+TEST[DATE|TIME] Statement is material and reconciled - appending
+TEST[DATE|TIME] Extracting statements from logs.
+TEST[DATE|TIME] There were no statements generated from logs.
+TEST[DATE|TIME] ~~~ Leaving: 14271011.355 ~~~
+TEST[DATE|TIME] ------------------------------------ 1 statements generated.
+TEST[DATE|TIME] 
+TEST[DATE|TIME] 
+TEST[DATE|TIME] ------------------------------------
+TEST[DATE|TIME] ~~~ Entering: 14271262.30 ~~~
+TEST[DATE|TIME] ETH is of interest
+TEST[DATE|TIME] Attempting to reconcile at top level: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e
+TEST[DATE|TIME] XXX =============[ top-level ]======================
+TEST[DATE|TIME] XXX Case 1: Only statement in block
+TEST[DATE|TIME] XXX Block: 14271262 Tx: 30 Asset: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+TEST[DATE|TIME] XXX FirstInBlock: true, LastInBlock: true
+TEST[DATE|TIME] XXX ================================================
+TEST[DATE|TIME] =========================================================
+TEST[DATE|TIME] ===> PRICING FOR 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) using Uniswap
+TEST[DATE|TIME] =========================================================
+TEST[DATE|TIME] blockNumber:         14271262
+TEST[DATE|TIME] source1 (uni/mkr):   0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f
+TEST[DATE|TIME] str0 (call):         getPair(0x6b175474e89094c44da98b954eedeac495271d0f, 0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2)
+TEST[DATE|TIME] source2 (pair):      0xa478c2975ab1ea89e8196811f51a7b7ade33eb11
+TEST[DATE|TIME] str1 (call/data):    getReserves()
+TEST[DATE|TIME] first:               0x6b175474e89094c44da98b954eedeac495271d0f
+TEST[DATE|TIME] second:              0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2
+TEST[DATE|TIME] reversed:            false
+TEST[DATE|TIME] float0:              15107626025295544450000000
+TEST[DATE|TIME] float1:              5719513216664661746000
+TEST[DATE|TIME] float2:              1
+TEST[DATE|TIME] bigPrice:            2641.4181509848083633
+TEST[DATE|TIME] price:               2641.4181509848086
+TEST[DATE|TIME] source:              uniswap
+TEST[DATE|TIME] ===================================================
+TEST[DATE|TIME] Previous:               14271011 355 ( true )
+TEST[DATE|TIME] Current:                14271262 30 ( true )
+TEST[DATE|TIME] Next:                   14271515 128 ( true )
+TEST[DATE|TIME] accountedFor:           0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e
+TEST[DATE|TIME] sender:                 0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e  ==>  0x2e554a62b0cfb8f64f96724da2f8b8d709881b81
+TEST[DATE|TIME] asset:                  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
+TEST[DATE|TIME] hash:                   0x08b5e486fb0a0dcede5c0f11419185359e44cdadf1507492c76757b6b7e95ecb
+TEST[DATE|TIME] timestamp:              1645738120
+TEST[DATE|TIME] blockNumber:            14271262.30.0
+TEST[DATE|TIME] priceSource:            2641.4181509848086 (uniswap)
+TEST[DATE|TIME] --------------------------------------------------- 
+TEST[DATE|TIME] Trial balance:
+TEST[DATE|TIME]    prevBal:             365.7003510935241614
+TEST[DATE|TIME]    begBal:              365.7003510935241614 (0)
+TEST[DATE|TIME]    totalIn:             0
+TEST[DATE|TIME]    totalOut:            355.001884144472443245
+TEST[DATE|TIME]    amountNet:           -355.001884144472443245
+TEST[DATE|TIME]                        ======================= 
+TEST[DATE|TIME]    endBal:              10.698466949051718155 (0)
+TEST[DATE|TIME]    endBalCalc:          10.698466949051718155
+TEST[DATE|TIME] --------------------------------------------------- 
+TEST[DATE|TIME]    amountOut:           355
+TEST[DATE|TIME]    gasOut:              0.001884144472443245
+TEST[DATE|TIME]    material:            true
+TEST[DATE|TIME]    reconciled:          true
+TEST[DATE|TIME] ---------------------------------------------------
+TEST[DATE|TIME] Statement is material and reconciled - appending
+TEST[DATE|TIME] Extracting statements from logs.
+TEST[DATE|TIME] There were no statements generated from logs.
+TEST[DATE|TIME] ~~~ Leaving: 14271262.30 ~~~
+TEST[DATE|TIME] ------------------------------------ 1 statements generated.
+TEST[DATE|TIME] 
+TEST[DATE|TIME] 
+TEST[DATE|TIME] ------------------------------------
+TEST[DATE|TIME] ~~~ Entering: 14271515.128 ~~~
+TEST[DATE|TIME] ETH is of interest
+TEST[DATE|TIME] Attempting to reconcile at top level: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e
+TEST[DATE|TIME] XXX =============[ top-level ]======================
+TEST[DATE|TIME] XXX Case 1: Only statement in block
+TEST[DATE|TIME] XXX Block: 14271515 Tx: 128 Asset: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+TEST[DATE|TIME] XXX FirstInBlock: true, LastInBlock: true
+TEST[DATE|TIME] XXX ================================================
+TEST[DATE|TIME] =========================================================
+TEST[DATE|TIME] ===> PRICING FOR 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) using Uniswap
+TEST[DATE|TIME] =========================================================
+TEST[DATE|TIME] blockNumber:         14271515
+TEST[DATE|TIME] source1 (uni/mkr):   0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f
+TEST[DATE|TIME] str0 (call):         getPair(0x6b175474e89094c44da98b954eedeac495271d0f, 0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2)
+TEST[DATE|TIME] source2 (pair):      0xa478c2975ab1ea89e8196811f51a7b7ade33eb11
+TEST[DATE|TIME] str1 (call/data):    getReserves()
+TEST[DATE|TIME] first:               0x6b175474e89094c44da98b954eedeac495271d0f
+TEST[DATE|TIME] second:              0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2
+TEST[DATE|TIME] reversed:            false
+TEST[DATE|TIME] float0:              15027235501650365840000000
+TEST[DATE|TIME] float1:              5750310938585842521000
+TEST[DATE|TIME] float2:              1
+TEST[DATE|TIME] bigPrice:            2613.290944114749171
+TEST[DATE|TIME] price:               2613.290944114749
+TEST[DATE|TIME] source:              uniswap
+TEST[DATE|TIME] ===================================================
+TEST[DATE|TIME] Previous:               14271262 30 ( true )
+TEST[DATE|TIME] Current:                14271515 128 ( true )
+TEST[DATE|TIME] Next:                   14276993 249 ( true )
+TEST[DATE|TIME] accountedFor:           0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e
+TEST[DATE|TIME] sender:                 0xe081abb7d9e327e89a13e65b3e2b6fcaf2eceb97  ==>  0x0bc529c00c6401aef6d220be8c6ea1667f6ad93e
+TEST[DATE|TIME] asset:                  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
+TEST[DATE|TIME] hash:                   0x0542c4f8f837a933d6dd556830a585df49553c10563325d7b97ec51b05d7ef5e
+TEST[DATE|TIME] timestamp:              1645741808
+TEST[DATE|TIME] blockNumber:            14271515.128.0
+TEST[DATE|TIME] priceSource:            2613.290944114749 (uniswap)
+TEST[DATE|TIME] --------------------------------------------------- 
+TEST[DATE|TIME] Trial balance:
+TEST[DATE|TIME]    prevBal:             10.698466949051718155
+TEST[DATE|TIME]    begBal:              10.698466949051718155 (0)
+TEST[DATE|TIME]    totalIn:             0
+TEST[DATE|TIME]    totalOut:            0
+TEST[DATE|TIME]    amountNet:           0
+TEST[DATE|TIME]                        ======================= 
+TEST[DATE|TIME]    endBal:              10.698466949051718155 (0)
+TEST[DATE|TIME]    endBalCalc:          10.698466949051718155
+TEST[DATE|TIME] --------------------------------------------------- 
+TEST[DATE|TIME]    material:            false
+TEST[DATE|TIME]    reconciled:          true
+TEST[DATE|TIME] ---------------------------------------------------
+TEST[DATE|TIME] Statement was not material
+TEST[DATE|TIME] Extracting statements from logs.
+TEST[DATE|TIME] 1 statements generated from logs.
+TEST[DATE|TIME] XXX =============[ token ]======================
+TEST[DATE|TIME] XXX Case 1: Only statement in block
+TEST[DATE|TIME] XXX Block: 14271515 Tx: 128 Asset: 0x0bc529c00c6401aef6d220be8c6ea1667f6ad93e
+TEST[DATE|TIME] XXX FirstInBlock: true, LastInBlock: true
+TEST[DATE|TIME] XXX ================================================
+TEST[DATE|TIME] =========================================================
+TEST[DATE|TIME] ===> PRICING FOR 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) using Uniswap
+TEST[DATE|TIME] =========================================================
+TEST[DATE|TIME] blockNumber:         14271515
+TEST[DATE|TIME] source1 (uni/mkr):   0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f
+TEST[DATE|TIME] str0 (call):         getPair(0x6b175474e89094c44da98b954eedeac495271d0f, 0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2)
+TEST[DATE|TIME] source2 (pair):      0xa478c2975ab1ea89e8196811f51a7b7ade33eb11
+TEST[DATE|TIME] str1 (call/data):    getReserves()
+TEST[DATE|TIME] first:               0x6b175474e89094c44da98b954eedeac495271d0f
+TEST[DATE|TIME] second:              0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2
+TEST[DATE|TIME] reversed:            false
+TEST[DATE|TIME] float0:              15027235501650365840000000
+TEST[DATE|TIME] float1:              5750310938585842521000
+TEST[DATE|TIME] float2:              1
+TEST[DATE|TIME] bigPrice:            2613.290944114749171
+TEST[DATE|TIME] price:               2613.290944114749
+TEST[DATE|TIME] source:              uniswap
+TEST[DATE|TIME] =========================================================
+TEST[DATE|TIME] ===> PRICING FOR 0x0bc529c00c6401aef6d220be8c6ea1667f6ad93e (YFI) using Uniswap
+TEST[DATE|TIME] =========================================================
+TEST[DATE|TIME] blockNumber:         14271515
+TEST[DATE|TIME] source1 (uni/mkr):   0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f
+TEST[DATE|TIME] str0 (call):         getPair(0x0bc529c00c6401aef6d220be8c6ea1667f6ad93e, 0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2)
+TEST[DATE|TIME] source2 (pair):      0x2fdbadf3c4d5a8666bc06645b8358ab803996e28
+TEST[DATE|TIME] str1 (call/data):    getReserves()
+TEST[DATE|TIME] first:               0x0bc529c00c6401aef6d220be8c6ea1667f6ad93e
+TEST[DATE|TIME] second:              0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2
+TEST[DATE|TIME] reversed:            true
+TEST[DATE|TIME] float0:              31502650762766498252
+TEST[DATE|TIME] float1:              234593059953829676080
+TEST[DATE|TIME] float2:              2613.290944114749
+TEST[DATE|TIME] bigPrice:            0.13428637134008373272
+TEST[DATE|TIME] price:               350.9293581410712
+TEST[DATE|TIME] source:              uniswap
+TEST[DATE|TIME] ===================================================
+TEST[DATE|TIME] Previous:               14271262 30 ( true )
+TEST[DATE|TIME] Current:                14271515 128 ( true )
+TEST[DATE|TIME] Next:                   14276993 249 ( true )
+TEST[DATE|TIME] accountedFor:           0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e
+TEST[DATE|TIME] sender:                 0xe081abb7d9e327e89a13e65b3e2b6fcaf2eceb97  ==>  0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e
+TEST[DATE|TIME] asset:                  0x0bc529c00c6401aef6d220be8c6ea1667f6ad93e (YFI) decimals: 18
+TEST[DATE|TIME] hash:                   0x0542c4f8f837a933d6dd556830a585df49553c10563325d7b97ec51b05d7ef5e
+TEST[DATE|TIME] timestamp:              1645741808
+TEST[DATE|TIME] blockNumber:            14271515.128.239
+TEST[DATE|TIME] priceSource:            350.9293581410712 (uniswap)
+TEST[DATE|TIME] --------------------------------------------------- 
+TEST[DATE|TIME] Trial balance:
+TEST[DATE|TIME]    prevBal:             0.42
+TEST[DATE|TIME]    begBal:              0.42 (0)
+TEST[DATE|TIME]    totalIn:             0.00136603
+TEST[DATE|TIME]    totalOut:            0
+TEST[DATE|TIME]    amountNet:           0.00136603
+TEST[DATE|TIME]                        ======================= 
+TEST[DATE|TIME]    endBal:              0.42136603 (0)
+TEST[DATE|TIME]    endBalCalc:          0.42136603
+TEST[DATE|TIME] --------------------------------------------------- 
+TEST[DATE|TIME]    amountIn:            0.00136603
+TEST[DATE|TIME]    material:            true
+TEST[DATE|TIME]    reconciled:          true
+TEST[DATE|TIME] ---------------------------------------------------
+TEST[DATE|TIME] Statement is material - appending. reconciled: true
+TEST[DATE|TIME] ~~~ Leaving: 14271515.128 ~~~
+TEST[DATE|TIME] ------------------------------------ 1 statements generated.
+TEST[DATE|TIME] 
+TEST[DATE|TIME] 
+TEST[DATE|TIME] ------------------------------------
+TEST[DATE|TIME] ~~~ Entering: 14276993.249 ~~~
+TEST[DATE|TIME] ETH is of interest
+TEST[DATE|TIME] Attempting to reconcile at top level: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e
+TEST[DATE|TIME] XXX =============[ top-level ]======================
+TEST[DATE|TIME] XXX Case 1: Only statement in block
+TEST[DATE|TIME] XXX Block: 14276993 Tx: 249 Asset: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+TEST[DATE|TIME] XXX FirstInBlock: true, LastInBlock: true
+TEST[DATE|TIME] XXX ================================================
+TEST[DATE|TIME] =========================================================
+TEST[DATE|TIME] ===> PRICING FOR 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) using Uniswap
+TEST[DATE|TIME] =========================================================
+TEST[DATE|TIME] blockNumber:         14276993
+TEST[DATE|TIME] source1 (uni/mkr):   0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f
+TEST[DATE|TIME] str0 (call):         getPair(0x6b175474e89094c44da98b954eedeac495271d0f, 0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2)
+TEST[DATE|TIME] source2 (pair):      0xa478c2975ab1ea89e8196811f51a7b7ade33eb11
+TEST[DATE|TIME] str1 (call/data):    getReserves()
+TEST[DATE|TIME] first:               0x6b175474e89094c44da98b954eedeac495271d0f
+TEST[DATE|TIME] second:              0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2
+TEST[DATE|TIME] reversed:            false
+TEST[DATE|TIME] float0:              15225846169275790728000000
+TEST[DATE|TIME] float1:              5678387813567977109500
+TEST[DATE|TIME] float2:              1
+TEST[DATE|TIME] bigPrice:            2681.3677876835136131
+TEST[DATE|TIME] price:               2681.3677876835136
+TEST[DATE|TIME] source:              uniswap
+TEST[DATE|TIME] ===================================================
+TEST[DATE|TIME] Previous:               14271515 128 ( true )
+TEST[DATE|TIME] Current:                14276993 249 ( true )
+TEST[DATE|TIME] Next:                   14296398 98 ( true )
+TEST[DATE|TIME] accountedFor:           0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e
+TEST[DATE|TIME] sender:                 0xe081abb7d9e327e89a13e65b3e2b6fcaf2eceb97  ==>  0x0bc529c00c6401aef6d220be8c6ea1667f6ad93e
+TEST[DATE|TIME] asset:                  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
+TEST[DATE|TIME] hash:                   0xd521ef2eb459a2419ccbecf9e0c0ba0471f56997534f4a02cc95e1dc0e13b90a
+TEST[DATE|TIME] timestamp:              1645815242
+TEST[DATE|TIME] blockNumber:            14276993.249.0
+TEST[DATE|TIME] priceSource:            2681.3677876835136 (uniswap)
+TEST[DATE|TIME] --------------------------------------------------- 
+TEST[DATE|TIME] Trial balance:
+TEST[DATE|TIME]    prevBal:             10.698466949051718155
+TEST[DATE|TIME]    begBal:              10.698466949051718155 (0)
+TEST[DATE|TIME]    totalIn:             0
+TEST[DATE|TIME]    totalOut:            0
+TEST[DATE|TIME]    amountNet:           0
+TEST[DATE|TIME]                        ======================= 
+TEST[DATE|TIME]    endBal:              10.698466949051718155 (0)
+TEST[DATE|TIME]    endBalCalc:          10.698466949051718155
+TEST[DATE|TIME] --------------------------------------------------- 
+TEST[DATE|TIME]    material:            false
+TEST[DATE|TIME]    reconciled:          true
+TEST[DATE|TIME] ---------------------------------------------------
+TEST[DATE|TIME] Statement was not material
+TEST[DATE|TIME] Extracting statements from logs.
+TEST[DATE|TIME] 1 statements generated from logs.
+TEST[DATE|TIME] XXX =============[ token ]======================
+TEST[DATE|TIME] XXX Case 1: Only statement in block
+TEST[DATE|TIME] XXX Block: 14276993 Tx: 249 Asset: 0x0bc529c00c6401aef6d220be8c6ea1667f6ad93e
+TEST[DATE|TIME] XXX FirstInBlock: true, LastInBlock: true
+TEST[DATE|TIME] XXX ================================================
+TEST[DATE|TIME] =========================================================
+TEST[DATE|TIME] ===> PRICING FOR 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) using Uniswap
+TEST[DATE|TIME] =========================================================
+TEST[DATE|TIME] blockNumber:         14276993
+TEST[DATE|TIME] source1 (uni/mkr):   0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f
+TEST[DATE|TIME] str0 (call):         getPair(0x6b175474e89094c44da98b954eedeac495271d0f, 0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2)
+TEST[DATE|TIME] source2 (pair):      0xa478c2975ab1ea89e8196811f51a7b7ade33eb11
+TEST[DATE|TIME] str1 (call/data):    getReserves()
+TEST[DATE|TIME] first:               0x6b175474e89094c44da98b954eedeac495271d0f
+TEST[DATE|TIME] second:              0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2
+TEST[DATE|TIME] reversed:            false
+TEST[DATE|TIME] float0:              15225846169275790728000000
+TEST[DATE|TIME] float1:              5678387813567977109500
+TEST[DATE|TIME] float2:              1
+TEST[DATE|TIME] bigPrice:            2681.3677876835136131
+TEST[DATE|TIME] price:               2681.3677876835136
+TEST[DATE|TIME] source:              uniswap
+TEST[DATE|TIME] =========================================================
+TEST[DATE|TIME] ===> PRICING FOR 0x0bc529c00c6401aef6d220be8c6ea1667f6ad93e (YFI) using Uniswap
+TEST[DATE|TIME] =========================================================
+TEST[DATE|TIME] blockNumber:         14276993
+TEST[DATE|TIME] source1 (uni/mkr):   0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f
+TEST[DATE|TIME] str0 (call):         getPair(0x0bc529c00c6401aef6d220be8c6ea1667f6ad93e, 0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2)
+TEST[DATE|TIME] source2 (pair):      0x2fdbadf3c4d5a8666bc06645b8358ab803996e28
+TEST[DATE|TIME] str1 (call/data):    getReserves()
+TEST[DATE|TIME] first:               0x0bc529c00c6401aef6d220be8c6ea1667f6ad93e
+TEST[DATE|TIME] second:              0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2
+TEST[DATE|TIME] reversed:            true
+TEST[DATE|TIME] float0:              31796810268899157244
+TEST[DATE|TIME] float1:              232441916353775817620
+TEST[DATE|TIME] float2:              2681.3677876835136
+TEST[DATE|TIME] bigPrice:            0.13679464860591029798
+TEST[DATE|TIME] price:               366.7967642993733
+TEST[DATE|TIME] source:              uniswap
+TEST[DATE|TIME] ===================================================
+TEST[DATE|TIME] Previous:               14271515 128 ( true )
+TEST[DATE|TIME] Current:                14276993 249 ( true )
+TEST[DATE|TIME] Next:                   14296398 98 ( true )
+TEST[DATE|TIME] accountedFor:           0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e
+TEST[DATE|TIME] sender:                 0xe081abb7d9e327e89a13e65b3e2b6fcaf2eceb97  ==>  0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e
+TEST[DATE|TIME] asset:                  0x0bc529c00c6401aef6d220be8c6ea1667f6ad93e (YFI) decimals: 18
+TEST[DATE|TIME] hash:                   0xd521ef2eb459a2419ccbecf9e0c0ba0471f56997534f4a02cc95e1dc0e13b90a
+TEST[DATE|TIME] timestamp:              1645815242
+TEST[DATE|TIME] blockNumber:            14276993.249.245
+TEST[DATE|TIME] priceSource:            366.7967642993733 (uniswap)
+TEST[DATE|TIME] --------------------------------------------------- 
+TEST[DATE|TIME] Trial balance:
+TEST[DATE|TIME]    prevBal:             0.42136603
+TEST[DATE|TIME]    begBal:              0.42136603 (0)
+TEST[DATE|TIME]    totalIn:             0.07252565
+TEST[DATE|TIME]    totalOut:            0
+TEST[DATE|TIME]    amountNet:           0.07252565
+TEST[DATE|TIME]                        ======================= 
+TEST[DATE|TIME]    endBal:              0.49389168 (0)
+TEST[DATE|TIME]    endBalCalc:          0.49389168
+TEST[DATE|TIME] --------------------------------------------------- 
+TEST[DATE|TIME]    amountIn:            0.07252565
+TEST[DATE|TIME]    material:            true
+TEST[DATE|TIME]    reconciled:          true
+TEST[DATE|TIME] ---------------------------------------------------
+TEST[DATE|TIME] Statement is material - appending. reconciled: true
+TEST[DATE|TIME] ~~~ Leaving: 14276993.249 ~~~
+TEST[DATE|TIME] ------------------------------------ 1 statements generated.
+TEST[DATE|TIME] 
+TEST[DATE|TIME] 
+TEST[DATE|TIME] ------------------------------------
+TEST[DATE|TIME] ~~~ Entering: 14296398.98 ~~~
+TEST[DATE|TIME] ETH is of interest
+TEST[DATE|TIME] Attempting to reconcile at top level: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e
+TEST[DATE|TIME] XXX =============[ top-level ]======================
+TEST[DATE|TIME] XXX Case 1: Only statement in block
+TEST[DATE|TIME] XXX Block: 14296398 Tx: 98 Asset: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+TEST[DATE|TIME] XXX FirstInBlock: true, LastInBlock: true
+TEST[DATE|TIME] XXX ================================================
+TEST[DATE|TIME] =========================================================
+TEST[DATE|TIME] ===> PRICING FOR 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) using Uniswap
+TEST[DATE|TIME] =========================================================
+TEST[DATE|TIME] blockNumber:         14296398
+TEST[DATE|TIME] source1 (uni/mkr):   0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f
+TEST[DATE|TIME] str0 (call):         getPair(0x6b175474e89094c44da98b954eedeac495271d0f, 0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2)
+TEST[DATE|TIME] source2 (pair):      0xa478c2975ab1ea89e8196811f51a7b7ade33eb11
+TEST[DATE|TIME] str1 (call/data):    getReserves()
+TEST[DATE|TIME] first:               0x6b175474e89094c44da98b954eedeac495271d0f
+TEST[DATE|TIME] second:              0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2
+TEST[DATE|TIME] reversed:            false
+TEST[DATE|TIME] float0:              13189176885977835570000000
+TEST[DATE|TIME] float1:              4694271998777720718300
+TEST[DATE|TIME] float2:              1
+TEST[DATE|TIME] bigPrice:            2809.6320131027751628
+TEST[DATE|TIME] price:               2809.632013102775
+TEST[DATE|TIME] source:              uniswap
+TEST[DATE|TIME] ===================================================
+TEST[DATE|TIME] Previous:               14276993 249 ( true )
+TEST[DATE|TIME] Current:                14296398 98 ( true )
+TEST[DATE|TIME] Next:                   14304199 69 ( true )
+TEST[DATE|TIME] accountedFor:           0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e
+TEST[DATE|TIME] sender:                 0xe081abb7d9e327e89a13e65b3e2b6fcaf2eceb97  ==>  0x0bc529c00c6401aef6d220be8c6ea1667f6ad93e
+TEST[DATE|TIME] asset:                  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
+TEST[DATE|TIME] hash:                   0xe0836121c525f8452c5a99dea1da4794b3872a7ef6df43c6bc0719dbe1bc9fa2
+TEST[DATE|TIME] timestamp:              1646074703
+TEST[DATE|TIME] blockNumber:            14296398.98.0
+TEST[DATE|TIME] priceSource:            2809.632013102775 (uniswap)
+TEST[DATE|TIME] --------------------------------------------------- 
+TEST[DATE|TIME] Trial balance:
+TEST[DATE|TIME]    prevBal:             10.698466949051718155
+TEST[DATE|TIME]    begBal:              10.698466949051718155 (0)
+TEST[DATE|TIME]    totalIn:             0
+TEST[DATE|TIME]    totalOut:            0
+TEST[DATE|TIME]    amountNet:           0
+TEST[DATE|TIME]                        ======================= 
+TEST[DATE|TIME]    endBal:              10.698466949051718155 (0)
+TEST[DATE|TIME]    endBalCalc:          10.698466949051718155
+TEST[DATE|TIME] --------------------------------------------------- 
+TEST[DATE|TIME]    material:            false
+TEST[DATE|TIME]    reconciled:          true
+TEST[DATE|TIME] ---------------------------------------------------
+TEST[DATE|TIME] Statement was not material
+TEST[DATE|TIME] Extracting statements from logs.
+TEST[DATE|TIME] 1 statements generated from logs.
+TEST[DATE|TIME] XXX =============[ token ]======================
+TEST[DATE|TIME] XXX Case 1: Only statement in block
+TEST[DATE|TIME] XXX Block: 14296398 Tx: 98 Asset: 0x0bc529c00c6401aef6d220be8c6ea1667f6ad93e
+TEST[DATE|TIME] XXX FirstInBlock: true, LastInBlock: true
+TEST[DATE|TIME] XXX ================================================
+TEST[DATE|TIME] =========================================================
+TEST[DATE|TIME] ===> PRICING FOR 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) using Uniswap
+TEST[DATE|TIME] =========================================================
+TEST[DATE|TIME] blockNumber:         14296398
+TEST[DATE|TIME] source1 (uni/mkr):   0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f
+TEST[DATE|TIME] str0 (call):         getPair(0x6b175474e89094c44da98b954eedeac495271d0f, 0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2)
+TEST[DATE|TIME] source2 (pair):      0xa478c2975ab1ea89e8196811f51a7b7ade33eb11
+TEST[DATE|TIME] str1 (call/data):    getReserves()
+TEST[DATE|TIME] first:               0x6b175474e89094c44da98b954eedeac495271d0f
+TEST[DATE|TIME] second:              0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2
+TEST[DATE|TIME] reversed:            false
+TEST[DATE|TIME] float0:              13189176885977835570000000
+TEST[DATE|TIME] float1:              4694271998777720718300
+TEST[DATE|TIME] float2:              1
+TEST[DATE|TIME] bigPrice:            2809.6320131027751628
+TEST[DATE|TIME] price:               2809.632013102775
+TEST[DATE|TIME] source:              uniswap
+TEST[DATE|TIME] =========================================================
+TEST[DATE|TIME] ===> PRICING FOR 0x0bc529c00c6401aef6d220be8c6ea1667f6ad93e (YFI) using Uniswap
+TEST[DATE|TIME] =========================================================
+TEST[DATE|TIME] blockNumber:         14296398
+TEST[DATE|TIME] source1 (uni/mkr):   0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f
+TEST[DATE|TIME] str0 (call):         getPair(0x0bc529c00c6401aef6d220be8c6ea1667f6ad93e, 0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2)
+TEST[DATE|TIME] source2 (pair):      0x2fdbadf3c4d5a8666bc06645b8358ab803996e28
+TEST[DATE|TIME] str1 (call/data):    getReserves()
+TEST[DATE|TIME] first:               0x0bc529c00c6401aef6d220be8c6ea1667f6ad93e
+TEST[DATE|TIME] second:              0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2
+TEST[DATE|TIME] reversed:            true
+TEST[DATE|TIME] float0:              31824442200280417168
+TEST[DATE|TIME] float1:              232445555056762679650
+TEST[DATE|TIME] float2:              2809.632013102775
+TEST[DATE|TIME] bigPrice:            0.13691138207615525385
+TEST[DATE|TIME] price:               384.6706020393113
+TEST[DATE|TIME] source:              uniswap
+TEST[DATE|TIME] ===================================================
+TEST[DATE|TIME] Previous:               14276993 249 ( true )
+TEST[DATE|TIME] Current:                14296398 98 ( true )
+TEST[DATE|TIME] Next:                   14304199 69 ( true )
+TEST[DATE|TIME] accountedFor:           0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e
+TEST[DATE|TIME] sender:                 0xe081abb7d9e327e89a13e65b3e2b6fcaf2eceb97  ==>  0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e
+TEST[DATE|TIME] asset:                  0x0bc529c00c6401aef6d220be8c6ea1667f6ad93e (YFI) decimals: 18
+TEST[DATE|TIME] hash:                   0xe0836121c525f8452c5a99dea1da4794b3872a7ef6df43c6bc0719dbe1bc9fa2
+TEST[DATE|TIME] timestamp:              1646074703
+TEST[DATE|TIME] blockNumber:            14296398.98.142
+TEST[DATE|TIME] priceSource:            384.6706020393113 (uniswap)
+TEST[DATE|TIME] --------------------------------------------------- 
+TEST[DATE|TIME] Trial balance:
+TEST[DATE|TIME]    prevBal:             0.49389168
+TEST[DATE|TIME]    begBal:              0.49389168 (0)
+TEST[DATE|TIME]    totalIn:             0.15968197
+TEST[DATE|TIME]    totalOut:            0
+TEST[DATE|TIME]    amountNet:           0.15968197
+TEST[DATE|TIME]                        ======================= 
+TEST[DATE|TIME]    endBal:              0.65357365 (0)
+TEST[DATE|TIME]    endBalCalc:          0.65357365
+TEST[DATE|TIME] --------------------------------------------------- 
+TEST[DATE|TIME]    amountIn:            0.15968197
+TEST[DATE|TIME]    material:            true
+TEST[DATE|TIME]    reconciled:          true
+TEST[DATE|TIME] ---------------------------------------------------
+TEST[DATE|TIME] Statement is material - appending. reconciled: true
+TEST[DATE|TIME] ~~~ Leaving: 14296398.98 ~~~
+TEST[DATE|TIME] ------------------------------------ 1 statements generated.
+TEST[DATE|TIME] 
+TEST[DATE|TIME] 
+TEST[DATE|TIME] ------------------------------------
+TEST[DATE|TIME] ~~~ Entering: 14304199.69 ~~~
+TEST[DATE|TIME] ETH is of interest
+TEST[DATE|TIME] Attempting to reconcile at top level: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e
+TEST[DATE|TIME] XXX =============[ top-level ]======================
+TEST[DATE|TIME] XXX Case 1: Only statement in block
+TEST[DATE|TIME] XXX Block: 14304199 Tx: 69 Asset: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+TEST[DATE|TIME] XXX FirstInBlock: true, LastInBlock: true
+TEST[DATE|TIME] XXX ================================================
+TEST[DATE|TIME] =========================================================
+TEST[DATE|TIME] ===> PRICING FOR 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) using Uniswap
+TEST[DATE|TIME] =========================================================
+TEST[DATE|TIME] blockNumber:         14304199
+TEST[DATE|TIME] source1 (uni/mkr):   0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f
+TEST[DATE|TIME] str0 (call):         getPair(0x6b175474e89094c44da98b954eedeac495271d0f, 0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2)
+TEST[DATE|TIME] source2 (pair):      0xa478c2975ab1ea89e8196811f51a7b7ade33eb11
+TEST[DATE|TIME] str1 (call/data):    getReserves()
+TEST[DATE|TIME] first:               0x6b175474e89094c44da98b954eedeac495271d0f
+TEST[DATE|TIME] second:              0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2
+TEST[DATE|TIME] reversed:            false
+TEST[DATE|TIME] float0:              13550849375276173571000000
+TEST[DATE|TIME] float1:              4571996442504507918000
+TEST[DATE|TIME] float2:              1
+TEST[DATE|TIME] bigPrice:            2963.8801223242230556
+TEST[DATE|TIME] price:               2963.880122324223
+TEST[DATE|TIME] source:              uniswap
+TEST[DATE|TIME] ===================================================
+TEST[DATE|TIME] Previous:               14296398 98 ( true )
+TEST[DATE|TIME] Current:                14304199 69 ( true )
+TEST[DATE|TIME] Next:                   14304289 8 ( true )
+TEST[DATE|TIME] accountedFor:           0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e
+TEST[DATE|TIME] sender:                 0xe081abb7d9e327e89a13e65b3e2b6fcaf2eceb97  ==>  0xa0b73e1ff0b80914ab6fe0444e65848c4c34450b
+TEST[DATE|TIME] asset:                  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
+TEST[DATE|TIME] hash:                   0x428bc69806d9e2b5b49ffd0154c5ca85e946fbcaa2c0da126d00f5648fada254
+TEST[DATE|TIME] timestamp:              1646178247
+TEST[DATE|TIME] blockNumber:            14304199.69.0
+TEST[DATE|TIME] priceSource:            2963.880122324223 (uniswap)
+TEST[DATE|TIME] --------------------------------------------------- 
+TEST[DATE|TIME] Trial balance:
+TEST[DATE|TIME]    prevBal:             10.698466949051718155
+TEST[DATE|TIME]    begBal:              10.698466949051718155 (0)
+TEST[DATE|TIME]    totalIn:             0
+TEST[DATE|TIME]    totalOut:            0
+TEST[DATE|TIME]    amountNet:           0
+TEST[DATE|TIME]                        ======================= 
+TEST[DATE|TIME]    endBal:              10.698466949051718155 (0)
+TEST[DATE|TIME]    endBalCalc:          10.698466949051718155
+TEST[DATE|TIME] --------------------------------------------------- 
+TEST[DATE|TIME]    material:            false
+TEST[DATE|TIME]    reconciled:          true
+TEST[DATE|TIME] ---------------------------------------------------
+TEST[DATE|TIME] Statement was not material
+TEST[DATE|TIME] Extracting statements from logs.
+TEST[DATE|TIME] 1 statements generated from logs.
+TEST[DATE|TIME] XXX =============[ token ]======================
+TEST[DATE|TIME] XXX Case 1: Only statement in block
+TEST[DATE|TIME] XXX Block: 14304199 Tx: 69 Asset: 0xa0b73e1ff0b80914ab6fe0444e65848c4c34450b
+TEST[DATE|TIME] XXX FirstInBlock: true, LastInBlock: true
+TEST[DATE|TIME] XXX ================================================
+TEST[DATE|TIME] =========================================================
+TEST[DATE|TIME] ===> PRICING FOR 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) using Uniswap
+TEST[DATE|TIME] =========================================================
+TEST[DATE|TIME] blockNumber:         14304199
+TEST[DATE|TIME] source1 (uni/mkr):   0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f
+TEST[DATE|TIME] str0 (call):         getPair(0x6b175474e89094c44da98b954eedeac495271d0f, 0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2)
+TEST[DATE|TIME] source2 (pair):      0xa478c2975ab1ea89e8196811f51a7b7ade33eb11
+TEST[DATE|TIME] str1 (call/data):    getReserves()
+TEST[DATE|TIME] first:               0x6b175474e89094c44da98b954eedeac495271d0f
+TEST[DATE|TIME] second:              0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2
+TEST[DATE|TIME] reversed:            false
+TEST[DATE|TIME] float0:              13550849375276173571000000
+TEST[DATE|TIME] float1:              4571996442504507918000
+TEST[DATE|TIME] float2:              1
+TEST[DATE|TIME] bigPrice:            2963.8801223242230556
+TEST[DATE|TIME] price:               2963.880122324223
+TEST[DATE|TIME] source:              uniswap
+TEST[DATE|TIME] =========================================================
+TEST[DATE|TIME] ===> PRICING FOR 0xa0b73e1ff0b80914ab6fe0444e65848c4c34450b (CRO) using Uniswap
+TEST[DATE|TIME] =========================================================
+TEST[DATE|TIME] blockNumber:         14304199
+TEST[DATE|TIME] source1 (uni/mkr):   0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f
+TEST[DATE|TIME] str0 (call):         getPair(0xa0b73e1ff0b80914ab6fe0444e65848c4c34450b, 0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2)
+TEST[DATE|TIME] source2 (pair):      0x90704ac59e7e54632b0cc9d22573aecd7eb094ad
+TEST[DATE|TIME] str1 (call/data):    getReserves()
+TEST[DATE|TIME] first:               0xa0b73e1ff0b80914ab6fe0444e65848c4c34450b
+TEST[DATE|TIME] second:              0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2
+TEST[DATE|TIME] reversed:            true
+TEST[DATE|TIME] float0:              9183871105683
+TEST[DATE|TIME] float1:              13485074862019183852
+TEST[DATE|TIME] float2:              2963.880122324223
+TEST[DATE|TIME] bigPrice:            0.00000068103968273468343727
+TEST[DATE|TIME] price:               0.0020185199781713238
+TEST[DATE|TIME] source:              uniswap
+TEST[DATE|TIME] ===================================================
+TEST[DATE|TIME] Previous:               14296398 98 ( true )
+TEST[DATE|TIME] Current:                14304199 69 ( true )
+TEST[DATE|TIME] Next:                   14304289 8 ( true )
+TEST[DATE|TIME] accountedFor:           0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e
+TEST[DATE|TIME] sender:                 0xe081abb7d9e327e89a13e65b3e2b6fcaf2eceb97  ==>  0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e
+TEST[DATE|TIME] asset:                  0xa0b73e1ff0b80914ab6fe0444e65848c4c34450b (CRO) decimals: 8
+TEST[DATE|TIME] hash:                   0x428bc69806d9e2b5b49ffd0154c5ca85e946fbcaa2c0da126d00f5648fada254
+TEST[DATE|TIME] timestamp:              1646178247
+TEST[DATE|TIME] blockNumber:            14304199.69.168
+TEST[DATE|TIME] priceSource:            0.0020185199781713238 (uniswap)
+TEST[DATE|TIME] --------------------------------------------------- 
+TEST[DATE|TIME] Trial balance:
+TEST[DATE|TIME]    prevBal:             0
+TEST[DATE|TIME]    begBal:              0 (0)
+TEST[DATE|TIME]    totalIn:             0.000071560937101954
+TEST[DATE|TIME]    totalOut:            0
+TEST[DATE|TIME]    amountNet:           0.000071560937101954
+TEST[DATE|TIME]                        ======================= 
+TEST[DATE|TIME]    endBal:              0.000071560937101954 (0)
+TEST[DATE|TIME]    endBalCalc:          0.000071560937101954
+TEST[DATE|TIME] --------------------------------------------------- 
+TEST[DATE|TIME]    amountIn:            0.000071560937101954
+TEST[DATE|TIME]    material:            true
+TEST[DATE|TIME]    reconciled:          true
+TEST[DATE|TIME] ---------------------------------------------------
+TEST[DATE|TIME] Statement is material - appending. reconciled: true
+TEST[DATE|TIME] ~~~ Leaving: 14304199.69 ~~~
+TEST[DATE|TIME] ------------------------------------ 1 statements generated.
+TEST[DATE|TIME] 
+TEST[DATE|TIME] 
+TEST[DATE|TIME] ------------------------------------
+TEST[DATE|TIME] ~~~ Entering: 14304289.8 ~~~
+TEST[DATE|TIME] ETH is of interest
+TEST[DATE|TIME] Attempting to reconcile at top level: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e
+TEST[DATE|TIME] XXX =============[ top-level ]======================
+TEST[DATE|TIME] XXX Case 1: Only statement in block
+TEST[DATE|TIME] XXX Block: 14304289 Tx: 8 Asset: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+TEST[DATE|TIME] XXX FirstInBlock: true, LastInBlock: true
+TEST[DATE|TIME] XXX ================================================
+TEST[DATE|TIME] =========================================================
+TEST[DATE|TIME] ===> PRICING FOR 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) using Uniswap
+TEST[DATE|TIME] =========================================================
+TEST[DATE|TIME] blockNumber:         14304289
+TEST[DATE|TIME] source1 (uni/mkr):   0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f
+TEST[DATE|TIME] str0 (call):         getPair(0x6b175474e89094c44da98b954eedeac495271d0f, 0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2)
+TEST[DATE|TIME] source2 (pair):      0xa478c2975ab1ea89e8196811f51a7b7ade33eb11
+TEST[DATE|TIME] str1 (call/data):    getReserves()
+TEST[DATE|TIME] first:               0x6b175474e89094c44da98b954eedeac495271d0f
+TEST[DATE|TIME] second:              0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2
+TEST[DATE|TIME] reversed:            false
+TEST[DATE|TIME] float0:              13553288248122239329000000
+TEST[DATE|TIME] float1:              4571183720840455725300
+TEST[DATE|TIME] float2:              1
+TEST[DATE|TIME] bigPrice:            2964.9406096568654252
+TEST[DATE|TIME] price:               2964.9406096568655
+TEST[DATE|TIME] source:              uniswap
+TEST[DATE|TIME] ===================================================
+TEST[DATE|TIME] Previous:               14304199 69 ( true )
+TEST[DATE|TIME] Current:                14304289 8 ( true )
+TEST[DATE|TIME] Next:                   14310071 69 ( true )
+TEST[DATE|TIME] accountedFor:           0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e
+TEST[DATE|TIME] sender:                 0xe081abb7d9e327e89a13e65b3e2b6fcaf2eceb97  ==>  0x0bc529c00c6401aef6d220be8c6ea1667f6ad93e
+TEST[DATE|TIME] asset:                  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
+TEST[DATE|TIME] hash:                   0x2a0480cba49121e1a1bf55eb1216ad3bb543d6798238b63aa4c9461510dbb5ca
+TEST[DATE|TIME] timestamp:              1646179627
+TEST[DATE|TIME] blockNumber:            14304289.8.0
+TEST[DATE|TIME] priceSource:            2964.9406096568655 (uniswap)
+TEST[DATE|TIME] --------------------------------------------------- 
+TEST[DATE|TIME] Trial balance:
+TEST[DATE|TIME]    prevBal:             10.698466949051718155
+TEST[DATE|TIME]    begBal:              10.698466949051718155 (0)
+TEST[DATE|TIME]    totalIn:             0
+TEST[DATE|TIME]    totalOut:            0
+TEST[DATE|TIME]    amountNet:           0
+TEST[DATE|TIME]                        ======================= 
+TEST[DATE|TIME]    endBal:              10.698466949051718155 (0)
+TEST[DATE|TIME]    endBalCalc:          10.698466949051718155
+TEST[DATE|TIME] --------------------------------------------------- 
+TEST[DATE|TIME]    material:            false
+TEST[DATE|TIME]    reconciled:          true
+TEST[DATE|TIME] ---------------------------------------------------
+TEST[DATE|TIME] Statement was not material
+TEST[DATE|TIME] Extracting statements from logs.
+TEST[DATE|TIME] 1 statements generated from logs.
+TEST[DATE|TIME] XXX =============[ token ]======================
+TEST[DATE|TIME] XXX Case 1: Only statement in block
+TEST[DATE|TIME] XXX Block: 14304289 Tx: 8 Asset: 0x0bc529c00c6401aef6d220be8c6ea1667f6ad93e
+TEST[DATE|TIME] XXX FirstInBlock: true, LastInBlock: true
+TEST[DATE|TIME] XXX ================================================
+TEST[DATE|TIME] =========================================================
+TEST[DATE|TIME] ===> PRICING FOR 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) using Uniswap
+TEST[DATE|TIME] =========================================================
+TEST[DATE|TIME] blockNumber:         14304289
+TEST[DATE|TIME] source1 (uni/mkr):   0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f
+TEST[DATE|TIME] str0 (call):         getPair(0x6b175474e89094c44da98b954eedeac495271d0f, 0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2)
+TEST[DATE|TIME] source2 (pair):      0xa478c2975ab1ea89e8196811f51a7b7ade33eb11
+TEST[DATE|TIME] str1 (call/data):    getReserves()
+TEST[DATE|TIME] first:               0x6b175474e89094c44da98b954eedeac495271d0f
+TEST[DATE|TIME] second:              0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2
+TEST[DATE|TIME] reversed:            false
+TEST[DATE|TIME] float0:              13553288248122239329000000
+TEST[DATE|TIME] float1:              4571183720840455725300
+TEST[DATE|TIME] float2:              1
+TEST[DATE|TIME] bigPrice:            2964.9406096568654252
+TEST[DATE|TIME] price:               2964.9406096568655
+TEST[DATE|TIME] source:              uniswap
+TEST[DATE|TIME] =========================================================
+TEST[DATE|TIME] ===> PRICING FOR 0x0bc529c00c6401aef6d220be8c6ea1667f6ad93e (YFI) using Uniswap
+TEST[DATE|TIME] =========================================================
+TEST[DATE|TIME] blockNumber:         14304289
+TEST[DATE|TIME] source1 (uni/mkr):   0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f
+TEST[DATE|TIME] str0 (call):         getPair(0x0bc529c00c6401aef6d220be8c6ea1667f6ad93e, 0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2)
+TEST[DATE|TIME] source2 (pair):      0x2fdbadf3c4d5a8666bc06645b8358ab803996e28
+TEST[DATE|TIME] str1 (call/data):    getReserves()
+TEST[DATE|TIME] first:               0x0bc529c00c6401aef6d220be8c6ea1667f6ad93e
+TEST[DATE|TIME] second:              0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2
+TEST[DATE|TIME] reversed:            true
+TEST[DATE|TIME] float0:              31842085409616156808
+TEST[DATE|TIME] float1:              232328143557838739630
+TEST[DATE|TIME] float2:              2964.9406096568655
+TEST[DATE|TIME] bigPrice:            0.13705651378258002906
+TEST[DATE|TIME] price:               406.3644235319674
+TEST[DATE|TIME] source:              uniswap
+TEST[DATE|TIME] ===================================================
+TEST[DATE|TIME] Previous:               14304199 69 ( true )
+TEST[DATE|TIME] Current:                14304289 8 ( true )
+TEST[DATE|TIME] Next:                   14310071 69 ( true )
+TEST[DATE|TIME] accountedFor:           0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e
+TEST[DATE|TIME] sender:                 0xe081abb7d9e327e89a13e65b3e2b6fcaf2eceb97  ==>  0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e
+TEST[DATE|TIME] asset:                  0x0bc529c00c6401aef6d220be8c6ea1667f6ad93e (YFI) decimals: 18
+TEST[DATE|TIME] hash:                   0x2a0480cba49121e1a1bf55eb1216ad3bb543d6798238b63aa4c9461510dbb5ca
+TEST[DATE|TIME] timestamp:              1646179627
+TEST[DATE|TIME] blockNumber:            14304289.8.5
+TEST[DATE|TIME] priceSource:            406.3644235319674 (uniswap)
+TEST[DATE|TIME] --------------------------------------------------- 
+TEST[DATE|TIME] Trial balance:
+TEST[DATE|TIME]    prevBal:             0.65357365
+TEST[DATE|TIME]    begBal:              0.65357365 (0)
+TEST[DATE|TIME]    totalIn:             0.6075824
+TEST[DATE|TIME]    totalOut:            0
+TEST[DATE|TIME]    amountNet:           0.6075824
+TEST[DATE|TIME]                        ======================= 
+TEST[DATE|TIME]    endBal:              1.26115605 (0)
+TEST[DATE|TIME]    endBalCalc:          1.26115605
+TEST[DATE|TIME] --------------------------------------------------- 
+TEST[DATE|TIME]    amountIn:            0.6075824
+TEST[DATE|TIME]    material:            true
+TEST[DATE|TIME]    reconciled:          true
+TEST[DATE|TIME] ---------------------------------------------------
+TEST[DATE|TIME] Statement is material - appending. reconciled: true
+TEST[DATE|TIME] ~~~ Leaving: 14304289.8 ~~~
+TEST[DATE|TIME] ------------------------------------ 1 statements generated.
+TEST[DATE|TIME] 
+TEST[DATE|TIME] 
+TEST[DATE|TIME] ------------------------------------
+TEST[DATE|TIME] ~~~ Entering: 14310071.69 ~~~
+TEST[DATE|TIME] ETH is of interest
+TEST[DATE|TIME] Attempting to reconcile at top level: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e
+TEST[DATE|TIME] XXX =============[ top-level ]======================
+TEST[DATE|TIME] XXX Case 1: Only statement in block
+TEST[DATE|TIME] XXX Block: 14310071 Tx: 69 Asset: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+TEST[DATE|TIME] XXX FirstInBlock: true, LastInBlock: true
+TEST[DATE|TIME] XXX ================================================
+TEST[DATE|TIME] =========================================================
+TEST[DATE|TIME] ===> PRICING FOR 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) using Uniswap
+TEST[DATE|TIME] =========================================================
+TEST[DATE|TIME] blockNumber:         14310071
+TEST[DATE|TIME] source1 (uni/mkr):   0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f
+TEST[DATE|TIME] str0 (call):         getPair(0x6b175474e89094c44da98b954eedeac495271d0f, 0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2)
+TEST[DATE|TIME] source2 (pair):      0xa478c2975ab1ea89e8196811f51a7b7ade33eb11
+TEST[DATE|TIME] str1 (call/data):    getReserves()
+TEST[DATE|TIME] first:               0x6b175474e89094c44da98b954eedeac495271d0f
+TEST[DATE|TIME] second:              0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2
+TEST[DATE|TIME] reversed:            false
+TEST[DATE|TIME] float0:              13481248949492314607000000
+TEST[DATE|TIME] float1:              4583439817822894484500
+TEST[DATE|TIME] float2:              1
+TEST[DATE|TIME] bigPrice:            2941.2950721137262213
+TEST[DATE|TIME] price:               2941.2950721137263
+TEST[DATE|TIME] source:              uniswap
+TEST[DATE|TIME] ===================================================
+TEST[DATE|TIME] Previous:               14304289 8 ( true )
+TEST[DATE|TIME] Current:                14310071 69 ( true )
+TEST[DATE|TIME] Next:                   14310827 166 ( true )
+TEST[DATE|TIME] accountedFor:           0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e
+TEST[DATE|TIME] sender:                 0xe081abb7d9e327e89a13e65b3e2b6fcaf2eceb97  ==>  0x0bc529c00c6401aef6d220be8c6ea1667f6ad93e
+TEST[DATE|TIME] asset:                  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
+TEST[DATE|TIME] hash:                   0x73f004780c825bc01d102d4d3d21242cfe42ffd7cfd85eacc9ff521f048fb5fa
+TEST[DATE|TIME] timestamp:              1646257078
+TEST[DATE|TIME] blockNumber:            14310071.69.0
+TEST[DATE|TIME] priceSource:            2941.2950721137263 (uniswap)
+TEST[DATE|TIME] --------------------------------------------------- 
+TEST[DATE|TIME] Trial balance:
+TEST[DATE|TIME]    prevBal:             10.698466949051718155
+TEST[DATE|TIME]    begBal:              10.698466949051718155 (0)
+TEST[DATE|TIME]    totalIn:             0
+TEST[DATE|TIME]    totalOut:            0
+TEST[DATE|TIME]    amountNet:           0
+TEST[DATE|TIME]                        ======================= 
+TEST[DATE|TIME]    endBal:              10.698466949051718155 (0)
+TEST[DATE|TIME]    endBalCalc:          10.698466949051718155
+TEST[DATE|TIME] --------------------------------------------------- 
+TEST[DATE|TIME]    material:            false
+TEST[DATE|TIME]    reconciled:          true
+TEST[DATE|TIME] ---------------------------------------------------
+TEST[DATE|TIME] Statement was not material
+TEST[DATE|TIME] Extracting statements from logs.
+TEST[DATE|TIME] 1 statements generated from logs.
+TEST[DATE|TIME] XXX =============[ token ]======================
+TEST[DATE|TIME] XXX Case 1: Only statement in block
+TEST[DATE|TIME] XXX Block: 14310071 Tx: 69 Asset: 0x0bc529c00c6401aef6d220be8c6ea1667f6ad93e
+TEST[DATE|TIME] XXX FirstInBlock: true, LastInBlock: true
+TEST[DATE|TIME] XXX ================================================
+TEST[DATE|TIME] =========================================================
+TEST[DATE|TIME] ===> PRICING FOR 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) using Uniswap
+TEST[DATE|TIME] =========================================================
+TEST[DATE|TIME] blockNumber:         14310071
+TEST[DATE|TIME] source1 (uni/mkr):   0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f
+TEST[DATE|TIME] str0 (call):         getPair(0x6b175474e89094c44da98b954eedeac495271d0f, 0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2)
+TEST[DATE|TIME] source2 (pair):      0xa478c2975ab1ea89e8196811f51a7b7ade33eb11
+TEST[DATE|TIME] str1 (call/data):    getReserves()
+TEST[DATE|TIME] first:               0x6b175474e89094c44da98b954eedeac495271d0f
+TEST[DATE|TIME] second:              0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2
+TEST[DATE|TIME] reversed:            false
+TEST[DATE|TIME] float0:              13481248949492314607000000
+TEST[DATE|TIME] float1:              4583439817822894484500
+TEST[DATE|TIME] float2:              1
+TEST[DATE|TIME] bigPrice:            2941.2950721137262213
+TEST[DATE|TIME] price:               2941.2950721137263
+TEST[DATE|TIME] source:              uniswap
+TEST[DATE|TIME] =========================================================
+TEST[DATE|TIME] ===> PRICING FOR 0x0bc529c00c6401aef6d220be8c6ea1667f6ad93e (YFI) using Uniswap
+TEST[DATE|TIME] =========================================================
+TEST[DATE|TIME] blockNumber:         14310071
+TEST[DATE|TIME] source1 (uni/mkr):   0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f
+TEST[DATE|TIME] str0 (call):         getPair(0x0bc529c00c6401aef6d220be8c6ea1667f6ad93e, 0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2)
+TEST[DATE|TIME] source2 (pair):      0x2fdbadf3c4d5a8666bc06645b8358ab803996e28
+TEST[DATE|TIME] str1 (call/data):    getReserves()
+TEST[DATE|TIME] first:               0x0bc529c00c6401aef6d220be8c6ea1667f6ad93e
+TEST[DATE|TIME] second:              0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2
+TEST[DATE|TIME] reversed:            true
+TEST[DATE|TIME] float0:              31854049809558354282
+TEST[DATE|TIME] float1:              232263111760131095330
+TEST[DATE|TIME] float2:              2941.2950721137263
+TEST[DATE|TIME] bigPrice:            0.1371464007700693824
+TEST[DATE|TIME] price:               403.3880327431392
+TEST[DATE|TIME] source:              uniswap
+TEST[DATE|TIME] ===================================================
+TEST[DATE|TIME] Previous:               14304289 8 ( true )
+TEST[DATE|TIME] Current:                14310071 69 ( true )
+TEST[DATE|TIME] Next:                   14310827 166 ( true )
+TEST[DATE|TIME] accountedFor:           0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e
+TEST[DATE|TIME] sender:                 0xe081abb7d9e327e89a13e65b3e2b6fcaf2eceb97  ==>  0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e
+TEST[DATE|TIME] asset:                  0x0bc529c00c6401aef6d220be8c6ea1667f6ad93e (YFI) decimals: 18
+TEST[DATE|TIME] hash:                   0x73f004780c825bc01d102d4d3d21242cfe42ffd7cfd85eacc9ff521f048fb5fa
+TEST[DATE|TIME] timestamp:              1646257078
+TEST[DATE|TIME] blockNumber:            14310071.69.155
+TEST[DATE|TIME] priceSource:            403.3880327431392 (uniswap)
+TEST[DATE|TIME] --------------------------------------------------- 
+TEST[DATE|TIME] Trial balance:
+TEST[DATE|TIME]    prevBal:             1.26115605
+TEST[DATE|TIME]    begBal:              1.26115605 (0)
+TEST[DATE|TIME]    totalIn:             0.15937745
+TEST[DATE|TIME]    totalOut:            0
+TEST[DATE|TIME]    amountNet:           0.15937745
+TEST[DATE|TIME]                        ======================= 
+TEST[DATE|TIME]    endBal:              1.4205335 (0)
+TEST[DATE|TIME]    endBalCalc:          1.4205335
+TEST[DATE|TIME] --------------------------------------------------- 
+TEST[DATE|TIME]    amountIn:            0.15937745
+TEST[DATE|TIME]    material:            true
+TEST[DATE|TIME]    reconciled:          true
+TEST[DATE|TIME] ---------------------------------------------------
+TEST[DATE|TIME] Statement is material - appending. reconciled: true
+TEST[DATE|TIME] ~~~ Leaving: 14310071.69 ~~~
+TEST[DATE|TIME] ------------------------------------ 1 statements generated.
+TEST[DATE|TIME] 
+TEST[DATE|TIME] 
+TEST[DATE|TIME] ------------------------------------
+TEST[DATE|TIME] ~~~ Entering: 14310827.166 ~~~
+TEST[DATE|TIME] ETH is of interest
+TEST[DATE|TIME] Attempting to reconcile at top level: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e
+TEST[DATE|TIME] XXX =============[ top-level ]======================
+TEST[DATE|TIME] XXX Case 1: Only statement in block
+TEST[DATE|TIME] XXX Block: 14310827 Tx: 166 Asset: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+TEST[DATE|TIME] XXX FirstInBlock: true, LastInBlock: true
+TEST[DATE|TIME] XXX ================================================
+TEST[DATE|TIME] =========================================================
+TEST[DATE|TIME] ===> PRICING FOR 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) using Uniswap
+TEST[DATE|TIME] =========================================================
+TEST[DATE|TIME] blockNumber:         14310827
+TEST[DATE|TIME] source1 (uni/mkr):   0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f
+TEST[DATE|TIME] str0 (call):         getPair(0x6b175474e89094c44da98b954eedeac495271d0f, 0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2)
+TEST[DATE|TIME] source2 (pair):      0xa478c2975ab1ea89e8196811f51a7b7ade33eb11
+TEST[DATE|TIME] str1 (call/data):    getReserves()
+TEST[DATE|TIME] first:               0x6b175474e89094c44da98b954eedeac495271d0f
+TEST[DATE|TIME] second:              0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2
+TEST[DATE|TIME] reversed:            false
+TEST[DATE|TIME] float0:              13509389738419556500000000
+TEST[DATE|TIME] float1:              4574615449682203588400
+TEST[DATE|TIME] float2:              1
+TEST[DATE|TIME] bigPrice:            2953.1202976543192353
+TEST[DATE|TIME] price:               2953.120297654319
+TEST[DATE|TIME] source:              uniswap
+TEST[DATE|TIME] ===================================================
+TEST[DATE|TIME] Previous:               14310071 69 ( true )
+TEST[DATE|TIME] Current:                14310827 166 ( true )
+TEST[DATE|TIME] Next:                   14316149 98 ( true )
+TEST[DATE|TIME] accountedFor:           0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e
+TEST[DATE|TIME] sender:                 0xe081abb7d9e327e89a13e65b3e2b6fcaf2eceb97  ==>  0xa0b73e1ff0b80914ab6fe0444e65848c4c34450b
+TEST[DATE|TIME] asset:                  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
+TEST[DATE|TIME] hash:                   0x6e2e8adb10316b28bb8225b1eb76e1dccdbed3505e828486e20fc141796e7359
+TEST[DATE|TIME] timestamp:              1646267700
+TEST[DATE|TIME] blockNumber:            14310827.166.0
+TEST[DATE|TIME] priceSource:            2953.120297654319 (uniswap)
+TEST[DATE|TIME] --------------------------------------------------- 
+TEST[DATE|TIME] Trial balance:
+TEST[DATE|TIME]    prevBal:             10.698466949051718155
+TEST[DATE|TIME]    begBal:              10.698466949051718155 (0)
+TEST[DATE|TIME]    totalIn:             0
+TEST[DATE|TIME]    totalOut:            0
+TEST[DATE|TIME]    amountNet:           0
+TEST[DATE|TIME]                        ======================= 
+TEST[DATE|TIME]    endBal:              10.698466949051718155 (0)
+TEST[DATE|TIME]    endBalCalc:          10.698466949051718155
+TEST[DATE|TIME] --------------------------------------------------- 
+TEST[DATE|TIME]    material:            false
+TEST[DATE|TIME]    reconciled:          true
+TEST[DATE|TIME] ---------------------------------------------------
+TEST[DATE|TIME] Statement was not material
+TEST[DATE|TIME] Extracting statements from logs.
+TEST[DATE|TIME] 1 statements generated from logs.
+TEST[DATE|TIME] XXX =============[ token ]======================
+TEST[DATE|TIME] XXX Case 1: Only statement in block
+TEST[DATE|TIME] XXX Block: 14310827 Tx: 166 Asset: 0xa0b73e1ff0b80914ab6fe0444e65848c4c34450b
+TEST[DATE|TIME] XXX FirstInBlock: true, LastInBlock: true
+TEST[DATE|TIME] XXX ================================================
+TEST[DATE|TIME] =========================================================
+TEST[DATE|TIME] ===> PRICING FOR 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) using Uniswap
+TEST[DATE|TIME] =========================================================
+TEST[DATE|TIME] blockNumber:         14310827
+TEST[DATE|TIME] source1 (uni/mkr):   0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f
+TEST[DATE|TIME] str0 (call):         getPair(0x6b175474e89094c44da98b954eedeac495271d0f, 0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2)
+TEST[DATE|TIME] source2 (pair):      0xa478c2975ab1ea89e8196811f51a7b7ade33eb11
+TEST[DATE|TIME] str1 (call/data):    getReserves()
+TEST[DATE|TIME] first:               0x6b175474e89094c44da98b954eedeac495271d0f
+TEST[DATE|TIME] second:              0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2
+TEST[DATE|TIME] reversed:            false
+TEST[DATE|TIME] float0:              13509389738419556500000000
+TEST[DATE|TIME] float1:              4574615449682203588400
+TEST[DATE|TIME] float2:              1
+TEST[DATE|TIME] bigPrice:            2953.1202976543192353
+TEST[DATE|TIME] price:               2953.120297654319
+TEST[DATE|TIME] source:              uniswap
+TEST[DATE|TIME] =========================================================
+TEST[DATE|TIME] ===> PRICING FOR 0xa0b73e1ff0b80914ab6fe0444e65848c4c34450b (CRO) using Uniswap
+TEST[DATE|TIME] =========================================================
+TEST[DATE|TIME] blockNumber:         14310827
+TEST[DATE|TIME] source1 (uni/mkr):   0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f
+TEST[DATE|TIME] str0 (call):         getPair(0xa0b73e1ff0b80914ab6fe0444e65848c4c34450b, 0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2)
+TEST[DATE|TIME] source2 (pair):      0x90704ac59e7e54632b0cc9d22573aecd7eb094ad
+TEST[DATE|TIME] str1 (call/data):    getReserves()
+TEST[DATE|TIME] first:               0xa0b73e1ff0b80914ab6fe0444e65848c4c34450b
+TEST[DATE|TIME] second:              0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2
+TEST[DATE|TIME] reversed:            true
+TEST[DATE|TIME] float0:              9135515967853
+TEST[DATE|TIME] float1:              13577080605644103729
+TEST[DATE|TIME] float2:              2953.120297654319
+TEST[DATE|TIME] bigPrice:            0.00000067286305747166965393
+TEST[DATE|TIME] price:               0.0019870455525613324
+TEST[DATE|TIME] source:              uniswap
+TEST[DATE|TIME] ===================================================
+TEST[DATE|TIME] Previous:               14310071 69 ( true )
+TEST[DATE|TIME] Current:                14310827 166 ( true )
+TEST[DATE|TIME] Next:                   14316149 98 ( true )
+TEST[DATE|TIME] accountedFor:           0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e
+TEST[DATE|TIME] sender:                 0xe081abb7d9e327e89a13e65b3e2b6fcaf2eceb97  ==>  0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e
+TEST[DATE|TIME] asset:                  0xa0b73e1ff0b80914ab6fe0444e65848c4c34450b (CRO) decimals: 8
+TEST[DATE|TIME] hash:                   0x6e2e8adb10316b28bb8225b1eb76e1dccdbed3505e828486e20fc141796e7359
+TEST[DATE|TIME] timestamp:              1646267700
+TEST[DATE|TIME] blockNumber:            14310827.166.239
+TEST[DATE|TIME] priceSource:            0.0019870455525613324 (uniswap)
+TEST[DATE|TIME] --------------------------------------------------- 
+TEST[DATE|TIME] Trial balance:
+TEST[DATE|TIME]    prevBal:             0.000071560937101954
+TEST[DATE|TIME]    begBal:              0.000071560937101954 (0)
+TEST[DATE|TIME]    totalIn:             0.000012331841038995
+TEST[DATE|TIME]    totalOut:            0
+TEST[DATE|TIME]    amountNet:           0.000012331841038995
+TEST[DATE|TIME]                        ======================= 
+TEST[DATE|TIME]    endBal:              0.000083892778140949 (0)
+TEST[DATE|TIME]    endBalCalc:          0.000083892778140949
+TEST[DATE|TIME] --------------------------------------------------- 
+TEST[DATE|TIME]    amountIn:            0.000012331841038995
+TEST[DATE|TIME]    material:            true
+TEST[DATE|TIME]    reconciled:          true
+TEST[DATE|TIME] ---------------------------------------------------
+TEST[DATE|TIME] Statement is material - appending. reconciled: true
+TEST[DATE|TIME] ~~~ Leaving: 14310827.166 ~~~
+TEST[DATE|TIME] ------------------------------------ 1 statements generated.
+TEST[DATE|TIME] 
+TEST[DATE|TIME] 
+TEST[DATE|TIME] ------------------------------------
+TEST[DATE|TIME] ~~~ Entering: 14316149.98 ~~~
+TEST[DATE|TIME] ETH is of interest
+TEST[DATE|TIME] Attempting to reconcile at top level: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e
+TEST[DATE|TIME] XXX =============[ top-level ]======================
+TEST[DATE|TIME] XXX Case 1: Only statement in block
+TEST[DATE|TIME] XXX Block: 14316149 Tx: 98 Asset: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+TEST[DATE|TIME] XXX FirstInBlock: true, LastInBlock: true
+TEST[DATE|TIME] XXX ================================================
+TEST[DATE|TIME] =========================================================
+TEST[DATE|TIME] ===> PRICING FOR 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) using Uniswap
+TEST[DATE|TIME] =========================================================
+TEST[DATE|TIME] blockNumber:         14316149
+TEST[DATE|TIME] source1 (uni/mkr):   0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f
+TEST[DATE|TIME] str0 (call):         getPair(0x6b175474e89094c44da98b954eedeac495271d0f, 0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2)
+TEST[DATE|TIME] source2 (pair):      0xa478c2975ab1ea89e8196811f51a7b7ade33eb11
+TEST[DATE|TIME] str1 (call/data):    getReserves()
+TEST[DATE|TIME] first:               0x6b175474e89094c44da98b954eedeac495271d0f
+TEST[DATE|TIME] second:              0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2
+TEST[DATE|TIME] reversed:            false
+TEST[DATE|TIME] float0:              13179829166389478412000000
+TEST[DATE|TIME] float1:              4685940966844281351200
+TEST[DATE|TIME] float2:              1
+TEST[DATE|TIME] bigPrice:            2812.6323527428803226
+TEST[DATE|TIME] price:               2812.6323527428804
+TEST[DATE|TIME] source:              uniswap
+TEST[DATE|TIME] ===================================================
+TEST[DATE|TIME] Previous:               14310827 166 ( true )
+TEST[DATE|TIME] Current:                14316149 98 ( true )
+TEST[DATE|TIME] Next:                   14316157 253 ( true )
+TEST[DATE|TIME] accountedFor:           0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e
+TEST[DATE|TIME] sender:                 0xe081abb7d9e327e89a13e65b3e2b6fcaf2eceb97  ==>  0x0bc529c00c6401aef6d220be8c6ea1667f6ad93e
+TEST[DATE|TIME] asset:                  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
+TEST[DATE|TIME] hash:                   0x1965e33b6d3d52163c31908986fa46b1ee8253ccc33836802ee6169aa0ce2799
+TEST[DATE|TIME] timestamp:              1646338749
+TEST[DATE|TIME] blockNumber:            14316149.98.0
+TEST[DATE|TIME] priceSource:            2812.6323527428804 (uniswap)
+TEST[DATE|TIME] --------------------------------------------------- 
+TEST[DATE|TIME] Trial balance:
+TEST[DATE|TIME]    prevBal:             10.698466949051718155
+TEST[DATE|TIME]    begBal:              10.698466949051718155 (0)
+TEST[DATE|TIME]    totalIn:             0
+TEST[DATE|TIME]    totalOut:            0
+TEST[DATE|TIME]    amountNet:           0
+TEST[DATE|TIME]                        ======================= 
+TEST[DATE|TIME]    endBal:              10.698466949051718155 (0)
+TEST[DATE|TIME]    endBalCalc:          10.698466949051718155
+TEST[DATE|TIME] --------------------------------------------------- 
+TEST[DATE|TIME]    material:            false
+TEST[DATE|TIME]    reconciled:          true
+TEST[DATE|TIME] ---------------------------------------------------
+TEST[DATE|TIME] Statement was not material
+TEST[DATE|TIME] Extracting statements from logs.
+TEST[DATE|TIME] 1 statements generated from logs.
+TEST[DATE|TIME] XXX =============[ token ]======================
+TEST[DATE|TIME] XXX Case 1: Only statement in block
+TEST[DATE|TIME] XXX Block: 14316149 Tx: 98 Asset: 0x0bc529c00c6401aef6d220be8c6ea1667f6ad93e
+TEST[DATE|TIME] XXX FirstInBlock: true, LastInBlock: true
+TEST[DATE|TIME] XXX ================================================
+TEST[DATE|TIME] =========================================================
+TEST[DATE|TIME] ===> PRICING FOR 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) using Uniswap
+TEST[DATE|TIME] =========================================================
+TEST[DATE|TIME] blockNumber:         14316149
+TEST[DATE|TIME] source1 (uni/mkr):   0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f
+TEST[DATE|TIME] str0 (call):         getPair(0x6b175474e89094c44da98b954eedeac495271d0f, 0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2)
+TEST[DATE|TIME] source2 (pair):      0xa478c2975ab1ea89e8196811f51a7b7ade33eb11
+TEST[DATE|TIME] str1 (call/data):    getReserves()
+TEST[DATE|TIME] first:               0x6b175474e89094c44da98b954eedeac495271d0f
+TEST[DATE|TIME] second:              0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2
+TEST[DATE|TIME] reversed:            false
+TEST[DATE|TIME] float0:              13179829166389478412000000
+TEST[DATE|TIME] float1:              4685940966844281351200
+TEST[DATE|TIME] float2:              1
+TEST[DATE|TIME] bigPrice:            2812.6323527428803226
+TEST[DATE|TIME] price:               2812.6323527428804
+TEST[DATE|TIME] source:              uniswap
+TEST[DATE|TIME] =========================================================
+TEST[DATE|TIME] ===> PRICING FOR 0x0bc529c00c6401aef6d220be8c6ea1667f6ad93e (YFI) using Uniswap
+TEST[DATE|TIME] =========================================================
+TEST[DATE|TIME] blockNumber:         14316149
+TEST[DATE|TIME] source1 (uni/mkr):   0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f
+TEST[DATE|TIME] str0 (call):         getPair(0x0bc529c00c6401aef6d220be8c6ea1667f6ad93e, 0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2)
+TEST[DATE|TIME] source2 (pair):      0x2fdbadf3c4d5a8666bc06645b8358ab803996e28
+TEST[DATE|TIME] str1 (call/data):    getReserves()
+TEST[DATE|TIME] first:               0x0bc529c00c6401aef6d220be8c6ea1667f6ad93e
+TEST[DATE|TIME] second:              0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2
+TEST[DATE|TIME] reversed:            true
+TEST[DATE|TIME] float0:              31169565796333418144
+TEST[DATE|TIME] float1:              237438173586285199150
+TEST[DATE|TIME] float2:              2812.6323527428804
+TEST[DATE|TIME] bigPrice:            0.13127445063085601957
+TEST[DATE|TIME] price:               369.22676693289367
+TEST[DATE|TIME] source:              uniswap
+TEST[DATE|TIME] ===================================================
+TEST[DATE|TIME] Previous:               14310827 166 ( true )
+TEST[DATE|TIME] Current:                14316149 98 ( true )
+TEST[DATE|TIME] Next:                   14316157 253 ( true )
+TEST[DATE|TIME] accountedFor:           0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e
+TEST[DATE|TIME] sender:                 0xe081abb7d9e327e89a13e65b3e2b6fcaf2eceb97  ==>  0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e
+TEST[DATE|TIME] asset:                  0x0bc529c00c6401aef6d220be8c6ea1667f6ad93e (YFI) decimals: 18
+TEST[DATE|TIME] hash:                   0x1965e33b6d3d52163c31908986fa46b1ee8253ccc33836802ee6169aa0ce2799
+TEST[DATE|TIME] timestamp:              1646338749
+TEST[DATE|TIME] blockNumber:            14316149.98.115
+TEST[DATE|TIME] priceSource:            369.22676693289367 (uniswap)
+TEST[DATE|TIME] --------------------------------------------------- 
+TEST[DATE|TIME] Trial balance:
+TEST[DATE|TIME]    prevBal:             1.4205335
+TEST[DATE|TIME]    begBal:              1.4205335 (0)
+TEST[DATE|TIME]    totalIn:             0.07392234
+TEST[DATE|TIME]    totalOut:            0
+TEST[DATE|TIME]    amountNet:           0.07392234
+TEST[DATE|TIME]                        ======================= 
+TEST[DATE|TIME]    endBal:              1.49445584 (0)
+TEST[DATE|TIME]    endBalCalc:          1.49445584
+TEST[DATE|TIME] --------------------------------------------------- 
+TEST[DATE|TIME]    amountIn:            0.07392234
+TEST[DATE|TIME]    material:            true
+TEST[DATE|TIME]    reconciled:          true
+TEST[DATE|TIME] ---------------------------------------------------
+TEST[DATE|TIME] Statement is material - appending. reconciled: true
+TEST[DATE|TIME] ~~~ Leaving: 14316149.98 ~~~
+TEST[DATE|TIME] ------------------------------------ 1 statements generated.
+TEST[DATE|TIME] 
+TEST[DATE|TIME] 
+TEST[DATE|TIME] ------------------------------------
+TEST[DATE|TIME] ~~~ Entering: 14316157.253 ~~~
+TEST[DATE|TIME] ETH is of interest
+TEST[DATE|TIME] Attempting to reconcile at top level: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e
+TEST[DATE|TIME] XXX =============[ top-level ]======================
+TEST[DATE|TIME] XXX Case 1: Only statement in block
+TEST[DATE|TIME] XXX Block: 14316157 Tx: 253 Asset: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+TEST[DATE|TIME] XXX FirstInBlock: true, LastInBlock: true
+TEST[DATE|TIME] XXX ================================================
+TEST[DATE|TIME] =========================================================
+TEST[DATE|TIME] ===> PRICING FOR 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) using Uniswap
+TEST[DATE|TIME] =========================================================
+TEST[DATE|TIME] blockNumber:         14316157
+TEST[DATE|TIME] source1 (uni/mkr):   0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f
+TEST[DATE|TIME] str0 (call):         getPair(0x6b175474e89094c44da98b954eedeac495271d0f, 0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2)
+TEST[DATE|TIME] source2 (pair):      0xa478c2975ab1ea89e8196811f51a7b7ade33eb11
+TEST[DATE|TIME] str1 (call/data):    getReserves()
+TEST[DATE|TIME] first:               0x6b175474e89094c44da98b954eedeac495271d0f
+TEST[DATE|TIME] second:              0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2
+TEST[DATE|TIME] reversed:            false
+TEST[DATE|TIME] float0:              13179829166389478412000000
+TEST[DATE|TIME] float1:              4685940966844281351200
+TEST[DATE|TIME] float2:              1
+TEST[DATE|TIME] bigPrice:            2812.6323527428803226
+TEST[DATE|TIME] price:               2812.6323527428804
+TEST[DATE|TIME] source:              uniswap
+TEST[DATE|TIME] ===================================================
+TEST[DATE|TIME] Previous:               14316149 98 ( true )
+TEST[DATE|TIME] Current:                14316157 253 ( true )
+TEST[DATE|TIME] Next:                   14322020 266 ( true )
+TEST[DATE|TIME] accountedFor:           0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e
+TEST[DATE|TIME] sender:                 0xe081abb7d9e327e89a13e65b3e2b6fcaf2eceb97  ==>  0xa0b73e1ff0b80914ab6fe0444e65848c4c34450b
+TEST[DATE|TIME] asset:                  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
+TEST[DATE|TIME] hash:                   0xf747b87f11b03c9dbfb2fb30dc083b5199b0fee32bc4a20acbb95457c20cecae
+TEST[DATE|TIME] timestamp:              1646338826
+TEST[DATE|TIME] blockNumber:            14316157.253.0
+TEST[DATE|TIME] priceSource:            2812.6323527428804 (uniswap)
+TEST[DATE|TIME] --------------------------------------------------- 
+TEST[DATE|TIME] Trial balance:
+TEST[DATE|TIME]    prevBal:             10.698466949051718155
+TEST[DATE|TIME]    begBal:              10.698466949051718155 (0)
+TEST[DATE|TIME]    totalIn:             0
+TEST[DATE|TIME]    totalOut:            0
+TEST[DATE|TIME]    amountNet:           0
+TEST[DATE|TIME]                        ======================= 
+TEST[DATE|TIME]    endBal:              10.698466949051718155 (0)
+TEST[DATE|TIME]    endBalCalc:          10.698466949051718155
+TEST[DATE|TIME] --------------------------------------------------- 
+TEST[DATE|TIME]    material:            false
+TEST[DATE|TIME]    reconciled:          true
+TEST[DATE|TIME] ---------------------------------------------------
+TEST[DATE|TIME] Statement was not material
+TEST[DATE|TIME] Extracting statements from logs.
+TEST[DATE|TIME] 1 statements generated from logs.
+TEST[DATE|TIME] XXX =============[ token ]======================
+TEST[DATE|TIME] XXX Case 1: Only statement in block
+TEST[DATE|TIME] XXX Block: 14316157 Tx: 253 Asset: 0xa0b73e1ff0b80914ab6fe0444e65848c4c34450b
+TEST[DATE|TIME] XXX FirstInBlock: true, LastInBlock: true
+TEST[DATE|TIME] XXX ================================================
+TEST[DATE|TIME] =========================================================
+TEST[DATE|TIME] ===> PRICING FOR 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) using Uniswap
+TEST[DATE|TIME] =========================================================
+TEST[DATE|TIME] blockNumber:         14316157
+TEST[DATE|TIME] source1 (uni/mkr):   0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f
+TEST[DATE|TIME] str0 (call):         getPair(0x6b175474e89094c44da98b954eedeac495271d0f, 0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2)
+TEST[DATE|TIME] source2 (pair):      0xa478c2975ab1ea89e8196811f51a7b7ade33eb11
+TEST[DATE|TIME] str1 (call/data):    getReserves()
+TEST[DATE|TIME] first:               0x6b175474e89094c44da98b954eedeac495271d0f
+TEST[DATE|TIME] second:              0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2
+TEST[DATE|TIME] reversed:            false
+TEST[DATE|TIME] float0:              13179829166389478412000000
+TEST[DATE|TIME] float1:              4685940966844281351200
+TEST[DATE|TIME] float2:              1
+TEST[DATE|TIME] bigPrice:            2812.6323527428803226
+TEST[DATE|TIME] price:               2812.6323527428804
+TEST[DATE|TIME] source:              uniswap
+TEST[DATE|TIME] =========================================================
+TEST[DATE|TIME] ===> PRICING FOR 0xa0b73e1ff0b80914ab6fe0444e65848c4c34450b (CRO) using Uniswap
+TEST[DATE|TIME] =========================================================
+TEST[DATE|TIME] blockNumber:         14316157
+TEST[DATE|TIME] source1 (uni/mkr):   0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f
+TEST[DATE|TIME] str0 (call):         getPair(0xa0b73e1ff0b80914ab6fe0444e65848c4c34450b, 0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2)
+TEST[DATE|TIME] source2 (pair):      0x90704ac59e7e54632b0cc9d22573aecd7eb094ad
+TEST[DATE|TIME] str1 (call/data):    getReserves()
+TEST[DATE|TIME] first:               0xa0b73e1ff0b80914ab6fe0444e65848c4c34450b
+TEST[DATE|TIME] second:              0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2
+TEST[DATE|TIME] reversed:            true
+TEST[DATE|TIME] float0:              8947894196742
+TEST[DATE|TIME] float1:              13606378078969008359
+TEST[DATE|TIME] float2:              2812.6323527428804
+TEST[DATE|TIME] bigPrice:            0.00000065762498622410805915
+TEST[DATE|TIME] price:               0.0018496573122260174
+TEST[DATE|TIME] source:              uniswap
+TEST[DATE|TIME] ===================================================
+TEST[DATE|TIME] Previous:               14316149 98 ( true )
+TEST[DATE|TIME] Current:                14316157 253 ( true )
+TEST[DATE|TIME] Next:                   14322020 266 ( true )
+TEST[DATE|TIME] accountedFor:           0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e
+TEST[DATE|TIME] sender:                 0xe081abb7d9e327e89a13e65b3e2b6fcaf2eceb97  ==>  0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e
+TEST[DATE|TIME] asset:                  0xa0b73e1ff0b80914ab6fe0444e65848c4c34450b (CRO) decimals: 8
+TEST[DATE|TIME] hash:                   0xf747b87f11b03c9dbfb2fb30dc083b5199b0fee32bc4a20acbb95457c20cecae
+TEST[DATE|TIME] timestamp:              1646338826
+TEST[DATE|TIME] blockNumber:            14316157.253.420
+TEST[DATE|TIME] priceSource:            0.0018496573122260174 (uniswap)
+TEST[DATE|TIME] --------------------------------------------------- 
+TEST[DATE|TIME] Trial balance:
+TEST[DATE|TIME]    prevBal:             0.000083892778140949
+TEST[DATE|TIME]    begBal:              0.000083892778140949 (0)
+TEST[DATE|TIME]    totalIn:             0.000004864922872613
+TEST[DATE|TIME]    totalOut:            0
+TEST[DATE|TIME]    amountNet:           0.000004864922872613
+TEST[DATE|TIME]                        ======================= 
+TEST[DATE|TIME]    endBal:              0.000088757701013562 (0)
+TEST[DATE|TIME]    endBalCalc:          0.000088757701013562
+TEST[DATE|TIME] --------------------------------------------------- 
+TEST[DATE|TIME]    amountIn:            0.000004864922872613
+TEST[DATE|TIME]    material:            true
+TEST[DATE|TIME]    reconciled:          true
+TEST[DATE|TIME] ---------------------------------------------------
+TEST[DATE|TIME] Statement is material - appending. reconciled: true
+TEST[DATE|TIME] ~~~ Leaving: 14316157.253 ~~~
+TEST[DATE|TIME] ------------------------------------ 1 statements generated.
+TEST[DATE|TIME] 
+TEST[DATE|TIME] 
+TEST[DATE|TIME] ------------------------------------
+TEST[DATE|TIME] ~~~ Entering: 14322020.266 ~~~
+TEST[DATE|TIME] ETH is of interest
+TEST[DATE|TIME] Attempting to reconcile at top level: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e
+TEST[DATE|TIME] XXX =============[ top-level ]======================
+TEST[DATE|TIME] XXX Case 1: Only statement in block
+TEST[DATE|TIME] XXX Block: 14322020 Tx: 266 Asset: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+TEST[DATE|TIME] XXX FirstInBlock: true, LastInBlock: true
+TEST[DATE|TIME] XXX ================================================
+TEST[DATE|TIME] =========================================================
+TEST[DATE|TIME] ===> PRICING FOR 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) using Uniswap
+TEST[DATE|TIME] =========================================================
+TEST[DATE|TIME] blockNumber:         14322020
+TEST[DATE|TIME] source1 (uni/mkr):   0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f
+TEST[DATE|TIME] str0 (call):         getPair(0x6b175474e89094c44da98b954eedeac495271d0f, 0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2)
+TEST[DATE|TIME] source2 (pair):      0xa478c2975ab1ea89e8196811f51a7b7ade33eb11
+TEST[DATE|TIME] str1 (call/data):    getReserves()
+TEST[DATE|TIME] first:               0x6b175474e89094c44da98b954eedeac495271d0f
+TEST[DATE|TIME] second:              0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2
+TEST[DATE|TIME] reversed:            false
+TEST[DATE|TIME] float0:              12892271961334227383000000
+TEST[DATE|TIME] float1:              4792660660181700762600
+TEST[DATE|TIME] float2:              1
+TEST[DATE|TIME] bigPrice:            2690.0030850182186215
+TEST[DATE|TIME] price:               2690.003085018219
+TEST[DATE|TIME] source:              uniswap
+TEST[DATE|TIME] ===================================================
+TEST[DATE|TIME] Previous:               14316157 253 ( true )
+TEST[DATE|TIME] Current:                14322020 266 ( true )
+TEST[DATE|TIME] Next:                   14322028 199 ( true )
+TEST[DATE|TIME] accountedFor:           0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e
+TEST[DATE|TIME] sender:                 0xaca096d2e6492d7380c5d8e70d90e13eecc72dd4  ==>  0x0bc529c00c6401aef6d220be8c6ea1667f6ad93e
+TEST[DATE|TIME] asset:                  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
+TEST[DATE|TIME] hash:                   0x66cfc8ce04a1b7a3f51dd3a2782f577db94060998f4bd0bcef4aadcb4d18098a
+TEST[DATE|TIME] timestamp:              1646416755
+TEST[DATE|TIME] blockNumber:            14322020.266.0
+TEST[DATE|TIME] priceSource:            2690.003085018219 (uniswap)
+TEST[DATE|TIME] --------------------------------------------------- 
+TEST[DATE|TIME] Trial balance:
+TEST[DATE|TIME]    prevBal:             10.698466949051718155
+TEST[DATE|TIME]    begBal:              10.698466949051718155 (0)
+TEST[DATE|TIME]    totalIn:             0
+TEST[DATE|TIME]    totalOut:            0
+TEST[DATE|TIME]    amountNet:           0
+TEST[DATE|TIME]                        ======================= 
+TEST[DATE|TIME]    endBal:              10.698466949051718155 (0)
+TEST[DATE|TIME]    endBalCalc:          10.698466949051718155
+TEST[DATE|TIME] --------------------------------------------------- 
+TEST[DATE|TIME]    material:            false
+TEST[DATE|TIME]    reconciled:          true
+TEST[DATE|TIME] ---------------------------------------------------
+TEST[DATE|TIME] Statement was not material
+TEST[DATE|TIME] Extracting statements from logs.
+TEST[DATE|TIME] 1 statements generated from logs.
+TEST[DATE|TIME] XXX =============[ token ]======================
+TEST[DATE|TIME] XXX Case 1: Only statement in block
+TEST[DATE|TIME] XXX Block: 14322020 Tx: 266 Asset: 0x0bc529c00c6401aef6d220be8c6ea1667f6ad93e
+TEST[DATE|TIME] XXX FirstInBlock: true, LastInBlock: true
+TEST[DATE|TIME] XXX ================================================
+TEST[DATE|TIME] =========================================================
+TEST[DATE|TIME] ===> PRICING FOR 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) using Uniswap
+TEST[DATE|TIME] =========================================================
+TEST[DATE|TIME] blockNumber:         14322020
+TEST[DATE|TIME] source1 (uni/mkr):   0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f
+TEST[DATE|TIME] str0 (call):         getPair(0x6b175474e89094c44da98b954eedeac495271d0f, 0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2)
+TEST[DATE|TIME] source2 (pair):      0xa478c2975ab1ea89e8196811f51a7b7ade33eb11
+TEST[DATE|TIME] str1 (call/data):    getReserves()
+TEST[DATE|TIME] first:               0x6b175474e89094c44da98b954eedeac495271d0f
+TEST[DATE|TIME] second:              0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2
+TEST[DATE|TIME] reversed:            false
+TEST[DATE|TIME] float0:              12892271961334227383000000
+TEST[DATE|TIME] float1:              4792660660181700762600
+TEST[DATE|TIME] float2:              1
+TEST[DATE|TIME] bigPrice:            2690.0030850182186215
+TEST[DATE|TIME] price:               2690.003085018219
+TEST[DATE|TIME] source:              uniswap
+TEST[DATE|TIME] =========================================================
+TEST[DATE|TIME] ===> PRICING FOR 0x0bc529c00c6401aef6d220be8c6ea1667f6ad93e (YFI) using Uniswap
+TEST[DATE|TIME] =========================================================
+TEST[DATE|TIME] blockNumber:         14322020
+TEST[DATE|TIME] source1 (uni/mkr):   0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f
+TEST[DATE|TIME] str0 (call):         getPair(0x0bc529c00c6401aef6d220be8c6ea1667f6ad93e, 0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2)
+TEST[DATE|TIME] source2 (pair):      0x2fdbadf3c4d5a8666bc06645b8358ab803996e28
+TEST[DATE|TIME] str1 (call/data):    getReserves()
+TEST[DATE|TIME] first:               0x0bc529c00c6401aef6d220be8c6ea1667f6ad93e
+TEST[DATE|TIME] second:              0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2
+TEST[DATE|TIME] reversed:            true
+TEST[DATE|TIME] float0:              30841609573505220388
+TEST[DATE|TIME] float1:              239974137234543087980
+TEST[DATE|TIME] float2:              2690.003085018219
+TEST[DATE|TIME] bigPrice:            0.12852055612710303146
+TEST[DATE|TIME] price:               345.7206924701643
+TEST[DATE|TIME] source:              uniswap
+TEST[DATE|TIME] ===================================================
+TEST[DATE|TIME] Previous:               14316157 253 ( true )
+TEST[DATE|TIME] Current:                14322020 266 ( true )
+TEST[DATE|TIME] Next:                   14322028 199 ( true )
+TEST[DATE|TIME] accountedFor:           0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e
+TEST[DATE|TIME] sender:                 0xaca096d2e6492d7380c5d8e70d90e13eecc72dd4  ==>  0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e
+TEST[DATE|TIME] asset:                  0x0bc529c00c6401aef6d220be8c6ea1667f6ad93e (YFI) decimals: 18
+TEST[DATE|TIME] hash:                   0x66cfc8ce04a1b7a3f51dd3a2782f577db94060998f4bd0bcef4aadcb4d18098a
+TEST[DATE|TIME] timestamp:              1646416755
+TEST[DATE|TIME] blockNumber:            14322020.266.477
+TEST[DATE|TIME] priceSource:            345.7206924701643 (uniswap)
+TEST[DATE|TIME] --------------------------------------------------- 
+TEST[DATE|TIME] Trial balance:
+TEST[DATE|TIME]    prevBal:             1.49445584
+TEST[DATE|TIME]    begBal:              1.49445584 (0)
+TEST[DATE|TIME]    totalIn:             0.18186085
+TEST[DATE|TIME]    totalOut:            0
+TEST[DATE|TIME]    amountNet:           0.18186085
+TEST[DATE|TIME]                        ======================= 
+TEST[DATE|TIME]    endBal:              1.67631669 (0)
+TEST[DATE|TIME]    endBalCalc:          1.67631669
+TEST[DATE|TIME] --------------------------------------------------- 
+TEST[DATE|TIME]    amountIn:            0.18186085
+TEST[DATE|TIME]    material:            true
+TEST[DATE|TIME]    reconciled:          true
+TEST[DATE|TIME] ---------------------------------------------------
+TEST[DATE|TIME] Statement is material - appending. reconciled: true
+TEST[DATE|TIME] ~~~ Leaving: 14322020.266 ~~~
+TEST[DATE|TIME] ------------------------------------ 1 statements generated.
+TEST[DATE|TIME] 
+TEST[DATE|TIME] 
+TEST[DATE|TIME] ------------------------------------
+TEST[DATE|TIME] ~~~ Entering: 14322028.199 ~~~
+TEST[DATE|TIME] ETH is of interest
+TEST[DATE|TIME] Attempting to reconcile at top level: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e
+TEST[DATE|TIME] XXX =============[ top-level ]======================
+TEST[DATE|TIME] XXX Case 1: Only statement in block
+TEST[DATE|TIME] XXX Block: 14322028 Tx: 199 Asset: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+TEST[DATE|TIME] XXX FirstInBlock: true, LastInBlock: true
+TEST[DATE|TIME] XXX ================================================
+TEST[DATE|TIME] =========================================================
+TEST[DATE|TIME] ===> PRICING FOR 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) using Uniswap
+TEST[DATE|TIME] =========================================================
+TEST[DATE|TIME] blockNumber:         14322028
+TEST[DATE|TIME] source1 (uni/mkr):   0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f
+TEST[DATE|TIME] str0 (call):         getPair(0x6b175474e89094c44da98b954eedeac495271d0f, 0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2)
+TEST[DATE|TIME] source2 (pair):      0xa478c2975ab1ea89e8196811f51a7b7ade33eb11
+TEST[DATE|TIME] str1 (call/data):    getReserves()
+TEST[DATE|TIME] first:               0x6b175474e89094c44da98b954eedeac495271d0f
+TEST[DATE|TIME] second:              0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2
+TEST[DATE|TIME] reversed:            false
+TEST[DATE|TIME] float0:              12892271961334227383000000
+TEST[DATE|TIME] float1:              4792660660181700762600
+TEST[DATE|TIME] float2:              1
+TEST[DATE|TIME] bigPrice:            2690.0030850182186215
+TEST[DATE|TIME] price:               2690.003085018219
+TEST[DATE|TIME] source:              uniswap
+TEST[DATE|TIME] ===================================================
+TEST[DATE|TIME] Previous:               14322020 266 ( true )
+TEST[DATE|TIME] Current:                14322028 199 ( true )
+TEST[DATE|TIME] Next:                   14323108 93 ( true )
+TEST[DATE|TIME] accountedFor:           0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e
+TEST[DATE|TIME] sender:                 0xe081abb7d9e327e89a13e65b3e2b6fcaf2eceb97  ==>  0xa0b73e1ff0b80914ab6fe0444e65848c4c34450b
+TEST[DATE|TIME] asset:                  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
+TEST[DATE|TIME] hash:                   0x2b6026c915bb606be4806cd361531957a9e591bd0304b00a60e0cdd160d2d025
+TEST[DATE|TIME] timestamp:              1646416874
+TEST[DATE|TIME] blockNumber:            14322028.199.0
+TEST[DATE|TIME] priceSource:            2690.003085018219 (uniswap)
+TEST[DATE|TIME] --------------------------------------------------- 
+TEST[DATE|TIME] Trial balance:
+TEST[DATE|TIME]    prevBal:             10.698466949051718155
+TEST[DATE|TIME]    begBal:              10.698466949051718155 (0)
+TEST[DATE|TIME]    totalIn:             0
+TEST[DATE|TIME]    totalOut:            0
+TEST[DATE|TIME]    amountNet:           0
+TEST[DATE|TIME]                        ======================= 
+TEST[DATE|TIME]    endBal:              10.698466949051718155 (0)
+TEST[DATE|TIME]    endBalCalc:          10.698466949051718155
+TEST[DATE|TIME] --------------------------------------------------- 
+TEST[DATE|TIME]    material:            false
+TEST[DATE|TIME]    reconciled:          true
+TEST[DATE|TIME] ---------------------------------------------------
+TEST[DATE|TIME] Statement was not material
+TEST[DATE|TIME] Extracting statements from logs.
+TEST[DATE|TIME] 1 statements generated from logs.
+TEST[DATE|TIME] XXX =============[ token ]======================
+TEST[DATE|TIME] XXX Case 1: Only statement in block
+TEST[DATE|TIME] XXX Block: 14322028 Tx: 199 Asset: 0xa0b73e1ff0b80914ab6fe0444e65848c4c34450b
+TEST[DATE|TIME] XXX FirstInBlock: true, LastInBlock: true
+TEST[DATE|TIME] XXX ================================================
+TEST[DATE|TIME] =========================================================
+TEST[DATE|TIME] ===> PRICING FOR 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) using Uniswap
+TEST[DATE|TIME] =========================================================
+TEST[DATE|TIME] blockNumber:         14322028
+TEST[DATE|TIME] source1 (uni/mkr):   0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f
+TEST[DATE|TIME] str0 (call):         getPair(0x6b175474e89094c44da98b954eedeac495271d0f, 0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2)
+TEST[DATE|TIME] source2 (pair):      0xa478c2975ab1ea89e8196811f51a7b7ade33eb11
+TEST[DATE|TIME] str1 (call/data):    getReserves()
+TEST[DATE|TIME] first:               0x6b175474e89094c44da98b954eedeac495271d0f
+TEST[DATE|TIME] second:              0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2
+TEST[DATE|TIME] reversed:            false
+TEST[DATE|TIME] float0:              12892271961334227383000000
+TEST[DATE|TIME] float1:              4792660660181700762600
+TEST[DATE|TIME] float2:              1
+TEST[DATE|TIME] bigPrice:            2690.0030850182186215
+TEST[DATE|TIME] price:               2690.003085018219
+TEST[DATE|TIME] source:              uniswap
+TEST[DATE|TIME] =========================================================
+TEST[DATE|TIME] ===> PRICING FOR 0xa0b73e1ff0b80914ab6fe0444e65848c4c34450b (CRO) using Uniswap
+TEST[DATE|TIME] =========================================================
+TEST[DATE|TIME] blockNumber:         14322028
+TEST[DATE|TIME] source1 (uni/mkr):   0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f
+TEST[DATE|TIME] str0 (call):         getPair(0xa0b73e1ff0b80914ab6fe0444e65848c4c34450b, 0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2)
+TEST[DATE|TIME] source2 (pair):      0x90704ac59e7e54632b0cc9d22573aecd7eb094ad
+TEST[DATE|TIME] str1 (call/data):    getReserves()
+TEST[DATE|TIME] first:               0xa0b73e1ff0b80914ab6fe0444e65848c4c34450b
+TEST[DATE|TIME] second:              0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2
+TEST[DATE|TIME] reversed:            true
+TEST[DATE|TIME] float0:              8894430276734
+TEST[DATE|TIME] float1:              13716915025228224147
+TEST[DATE|TIME] float2:              2690.003085018219
+TEST[DATE|TIME] bigPrice:            0.00000064842789070102977457
+TEST[DATE|TIME] price:               0.0017442730263976264
+TEST[DATE|TIME] source:              uniswap
+TEST[DATE|TIME] ===================================================
+TEST[DATE|TIME] Previous:               14322020 266 ( true )
+TEST[DATE|TIME] Current:                14322028 199 ( true )
+TEST[DATE|TIME] Next:                   14323108 93 ( true )
+TEST[DATE|TIME] accountedFor:           0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e
+TEST[DATE|TIME] sender:                 0xe081abb7d9e327e89a13e65b3e2b6fcaf2eceb97  ==>  0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e
+TEST[DATE|TIME] asset:                  0xa0b73e1ff0b80914ab6fe0444e65848c4c34450b (CRO) decimals: 8
+TEST[DATE|TIME] hash:                   0x2b6026c915bb606be4806cd361531957a9e591bd0304b00a60e0cdd160d2d025
+TEST[DATE|TIME] timestamp:              1646416874
+TEST[DATE|TIME] blockNumber:            14322028.199.357
+TEST[DATE|TIME] priceSource:            0.0017442730263976264 (uniswap)
+TEST[DATE|TIME] --------------------------------------------------- 
+TEST[DATE|TIME] Trial balance:
+TEST[DATE|TIME]    prevBal:             0.000088757701013562
+TEST[DATE|TIME]    begBal:              0.000088757701013562 (0)
+TEST[DATE|TIME]    totalIn:             0.000006701343553053
+TEST[DATE|TIME]    totalOut:            0
+TEST[DATE|TIME]    amountNet:           0.000006701343553053
+TEST[DATE|TIME]                        ======================= 
+TEST[DATE|TIME]    endBal:              0.000095459044566615 (0)
+TEST[DATE|TIME]    endBalCalc:          0.000095459044566615
+TEST[DATE|TIME] --------------------------------------------------- 
+TEST[DATE|TIME]    amountIn:            0.000006701343553053
+TEST[DATE|TIME]    material:            true
+TEST[DATE|TIME]    reconciled:          true
+TEST[DATE|TIME] ---------------------------------------------------
+TEST[DATE|TIME] Statement is material - appending. reconciled: true
+TEST[DATE|TIME] ~~~ Leaving: 14322028.199 ~~~
+TEST[DATE|TIME] ------------------------------------ 1 statements generated.
+TEST[DATE|TIME] 
+TEST[DATE|TIME] 
+TEST[DATE|TIME] ------------------------------------
+TEST[DATE|TIME] ~~~ Entering: 14323108.93 ~~~
+TEST[DATE|TIME] ETH is of interest
+TEST[DATE|TIME] Attempting to reconcile at top level: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e
+TEST[DATE|TIME] XXX =============[ top-level ]======================
+TEST[DATE|TIME] XXX Case 1: Only statement in block
+TEST[DATE|TIME] XXX Block: 14323108 Tx: 93 Asset: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+TEST[DATE|TIME] XXX FirstInBlock: true, LastInBlock: true
+TEST[DATE|TIME] XXX ================================================
+TEST[DATE|TIME] =========================================================
+TEST[DATE|TIME] ===> PRICING FOR 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) using Uniswap
+TEST[DATE|TIME] =========================================================
+TEST[DATE|TIME] blockNumber:         14323108
+TEST[DATE|TIME] source1 (uni/mkr):   0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f
+TEST[DATE|TIME] str0 (call):         getPair(0x6b175474e89094c44da98b954eedeac495271d0f, 0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2)
+TEST[DATE|TIME] source2 (pair):      0xa478c2975ab1ea89e8196811f51a7b7ade33eb11
+TEST[DATE|TIME] str1 (call/data):    getReserves()
+TEST[DATE|TIME] first:               0x6b175474e89094c44da98b954eedeac495271d0f
+TEST[DATE|TIME] second:              0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2
+TEST[DATE|TIME] reversed:            false
+TEST[DATE|TIME] float0:              12709095773345606544000000
+TEST[DATE|TIME] float1:              4862055009544841135000
+TEST[DATE|TIME] float2:              1
+TEST[DATE|TIME] bigPrice:            2613.9350024621301503
+TEST[DATE|TIME] price:               2613.9350024621303
+TEST[DATE|TIME] source:              uniswap
+TEST[DATE|TIME] ===================================================
+TEST[DATE|TIME] Previous:               14322028 199 ( true )
+TEST[DATE|TIME] Current:                14323108 93 ( true )
+TEST[DATE|TIME] Next:                   14341057 158 ( true )
+TEST[DATE|TIME] accountedFor:           0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e
+TEST[DATE|TIME] sender:                 0xe081abb7d9e327e89a13e65b3e2b6fcaf2eceb97  ==>  0x95ad61b0a150d79219dcf64e1e6cc01f0b64c4ce
+TEST[DATE|TIME] asset:                  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
+TEST[DATE|TIME] hash:                   0x81866cd08eca2c7bf7bdcd370acdea8f0b57095c412704106d9ff1c25e888e6c
+TEST[DATE|TIME] timestamp:              1646431842
+TEST[DATE|TIME] blockNumber:            14323108.93.0
+TEST[DATE|TIME] priceSource:            2613.9350024621303 (uniswap)
+TEST[DATE|TIME] --------------------------------------------------- 
+TEST[DATE|TIME] Trial balance:
+TEST[DATE|TIME]    prevBal:             10.698466949051718155
+TEST[DATE|TIME]    begBal:              10.698466949051718155 (0)
+TEST[DATE|TIME]    totalIn:             0
+TEST[DATE|TIME]    totalOut:            0
+TEST[DATE|TIME]    amountNet:           0
+TEST[DATE|TIME]                        ======================= 
+TEST[DATE|TIME]    endBal:              10.698466949051718155 (0)
+TEST[DATE|TIME]    endBalCalc:          10.698466949051718155
+TEST[DATE|TIME] --------------------------------------------------- 
+TEST[DATE|TIME]    material:            false
+TEST[DATE|TIME]    reconciled:          true
+TEST[DATE|TIME] ---------------------------------------------------
+TEST[DATE|TIME] Statement was not material
+TEST[DATE|TIME] Extracting statements from logs.
+TEST[DATE|TIME] 1 statements generated from logs.
+TEST[DATE|TIME] XXX =============[ token ]======================
+TEST[DATE|TIME] XXX Case 1: Only statement in block
+TEST[DATE|TIME] XXX Block: 14323108 Tx: 93 Asset: 0x95ad61b0a150d79219dcf64e1e6cc01f0b64c4ce
+TEST[DATE|TIME] XXX FirstInBlock: true, LastInBlock: true
+TEST[DATE|TIME] XXX ================================================
+TEST[DATE|TIME] =========================================================
+TEST[DATE|TIME] ===> PRICING FOR 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) using Uniswap
+TEST[DATE|TIME] =========================================================
+TEST[DATE|TIME] blockNumber:         14323108
+TEST[DATE|TIME] source1 (uni/mkr):   0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f
+TEST[DATE|TIME] str0 (call):         getPair(0x6b175474e89094c44da98b954eedeac495271d0f, 0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2)
+TEST[DATE|TIME] source2 (pair):      0xa478c2975ab1ea89e8196811f51a7b7ade33eb11
+TEST[DATE|TIME] str1 (call/data):    getReserves()
+TEST[DATE|TIME] first:               0x6b175474e89094c44da98b954eedeac495271d0f
+TEST[DATE|TIME] second:              0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2
+TEST[DATE|TIME] reversed:            false
+TEST[DATE|TIME] float0:              12709095773345606544000000
+TEST[DATE|TIME] float1:              4862055009544841135000
+TEST[DATE|TIME] float2:              1
+TEST[DATE|TIME] bigPrice:            2613.9350024621301503
+TEST[DATE|TIME] price:               2613.9350024621303
+TEST[DATE|TIME] source:              uniswap
+TEST[DATE|TIME] =========================================================
+TEST[DATE|TIME] ===> PRICING FOR 0x95ad61b0a150d79219dcf64e1e6cc01f0b64c4ce (SHIB) using Uniswap
+TEST[DATE|TIME] =========================================================
+TEST[DATE|TIME] blockNumber:         14323108
+TEST[DATE|TIME] source1 (uni/mkr):   0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f
+TEST[DATE|TIME] str0 (call):         getPair(0x95ad61b0a150d79219dcf64e1e6cc01f0b64c4ce, 0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2)
+TEST[DATE|TIME] source2 (pair):      0x811beed0119b4afce20d2583eb608c6f7af1954f
+TEST[DATE|TIME] str1 (call/data):    getReserves()
+TEST[DATE|TIME] first:               0x95ad61b0a150d79219dcf64e1e6cc01f0b64c4ce
+TEST[DATE|TIME] second:              0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2
+TEST[DATE|TIME] reversed:            true
+TEST[DATE|TIME] float0:              93153303706777032920000000000
+TEST[DATE|TIME] float1:              840527748347987976200
+TEST[DATE|TIME] float2:              2613.9350024621303
+TEST[DATE|TIME] bigPrice:            110827160.54272429994
+TEST[DATE|TIME] price:               2.8969499416611694e+11
+TEST[DATE|TIME] source:              uniswap
+TEST[DATE|TIME] ===================================================
+TEST[DATE|TIME] Previous:               14322028 199 ( true )
+TEST[DATE|TIME] Current:                14323108 93 ( true )
+TEST[DATE|TIME] Next:                   14341057 158 ( true )
+TEST[DATE|TIME] accountedFor:           0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e
+TEST[DATE|TIME] sender:                 0xe081abb7d9e327e89a13e65b3e2b6fcaf2eceb97  ==>  0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e
+TEST[DATE|TIME] asset:                  0x95ad61b0a150d79219dcf64e1e6cc01f0b64c4ce (SHIB) decimals: 18
+TEST[DATE|TIME] hash:                   0x81866cd08eca2c7bf7bdcd370acdea8f0b57095c412704106d9ff1c25e888e6c
+TEST[DATE|TIME] timestamp:              1646431842
+TEST[DATE|TIME] blockNumber:            14323108.93.108
+TEST[DATE|TIME] priceSource:            2.8969499416611694e+11 (uniswap)
+TEST[DATE|TIME] --------------------------------------------------- 
+TEST[DATE|TIME] Trial balance:
+TEST[DATE|TIME]    prevBal:             0
+TEST[DATE|TIME]    begBal:              0 (0)
+TEST[DATE|TIME]    totalIn:             5379613000
+TEST[DATE|TIME]    totalOut:            0
+TEST[DATE|TIME]    amountNet:           5379613000
+TEST[DATE|TIME]                        ======================= 
+TEST[DATE|TIME]    endBal:              5379613000 (0)
+TEST[DATE|TIME]    endBalCalc:          5379613000
+TEST[DATE|TIME] --------------------------------------------------- 
+TEST[DATE|TIME]    amountIn:            5379613000
+TEST[DATE|TIME]    material:            true
+TEST[DATE|TIME]    reconciled:          true
+TEST[DATE|TIME] ---------------------------------------------------
+TEST[DATE|TIME] Statement is material - appending. reconciled: true
+TEST[DATE|TIME] ~~~ Leaving: 14323108.93 ~~~
+TEST[DATE|TIME] ------------------------------------ 1 statements generated.
+TEST[DATE|TIME] 
+TEST[DATE|TIME] 
+TEST[DATE|TIME] ------------------------------------
+TEST[DATE|TIME] ~~~ Entering: 14341057.158 ~~~
+TEST[DATE|TIME] ETH is of interest
+TEST[DATE|TIME] Attempting to reconcile at top level: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e
+TEST[DATE|TIME] XXX =============[ top-level ]======================
+TEST[DATE|TIME] XXX Case 1: Only statement in block
+TEST[DATE|TIME] XXX Block: 14341057 Tx: 158 Asset: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+TEST[DATE|TIME] XXX FirstInBlock: true, LastInBlock: true
+TEST[DATE|TIME] XXX ================================================
+TEST[DATE|TIME] =========================================================
+TEST[DATE|TIME] ===> PRICING FOR 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) using Uniswap
+TEST[DATE|TIME] =========================================================
+TEST[DATE|TIME] blockNumber:         14341057
+TEST[DATE|TIME] source1 (uni/mkr):   0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f
+TEST[DATE|TIME] str0 (call):         getPair(0x6b175474e89094c44da98b954eedeac495271d0f, 0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2)
+TEST[DATE|TIME] source2 (pair):      0xa478c2975ab1ea89e8196811f51a7b7ade33eb11
+TEST[DATE|TIME] str1 (call/data):    getReserves()
+TEST[DATE|TIME] first:               0x6b175474e89094c44da98b954eedeac495271d0f
+TEST[DATE|TIME] second:              0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2
+TEST[DATE|TIME] reversed:            false
+TEST[DATE|TIME] float0:              12617932221538000835000000
+TEST[DATE|TIME] float1:              4896301105314152760300
+TEST[DATE|TIME] float2:              1
+TEST[DATE|TIME] bigPrice:            2577.0335504577630814
+TEST[DATE|TIME] price:               2577.033550457763
+TEST[DATE|TIME] source:              uniswap
+TEST[DATE|TIME] ===================================================
+TEST[DATE|TIME] Previous:               14323108 93 ( true )
+TEST[DATE|TIME] Current:                14341057 158 ( true )
+TEST[DATE|TIME] Next:                   14341533 111 ( true )
+TEST[DATE|TIME] accountedFor:           0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e
+TEST[DATE|TIME] sender:                 0xe081abb7d9e327e89a13e65b3e2b6fcaf2eceb97  ==>  0x0bc529c00c6401aef6d220be8c6ea1667f6ad93e
+TEST[DATE|TIME] asset:                  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
+TEST[DATE|TIME] hash:                   0x1c8353958e28d5c39336bed322ff5f0f65aab37c006393f7c18701b2eb2a3707
+TEST[DATE|TIME] timestamp:              1646673952
+TEST[DATE|TIME] blockNumber:            14341057.158.0
+TEST[DATE|TIME] priceSource:            2577.033550457763 (uniswap)
+TEST[DATE|TIME] --------------------------------------------------- 
+TEST[DATE|TIME] Trial balance:
+TEST[DATE|TIME]    prevBal:             10.698466949051718155
+TEST[DATE|TIME]    begBal:              10.698466949051718155 (0)
+TEST[DATE|TIME]    totalIn:             0
+TEST[DATE|TIME]    totalOut:            0
+TEST[DATE|TIME]    amountNet:           0
+TEST[DATE|TIME]                        ======================= 
+TEST[DATE|TIME]    endBal:              10.698466949051718155 (0)
+TEST[DATE|TIME]    endBalCalc:          10.698466949051718155
+TEST[DATE|TIME] --------------------------------------------------- 
+TEST[DATE|TIME]    material:            false
+TEST[DATE|TIME]    reconciled:          true
+TEST[DATE|TIME] ---------------------------------------------------
+TEST[DATE|TIME] Statement was not material
+TEST[DATE|TIME] Extracting statements from logs.
+TEST[DATE|TIME] 1 statements generated from logs.
+TEST[DATE|TIME] XXX =============[ token ]======================
+TEST[DATE|TIME] XXX Case 1: Only statement in block
+TEST[DATE|TIME] XXX Block: 14341057 Tx: 158 Asset: 0x0bc529c00c6401aef6d220be8c6ea1667f6ad93e
+TEST[DATE|TIME] XXX FirstInBlock: true, LastInBlock: true
+TEST[DATE|TIME] XXX ================================================
+TEST[DATE|TIME] =========================================================
+TEST[DATE|TIME] ===> PRICING FOR 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) using Uniswap
+TEST[DATE|TIME] =========================================================
+TEST[DATE|TIME] blockNumber:         14341057
+TEST[DATE|TIME] source1 (uni/mkr):   0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f
+TEST[DATE|TIME] str0 (call):         getPair(0x6b175474e89094c44da98b954eedeac495271d0f, 0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2)
+TEST[DATE|TIME] source2 (pair):      0xa478c2975ab1ea89e8196811f51a7b7ade33eb11
+TEST[DATE|TIME] str1 (call/data):    getReserves()
+TEST[DATE|TIME] first:               0x6b175474e89094c44da98b954eedeac495271d0f
+TEST[DATE|TIME] second:              0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2
+TEST[DATE|TIME] reversed:            false
+TEST[DATE|TIME] float0:              12617932221538000835000000
+TEST[DATE|TIME] float1:              4896301105314152760300
+TEST[DATE|TIME] float2:              1
+TEST[DATE|TIME] bigPrice:            2577.0335504577630814
+TEST[DATE|TIME] price:               2577.033550457763
+TEST[DATE|TIME] source:              uniswap
+TEST[DATE|TIME] =========================================================
+TEST[DATE|TIME] ===> PRICING FOR 0x0bc529c00c6401aef6d220be8c6ea1667f6ad93e (YFI) using Uniswap
+TEST[DATE|TIME] =========================================================
+TEST[DATE|TIME] blockNumber:         14341057
+TEST[DATE|TIME] source1 (uni/mkr):   0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f
+TEST[DATE|TIME] str0 (call):         getPair(0x0bc529c00c6401aef6d220be8c6ea1667f6ad93e, 0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2)
+TEST[DATE|TIME] source2 (pair):      0x2fdbadf3c4d5a8666bc06645b8358ab803996e28
+TEST[DATE|TIME] str1 (call/data):    getReserves()
+TEST[DATE|TIME] first:               0x0bc529c00c6401aef6d220be8c6ea1667f6ad93e
+TEST[DATE|TIME] second:              0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2
+TEST[DATE|TIME] reversed:            true
+TEST[DATE|TIME] float0:              32919146403909491894
+TEST[DATE|TIME] float1:              242422532636740067740
+TEST[DATE|TIME] float2:              2577.033550457763
+TEST[DATE|TIME] bigPrice:            0.13579243664299738684
+TEST[DATE|TIME] price:               349.9416651274144
+TEST[DATE|TIME] source:              uniswap
+TEST[DATE|TIME] ===================================================
+TEST[DATE|TIME] Previous:               14323108 93 ( true )
+TEST[DATE|TIME] Current:                14341057 158 ( true )
+TEST[DATE|TIME] Next:                   14341533 111 ( true )
+TEST[DATE|TIME] accountedFor:           0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e
+TEST[DATE|TIME] sender:                 0xe081abb7d9e327e89a13e65b3e2b6fcaf2eceb97  ==>  0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e
+TEST[DATE|TIME] asset:                  0x0bc529c00c6401aef6d220be8c6ea1667f6ad93e (YFI) decimals: 18
+TEST[DATE|TIME] hash:                   0x1c8353958e28d5c39336bed322ff5f0f65aab37c006393f7c18701b2eb2a3707
+TEST[DATE|TIME] timestamp:              1646673952
+TEST[DATE|TIME] blockNumber:            14341057.158.145
+TEST[DATE|TIME] priceSource:            349.9416651274144 (uniswap)
+TEST[DATE|TIME] --------------------------------------------------- 
+TEST[DATE|TIME] Trial balance:
+TEST[DATE|TIME]    prevBal:             1.67631669
+TEST[DATE|TIME]    begBal:              1.67631669 (0)
+TEST[DATE|TIME]    totalIn:             0.44102665
+TEST[DATE|TIME]    totalOut:            0
+TEST[DATE|TIME]    amountNet:           0.44102665
+TEST[DATE|TIME]                        ======================= 
+TEST[DATE|TIME]    endBal:              2.11734334 (0)
+TEST[DATE|TIME]    endBalCalc:          2.11734334
+TEST[DATE|TIME] --------------------------------------------------- 
+TEST[DATE|TIME]    amountIn:            0.44102665
+TEST[DATE|TIME]    material:            true
+TEST[DATE|TIME]    reconciled:          true
+TEST[DATE|TIME] ---------------------------------------------------
+TEST[DATE|TIME] Statement is material - appending. reconciled: true
+TEST[DATE|TIME] ~~~ Leaving: 14341057.158 ~~~
+TEST[DATE|TIME] ------------------------------------ 1 statements generated.
+TEST[DATE|TIME] 
+TEST[DATE|TIME] 
+TEST[DATE|TIME] ------------------------------------
+TEST[DATE|TIME] ~~~ Entering: 14341533.111 ~~~
+TEST[DATE|TIME] ETH is of interest
+TEST[DATE|TIME] Attempting to reconcile at top level: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e
+TEST[DATE|TIME] XXX =============[ top-level ]======================
+TEST[DATE|TIME] XXX Case 1: Only statement in block
+TEST[DATE|TIME] XXX Block: 14341533 Tx: 111 Asset: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+TEST[DATE|TIME] XXX FirstInBlock: true, LastInBlock: true
+TEST[DATE|TIME] XXX ================================================
+TEST[DATE|TIME] =========================================================
+TEST[DATE|TIME] ===> PRICING FOR 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) using Uniswap
+TEST[DATE|TIME] =========================================================
+TEST[DATE|TIME] blockNumber:         14341533
+TEST[DATE|TIME] source1 (uni/mkr):   0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f
+TEST[DATE|TIME] str0 (call):         getPair(0x6b175474e89094c44da98b954eedeac495271d0f, 0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2)
+TEST[DATE|TIME] source2 (pair):      0xa478c2975ab1ea89e8196811f51a7b7ade33eb11
+TEST[DATE|TIME] str1 (call/data):    getReserves()
+TEST[DATE|TIME] first:               0x6b175474e89094c44da98b954eedeac495271d0f
+TEST[DATE|TIME] second:              0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2
+TEST[DATE|TIME] reversed:            false
+TEST[DATE|TIME] float0:              12487706707171550394000000
+TEST[DATE|TIME] float1:              4947570433223828941000
+TEST[DATE|TIME] float2:              1
+TEST[DATE|TIME] bigPrice:            2524.0078692592923388
+TEST[DATE|TIME] price:               2524.0078692592924
+TEST[DATE|TIME] source:              uniswap
+TEST[DATE|TIME] ===================================================
+TEST[DATE|TIME] Previous:               14341057 158 ( true )
+TEST[DATE|TIME] Current:                14341533 111 ( true )
+TEST[DATE|TIME] Next:                   14341534 0 ( true )
+TEST[DATE|TIME] accountedFor:           0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e
+TEST[DATE|TIME] sender:                 0xe081abb7d9e327e89a13e65b3e2b6fcaf2eceb97  ==>  0xa0b73e1ff0b80914ab6fe0444e65848c4c34450b
+TEST[DATE|TIME] asset:                  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
+TEST[DATE|TIME] hash:                   0x51c5cadbd054741d9a1962c1e3a938cb193af315ebb13d7749fcb2fbd9bdb947
+TEST[DATE|TIME] timestamp:              1646680324
+TEST[DATE|TIME] blockNumber:            14341533.111.0
+TEST[DATE|TIME] priceSource:            2524.0078692592924 (uniswap)
+TEST[DATE|TIME] --------------------------------------------------- 
+TEST[DATE|TIME] Trial balance:
+TEST[DATE|TIME]    prevBal:             10.698466949051718155
+TEST[DATE|TIME]    begBal:              10.698466949051718155 (0)
+TEST[DATE|TIME]    totalIn:             0
+TEST[DATE|TIME]    totalOut:            0
+TEST[DATE|TIME]    amountNet:           0
+TEST[DATE|TIME]                        ======================= 
+TEST[DATE|TIME]    endBal:              10.698466949051718155 (0)
+TEST[DATE|TIME]    endBalCalc:          10.698466949051718155
+TEST[DATE|TIME] --------------------------------------------------- 
+TEST[DATE|TIME]    material:            false
+TEST[DATE|TIME]    reconciled:          true
+TEST[DATE|TIME] ---------------------------------------------------
+TEST[DATE|TIME] Statement was not material
+TEST[DATE|TIME] Extracting statements from logs.
+TEST[DATE|TIME] 1 statements generated from logs.
+TEST[DATE|TIME] XXX =============[ token ]======================
+TEST[DATE|TIME] XXX Case 1: Only statement in block
+TEST[DATE|TIME] XXX Block: 14341533 Tx: 111 Asset: 0xa0b73e1ff0b80914ab6fe0444e65848c4c34450b
+TEST[DATE|TIME] XXX FirstInBlock: true, LastInBlock: true
+TEST[DATE|TIME] XXX ================================================
+TEST[DATE|TIME] =========================================================
+TEST[DATE|TIME] ===> PRICING FOR 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) using Uniswap
+TEST[DATE|TIME] =========================================================
+TEST[DATE|TIME] blockNumber:         14341533
+TEST[DATE|TIME] source1 (uni/mkr):   0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f
+TEST[DATE|TIME] str0 (call):         getPair(0x6b175474e89094c44da98b954eedeac495271d0f, 0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2)
+TEST[DATE|TIME] source2 (pair):      0xa478c2975ab1ea89e8196811f51a7b7ade33eb11
+TEST[DATE|TIME] str1 (call/data):    getReserves()
+TEST[DATE|TIME] first:               0x6b175474e89094c44da98b954eedeac495271d0f
+TEST[DATE|TIME] second:              0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2
+TEST[DATE|TIME] reversed:            false
+TEST[DATE|TIME] float0:              12487706707171550394000000
+TEST[DATE|TIME] float1:              4947570433223828941000
+TEST[DATE|TIME] float2:              1
+TEST[DATE|TIME] bigPrice:            2524.0078692592923388
+TEST[DATE|TIME] price:               2524.0078692592924
+TEST[DATE|TIME] source:              uniswap
+TEST[DATE|TIME] =========================================================
+TEST[DATE|TIME] ===> PRICING FOR 0xa0b73e1ff0b80914ab6fe0444e65848c4c34450b (CRO) using Uniswap
+TEST[DATE|TIME] =========================================================
+TEST[DATE|TIME] blockNumber:         14341533
+TEST[DATE|TIME] source1 (uni/mkr):   0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f
+TEST[DATE|TIME] str0 (call):         getPair(0xa0b73e1ff0b80914ab6fe0444e65848c4c34450b, 0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2)
+TEST[DATE|TIME] source2 (pair):      0x90704ac59e7e54632b0cc9d22573aecd7eb094ad
+TEST[DATE|TIME] str1 (call/data):    getReserves()
+TEST[DATE|TIME] first:               0xa0b73e1ff0b80914ab6fe0444e65848c4c34450b
+TEST[DATE|TIME] second:              0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2
+TEST[DATE|TIME] reversed:            true
+TEST[DATE|TIME] float0:              9043459908433
+TEST[DATE|TIME] float1:              13576454053364840690
+TEST[DATE|TIME] float2:              2524.0078692592924
+TEST[DATE|TIME] bigPrice:            0.000000666113542820972023
+TEST[DATE|TIME] price:               0.00168127582390032
+TEST[DATE|TIME] source:              uniswap
+TEST[DATE|TIME] ===================================================
+TEST[DATE|TIME] Previous:               14341057 158 ( true )
+TEST[DATE|TIME] Current:                14341533 111 ( true )
+TEST[DATE|TIME] Next:                   14341534 0 ( true )
+TEST[DATE|TIME] accountedFor:           0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e
+TEST[DATE|TIME] sender:                 0xe081abb7d9e327e89a13e65b3e2b6fcaf2eceb97  ==>  0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e
+TEST[DATE|TIME] asset:                  0xa0b73e1ff0b80914ab6fe0444e65848c4c34450b (CRO) decimals: 8
+TEST[DATE|TIME] hash:                   0x51c5cadbd054741d9a1962c1e3a938cb193af315ebb13d7749fcb2fbd9bdb947
+TEST[DATE|TIME] timestamp:              1646680324
+TEST[DATE|TIME] blockNumber:            14341533.111.265
+TEST[DATE|TIME] priceSource:            0.00168127582390032 (uniswap)
+TEST[DATE|TIME] --------------------------------------------------- 
+TEST[DATE|TIME] Trial balance:
+TEST[DATE|TIME]    prevBal:             0.000095459044566615
+TEST[DATE|TIME]    begBal:              0.000095459044566615 (0)
+TEST[DATE|TIME]    totalIn:             0.000024372280012899
+TEST[DATE|TIME]    totalOut:            0
+TEST[DATE|TIME]    amountNet:           0.000024372280012899
+TEST[DATE|TIME]                        ======================= 
+TEST[DATE|TIME]    endBal:              0.000119831324579514 (0)
+TEST[DATE|TIME]    endBalCalc:          0.000119831324579514
+TEST[DATE|TIME] --------------------------------------------------- 
+TEST[DATE|TIME]    amountIn:            0.000024372280012899
+TEST[DATE|TIME]    material:            true
+TEST[DATE|TIME]    reconciled:          true
+TEST[DATE|TIME] ---------------------------------------------------
+TEST[DATE|TIME] Statement is material - appending. reconciled: true
+TEST[DATE|TIME] ~~~ Leaving: 14341533.111 ~~~
+TEST[DATE|TIME] ------------------------------------ 1 statements generated.
+TEST[DATE|TIME] 
 ----
 Results in ./accounting_intra_tokens_out.file
 {
   "data": [
     {
-      "blockHash": "0x2e7ea264d8021855db3e7eafcba0612539baa743dd2ae1f09c9328c2022576b8",
+      "accountedFor": "0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e",
+      "amountIn": "371714047500000000000",
+      "amountNet": "371714047500000000000",
+      "amountOut": "0",
+      "asset": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+      "assetName": "ETH",
+      "begBal": "0",
+      "begBalDiff": "0",
       "blockNumber": 13960847,
+      "correctAmountIn": "0",
+      "correctAmountOut": "0",
+      "correctBegBalIn": "0",
+      "correctBegBalOut": "0",
+      "correctEndBalIn": "0",
+      "correctEndBalOut": "0",
+      "correctingReasons": "",
       "date": "2022-01-07 21:52:17 UTC",
-      "ether": "371.7140475",
-      "from": "0xe081abb7d9e327e89a13e65b3e2b6fcaf2eceb97",
-      "gas": 21000,
-      "gasCost": 2623412541141000,
-      "gasPrice": 124924406721,
-      "gasUsed": 21000,
-      "hash": "0x9d185a97a8825e220e2574a9cd0406c6a03b3215e91bebdcf7e159b37df91643",
-      "maxFeePerGas": 147181980798,
-      "maxPriorityFeePerGas": 2000000000,
-      "nonce": 6218,
-      "receipt": {
-        "contractAddress": "0x0",
-        "effectiveGasPrice": 124924406721,
-        "gasUsed": 21000,
-        "logs": [],
-        "status": 1
-      },
-      "statements": [
-        {
-          "accountedFor": "0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e",
-          "amountIn": "371714047500000000000",
-          "amountNet": "371714047500000000000",
-          "amountOut": "0",
-          "asset": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
-          "begBal": "0",
-          "begBalDiff": "0",
-          "blockNumber": 13960847,
-          "correctAmountIn": "0",
-          "correctAmountOut": "0",
-          "correctBegBalIn": "0",
-          "correctBegBalOut": "0",
-          "correctEndBalIn": "0",
-          "correctEndBalOut": "0",
-          "correctingReasons": "",
-          "date": "2022-01-07 21:52:17 UTC",
-          "decimals": 18,
-          "endBal": "371714047500000000000",
-          "endBalCalc": "371714047500000000000",
-          "endBalDiff": "0",
-          "gasOut": "0",
-          "internalIn": "0",
-          "internalOut": "0",
-          "logIndex": 0,
-          "minerBaseRewardIn": "0",
-          "minerNephewRewardIn": "0",
-          "minerTxFeeIn": "0",
-          "minerUncleRewardIn": "0",
-          "prefundIn": "0",
-          "prevBal": "0",
-          "priceSource": "uniswap",
-          "recipient": "0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e",
-          "reconciled": true,
-          "selfDestructIn": "0",
-          "selfDestructOut": "0",
-          "sender": "0xe081abb7d9e327e89a13e65b3e2b6fcaf2eceb97",
-          "spotPrice": 3209.6174517192276,
-          "symbol": "WEI",
-          "timestamp": 1641592337,
-          "totalIn": "371714047500000000000",
-          "totalOut": "0",
-          "transactionHash": "0x9d185a97a8825e220e2574a9cd0406c6a03b3215e91bebdcf7e159b37df91643",
-          "transactionIndex": 66
-        }
-      ],
+      "decimals": 18,
+      "endBal": "371714047500000000000",
+      "endBalCalc": "371714047500000000000",
+      "endBalDiff": "0",
+      "gasOut": "0",
+      "internalIn": "0",
+      "internalOut": "0",
+      "logIndex": 0,
+      "minerBaseRewardIn": "0",
+      "minerNephewRewardIn": "0",
+      "minerTxFeeIn": "0",
+      "minerUncleRewardIn": "0",
+      "prefundIn": "0",
+      "prevBal": "0",
+      "priceSource": "uniswap",
+      "recipient": "0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e",
+      "reconciled": true,
+      "selfDestructIn": "0",
+      "selfDestructOut": "0",
+      "sender": "0xe081abb7d9e327e89a13e65b3e2b6fcaf2eceb97",
+      "spotPrice": 3209.6174517192276,
+      "symbol": "WEI",
       "timestamp": 1641592337,
-      "to": "0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e",
-      "traces": [],
-      "transactionIndex": 66,
-      "type": "0x2",
-      "value": "371714047500000000000"
+      "totalIn": "371714047500000000000",
+      "totalOut": "0",
+      "transactionHash": "0x9d185a97a8825e220e2574a9cd0406c6a03b3215e91bebdcf7e159b37df91643",
+      "transactionIndex": 66
     },
     {
-      "articulatedTx": {
-        "inputs": {
-          "amount": "420000000000000000",
-          "recipient": "0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e"
-        },
-        "name": "transfer",
-        "outputs": {
-          "val_0": null
-        }
-      },
-      "blockHash": "0xa2534d70a72d26b809522d2b91b642ba39974285b7e8848c50a4bfc66ae0d20f",
+      "accountedFor": "0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e",
+      "amountIn": "420000000000000000",
+      "amountNet": "420000000000000000",
+      "amountOut": "0",
+      "asset": "0x0bc529c00c6401aef6d220be8c6ea1667f6ad93e",
+      "assetName": "yearn.finance",
+      "begBal": "0",
+      "begBalDiff": "0",
       "blockNumber": 14218245,
+      "correctAmountIn": "0",
+      "correctAmountOut": "0",
+      "correctBegBalIn": "0",
+      "correctBegBalOut": "0",
+      "correctEndBalIn": "0",
+      "correctEndBalOut": "0",
+      "correctingReasons": "",
       "date": "2022-02-16 16:37:18 UTC",
-      "ether": "0",
-      "from": "0xaca096d2e6492d7380c5d8e70d90e13eecc72dd4",
-      "gas": 120000,
-      "gasCost": 6767454956110048,
-      "gasPrice": 130686214972,
-      "gasUsed": 51784,
-      "hasToken": true,
-      "hash": "0x3d630cf5a1626382924429d936d1b95d5e31be1ead3773f490b9fb0e95497ce4",
-      "input": "0xa9059cbb0000000000000000000000006aed588ca2052ccfc907db8c24df4b7b95a29a5e00000000000000000000000000000000000000000000000005d423c655aa0000",
-      "maxFeePerGas": 178873234746,
-      "maxPriorityFeePerGas": 2500000000,
-      "nonce": 1844,
-      "receipt": {
-        "contractAddress": "0x0",
-        "effectiveGasPrice": 130686214972,
-        "gasUsed": 51784,
-        "logs": [
-          {
-            "address": "0x0bc529c00c6401aef6d220be8c6ea1667f6ad93e",
-            "articulatedLog": {
-              "inputs": {
-                "_amount": "420000000000000000",
-                "_from": "0xaca096d2e6492d7380c5d8e70d90e13eecc72dd4",
-                "_to": "0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e"
-              },
-              "name": "Transfer"
-            },
-            "data": "0x00000000000000000000000000000000000000000000000005d423c655aa0000",
-            "date": "2022-02-16 16:37:18 UTC",
-            "logIndex": 3,
-            "timestamp": 1645029438,
-            "topics": [
-              "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef",
-              "0x000000000000000000000000aca096d2e6492d7380c5d8e70d90e13eecc72dd4",
-              "0x0000000000000000000000006aed588ca2052ccfc907db8c24df4b7b95a29a5e"
-            ]
-          }
-        ],
-        "status": 1
-      },
-      "statements": [
-        {
-          "accountedFor": "0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e",
-          "amountIn": "420000000000000000",
-          "amountNet": "420000000000000000",
-          "amountOut": "0",
-          "asset": "0x0bc529c00c6401aef6d220be8c6ea1667f6ad93e",
-          "begBal": "0",
-          "begBalDiff": "0",
-          "blockNumber": 14218245,
-          "correctAmountIn": "0",
-          "correctAmountOut": "0",
-          "correctBegBalIn": "0",
-          "correctBegBalOut": "0",
-          "correctEndBalIn": "0",
-          "correctEndBalOut": "0",
-          "correctingReasons": "",
-          "date": "2022-02-16 16:37:18 UTC",
-          "decimals": 18,
-          "endBal": "420000000000000000",
-          "endBalCalc": "420000000000000000",
-          "endBalDiff": "0",
-          "gasOut": "0",
-          "internalIn": "0",
-          "internalOut": "0",
-          "logIndex": 3,
-          "minerBaseRewardIn": "0",
-          "minerNephewRewardIn": "0",
-          "minerTxFeeIn": "0",
-          "minerUncleRewardIn": "0",
-          "prefundIn": "0",
-          "prevBal": "0",
-          "priceSource": "uniswap",
-          "recipient": "0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e",
-          "reconciled": true,
-          "selfDestructIn": "0",
-          "selfDestructOut": "0",
-          "sender": "0xaca096d2e6492d7380c5d8e70d90e13eecc72dd4",
-          "spotPrice": 407.2052624224116,
-          "symbol": "YFI",
-          "timestamp": 1645029438,
-          "totalIn": "420000000000000000",
-          "totalOut": "0",
-          "transactionHash": "0x3d630cf5a1626382924429d936d1b95d5e31be1ead3773f490b9fb0e95497ce4",
-          "transactionIndex": 11
-        }
-      ],
+      "decimals": 18,
+      "endBal": "420000000000000000",
+      "endBalCalc": "420000000000000000",
+      "endBalDiff": "0",
+      "gasOut": "0",
+      "internalIn": "0",
+      "internalOut": "0",
+      "logIndex": 3,
+      "minerBaseRewardIn": "0",
+      "minerNephewRewardIn": "0",
+      "minerTxFeeIn": "0",
+      "minerUncleRewardIn": "0",
+      "prefundIn": "0",
+      "prevBal": "0",
+      "priceSource": "uniswap",
+      "recipient": "0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e",
+      "reconciled": true,
+      "selfDestructIn": "0",
+      "selfDestructOut": "0",
+      "sender": "0xaca096d2e6492d7380c5d8e70d90e13eecc72dd4",
+      "spotPrice": 407.2052624224116,
+      "symbol": "YFI",
       "timestamp": 1645029438,
-      "to": "0x0bc529c00c6401aef6d220be8c6ea1667f6ad93e",
-      "traces": [],
-      "transactionIndex": 11,
-      "type": "0x2",
-      "value": "0"
+      "totalIn": "420000000000000000",
+      "totalOut": "0",
+      "transactionHash": "0x3d630cf5a1626382924429d936d1b95d5e31be1ead3773f490b9fb0e95497ce4",
+      "transactionIndex": 11
     },
     {
-      "blockHash": "0xd3be839365b69d5b036ce830e49b47a1c46f27749111c1f1a886458f7adbf8f7",
+      "accountedFor": "0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e",
+      "amountIn": "0",
+      "amountNet": "-1003516294286512000",
+      "amountOut": "1000000000000000000",
+      "asset": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+      "assetName": "ETH",
+      "begBal": "371714047500000000000",
+      "begBalDiff": "0",
       "blockNumber": 14231553,
+      "correctAmountIn": "0",
+      "correctAmountOut": "0",
+      "correctBegBalIn": "0",
+      "correctBegBalOut": "0",
+      "correctEndBalIn": "0",
+      "correctEndBalOut": "0",
+      "correctingReasons": "",
       "date": "2022-02-18 17:59:11 UTC",
-      "ether": "1",
-      "from": "0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e",
-      "gas": 21000,
-      "gasCost": 3516294286512000,
-      "gasPrice": 167442585072,
-      "gasUsed": 21000,
-      "hash": "0x4cdaa467819f6565f4767663be4181f00f01d4dee40423872fe67fbb1529c4b3",
-      "maxFeePerGas": 172232804522,
-      "maxPriorityFeePerGas": 1500000000,
-      "receipt": {
-        "contractAddress": "0x0",
-        "effectiveGasPrice": 167442585072,
-        "gasUsed": 21000,
-        "logs": [],
-        "status": 1
-      },
-      "statements": [
-        {
-          "accountedFor": "0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e",
-          "amountIn": "0",
-          "amountNet": "-1003516294286512000",
-          "amountOut": "1000000000000000000",
-          "asset": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
-          "begBal": "371714047500000000000",
-          "begBalDiff": "0",
-          "blockNumber": 14231553,
-          "correctAmountIn": "0",
-          "correctAmountOut": "0",
-          "correctBegBalIn": "0",
-          "correctBegBalOut": "0",
-          "correctEndBalIn": "0",
-          "correctEndBalOut": "0",
-          "correctingReasons": "",
-          "date": "2022-02-18 17:59:11 UTC",
-          "decimals": 18,
-          "endBal": "370710531205713488000",
-          "endBalCalc": "370710531205713488000",
-          "endBalDiff": "0",
-          "gasOut": "3516294286512000",
-          "internalIn": "0",
-          "internalOut": "0",
-          "logIndex": 0,
-          "minerBaseRewardIn": "0",
-          "minerNephewRewardIn": "0",
-          "minerTxFeeIn": "0",
-          "minerUncleRewardIn": "0",
-          "prefundIn": "0",
-          "prevBal": "371714047500000000000",
-          "priceSource": "uniswap",
-          "recipient": "0x2e2ca259ffa7491e9222d6f7708e4a1a2b34aaef",
-          "reconciled": true,
-          "selfDestructIn": "0",
-          "selfDestructOut": "0",
-          "sender": "0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e",
-          "spotPrice": 2795.2283633627558,
-          "symbol": "WEI",
-          "timestamp": 1645207151,
-          "totalIn": "0",
-          "totalOut": "1003516294286512000",
-          "transactionHash": "0x4cdaa467819f6565f4767663be4181f00f01d4dee40423872fe67fbb1529c4b3",
-          "transactionIndex": 18
-        }
-      ],
+      "decimals": 18,
+      "endBal": "370710531205713488000",
+      "endBalCalc": "370710531205713488000",
+      "endBalDiff": "0",
+      "gasOut": "3516294286512000",
+      "internalIn": "0",
+      "internalOut": "0",
+      "logIndex": 0,
+      "minerBaseRewardIn": "0",
+      "minerNephewRewardIn": "0",
+      "minerTxFeeIn": "0",
+      "minerUncleRewardIn": "0",
+      "prefundIn": "0",
+      "prevBal": "371714047500000000000",
+      "priceSource": "uniswap",
+      "recipient": "0x2e2ca259ffa7491e9222d6f7708e4a1a2b34aaef",
+      "reconciled": true,
+      "selfDestructIn": "0",
+      "selfDestructOut": "0",
+      "sender": "0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e",
+      "spotPrice": 2795.2283633627558,
+      "symbol": "WEI",
       "timestamp": 1645207151,
-      "to": "0x2e2ca259ffa7491e9222d6f7708e4a1a2b34aaef",
-      "traces": [],
-      "transactionIndex": 18,
-      "type": "0x2",
-      "value": "1000000000000000000"
+      "totalIn": "0",
+      "totalOut": "1003516294286512000",
+      "transactionHash": "0x4cdaa467819f6565f4767663be4181f00f01d4dee40423872fe67fbb1529c4b3",
+      "transactionIndex": 18
     }
   ]
 }

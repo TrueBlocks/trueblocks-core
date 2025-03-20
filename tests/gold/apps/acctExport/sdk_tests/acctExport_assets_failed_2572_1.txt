@@ -1,11 +1,11 @@
 export?addrs=0x054993ab0f2b1acc0fdc65405ee203b4271bebe6&accounting&assets&ether&lastBlock=15549163&maxRecords=40
 Args: [addrs=0x054993ab0f2b1acc0fdc65405ee203b4271bebe6 accounting assets ether lastBlock=15549163 maxRecords=40]
-Opts: {"addrs":["0x054993ab0f2b1acc0fdc65405ee203b4271bebe6"],"accounting":true,"assets":true,"maxRecords":40,"lastBlock":15549163,"ether":true}
+Opts: {"addrs":["0x054993ab0f2b1acc0fdc65405ee203b4271bebe6"],"assets":true,"maxRecords":40,"lastBlock":15549163,"accounting":true,"ether":true}
 Addrs:  [0x054993ab0f2b1acc0fdc65405ee203b4271bebe6]
-Accounting:  true
 Assets:  true
 MaxRecords:  40
 LastBlock:  15549163
+Accounting:  true
 Ether:  true
 Caps:  cache,decache,ether
 Format:  json

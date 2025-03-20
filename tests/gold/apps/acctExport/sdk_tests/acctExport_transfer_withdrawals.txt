@@ -1,16 +1,16 @@
 export?addrs=chasewright.eth&accounting&transfers&withdrawals&firstBlock=17048500&lastBlock=18409900
 Args: [addrs=chasewright.eth accounting transfers withdrawals firstBlock=17048500 lastBlock=18409900]
-Opts: {"addrs":["chasewright.eth"],"accounting":true,"transfers":true,"withdrawals":true,"firstBlock":17048500,"lastBlock":18409900}
+Opts: {"addrs":["chasewright.eth"],"transfers":true,"withdrawals":true,"firstBlock":17048500,"lastBlock":18409900,"accounting":true}
 Addrs:  [0x0e39e47eebd12cc4d08b214a0037c63c78f1fc63]
-Accounting:  true
 Transfers:  true
 Withdrawals:  true
 FirstBlock:  17048500
 LastBlock:  18409900
+Accounting:  true
 Caps:  cache,decache,ether
 Format:  json
 {
   "errors": [
-    "Please choose only a single mode (--accounting, --withdrawals, etc.)"
+    "Please choose only a single mode (--transfers, --withdrawals, etc.)"
   ]
 }

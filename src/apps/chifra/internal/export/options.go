@@ -36,10 +36,9 @@ type ExportOptions struct {
 	Logs        bool                  `json:"logs,omitempty"`        // Export logs instead of transactional data
 	Traces      bool                  `json:"traces,omitempty"`      // Export traces instead of transactional data
 	Neighbors   bool                  `json:"neighbors,omitempty"`   // Export the neighbors of the given address
-	Accounting  bool                  `json:"accounting,omitempty"`  // Attach accounting records to the exported data (applies to transactions export only)
-	Statements  bool                  `json:"statements,omitempty"`  // For the accounting options only, export only statements
-	Transfers   bool                  `json:"transfers,omitempty"`   // For the accounting options only, export only eth or token transfers
-	Assets      bool                  `json:"assets,omitempty"`      // For the accounting options only, list all assets (with names) that appear in any transfer
+	Statements  bool                  `json:"statements,omitempty"`  // Export only statements
+	Transfers   bool                  `json:"transfers,omitempty"`   // Export only eth or token transfers
+	Assets      bool                  `json:"assets,omitempty"`      // List all assets (with names) that appear in any transfer
 	Balances    bool                  `json:"balances,omitempty"`    // Traverse the transaction history and show each change in ETH balances
 	Withdrawals bool                  `json:"withdrawals,omitempty"` // Export withdrawals for the given address
 	Articulate  bool                  `json:"articulate,omitempty"`  // Articulate transactions, traces, logs, and outputs
@@ -52,14 +51,15 @@ type ExportOptions struct {
 	Topic       []string              `json:"topic,omitempty"`       // For the --logs option only, filter logs to show only those with this topic(s)
 	Nfts        bool                  `json:"nfts,omitempty"`        // For the --logs option only, filter logs to show only nft transfers
 	Reverted    bool                  `json:"reverted,omitempty"`    // Export only transactions that were reverted
-	Asset       []string              `json:"asset,omitempty"`       // For the accounting options only, export transfers, balances, or statements only for this asset
-	Flow        string                `json:"flow,omitempty"`        // For the accounting options only, export transfers, balances, or statements with incoming, outgoing, or zero value
+	Asset       []string              `json:"asset,omitempty"`       // Export transfers, balances, or statements only for this asset
+	Flow        string                `json:"flow,omitempty"`        // Export transfers, balances, or statements with incoming, outgoing, or zero value
 	Factory     bool                  `json:"factory,omitempty"`     // For --traces only, report addresses created by (or self-destructed by) the given address(es)
 	Unripe      bool                  `json:"unripe,omitempty"`      // Export transactions labeled unripe (i.e. less than 28 blocks old)
 	Reversed    bool                  `json:"reversed,omitempty"`    // Produce results in reverse chronological order
 	NoZero      bool                  `json:"noZero,omitempty"`      // For the --count option only, suppress the display of zero appearance accounts
 	FirstBlock  base.Blknum           `json:"firstBlock,omitempty"`  // First block to process (inclusive)
 	LastBlock   base.Blknum           `json:"lastBlock,omitempty"`   // Last block to process (inclusive)
+	Accounting  bool                  `json:"accounting,omitempty"`  // Deprecated option, you may simply remove it
 	Globals     globals.GlobalOptions `json:"globals,omitempty"`     // The global options
 	Conn        *rpc.Connection       `json:"conn,omitempty"`        // The connection to the RPC server
 	BadFlag     error                 `json:"badFlag,omitempty"`     // An error flag if needed
@@ -82,7 +82,6 @@ func (opts *ExportOptions) testLog() {
 	logger.TestLog(opts.Logs, "Logs: ", opts.Logs)
 	logger.TestLog(opts.Traces, "Traces: ", opts.Traces)
 	logger.TestLog(opts.Neighbors, "Neighbors: ", opts.Neighbors)
-	logger.TestLog(opts.Accounting, "Accounting: ", opts.Accounting)
 	logger.TestLog(opts.Statements, "Statements: ", opts.Statements)
 	logger.TestLog(opts.Transfers, "Transfers: ", opts.Transfers)
 	logger.TestLog(opts.Assets, "Assets: ", opts.Assets)
@@ -106,6 +105,7 @@ func (opts *ExportOptions) testLog() {
 	logger.TestLog(opts.NoZero, "NoZero: ", opts.NoZero)
 	logger.TestLog(opts.FirstBlock != 0, "FirstBlock: ", opts.FirstBlock)
 	logger.TestLog(opts.LastBlock != base.NOPOSN && opts.LastBlock != 0, "LastBlock: ", opts.LastBlock)
+	logger.TestLog(opts.Accounting, "Accounting: ", opts.Accounting)
 	opts.Conn.TestLog()
 	opts.Globals.TestLog()
 }
@@ -158,8 +158,6 @@ func ExportFinishParseInternal(w io.Writer, values url.Values) *ExportOptions {
 			opts.Traces = true
 		case "neighbors":
 			opts.Neighbors = true
-		case "accounting":
-			opts.Accounting = true
 		case "statements":
 			opts.Statements = true
 		case "transfers":
@@ -215,6 +213,8 @@ func ExportFinishParseInternal(w io.Writer, values url.Values) *ExportOptions {
 			opts.FirstBlock = base.MustParseBlknum(value[0])
 		case "lastBlock":
 			opts.LastBlock = base.MustParseBlknum(value[0])
+		case "accounting":
+			opts.Accounting = true
 		default:
 			if !copy.Globals.Caps.HasKey(key) {
 				err := validate.Usage("Invalid key ({0}) in {1} route.", key, "export")
@@ -325,7 +325,7 @@ func (opts *ExportOptions) getCaches() (caches map[walk.CacheType]bool) {
 	caches = map[walk.CacheType]bool{
 		// TODO: Enable neighbors cache
 		walk.Cache_Transactions: true,
-		walk.Cache_Transfers:    opts.Transfers || opts.Accounting,
+		walk.Cache_Transfers:    opts.Transfers || opts.Assets || opts.Statements,
 		walk.Cache_Traces:       opts.CacheTraces || (opts.Globals.Cache && (opts.Traces || opts.Neighbors)),
 	}
 	// EXISTING_CODE

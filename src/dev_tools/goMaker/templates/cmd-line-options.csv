@@ -26,10 +26,9 @@ num,folder,group,route,tool,longName,hotKey,def_val,attributes,handler,option_ty
 13070,apps,Accounts,export,acctExport,logs,l,,visible|docs,3,switch,<boolean>,log,,,,export logs instead of transactional data
 13080,apps,Accounts,export,acctExport,traces,t,,visible|docs,12,switch,<boolean>,trace,,,,export traces instead of transactional data
 13090,apps,Accounts,export,acctExport,neighbors,n,,visible|docs,8,switch,<boolean>,message,,,,export the neighbors of the given address
-13100,apps,Accounts,export,acctExport,accounting,C,,visible|docs,11,switch,<boolean>,,,,,attach accounting records to the exported data (applies to transactions export only)
-13110,apps,Accounts,export,acctExport,statements,A,,visible|docs,9,switch,<boolean>,statement,,,,for the accounting options only&#44; export only statements
-13110,apps,Accounts,export,acctExport,transfers,X,,visible|docs,10,switch,<boolean>,transfer,,,,for the accounting options only&#44; export only eth or token transfers
-13120,apps,Accounts,export,acctExport,assets,s,,visible|docs,6,switch,<boolean>,name,,,,for the accounting options only&#44; list all assets (with names) that appear in any transfer
+13110,apps,Accounts,export,acctExport,statements,A,,visible|docs,9,switch,<boolean>,statement,,,,export only statements
+13110,apps,Accounts,export,acctExport,transfers,X,,visible|docs,10,switch,<boolean>,transfer,,,,export only eth or token transfers
+13120,apps,Accounts,export,acctExport,assets,s,,visible|docs,6,switch,<boolean>,name,,,,list all assets (with names) that appear in any transfer
 13120,apps,Accounts,export,acctExport,balances,b,,visible|docs,7,switch,<boolean>,state,,,,traverse the transaction history and show each change in ETH balances
 13130,apps,Accounts,export,acctExport,withdrawals,i,,visible|docs,4,switch,<boolean>,withdrawal,,,,export withdrawals for the given address
 13140,apps,Accounts,export,acctExport,articulate,a,,visible|docs,,switch,<boolean>,,,,,articulate transactions&#44; traces&#44; logs&#44; and outputs
@@ -42,14 +41,15 @@ num,folder,group,route,tool,longName,hotKey,def_val,attributes,handler,option_ty
 13210,apps,Accounts,export,acctExport,topic,B,,visible|docs,,flag,list<topic>,,,,,for the --logs option only&#44; filter logs to show only those with this topic(s)
 13215,apps,Accounts,export,acctExport,nfts,T,,visible|docs,,switch,<boolean>,,,,,for the --logs option only&#44; filter logs to show only nft transfers
 13220,apps,Accounts,export,acctExport,reverted,V,,visible|docs,,switch,<boolean>,,,,,export only transactions that were reverted
-13230,apps,Accounts,export,acctExport,asset,P,,visible|docs,,flag,list<addr>,,,,,for the accounting options only&#44; export transfers&#44; balances&#44; or statements only for this asset
-13240,apps,Accounts,export,acctExport,flow,f,,visible|docs,,flag,enum[in|out|zero],,,,,for the accounting options only&#44; export transfers&#44; balances&#44; or statements with incoming&#44; outgoing&#44; or zero value
+13230,apps,Accounts,export,acctExport,asset,P,,visible|docs,,flag,list<addr>,,,,,export transfers&#44; balances&#44; or statements only for this asset
+13240,apps,Accounts,export,acctExport,flow,f,,visible|docs,,flag,enum[in|out|zero],,,,,export transfers&#44; balances&#44; or statements with incoming&#44; outgoing&#44; or zero value
 13250,apps,Accounts,export,acctExport,factory,y,,visible|docs,,switch,<boolean>,,,,,for --traces only&#44; report addresses created by (or self-destructed by) the given address(es)
 13260,apps,Accounts,export,acctExport,unripe,u,,visible|docs,,switch,<boolean>,,,,,export transactions labeled unripe (i.e. less than 28 blocks old)
 13280,apps,Accounts,export,acctExport,reversed,E,,visible|docs,,switch,<boolean>,,,,,produce results in reverse chronological order
 13290,apps,Accounts,export,acctExport,no_zero,z,,visible|docs,,switch,<boolean>,,,,,for the --count option only&#44; suppress the display of zero appearance accounts
 13300,apps,Accounts,export,acctExport,first_block,F,,visible|docs,,flag,<blknum>,,,,,first block to process (inclusive)
 13310,apps,Accounts,export,acctExport,last_block,L,NOPOSN,visible|docs,,flag,<blknum>,,,,,last block to process (inclusive)
+13315,apps,Accounts,export,acctExport,accounting,C,,visible|docs,,switch,<boolean>,,,,,deprecated option&#44; you may simply remove it
 13320,apps,Accounts,export,acctExport,n1,,,,,note,,,,,,An `address` must be either an ENS name or start with '0x' and be forty-two characters long.
 13330,apps,Accounts,export,acctExport,n2,,,,,note,,,,,,Articulating the export means turn the EVM's byte data into human-readable text (if possible).
 13340,apps,Accounts,export,acctExport,n3,,,,,note,,,,,,For the --logs option&#44; you may optionally specify one or more --emitter&#44; one or more --topics&#44; or both.

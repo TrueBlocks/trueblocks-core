@@ -1,9 +1,9 @@
 chifra export  trueblocks.eth --accounting --assets --ether --fmt csv --first_block 8856476 --last_block 9193814 --output assets_2_asset_filt_out.file
 TEST[DATE|TIME] Addrs:  [0xf503017d7baf7fbc0fff7492b751025c6a78179b]
-TEST[DATE|TIME] Accounting:  true
 TEST[DATE|TIME] Assets:  true
 TEST[DATE|TIME] FirstBlock:  8856476
 TEST[DATE|TIME] LastBlock:  9193814
+TEST[DATE|TIME] Accounting:  true
 TEST[DATE|TIME] Ether:  true
 TEST[DATE|TIME] OutputFn:  assets_2_asset_filt_out.file
 TEST[DATE|TIME] Caps:  cache,decache,ether

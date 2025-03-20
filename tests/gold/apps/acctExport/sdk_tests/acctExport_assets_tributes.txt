@@ -1,11 +1,11 @@
 export?addrs=0x868b8fd259abfcfdf9634c343593b34ef359641d&accounting&assets&firstBlock=8769018&lastBlock=8769053
 Args: [addrs=0x868b8fd259abfcfdf9634c343593b34ef359641d accounting assets firstBlock=8769018 lastBlock=8769053]
-Opts: {"addrs":["0x868b8fd259abfcfdf9634c343593b34ef359641d"],"accounting":true,"assets":true,"firstBlock":8769018,"lastBlock":8769053}
+Opts: {"addrs":["0x868b8fd259abfcfdf9634c343593b34ef359641d"],"assets":true,"firstBlock":8769018,"lastBlock":8769053,"accounting":true}
 Addrs:  [0x868b8fd259abfcfdf9634c343593b34ef359641d]
-Accounting:  true
 Assets:  true
 FirstBlock:  8769018
 LastBlock:  8769053
+Accounting:  true
 Caps:  cache,decache,ether
 Format:  json
 {

@@ -316,16 +316,8 @@ paths:
           explode: true
           schema:
             type: boolean
-        - name: accounting
-          description: attach accounting records to the exported data (applies to transactions export only)
-          required: false
-          style: form
-          in: query
-          explode: true
-          schema:
-            type: boolean
         - name: statements
-          description: for the accounting options only, export only statements
+          description: export only statements
           required: false
           style: form
           in: query
@@ -333,7 +325,7 @@ paths:
           schema:
             type: boolean
         - name: transfers
-          description: for the accounting options only, export only eth or token transfers
+          description: export only eth or token transfers
           required: false
           style: form
           in: query
@@ -341,7 +333,7 @@ paths:
           schema:
             type: boolean
         - name: assets
-          description: for the accounting options only, list all assets (with names) that appear in any transfer
+          description: list all assets (with names) that appear in any transfer
           required: false
           style: form
           in: query
@@ -453,7 +445,7 @@ paths:
           schema:
             type: boolean
         - name: asset
-          description: for the accounting options only, export transfers, balances, or statements only for this asset
+          description: export transfers, balances, or statements only for this asset
           required: false
           style: form
           in: query
@@ -464,7 +456,7 @@ paths:
               type: string
               format: address
         - name: flow
-          description: for the accounting options only, export transfers, balances, or statements with incoming, outgoing, or zero value
+          description: export transfers, balances, or statements with incoming, outgoing, or zero value
           required: false
           style: form
           in: query
@@ -525,6 +517,14 @@ paths:
           schema:
             type: number
             format: blknum
+        - name: accounting
+          description: deprecated option, you may simply remove it
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
         - name: chain
           description: the chain to use
           required: false

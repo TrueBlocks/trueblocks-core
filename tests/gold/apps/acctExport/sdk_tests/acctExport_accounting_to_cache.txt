@@ -1,10 +1,10 @@
 export?addrs=0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c&accounting&statements&lastBlock=100
 Args: [addrs=0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c accounting statements lastBlock=100]
-Opts: {"addrs":["0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c"],"accounting":true,"statements":true,"lastBlock":100}
+Opts: {"addrs":["0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c"],"statements":true,"lastBlock":100,"accounting":true}
 Addrs:  [0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c]
-Accounting:  true
 Statements:  true
 LastBlock:  100
+Accounting:  true
 Caps:  cache,decache,ether
 Format:  json
 0: 13 99999

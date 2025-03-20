@@ -1,11 +1,11 @@
 export?addrs=0xf503017d7baf7fbc0fff7492b751025c6a78179b&lastBlock=8856511&maxRecords=10&accounting&reversed
 Args: [addrs=0xf503017d7baf7fbc0fff7492b751025c6a78179b lastBlock=8856511 maxRecords=10 accounting reversed]
-Opts: {"addrs":["0xf503017d7baf7fbc0fff7492b751025c6a78179b"],"accounting":true,"maxRecords":10,"reversed":true,"lastBlock":8856511}
+Opts: {"addrs":["0xf503017d7baf7fbc0fff7492b751025c6a78179b"],"maxRecords":10,"reversed":true,"lastBlock":8856511,"accounting":true}
 Addrs:  [0xf503017d7baf7fbc0fff7492b751025c6a78179b]
-Accounting:  true
 MaxRecords:  10
 Reversed:  true
 LastBlock:  8856511
+Accounting:  true
 Caps:  cache,decache,ether
 Format:  json
 {

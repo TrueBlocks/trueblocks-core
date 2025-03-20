@@ -1,8 +1,8 @@
 chifra export  0x08166f02313feae18bb044e7877c808b55b5bf58 --accounting --statements --last_block 4000000 --fmt json --output statement_3_out.file
 TEST[DATE|TIME] Addrs:  [0x08166f02313feae18bb044e7877c808b55b5bf58]
-TEST[DATE|TIME] Accounting:  true
 TEST[DATE|TIME] Statements:  true
 TEST[DATE|TIME] LastBlock:  4000000
+TEST[DATE|TIME] Accounting:  true
 TEST[DATE|TIME] OutputFn:  statement_3_out.file
 TEST[DATE|TIME] Caps:  cache,decache,ether
 TEST[DATE|TIME] Format:  json

@@ -1,10 +1,10 @@
 export?addrs=0x05a56e2d52c817161883f50c441c3228cfe54d9f&accounting&assets&maxRecords=15
 Args: [addrs=0x05a56e2d52c817161883f50c441c3228cfe54d9f accounting assets maxRecords=15]
-Opts: {"addrs":["0x05a56e2d52c817161883f50c441c3228cfe54d9f"],"accounting":true,"assets":true,"maxRecords":15}
+Opts: {"addrs":["0x05a56e2d52c817161883f50c441c3228cfe54d9f"],"assets":true,"maxRecords":15,"accounting":true}
 Addrs:  [0x05a56e2d52c817161883f50c441c3228cfe54d9f]
-Accounting:  true
 Assets:  true
 MaxRecords:  15
+Accounting:  true
 Caps:  cache,decache,ether
 Format:  json
 {

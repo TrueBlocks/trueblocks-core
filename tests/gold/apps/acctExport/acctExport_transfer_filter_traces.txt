@@ -1,11 +1,11 @@
 chifra export  0xf503017d7baf7fbc0fff7492b751025c6a78179b --accounting --transfers --traces --first_block 8860513 --last_block 8860531 --ether --asset 0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359 --fmt json --output transfer_filter_traces_out.file
 TEST[DATE|TIME] Addrs:  [0xf503017d7baf7fbc0fff7492b751025c6a78179b]
 TEST[DATE|TIME] Traces:  true
-TEST[DATE|TIME] Accounting:  true
 TEST[DATE|TIME] Transfers:  true
 TEST[DATE|TIME] Asset:  [0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359]
 TEST[DATE|TIME] FirstBlock:  8860513
 TEST[DATE|TIME] LastBlock:  8860531
+TEST[DATE|TIME] Accounting:  true
 TEST[DATE|TIME] Ether:  true
 TEST[DATE|TIME] OutputFn:  transfer_filter_traces_out.file
 TEST[DATE|TIME] Caps:  cache,decache,ether

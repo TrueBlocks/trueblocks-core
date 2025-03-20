@@ -1,8 +1,8 @@
 chifra export  0x868b8fd259abfcfdf9634c343593b34ef359641d --accounting --statements --last_block 8769141 --fmt json --output statement_forward_out.file
 TEST[DATE|TIME] Addrs:  [0x868b8fd259abfcfdf9634c343593b34ef359641d]
-TEST[DATE|TIME] Accounting:  true
 TEST[DATE|TIME] Statements:  true
 TEST[DATE|TIME] LastBlock:  8769141
+TEST[DATE|TIME] Accounting:  true
 TEST[DATE|TIME] OutputFn:  statement_forward_out.file
 TEST[DATE|TIME] Caps:  cache,decache,ether
 TEST[DATE|TIME] Format:  json

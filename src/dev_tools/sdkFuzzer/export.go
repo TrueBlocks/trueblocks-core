@@ -28,7 +28,6 @@ func DoExport() {
 	globs := globals
 	topics := fuzzTopics
 	fourbytes := fuzzFourbytes
-	accounting := []bool{false, true}
 	articulate := []bool{false, true}
 	cacheTraces := []bool{false, true}
 	relevant := []bool{false, true}
@@ -42,6 +41,7 @@ func DoExport() {
 	unripe := []bool{false, true}
 	reversed := []bool{false, true}
 	noZero := []bool{false, true}
+	accounting := []bool{false, true}
 	// firstBlock is a <blknum> --other
 	// lastBlock is a <blknum> --other
 	// firstRecord is not fuzzed
@@ -284,7 +284,6 @@ func TestExportExport(reverted, unripe, accounting, reversed []bool, asset []str
 					opts := *opts
 					opts.Reverted = r
 					opts.Unripe = u
-					opts.Accounting = a
 					opts.Reversed = rv
 					ff := fmt.Sprintf("%s--%t-%t-%t-%t", fn, r, u, a, rv)
 					TestExport("export", "", ff, &opts)

@@ -1,12 +1,12 @@
 export?addrs=0x868b8fd259abfcfdf9634c343593b34ef359641d&accounting&statements&firstBlock=8769018&lastBlock=8769053&asset=0x0ba45a8b5d5575935b8158a88c631e9f9c95a2e5
 Args: [addrs=0x868b8fd259abfcfdf9634c343593b34ef359641d accounting statements firstBlock=8769018 lastBlock=8769053 asset=0x0ba45a8b5d5575935b8158a88c631e9f9c95a2e5]
-Opts: {"addrs":["0x868b8fd259abfcfdf9634c343593b34ef359641d"],"accounting":true,"statements":true,"asset":["0x0ba45a8b5d5575935b8158a88c631e9f9c95a2e5"],"firstBlock":8769018,"lastBlock":8769053}
+Opts: {"addrs":["0x868b8fd259abfcfdf9634c343593b34ef359641d"],"statements":true,"asset":["0x0ba45a8b5d5575935b8158a88c631e9f9c95a2e5"],"firstBlock":8769018,"lastBlock":8769053,"accounting":true}
 Addrs:  [0x868b8fd259abfcfdf9634c343593b34ef359641d]
-Accounting:  true
 Statements:  true
 Asset:  [0x0ba45a8b5d5575935b8158a88c631e9f9c95a2e5]
 FirstBlock:  8769018
 LastBlock:  8769053
+Accounting:  true
 Caps:  cache,decache,ether
 Format:  json
 0: 8769019 124

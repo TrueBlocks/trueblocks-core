@@ -1,8 +1,8 @@
 chifra export  0x05a56e2d52c817161883f50c441c3228cfe54d9f --accounting --assets --fmt json --max_records 15 --output assets_wei_2_1_out.file
 TEST[DATE|TIME] Addrs:  [0x05a56e2d52c817161883f50c441c3228cfe54d9f]
-TEST[DATE|TIME] Accounting:  true
 TEST[DATE|TIME] Assets:  true
 TEST[DATE|TIME] MaxRecords:  15
+TEST[DATE|TIME] Accounting:  true
 TEST[DATE|TIME] OutputFn:  assets_wei_2_1_out.file
 TEST[DATE|TIME] Caps:  cache,decache,ether
 TEST[DATE|TIME] Format:  json

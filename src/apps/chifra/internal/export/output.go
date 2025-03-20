@@ -82,8 +82,6 @@ func (opts *ExportOptions) ExportInternal(rCtx *output.RenderCtx) error {
 		err = opts.HandleStatements(rCtx, monitorArray)
 	} else if opts.Transfers {
 		err = opts.HandleTransfers(rCtx, monitorArray)
-	} else if opts.Accounting {
-		err = opts.HandleAccounting(rCtx, monitorArray)
 	} else if opts.Traces {
 		err = opts.HandleTraces(rCtx, monitorArray)
 	} else {

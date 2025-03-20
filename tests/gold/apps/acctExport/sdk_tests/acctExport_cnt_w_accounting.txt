@@ -1,10 +1,10 @@
 export?addrs=0x001d14804b399c6ef80e64576f657660804fec0b&count&accounting&lastBlock=15508000
 Args: [addrs=0x001d14804b399c6ef80e64576f657660804fec0b count accounting lastBlock=15508000]
-Opts: {"addrs":["0x001d14804b399c6ef80e64576f657660804fec0b"],"accounting":true,"count":true,"lastBlock":15508000}
+Opts: {"addrs":["0x001d14804b399c6ef80e64576f657660804fec0b"],"count":true,"lastBlock":15508000,"accounting":true}
 Addrs:  [0x001d14804b399c6ef80e64576f657660804fec0b]
-Accounting:  true
 Count:  true
 LastBlock:  15508000
+Accounting:  true
 Caps:  cache,decache,ether
 Format:  json
 {

@@ -40,8 +40,9 @@ func (opts *ExportOptions) validateExport() error {
 	if opts.Neighbors && !strings.Contains(key, "+neighbors") {
 		return validate.Usage("The {0} option requires a license key. Please contact us in our discord.", "--neighbors")
 	}
-	if opts.Accounting && !strings.Contains(key, "+accounting") {
-		return validate.Usage("The {0} option requires a license key. Please contact us in our discord.", "--accounting")
+
+	if opts.Accounting && !opts.IsAccounting() {
+		opts.Statements = true
 	}
 
 	if which, tooMany := opts.tooMany(); tooMany {
@@ -155,7 +156,7 @@ func (opts *ExportOptions) validateExport() error {
 		}
 	}
 
-	if opts.Accounting {
+	if opts.IsAccounting() {
 		if len(opts.Addrs) != 1 {
 			return validate.Usage("The {0} option allows only a single address.", "--accounting")
 		}
@@ -178,10 +179,6 @@ func (opts *ExportOptions) validateExport() error {
 			if err := validate.ValidateEnum("--flow", opts.Flow, "[in|out|zero]"); err != nil {
 				return err
 			}
-
-			if !opts.Statements && !opts.Transfers && !opts.Assets {
-				return validate.Usage("The {0} option is only available with the {1} option.", "--flow", "--statements, --transfers, or --asset")
-			}
 		}
 
 		if opts.FirstRecord != 0 {
@@ -191,22 +188,9 @@ func (opts *ExportOptions) validateExport() error {
 		if opts.Reversed {
 			return validate.Usage("The {0} option is not available with the {1} option.", "--reversed", "--accounting")
 		}
-
 	} else {
-		if opts.Statements {
-			return validate.Usage("The {0} option is only available with the {1} option.", "--statements", "--accounting")
-		}
-
-		if opts.Transfers {
-			return validate.Usage("The {0} option is only available with the {1} option.", "--transfers", "--accounting")
-		}
-
-		if opts.Assets {
-			return validate.Usage("The {0} option is only available with the {1} option.", "--assets", "--accounting")
-		}
-
-		if opts.Globals.Format == "ofx" {
-			return validate.Usage("The {0} option is only available with the {1} option.", "--fmt ofx", "--accounting")
+		if len(opts.Flow) > 0 {
+			return validate.Usage("The {0} option is only available with the {1} option.", "--flow", "--statements, --transfers, or --asset")
 		}
 	}
 
@@ -258,8 +242,16 @@ func (opts *ExportOptions) tooMany() ([]string, bool) {
 		which = append(which, "--neighbors")
 		cnt++
 	}
-	if opts.Accounting {
+	if opts.Statements {
 		which = append(which, "--accounting")
+		cnt++
+	}
+	if opts.Transfers {
+		which = append(which, "--transfers")
+		cnt++
+	}
+	if opts.Assets {
+		which = append(which, "--assets")
 		cnt++
 	}
 	if opts.Withdrawals {
@@ -276,9 +268,13 @@ func (opts *ExportOptions) tooMany() ([]string, bool) {
 		m[w] = true
 	}
 
-	if len(which) == 2 && m["--accounting"] && m["--traces"] {
+	if len(which) == 2 && (m["--accounting"] || m["--transfers"] || m["--statements"] || m["--assets"]) && m["--traces"] {
 		return []string{}, false
 	}
 
 	return which, cnt > 1
+}
+
+func (opts *ExportOptions) IsAccounting() bool {
+	return opts.Statements || opts.Transfers || opts.Assets
 }

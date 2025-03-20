@@ -1,11 +1,11 @@
 export?addrs=trueblocks.eth&accounting&assets&firstBlock=9278039&lastBlock=9279454
 Args: [addrs=trueblocks.eth accounting assets firstBlock=9278039 lastBlock=9279454]
-Opts: {"addrs":["trueblocks.eth"],"accounting":true,"assets":true,"firstBlock":9278039,"lastBlock":9279454}
+Opts: {"addrs":["trueblocks.eth"],"assets":true,"firstBlock":9278039,"lastBlock":9279454,"accounting":true}
 Addrs:  [0xf503017d7baf7fbc0fff7492b751025c6a78179b]
-Accounting:  true
 Assets:  true
 FirstBlock:  9278039
 LastBlock:  9279454
+Accounting:  true
 Caps:  cache,decache,ether
 Format:  json
 {

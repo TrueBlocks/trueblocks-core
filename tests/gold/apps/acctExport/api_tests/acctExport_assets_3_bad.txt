@@ -1,6 +1,21 @@
 export?addrs=0x08166f02313feae18bb044e7877c808b55b5bf58&assets&lastBlock=4000000&fmt=json
 {
-  "errors": [
-    "The --assets option is only available with the --accounting option."
-  ]
+  "data": [
+    {
+      "address": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+      "decimals": 18,
+      "name": "ETH",
+      "symbol": "ETH"
+    }
+  ],
+  "meta": {
+    "client": "0xdeadbeef",
+    "finalized": "0xdeadbeef",
+    "staging": "0xdeadbeef",
+    "ripe": "0xdeadbeef",
+    "unripe": "0xdeadbeef",
+    "chainId": 1,
+    "networkId": 1,
+    "chain": "mainnet"
+  }
 }

@@ -1,12 +1,12 @@
 export?addrs=trueblocks.eth&accounting&transfers&firstBlock=9278039&lastBlock=9279454&asset=0x6b175474e89094c44da98b954eedeac495271d0f
 Args: [addrs=trueblocks.eth accounting transfers firstBlock=9278039 lastBlock=9279454 asset=0x6b175474e89094c44da98b954eedeac495271d0f]
-Opts: {"addrs":["trueblocks.eth"],"accounting":true,"transfers":true,"asset":["0x6b175474e89094c44da98b954eedeac495271d0f"],"firstBlock":9278039,"lastBlock":9279454}
+Opts: {"addrs":["trueblocks.eth"],"transfers":true,"asset":["0x6b175474e89094c44da98b954eedeac495271d0f"],"firstBlock":9278039,"lastBlock":9279454,"accounting":true}
 Addrs:  [0xf503017d7baf7fbc0fff7492b751025c6a78179b]
-Accounting:  true
 Transfers:  true
 Asset:  [0x6b175474e89094c44da98b954eedeac495271d0f]
 FirstBlock:  9278039
 LastBlock:  9279454
+Accounting:  true
 Caps:  cache,decache,ether
 Format:  json
 {

@@ -1,9 +1,9 @@
 chifra export  0x868b8fd259abfcfdf9634c343593b34ef359641d --accounting --assets --traces --last_block 8769141 --ether --fmt json --output assets_forward_out.file
 TEST[DATE|TIME] Addrs:  [0x868b8fd259abfcfdf9634c343593b34ef359641d]
 TEST[DATE|TIME] Traces:  true
-TEST[DATE|TIME] Accounting:  true
 TEST[DATE|TIME] Assets:  true
 TEST[DATE|TIME] LastBlock:  8769141
+TEST[DATE|TIME] Accounting:  true
 TEST[DATE|TIME] Ether:  true
 TEST[DATE|TIME] OutputFn:  assets_forward_out.file
 TEST[DATE|TIME] Caps:  cache,decache,ether
