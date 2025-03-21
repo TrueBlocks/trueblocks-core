@@ -1,4 +1,3 @@
-broken
 export?addrs=0x054993ab0f2b1acc0fdc65405ee203b4271bebe6&accounting&statements&asset=0xf5b2c59f6db42ffcdfc1625999c81fdf17953384&fmt=json&lastBlock=15549163&maxRecords=40
 {
   "data": [

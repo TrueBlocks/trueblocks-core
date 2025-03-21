@@ -1,9 +1,10 @@
-chifra export  0xf503017d7baf7fbc0fff7492b751025c6a78179b --accounting --statements --first_block 12704456 --last_block 12705893 --fmt json --output statement_token_ibt_2_out.file
+chifra export  0xf503017d7baf7fbc0fff7492b751025c6a78179b --accounting --statements --first_block 12704456 --last_block 12705893 --fmt json --traces --output statement_token_ibt_2_out.file
 TEST[DATE|TIME] Addrs:  [0xf503017d7baf7fbc0fff7492b751025c6a78179b]
-TEST[DATE|TIME] Accounting:  true
+TEST[DATE|TIME] Traces:  true
 TEST[DATE|TIME] Statements:  true
 TEST[DATE|TIME] FirstBlock:  12704456
 TEST[DATE|TIME] LastBlock:  12705893
+TEST[DATE|TIME] Accounting:  true
 TEST[DATE|TIME] OutputFn:  statement_token_ibt_2_out.file
 TEST[DATE|TIME] Caps:  cache,decache,ether
 TEST[DATE|TIME] Format:  json
@@ -16,61 +17,16 @@ TEST[DATE|TIME] 4: 12705892 117
 TEST[DATE|TIME] 
 TEST[DATE|TIME] ------------------------------------
 TEST[DATE|TIME] ~~~ Entering: 12704456.92 ~~~
-TEST[DATE|TIME] ETH is of interest
-TEST[DATE|TIME] Attempting to reconcile at top level: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-0xf503017d7baf7fbc0fff7492b751025c6a78179b
-TEST[DATE|TIME] XXX =============[ top-level ]======================
+TEST[DATE|TIME] First pass: Fetching unreconciled transfers
+TEST[DATE|TIME] Fetched 1 unreconciled transfers
+TEST[DATE|TIME] Second pass: Reconciling transfers
+TEST[DATE|TIME] Processing ETH transfer
+TEST[DATE|TIME] Converted ETH transfer to statement
+TEST[DATE|TIME] Using trace-based ETH transfer
+TEST[DATE|TIME] XXX =============[ traces ]======================
 TEST[DATE|TIME] XXX Case 1: Only statement in block
 TEST[DATE|TIME] XXX Block: 12704456 Tx: 92 Asset: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
 TEST[DATE|TIME] XXX FirstInBlock: true, LastInBlock: true
-TEST[DATE|TIME] XXX ================================================
-TEST[DATE|TIME] =========================================================
-TEST[DATE|TIME] ===> PRICING FOR 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) using Uniswap
-TEST[DATE|TIME] =========================================================
-TEST[DATE|TIME] blockNumber:         12704456
-TEST[DATE|TIME] source1 (uni/mkr):   0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f
-TEST[DATE|TIME] str0 (call):         getPair(0x6b175474e89094c44da98b954eedeac495271d0f, 0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2)
-TEST[DATE|TIME] source2 (pair):      0xa478c2975ab1ea89e8196811f51a7b7ade33eb11
-TEST[DATE|TIME] str1 (call/data):    getReserves()
-TEST[DATE|TIME] first:               0x6b175474e89094c44da98b954eedeac495271d0f
-TEST[DATE|TIME] second:              0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2
-TEST[DATE|TIME] reversed:            false
-TEST[DATE|TIME] float0:              36936252061481304330000000
-TEST[DATE|TIME] float1:              20243962597672319668000
-TEST[DATE|TIME] float2:              1
-TEST[DATE|TIME] bigPrice:            1824.5564267999728689
-TEST[DATE|TIME] price:               1824.5564267999728
-TEST[DATE|TIME] source:              uniswap
-TEST[DATE|TIME] ===================================================
-TEST[DATE|TIME] Previous:               12704455 0 ( true )
-TEST[DATE|TIME] Current:                12704456 92 ( true )
-TEST[DATE|TIME] Next:                   12704710 143 ( true )
-TEST[DATE|TIME] accountedFor:           0xf503017d7baf7fbc0fff7492b751025c6a78179b
-TEST[DATE|TIME] sender:                 0x3c52683b24406d1821d9a83cabf9b91f15fde860  ==>  0x7d655c57f71464b6f83811c55d84009cd9f5221c
-TEST[DATE|TIME] asset:                  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
-TEST[DATE|TIME] hash:                   0xc4d90e497f91f7feb1f9d1019bee148d3b00b7c900c9ba657cacdb156b67d781
-TEST[DATE|TIME] timestamp:              1624640874
-TEST[DATE|TIME] blockNumber:            12704456.92.0
-TEST[DATE|TIME] priceSource:            1824.5564267999728 (uniswap)
-TEST[DATE|TIME] --------------------------------------------------- 
-TEST[DATE|TIME] Trial balance:
-TEST[DATE|TIME]    prevBal:             36.711034261192445316
-TEST[DATE|TIME]    begBal:              36.711034261192445316 (-0.0095)
-TEST[DATE|TIME]    totalIn:             0
-TEST[DATE|TIME]    totalOut:            0
-TEST[DATE|TIME]    amountNet:           0
-TEST[DATE|TIME]                        ======================= 
-TEST[DATE|TIME]    endBal:              36.720534261192445316 (0)
-TEST[DATE|TIME]    endBalCalc:          36.711034261192445316
-TEST[DATE|TIME] --------------------------------------------------- 
-TEST[DATE|TIME]    material:            false
-TEST[DATE|TIME]    reconciled:          true
-TEST[DATE|TIME] ---------------------------------------------------
-TEST[DATE|TIME] Failed reconcile, decending into to traces
-TEST[DATE|TIME] Fetched a single statement from traces
-TEST[DATE|TIME] XXX =============[ traces ]======================
-TEST[DATE|TIME] XXX Case 4: Last statement in block with prior
-TEST[DATE|TIME] XXX Block: 12704456 Tx: 92 Asset: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
-TEST[DATE|TIME] XXX FirstInBlock: false, LastInBlock: true
 TEST[DATE|TIME] XXX ================================================
 TEST[DATE|TIME] =========================================================
 TEST[DATE|TIME] ===> PRICING FOR 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) using Uniswap
@@ -115,67 +71,21 @@ TEST[DATE|TIME]    internalIn:          0.0095
 TEST[DATE|TIME]    material:            true
 TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
-TEST[DATE|TIME] Statement is material - appending. reconciled: true
-TEST[DATE|TIME] Extracting statements from logs.
-TEST[DATE|TIME] There were no statements generated from logs.
+TEST[DATE|TIME] Trace-based statement is material - appending. reconciled: true
+TEST[DATE|TIME] No log transfers to process
 TEST[DATE|TIME] ~~~ Leaving: 12704456.92 ~~~
 TEST[DATE|TIME] ------------------------------------ 1 statements generated.
 TEST[DATE|TIME] 
 TEST[DATE|TIME] 
 TEST[DATE|TIME] ------------------------------------
 TEST[DATE|TIME] ~~~ Entering: 12704710.143 ~~~
-TEST[DATE|TIME] ETH is of interest
-TEST[DATE|TIME] Attempting to reconcile at top level: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-0xf503017d7baf7fbc0fff7492b751025c6a78179b
-TEST[DATE|TIME] XXX =============[ top-level ]======================
-TEST[DATE|TIME] XXX Case 1: Only statement in block
-TEST[DATE|TIME] XXX Block: 12704710 Tx: 143 Asset: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
-TEST[DATE|TIME] XXX FirstInBlock: true, LastInBlock: true
-TEST[DATE|TIME] XXX ================================================
-TEST[DATE|TIME] =========================================================
-TEST[DATE|TIME] ===> PRICING FOR 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) using Uniswap
-TEST[DATE|TIME] =========================================================
-TEST[DATE|TIME] blockNumber:         12704710
-TEST[DATE|TIME] source1 (uni/mkr):   0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f
-TEST[DATE|TIME] str0 (call):         getPair(0x6b175474e89094c44da98b954eedeac495271d0f, 0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2)
-TEST[DATE|TIME] source2 (pair):      0xa478c2975ab1ea89e8196811f51a7b7ade33eb11
-TEST[DATE|TIME] str1 (call/data):    getReserves()
-TEST[DATE|TIME] first:               0x6b175474e89094c44da98b954eedeac495271d0f
-TEST[DATE|TIME] second:              0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2
-TEST[DATE|TIME] reversed:            false
-TEST[DATE|TIME] float0:              36751647504361430380000000
-TEST[DATE|TIME] float1:              20346605310974698877000
-TEST[DATE|TIME] float2:              1
-TEST[DATE|TIME] bigPrice:            1806.2790791217668827
-TEST[DATE|TIME] price:               1806.279079121767
-TEST[DATE|TIME] source:              uniswap
-TEST[DATE|TIME] ===================================================
-TEST[DATE|TIME] Previous:               12704456 92 ( true )
-TEST[DATE|TIME] Current:                12704710 143 ( true )
-TEST[DATE|TIME] Next:                   12704812 11 ( true )
-TEST[DATE|TIME] accountedFor:           0xf503017d7baf7fbc0fff7492b751025c6a78179b
-TEST[DATE|TIME] sender:                 0x467a755ba59267678e14e414ed214c3cea836498  ==>  0x7d655c57f71464b6f83811c55d84009cd9f5221c
-TEST[DATE|TIME] asset:                  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
-TEST[DATE|TIME] hash:                   0x148110db3854cd9337ec466e7019635166315218a5632282b6e01f3d48c79184
-TEST[DATE|TIME] timestamp:              1624644135
-TEST[DATE|TIME] blockNumber:            12704710.143.0
-TEST[DATE|TIME] priceSource:            1806.279079121767 (uniswap)
-TEST[DATE|TIME] --------------------------------------------------- 
-TEST[DATE|TIME] Trial balance:
-TEST[DATE|TIME]    prevBal:             36.720534261192445316
-TEST[DATE|TIME]    begBal:              36.720534261192445316 (0)
-TEST[DATE|TIME]    totalIn:             0
-TEST[DATE|TIME]    totalOut:            0
-TEST[DATE|TIME]    amountNet:           0
-TEST[DATE|TIME]                        ======================= 
-TEST[DATE|TIME]    endBal:              36.720534261192445316 (0)
-TEST[DATE|TIME]    endBalCalc:          36.720534261192445316
-TEST[DATE|TIME] --------------------------------------------------- 
-TEST[DATE|TIME]    material:            false
-TEST[DATE|TIME]    reconciled:          true
-TEST[DATE|TIME] ---------------------------------------------------
-TEST[DATE|TIME] Statement was not material
-TEST[DATE|TIME] Extracting statements from logs.
-TEST[DATE|TIME] 1 statements generated from logs.
+TEST[DATE|TIME] First pass: Fetching unreconciled transfers
+TEST[DATE|TIME] Fetched 1 unreconciled transfers
+TEST[DATE|TIME] Second pass: Reconciling transfers
+TEST[DATE|TIME] Processing 1 log transfers
+TEST[DATE|TIME] Set BegSentinel for first log transfer
+TEST[DATE|TIME] Set EndSentinel for last log transfer
+TEST[DATE|TIME] Converted log transfer to statement for asset: 0x6b175474e89094c44da98b954eedeac495271d0f
 TEST[DATE|TIME] XXX =============[ token ]======================
 TEST[DATE|TIME] XXX Case 1: Only statement in block
 TEST[DATE|TIME] XXX Block: 12704710 Tx: 143 Asset: 0x6b175474e89094c44da98b954eedeac495271d0f
@@ -211,65 +121,20 @@ TEST[DATE|TIME]    amountIn:            4.75
 TEST[DATE|TIME]    material:            true
 TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
-TEST[DATE|TIME] Statement is material - appending. reconciled: true
+TEST[DATE|TIME] Log statement is material - appending. reconciled: true
 TEST[DATE|TIME] ~~~ Leaving: 12704710.143 ~~~
 TEST[DATE|TIME] ------------------------------------ 1 statements generated.
 TEST[DATE|TIME] 
 TEST[DATE|TIME] 
 TEST[DATE|TIME] ------------------------------------
 TEST[DATE|TIME] ~~~ Entering: 12704812.11 ~~~
-TEST[DATE|TIME] ETH is of interest
-TEST[DATE|TIME] Attempting to reconcile at top level: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-0xf503017d7baf7fbc0fff7492b751025c6a78179b
-TEST[DATE|TIME] XXX =============[ top-level ]======================
-TEST[DATE|TIME] XXX Case 1: Only statement in block
-TEST[DATE|TIME] XXX Block: 12704812 Tx: 11 Asset: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
-TEST[DATE|TIME] XXX FirstInBlock: true, LastInBlock: true
-TEST[DATE|TIME] XXX ================================================
-TEST[DATE|TIME] =========================================================
-TEST[DATE|TIME] ===> PRICING FOR 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) using Uniswap
-TEST[DATE|TIME] =========================================================
-TEST[DATE|TIME] blockNumber:         12704812
-TEST[DATE|TIME] source1 (uni/mkr):   0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f
-TEST[DATE|TIME] str0 (call):         getPair(0x6b175474e89094c44da98b954eedeac495271d0f, 0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2)
-TEST[DATE|TIME] source2 (pair):      0xa478c2975ab1ea89e8196811f51a7b7ade33eb11
-TEST[DATE|TIME] str1 (call/data):    getReserves()
-TEST[DATE|TIME] first:               0x6b175474e89094c44da98b954eedeac495271d0f
-TEST[DATE|TIME] second:              0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2
-TEST[DATE|TIME] reversed:            false
-TEST[DATE|TIME] float0:              37016964038249734100000000
-TEST[DATE|TIME] float1:              20201367071474849590000
-TEST[DATE|TIME] float2:              1
-TEST[DATE|TIME] bigPrice:            1832.3989612821396669
-TEST[DATE|TIME] price:               1832.3989612821397
-TEST[DATE|TIME] source:              uniswap
-TEST[DATE|TIME] ===================================================
-TEST[DATE|TIME] Previous:               12704710 143 ( true )
-TEST[DATE|TIME] Current:                12704812 11 ( true )
-TEST[DATE|TIME] Next:                   12705275 212 ( true )
-TEST[DATE|TIME] accountedFor:           0xf503017d7baf7fbc0fff7492b751025c6a78179b
-TEST[DATE|TIME] sender:                 0x5c04e7808455ee0e22c2773328c151d0dd79dc62  ==>  0x7d655c57f71464b6f83811c55d84009cd9f5221c
-TEST[DATE|TIME] asset:                  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
-TEST[DATE|TIME] hash:                   0x5bb75cb2516942158d3b0ad5eed1c08acf5c463cac46534a29487875d7ed1b72
-TEST[DATE|TIME] timestamp:              1624645515
-TEST[DATE|TIME] blockNumber:            12704812.11.0
-TEST[DATE|TIME] priceSource:            1832.3989612821397 (uniswap)
-TEST[DATE|TIME] --------------------------------------------------- 
-TEST[DATE|TIME] Trial balance:
-TEST[DATE|TIME]    prevBal:             36.720534261192445316
-TEST[DATE|TIME]    begBal:              36.720534261192445316 (0)
-TEST[DATE|TIME]    totalIn:             0
-TEST[DATE|TIME]    totalOut:            0
-TEST[DATE|TIME]    amountNet:           0
-TEST[DATE|TIME]                        ======================= 
-TEST[DATE|TIME]    endBal:              36.720534261192445316 (0)
-TEST[DATE|TIME]    endBalCalc:          36.720534261192445316
-TEST[DATE|TIME] --------------------------------------------------- 
-TEST[DATE|TIME]    material:            false
-TEST[DATE|TIME]    reconciled:          true
-TEST[DATE|TIME] ---------------------------------------------------
-TEST[DATE|TIME] Statement was not material
-TEST[DATE|TIME] Extracting statements from logs.
-TEST[DATE|TIME] 1 statements generated from logs.
+TEST[DATE|TIME] First pass: Fetching unreconciled transfers
+TEST[DATE|TIME] Fetched 1 unreconciled transfers
+TEST[DATE|TIME] Second pass: Reconciling transfers
+TEST[DATE|TIME] Processing 1 log transfers
+TEST[DATE|TIME] Set BegSentinel for first log transfer
+TEST[DATE|TIME] Set EndSentinel for last log transfer
+TEST[DATE|TIME] Converted log transfer to statement for asset: 0x6b175474e89094c44da98b954eedeac495271d0f
 TEST[DATE|TIME] XXX =============[ token ]======================
 TEST[DATE|TIME] XXX Case 1: Only statement in block
 TEST[DATE|TIME] XXX Block: 12704812 Tx: 11 Asset: 0x6b175474e89094c44da98b954eedeac495271d0f
@@ -305,65 +170,20 @@ TEST[DATE|TIME]    amountIn:            5
 TEST[DATE|TIME]    material:            true
 TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
-TEST[DATE|TIME] Statement is material - appending. reconciled: true
+TEST[DATE|TIME] Log statement is material - appending. reconciled: true
 TEST[DATE|TIME] ~~~ Leaving: 12704812.11 ~~~
 TEST[DATE|TIME] ------------------------------------ 1 statements generated.
 TEST[DATE|TIME] 
 TEST[DATE|TIME] 
 TEST[DATE|TIME] ------------------------------------
 TEST[DATE|TIME] ~~~ Entering: 12705275.212 ~~~
-TEST[DATE|TIME] ETH is of interest
-TEST[DATE|TIME] Attempting to reconcile at top level: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-0xf503017d7baf7fbc0fff7492b751025c6a78179b
-TEST[DATE|TIME] XXX =============[ top-level ]======================
-TEST[DATE|TIME] XXX Case 1: Only statement in block
-TEST[DATE|TIME] XXX Block: 12705275 Tx: 212 Asset: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
-TEST[DATE|TIME] XXX FirstInBlock: true, LastInBlock: true
-TEST[DATE|TIME] XXX ================================================
-TEST[DATE|TIME] =========================================================
-TEST[DATE|TIME] ===> PRICING FOR 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) using Uniswap
-TEST[DATE|TIME] =========================================================
-TEST[DATE|TIME] blockNumber:         12705275
-TEST[DATE|TIME] source1 (uni/mkr):   0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f
-TEST[DATE|TIME] str0 (call):         getPair(0x6b175474e89094c44da98b954eedeac495271d0f, 0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2)
-TEST[DATE|TIME] source2 (pair):      0xa478c2975ab1ea89e8196811f51a7b7ade33eb11
-TEST[DATE|TIME] str1 (call/data):    getReserves()
-TEST[DATE|TIME] first:               0x6b175474e89094c44da98b954eedeac495271d0f
-TEST[DATE|TIME] second:              0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2
-TEST[DATE|TIME] reversed:            false
-TEST[DATE|TIME] float0:              37159194895412793168000000
-TEST[DATE|TIME] float1:              20125224631858919470000
-TEST[DATE|TIME] float2:              1
-TEST[DATE|TIME] bigPrice:            1846.3990129376501819
-TEST[DATE|TIME] price:               1846.3990129376502
-TEST[DATE|TIME] source:              uniswap
-TEST[DATE|TIME] ===================================================
-TEST[DATE|TIME] Previous:               12704812 11 ( true )
-TEST[DATE|TIME] Current:                12705275 212 ( true )
-TEST[DATE|TIME] Next:                   12705892 117 ( true )
-TEST[DATE|TIME] accountedFor:           0xf503017d7baf7fbc0fff7492b751025c6a78179b
-TEST[DATE|TIME] sender:                 0xc7d0961e09ef783b02e951b3a0704236ae7cabb5  ==>  0x7d655c57f71464b6f83811c55d84009cd9f5221c
-TEST[DATE|TIME] asset:                  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
-TEST[DATE|TIME] hash:                   0x297d5bb4b26f26752523aa46ea7902faaedef3bc97a1ec53f37b24d6ee88cff4
-TEST[DATE|TIME] timestamp:              1624651859
-TEST[DATE|TIME] blockNumber:            12705275.212.0
-TEST[DATE|TIME] priceSource:            1846.3990129376502 (uniswap)
-TEST[DATE|TIME] --------------------------------------------------- 
-TEST[DATE|TIME] Trial balance:
-TEST[DATE|TIME]    prevBal:             36.720534261192445316
-TEST[DATE|TIME]    begBal:              36.720534261192445316 (0)
-TEST[DATE|TIME]    totalIn:             0
-TEST[DATE|TIME]    totalOut:            0
-TEST[DATE|TIME]    amountNet:           0
-TEST[DATE|TIME]                        ======================= 
-TEST[DATE|TIME]    endBal:              36.720534261192445316 (0)
-TEST[DATE|TIME]    endBalCalc:          36.720534261192445316
-TEST[DATE|TIME] --------------------------------------------------- 
-TEST[DATE|TIME]    material:            false
-TEST[DATE|TIME]    reconciled:          true
-TEST[DATE|TIME] ---------------------------------------------------
-TEST[DATE|TIME] Statement was not material
-TEST[DATE|TIME] Extracting statements from logs.
-TEST[DATE|TIME] 1 statements generated from logs.
+TEST[DATE|TIME] First pass: Fetching unreconciled transfers
+TEST[DATE|TIME] Fetched 1 unreconciled transfers
+TEST[DATE|TIME] Second pass: Reconciling transfers
+TEST[DATE|TIME] Processing 1 log transfers
+TEST[DATE|TIME] Set BegSentinel for first log transfer
+TEST[DATE|TIME] Set EndSentinel for last log transfer
+TEST[DATE|TIME] Converted log transfer to statement for asset: 0x6b175474e89094c44da98b954eedeac495271d0f
 TEST[DATE|TIME] XXX =============[ token ]======================
 TEST[DATE|TIME] XXX Case 1: Only statement in block
 TEST[DATE|TIME] XXX Block: 12705275 Tx: 212 Asset: 0x6b175474e89094c44da98b954eedeac495271d0f
@@ -399,16 +219,20 @@ TEST[DATE|TIME]    amountIn:            3.8
 TEST[DATE|TIME]    material:            true
 TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
-TEST[DATE|TIME] Statement is material - appending. reconciled: true
+TEST[DATE|TIME] Log statement is material - appending. reconciled: true
 TEST[DATE|TIME] ~~~ Leaving: 12705275.212 ~~~
 TEST[DATE|TIME] ------------------------------------ 1 statements generated.
 TEST[DATE|TIME] 
 TEST[DATE|TIME] 
 TEST[DATE|TIME] ------------------------------------
 TEST[DATE|TIME] ~~~ Entering: 12705892.117 ~~~
-TEST[DATE|TIME] ETH is of interest
-TEST[DATE|TIME] Attempting to reconcile at top level: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-0xf503017d7baf7fbc0fff7492b751025c6a78179b
-TEST[DATE|TIME] XXX =============[ top-level ]======================
+TEST[DATE|TIME] First pass: Fetching unreconciled transfers
+TEST[DATE|TIME] Fetched 45 unreconciled transfers
+TEST[DATE|TIME] Second pass: Reconciling transfers
+TEST[DATE|TIME] Processing ETH transfer
+TEST[DATE|TIME] Converted ETH transfer to statement
+TEST[DATE|TIME] Using trace-based ETH transfer
+TEST[DATE|TIME] XXX =============[ traces ]======================
 TEST[DATE|TIME] XXX Case 1: Only statement in block
 TEST[DATE|TIME] XXX Block: 12705892 Tx: 117 Asset: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
 TEST[DATE|TIME] XXX FirstInBlock: true, LastInBlock: true
@@ -456,9 +280,10 @@ TEST[DATE|TIME]    gasOut:              0.011780085
 TEST[DATE|TIME]    material:            true
 TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
-TEST[DATE|TIME] Statement is material and reconciled - appending
-TEST[DATE|TIME] Extracting statements from logs.
-TEST[DATE|TIME] 44 statements generated from logs.
+TEST[DATE|TIME] Trace-based statement is material - appending. reconciled: true
+TEST[DATE|TIME] Processing 44 log transfers
+TEST[DATE|TIME] Set BegSentinel for first log transfer
+TEST[DATE|TIME] Converted log transfer to statement for asset: 0x6b175474e89094c44da98b954eedeac495271d0f
 TEST[DATE|TIME] XXX =============[ token ]======================
 TEST[DATE|TIME] XXX Case 3: First statement in block with more
 TEST[DATE|TIME] XXX Block: 12705892 Tx: 117 Asset: 0x6b175474e89094c44da98b954eedeac495271d0f
@@ -494,7 +319,8 @@ TEST[DATE|TIME]    amountOut:           2
 TEST[DATE|TIME]    material:            true
 TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
-TEST[DATE|TIME] Statement is material - appending. reconciled: true
+TEST[DATE|TIME] Log statement is material - appending. reconciled: true
+TEST[DATE|TIME] Converted log transfer to statement for asset: 0x6b175474e89094c44da98b954eedeac495271d0f
 TEST[DATE|TIME] XXX =============[ token ]======================
 TEST[DATE|TIME] XXX Case 2: Middle statement in block
 TEST[DATE|TIME] XXX Block: 12705892 Tx: 117 Asset: 0x6b175474e89094c44da98b954eedeac495271d0f
@@ -518,20 +344,20 @@ TEST[DATE|TIME] priceSource:            1 (stable-coin)
 TEST[DATE|TIME] --------------------------------------------------- 
 TEST[DATE|TIME] Trial balance:
 TEST[DATE|TIME]    prevBal:             1551.721842513858802649
-TEST[DATE|TIME]    begBal:              1551.721842513858802649 (1549.721842513858802649)
+TEST[DATE|TIME]    begBal:              1551.721842513858802649 (0)
 TEST[DATE|TIME]    totalIn:             0
 TEST[DATE|TIME]    totalOut:            2
 TEST[DATE|TIME]    amountNet:           -2
 TEST[DATE|TIME]                        ======================= 
-TEST[DATE|TIME]    endBal:              0 (0)
+TEST[DATE|TIME]    endBal:              1549.721842513858802649 (0)
 TEST[DATE|TIME]    endBalCalc:          1549.721842513858802649
 TEST[DATE|TIME] --------------------------------------------------- 
 TEST[DATE|TIME]    amountOut:           2
 TEST[DATE|TIME]    material:            true
 TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
-WARN[DATE|TIME] Token statement at  12705892.117.288 0x6b175474e89094c44da98b954eedeac495271d0f 0xf503017d7baf7fbc0fff7492b751025c6a78179b did not reconcile. 
-TEST[DATE|TIME] Statement is material - appending. reconciled: false
+TEST[DATE|TIME] Log statement is material - appending. reconciled: true
+TEST[DATE|TIME] Converted log transfer to statement for asset: 0x6b175474e89094c44da98b954eedeac495271d0f
 TEST[DATE|TIME] XXX =============[ token ]======================
 TEST[DATE|TIME] XXX Case 2: Middle statement in block
 TEST[DATE|TIME] XXX Block: 12705892 Tx: 117 Asset: 0x6b175474e89094c44da98b954eedeac495271d0f
@@ -555,20 +381,20 @@ TEST[DATE|TIME] priceSource:            1 (stable-coin)
 TEST[DATE|TIME] --------------------------------------------------- 
 TEST[DATE|TIME] Trial balance:
 TEST[DATE|TIME]    prevBal:             1549.721842513858802649
-TEST[DATE|TIME]    begBal:              1549.721842513858802649 (1547.721842513858802649)
+TEST[DATE|TIME]    begBal:              1549.721842513858802649 (0)
 TEST[DATE|TIME]    totalIn:             0
 TEST[DATE|TIME]    totalOut:            2
 TEST[DATE|TIME]    amountNet:           -2
 TEST[DATE|TIME]                        ======================= 
-TEST[DATE|TIME]    endBal:              0 (0)
+TEST[DATE|TIME]    endBal:              1547.721842513858802649 (0)
 TEST[DATE|TIME]    endBalCalc:          1547.721842513858802649
 TEST[DATE|TIME] --------------------------------------------------- 
 TEST[DATE|TIME]    amountOut:           2
 TEST[DATE|TIME]    material:            true
 TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
-WARN[DATE|TIME] Token statement at  12705892.117.290 0x6b175474e89094c44da98b954eedeac495271d0f 0xf503017d7baf7fbc0fff7492b751025c6a78179b did not reconcile. 
-TEST[DATE|TIME] Statement is material - appending. reconciled: false
+TEST[DATE|TIME] Log statement is material - appending. reconciled: true
+TEST[DATE|TIME] Converted log transfer to statement for asset: 0x6b175474e89094c44da98b954eedeac495271d0f
 TEST[DATE|TIME] XXX =============[ token ]======================
 TEST[DATE|TIME] XXX Case 2: Middle statement in block
 TEST[DATE|TIME] XXX Block: 12705892 Tx: 117 Asset: 0x6b175474e89094c44da98b954eedeac495271d0f
@@ -592,20 +418,20 @@ TEST[DATE|TIME] priceSource:            1 (stable-coin)
 TEST[DATE|TIME] --------------------------------------------------- 
 TEST[DATE|TIME] Trial balance:
 TEST[DATE|TIME]    prevBal:             1547.721842513858802649
-TEST[DATE|TIME]    begBal:              1547.721842513858802649 (1545.721842513858802649)
+TEST[DATE|TIME]    begBal:              1547.721842513858802649 (0)
 TEST[DATE|TIME]    totalIn:             0
 TEST[DATE|TIME]    totalOut:            2
 TEST[DATE|TIME]    amountNet:           -2
 TEST[DATE|TIME]                        ======================= 
-TEST[DATE|TIME]    endBal:              0 (0)
+TEST[DATE|TIME]    endBal:              1545.721842513858802649 (0)
 TEST[DATE|TIME]    endBalCalc:          1545.721842513858802649
 TEST[DATE|TIME] --------------------------------------------------- 
 TEST[DATE|TIME]    amountOut:           2
 TEST[DATE|TIME]    material:            true
 TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
-WARN[DATE|TIME] Token statement at  12705892.117.292 0x6b175474e89094c44da98b954eedeac495271d0f 0xf503017d7baf7fbc0fff7492b751025c6a78179b did not reconcile. 
-TEST[DATE|TIME] Statement is material - appending. reconciled: false
+TEST[DATE|TIME] Log statement is material - appending. reconciled: true
+TEST[DATE|TIME] Converted log transfer to statement for asset: 0x6b175474e89094c44da98b954eedeac495271d0f
 TEST[DATE|TIME] XXX =============[ token ]======================
 TEST[DATE|TIME] XXX Case 2: Middle statement in block
 TEST[DATE|TIME] XXX Block: 12705892 Tx: 117 Asset: 0x6b175474e89094c44da98b954eedeac495271d0f
@@ -629,20 +455,20 @@ TEST[DATE|TIME] priceSource:            1 (stable-coin)
 TEST[DATE|TIME] --------------------------------------------------- 
 TEST[DATE|TIME] Trial balance:
 TEST[DATE|TIME]    prevBal:             1545.721842513858802649
-TEST[DATE|TIME]    begBal:              1545.721842513858802649 (1543.721842513858802649)
+TEST[DATE|TIME]    begBal:              1545.721842513858802649 (0)
 TEST[DATE|TIME]    totalIn:             0
 TEST[DATE|TIME]    totalOut:            2
 TEST[DATE|TIME]    amountNet:           -2
 TEST[DATE|TIME]                        ======================= 
-TEST[DATE|TIME]    endBal:              0 (0)
+TEST[DATE|TIME]    endBal:              1543.721842513858802649 (0)
 TEST[DATE|TIME]    endBalCalc:          1543.721842513858802649
 TEST[DATE|TIME] --------------------------------------------------- 
 TEST[DATE|TIME]    amountOut:           2
 TEST[DATE|TIME]    material:            true
 TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
-WARN[DATE|TIME] Token statement at  12705892.117.294 0x6b175474e89094c44da98b954eedeac495271d0f 0xf503017d7baf7fbc0fff7492b751025c6a78179b did not reconcile. 
-TEST[DATE|TIME] Statement is material - appending. reconciled: false
+TEST[DATE|TIME] Log statement is material - appending. reconciled: true
+TEST[DATE|TIME] Converted log transfer to statement for asset: 0x6b175474e89094c44da98b954eedeac495271d0f
 TEST[DATE|TIME] XXX =============[ token ]======================
 TEST[DATE|TIME] XXX Case 2: Middle statement in block
 TEST[DATE|TIME] XXX Block: 12705892 Tx: 117 Asset: 0x6b175474e89094c44da98b954eedeac495271d0f
@@ -666,20 +492,20 @@ TEST[DATE|TIME] priceSource:            1 (stable-coin)
 TEST[DATE|TIME] --------------------------------------------------- 
 TEST[DATE|TIME] Trial balance:
 TEST[DATE|TIME]    prevBal:             1543.721842513858802649
-TEST[DATE|TIME]    begBal:              1543.721842513858802649 (1541.721842513858802649)
+TEST[DATE|TIME]    begBal:              1543.721842513858802649 (0)
 TEST[DATE|TIME]    totalIn:             0
 TEST[DATE|TIME]    totalOut:            2
 TEST[DATE|TIME]    amountNet:           -2
 TEST[DATE|TIME]                        ======================= 
-TEST[DATE|TIME]    endBal:              0 (0)
+TEST[DATE|TIME]    endBal:              1541.721842513858802649 (0)
 TEST[DATE|TIME]    endBalCalc:          1541.721842513858802649
 TEST[DATE|TIME] --------------------------------------------------- 
 TEST[DATE|TIME]    amountOut:           2
 TEST[DATE|TIME]    material:            true
 TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
-WARN[DATE|TIME] Token statement at  12705892.117.296 0x6b175474e89094c44da98b954eedeac495271d0f 0xf503017d7baf7fbc0fff7492b751025c6a78179b did not reconcile. 
-TEST[DATE|TIME] Statement is material - appending. reconciled: false
+TEST[DATE|TIME] Log statement is material - appending. reconciled: true
+TEST[DATE|TIME] Converted log transfer to statement for asset: 0x6b175474e89094c44da98b954eedeac495271d0f
 TEST[DATE|TIME] XXX =============[ token ]======================
 TEST[DATE|TIME] XXX Case 2: Middle statement in block
 TEST[DATE|TIME] XXX Block: 12705892 Tx: 117 Asset: 0x6b175474e89094c44da98b954eedeac495271d0f
@@ -703,20 +529,20 @@ TEST[DATE|TIME] priceSource:            1 (stable-coin)
 TEST[DATE|TIME] --------------------------------------------------- 
 TEST[DATE|TIME] Trial balance:
 TEST[DATE|TIME]    prevBal:             1541.721842513858802649
-TEST[DATE|TIME]    begBal:              1541.721842513858802649 (1539.721842513858802649)
+TEST[DATE|TIME]    begBal:              1541.721842513858802649 (0)
 TEST[DATE|TIME]    totalIn:             0
 TEST[DATE|TIME]    totalOut:            2
 TEST[DATE|TIME]    amountNet:           -2
 TEST[DATE|TIME]                        ======================= 
-TEST[DATE|TIME]    endBal:              0 (0)
+TEST[DATE|TIME]    endBal:              1539.721842513858802649 (0)
 TEST[DATE|TIME]    endBalCalc:          1539.721842513858802649
 TEST[DATE|TIME] --------------------------------------------------- 
 TEST[DATE|TIME]    amountOut:           2
 TEST[DATE|TIME]    material:            true
 TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
-WARN[DATE|TIME] Token statement at  12705892.117.298 0x6b175474e89094c44da98b954eedeac495271d0f 0xf503017d7baf7fbc0fff7492b751025c6a78179b did not reconcile. 
-TEST[DATE|TIME] Statement is material - appending. reconciled: false
+TEST[DATE|TIME] Log statement is material - appending. reconciled: true
+TEST[DATE|TIME] Converted log transfer to statement for asset: 0x6b175474e89094c44da98b954eedeac495271d0f
 TEST[DATE|TIME] XXX =============[ token ]======================
 TEST[DATE|TIME] XXX Case 2: Middle statement in block
 TEST[DATE|TIME] XXX Block: 12705892 Tx: 117 Asset: 0x6b175474e89094c44da98b954eedeac495271d0f
@@ -740,20 +566,20 @@ TEST[DATE|TIME] priceSource:            1 (stable-coin)
 TEST[DATE|TIME] --------------------------------------------------- 
 TEST[DATE|TIME] Trial balance:
 TEST[DATE|TIME]    prevBal:             1539.721842513858802649
-TEST[DATE|TIME]    begBal:              1539.721842513858802649 (1537.721842513858802649)
+TEST[DATE|TIME]    begBal:              1539.721842513858802649 (0)
 TEST[DATE|TIME]    totalIn:             0
 TEST[DATE|TIME]    totalOut:            2
 TEST[DATE|TIME]    amountNet:           -2
 TEST[DATE|TIME]                        ======================= 
-TEST[DATE|TIME]    endBal:              0 (0)
+TEST[DATE|TIME]    endBal:              1537.721842513858802649 (0)
 TEST[DATE|TIME]    endBalCalc:          1537.721842513858802649
 TEST[DATE|TIME] --------------------------------------------------- 
 TEST[DATE|TIME]    amountOut:           2
 TEST[DATE|TIME]    material:            true
 TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
-WARN[DATE|TIME] Token statement at  12705892.117.300 0x6b175474e89094c44da98b954eedeac495271d0f 0xf503017d7baf7fbc0fff7492b751025c6a78179b did not reconcile. 
-TEST[DATE|TIME] Statement is material - appending. reconciled: false
+TEST[DATE|TIME] Log statement is material - appending. reconciled: true
+TEST[DATE|TIME] Converted log transfer to statement for asset: 0x6b175474e89094c44da98b954eedeac495271d0f
 TEST[DATE|TIME] XXX =============[ token ]======================
 TEST[DATE|TIME] XXX Case 2: Middle statement in block
 TEST[DATE|TIME] XXX Block: 12705892 Tx: 117 Asset: 0x6b175474e89094c44da98b954eedeac495271d0f
@@ -777,20 +603,20 @@ TEST[DATE|TIME] priceSource:            1 (stable-coin)
 TEST[DATE|TIME] --------------------------------------------------- 
 TEST[DATE|TIME] Trial balance:
 TEST[DATE|TIME]    prevBal:             1537.721842513858802649
-TEST[DATE|TIME]    begBal:              1537.721842513858802649 (1535.721842513858802649)
+TEST[DATE|TIME]    begBal:              1537.721842513858802649 (0)
 TEST[DATE|TIME]    totalIn:             0
 TEST[DATE|TIME]    totalOut:            2
 TEST[DATE|TIME]    amountNet:           -2
 TEST[DATE|TIME]                        ======================= 
-TEST[DATE|TIME]    endBal:              0 (0)
+TEST[DATE|TIME]    endBal:              1535.721842513858802649 (0)
 TEST[DATE|TIME]    endBalCalc:          1535.721842513858802649
 TEST[DATE|TIME] --------------------------------------------------- 
 TEST[DATE|TIME]    amountOut:           2
 TEST[DATE|TIME]    material:            true
 TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
-WARN[DATE|TIME] Token statement at  12705892.117.302 0x6b175474e89094c44da98b954eedeac495271d0f 0xf503017d7baf7fbc0fff7492b751025c6a78179b did not reconcile. 
-TEST[DATE|TIME] Statement is material - appending. reconciled: false
+TEST[DATE|TIME] Log statement is material - appending. reconciled: true
+TEST[DATE|TIME] Converted log transfer to statement for asset: 0x6b175474e89094c44da98b954eedeac495271d0f
 TEST[DATE|TIME] XXX =============[ token ]======================
 TEST[DATE|TIME] XXX Case 2: Middle statement in block
 TEST[DATE|TIME] XXX Block: 12705892 Tx: 117 Asset: 0x6b175474e89094c44da98b954eedeac495271d0f
@@ -814,20 +640,20 @@ TEST[DATE|TIME] priceSource:            1 (stable-coin)
 TEST[DATE|TIME] --------------------------------------------------- 
 TEST[DATE|TIME] Trial balance:
 TEST[DATE|TIME]    prevBal:             1535.721842513858802649
-TEST[DATE|TIME]    begBal:              1535.721842513858802649 (1533.721842513858802649)
+TEST[DATE|TIME]    begBal:              1535.721842513858802649 (0)
 TEST[DATE|TIME]    totalIn:             0
 TEST[DATE|TIME]    totalOut:            2
 TEST[DATE|TIME]    amountNet:           -2
 TEST[DATE|TIME]                        ======================= 
-TEST[DATE|TIME]    endBal:              0 (0)
+TEST[DATE|TIME]    endBal:              1533.721842513858802649 (0)
 TEST[DATE|TIME]    endBalCalc:          1533.721842513858802649
 TEST[DATE|TIME] --------------------------------------------------- 
 TEST[DATE|TIME]    amountOut:           2
 TEST[DATE|TIME]    material:            true
 TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
-WARN[DATE|TIME] Token statement at  12705892.117.304 0x6b175474e89094c44da98b954eedeac495271d0f 0xf503017d7baf7fbc0fff7492b751025c6a78179b did not reconcile. 
-TEST[DATE|TIME] Statement is material - appending. reconciled: false
+TEST[DATE|TIME] Log statement is material - appending. reconciled: true
+TEST[DATE|TIME] Converted log transfer to statement for asset: 0x6b175474e89094c44da98b954eedeac495271d0f
 TEST[DATE|TIME] XXX =============[ token ]======================
 TEST[DATE|TIME] XXX Case 2: Middle statement in block
 TEST[DATE|TIME] XXX Block: 12705892 Tx: 117 Asset: 0x6b175474e89094c44da98b954eedeac495271d0f
@@ -851,20 +677,20 @@ TEST[DATE|TIME] priceSource:            1 (stable-coin)
 TEST[DATE|TIME] --------------------------------------------------- 
 TEST[DATE|TIME] Trial balance:
 TEST[DATE|TIME]    prevBal:             1533.721842513858802649
-TEST[DATE|TIME]    begBal:              1533.721842513858802649 (1531.721842513858802649)
+TEST[DATE|TIME]    begBal:              1533.721842513858802649 (0)
 TEST[DATE|TIME]    totalIn:             0
 TEST[DATE|TIME]    totalOut:            2
 TEST[DATE|TIME]    amountNet:           -2
 TEST[DATE|TIME]                        ======================= 
-TEST[DATE|TIME]    endBal:              0 (0)
+TEST[DATE|TIME]    endBal:              1531.721842513858802649 (0)
 TEST[DATE|TIME]    endBalCalc:          1531.721842513858802649
 TEST[DATE|TIME] --------------------------------------------------- 
 TEST[DATE|TIME]    amountOut:           2
 TEST[DATE|TIME]    material:            true
 TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
-WARN[DATE|TIME] Token statement at  12705892.117.306 0x6b175474e89094c44da98b954eedeac495271d0f 0xf503017d7baf7fbc0fff7492b751025c6a78179b did not reconcile. 
-TEST[DATE|TIME] Statement is material - appending. reconciled: false
+TEST[DATE|TIME] Log statement is material - appending. reconciled: true
+TEST[DATE|TIME] Converted log transfer to statement for asset: 0x6b175474e89094c44da98b954eedeac495271d0f
 TEST[DATE|TIME] XXX =============[ token ]======================
 TEST[DATE|TIME] XXX Case 2: Middle statement in block
 TEST[DATE|TIME] XXX Block: 12705892 Tx: 117 Asset: 0x6b175474e89094c44da98b954eedeac495271d0f
@@ -888,20 +714,20 @@ TEST[DATE|TIME] priceSource:            1 (stable-coin)
 TEST[DATE|TIME] --------------------------------------------------- 
 TEST[DATE|TIME] Trial balance:
 TEST[DATE|TIME]    prevBal:             1531.721842513858802649
-TEST[DATE|TIME]    begBal:              1531.721842513858802649 (1529.721842513858802649)
+TEST[DATE|TIME]    begBal:              1531.721842513858802649 (0)
 TEST[DATE|TIME]    totalIn:             0
 TEST[DATE|TIME]    totalOut:            2
 TEST[DATE|TIME]    amountNet:           -2
 TEST[DATE|TIME]                        ======================= 
-TEST[DATE|TIME]    endBal:              0 (0)
+TEST[DATE|TIME]    endBal:              1529.721842513858802649 (0)
 TEST[DATE|TIME]    endBalCalc:          1529.721842513858802649
 TEST[DATE|TIME] --------------------------------------------------- 
 TEST[DATE|TIME]    amountOut:           2
 TEST[DATE|TIME]    material:            true
 TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
-WARN[DATE|TIME] Token statement at  12705892.117.308 0x6b175474e89094c44da98b954eedeac495271d0f 0xf503017d7baf7fbc0fff7492b751025c6a78179b did not reconcile. 
-TEST[DATE|TIME] Statement is material - appending. reconciled: false
+TEST[DATE|TIME] Log statement is material - appending. reconciled: true
+TEST[DATE|TIME] Converted log transfer to statement for asset: 0x6b175474e89094c44da98b954eedeac495271d0f
 TEST[DATE|TIME] XXX =============[ token ]======================
 TEST[DATE|TIME] XXX Case 2: Middle statement in block
 TEST[DATE|TIME] XXX Block: 12705892 Tx: 117 Asset: 0x6b175474e89094c44da98b954eedeac495271d0f
@@ -925,20 +751,20 @@ TEST[DATE|TIME] priceSource:            1 (stable-coin)
 TEST[DATE|TIME] --------------------------------------------------- 
 TEST[DATE|TIME] Trial balance:
 TEST[DATE|TIME]    prevBal:             1529.721842513858802649
-TEST[DATE|TIME]    begBal:              1529.721842513858802649 (1527.721842513858802649)
+TEST[DATE|TIME]    begBal:              1529.721842513858802649 (0)
 TEST[DATE|TIME]    totalIn:             0
 TEST[DATE|TIME]    totalOut:            2
 TEST[DATE|TIME]    amountNet:           -2
 TEST[DATE|TIME]                        ======================= 
-TEST[DATE|TIME]    endBal:              0 (0)
+TEST[DATE|TIME]    endBal:              1527.721842513858802649 (0)
 TEST[DATE|TIME]    endBalCalc:          1527.721842513858802649
 TEST[DATE|TIME] --------------------------------------------------- 
 TEST[DATE|TIME]    amountOut:           2
 TEST[DATE|TIME]    material:            true
 TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
-WARN[DATE|TIME] Token statement at  12705892.117.310 0x6b175474e89094c44da98b954eedeac495271d0f 0xf503017d7baf7fbc0fff7492b751025c6a78179b did not reconcile. 
-TEST[DATE|TIME] Statement is material - appending. reconciled: false
+TEST[DATE|TIME] Log statement is material - appending. reconciled: true
+TEST[DATE|TIME] Converted log transfer to statement for asset: 0x6b175474e89094c44da98b954eedeac495271d0f
 TEST[DATE|TIME] XXX =============[ token ]======================
 TEST[DATE|TIME] XXX Case 2: Middle statement in block
 TEST[DATE|TIME] XXX Block: 12705892 Tx: 117 Asset: 0x6b175474e89094c44da98b954eedeac495271d0f
@@ -962,20 +788,20 @@ TEST[DATE|TIME] priceSource:            1 (stable-coin)
 TEST[DATE|TIME] --------------------------------------------------- 
 TEST[DATE|TIME] Trial balance:
 TEST[DATE|TIME]    prevBal:             1527.721842513858802649
-TEST[DATE|TIME]    begBal:              1527.721842513858802649 (1525.721842513858802649)
+TEST[DATE|TIME]    begBal:              1527.721842513858802649 (0)
 TEST[DATE|TIME]    totalIn:             0
 TEST[DATE|TIME]    totalOut:            2
 TEST[DATE|TIME]    amountNet:           -2
 TEST[DATE|TIME]                        ======================= 
-TEST[DATE|TIME]    endBal:              0 (0)
+TEST[DATE|TIME]    endBal:              1525.721842513858802649 (0)
 TEST[DATE|TIME]    endBalCalc:          1525.721842513858802649
 TEST[DATE|TIME] --------------------------------------------------- 
 TEST[DATE|TIME]    amountOut:           2
 TEST[DATE|TIME]    material:            true
 TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
-WARN[DATE|TIME] Token statement at  12705892.117.312 0x6b175474e89094c44da98b954eedeac495271d0f 0xf503017d7baf7fbc0fff7492b751025c6a78179b did not reconcile. 
-TEST[DATE|TIME] Statement is material - appending. reconciled: false
+TEST[DATE|TIME] Log statement is material - appending. reconciled: true
+TEST[DATE|TIME] Converted log transfer to statement for asset: 0x6b175474e89094c44da98b954eedeac495271d0f
 TEST[DATE|TIME] XXX =============[ token ]======================
 TEST[DATE|TIME] XXX Case 2: Middle statement in block
 TEST[DATE|TIME] XXX Block: 12705892 Tx: 117 Asset: 0x6b175474e89094c44da98b954eedeac495271d0f
@@ -999,20 +825,20 @@ TEST[DATE|TIME] priceSource:            1 (stable-coin)
 TEST[DATE|TIME] --------------------------------------------------- 
 TEST[DATE|TIME] Trial balance:
 TEST[DATE|TIME]    prevBal:             1525.721842513858802649
-TEST[DATE|TIME]    begBal:              1525.721842513858802649 (1523.721842513858802649)
+TEST[DATE|TIME]    begBal:              1525.721842513858802649 (0)
 TEST[DATE|TIME]    totalIn:             0
 TEST[DATE|TIME]    totalOut:            2
 TEST[DATE|TIME]    amountNet:           -2
 TEST[DATE|TIME]                        ======================= 
-TEST[DATE|TIME]    endBal:              0 (0)
+TEST[DATE|TIME]    endBal:              1523.721842513858802649 (0)
 TEST[DATE|TIME]    endBalCalc:          1523.721842513858802649
 TEST[DATE|TIME] --------------------------------------------------- 
 TEST[DATE|TIME]    amountOut:           2
 TEST[DATE|TIME]    material:            true
 TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
-WARN[DATE|TIME] Token statement at  12705892.117.314 0x6b175474e89094c44da98b954eedeac495271d0f 0xf503017d7baf7fbc0fff7492b751025c6a78179b did not reconcile. 
-TEST[DATE|TIME] Statement is material - appending. reconciled: false
+TEST[DATE|TIME] Log statement is material - appending. reconciled: true
+TEST[DATE|TIME] Converted log transfer to statement for asset: 0x6b175474e89094c44da98b954eedeac495271d0f
 TEST[DATE|TIME] XXX =============[ token ]======================
 TEST[DATE|TIME] XXX Case 2: Middle statement in block
 TEST[DATE|TIME] XXX Block: 12705892 Tx: 117 Asset: 0x6b175474e89094c44da98b954eedeac495271d0f
@@ -1036,20 +862,20 @@ TEST[DATE|TIME] priceSource:            1 (stable-coin)
 TEST[DATE|TIME] --------------------------------------------------- 
 TEST[DATE|TIME] Trial balance:
 TEST[DATE|TIME]    prevBal:             1523.721842513858802649
-TEST[DATE|TIME]    begBal:              1523.721842513858802649 (1521.721842513858802649)
+TEST[DATE|TIME]    begBal:              1523.721842513858802649 (0)
 TEST[DATE|TIME]    totalIn:             0
 TEST[DATE|TIME]    totalOut:            2
 TEST[DATE|TIME]    amountNet:           -2
 TEST[DATE|TIME]                        ======================= 
-TEST[DATE|TIME]    endBal:              0 (0)
+TEST[DATE|TIME]    endBal:              1521.721842513858802649 (0)
 TEST[DATE|TIME]    endBalCalc:          1521.721842513858802649
 TEST[DATE|TIME] --------------------------------------------------- 
 TEST[DATE|TIME]    amountOut:           2
 TEST[DATE|TIME]    material:            true
 TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
-WARN[DATE|TIME] Token statement at  12705892.117.316 0x6b175474e89094c44da98b954eedeac495271d0f 0xf503017d7baf7fbc0fff7492b751025c6a78179b did not reconcile. 
-TEST[DATE|TIME] Statement is material - appending. reconciled: false
+TEST[DATE|TIME] Log statement is material - appending. reconciled: true
+TEST[DATE|TIME] Converted log transfer to statement for asset: 0x6b175474e89094c44da98b954eedeac495271d0f
 TEST[DATE|TIME] XXX =============[ token ]======================
 TEST[DATE|TIME] XXX Case 2: Middle statement in block
 TEST[DATE|TIME] XXX Block: 12705892 Tx: 117 Asset: 0x6b175474e89094c44da98b954eedeac495271d0f
@@ -1073,20 +899,20 @@ TEST[DATE|TIME] priceSource:            1 (stable-coin)
 TEST[DATE|TIME] --------------------------------------------------- 
 TEST[DATE|TIME] Trial balance:
 TEST[DATE|TIME]    prevBal:             1521.721842513858802649
-TEST[DATE|TIME]    begBal:              1521.721842513858802649 (1519.721842513858802649)
+TEST[DATE|TIME]    begBal:              1521.721842513858802649 (0)
 TEST[DATE|TIME]    totalIn:             0
 TEST[DATE|TIME]    totalOut:            2
 TEST[DATE|TIME]    amountNet:           -2
 TEST[DATE|TIME]                        ======================= 
-TEST[DATE|TIME]    endBal:              0 (0)
+TEST[DATE|TIME]    endBal:              1519.721842513858802649 (0)
 TEST[DATE|TIME]    endBalCalc:          1519.721842513858802649
 TEST[DATE|TIME] --------------------------------------------------- 
 TEST[DATE|TIME]    amountOut:           2
 TEST[DATE|TIME]    material:            true
 TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
-WARN[DATE|TIME] Token statement at  12705892.117.318 0x6b175474e89094c44da98b954eedeac495271d0f 0xf503017d7baf7fbc0fff7492b751025c6a78179b did not reconcile. 
-TEST[DATE|TIME] Statement is material - appending. reconciled: false
+TEST[DATE|TIME] Log statement is material - appending. reconciled: true
+TEST[DATE|TIME] Converted log transfer to statement for asset: 0x6b175474e89094c44da98b954eedeac495271d0f
 TEST[DATE|TIME] XXX =============[ token ]======================
 TEST[DATE|TIME] XXX Case 2: Middle statement in block
 TEST[DATE|TIME] XXX Block: 12705892 Tx: 117 Asset: 0x6b175474e89094c44da98b954eedeac495271d0f
@@ -1110,20 +936,20 @@ TEST[DATE|TIME] priceSource:            1 (stable-coin)
 TEST[DATE|TIME] --------------------------------------------------- 
 TEST[DATE|TIME] Trial balance:
 TEST[DATE|TIME]    prevBal:             1519.721842513858802649
-TEST[DATE|TIME]    begBal:              1519.721842513858802649 (1517.721842513858802649)
+TEST[DATE|TIME]    begBal:              1519.721842513858802649 (0)
 TEST[DATE|TIME]    totalIn:             0
 TEST[DATE|TIME]    totalOut:            2
 TEST[DATE|TIME]    amountNet:           -2
 TEST[DATE|TIME]                        ======================= 
-TEST[DATE|TIME]    endBal:              0 (0)
+TEST[DATE|TIME]    endBal:              1517.721842513858802649 (0)
 TEST[DATE|TIME]    endBalCalc:          1517.721842513858802649
 TEST[DATE|TIME] --------------------------------------------------- 
 TEST[DATE|TIME]    amountOut:           2
 TEST[DATE|TIME]    material:            true
 TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
-WARN[DATE|TIME] Token statement at  12705892.117.320 0x6b175474e89094c44da98b954eedeac495271d0f 0xf503017d7baf7fbc0fff7492b751025c6a78179b did not reconcile. 
-TEST[DATE|TIME] Statement is material - appending. reconciled: false
+TEST[DATE|TIME] Log statement is material - appending. reconciled: true
+TEST[DATE|TIME] Converted log transfer to statement for asset: 0x6b175474e89094c44da98b954eedeac495271d0f
 TEST[DATE|TIME] XXX =============[ token ]======================
 TEST[DATE|TIME] XXX Case 2: Middle statement in block
 TEST[DATE|TIME] XXX Block: 12705892 Tx: 117 Asset: 0x6b175474e89094c44da98b954eedeac495271d0f
@@ -1147,20 +973,20 @@ TEST[DATE|TIME] priceSource:            1 (stable-coin)
 TEST[DATE|TIME] --------------------------------------------------- 
 TEST[DATE|TIME] Trial balance:
 TEST[DATE|TIME]    prevBal:             1517.721842513858802649
-TEST[DATE|TIME]    begBal:              1517.721842513858802649 (1515.721842513858802649)
+TEST[DATE|TIME]    begBal:              1517.721842513858802649 (0)
 TEST[DATE|TIME]    totalIn:             0
 TEST[DATE|TIME]    totalOut:            2
 TEST[DATE|TIME]    amountNet:           -2
 TEST[DATE|TIME]                        ======================= 
-TEST[DATE|TIME]    endBal:              0 (0)
+TEST[DATE|TIME]    endBal:              1515.721842513858802649 (0)
 TEST[DATE|TIME]    endBalCalc:          1515.721842513858802649
 TEST[DATE|TIME] --------------------------------------------------- 
 TEST[DATE|TIME]    amountOut:           2
 TEST[DATE|TIME]    material:            true
 TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
-WARN[DATE|TIME] Token statement at  12705892.117.322 0x6b175474e89094c44da98b954eedeac495271d0f 0xf503017d7baf7fbc0fff7492b751025c6a78179b did not reconcile. 
-TEST[DATE|TIME] Statement is material - appending. reconciled: false
+TEST[DATE|TIME] Log statement is material - appending. reconciled: true
+TEST[DATE|TIME] Converted log transfer to statement for asset: 0x6b175474e89094c44da98b954eedeac495271d0f
 TEST[DATE|TIME] XXX =============[ token ]======================
 TEST[DATE|TIME] XXX Case 2: Middle statement in block
 TEST[DATE|TIME] XXX Block: 12705892 Tx: 117 Asset: 0x6b175474e89094c44da98b954eedeac495271d0f
@@ -1184,20 +1010,20 @@ TEST[DATE|TIME] priceSource:            1 (stable-coin)
 TEST[DATE|TIME] --------------------------------------------------- 
 TEST[DATE|TIME] Trial balance:
 TEST[DATE|TIME]    prevBal:             1515.721842513858802649
-TEST[DATE|TIME]    begBal:              1515.721842513858802649 (1513.721842513858802649)
+TEST[DATE|TIME]    begBal:              1515.721842513858802649 (0)
 TEST[DATE|TIME]    totalIn:             0
 TEST[DATE|TIME]    totalOut:            2
 TEST[DATE|TIME]    amountNet:           -2
 TEST[DATE|TIME]                        ======================= 
-TEST[DATE|TIME]    endBal:              0 (0)
+TEST[DATE|TIME]    endBal:              1513.721842513858802649 (0)
 TEST[DATE|TIME]    endBalCalc:          1513.721842513858802649
 TEST[DATE|TIME] --------------------------------------------------- 
 TEST[DATE|TIME]    amountOut:           2
 TEST[DATE|TIME]    material:            true
 TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
-WARN[DATE|TIME] Token statement at  12705892.117.324 0x6b175474e89094c44da98b954eedeac495271d0f 0xf503017d7baf7fbc0fff7492b751025c6a78179b did not reconcile. 
-TEST[DATE|TIME] Statement is material - appending. reconciled: false
+TEST[DATE|TIME] Log statement is material - appending. reconciled: true
+TEST[DATE|TIME] Converted log transfer to statement for asset: 0x6b175474e89094c44da98b954eedeac495271d0f
 TEST[DATE|TIME] XXX =============[ token ]======================
 TEST[DATE|TIME] XXX Case 2: Middle statement in block
 TEST[DATE|TIME] XXX Block: 12705892 Tx: 117 Asset: 0x6b175474e89094c44da98b954eedeac495271d0f
@@ -1221,20 +1047,20 @@ TEST[DATE|TIME] priceSource:            1 (stable-coin)
 TEST[DATE|TIME] --------------------------------------------------- 
 TEST[DATE|TIME] Trial balance:
 TEST[DATE|TIME]    prevBal:             1513.721842513858802649
-TEST[DATE|TIME]    begBal:              1513.721842513858802649 (1511.721842513858802649)
+TEST[DATE|TIME]    begBal:              1513.721842513858802649 (0)
 TEST[DATE|TIME]    totalIn:             0
 TEST[DATE|TIME]    totalOut:            2
 TEST[DATE|TIME]    amountNet:           -2
 TEST[DATE|TIME]                        ======================= 
-TEST[DATE|TIME]    endBal:              0 (0)
+TEST[DATE|TIME]    endBal:              1511.721842513858802649 (0)
 TEST[DATE|TIME]    endBalCalc:          1511.721842513858802649
 TEST[DATE|TIME] --------------------------------------------------- 
 TEST[DATE|TIME]    amountOut:           2
 TEST[DATE|TIME]    material:            true
 TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
-WARN[DATE|TIME] Token statement at  12705892.117.326 0x6b175474e89094c44da98b954eedeac495271d0f 0xf503017d7baf7fbc0fff7492b751025c6a78179b did not reconcile. 
-TEST[DATE|TIME] Statement is material - appending. reconciled: false
+TEST[DATE|TIME] Log statement is material - appending. reconciled: true
+TEST[DATE|TIME] Converted log transfer to statement for asset: 0x6b175474e89094c44da98b954eedeac495271d0f
 TEST[DATE|TIME] XXX =============[ token ]======================
 TEST[DATE|TIME] XXX Case 2: Middle statement in block
 TEST[DATE|TIME] XXX Block: 12705892 Tx: 117 Asset: 0x6b175474e89094c44da98b954eedeac495271d0f
@@ -1258,20 +1084,20 @@ TEST[DATE|TIME] priceSource:            1 (stable-coin)
 TEST[DATE|TIME] --------------------------------------------------- 
 TEST[DATE|TIME] Trial balance:
 TEST[DATE|TIME]    prevBal:             1511.721842513858802649
-TEST[DATE|TIME]    begBal:              1511.721842513858802649 (1509.721842513858802649)
+TEST[DATE|TIME]    begBal:              1511.721842513858802649 (0)
 TEST[DATE|TIME]    totalIn:             0
 TEST[DATE|TIME]    totalOut:            2
 TEST[DATE|TIME]    amountNet:           -2
 TEST[DATE|TIME]                        ======================= 
-TEST[DATE|TIME]    endBal:              0 (0)
+TEST[DATE|TIME]    endBal:              1509.721842513858802649 (0)
 TEST[DATE|TIME]    endBalCalc:          1509.721842513858802649
 TEST[DATE|TIME] --------------------------------------------------- 
 TEST[DATE|TIME]    amountOut:           2
 TEST[DATE|TIME]    material:            true
 TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
-WARN[DATE|TIME] Token statement at  12705892.117.328 0x6b175474e89094c44da98b954eedeac495271d0f 0xf503017d7baf7fbc0fff7492b751025c6a78179b did not reconcile. 
-TEST[DATE|TIME] Statement is material - appending. reconciled: false
+TEST[DATE|TIME] Log statement is material - appending. reconciled: true
+TEST[DATE|TIME] Converted log transfer to statement for asset: 0x6b175474e89094c44da98b954eedeac495271d0f
 TEST[DATE|TIME] XXX =============[ token ]======================
 TEST[DATE|TIME] XXX Case 2: Middle statement in block
 TEST[DATE|TIME] XXX Block: 12705892 Tx: 117 Asset: 0x6b175474e89094c44da98b954eedeac495271d0f
@@ -1295,20 +1121,20 @@ TEST[DATE|TIME] priceSource:            1 (stable-coin)
 TEST[DATE|TIME] --------------------------------------------------- 
 TEST[DATE|TIME] Trial balance:
 TEST[DATE|TIME]    prevBal:             1509.721842513858802649
-TEST[DATE|TIME]    begBal:              1509.721842513858802649 (1507.721842513858802649)
+TEST[DATE|TIME]    begBal:              1509.721842513858802649 (0)
 TEST[DATE|TIME]    totalIn:             0
 TEST[DATE|TIME]    totalOut:            2
 TEST[DATE|TIME]    amountNet:           -2
 TEST[DATE|TIME]                        ======================= 
-TEST[DATE|TIME]    endBal:              0 (0)
+TEST[DATE|TIME]    endBal:              1507.721842513858802649 (0)
 TEST[DATE|TIME]    endBalCalc:          1507.721842513858802649
 TEST[DATE|TIME] --------------------------------------------------- 
 TEST[DATE|TIME]    amountOut:           2
 TEST[DATE|TIME]    material:            true
 TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
-WARN[DATE|TIME] Token statement at  12705892.117.330 0x6b175474e89094c44da98b954eedeac495271d0f 0xf503017d7baf7fbc0fff7492b751025c6a78179b did not reconcile. 
-TEST[DATE|TIME] Statement is material - appending. reconciled: false
+TEST[DATE|TIME] Log statement is material - appending. reconciled: true
+TEST[DATE|TIME] Converted log transfer to statement for asset: 0x6b175474e89094c44da98b954eedeac495271d0f
 TEST[DATE|TIME] XXX =============[ token ]======================
 TEST[DATE|TIME] XXX Case 2: Middle statement in block
 TEST[DATE|TIME] XXX Block: 12705892 Tx: 117 Asset: 0x6b175474e89094c44da98b954eedeac495271d0f
@@ -1332,20 +1158,20 @@ TEST[DATE|TIME] priceSource:            1 (stable-coin)
 TEST[DATE|TIME] --------------------------------------------------- 
 TEST[DATE|TIME] Trial balance:
 TEST[DATE|TIME]    prevBal:             1507.721842513858802649
-TEST[DATE|TIME]    begBal:              1507.721842513858802649 (1505.721842513858802649)
+TEST[DATE|TIME]    begBal:              1507.721842513858802649 (0)
 TEST[DATE|TIME]    totalIn:             0
 TEST[DATE|TIME]    totalOut:            2
 TEST[DATE|TIME]    amountNet:           -2
 TEST[DATE|TIME]                        ======================= 
-TEST[DATE|TIME]    endBal:              0 (0)
+TEST[DATE|TIME]    endBal:              1505.721842513858802649 (0)
 TEST[DATE|TIME]    endBalCalc:          1505.721842513858802649
 TEST[DATE|TIME] --------------------------------------------------- 
 TEST[DATE|TIME]    amountOut:           2
 TEST[DATE|TIME]    material:            true
 TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
-WARN[DATE|TIME] Token statement at  12705892.117.332 0x6b175474e89094c44da98b954eedeac495271d0f 0xf503017d7baf7fbc0fff7492b751025c6a78179b did not reconcile. 
-TEST[DATE|TIME] Statement is material - appending. reconciled: false
+TEST[DATE|TIME] Log statement is material - appending. reconciled: true
+TEST[DATE|TIME] Converted log transfer to statement for asset: 0x6b175474e89094c44da98b954eedeac495271d0f
 TEST[DATE|TIME] XXX =============[ token ]======================
 TEST[DATE|TIME] XXX Case 2: Middle statement in block
 TEST[DATE|TIME] XXX Block: 12705892 Tx: 117 Asset: 0x6b175474e89094c44da98b954eedeac495271d0f
@@ -1369,20 +1195,20 @@ TEST[DATE|TIME] priceSource:            1 (stable-coin)
 TEST[DATE|TIME] --------------------------------------------------- 
 TEST[DATE|TIME] Trial balance:
 TEST[DATE|TIME]    prevBal:             1505.721842513858802649
-TEST[DATE|TIME]    begBal:              1505.721842513858802649 (1503.721842513858802649)
+TEST[DATE|TIME]    begBal:              1505.721842513858802649 (0)
 TEST[DATE|TIME]    totalIn:             0
 TEST[DATE|TIME]    totalOut:            2
 TEST[DATE|TIME]    amountNet:           -2
 TEST[DATE|TIME]                        ======================= 
-TEST[DATE|TIME]    endBal:              0 (0)
+TEST[DATE|TIME]    endBal:              1503.721842513858802649 (0)
 TEST[DATE|TIME]    endBalCalc:          1503.721842513858802649
 TEST[DATE|TIME] --------------------------------------------------- 
 TEST[DATE|TIME]    amountOut:           2
 TEST[DATE|TIME]    material:            true
 TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
-WARN[DATE|TIME] Token statement at  12705892.117.334 0x6b175474e89094c44da98b954eedeac495271d0f 0xf503017d7baf7fbc0fff7492b751025c6a78179b did not reconcile. 
-TEST[DATE|TIME] Statement is material - appending. reconciled: false
+TEST[DATE|TIME] Log statement is material - appending. reconciled: true
+TEST[DATE|TIME] Converted log transfer to statement for asset: 0x6b175474e89094c44da98b954eedeac495271d0f
 TEST[DATE|TIME] XXX =============[ token ]======================
 TEST[DATE|TIME] XXX Case 2: Middle statement in block
 TEST[DATE|TIME] XXX Block: 12705892 Tx: 117 Asset: 0x6b175474e89094c44da98b954eedeac495271d0f
@@ -1406,20 +1232,20 @@ TEST[DATE|TIME] priceSource:            1 (stable-coin)
 TEST[DATE|TIME] --------------------------------------------------- 
 TEST[DATE|TIME] Trial balance:
 TEST[DATE|TIME]    prevBal:             1503.721842513858802649
-TEST[DATE|TIME]    begBal:              1503.721842513858802649 (1501.721842513858802649)
+TEST[DATE|TIME]    begBal:              1503.721842513858802649 (0)
 TEST[DATE|TIME]    totalIn:             0
 TEST[DATE|TIME]    totalOut:            2
 TEST[DATE|TIME]    amountNet:           -2
 TEST[DATE|TIME]                        ======================= 
-TEST[DATE|TIME]    endBal:              0 (0)
+TEST[DATE|TIME]    endBal:              1501.721842513858802649 (0)
 TEST[DATE|TIME]    endBalCalc:          1501.721842513858802649
 TEST[DATE|TIME] --------------------------------------------------- 
 TEST[DATE|TIME]    amountOut:           2
 TEST[DATE|TIME]    material:            true
 TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
-WARN[DATE|TIME] Token statement at  12705892.117.336 0x6b175474e89094c44da98b954eedeac495271d0f 0xf503017d7baf7fbc0fff7492b751025c6a78179b did not reconcile. 
-TEST[DATE|TIME] Statement is material - appending. reconciled: false
+TEST[DATE|TIME] Log statement is material - appending. reconciled: true
+TEST[DATE|TIME] Converted log transfer to statement for asset: 0x6b175474e89094c44da98b954eedeac495271d0f
 TEST[DATE|TIME] XXX =============[ token ]======================
 TEST[DATE|TIME] XXX Case 2: Middle statement in block
 TEST[DATE|TIME] XXX Block: 12705892 Tx: 117 Asset: 0x6b175474e89094c44da98b954eedeac495271d0f
@@ -1443,20 +1269,20 @@ TEST[DATE|TIME] priceSource:            1 (stable-coin)
 TEST[DATE|TIME] --------------------------------------------------- 
 TEST[DATE|TIME] Trial balance:
 TEST[DATE|TIME]    prevBal:             1501.721842513858802649
-TEST[DATE|TIME]    begBal:              1501.721842513858802649 (1499.721842513858802649)
+TEST[DATE|TIME]    begBal:              1501.721842513858802649 (0)
 TEST[DATE|TIME]    totalIn:             0
 TEST[DATE|TIME]    totalOut:            2
 TEST[DATE|TIME]    amountNet:           -2
 TEST[DATE|TIME]                        ======================= 
-TEST[DATE|TIME]    endBal:              0 (0)
+TEST[DATE|TIME]    endBal:              1499.721842513858802649 (0)
 TEST[DATE|TIME]    endBalCalc:          1499.721842513858802649
 TEST[DATE|TIME] --------------------------------------------------- 
 TEST[DATE|TIME]    amountOut:           2
 TEST[DATE|TIME]    material:            true
 TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
-WARN[DATE|TIME] Token statement at  12705892.117.338 0x6b175474e89094c44da98b954eedeac495271d0f 0xf503017d7baf7fbc0fff7492b751025c6a78179b did not reconcile. 
-TEST[DATE|TIME] Statement is material - appending. reconciled: false
+TEST[DATE|TIME] Log statement is material - appending. reconciled: true
+TEST[DATE|TIME] Converted log transfer to statement for asset: 0x6b175474e89094c44da98b954eedeac495271d0f
 TEST[DATE|TIME] XXX =============[ token ]======================
 TEST[DATE|TIME] XXX Case 2: Middle statement in block
 TEST[DATE|TIME] XXX Block: 12705892 Tx: 117 Asset: 0x6b175474e89094c44da98b954eedeac495271d0f
@@ -1480,20 +1306,20 @@ TEST[DATE|TIME] priceSource:            1 (stable-coin)
 TEST[DATE|TIME] --------------------------------------------------- 
 TEST[DATE|TIME] Trial balance:
 TEST[DATE|TIME]    prevBal:             1499.721842513858802649
-TEST[DATE|TIME]    begBal:              1499.721842513858802649 (1497.721842513858802649)
+TEST[DATE|TIME]    begBal:              1499.721842513858802649 (0)
 TEST[DATE|TIME]    totalIn:             0
 TEST[DATE|TIME]    totalOut:            2
 TEST[DATE|TIME]    amountNet:           -2
 TEST[DATE|TIME]                        ======================= 
-TEST[DATE|TIME]    endBal:              0 (0)
+TEST[DATE|TIME]    endBal:              1497.721842513858802649 (0)
 TEST[DATE|TIME]    endBalCalc:          1497.721842513858802649
 TEST[DATE|TIME] --------------------------------------------------- 
 TEST[DATE|TIME]    amountOut:           2
 TEST[DATE|TIME]    material:            true
 TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
-WARN[DATE|TIME] Token statement at  12705892.117.340 0x6b175474e89094c44da98b954eedeac495271d0f 0xf503017d7baf7fbc0fff7492b751025c6a78179b did not reconcile. 
-TEST[DATE|TIME] Statement is material - appending. reconciled: false
+TEST[DATE|TIME] Log statement is material - appending. reconciled: true
+TEST[DATE|TIME] Converted log transfer to statement for asset: 0x6b175474e89094c44da98b954eedeac495271d0f
 TEST[DATE|TIME] XXX =============[ token ]======================
 TEST[DATE|TIME] XXX Case 2: Middle statement in block
 TEST[DATE|TIME] XXX Block: 12705892 Tx: 117 Asset: 0x6b175474e89094c44da98b954eedeac495271d0f
@@ -1517,20 +1343,20 @@ TEST[DATE|TIME] priceSource:            1 (stable-coin)
 TEST[DATE|TIME] --------------------------------------------------- 
 TEST[DATE|TIME] Trial balance:
 TEST[DATE|TIME]    prevBal:             1497.721842513858802649
-TEST[DATE|TIME]    begBal:              1497.721842513858802649 (1495.721842513858802649)
+TEST[DATE|TIME]    begBal:              1497.721842513858802649 (0)
 TEST[DATE|TIME]    totalIn:             0
 TEST[DATE|TIME]    totalOut:            2
 TEST[DATE|TIME]    amountNet:           -2
 TEST[DATE|TIME]                        ======================= 
-TEST[DATE|TIME]    endBal:              0 (0)
+TEST[DATE|TIME]    endBal:              1495.721842513858802649 (0)
 TEST[DATE|TIME]    endBalCalc:          1495.721842513858802649
 TEST[DATE|TIME] --------------------------------------------------- 
 TEST[DATE|TIME]    amountOut:           2
 TEST[DATE|TIME]    material:            true
 TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
-WARN[DATE|TIME] Token statement at  12705892.117.342 0x6b175474e89094c44da98b954eedeac495271d0f 0xf503017d7baf7fbc0fff7492b751025c6a78179b did not reconcile. 
-TEST[DATE|TIME] Statement is material - appending. reconciled: false
+TEST[DATE|TIME] Log statement is material - appending. reconciled: true
+TEST[DATE|TIME] Converted log transfer to statement for asset: 0x6b175474e89094c44da98b954eedeac495271d0f
 TEST[DATE|TIME] XXX =============[ token ]======================
 TEST[DATE|TIME] XXX Case 2: Middle statement in block
 TEST[DATE|TIME] XXX Block: 12705892 Tx: 117 Asset: 0x6b175474e89094c44da98b954eedeac495271d0f
@@ -1554,20 +1380,20 @@ TEST[DATE|TIME] priceSource:            1 (stable-coin)
 TEST[DATE|TIME] --------------------------------------------------- 
 TEST[DATE|TIME] Trial balance:
 TEST[DATE|TIME]    prevBal:             1495.721842513858802649
-TEST[DATE|TIME]    begBal:              1495.721842513858802649 (1493.721842513858802649)
+TEST[DATE|TIME]    begBal:              1495.721842513858802649 (0)
 TEST[DATE|TIME]    totalIn:             0
 TEST[DATE|TIME]    totalOut:            2
 TEST[DATE|TIME]    amountNet:           -2
 TEST[DATE|TIME]                        ======================= 
-TEST[DATE|TIME]    endBal:              0 (0)
+TEST[DATE|TIME]    endBal:              1493.721842513858802649 (0)
 TEST[DATE|TIME]    endBalCalc:          1493.721842513858802649
 TEST[DATE|TIME] --------------------------------------------------- 
 TEST[DATE|TIME]    amountOut:           2
 TEST[DATE|TIME]    material:            true
 TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
-WARN[DATE|TIME] Token statement at  12705892.117.344 0x6b175474e89094c44da98b954eedeac495271d0f 0xf503017d7baf7fbc0fff7492b751025c6a78179b did not reconcile. 
-TEST[DATE|TIME] Statement is material - appending. reconciled: false
+TEST[DATE|TIME] Log statement is material - appending. reconciled: true
+TEST[DATE|TIME] Converted log transfer to statement for asset: 0x6b175474e89094c44da98b954eedeac495271d0f
 TEST[DATE|TIME] XXX =============[ token ]======================
 TEST[DATE|TIME] XXX Case 2: Middle statement in block
 TEST[DATE|TIME] XXX Block: 12705892 Tx: 117 Asset: 0x6b175474e89094c44da98b954eedeac495271d0f
@@ -1591,20 +1417,20 @@ TEST[DATE|TIME] priceSource:            1 (stable-coin)
 TEST[DATE|TIME] --------------------------------------------------- 
 TEST[DATE|TIME] Trial balance:
 TEST[DATE|TIME]    prevBal:             1493.721842513858802649
-TEST[DATE|TIME]    begBal:              1493.721842513858802649 (1491.721842513858802649)
+TEST[DATE|TIME]    begBal:              1493.721842513858802649 (0)
 TEST[DATE|TIME]    totalIn:             0
 TEST[DATE|TIME]    totalOut:            2
 TEST[DATE|TIME]    amountNet:           -2
 TEST[DATE|TIME]                        ======================= 
-TEST[DATE|TIME]    endBal:              0 (0)
+TEST[DATE|TIME]    endBal:              1491.721842513858802649 (0)
 TEST[DATE|TIME]    endBalCalc:          1491.721842513858802649
 TEST[DATE|TIME] --------------------------------------------------- 
 TEST[DATE|TIME]    amountOut:           2
 TEST[DATE|TIME]    material:            true
 TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
-WARN[DATE|TIME] Token statement at  12705892.117.346 0x6b175474e89094c44da98b954eedeac495271d0f 0xf503017d7baf7fbc0fff7492b751025c6a78179b did not reconcile. 
-TEST[DATE|TIME] Statement is material - appending. reconciled: false
+TEST[DATE|TIME] Log statement is material - appending. reconciled: true
+TEST[DATE|TIME] Converted log transfer to statement for asset: 0x6b175474e89094c44da98b954eedeac495271d0f
 TEST[DATE|TIME] XXX =============[ token ]======================
 TEST[DATE|TIME] XXX Case 2: Middle statement in block
 TEST[DATE|TIME] XXX Block: 12705892 Tx: 117 Asset: 0x6b175474e89094c44da98b954eedeac495271d0f
@@ -1628,20 +1454,20 @@ TEST[DATE|TIME] priceSource:            1 (stable-coin)
 TEST[DATE|TIME] --------------------------------------------------- 
 TEST[DATE|TIME] Trial balance:
 TEST[DATE|TIME]    prevBal:             1491.721842513858802649
-TEST[DATE|TIME]    begBal:              1491.721842513858802649 (1489.721842513858802649)
+TEST[DATE|TIME]    begBal:              1491.721842513858802649 (0)
 TEST[DATE|TIME]    totalIn:             0
 TEST[DATE|TIME]    totalOut:            2
 TEST[DATE|TIME]    amountNet:           -2
 TEST[DATE|TIME]                        ======================= 
-TEST[DATE|TIME]    endBal:              0 (0)
+TEST[DATE|TIME]    endBal:              1489.721842513858802649 (0)
 TEST[DATE|TIME]    endBalCalc:          1489.721842513858802649
 TEST[DATE|TIME] --------------------------------------------------- 
 TEST[DATE|TIME]    amountOut:           2
 TEST[DATE|TIME]    material:            true
 TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
-WARN[DATE|TIME] Token statement at  12705892.117.348 0x6b175474e89094c44da98b954eedeac495271d0f 0xf503017d7baf7fbc0fff7492b751025c6a78179b did not reconcile. 
-TEST[DATE|TIME] Statement is material - appending. reconciled: false
+TEST[DATE|TIME] Log statement is material - appending. reconciled: true
+TEST[DATE|TIME] Converted log transfer to statement for asset: 0x6b175474e89094c44da98b954eedeac495271d0f
 TEST[DATE|TIME] XXX =============[ token ]======================
 TEST[DATE|TIME] XXX Case 2: Middle statement in block
 TEST[DATE|TIME] XXX Block: 12705892 Tx: 117 Asset: 0x6b175474e89094c44da98b954eedeac495271d0f
@@ -1665,20 +1491,20 @@ TEST[DATE|TIME] priceSource:            1 (stable-coin)
 TEST[DATE|TIME] --------------------------------------------------- 
 TEST[DATE|TIME] Trial balance:
 TEST[DATE|TIME]    prevBal:             1489.721842513858802649
-TEST[DATE|TIME]    begBal:              1489.721842513858802649 (1487.721842513858802649)
+TEST[DATE|TIME]    begBal:              1489.721842513858802649 (0)
 TEST[DATE|TIME]    totalIn:             0
 TEST[DATE|TIME]    totalOut:            2
 TEST[DATE|TIME]    amountNet:           -2
 TEST[DATE|TIME]                        ======================= 
-TEST[DATE|TIME]    endBal:              0 (0)
+TEST[DATE|TIME]    endBal:              1487.721842513858802649 (0)
 TEST[DATE|TIME]    endBalCalc:          1487.721842513858802649
 TEST[DATE|TIME] --------------------------------------------------- 
 TEST[DATE|TIME]    amountOut:           2
 TEST[DATE|TIME]    material:            true
 TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
-WARN[DATE|TIME] Token statement at  12705892.117.350 0x6b175474e89094c44da98b954eedeac495271d0f 0xf503017d7baf7fbc0fff7492b751025c6a78179b did not reconcile. 
-TEST[DATE|TIME] Statement is material - appending. reconciled: false
+TEST[DATE|TIME] Log statement is material - appending. reconciled: true
+TEST[DATE|TIME] Converted log transfer to statement for asset: 0x6b175474e89094c44da98b954eedeac495271d0f
 TEST[DATE|TIME] XXX =============[ token ]======================
 TEST[DATE|TIME] XXX Case 2: Middle statement in block
 TEST[DATE|TIME] XXX Block: 12705892 Tx: 117 Asset: 0x6b175474e89094c44da98b954eedeac495271d0f
@@ -1702,20 +1528,20 @@ TEST[DATE|TIME] priceSource:            1 (stable-coin)
 TEST[DATE|TIME] --------------------------------------------------- 
 TEST[DATE|TIME] Trial balance:
 TEST[DATE|TIME]    prevBal:             1487.721842513858802649
-TEST[DATE|TIME]    begBal:              1487.721842513858802649 (1485.721842513858802649)
+TEST[DATE|TIME]    begBal:              1487.721842513858802649 (0)
 TEST[DATE|TIME]    totalIn:             0
 TEST[DATE|TIME]    totalOut:            2
 TEST[DATE|TIME]    amountNet:           -2
 TEST[DATE|TIME]                        ======================= 
-TEST[DATE|TIME]    endBal:              0 (0)
+TEST[DATE|TIME]    endBal:              1485.721842513858802649 (0)
 TEST[DATE|TIME]    endBalCalc:          1485.721842513858802649
 TEST[DATE|TIME] --------------------------------------------------- 
 TEST[DATE|TIME]    amountOut:           2
 TEST[DATE|TIME]    material:            true
 TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
-WARN[DATE|TIME] Token statement at  12705892.117.352 0x6b175474e89094c44da98b954eedeac495271d0f 0xf503017d7baf7fbc0fff7492b751025c6a78179b did not reconcile. 
-TEST[DATE|TIME] Statement is material - appending. reconciled: false
+TEST[DATE|TIME] Log statement is material - appending. reconciled: true
+TEST[DATE|TIME] Converted log transfer to statement for asset: 0x6b175474e89094c44da98b954eedeac495271d0f
 TEST[DATE|TIME] XXX =============[ token ]======================
 TEST[DATE|TIME] XXX Case 2: Middle statement in block
 TEST[DATE|TIME] XXX Block: 12705892 Tx: 117 Asset: 0x6b175474e89094c44da98b954eedeac495271d0f
@@ -1739,20 +1565,20 @@ TEST[DATE|TIME] priceSource:            1 (stable-coin)
 TEST[DATE|TIME] --------------------------------------------------- 
 TEST[DATE|TIME] Trial balance:
 TEST[DATE|TIME]    prevBal:             1485.721842513858802649
-TEST[DATE|TIME]    begBal:              1485.721842513858802649 (1483.721842513858802649)
+TEST[DATE|TIME]    begBal:              1485.721842513858802649 (0)
 TEST[DATE|TIME]    totalIn:             0
 TEST[DATE|TIME]    totalOut:            2
 TEST[DATE|TIME]    amountNet:           -2
 TEST[DATE|TIME]                        ======================= 
-TEST[DATE|TIME]    endBal:              0 (0)
+TEST[DATE|TIME]    endBal:              1483.721842513858802649 (0)
 TEST[DATE|TIME]    endBalCalc:          1483.721842513858802649
 TEST[DATE|TIME] --------------------------------------------------- 
 TEST[DATE|TIME]    amountOut:           2
 TEST[DATE|TIME]    material:            true
 TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
-WARN[DATE|TIME] Token statement at  12705892.117.354 0x6b175474e89094c44da98b954eedeac495271d0f 0xf503017d7baf7fbc0fff7492b751025c6a78179b did not reconcile. 
-TEST[DATE|TIME] Statement is material - appending. reconciled: false
+TEST[DATE|TIME] Log statement is material - appending. reconciled: true
+TEST[DATE|TIME] Converted log transfer to statement for asset: 0x6b175474e89094c44da98b954eedeac495271d0f
 TEST[DATE|TIME] XXX =============[ token ]======================
 TEST[DATE|TIME] XXX Case 2: Middle statement in block
 TEST[DATE|TIME] XXX Block: 12705892 Tx: 117 Asset: 0x6b175474e89094c44da98b954eedeac495271d0f
@@ -1776,20 +1602,20 @@ TEST[DATE|TIME] priceSource:            1 (stable-coin)
 TEST[DATE|TIME] --------------------------------------------------- 
 TEST[DATE|TIME] Trial balance:
 TEST[DATE|TIME]    prevBal:             1483.721842513858802649
-TEST[DATE|TIME]    begBal:              1483.721842513858802649 (1481.721842513858802649)
+TEST[DATE|TIME]    begBal:              1483.721842513858802649 (0)
 TEST[DATE|TIME]    totalIn:             0
 TEST[DATE|TIME]    totalOut:            2
 TEST[DATE|TIME]    amountNet:           -2
 TEST[DATE|TIME]                        ======================= 
-TEST[DATE|TIME]    endBal:              0 (0)
+TEST[DATE|TIME]    endBal:              1481.721842513858802649 (0)
 TEST[DATE|TIME]    endBalCalc:          1481.721842513858802649
 TEST[DATE|TIME] --------------------------------------------------- 
 TEST[DATE|TIME]    amountOut:           2
 TEST[DATE|TIME]    material:            true
 TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
-WARN[DATE|TIME] Token statement at  12705892.117.356 0x6b175474e89094c44da98b954eedeac495271d0f 0xf503017d7baf7fbc0fff7492b751025c6a78179b did not reconcile. 
-TEST[DATE|TIME] Statement is material - appending. reconciled: false
+TEST[DATE|TIME] Log statement is material - appending. reconciled: true
+TEST[DATE|TIME] Converted log transfer to statement for asset: 0x6b175474e89094c44da98b954eedeac495271d0f
 TEST[DATE|TIME] XXX =============[ token ]======================
 TEST[DATE|TIME] XXX Case 2: Middle statement in block
 TEST[DATE|TIME] XXX Block: 12705892 Tx: 117 Asset: 0x6b175474e89094c44da98b954eedeac495271d0f
@@ -1813,20 +1639,20 @@ TEST[DATE|TIME] priceSource:            1 (stable-coin)
 TEST[DATE|TIME] --------------------------------------------------- 
 TEST[DATE|TIME] Trial balance:
 TEST[DATE|TIME]    prevBal:             1481.721842513858802649
-TEST[DATE|TIME]    begBal:              1481.721842513858802649 (1479.721842513858802649)
+TEST[DATE|TIME]    begBal:              1481.721842513858802649 (0)
 TEST[DATE|TIME]    totalIn:             0
 TEST[DATE|TIME]    totalOut:            2
 TEST[DATE|TIME]    amountNet:           -2
 TEST[DATE|TIME]                        ======================= 
-TEST[DATE|TIME]    endBal:              0 (0)
+TEST[DATE|TIME]    endBal:              1479.721842513858802649 (0)
 TEST[DATE|TIME]    endBalCalc:          1479.721842513858802649
 TEST[DATE|TIME] --------------------------------------------------- 
 TEST[DATE|TIME]    amountOut:           2
 TEST[DATE|TIME]    material:            true
 TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
-WARN[DATE|TIME] Token statement at  12705892.117.358 0x6b175474e89094c44da98b954eedeac495271d0f 0xf503017d7baf7fbc0fff7492b751025c6a78179b did not reconcile. 
-TEST[DATE|TIME] Statement is material - appending. reconciled: false
+TEST[DATE|TIME] Log statement is material - appending. reconciled: true
+TEST[DATE|TIME] Converted log transfer to statement for asset: 0x6b175474e89094c44da98b954eedeac495271d0f
 TEST[DATE|TIME] XXX =============[ token ]======================
 TEST[DATE|TIME] XXX Case 2: Middle statement in block
 TEST[DATE|TIME] XXX Block: 12705892 Tx: 117 Asset: 0x6b175474e89094c44da98b954eedeac495271d0f
@@ -1850,20 +1676,20 @@ TEST[DATE|TIME] priceSource:            1 (stable-coin)
 TEST[DATE|TIME] --------------------------------------------------- 
 TEST[DATE|TIME] Trial balance:
 TEST[DATE|TIME]    prevBal:             1479.721842513858802649
-TEST[DATE|TIME]    begBal:              1479.721842513858802649 (1477.721842513858802649)
+TEST[DATE|TIME]    begBal:              1479.721842513858802649 (0)
 TEST[DATE|TIME]    totalIn:             0
 TEST[DATE|TIME]    totalOut:            2
 TEST[DATE|TIME]    amountNet:           -2
 TEST[DATE|TIME]                        ======================= 
-TEST[DATE|TIME]    endBal:              0 (0)
+TEST[DATE|TIME]    endBal:              1477.721842513858802649 (0)
 TEST[DATE|TIME]    endBalCalc:          1477.721842513858802649
 TEST[DATE|TIME] --------------------------------------------------- 
 TEST[DATE|TIME]    amountOut:           2
 TEST[DATE|TIME]    material:            true
 TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
-WARN[DATE|TIME] Token statement at  12705892.117.360 0x6b175474e89094c44da98b954eedeac495271d0f 0xf503017d7baf7fbc0fff7492b751025c6a78179b did not reconcile. 
-TEST[DATE|TIME] Statement is material - appending. reconciled: false
+TEST[DATE|TIME] Log statement is material - appending. reconciled: true
+TEST[DATE|TIME] Converted log transfer to statement for asset: 0x6b175474e89094c44da98b954eedeac495271d0f
 TEST[DATE|TIME] XXX =============[ token ]======================
 TEST[DATE|TIME] XXX Case 2: Middle statement in block
 TEST[DATE|TIME] XXX Block: 12705892 Tx: 117 Asset: 0x6b175474e89094c44da98b954eedeac495271d0f
@@ -1887,20 +1713,20 @@ TEST[DATE|TIME] priceSource:            1 (stable-coin)
 TEST[DATE|TIME] --------------------------------------------------- 
 TEST[DATE|TIME] Trial balance:
 TEST[DATE|TIME]    prevBal:             1477.721842513858802649
-TEST[DATE|TIME]    begBal:              1477.721842513858802649 (1475.721842513858802649)
+TEST[DATE|TIME]    begBal:              1477.721842513858802649 (0)
 TEST[DATE|TIME]    totalIn:             0
 TEST[DATE|TIME]    totalOut:            2
 TEST[DATE|TIME]    amountNet:           -2
 TEST[DATE|TIME]                        ======================= 
-TEST[DATE|TIME]    endBal:              0 (0)
+TEST[DATE|TIME]    endBal:              1475.721842513858802649 (0)
 TEST[DATE|TIME]    endBalCalc:          1475.721842513858802649
 TEST[DATE|TIME] --------------------------------------------------- 
 TEST[DATE|TIME]    amountOut:           2
 TEST[DATE|TIME]    material:            true
 TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
-WARN[DATE|TIME] Token statement at  12705892.117.362 0x6b175474e89094c44da98b954eedeac495271d0f 0xf503017d7baf7fbc0fff7492b751025c6a78179b did not reconcile. 
-TEST[DATE|TIME] Statement is material - appending. reconciled: false
+TEST[DATE|TIME] Log statement is material - appending. reconciled: true
+TEST[DATE|TIME] Converted log transfer to statement for asset: 0x6b175474e89094c44da98b954eedeac495271d0f
 TEST[DATE|TIME] XXX =============[ token ]======================
 TEST[DATE|TIME] XXX Case 2: Middle statement in block
 TEST[DATE|TIME] XXX Block: 12705892 Tx: 117 Asset: 0x6b175474e89094c44da98b954eedeac495271d0f
@@ -1924,20 +1750,20 @@ TEST[DATE|TIME] priceSource:            1 (stable-coin)
 TEST[DATE|TIME] --------------------------------------------------- 
 TEST[DATE|TIME] Trial balance:
 TEST[DATE|TIME]    prevBal:             1475.721842513858802649
-TEST[DATE|TIME]    begBal:              1475.721842513858802649 (1473.721842513858802649)
+TEST[DATE|TIME]    begBal:              1475.721842513858802649 (0)
 TEST[DATE|TIME]    totalIn:             0
 TEST[DATE|TIME]    totalOut:            2
 TEST[DATE|TIME]    amountNet:           -2
 TEST[DATE|TIME]                        ======================= 
-TEST[DATE|TIME]    endBal:              0 (0)
+TEST[DATE|TIME]    endBal:              1473.721842513858802649 (0)
 TEST[DATE|TIME]    endBalCalc:          1473.721842513858802649
 TEST[DATE|TIME] --------------------------------------------------- 
 TEST[DATE|TIME]    amountOut:           2
 TEST[DATE|TIME]    material:            true
 TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
-WARN[DATE|TIME] Token statement at  12705892.117.364 0x6b175474e89094c44da98b954eedeac495271d0f 0xf503017d7baf7fbc0fff7492b751025c6a78179b did not reconcile. 
-TEST[DATE|TIME] Statement is material - appending. reconciled: false
+TEST[DATE|TIME] Log statement is material - appending. reconciled: true
+TEST[DATE|TIME] Converted log transfer to statement for asset: 0x6b175474e89094c44da98b954eedeac495271d0f
 TEST[DATE|TIME] XXX =============[ token ]======================
 TEST[DATE|TIME] XXX Case 2: Middle statement in block
 TEST[DATE|TIME] XXX Block: 12705892 Tx: 117 Asset: 0x6b175474e89094c44da98b954eedeac495271d0f
@@ -1961,20 +1787,20 @@ TEST[DATE|TIME] priceSource:            1 (stable-coin)
 TEST[DATE|TIME] --------------------------------------------------- 
 TEST[DATE|TIME] Trial balance:
 TEST[DATE|TIME]    prevBal:             1473.721842513858802649
-TEST[DATE|TIME]    begBal:              1473.721842513858802649 (1471.721842513858802649)
+TEST[DATE|TIME]    begBal:              1473.721842513858802649 (0)
 TEST[DATE|TIME]    totalIn:             0
 TEST[DATE|TIME]    totalOut:            2
 TEST[DATE|TIME]    amountNet:           -2
 TEST[DATE|TIME]                        ======================= 
-TEST[DATE|TIME]    endBal:              0 (0)
+TEST[DATE|TIME]    endBal:              1471.721842513858802649 (0)
 TEST[DATE|TIME]    endBalCalc:          1471.721842513858802649
 TEST[DATE|TIME] --------------------------------------------------- 
 TEST[DATE|TIME]    amountOut:           2
 TEST[DATE|TIME]    material:            true
 TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
-WARN[DATE|TIME] Token statement at  12705892.117.366 0x6b175474e89094c44da98b954eedeac495271d0f 0xf503017d7baf7fbc0fff7492b751025c6a78179b did not reconcile. 
-TEST[DATE|TIME] Statement is material - appending. reconciled: false
+TEST[DATE|TIME] Log statement is material - appending. reconciled: true
+TEST[DATE|TIME] Converted log transfer to statement for asset: 0x6b175474e89094c44da98b954eedeac495271d0f
 TEST[DATE|TIME] XXX =============[ token ]======================
 TEST[DATE|TIME] XXX Case 2: Middle statement in block
 TEST[DATE|TIME] XXX Block: 12705892 Tx: 117 Asset: 0x6b175474e89094c44da98b954eedeac495271d0f
@@ -1998,20 +1824,20 @@ TEST[DATE|TIME] priceSource:            1 (stable-coin)
 TEST[DATE|TIME] --------------------------------------------------- 
 TEST[DATE|TIME] Trial balance:
 TEST[DATE|TIME]    prevBal:             1471.721842513858802649
-TEST[DATE|TIME]    begBal:              1471.721842513858802649 (1469.721842513858802649)
+TEST[DATE|TIME]    begBal:              1471.721842513858802649 (0)
 TEST[DATE|TIME]    totalIn:             0
 TEST[DATE|TIME]    totalOut:            2
 TEST[DATE|TIME]    amountNet:           -2
 TEST[DATE|TIME]                        ======================= 
-TEST[DATE|TIME]    endBal:              0 (0)
+TEST[DATE|TIME]    endBal:              1469.721842513858802649 (0)
 TEST[DATE|TIME]    endBalCalc:          1469.721842513858802649
 TEST[DATE|TIME] --------------------------------------------------- 
 TEST[DATE|TIME]    amountOut:           2
 TEST[DATE|TIME]    material:            true
 TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
-WARN[DATE|TIME] Token statement at  12705892.117.368 0x6b175474e89094c44da98b954eedeac495271d0f 0xf503017d7baf7fbc0fff7492b751025c6a78179b did not reconcile. 
-TEST[DATE|TIME] Statement is material - appending. reconciled: false
+TEST[DATE|TIME] Log statement is material - appending. reconciled: true
+TEST[DATE|TIME] Converted log transfer to statement for asset: 0x6b175474e89094c44da98b954eedeac495271d0f
 TEST[DATE|TIME] XXX =============[ token ]======================
 TEST[DATE|TIME] XXX Case 2: Middle statement in block
 TEST[DATE|TIME] XXX Block: 12705892 Tx: 117 Asset: 0x6b175474e89094c44da98b954eedeac495271d0f
@@ -2035,20 +1861,21 @@ TEST[DATE|TIME] priceSource:            1 (stable-coin)
 TEST[DATE|TIME] --------------------------------------------------- 
 TEST[DATE|TIME] Trial balance:
 TEST[DATE|TIME]    prevBal:             1469.721842513858802649
-TEST[DATE|TIME]    begBal:              1469.721842513858802649 (1467.721842513858802649)
+TEST[DATE|TIME]    begBal:              1469.721842513858802649 (0)
 TEST[DATE|TIME]    totalIn:             0
 TEST[DATE|TIME]    totalOut:            2
 TEST[DATE|TIME]    amountNet:           -2
 TEST[DATE|TIME]                        ======================= 
-TEST[DATE|TIME]    endBal:              0 (0)
+TEST[DATE|TIME]    endBal:              1467.721842513858802649 (0)
 TEST[DATE|TIME]    endBalCalc:          1467.721842513858802649
 TEST[DATE|TIME] --------------------------------------------------- 
 TEST[DATE|TIME]    amountOut:           2
 TEST[DATE|TIME]    material:            true
 TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
-WARN[DATE|TIME] Token statement at  12705892.117.370 0x6b175474e89094c44da98b954eedeac495271d0f 0xf503017d7baf7fbc0fff7492b751025c6a78179b did not reconcile. 
-TEST[DATE|TIME] Statement is material - appending. reconciled: false
+TEST[DATE|TIME] Log statement is material - appending. reconciled: true
+TEST[DATE|TIME] Set EndSentinel for last log transfer
+TEST[DATE|TIME] Converted log transfer to statement for asset: 0x6b175474e89094c44da98b954eedeac495271d0f
 TEST[DATE|TIME] XXX =============[ token ]======================
 TEST[DATE|TIME] XXX Case 4: Last statement in block with prior
 TEST[DATE|TIME] XXX Block: 12705892 Tx: 117 Asset: 0x6b175474e89094c44da98b954eedeac495271d0f
@@ -2084,7 +1911,7 @@ TEST[DATE|TIME]    amountOut:           2
 TEST[DATE|TIME]    material:            true
 TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
-TEST[DATE|TIME] Statement is material - appending. reconciled: true
+TEST[DATE|TIME] Log statement is material - appending. reconciled: true
 TEST[DATE|TIME] ~~~ Leaving: 12705892.117 ~~~
 TEST[DATE|TIME] ------------------------------------ 45 statements generated.
 TEST[DATE|TIME] 
@@ -2498,6 +2325,7 @@ Results in ./statement_token_ibt_2_out.file
       "prevBal": "1547721842513858802649",
       "priceSource": "stable-coin",
       "recipient": "0x97843608a00e2bbc75ab0c1911387e002565dede",
+      "recipientName": "Grant 1636 Buidl Guidl",
       "reconciled": true,
       "selfDestructIn": "0",
       "selfDestructOut": "0",
@@ -2544,6 +2372,7 @@ Results in ./statement_token_ibt_2_out.file
       "prevBal": "1545721842513858802649",
       "priceSource": "stable-coin",
       "recipient": "0x13ebd3443fa5575f0eb173e323d8419f7452cfb1",
+      "recipientName": "abcoathup",
       "reconciled": true,
       "selfDestructIn": "0",
       "selfDestructOut": "0",
@@ -2590,6 +2419,7 @@ Results in ./statement_token_ibt_2_out.file
       "prevBal": "1543721842513858802649",
       "priceSource": "stable-coin",
       "recipient": "0x5d99805ca2867f22a318c4e6b0dc5c0eac457386",
+      "recipientName": "Grant 2323 - Dark Forest",
       "reconciled": true,
       "selfDestructIn": "0",
       "selfDestructOut": "0",
@@ -3811,7 +3641,7 @@ Results in ./statement_token_ibt_2_out.file
       "prevBal": "1491721842513858802649",
       "priceSource": "stable-coin",
       "recipient": "0x15ef9189a8282e4e1e985eb8ed767e7426b4bfd5",
-      "recipientName": "Grant 0211 Trust Graphic Novel \u0026 Motion Comic",
+      "recipientName": "Grant 0211 Trust Graphic Novel & Motion Comic",
       "reconciled": true,
       "selfDestructIn": "0",
       "selfDestructOut": "0",

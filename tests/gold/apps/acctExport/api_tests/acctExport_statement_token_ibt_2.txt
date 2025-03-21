@@ -1,4 +1,4 @@
-export?addrs=0xf503017d7baf7fbc0fff7492b751025c6a78179b&accounting&statements&firstBlock=12704456&lastBlock=12705893&fmt=json
+export?addrs=0xf503017d7baf7fbc0fff7492b751025c6a78179b&accounting&statements&firstBlock=12704456&lastBlock=12705893&fmt=json&traces
 {
   "data": [
     {
@@ -407,6 +407,7 @@ export?addrs=0xf503017d7baf7fbc0fff7492b751025c6a78179b&accounting&statements&fi
       "prevBal": "1547721842513858802649",
       "priceSource": "stable-coin",
       "recipient": "0x97843608a00e2bbc75ab0c1911387e002565dede",
+      "recipientName": "Grant 1636 Buidl Guidl",
       "reconciled": true,
       "selfDestructIn": "0",
       "selfDestructOut": "0",
@@ -453,6 +454,7 @@ export?addrs=0xf503017d7baf7fbc0fff7492b751025c6a78179b&accounting&statements&fi
       "prevBal": "1545721842513858802649",
       "priceSource": "stable-coin",
       "recipient": "0x13ebd3443fa5575f0eb173e323d8419f7452cfb1",
+      "recipientName": "abcoathup",
       "reconciled": true,
       "selfDestructIn": "0",
       "selfDestructOut": "0",
@@ -499,6 +501,7 @@ export?addrs=0xf503017d7baf7fbc0fff7492b751025c6a78179b&accounting&statements&fi
       "prevBal": "1543721842513858802649",
       "priceSource": "stable-coin",
       "recipient": "0x5d99805ca2867f22a318c4e6b0dc5c0eac457386",
+      "recipientName": "Grant 2323 - Dark Forest",
       "reconciled": true,
       "selfDestructIn": "0",
       "selfDestructOut": "0",
@@ -1720,7 +1723,7 @@ export?addrs=0xf503017d7baf7fbc0fff7492b751025c6a78179b&accounting&statements&fi
       "prevBal": "1491721842513858802649",
       "priceSource": "stable-coin",
       "recipient": "0x15ef9189a8282e4e1e985eb8ed767e7426b4bfd5",
-      "recipientName": "Grant 0211 Trust Graphic Novel \u0026 Motion Comic",
+      "recipientName": "Grant 0211 Trust Graphic Novel & Motion Comic",
       "reconciled": true,
       "selfDestructIn": "0",
       "selfDestructOut": "0",

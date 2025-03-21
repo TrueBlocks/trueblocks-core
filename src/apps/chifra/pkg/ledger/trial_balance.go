@@ -110,6 +110,7 @@ func (r *Reconciler) case2MidMid(key AssetHolder, reason string, stmt *types.Sta
 	stmt.BegBal = running.amt
 	stmt.PrevBal = stmt.BegBal
 	newEndBal := stmt.EndBalCalc()
+	stmt.EndBal = *newEndBal
 	r.Running[key] = Running{
 		amt:  *newEndBal,
 		stmt: stmt,
