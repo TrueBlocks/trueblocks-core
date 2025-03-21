@@ -51,6 +51,16 @@ Results in ./assets_failed_2572_1_out.file
       "source": "defipulse.com",
       "symbol": "ETH",
       "tags": "50-Ethereum"
+    },
+    {
+      "address": "0xf5b2c59f6db42ffcdfc1625999c81fdf17953384",
+      "decimals": 18,
+      "isContract": true,
+      "isErc20": true,
+      "name": "mdai.io",
+      "source": "On chain",
+      "symbol": "mdai.io",
+      "tags": "50-Tokens:ERC20"
     }
   ]
 }

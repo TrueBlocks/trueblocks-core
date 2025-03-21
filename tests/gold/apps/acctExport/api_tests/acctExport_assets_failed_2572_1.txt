@@ -39,6 +39,16 @@ export?addrs=0x054993ab0f2b1acc0fdc65405ee203b4271bebe6&accounting&assets&ether&
       "source": "defipulse.com",
       "symbol": "ETH",
       "tags": "50-Ethereum"
+    },
+    {
+      "address": "0xf5b2c59f6db42ffcdfc1625999c81fdf17953384",
+      "decimals": 18,
+      "isContract": true,
+      "isErc20": true,
+      "name": "mdai.io",
+      "source": "On chain",
+      "symbol": "mdai.io",
+      "tags": "50-Tokens:ERC20"
     }
   ],
   "meta": {

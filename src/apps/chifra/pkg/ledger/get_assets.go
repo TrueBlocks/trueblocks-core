@@ -13,31 +13,25 @@ func (r *Reconciler) GetAssets(txs []*types.Transaction) ([]*types.Name, bool, e
 	}
 
 	transfers := append(ethTransfers, tokenTransfers...)
-	sort.Slice(transfers, func(i, j int) bool {
-		if r.Opts.Reversed {
-			i, j = j, i
-		}
-		return transfers[i].Asset.LessThan(transfers[j].Asset)
-	})
 
 	finished := false
-	newAssets := make([]*types.Name, 0, 50)
+	slice := make([]*types.Name, 0, len(transfers))
 	for _, item := range transfers {
-		var passes bool
-		passes, finished = r.Opts.AppFilters.ApplyCountFilter()
-		if passes {
-			key := NewAssetHolderKey(item.Asset, r.Opts.AccountFor)
-			if _, ok := r.AssetMap[key]; !ok {
-				var name types.Name
-				if name, ok = r.Names[item.Asset]; !ok {
-					name = types.Name{
-						Address:  item.Asset,
-						Name:     item.Asset.Display(3, 3),
-						Decimals: 18,
-					}
+		key := NewAssetHolderKey(item.Asset, r.Opts.AccountFor)
+		if _, ok := r.AssetMap[key]; !ok {
+			var name types.Name
+			if name, ok = r.Names[item.Asset]; !ok {
+				name = types.Name{
+					Address:  item.Asset,
+					Name:     item.Asset.Display(3, 3),
+					Decimals: 18,
 				}
-				r.AssetMap[key] = &name
-				newAssets = append(newAssets, &name)
+			}
+			r.AssetMap[key] = &name
+			var passes bool
+			passes, finished = r.Opts.AppFilters.ApplyCountFilter()
+			if passes {
+				slice = append(slice, &name)
 			}
 		}
 		if finished {
@@ -45,12 +39,9 @@ func (r *Reconciler) GetAssets(txs []*types.Transaction) ([]*types.Name, bool, e
 		}
 	}
 
-	sort.Slice(newAssets, func(i, j int) bool {
-		if r.Opts.Reversed {
-			i, j = j, i
-		}
-		return newAssets[i].Address.LessThan(newAssets[j].Address)
+	sort.Slice(slice, func(i, j int) bool {
+		return slice[i].Address.LessThan(slice[j].Address)
 	})
 
-	return newAssets, finished, nil
+	return slice, finished, nil
 }

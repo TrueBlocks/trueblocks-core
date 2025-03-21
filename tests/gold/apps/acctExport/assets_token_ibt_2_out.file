@@ -9,6 +9,15 @@
       "source": "Giveth website",
       "symbol": "DAI",
       "tags": "50-Tokens:ERC20"
+    },
+    {
+      "address": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+      "decimals": 18,
+      "isErc20": true,
+      "name": "ETH",
+      "source": "defipulse.com",
+      "symbol": "ETH",
+      "tags": "50-Ethereum"
     }
   ]
 }
