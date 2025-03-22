@@ -21,7 +21,7 @@ func (r *Reconciler) GetStatements(node *types.AppNode[types.Transaction]) ([]ty
 
 	// First Pass: Fetch unreconciled transfers
 	logger.TestLog(true, "First pass: Fetching unreconciled transfers")
-	ethTransfers, tokenTransfers, err := r.getTransfersInternal([]*types.Transaction{trans})
+	ethTransfers, tokenTransfers, balances, err := r.getTransfersInternal([]*types.Transaction{trans})
 	if err != nil {
 		debugFail(1)
 		logger.TestLog(true, "Error getting unreconciled transfers:", err)
@@ -46,7 +46,7 @@ func (r *Reconciler) GetStatements(node *types.AppNode[types.Transaction]) ([]ty
 
 			if r.Opts.UseTraces {
 				logger.TestLog(true, "Using trace-based ETH transfer")
-				if _, err := r.trialBalance("traces", stmt, node, true); err != nil {
+				if _, err := r.trialBalance("traces", stmt, node, true, balances); err != nil {
 					debugFail(2)
 					logger.TestLog(true, "Error in trialBalance for traces:", err)
 					return nil, err
@@ -61,7 +61,7 @@ func (r *Reconciler) GetStatements(node *types.AppNode[types.Transaction]) ([]ty
 				}
 			} else {
 				logger.TestLog(true, fmt.Sprintf("Attempting to reconcile top-level ETH transfer: %s-%s", base.FAKE_ETH_ADDRESS.Hex(), r.Opts.AccountFor.Hex()))
-				reconciled, err := r.trialBalance("top-level", stmt, node, false)
+				reconciled, err := r.trialBalance("top-level", stmt, node, false, balances)
 				if err != nil {
 					debugFail(3)
 					logger.TestLog(true, "Error in trialBalance for top-level:", err)
@@ -90,7 +90,7 @@ func (r *Reconciler) GetStatements(node *types.AppNode[types.Transaction]) ([]ty
 							// traceStmt.Symbol = "ETH"
 							traceStmt.Decimals = 18
 							logger.TestLog(true, "Fetched and converted trace-based ETH transfer to statement")
-							if _, err = r.trialBalance("traces", traceStmt, node, true); err != nil {
+							if _, err = r.trialBalance("traces", traceStmt, node, true, balances); err != nil {
 								debugFail(6)
 								logger.TestLog(true, "Error in trialBalance for traces:", err)
 								return nil, err
@@ -143,7 +143,7 @@ func (r *Reconciler) GetStatements(node *types.AppNode[types.Transaction]) ([]ty
 			}
 			logger.TestLog(true, "Converted log transfer to statement for asset:", stmt.Asset.Hex())
 
-			if _, err := r.trialBalance("token", stmt, node, true); err != nil {
+			if _, err := r.trialBalance("token", stmt, node, true, balances); err != nil {
 				debugFail(7)
 				logger.TestLog(true, "Error in trialBalance for token:", err)
 				continue // Continue processing other transfers as in original

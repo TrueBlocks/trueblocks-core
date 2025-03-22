@@ -7,7 +7,7 @@ import (
 )
 
 func (r *Reconciler) GetAssets(txs []*types.Transaction) ([]*types.Name, bool, error) {
-	ethTransfers, tokenTransfers, err := r.getTransfersInternal(txs)
+	ethTransfers, tokenTransfers, _, err := r.getTransfersInternal(txs)
 	if err != nil {
 		return nil, false, err
 	}
@@ -28,14 +28,7 @@ func (r *Reconciler) GetAssets(txs []*types.Transaction) ([]*types.Name, bool, e
 				}
 			}
 			r.AssetMap[key] = &name
-			var passes bool
-			passes, finished = r.Opts.AppFilters.ApplyCountFilter()
-			if passes {
-				slice = append(slice, &name)
-			}
-		}
-		if finished {
-			break
+			slice = append(slice, &name)
 		}
 	}
 
@@ -43,5 +36,17 @@ func (r *Reconciler) GetAssets(txs []*types.Transaction) ([]*types.Name, bool, e
 		return slice[i].Address.LessThan(slice[j].Address)
 	})
 
-	return slice, finished, nil
+	results := make([]*types.Name, 0, len(slice))
+	for _, item := range slice {
+		var passes bool
+		passes, finished = r.Opts.AppFilters.ApplyCountFilter()
+		if passes {
+			results = append(results, item)
+		}
+		if finished {
+			break
+		}
+	}
+
+	return results, finished, nil
 }
