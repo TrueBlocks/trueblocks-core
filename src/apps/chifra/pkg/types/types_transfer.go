@@ -107,8 +107,8 @@ func (s *Transfer) Model(chain, format string, verbose bool, extraOpts map[strin
 	}
 }
 
-func (s *Transfer) CacheLocations() (string, string, string) {
-	paddedId := fmt.Sprintf("%s-%s-%09d-%05d-%05d", s.Holder, s.Asset, s.BlockNumber, s.TransactionIndex, s.LogIndex)
+func (s *TransferGroup) CacheLocations() (string, string, string) {
+	paddedId := fmt.Sprintf("%s-%09d-%05d", s.Address.Hex()[2:], s.BlockNumber, s.TransactionIndex)
 	parts := make([]string, 3)
 	parts[0] = paddedId[:2]
 	parts[1] = paddedId[2:4]
@@ -116,6 +116,21 @@ func (s *Transfer) CacheLocations() (string, string, string) {
 	subFolder := strings.ToLower("Transfer") + "s"
 	directory := filepath.Join(subFolder, filepath.Join(parts...))
 	return directory, paddedId, "bin"
+}
+
+type TransferGroup struct {
+	BlockNumber      base.Blknum
+	TransactionIndex base.Txnum
+	Address          base.Address
+	Transfers        []Transfer
+}
+
+func (s *TransferGroup) MarshalCache(writer io.Writer) (err error) {
+	return base.WriteValue(writer, s.Transfers)
+}
+
+func (s *TransferGroup) UnmarshalCache(fileVersion uint64, reader io.Reader) (err error) {
+	return base.ReadValue(reader, &s.Transfers, fileVersion)
 }
 
 func (s *Transfer) MarshalCache(writer io.Writer) (err error) {
@@ -347,7 +362,7 @@ type AssetTransfer struct {
 	Asset             base.Address `json:"asset"`
 	BegBal            base.Wei
 	BlockNumber       base.Blknum `json:"blockNumber"`
-	CorrectingReasons []string    `json:"correctingReasons"`
+	CorrectingReasons string      `json:"correctingReasons"`
 	CorrectionId      base.Value  `json:"correctionId"`
 	Decimals          uint64      `json:"decimals"`
 	EndBal            base.Wei
@@ -392,7 +407,7 @@ func (s *AssetTransfer) Model(chain, format string, verbose bool, extraOpts map[
 		s.LogIndex,
 		s.StatementId,
 		s.CorrectionId,
-		strings.Join(s.CorrectingReasons, "-"),
+		s.CorrectingReasons,
 		s.BegBal.Text(10),
 		s.AmountNet().Text(10),
 		calc.Text(10),

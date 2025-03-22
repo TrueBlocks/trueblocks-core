@@ -1,6 +1,6 @@
 status?modes=slurps&verbose&maxRecords=2
 Args: [modes=slurps verbose maxRecords=2]
-Opts: {"modes":16384,"maxRecords":2,"verbose":true}
+Opts: {"modes":32768,"maxRecords":2,"verbose":true}
 Modes:  [slurps]
 MaxRecords:  2
 Verbose:  true

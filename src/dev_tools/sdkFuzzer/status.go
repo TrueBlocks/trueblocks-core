@@ -160,6 +160,16 @@ func TestStatus(which, value, fn string, opts *sdk.StatusOptions) {
 				ReportOkay(fn)
 			}
 		}
+	case "statements":
+		if statements, _, err := opts.StatusStatements(); err != nil {
+			ReportError(fn, opts, err)
+		} else {
+			if err := SaveToFile(fn, statements); err != nil {
+				ReportError2(fn, err)
+			} else {
+				ReportOkay(fn)
+			}
+		}
 	case "results":
 		if results, _, err := opts.StatusResults(); err != nil {
 			ReportError(fn, opts, err)

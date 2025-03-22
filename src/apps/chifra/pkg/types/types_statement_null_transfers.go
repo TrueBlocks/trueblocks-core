@@ -41,6 +41,6 @@ func (s *Statement) CorrectForNullTransfer() bool {
 	s.AmountIn = *base.ZeroWei
 	s.CorrectAmountIn = *amt
 	s.CorrectAmountOut = *amt
-	s.CorrectingReasons = append(s.CorrectingReasons, "nullTransfer")
+	s.CorrectingReasons += "nullTransfer,"
 	return s.Reconciled()
 }

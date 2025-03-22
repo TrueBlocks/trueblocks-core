@@ -41,4 +41,4 @@ prevBal            , int256   ,           , omitempty     ,       39, the accoun
 begBalDiff         , int256   ,           , omitempty|calc,       40, difference between expected beginning balance and balance at last reconciliation&#44; if non-zero&#44; the reconciliation failed
 endBalDiff         , int256   ,           , omitempty|calc,       41, endBal - endBalCalc&#44; if non-zero&#44; the reconciliation failed
 endBalCalc         , int256   ,           , omitempty|calc,       42, begBal + amountNet
-correctingReasons  , []string ,           , omitempty     ,       43, for unreconciled transfers&#44; the reasons for the correcting entries&#44; if any
+correctingReasons  , string   ,           , omitempty     ,       43, for unreconciled transfers&#44; the reasons for the correcting entries&#44; if any

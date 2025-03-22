@@ -1,6 +1,6 @@
 status?modes=names&output=output_test_file&maxRecords=2
 Args: [modes=names output=output_test_file maxRecords=2]
-Opts: {"modes":4096,"maxRecords":2,"output":"output_test_file"}
+Opts: {"modes":8192,"maxRecords":2,"output":"output_test_file"}
 Modes:  [names]
 MaxRecords:  2
 OutputFn:  output_test_file

@@ -217,7 +217,7 @@ Statements consist of the following fields:
 | begBalDiff          | difference between expected beginning balance and balance at last reconciliation, if non-zero, the reconciliation failed (calculated) | int256    |
 | endBalDiff          | endBal - endBalCalc, if non-zero, the reconciliation failed (calculated)                                                              | int256    |
 | endBalCalc          | begBal + amountNet (calculated)                                                                                                       | int256    |
-| correctingReasons   | for unreconciled transfers, the reasons for the correcting entries, if any                                                            | string[]  |
+| correctingReasons   | for unreconciled transfers, the reasons for the correcting entries, if any                                                            | string    |
 
 ## Transfer
 

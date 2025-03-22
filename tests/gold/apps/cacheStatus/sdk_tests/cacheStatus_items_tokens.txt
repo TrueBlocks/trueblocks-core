@@ -1,6 +1,6 @@
 status?modes=tokens&maxRecords=100
 Args: [modes=tokens maxRecords=100]
-Opts: {"modes":1024,"maxRecords":100}
+Opts: {"modes":2048,"maxRecords":100}
 Modes:  [tokens]
 MaxRecords:  100
 Format:  json

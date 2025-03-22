@@ -76,7 +76,7 @@ func (s *Statement) DebugStatement(node *AppNode[Transaction]) {
 	reportE("   correctEndBalOut:   ", &s.CorrectEndBalOut)
 	reportE("   selfDestructOut:    ", &s.SelfDestructOut)
 	reportE("   gasOut:             ", &s.GasOut)
-	logger.TestLog(len(s.CorrectingReasons) > 0, "   correctingReasons:  ", strings.Join(s.CorrectingReasons, "-"))
+	logger.TestLog(len(s.CorrectingReasons) > 0, "   correctingReasons:  ", strings.Trim(s.CorrectingReasons, ","))
 	logger.TestLog(true, "   material:           ", s.IsMaterial())
 	logger.TestLog(true, "   reconciled:         ", s.Reconciled())
 	if !s.Reconciled() {

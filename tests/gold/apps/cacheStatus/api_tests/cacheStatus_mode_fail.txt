@@ -1,6 +1,6 @@
 status?modes=junk&verbose
 {
   "errors": [
-    "The mode option (junk) must be one of [ index | blooms | blocks | transactions | traces | logs | transfers | results | state | tokens | monitors | names | abis | slurps | staging | unripe | maps | some | all ]"
+    "The mode option (junk) must be one of [ index | blooms | blocks | transactions | traces | logs | transfers | statements | results | state | tokens | monitors | names | abis | slurps | staging | unripe | maps | some | all ]"
   ]
 }

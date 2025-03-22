@@ -12,6 +12,8 @@ package types
 import (
 	"encoding/json"
 	"fmt"
+	"io"
+	"path/filepath"
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
@@ -33,7 +35,7 @@ type Statement struct {
 	CorrectBegBalOut    base.Wei       `json:"correctBegBalOut,omitempty"`
 	CorrectEndBalIn     base.Wei       `json:"correctEndBalIn,omitempty"`
 	CorrectEndBalOut    base.Wei       `json:"correctEndBalOut,omitempty"`
-	CorrectingReasons   []string       `json:"correctingReasons,omitempty"`
+	CorrectingReasons   string         `json:"correctingReasons,omitempty"`
 	Decimals            base.Value     `json:"decimals"`
 	EndBal              base.Wei       `json:"endBal"`
 	GasOut              base.Wei       `json:"gasOut,omitempty"`
@@ -96,7 +98,7 @@ func (s *Statement) Model(chain, format string, verbose bool, extraOpts map[stri
 		"correctBegBalOut":    s.CorrectBegBalOut.Text(10),
 		"correctEndBalIn":     s.CorrectEndBalIn.Text(10),
 		"correctEndBalOut":    s.CorrectEndBalOut.Text(10),
-		"correctingReasons":   strings.Join(s.CorrectingReasons, "-"),
+		"correctingReasons":   strings.Trim(s.CorrectingReasons, ","),
 		"date":                s.Date(),
 		"decimals":            s.Decimals,
 		"endBal":              s.EndBal.Text(10),
@@ -208,6 +210,396 @@ func (s *Statement) Date() string {
 	return base.FormattedDate(s.Timestamp)
 }
 
+func (s *StatementGroup) CacheLocations() (string, string, string) {
+	paddedId := fmt.Sprintf("%s-%09d-%05d", s.Address.Hex()[2:], s.BlockNumber, s.TransactionIndex)
+	parts := make([]string, 3)
+	parts[0] = paddedId[:2]
+	parts[1] = paddedId[2:4]
+	parts[2] = paddedId[4:6]
+	subFolder := strings.ToLower("Statement") + "s"
+	directory := filepath.Join(subFolder, filepath.Join(parts...))
+	return directory, paddedId, "bin"
+}
+
+type StatementGroup struct {
+	BlockNumber      base.Blknum
+	TransactionIndex base.Txnum
+	Address          base.Address
+	Statements       []Statement
+}
+
+func (s *StatementGroup) MarshalCache(writer io.Writer) (err error) {
+	return base.WriteValue(writer, s.Statements)
+}
+
+func (s *StatementGroup) UnmarshalCache(fileVersion uint64, reader io.Reader) (err error) {
+	return base.ReadValue(reader, &s.Statements, fileVersion)
+}
+
+func (s *Statement) MarshalCache(writer io.Writer) (err error) {
+	// AccountedFor
+	if err = base.WriteValue(writer, s.AccountedFor); err != nil {
+		return err
+	}
+
+	// AmountIn
+	if err = base.WriteValue(writer, &s.AmountIn); err != nil {
+		return err
+	}
+
+	// AmountOut
+	if err = base.WriteValue(writer, &s.AmountOut); err != nil {
+		return err
+	}
+
+	// Asset
+	if err = base.WriteValue(writer, s.Asset); err != nil {
+		return err
+	}
+
+	// BegBal
+	if err = base.WriteValue(writer, &s.BegBal); err != nil {
+		return err
+	}
+
+	// BlockNumber
+	if err = base.WriteValue(writer, s.BlockNumber); err != nil {
+		return err
+	}
+
+	// CorrectAmountIn
+	if err = base.WriteValue(writer, &s.CorrectAmountIn); err != nil {
+		return err
+	}
+
+	// CorrectAmountOut
+	if err = base.WriteValue(writer, &s.CorrectAmountOut); err != nil {
+		return err
+	}
+
+	// CorrectBegBalIn
+	if err = base.WriteValue(writer, &s.CorrectBegBalIn); err != nil {
+		return err
+	}
+
+	// CorrectBegBalOut
+	if err = base.WriteValue(writer, &s.CorrectBegBalOut); err != nil {
+		return err
+	}
+
+	// CorrectEndBalIn
+	if err = base.WriteValue(writer, &s.CorrectEndBalIn); err != nil {
+		return err
+	}
+
+	// CorrectEndBalOut
+	if err = base.WriteValue(writer, &s.CorrectEndBalOut); err != nil {
+		return err
+	}
+
+	// CorrectingReasons
+	if err = base.WriteValue(writer, s.CorrectingReasons); err != nil {
+		return err
+	}
+
+	// Decimals
+	if err = base.WriteValue(writer, s.Decimals); err != nil {
+		return err
+	}
+
+	// EndBal
+	if err = base.WriteValue(writer, &s.EndBal); err != nil {
+		return err
+	}
+
+	// GasOut
+	if err = base.WriteValue(writer, &s.GasOut); err != nil {
+		return err
+	}
+
+	// InternalIn
+	if err = base.WriteValue(writer, &s.InternalIn); err != nil {
+		return err
+	}
+
+	// InternalOut
+	if err = base.WriteValue(writer, &s.InternalOut); err != nil {
+		return err
+	}
+
+	// LogIndex
+	if err = base.WriteValue(writer, s.LogIndex); err != nil {
+		return err
+	}
+
+	// MinerBaseRewardIn
+	if err = base.WriteValue(writer, &s.MinerBaseRewardIn); err != nil {
+		return err
+	}
+
+	// MinerNephewRewardIn
+	if err = base.WriteValue(writer, &s.MinerNephewRewardIn); err != nil {
+		return err
+	}
+
+	// MinerTxFeeIn
+	if err = base.WriteValue(writer, &s.MinerTxFeeIn); err != nil {
+		return err
+	}
+
+	// MinerUncleRewardIn
+	if err = base.WriteValue(writer, &s.MinerUncleRewardIn); err != nil {
+		return err
+	}
+
+	// PrefundIn
+	if err = base.WriteValue(writer, &s.PrefundIn); err != nil {
+		return err
+	}
+
+	// PrevBal
+	if err = base.WriteValue(writer, &s.PrevBal); err != nil {
+		return err
+	}
+
+	// PriceSource
+	if err = base.WriteValue(writer, s.PriceSource); err != nil {
+		return err
+	}
+
+	// Recipient
+	if err = base.WriteValue(writer, s.Recipient); err != nil {
+		return err
+	}
+
+	// SelfDestructIn
+	if err = base.WriteValue(writer, &s.SelfDestructIn); err != nil {
+		return err
+	}
+
+	// SelfDestructOut
+	if err = base.WriteValue(writer, &s.SelfDestructOut); err != nil {
+		return err
+	}
+
+	// Sender
+	if err = base.WriteValue(writer, s.Sender); err != nil {
+		return err
+	}
+
+	// SpotPrice
+	if err = base.WriteValue(writer, s.SpotPrice); err != nil {
+		return err
+	}
+
+	// Symbol
+	if err = base.WriteValue(writer, s.Symbol); err != nil {
+		return err
+	}
+
+	// Timestamp
+	if err = base.WriteValue(writer, s.Timestamp); err != nil {
+		return err
+	}
+
+	// TransactionHash
+	if err = base.WriteValue(writer, &s.TransactionHash); err != nil {
+		return err
+	}
+
+	// TransactionIndex
+	if err = base.WriteValue(writer, s.TransactionIndex); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (s *Statement) UnmarshalCache(fileVersion uint64, reader io.Reader) (err error) {
+	// Check for compatibility and return cache.ErrIncompatibleVersion to invalidate this item (see #3638)
+	// EXISTING_CODE
+	// EXISTING_CODE
+
+	// AccountedFor
+	if err = base.ReadValue(reader, &s.AccountedFor, fileVersion); err != nil {
+		return err
+	}
+
+	// AmountIn
+	if err = base.ReadValue(reader, &s.AmountIn, fileVersion); err != nil {
+		return err
+	}
+
+	// AmountOut
+	if err = base.ReadValue(reader, &s.AmountOut, fileVersion); err != nil {
+		return err
+	}
+
+	// Asset
+	if err = base.ReadValue(reader, &s.Asset, fileVersion); err != nil {
+		return err
+	}
+
+	// BegBal
+	if err = base.ReadValue(reader, &s.BegBal, fileVersion); err != nil {
+		return err
+	}
+
+	// BlockNumber
+	if err = base.ReadValue(reader, &s.BlockNumber, fileVersion); err != nil {
+		return err
+	}
+
+	// CorrectAmountIn
+	if err = base.ReadValue(reader, &s.CorrectAmountIn, fileVersion); err != nil {
+		return err
+	}
+
+	// CorrectAmountOut
+	if err = base.ReadValue(reader, &s.CorrectAmountOut, fileVersion); err != nil {
+		return err
+	}
+
+	// CorrectBegBalIn
+	if err = base.ReadValue(reader, &s.CorrectBegBalIn, fileVersion); err != nil {
+		return err
+	}
+
+	// CorrectBegBalOut
+	if err = base.ReadValue(reader, &s.CorrectBegBalOut, fileVersion); err != nil {
+		return err
+	}
+
+	// CorrectEndBalIn
+	if err = base.ReadValue(reader, &s.CorrectEndBalIn, fileVersion); err != nil {
+		return err
+	}
+
+	// CorrectEndBalOut
+	if err = base.ReadValue(reader, &s.CorrectEndBalOut, fileVersion); err != nil {
+		return err
+	}
+
+	// CorrectingReasons
+	if err = base.ReadValue(reader, &s.CorrectingReasons, fileVersion); err != nil {
+		return err
+	}
+
+	// Decimals
+	if err = base.ReadValue(reader, &s.Decimals, fileVersion); err != nil {
+		return err
+	}
+
+	// EndBal
+	if err = base.ReadValue(reader, &s.EndBal, fileVersion); err != nil {
+		return err
+	}
+
+	// GasOut
+	if err = base.ReadValue(reader, &s.GasOut, fileVersion); err != nil {
+		return err
+	}
+
+	// InternalIn
+	if err = base.ReadValue(reader, &s.InternalIn, fileVersion); err != nil {
+		return err
+	}
+
+	// InternalOut
+	if err = base.ReadValue(reader, &s.InternalOut, fileVersion); err != nil {
+		return err
+	}
+
+	// LogIndex
+	if err = base.ReadValue(reader, &s.LogIndex, fileVersion); err != nil {
+		return err
+	}
+
+	// MinerBaseRewardIn
+	if err = base.ReadValue(reader, &s.MinerBaseRewardIn, fileVersion); err != nil {
+		return err
+	}
+
+	// MinerNephewRewardIn
+	if err = base.ReadValue(reader, &s.MinerNephewRewardIn, fileVersion); err != nil {
+		return err
+	}
+
+	// MinerTxFeeIn
+	if err = base.ReadValue(reader, &s.MinerTxFeeIn, fileVersion); err != nil {
+		return err
+	}
+
+	// MinerUncleRewardIn
+	if err = base.ReadValue(reader, &s.MinerUncleRewardIn, fileVersion); err != nil {
+		return err
+	}
+
+	// PrefundIn
+	if err = base.ReadValue(reader, &s.PrefundIn, fileVersion); err != nil {
+		return err
+	}
+
+	// PrevBal
+	if err = base.ReadValue(reader, &s.PrevBal, fileVersion); err != nil {
+		return err
+	}
+
+	// PriceSource
+	if err = base.ReadValue(reader, &s.PriceSource, fileVersion); err != nil {
+		return err
+	}
+
+	// Recipient
+	if err = base.ReadValue(reader, &s.Recipient, fileVersion); err != nil {
+		return err
+	}
+
+	// SelfDestructIn
+	if err = base.ReadValue(reader, &s.SelfDestructIn, fileVersion); err != nil {
+		return err
+	}
+
+	// SelfDestructOut
+	if err = base.ReadValue(reader, &s.SelfDestructOut, fileVersion); err != nil {
+		return err
+	}
+
+	// Sender
+	if err = base.ReadValue(reader, &s.Sender, fileVersion); err != nil {
+		return err
+	}
+
+	// SpotPrice
+	if err = base.ReadValue(reader, &s.SpotPrice, fileVersion); err != nil {
+		return err
+	}
+
+	// Symbol
+	if err = base.ReadValue(reader, &s.Symbol, fileVersion); err != nil {
+		return err
+	}
+
+	// Timestamp
+	if err = base.ReadValue(reader, &s.Timestamp, fileVersion); err != nil {
+		return err
+	}
+
+	// TransactionHash
+	if err = base.ReadValue(reader, &s.TransactionHash, fileVersion); err != nil {
+		return err
+	}
+
+	// TransactionIndex
+	if err = base.ReadValue(reader, &s.TransactionIndex, fileVersion); err != nil {
+		return err
+	}
+
+	s.FinishUnmarshal(fileVersion)
+
+	return nil
+}
+
 // FinishUnmarshal is used by the cache. It may be unused depending on auto-code-gen
 func (s *Statement) FinishUnmarshal(fileVersion uint64) {
 	_ = fileVersion
@@ -252,11 +644,11 @@ func (stmt *Statement) CorrectBeginBalance() bool {
 	absDiff := diff.Abs()
 	logger.TestLog(true, "Correcting beginning balance", diff.Text(10), "absDiff:", absDiff.Text(10))
 	if stmt.BegBalDiff().LessThan(base.ZeroWei) { // begBal < expected, increase totalIn
-		stmt.CorrectingReasons = append(stmt.CorrectingReasons, "begBalIn")
+		stmt.CorrectingReasons += "begBalIn,"
 		val := new(base.Wei).Add(&stmt.CorrectBegBalIn, absDiff)
 		stmt.CorrectBegBalIn = *val
 	} else if stmt.BegBalDiff().GreaterThan(base.ZeroWei) { // begBal > expected, increase totalOut
-		stmt.CorrectingReasons = append(stmt.CorrectingReasons, "begBalOut")
+		stmt.CorrectingReasons += "begBalOut,"
 		val := new(base.Wei).Add(&stmt.CorrectBegBalOut, absDiff)
 		stmt.CorrectBegBalOut = *val
 	}
@@ -273,12 +665,12 @@ func (stmt *Statement) CorrectEndBalance() bool {
 	absDiff := diff.Abs()
 	logger.TestLog(true, "Correcting ending balance", "diff:", diff.Text(10), "absDiff:", absDiff.Text(10))
 	if stmt.EndBalDiff().GreaterThan(base.ZeroWei) { // endBal > endBalCalc, reduce totalOut
-		stmt.CorrectingReasons = append(stmt.CorrectingReasons, "endBalOut")
+		stmt.CorrectingReasons += "endBalOut,"
 		val := new(base.Wei).Add(&stmt.CorrectEndBalOut, absDiff)
 		stmt.CorrectEndBalOut = *val
 		logger.TestLog(true, "correctEndBalOut:", stmt.CorrectEndBalOut.Text(10))
 	} else if stmt.EndBalDiff().LessThan(base.ZeroWei) { // endBal < endBalCalc, increase totalIn
-		stmt.CorrectingReasons = append(stmt.CorrectingReasons, "endBalIn")
+		stmt.CorrectingReasons += "endBalIn,"
 		val := new(base.Wei).Add(&stmt.CorrectEndBalIn, absDiff)
 		stmt.CorrectEndBalIn = *val
 		logger.TestLog(true, "correctEndBalIn:", stmt.CorrectEndBalIn.Text(10))
@@ -362,7 +754,7 @@ func (s Statement) Report() string {
 	return fmt.Sprintf("%s,%s,%s,%s,%s,%s,%s\n",
 		s.CorrectAmountIn.Text(10), s.CorrectAmountOut.Text(10), s.CorrectBegBalIn.Text(10),
 		s.CorrectBegBalOut.Text(10), s.CorrectEndBalIn.Text(10), s.CorrectEndBalOut.Text(10),
-		strings.Join(s.CorrectingReasons, ","))
+		s.CorrectingReasons)
 }
 
 func (s *Statement) Type() string {

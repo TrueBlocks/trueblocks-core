@@ -1,6 +1,6 @@
 status?modes=maps&maxRecords=100
 Args: [modes=maps maxRecords=100]
-Opts: {"modes":131072,"maxRecords":100}
+Opts: {"modes":262144,"maxRecords":100}
 Modes:  [maps]
 MaxRecords:  100
 Format:  json
