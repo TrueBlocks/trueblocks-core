@@ -39,7 +39,7 @@ func (conn *Connection) GetWithdrawalsByNumber(bn base.Blknum) ([]types.Withdraw
 			BlockNumber:      bn,
 			TransactionIndex: base.NOPOSN,
 		}
-		if err := conn.Store.Read(withdrawalGroup); err == nil {
+		if err := conn.ReadFromCache(withdrawalGroup); err == nil {
 			return withdrawalGroup.Withdrawals, nil
 		}
 	}

@@ -37,7 +37,7 @@ func (conn *Connection) GetReceiptNoTimestamp(bn base.Blknum, txid base.Txnum) (
 			BlockNumber:      bn,
 			TransactionIndex: txid,
 		}
-		if err := conn.Store.Read(tx); err == nil {
+		if err := conn.ReadFromCache(tx); err == nil {
 			// success
 			if tx.Receipt == nil {
 				return receipt, nil
@@ -76,7 +76,7 @@ func (conn *Connection) GetReceiptsByNumber(bn base.Blknum, ts base.Timestamp) (
 			BlockNumber:      bn,
 			TransactionIndex: base.NOPOSN,
 		}
-		if err := conn.Store.Read(receiptGroup); err == nil {
+		if err := conn.ReadFromCache(receiptGroup); err == nil {
 			receiptMap := make(map[base.Txnum]*types.Receipt, len(receiptGroup.Receipts))
 			for index := 0; index < len(receiptGroup.Receipts); index++ {
 				pReceipt := &receiptGroup.Receipts[index]

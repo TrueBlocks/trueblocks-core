@@ -195,7 +195,7 @@ func (call *ContractCall) Call(artFunc func(string, *types.Function) error) (res
 			Address:     call.Address,
 			Encoding:    call.Method.Encoding,
 		}
-		if err := call.Conn.Store.Read(results); err == nil {
+		if err := call.Conn.ReadFromCache(results); err == nil {
 			return results, nil
 		}
 		blockTs = call.Conn.GetBlockTimestamp(call.BlockNumber)

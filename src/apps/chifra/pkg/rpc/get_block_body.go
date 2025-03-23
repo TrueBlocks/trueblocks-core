@@ -22,7 +22,7 @@ func (conn *Connection) GetBlockBodyByNumber(bn base.Blknum) (types.Block, error
 		lightBlock := &types.LightBlock{
 			BlockNumber: bn,
 		}
-		if err := conn.Store.Read(lightBlock); err == nil {
+		if err := conn.ReadFromCache(lightBlock); err == nil {
 			// We need to fill in the actual transactions (from cache hopefully, but
 			// if not, then from the RPC)
 			transactions := make([]types.Transaction, 0, len(lightBlock.Transactions))

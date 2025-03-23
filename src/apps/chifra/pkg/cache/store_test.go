@@ -30,7 +30,7 @@ func TestStoreWrite(t *testing.T) {
 		result := &testStoreData{
 			Id: "1",
 		}
-		if err := store.Read(result); err != nil {
+		if err := store.ReadFromStore(result); err != nil {
 			t.Errorf("Read failed: %v", err)
 		}
 		if result.Value != "direct" {
@@ -53,7 +53,7 @@ func TestStoreWrite(t *testing.T) {
 		result := &testStoreData{
 			Id: "2",
 		}
-		if err := store.Read(result); err == nil {
+		if err := store.ReadFromStore(result); err == nil {
 			t.Errorf("Expected read to fail (no write occurred)")
 		}
 	})
@@ -90,7 +90,7 @@ func TestStoreRead(t *testing.T) {
 		result := &testStoreData{
 			Id: "1",
 		}
-		err = store.Read(result)
+		err = store.ReadFromStore(result)
 		if err != nil {
 			t.Errorf("Read failed: %v", err)
 		}
@@ -106,7 +106,7 @@ func TestStoreRead(t *testing.T) {
 		result := &testStoreData{
 			Id: "999",
 		}
-		err = store.Read(result)
+		err = store.ReadFromStore(result)
 		if err == nil {
 			t.Errorf("Expected error, got nil")
 		}
@@ -175,7 +175,7 @@ func TestStoreRemove(t *testing.T) {
 		result := &testStoreData{
 			Id: "1",
 		}
-		if err := store.Read(result); err == nil {
+		if err := store.ReadFromStore(result); err == nil {
 			t.Errorf("Expected read to fail after remove, got no error")
 		}
 	})
@@ -224,11 +224,11 @@ func TestStoreDecache(t *testing.T) {
 			t.Errorf("Decache failed: %v", err)
 		}
 		result1 := &testStoreData{Id: "1"}
-		if err := store.Read(result1); err == nil {
+		if err := store.ReadFromStore(result1); err == nil {
 			t.Errorf("Expected read to fail for data1 after decache")
 		}
 		result2 := &testStoreData{Id: "2"}
-		if err := store.Read(result2); err == nil {
+		if err := store.ReadFromStore(result2); err == nil {
 			t.Errorf("Expected read to fail for data2 after decache")
 		}
 	})
@@ -269,7 +269,7 @@ func TestStoreDecache(t *testing.T) {
 			t.Errorf("Decache failed: %v", err)
 		}
 		result := &testStoreData{Id: "3"}
-		if err := store.Read(result); err != nil {
+		if err := store.ReadFromStore(result); err != nil {
 			t.Errorf("Expected read to succeed (data not removed), got %v", err)
 		}
 		if result.Value != "decache3" {
@@ -337,7 +337,7 @@ func TestStorePathResolution(t *testing.T) {
 		result := &testStoreData{
 			Id: "1",
 		}
-		if err := store.Read(result); err != nil {
+		if err := store.ReadFromStore(result); err != nil {
 			t.Errorf("Read failed: %v", err)
 		}
 		if result.Value != "relative" {
@@ -388,7 +388,7 @@ func TestWriteToStore(t *testing.T) {
 		result := &testStoreData{
 			Id: "1",
 		}
-		if err := store.Read(result); err != nil {
+		if err := store.ReadFromStore(result); err != nil {
 			t.Errorf("failed to read back data: %v, got %v", err, result.Value)
 		}
 		if result.Value != "trueblocks" {
@@ -411,7 +411,7 @@ func TestWriteToStore(t *testing.T) {
 		}
 
 		readBack := &testStoreData{Id: "2"}
-		if err := store.Read(readBack); err == nil {
+		if err := store.ReadFromStore(readBack); err == nil {
 			t.Errorf("Expected read to fail (no write occurred)")
 		}
 	})
@@ -431,7 +431,7 @@ func TestWriteToStore(t *testing.T) {
 		}
 
 		readBack := &testStoreData{Id: "3"}
-		if err := store.Read(readBack); err == nil {
+		if err := store.ReadFromStore(readBack); err == nil {
 			t.Errorf("Expected read to fail (no write occurred)")
 		}
 	})
@@ -450,7 +450,7 @@ func TestWriteToStore(t *testing.T) {
 		}
 
 		readBack := &testStoreData{Id: "4"}
-		if err := store.Read(readBack); err == nil {
+		if err := store.ReadFromStore(readBack); err == nil {
 			t.Errorf("Expected read to fail (no write occurred)")
 		}
 	})
@@ -497,7 +497,7 @@ func TestWriteToStore(t *testing.T) {
 		}
 
 		readBack := &testStoreData{Id: "7"}
-		if err := store.Read(readBack); err == nil {
+		if err := store.ReadFromStore(readBack); err == nil {
 			t.Errorf("Expected read to fail (no write occurred)")
 		}
 	})

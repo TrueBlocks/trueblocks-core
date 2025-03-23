@@ -17,7 +17,7 @@ func (conn *Connection) GetLogsByNumber(bn base.Blknum, ts base.Timestamp) ([]ty
 			BlockNumber:      bn,
 			TransactionIndex: base.NOPOSN,
 		}
-		if err := conn.Store.Read(logGroup); err == nil {
+		if err := conn.ReadFromCache(logGroup); err == nil {
 			return logGroup.Logs, nil
 		}
 	}

@@ -20,7 +20,7 @@ func (conn *Connection) GetTransactionByNumberAndId(bn base.Blknum, txid base.Tx
 			BlockNumber:      bn,
 			TransactionIndex: txid,
 		}
-		if err := conn.Store.Read(tx); err == nil {
+		if err := conn.ReadFromCache(tx); err == nil {
 			// success
 			return tx, nil
 		}
@@ -65,7 +65,7 @@ func (conn *Connection) GetTransactionByAppearance(app *types.Appearance, fetchT
 			BlockNumber:      bn,
 			TransactionIndex: txid,
 		}
-		if err := conn.Store.Read(tx); err == nil {
+		if err := conn.ReadFromCache(tx); err == nil {
 			// success
 			if fetchTraces {
 				traces, err := conn.GetTracesByTransactionHash(tx.Hash.Hex(), tx)

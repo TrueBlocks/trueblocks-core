@@ -21,7 +21,7 @@ func (conn *Connection) GetTracesByBlockNumber(bn base.Blknum) ([]types.Trace, e
 			BlockNumber:      bn,
 			TransactionIndex: base.NOPOSN, // no tx id means we're storing the whole block
 		}
-		if err := conn.Store.Read(traceGroup); err == nil {
+		if err := conn.ReadFromCache(traceGroup); err == nil {
 			return traceGroup.Traces, nil
 		}
 	}
@@ -82,7 +82,7 @@ func (conn *Connection) GetTracesByTransactionHash(txHash string, transaction *t
 			TransactionIndex: transaction.TransactionIndex,
 			Traces:           make([]types.Trace, 0, len(transaction.Traces)),
 		}
-		if err := conn.Store.Read(traceGroup); err == nil {
+		if err := conn.ReadFromCache(traceGroup); err == nil {
 			return traceGroup.Traces, nil
 		}
 	}

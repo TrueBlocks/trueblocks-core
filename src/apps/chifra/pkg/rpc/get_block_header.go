@@ -21,7 +21,7 @@ func (conn *Connection) GetBlockHeaderByNumber(bn base.Blknum) (types.LightBlock
 		block := types.LightBlock{
 			BlockNumber: bn,
 		}
-		if err := conn.Store.Read(&block); err == nil {
+		if err := conn.ReadFromCache(&block); err == nil {
 			// read was successful
 			return block, nil
 		}

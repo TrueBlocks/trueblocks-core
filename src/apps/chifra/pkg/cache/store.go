@@ -119,10 +119,10 @@ func (s *Store) Write(value Locator) error {
 	}
 }
 
-// Read retrieves value from a location defined by options.Location. If options is nil,
+// ReadFromStore retrieves value from a location defined by options.Location. If options is nil,
 // then FileSystem is used. The value has to implement Locator interface, which
 // provides information about in-cache path
-func (s *Store) Read(value Locator) error {
+func (s *Store) ReadFromStore(value Locator) error {
 	if itemPath, err := s.resolvePath(value); err != nil {
 		return err
 	} else {

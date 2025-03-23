@@ -24,7 +24,7 @@ func (conn *Connection) GetState(fieldBits types.StatePart, address base.Address
 			BlockNumber: blockNumber,
 			Address:     address,
 		}
-		if err := conn.Store.Read(state); err == nil {
+		if err := conn.ReadFromCache(state); err == nil {
 			if state.Parts&fieldBits == fieldBits {
 				// we have what we need
 				return state, nil
