@@ -17,24 +17,19 @@ type StateFilters struct {
 
 // GetState returns account state (search: FromRpc)
 func (conn *Connection) GetState(fieldBits types.StatePart, address base.Address, blockNumber base.Blknum, filters StateFilters) (*types.State, error) {
-	blockTs := base.Timestamp(0)
-	if conn.Store != nil {
-		// walk.Cache_State
-		state := &types.State{
-			BlockNumber: blockNumber,
-			Address:     address,
-		}
-		if err := conn.ReadFromCache(state); err == nil {
-			if state.Parts&fieldBits == fieldBits {
-				// we have what we need
-				return state, nil
-			}
+	state := &types.State{
+		BlockNumber: blockNumber,
+		Address:     address,
+	}
+	if err := conn.ReadFromCache(state); err == nil {
+		if state.Parts&fieldBits == fieldBits {
+			return state, nil
 		}
 		fieldBits |= state.Parts // preserve what's there
-		blockTs = conn.GetBlockTimestamp(blockNumber)
 	}
 
 	// We always ask for balance even if we dont' need it. Not sure why.
+	blockTs := conn.GetBlockTimestamp(blockNumber)
 	rpcPayload := []query.BatchPayload{
 		{
 			Key: "balance",
@@ -83,7 +78,7 @@ func (conn *Connection) GetState(fieldBits types.StatePart, address base.Address
 	balance := base.NewWei(0)
 	balance.SetString(*value, 0)
 
-	state := &types.State{
+	state = &types.State{
 		Address:     address,
 		BlockNumber: blockNumber,
 		Deployed:    base.NOPOSN,

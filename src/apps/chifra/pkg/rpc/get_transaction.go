@@ -14,16 +14,12 @@ import (
 )
 
 func (conn *Connection) GetTransactionByNumberAndId(bn base.Blknum, txid base.Txnum) (*types.Transaction, error) {
-	if conn.Store != nil {
-		// walk.Cache_Transactions
-		tx := &types.Transaction{
-			BlockNumber:      bn,
-			TransactionIndex: txid,
-		}
-		if err := conn.ReadFromCache(tx); err == nil {
-			// success
-			return tx, nil
-		}
+	tx := &types.Transaction{
+		BlockNumber:      bn,
+		TransactionIndex: txid,
+	}
+	if err := conn.ReadFromCache(tx); err == nil {
+		return tx, nil
 	}
 
 	trans, err := conn.getTransactionFromRpc(notAHash, notAHash, bn, txid)
@@ -59,23 +55,19 @@ func (conn *Connection) GetTransactionByAppearance(app *types.Appearance, fetchT
 	bn := base.Blknum(theApp.BlockNumber)
 	txid := base.Txnum(theApp.TransactionIndex)
 
-	if conn.Store != nil {
-		// walk.Cache_Transactions
-		tx := &types.Transaction{
-			BlockNumber:      bn,
-			TransactionIndex: txid,
-		}
-		if err := conn.ReadFromCache(tx); err == nil {
-			// success
-			if fetchTraces {
-				traces, err := conn.GetTracesByTransactionHash(tx.Hash.Hex(), tx)
-				if err != nil {
-					return nil, err
-				}
-				tx.Traces = traces
+	tx := &types.Transaction{
+		BlockNumber:      bn,
+		TransactionIndex: txid,
+	}
+	if err := conn.ReadFromCache(tx); err == nil {
+		if fetchTraces {
+			traces, err := conn.GetTracesByTransactionHash(tx.Hash.Hex(), tx)
+			if err != nil {
+				return nil, err
 			}
-			return tx, nil
+			tx.Traces = traces
 		}
+		return tx, nil
 	}
 
 	blockTs := conn.GetBlockTimestamp(bn)

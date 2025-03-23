@@ -33,15 +33,12 @@ func (conn *Connection) GetWithdrawalsByNumber(bn base.Blknum) ([]types.Withdraw
 		return []types.Withdrawal{}, nil
 	}
 
-	if conn.Store != nil {
-		// walk.Cache_Withdrawals
-		withdrawalGroup := &types.WithdrawalGroup{
-			BlockNumber:      bn,
-			TransactionIndex: base.NOPOSN,
-		}
-		if err := conn.ReadFromCache(withdrawalGroup); err == nil {
-			return withdrawalGroup.Withdrawals, nil
-		}
+	withdrawalGroup := &types.WithdrawalGroup{
+		BlockNumber:      bn,
+		TransactionIndex: base.NOPOSN,
+	}
+	if err := conn.ReadFromCache(withdrawalGroup); err == nil {
+		return withdrawalGroup.Withdrawals, nil
 	}
 
 	if withdrawals, ts, err := conn.getWithdrawals(bn); err != nil {

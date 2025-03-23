@@ -65,7 +65,7 @@ func (conn *Connection) ReadFromCache(value cache.Locator) error {
 	if conn.Store == nil {
 		return nil
 	}
-	return conn.ReadFromCache(value)
+	return conn.Store.ReadFromStore(value)
 }
 
 // WriteToCache is syntactic sugar for the store. Cleans calling code by testing for nil store

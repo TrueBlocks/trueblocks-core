@@ -15,19 +15,15 @@ import (
 
 // GetTracesByBlockNumber returns a slice of traces in the given block
 func (conn *Connection) GetTracesByBlockNumber(bn base.Blknum) ([]types.Trace, error) {
-	if conn.Store != nil {
-		// walk.Cache_Traces
-		traceGroup := &types.TraceGroup{
-			BlockNumber:      bn,
-			TransactionIndex: base.NOPOSN, // no tx id means we're storing the whole block
-		}
-		if err := conn.ReadFromCache(traceGroup); err == nil {
-			return traceGroup.Traces, nil
-		}
+	traceGroup := &types.TraceGroup{
+		BlockNumber:      bn,
+		TransactionIndex: base.NOPOSN, // no tx id means we're storing the whole block
+	}
+	if err := conn.ReadFromCache(traceGroup); err == nil {
+		return traceGroup.Traces, nil
 	}
 
 	curTs := conn.GetBlockTimestamp(bn) // same for every trace
-
 	method := "trace_block"
 	params := query.Params{fmt.Sprintf("0x%x", bn)}
 
@@ -75,8 +71,7 @@ func (conn *Connection) GetTracesByBlockNumber(bn base.Blknum) ([]types.Trace, e
 
 // GetTracesByTransactionHash returns a slice of traces in a given transaction's hash
 func (conn *Connection) GetTracesByTransactionHash(txHash string, transaction *types.Transaction) ([]types.Trace, error) {
-	if conn.Store != nil && transaction != nil {
-		// walk.Cache_Traces
+	if transaction != nil {
 		traceGroup := &types.TraceGroup{
 			BlockNumber:      transaction.BlockNumber,
 			TransactionIndex: transaction.TransactionIndex,

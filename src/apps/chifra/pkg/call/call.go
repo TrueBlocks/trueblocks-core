@@ -187,20 +187,16 @@ func (call *ContractCall) forceEncoding(encoding string) {
 }
 
 func (call *ContractCall) Call(artFunc func(string, *types.Function) error) (results *types.Result, err error) {
-	blockTs := base.Timestamp(0)
-	if call.Conn.Store != nil {
-		// walk.Cache_Results
-		results = &types.Result{
-			BlockNumber: call.BlockNumber,
-			Address:     call.Address,
-			Encoding:    call.Method.Encoding,
-		}
-		if err := call.Conn.ReadFromCache(results); err == nil {
-			return results, nil
-		}
-		blockTs = call.Conn.GetBlockTimestamp(call.BlockNumber)
+	results = &types.Result{
+		BlockNumber: call.BlockNumber,
+		Address:     call.Address,
+		Encoding:    call.Method.Encoding,
+	}
+	if err := call.Conn.ReadFromCache(results); err == nil {
+		return results, nil
 	}
 
+	blockTs := call.Conn.GetBlockTimestamp(call.BlockNumber)
 	if artFunc == nil {
 		logger.Fatal("should not happen ==> implementation error: artFunc is nil")
 	}
