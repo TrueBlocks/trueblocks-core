@@ -68,7 +68,7 @@ func (conn *Connection) GetTracesByBlockNumber(bn base.Blknum) ([]types.Trace, e
 			TransactionIndex: base.NOPOSN,
 		}
 
-		err = conn.Store.WriteToCache(traceGroup, walk.Cache_Traces, curTs)
+		err = conn.WriteToCache(traceGroup, walk.Cache_Traces, curTs)
 		return *traces, err
 	}
 }
@@ -134,7 +134,7 @@ func (conn *Connection) GetTracesByTransactionHash(txHash string, transaction *t
 			TransactionIndex: transaction.TransactionIndex,
 			Traces:           *traces,
 		}
-		err = conn.Store.WriteToCache(traceGroup, walk.Cache_Traces, transaction.Timestamp)
+		err = conn.WriteToCache(traceGroup, walk.Cache_Traces, transaction.Timestamp)
 		return *traces, err
 	}
 }

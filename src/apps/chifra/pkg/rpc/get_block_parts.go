@@ -20,7 +20,7 @@ func (conn *Connection) GetBlockHashByHash(hash string) (base.Hash, error) {
 	if block, err := conn.getLightBlockFromRpc(base.NOPOSN, base.HexToHash(hash)); err != nil {
 		return base.Hash{}, err
 	} else {
-		err = conn.Store.WriteToCache(block, walk.Cache_Blocks, block.Timestamp)
+		err = conn.WriteToCache(block, walk.Cache_Blocks, block.Timestamp)
 		return block.Hash, err
 	}
 }
@@ -30,7 +30,7 @@ func (conn *Connection) GetBlockNumberByHash(hash string) (base.Blknum, error) {
 	if block, err := conn.getLightBlockFromRpc(base.NOPOSN, base.HexToHash(hash)); err != nil {
 		return 0, err
 	} else {
-		err = conn.Store.WriteToCache(block, walk.Cache_Blocks, block.Timestamp)
+		err = conn.WriteToCache(block, walk.Cache_Blocks, block.Timestamp)
 		return block.BlockNumber, err
 	}
 }

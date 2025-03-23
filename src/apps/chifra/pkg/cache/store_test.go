@@ -366,7 +366,7 @@ func TestStoreInit(t *testing.T) {
 	})
 }
 
-func TestWriteToCache(t *testing.T) {
+func TestWriteToStore(t *testing.T) {
 	t.Run("HappyPath", func(t *testing.T) {
 		store, err := newTestStore(true, walk.Cache_Results, true, 5000)
 		if err != nil {
@@ -379,11 +379,11 @@ func TestWriteToCache(t *testing.T) {
 		}
 		ts := base.Timestamp(900)
 
-		err = store.WriteToCache(data, walk.Cache_Results, ts)
+		err = store.WriteToStore(data, walk.Cache_Results, ts)
 		if err != nil {
 			t.Errorf("Expected no error, got %v", err)
 		}
-		t.Logf("WriteToCache completed")
+		t.Logf("WriteToStore completed")
 
 		result := &testStoreData{
 			Id: "1",
@@ -405,7 +405,7 @@ func TestWriteToCache(t *testing.T) {
 		data := &testStoreData{Id: "2", Value: "test"}
 		finalTs := base.Timestamp(900)
 
-		err = store.WriteToCache(data, walk.Cache_Results, finalTs)
+		err = store.WriteToStore(data, walk.Cache_Results, finalTs)
 		if err != nil {
 			t.Errorf("Expected nil error, got %v", err)
 		}
@@ -425,7 +425,7 @@ func TestWriteToCache(t *testing.T) {
 		data := &testStoreData{Id: "3", Value: "test"}
 		finalTs := base.Timestamp(900)
 
-		err = store.WriteToCache(data, walk.Cache_Results, finalTs)
+		err = store.WriteToStore(data, walk.Cache_Results, finalTs)
 		if err != nil {
 			t.Errorf("Expected nil error, got %v", err)
 		}
@@ -444,7 +444,7 @@ func TestWriteToCache(t *testing.T) {
 		data := &testStoreData{Id: "4", Value: "test"}
 		nonFinalTs := base.Timestamp(1001)
 
-		err = store.WriteToCache(data, walk.Cache_Results, nonFinalTs)
+		err = store.WriteToStore(data, walk.Cache_Results, nonFinalTs)
 		if err != nil {
 			t.Errorf("Expected nil error, got %v", err)
 		}
@@ -463,7 +463,7 @@ func TestWriteToCache(t *testing.T) {
 		invalidData := &testStoreData{Id: "", Value: "test"}
 		finalTs := base.Timestamp(900)
 
-		err = store.WriteToCache(invalidData, walk.Cache_Results, finalTs)
+		err = store.WriteToStore(invalidData, walk.Cache_Results, finalTs)
 		if err != nil {
 			fmt.Println(err.Error())
 		}
@@ -477,7 +477,7 @@ func TestWriteToCache(t *testing.T) {
 		data := &testStoreData{Id: "6", Value: "test"}
 		finalTs := base.Timestamp(900)
 
-		err := nilStore.WriteToCache(data, walk.Cache_Results, finalTs)
+		err := nilStore.WriteToStore(data, walk.Cache_Results, finalTs)
 		if err != nil {
 			t.Errorf("Expected nil error, got %v", err)
 		}
@@ -491,7 +491,7 @@ func TestWriteToCache(t *testing.T) {
 		data := &testStoreData{Id: "7", Value: "test"}
 		finalTs := base.Timestamp(900)
 
-		err = store.WriteToCache(data, walk.CacheType(999), finalTs)
+		err = store.WriteToStore(data, walk.CacheType(999), finalTs)
 		if err != nil {
 			t.Errorf("Expected nil error, got %v", err)
 		}

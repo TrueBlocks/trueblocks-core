@@ -32,7 +32,7 @@ func (conn *Connection) GetBlockHeaderByNumber(bn base.Blknum) (types.LightBlock
 		return types.LightBlock{}, err
 	}
 
-	err = conn.Store.WriteToCache(block, walk.Cache_Blocks, block.Timestamp)
+	err = conn.WriteToCache(block, walk.Cache_Blocks, block.Timestamp)
 	return *block, err
 }
 

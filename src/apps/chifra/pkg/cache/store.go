@@ -198,9 +198,9 @@ func (s *Store) TestLog() {
 	}
 }
 
-// WriteToCache handles caching of any data type that implements the Locator interface. Precondition: Caller
+// WriteToStore handles caching of any data type that implements the Locator interface. Precondition: Caller
 // must ensure caching is enabled and provide all conditions (e.g., isFinal, isWritable).
-func (s *Store) WriteToCache(data Locator, cacheType walk.CacheType, ts base.Timestamp, conditions ...bool) error {
+func (s *Store) WriteToStore(data Locator, cacheType walk.CacheType, ts base.Timestamp, conditions ...bool) error {
 	if s == nil || !s.Enabled() || !s.enabledMap[cacheType] || !s.IsFinal(ts) {
 		return nil
 	}

@@ -35,7 +35,7 @@ func (conn *Connection) GetLogsByNumber(bn base.Blknum, ts base.Timestamp) ([]ty
 			TransactionIndex: base.NOPOSN,
 			Logs:             logs,
 		}
-		err = conn.Store.WriteToCache(logGroup, walk.Cache_Logs, ts)
+		err = conn.WriteToCache(logGroup, walk.Cache_Logs, ts)
 		return logs, err
 	}
 }

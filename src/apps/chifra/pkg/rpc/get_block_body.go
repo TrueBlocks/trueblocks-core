@@ -83,10 +83,10 @@ func (conn *Connection) GetBlockBodyByNumber(bn base.Blknum) (types.Block, error
 		block.Transactions[i].Timestamp = block.Timestamp
 		block.Transactions[i].HasToken = types.IsTokenFunction(block.Transactions[i].Input)
 
-		_ = conn.Store.WriteToCache(&block.Transactions[i], walk.Cache_Transactions, block.Timestamp)
+		_ = conn.WriteToCache(&block.Transactions[i], walk.Cache_Transactions, block.Timestamp)
 	}
 
-	err = conn.Store.WriteToCache(block, walk.Cache_Blocks, block.Timestamp)
+	err = conn.WriteToCache(block, walk.Cache_Blocks, block.Timestamp)
 	return *block, err
 }
 

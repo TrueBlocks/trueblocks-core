@@ -52,7 +52,7 @@ func (conn *Connection) GetWithdrawalsByNumber(bn base.Blknum) ([]types.Withdraw
 			TransactionIndex: base.NOPOSN,
 			Withdrawals:      withdrawals,
 		}
-		err := conn.Store.WriteToCache(withdrawalGroup, walk.Cache_Withdrawals, ts)
+		err := conn.WriteToCache(withdrawalGroup, walk.Cache_Withdrawals, ts)
 		return withdrawals, err
 	}
 }

@@ -98,7 +98,7 @@ func (conn *Connection) GetReceiptsByNumber(bn base.Blknum, ts base.Timestamp) (
 		receiptMap := make(map[base.Txnum]*types.Receipt, len(receipts))
 
 		// even if there's an error, this spin through won't matter
-		err = conn.Store.WriteToCache(receiptGroup, walk.Cache_Receipts, ts)
+		err = conn.WriteToCache(receiptGroup, walk.Cache_Receipts, ts)
 		for index := 0; index < len(receipts); index++ {
 			pReceipt := &receipts[index]
 			receiptMap[pReceipt.TransactionIndex] = pReceipt

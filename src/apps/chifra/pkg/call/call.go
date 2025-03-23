@@ -261,6 +261,6 @@ func (call *ContractCall) Call(artFunc func(string, *types.Function) error) (res
 		results.Values[output.DisplayName(index)] = fmt.Sprint(output.Value)
 	}
 
-	err = call.Conn.Store.WriteToCache(results, walk.Cache_Results, blockTs)
+	err = call.Conn.WriteToCache(results, walk.Cache_Results, blockTs)
 	return results, err
 }

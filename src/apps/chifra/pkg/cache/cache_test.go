@@ -90,19 +90,19 @@ func Example() {
 
 	// we will store it in memory cache (if StoreOptions is nil, then file system
 	// cache is used)
-	cacheStore, err := NewStore(&StoreOptions{Location: MemoryCache})
+	store, err := NewStore(&StoreOptions{Location: MemoryCache})
 	if err != nil {
 		panic(err)
 	}
 
-	if err := cacheStore.Write(block); err != nil {
+	if err := store.Write(block); err != nil {
 		panic(err)
 	}
 
 	readFromCache := &ExampleBlock{
 		BlockNumber: 4436721,
 	}
-	if err := cacheStore.Read(readFromCache); err != nil {
+	if err := store.Read(readFromCache); err != nil {
 		panic(err)
 	}
 

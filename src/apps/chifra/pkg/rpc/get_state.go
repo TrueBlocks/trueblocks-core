@@ -141,7 +141,7 @@ func (conn *Connection) GetState(fieldBits types.StatePart, address base.Address
 		}
 	}
 
-	err = conn.Store.WriteToCache(state, walk.Cache_State, blockTs)
+	err = conn.WriteToCache(state, walk.Cache_State, blockTs)
 	if filters.BalanceCheck != nil {
 		if !filters.BalanceCheck(address, &state.Balance) {
 			return nil, err

@@ -43,7 +43,7 @@ func (conn *Connection) GetTransactionByNumberAndId(bn base.Blknum, txid base.Tx
 	trans.IsError = receipt.IsError
 	trans.Receipt = &receipt
 
-	err = conn.Store.WriteToCache(trans, walk.Cache_Transactions, blockTs)
+	err = conn.WriteToCache(trans, walk.Cache_Transactions, blockTs)
 	return trans, err
 }
 
@@ -84,7 +84,7 @@ func (conn *Connection) GetTransactionByAppearance(app *types.Appearance, fetchT
 			return nil, err
 		} else {
 			tx.Timestamp = blockTs
-			err = conn.Store.WriteToCache(tx, walk.Cache_Transactions, blockTs)
+			err = conn.WriteToCache(tx, walk.Cache_Transactions, blockTs)
 			return tx, err
 		}
 	} else if txid == types.BlockReward || txid == types.MisconfigReward || txid == types.ExternalReward {
@@ -92,7 +92,7 @@ func (conn *Connection) GetTransactionByAppearance(app *types.Appearance, fetchT
 			return nil, err
 		} else {
 			tx.Timestamp = blockTs
-			err = conn.Store.WriteToCache(tx, walk.Cache_Transactions, blockTs)
+			err = conn.WriteToCache(tx, walk.Cache_Transactions, blockTs)
 			return tx, err
 		}
 	} else if txid == types.UncleReward {
@@ -100,7 +100,7 @@ func (conn *Connection) GetTransactionByAppearance(app *types.Appearance, fetchT
 			return nil, err
 		} else {
 			tx.Timestamp = blockTs
-			err = conn.Store.WriteToCache(tx, walk.Cache_Transactions, blockTs)
+			err = conn.WriteToCache(tx, walk.Cache_Transactions, blockTs)
 			return tx, err
 		}
 	} else if txid == types.WithdrawalAmt {
@@ -108,7 +108,7 @@ func (conn *Connection) GetTransactionByAppearance(app *types.Appearance, fetchT
 			return nil, err
 		} else {
 			tx.Timestamp = blockTs
-			err = conn.Store.WriteToCache(tx, walk.Cache_Transactions, blockTs)
+			err = conn.WriteToCache(tx, walk.Cache_Transactions, blockTs)
 			return tx, err
 		}
 	}
@@ -129,7 +129,7 @@ func (conn *Connection) GetTransactionByAppearance(app *types.Appearance, fetchT
 	trans.IsError = receipt.IsError
 	trans.Receipt = &receipt
 
-	err = conn.Store.WriteToCache(trans, walk.Cache_Transactions, blockTs)
+	err = conn.WriteToCache(trans, walk.Cache_Transactions, blockTs)
 	if err == nil && fetchTraces {
 		if traces, err := conn.GetTracesByTransactionHash(trans.Hash.Hex(), trans); err != nil {
 			return nil, err
