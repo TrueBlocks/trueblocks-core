@@ -1,4 +1,4 @@
-export?addrs=0x08166f02313feae18bb044e7877c808b55b5bf58&accounting&transfers&lastBlock=4000000&fmt=json
+export?addrs=0x08166f02313feae18bb044e7877c808b55b5bf58&accounting&transfers&cache&lastBlock=4000000&fmt=json
 {
   "data": [
     {

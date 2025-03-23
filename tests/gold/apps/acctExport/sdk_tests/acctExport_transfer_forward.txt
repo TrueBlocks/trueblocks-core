@@ -1,12 +1,14 @@
-export?addrs=0x868b8fd259abfcfdf9634c343593b34ef359641d&accounting&transfers&traces&lastBlock=8769141&ether
-Args: [addrs=0x868b8fd259abfcfdf9634c343593b34ef359641d accounting transfers traces lastBlock=8769141 ether]
-Opts: {"addrs":["0x868b8fd259abfcfdf9634c343593b34ef359641d"],"traces":true,"transfers":true,"lastBlock":8769141,"accounting":true,"ether":true}
+export?addrs=0x868b8fd259abfcfdf9634c343593b34ef359641d&accounting&transfers&cache&traces&lastBlock=8769141&ether
+Args: [addrs=0x868b8fd259abfcfdf9634c343593b34ef359641d accounting transfers cache traces lastBlock=8769141 ether]
+Opts: {"addrs":["0x868b8fd259abfcfdf9634c343593b34ef359641d"],"traces":true,"transfers":true,"lastBlock":8769141,"accounting":true,"ether":true,"cache":true}
 Addrs:  [0x868b8fd259abfcfdf9634c343593b34ef359641d]
 Traces:  true
 Transfers:  true
 LastBlock:  8769141
 Accounting:  true
+Enabled:  transactions, transfers
 Ether:  true
+Cache:  true
 Caps:  cache,decache,ether
 Format:  json
 {

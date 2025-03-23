@@ -1,10 +1,12 @@
-chifra export  trueblocks.eth --accounting --statements --asset 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee --asset 0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359 --fmt csv --first_block 8856476 --last_block 9193814
+chifra export  trueblocks.eth --accounting --statements --cache --asset 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee --asset 0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359 --fmt csv --first_block 8856476 --last_block 9193814
 TEST[DATE|TIME] Addrs:  [0xf503017d7baf7fbc0fff7492b751025c6a78179b]
 TEST[DATE|TIME] Statements:  true
 TEST[DATE|TIME] Asset:  [0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359]
 TEST[DATE|TIME] FirstBlock:  8856476
 TEST[DATE|TIME] LastBlock:  9193814
 TEST[DATE|TIME] Accounting:  true
+TEST[DATE|TIME] Enabled:  statements, transactions, transfers
+TEST[DATE|TIME] Cache:  true
 TEST[DATE|TIME] Caps:  cache,decache,ether
 TEST[DATE|TIME] Format:  csv
 TEST[DATE|TIME] 0: 8856476 55

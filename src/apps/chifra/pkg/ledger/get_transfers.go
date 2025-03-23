@@ -8,7 +8,7 @@ import (
 
 // GetTransfers returns a statement from a given transaction
 func (r *Reconciler) GetTransfers(txs []*types.Transaction) ([]*types.Transfer, bool, error) {
-	ethTransfers, tokenTransfers, _, err := r.getTransfersInternal(txs)
+	ethTransfers, tokenTransfers, _, err := r.getTransfersInternal(txs, false)
 	if err != nil {
 		return nil, false, err
 	}

@@ -177,6 +177,8 @@ func (s *Structure) CacheIdStr() string {
 		return "\"%s-%s-%09d\", s.Address.Hex()[2:], s.Encoding[2:], s.BlockNumber"
 	case "address,tx":
 		return "\"%s-%09d-%05d\", s.Address.Hex()[2:], s.BlockNumber, s.TransactionIndex"
+	case "statement":
+		return "\"%s-%s-%09d-%05d\", s.Address.Hex()[2:], s.Address2.Hex()[2:], s.BlockNumber, s.TransactionIndex"
 	case "block":
 		return "\"%09d\", s.BlockNumber"
 	case "tx":

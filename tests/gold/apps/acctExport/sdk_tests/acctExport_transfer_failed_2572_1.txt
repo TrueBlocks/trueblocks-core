@@ -1,13 +1,15 @@
-export?addrs=0x054993ab0f2b1acc0fdc65405ee203b4271bebe6&accounting&transfers&ether&asset=0xf5b2c59f6db42ffcdfc1625999c81fdf17953384&lastBlock=15549163&maxRecords=40
-Args: [addrs=0x054993ab0f2b1acc0fdc65405ee203b4271bebe6 accounting transfers ether asset=0xf5b2c59f6db42ffcdfc1625999c81fdf17953384 lastBlock=15549163 maxRecords=40]
-Opts: {"addrs":["0x054993ab0f2b1acc0fdc65405ee203b4271bebe6"],"transfers":true,"maxRecords":40,"asset":["0xf5b2c59f6db42ffcdfc1625999c81fdf17953384"],"lastBlock":15549163,"accounting":true,"ether":true}
+export?addrs=0x054993ab0f2b1acc0fdc65405ee203b4271bebe6&accounting&transfers&cache&ether&asset=0xf5b2c59f6db42ffcdfc1625999c81fdf17953384&lastBlock=15549163&maxRecords=40
+Args: [addrs=0x054993ab0f2b1acc0fdc65405ee203b4271bebe6 accounting transfers cache ether asset=0xf5b2c59f6db42ffcdfc1625999c81fdf17953384 lastBlock=15549163 maxRecords=40]
+Opts: {"addrs":["0x054993ab0f2b1acc0fdc65405ee203b4271bebe6"],"transfers":true,"maxRecords":40,"asset":["0xf5b2c59f6db42ffcdfc1625999c81fdf17953384"],"lastBlock":15549163,"accounting":true,"ether":true,"cache":true}
 Addrs:  [0x054993ab0f2b1acc0fdc65405ee203b4271bebe6]
 Transfers:  true
 MaxRecords:  40
 Asset:  [0xf5b2c59f6db42ffcdfc1625999c81fdf17953384]
 LastBlock:  15549163
 Accounting:  true
+Enabled:  transactions, transfers
 Ether:  true
+Cache:  true
 Caps:  cache,decache,ether
 Format:  json
 {

@@ -1,12 +1,14 @@
-chifra export  0x054993ab0f2b1acc0fdc65405ee203b4271bebe6 --accounting --transfers --ether --asset 0xf5b2c59f6db42ffcdfc1625999c81fdf17953384 --fmt json --last_block 15549163 --max_records 40 --output transfer_failed_2572_1_out.file
+chifra export  0x054993ab0f2b1acc0fdc65405ee203b4271bebe6 --accounting --transfers --cache --ether --asset 0xf5b2c59f6db42ffcdfc1625999c81fdf17953384 --fmt json --last_block 15549163 --max_records 40 --output transfer_failed_2572_1_out.file
 TEST[DATE|TIME] Addrs:  [0x054993ab0f2b1acc0fdc65405ee203b4271bebe6]
 TEST[DATE|TIME] Transfers:  true
 TEST[DATE|TIME] MaxRecords:  40
 TEST[DATE|TIME] Asset:  [0xf5b2c59f6db42ffcdfc1625999c81fdf17953384]
 TEST[DATE|TIME] LastBlock:  15549163
 TEST[DATE|TIME] Accounting:  true
+TEST[DATE|TIME] Enabled:  transactions, transfers
 TEST[DATE|TIME] Ether:  true
 TEST[DATE|TIME] OutputFn:  transfer_failed_2572_1_out.file
+TEST[DATE|TIME] Cache:  true
 TEST[DATE|TIME] Caps:  cache,decache,ether
 TEST[DATE|TIME] Format:  json
 INFO[DATE|TIME] { "outputFilename": "--output_filename--" }

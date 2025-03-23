@@ -1,9 +1,11 @@
-chifra export  trueblocks.eth --accounting --statements --first_block 8876230 --last_block 9024186 --fmt json
+chifra export  trueblocks.eth --accounting --statements --cache --first_block 8876230 --last_block 9024186 --fmt json
 TEST[DATE|TIME] Addrs:  [0xf503017d7baf7fbc0fff7492b751025c6a78179b]
 TEST[DATE|TIME] Statements:  true
 TEST[DATE|TIME] FirstBlock:  8876230
 TEST[DATE|TIME] LastBlock:  9024186
 TEST[DATE|TIME] Accounting:  true
+TEST[DATE|TIME] Enabled:  statements, transactions, transfers
+TEST[DATE|TIME] Cache:  true
 TEST[DATE|TIME] Caps:  cache,decache,ether
 TEST[DATE|TIME] Format:  json
 TEST[DATE|TIME] 0: 8876232 84

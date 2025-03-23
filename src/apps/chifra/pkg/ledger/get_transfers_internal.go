@@ -5,7 +5,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
-func (r *Reconciler) getTransfersInternal(txs []*types.Transaction) ([]*types.Transfer, []*types.Transfer, map[BalanceOptions]*base.Wei, error) {
+func (r *Reconciler) getTransfersInternal(txs []*types.Transaction, fetchBalances bool) ([]*types.Transfer, []*types.Transfer, map[BalanceOptions]*base.Wei, error) {
 	var allEthTransfers []*types.Transfer
 	var allTokenTransfers []*types.Transfer
 	balances := make(map[BalanceOptions]*base.Wei)
@@ -26,26 +26,28 @@ func (r *Reconciler) getTransfersInternal(txs []*types.Transaction) ([]*types.Tr
 				allTokenTransfers = append(allTokenTransfers, xfer)
 			}
 
-			// Get balance for current block number if not already present
-			ahbKey := BalanceOptions{Asset: key.Asset, Holder: key.Holder, BlockNumber: bn}
-			if _, exists := balances[ahbKey]; !exists {
-				balance, err := r.Connection.GetBalanceAtToken(key.Asset, key.Holder, bn)
-				if err != nil {
-					return nil, nil, nil, err
-				}
-				balances[ahbKey] = balance
-			}
-
-			// Get balance for previous block if bn > 0 and not already present
-			if bn > 0 {
-				prevBn := bn - 1
-				prevAhbKey := BalanceOptions{Asset: key.Asset, Holder: key.Holder, BlockNumber: prevBn}
-				if _, exists := balances[prevAhbKey]; !exists {
-					balance, err := r.Connection.GetBalanceAtToken(key.Asset, key.Holder, prevBn)
+			if fetchBalances {
+				// Get balance for current block number if not already present
+				ahbKey := BalanceOptions{Asset: key.Asset, Holder: key.Holder, BlockNumber: bn}
+				if _, exists := balances[ahbKey]; !exists {
+					balance, err := r.Connection.GetBalanceAtToken(key.Asset, key.Holder, bn)
 					if err != nil {
 						return nil, nil, nil, err
 					}
-					balances[prevAhbKey] = balance
+					balances[ahbKey] = balance
+				}
+
+				// Get balance for previous block if bn > 0 and not already present
+				if bn > 0 {
+					prevBn := bn - 1
+					prevAhbKey := BalanceOptions{Asset: key.Asset, Holder: key.Holder, BlockNumber: prevBn}
+					if _, exists := balances[prevAhbKey]; !exists {
+						balance, err := r.Connection.GetBalanceAtToken(key.Asset, key.Holder, prevBn)
+						if err != nil {
+							return nil, nil, nil, err
+						}
+						balances[prevAhbKey] = balance
+					}
 				}
 			}
 		}

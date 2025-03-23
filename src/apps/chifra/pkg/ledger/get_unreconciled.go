@@ -46,3 +46,7 @@ func (r *Reconciler) getUnreconciledTransfers(trans *types.Transaction) ([]*type
 
 	return ethTransfers, tokenTransfers, nil
 }
+
+func (r *Reconciler) HasFilters() bool {
+	return len(r.Opts.AssetFilters) > 0
+}

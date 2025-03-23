@@ -1,13 +1,15 @@
-export?addrs=0x65b0d5e1dc0dee0704f53f660aa865c72e986fc7&accounting&assets&ether&firstBlock=11670418&lastBlock=11670420&maxRecords=40
-Args: [addrs=0x65b0d5e1dc0dee0704f53f660aa865c72e986fc7 accounting assets ether firstBlock=11670418 lastBlock=11670420 maxRecords=40]
-Opts: {"addrs":["0x65b0d5e1dc0dee0704f53f660aa865c72e986fc7"],"assets":true,"maxRecords":40,"firstBlock":11670418,"lastBlock":11670420,"accounting":true,"ether":true}
+export?addrs=0x65b0d5e1dc0dee0704f53f660aa865c72e986fc7&accounting&assets&cache&ether&firstBlock=11670418&lastBlock=11670420&maxRecords=40
+Args: [addrs=0x65b0d5e1dc0dee0704f53f660aa865c72e986fc7 accounting assets cache ether firstBlock=11670418 lastBlock=11670420 maxRecords=40]
+Opts: {"addrs":["0x65b0d5e1dc0dee0704f53f660aa865c72e986fc7"],"assets":true,"maxRecords":40,"firstBlock":11670418,"lastBlock":11670420,"accounting":true,"ether":true,"cache":true}
 Addrs:  [0x65b0d5e1dc0dee0704f53f660aa865c72e986fc7]
 Assets:  true
 MaxRecords:  40
 FirstBlock:  11670418
 LastBlock:  11670420
 Accounting:  true
+Enabled:  transactions, transfers
 Ether:  true
+Cache:  true
 Caps:  cache,decache,ether
 Format:  json
 {

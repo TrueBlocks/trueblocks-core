@@ -7,10 +7,20 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/walk"
 )
 
 func (r *Reconciler) GetStatements(node *types.AppNode[types.Transaction]) ([]types.Statement, error) {
 	trans := node.Data()
+	statementGroup := &types.StatementGroup{
+		Address:          r.Opts.AccountFor,
+		BlockNumber:      trans.BlockNumber,
+		TransactionIndex: trans.TransactionIndex,
+	}
+	if err := r.Connection.ReadFromCache(statementGroup); err == nil {
+		return statementGroup.Statements, nil
+	}
+
 	logger.TestLog(true, "")
 	logger.TestLog(true, "------------------------------------")
 	logger.TestLog(true, fmt.Sprintf("~~~ Entering: %d.%d ~~~", trans.BlockNumber, trans.TransactionIndex))
@@ -21,7 +31,7 @@ func (r *Reconciler) GetStatements(node *types.AppNode[types.Transaction]) ([]ty
 
 	// First Pass: Fetch unreconciled transfers
 	logger.TestLog(true, "First pass: Fetching unreconciled transfers")
-	ethTransfers, tokenTransfers, balances, err := r.getTransfersInternal([]*types.Transaction{trans})
+	ethTransfers, tokenTransfers, balances, err := r.getTransfersInternal([]*types.Transaction{trans}, true)
 	if err != nil {
 		debugFail(1)
 		logger.TestLog(true, "Error getting unreconciled transfers:", err)
@@ -162,6 +172,13 @@ func (r *Reconciler) GetStatements(node *types.AppNode[types.Transaction]) ([]ty
 	logger.TestLog(true, fmt.Sprintf("~~~ Leaving: %d.%d ~~~", node.CurBlock(), node.CurTxId()))
 	logger.TestLog(true, "------------------------------------", len(results), "statements generated.")
 	logger.TestLog(true, "")
+
+	// we don't want to cache filtered results
+	if !r.HasFilters() {
+		statementGroup.Statements = results
+		err = r.Connection.WriteToCache(statementGroup, walk.Cache_Statements, trans.Timestamp)
+		return results, err
+	}
 	return results, nil
 }
 

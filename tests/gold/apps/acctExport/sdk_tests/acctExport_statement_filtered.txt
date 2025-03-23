@@ -1,12 +1,14 @@
-export?addrs=0xf503017d7baf7fbc0fff7492b751025c6a78179b&accounting&statements&firstBlock=8860513&lastBlock=8860531&asset=0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359
-Args: [addrs=0xf503017d7baf7fbc0fff7492b751025c6a78179b accounting statements firstBlock=8860513 lastBlock=8860531 asset=0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359]
-Opts: {"addrs":["0xf503017d7baf7fbc0fff7492b751025c6a78179b"],"statements":true,"asset":["0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359"],"firstBlock":8860513,"lastBlock":8860531,"accounting":true}
+export?addrs=0xf503017d7baf7fbc0fff7492b751025c6a78179b&accounting&statements&cache&firstBlock=8860513&lastBlock=8860531&asset=0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359
+Args: [addrs=0xf503017d7baf7fbc0fff7492b751025c6a78179b accounting statements cache firstBlock=8860513 lastBlock=8860531 asset=0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359]
+Opts: {"addrs":["0xf503017d7baf7fbc0fff7492b751025c6a78179b"],"statements":true,"asset":["0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359"],"firstBlock":8860513,"lastBlock":8860531,"accounting":true,"cache":true}
 Addrs:  [0xf503017d7baf7fbc0fff7492b751025c6a78179b]
 Statements:  true
 Asset:  [0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359]
 FirstBlock:  8860513
 LastBlock:  8860531
 Accounting:  true
+Enabled:  statements, transactions, transfers
+Cache:  true
 Caps:  cache,decache,ether
 Format:  json
 0: 8860513 85

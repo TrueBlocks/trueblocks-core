@@ -1,4 +1,4 @@
-export?addrs=trueblocks.eth&accounting&transfers&ether&asset=0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee&asset=0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359&fmt=csv&firstBlock=8856476&lastBlock=9193814
+export?addrs=trueblocks.eth&accounting&transfers&cache&ether&asset=0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee&asset=0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359&fmt=csv&firstBlock=8856476&lastBlock=9193814
 blockNumber,transactionIndex,logIndex,asset,assetName,holder,holderName,amount,amountEth
 8856476,55,40,0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359,Dai Stablecoin v1.0,0xf503017d7baf7fbc0fff7492b751025c6a78179b,,1000000000000000000,1
 8856511,161,94,0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359,Dai Stablecoin v1.0,0xf503017d7baf7fbc0fff7492b751025c6a78179b,,4999000000000000000000,4999

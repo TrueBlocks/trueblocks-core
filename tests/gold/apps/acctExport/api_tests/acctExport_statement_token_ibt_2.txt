@@ -1,4 +1,4 @@
-export?addrs=0xf503017d7baf7fbc0fff7492b751025c6a78179b&accounting&statements&firstBlock=12704456&lastBlock=12705893&fmt=json&traces
+export?addrs=0xf503017d7baf7fbc0fff7492b751025c6a78179b&accounting&statements&cache&firstBlock=12704456&lastBlock=12705893&fmt=json&traces
 {
   "data": [
     {

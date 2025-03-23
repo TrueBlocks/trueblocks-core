@@ -7,7 +7,7 @@ import (
 )
 
 func (r *Reconciler) GetAssets(txs []*types.Transaction) ([]*types.Name, bool, error) {
-	ethTransfers, tokenTransfers, _, err := r.getTransfersInternal(txs)
+	ethTransfers, tokenTransfers, _, err := r.getTransfersInternal(txs, false)
 	if err != nil {
 		return nil, false, err
 	}

@@ -1,4 +1,4 @@
-export?addrs=trueblocks.eth&accounting&transfers&firstBlock=8876230&lastBlock=9024186&fmt=json
+export?addrs=trueblocks.eth&accounting&transfers&cache&firstBlock=8876230&lastBlock=9024186&fmt=json
 {
   "data": [
     {
