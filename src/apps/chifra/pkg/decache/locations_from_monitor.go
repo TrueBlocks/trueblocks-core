@@ -34,17 +34,17 @@ func LocationsFromAddressAndAppearances(address base.Address, apps []types.Appea
 				BlockNumber: bn,
 			})
 		case walk.Cache_Statements:
-				locations = append(locations, &types.StatementGroup{
-					Address:          address,
-					BlockNumber:      bn,
-					TransactionIndex: txid,
-				})
+			locations = append(locations, &types.StatementGroup{
+				Address:          address,
+				BlockNumber:      bn,
+				TransactionIndex: txid,
+			})
 		case walk.Cache_Transfers:
-				locations = append(locations, &types.TransferGroup{
-					Address:          address,
-					BlockNumber:      bn,
-					TransactionIndex: txid,
-				})
+			locations = append(locations, &types.TransferGroup{
+				Address:          address,
+				BlockNumber:      bn,
+				TransactionIndex: txid,
+			})
 		}
 	}
 

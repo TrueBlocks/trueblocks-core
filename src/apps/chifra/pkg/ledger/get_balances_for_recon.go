@@ -14,7 +14,7 @@ type BalanceOptions struct {
 
 func (r *Reconciler) GetReconBalances(opts *BalanceOptions, balances map[BalanceOptions]*base.Wei) (*base.Wei, *base.Wei, error) {
 	var ok bool
-	var begBal, endBal = base.ZeroWei, base.ZeroWei
+	var begBal, endBal *base.Wei
 	if opts.BlockNumber == 0 {
 		if endBal, ok = balances[*opts]; !ok {
 			// logger.TestLog(true, "no endBal found for", opts.BlockNumber)

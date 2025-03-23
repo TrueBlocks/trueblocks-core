@@ -14,7 +14,7 @@ type Connection struct {
 	Chain string
 	Store *cache.Store
 	// TODO: The following three fields were added as part of reconciliation. The can
-	// TODO: be removed once we properly cache balance queires.
+	// TODO: be removed once we properly cache balance queries.
 	balanceCache      map[string]*base.Wei
 	tokenBalanceCache map[string]*base.Wei
 	cacheMutex        sync.Mutex
