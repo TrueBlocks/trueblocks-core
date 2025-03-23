@@ -1,6 +1,8 @@
 package ledger
 
 import (
+	"errors"
+
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 )
 
@@ -11,16 +13,28 @@ type BalanceOptions struct {
 }
 
 func (r *Reconciler) GetReconBalances(opts *BalanceOptions, balances map[BalanceOptions]*base.Wei) (*base.Wei, *base.Wei, error) {
+	var ok bool
+	var begBal, endBal = base.ZeroWei, base.ZeroWei
 	if opts.BlockNumber == 0 {
-		endBal, err := r.Connection.GetBalanceAtToken(opts.Asset, opts.Holder, opts.BlockNumber)
-		return base.ZeroWei, endBal, err
+		if endBal, ok = balances[*opts]; !ok {
+			// logger.TestLog(true, "no endBal found for", opts.BlockNumber)
+			return base.ZeroWei, base.ZeroWei, errors.New("error fetching endBal")
+		} else {
+			return base.ZeroWei, endBal, nil
+		}
 	}
 
-	endBal, err := r.Connection.GetBalanceAtToken(opts.Asset, opts.Holder, opts.BlockNumber)
-	if err != nil {
-		return base.ZeroWei, base.ZeroWei, err
+	if endBal, ok = balances[*opts]; !ok {
+		// logger.TestLog(true, "error fetching endBal")
+		return base.ZeroWei, base.ZeroWei, errors.New("error fetching endBal")
 	}
 
-	begBal, err := r.Connection.GetBalanceAtToken(opts.Asset, opts.Holder, opts.BlockNumber-1)
-	return begBal, endBal, err
+	o := *opts
+	o.BlockNumber = base.Blknum(int(o.BlockNumber) - 1)
+	if begBal, ok = balances[o]; !ok {
+		// logger.TestLog(true, "error fetching begBal")
+		return base.ZeroWei, base.ZeroWei, errors.New("error fetching begBal")
+	}
+
+	return begBal, endBal, nil
 }

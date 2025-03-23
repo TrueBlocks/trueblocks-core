@@ -101,6 +101,7 @@ func (r *Reconciler) case1FirstLast(key AssetHolder, reason string, stmt *types.
 
 // -----------------------------------------------------------------
 func (r *Reconciler) case2MidMid(key AssetHolder, reason string, stmt *types.Statement, node *types.AppNode[types.Transaction], balances map[BalanceOptions]*base.Wei) (bool, error) {
+	_ = balances
 	trans := node.Data()
 	logger.TestLog(true, "XXX =============[ "+reason+" ]======================")
 	logger.TestLog(true, "XXX Case 2: Middle statement in block")
