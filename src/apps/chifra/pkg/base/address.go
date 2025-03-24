@@ -77,6 +77,11 @@ func (e *Address) UnmarshalJSON(data []byte) error {
 	return e.Address.UnmarshalJSON(data)
 }
 
+func (a *Address) UnmarshalCSV(hex string) error {
+	*a = HexToAddress(hex)
+	return nil
+}
+
 func (a *Address) Common() common.Address {
 	return common.BytesToAddress(a.Bytes())
 }

@@ -108,7 +108,7 @@ func (s *Result) Model(chain, format string, verbose bool, extraOpts map[string]
 
 	if format != "json" {
 		model["signature"] = s.Signature
-		model["compressedResult"] = makeCompressed(s.Values)
+		model["compressedResult"] = MakeCompressed(s.Values)
 	}
 
 	if name, loaded, found := nameAddress(extraOpts, s.Address); found {

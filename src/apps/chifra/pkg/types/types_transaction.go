@@ -275,7 +275,7 @@ func (s *Transaction) Model(chain, format string, verbose bool, extraOpts map[st
 		model["encoding"] = enc
 
 		if isArticulated {
-			model["compressedTx"] = makeCompressed(articulatedTx)
+			model["compressedTx"] = MakeCompressed(articulatedTx)
 		} else if s.Message != "" {
 			model["encoding"] = ""
 			model["compressedTx"] = s.Message

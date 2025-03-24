@@ -15,7 +15,6 @@ var EnsTransferTopic = base.HexToHash(
 )
 
 var KnownTopics = map[base.Hash]bool{
-	TransferTopic:    true,
-	ApprovalTopic:    true,
-	EnsTransferTopic: true,
+	TransferTopic: true,
+	ApprovalTopic: true,
 }

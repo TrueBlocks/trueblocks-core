@@ -765,4 +765,8 @@ func (s *Statement) Type() string {
 	return "token"
 }
 
+func (s *Statement) DateTime() base.DateTime {
+	return base.NewDateTimeTs(s.Timestamp)
+}
+
 // EXISTING_CODE
