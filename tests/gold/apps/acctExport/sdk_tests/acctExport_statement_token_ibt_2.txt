@@ -1,14 +1,12 @@
-export?addrs=0xf503017d7baf7fbc0fff7492b751025c6a78179b&accounting&statements&cache&firstBlock=12704456&lastBlock=12705893&traces
-Args: [addrs=0xf503017d7baf7fbc0fff7492b751025c6a78179b accounting statements cache firstBlock=12704456 lastBlock=12705893 traces]
-Opts: {"addrs":["0xf503017d7baf7fbc0fff7492b751025c6a78179b"],"traces":true,"statements":true,"firstBlock":12704456,"lastBlock":12705893,"accounting":true,"cache":true}
+export?addrs=0xf503017d7baf7fbc0fff7492b751025c6a78179b&accounting&statements&firstBlock=12704456&lastBlock=12705893&traces
+Args: [addrs=0xf503017d7baf7fbc0fff7492b751025c6a78179b accounting statements firstBlock=12704456 lastBlock=12705893 traces]
+Opts: {"addrs":["0xf503017d7baf7fbc0fff7492b751025c6a78179b"],"traces":true,"statements":true,"firstBlock":12704456,"lastBlock":12705893,"accounting":true}
 Addrs:  [0xf503017d7baf7fbc0fff7492b751025c6a78179b]
 Traces:  true
 Statements:  true
 FirstBlock:  12704456
 LastBlock:  12705893
 Accounting:  true
-Enabled:  statements, transactions
-Cache:  true
 Caps:  cache,decache,ether
 Format:  json
 0: 12704456 92

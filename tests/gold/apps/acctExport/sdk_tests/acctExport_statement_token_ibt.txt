@@ -1,13 +1,11 @@
-export?addrs=0xec3ef464bf821c3b10a18adf9ac7177a628e87cc&accounting&statements&cache&firstBlock=7005600&lastBlock=7005780
-Args: [addrs=0xec3ef464bf821c3b10a18adf9ac7177a628e87cc accounting statements cache firstBlock=7005600 lastBlock=7005780]
-Opts: {"addrs":["0xec3ef464bf821c3b10a18adf9ac7177a628e87cc"],"statements":true,"firstBlock":7005600,"lastBlock":7005780,"accounting":true,"cache":true}
+export?addrs=0xec3ef464bf821c3b10a18adf9ac7177a628e87cc&accounting&statements&firstBlock=7005600&lastBlock=7005780
+Args: [addrs=0xec3ef464bf821c3b10a18adf9ac7177a628e87cc accounting statements firstBlock=7005600 lastBlock=7005780]
+Opts: {"addrs":["0xec3ef464bf821c3b10a18adf9ac7177a628e87cc"],"statements":true,"firstBlock":7005600,"lastBlock":7005780,"accounting":true}
 Addrs:  [0xec3ef464bf821c3b10a18adf9ac7177a628e87cc]
 Statements:  true
 FirstBlock:  7005600
 LastBlock:  7005780
 Accounting:  true
-Enabled:  statements, transactions
-Cache:  true
 Caps:  cache,decache,ether
 Format:  json
 0: 7005646 182
@@ -15,6 +13,236 @@ Format:  json
 2: 7005662 5
 3: 7005737 27
 4: 7005737 30
+
+------------------------------------
+~~~ Entering: 7005646.182 ~~~
+First pass: Fetching unreconciled transfers
+Fetched 1 unreconciled transfers
+Second pass: Reconciling transfers
+Processing 1 log transfers
+Set BegSentinel for first log transfer
+Set EndSentinel for last log transfer
+Converted log transfer to statement for asset: 0x5c2c629feefcc07b338e97e39c73d2db33a85548
+XXX =============[ token ]======================
+XXX Case 1: Only statement in block
+XXX Block: 7005646 Tx: 182 Asset: 0x5c2c629feefcc07b338e97e39c73d2db33a85548
+XXX FirstInBlock: true, LastInBlock: true
+XXX ================================================
+Block 7005646 is prior to deployment (10000835) of Uniswap V2. No other source for tokens prior to UniSwap
+===================================================
+Previous:               7005645 0 ( true )
+Current:                7005646 182 ( true )
+Next:                   7005654 54 ( true )
+accountedFor:           0xec3ef464bf821c3b10a18adf9ac7177a628e87cc
+sender:                 0x78f6e9dd3ab00c5c43bfb58d8d23b6149db13237  ==>  0xec3ef464bf821c3b10a18adf9ac7177a628e87cc
+asset:                  0x5c2c629feefcc07b338e97e39c73d2db33a85548 (0x5c2c) decimals: 18
+hash:                   0xea8b6bf39f8fe343ad1fbb95ad9a2dd695bee9de33d1ccfb79552fc0bf40b92f
+timestamp:              1546554524
+blockNumber:            7005646.182.42
+priceSource:            0 (token-not-priced-pre-uni)
+--------------------------------------------------- 
+Trial balance:
+   prevBal:             64663.282872
+   begBal:              64663.282872 (0)
+   totalIn:             3016.109787
+   totalOut:            0
+   amountNet:           3016.109787
+                       ======================= 
+   endBal:              67679.392659 (0)
+   endBalCalc:          67679.392659
+--------------------------------------------------- 
+   amountIn:            3016.109787
+   material:            true
+   reconciled:          true
+---------------------------------------------------
+Log statement is material - appending. reconciled: true
+~~~ Leaving: 7005646.182 ~~~
+------------------------------------ 1 statements generated.
+
+
+------------------------------------
+~~~ Entering: 7005654.54 ~~~
+First pass: Fetching unreconciled transfers
+Fetched 1 unreconciled transfers
+Second pass: Reconciling transfers
+Processing 1 log transfers
+Set BegSentinel for first log transfer
+Set EndSentinel for last log transfer
+Converted log transfer to statement for asset: 0x5c2c629feefcc07b338e97e39c73d2db33a85548
+XXX =============[ token ]======================
+XXX Case 1: Only statement in block
+XXX Block: 7005654 Tx: 54 Asset: 0x5c2c629feefcc07b338e97e39c73d2db33a85548
+XXX FirstInBlock: true, LastInBlock: true
+XXX ================================================
+Block 7005654 is prior to deployment (10000835) of Uniswap V2. No other source for tokens prior to UniSwap
+===================================================
+Previous:               7005646 182 ( true )
+Current:                7005654 54 ( true )
+Next:                   7005662 5 ( true )
+accountedFor:           0xec3ef464bf821c3b10a18adf9ac7177a628e87cc
+sender:                 0x78f6e9dd3ab00c5c43bfb58d8d23b6149db13237  ==>  0xec3ef464bf821c3b10a18adf9ac7177a628e87cc
+asset:                  0x5c2c629feefcc07b338e97e39c73d2db33a85548 (0x5c2c) decimals: 18
+hash:                   0x234186f8fab2fb4ca1222031ad6d0b41d5a55b3d0e934fb2b47059f7a394433f
+timestamp:              1546554605
+blockNumber:            7005654.54.32
+priceSource:            0 (token-not-priced-pre-uni)
+--------------------------------------------------- 
+Trial balance:
+   prevBal:             67679.392659
+   begBal:              67679.392659 (0)
+   totalIn:             1982.984682
+   totalOut:            0
+   amountNet:           1982.984682
+                       ======================= 
+   endBal:              69662.377341 (0)
+   endBalCalc:          69662.377341
+--------------------------------------------------- 
+   amountIn:            1982.984682
+   material:            true
+   reconciled:          true
+---------------------------------------------------
+Log statement is material - appending. reconciled: true
+~~~ Leaving: 7005654.54 ~~~
+------------------------------------ 1 statements generated.
+
+
+------------------------------------
+~~~ Entering: 7005662.5 ~~~
+First pass: Fetching unreconciled transfers
+Fetched 1 unreconciled transfers
+Second pass: Reconciling transfers
+Processing 1 log transfers
+Set BegSentinel for first log transfer
+Set EndSentinel for last log transfer
+Converted log transfer to statement for asset: 0x5c2c629feefcc07b338e97e39c73d2db33a85548
+XXX =============[ token ]======================
+XXX Case 1: Only statement in block
+XXX Block: 7005662 Tx: 5 Asset: 0x5c2c629feefcc07b338e97e39c73d2db33a85548
+XXX FirstInBlock: true, LastInBlock: true
+XXX ================================================
+Block 7005662 is prior to deployment (10000835) of Uniswap V2. No other source for tokens prior to UniSwap
+===================================================
+Previous:               7005654 54 ( true )
+Current:                7005662 5 ( true )
+Next:                   7005737 27 ( true )
+accountedFor:           0xec3ef464bf821c3b10a18adf9ac7177a628e87cc
+sender:                 0x78f6e9dd3ab00c5c43bfb58d8d23b6149db13237  ==>  0xec3ef464bf821c3b10a18adf9ac7177a628e87cc
+asset:                  0x5c2c629feefcc07b338e97e39c73d2db33a85548 (0x5c2c) decimals: 18
+hash:                   0xfa8eef26c445913833a6ace11e27df3821598b9aeb4896eb41213999e89ece7a
+timestamp:              1546554763
+blockNumber:            7005662.5.5
+priceSource:            0 (token-not-priced-pre-uni)
+--------------------------------------------------- 
+Trial balance:
+   prevBal:             69662.377341
+   begBal:              69662.377341 (0)
+   totalIn:             1377.663523
+   totalOut:            0
+   amountNet:           1377.663523
+                       ======================= 
+   endBal:              71040.040864 (0)
+   endBalCalc:          71040.040864
+--------------------------------------------------- 
+   amountIn:            1377.663523
+   material:            true
+   reconciled:          true
+---------------------------------------------------
+Log statement is material - appending. reconciled: true
+~~~ Leaving: 7005662.5 ~~~
+------------------------------------ 1 statements generated.
+
+
+------------------------------------
+~~~ Entering: 7005737.27 ~~~
+First pass: Fetching unreconciled transfers
+Fetched 1 unreconciled transfers
+Second pass: Reconciling transfers
+Processing 1 log transfers
+Set BegSentinel for first log transfer
+Set EndSentinel for last log transfer
+Converted log transfer to statement for asset: 0x5c2c629feefcc07b338e97e39c73d2db33a85548
+XXX =============[ token ]======================
+XXX Case 3: First statement in block with more
+XXX Block: 7005737 Tx: 27 Asset: 0x5c2c629feefcc07b338e97e39c73d2db33a85548
+XXX FirstInBlock: true, LastInBlock: false
+XXX ================================================
+Block 7005737 is prior to deployment (10000835) of Uniswap V2. No other source for tokens prior to UniSwap
+===================================================
+Previous:               7005662 5 ( true )
+Current:                7005737 27 ( true )
+Next:                   7005737 30 ( false )
+accountedFor:           0xec3ef464bf821c3b10a18adf9ac7177a628e87cc
+sender:                 0x28adfa7a3ab67fb19410beabb1c1bf880fef0541  ==>  0xec3ef464bf821c3b10a18adf9ac7177a628e87cc
+asset:                  0x5c2c629feefcc07b338e97e39c73d2db33a85548 (0x5c2c) decimals: 18
+hash:                   0x968d9ef3eee9d9526784622726cef4f23712dff17a7dc639f0a1ef79c8f89002
+timestamp:              1546555962
+blockNumber:            7005737.27.17
+priceSource:            0 (token-not-priced-pre-uni)
+--------------------------------------------------- 
+Trial balance:
+   prevBal:             71040.040864
+   begBal:              71040.040864 (0)
+   totalIn:             1787.395981
+   totalOut:            0
+   amountNet:           1787.395981
+                       ======================= 
+   endBal:              72827.436845 (0)
+   endBalCalc:          72827.436845
+--------------------------------------------------- 
+   amountIn:            1787.395981
+   material:            true
+   reconciled:          true
+---------------------------------------------------
+Log statement is material - appending. reconciled: true
+~~~ Leaving: 7005737.27 ~~~
+------------------------------------ 1 statements generated.
+
+
+------------------------------------
+~~~ Entering: 7005737.30 ~~~
+First pass: Fetching unreconciled transfers
+Fetched 1 unreconciled transfers
+Second pass: Reconciling transfers
+Processing 1 log transfers
+Set BegSentinel for first log transfer
+Set EndSentinel for last log transfer
+Converted log transfer to statement for asset: 0x5c2c629feefcc07b338e97e39c73d2db33a85548
+XXX =============[ token ]======================
+XXX Case 4: Last statement in block with prior
+XXX Block: 7005737 Tx: 30 Asset: 0x5c2c629feefcc07b338e97e39c73d2db33a85548
+XXX FirstInBlock: false, LastInBlock: true
+XXX ================================================
+Block 7005737 is prior to deployment (10000835) of Uniswap V2. No other source for tokens prior to UniSwap
+===================================================
+Previous:               7005737 27 ( false )
+Current:                7005737 30 ( true )
+Next:                   7005738 0 ( true )
+accountedFor:           0xec3ef464bf821c3b10a18adf9ac7177a628e87cc
+sender:                 0x28adfa7a3ab67fb19410beabb1c1bf880fef0541  ==>  0xec3ef464bf821c3b10a18adf9ac7177a628e87cc
+asset:                  0x5c2c629feefcc07b338e97e39c73d2db33a85548 (0x5c2c) decimals: 18
+hash:                   0xff5bdd0900bdbcf80948e102c349a494ad5f409a1d27e4ea6199334cf3399cdf
+timestamp:              1546555962
+blockNumber:            7005737.30.20
+priceSource:            0 (token-not-priced-pre-uni)
+--------------------------------------------------- 
+Trial balance:
+   prevBal:             72827.436845
+   begBal:              72827.436845 (0)
+   totalIn:             3016.109787
+   totalOut:            0
+   amountNet:           3016.109787
+                       ======================= 
+   endBal:              75843.546632 (0)
+   endBalCalc:          75843.546632
+--------------------------------------------------- 
+   amountIn:            3016.109787
+   material:            true
+   reconciled:          true
+---------------------------------------------------
+Log statement is material - appending. reconciled: true
+~~~ Leaving: 7005737.30 ~~~
+------------------------------------ 1 statements generated.
+
 {
   "data": [
     {

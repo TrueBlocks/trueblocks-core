@@ -1,11 +1,9 @@
-chifra export  0x05a56e2d52c817161883f50c441c3228cfe54d9f --accounting --assets --cache --fmt json --max_records 15 --output assets_wei_2_1_out.file
+chifra export  0x05a56e2d52c817161883f50c441c3228cfe54d9f --accounting --assets --fmt json --max_records 15 --output assets_wei_2_1_out.file
 TEST[DATE|TIME] Addrs:  [0x05a56e2d52c817161883f50c441c3228cfe54d9f]
 TEST[DATE|TIME] Assets:  true
 TEST[DATE|TIME] MaxRecords:  15
 TEST[DATE|TIME] Accounting:  true
-TEST[DATE|TIME] Enabled:  transactions
 TEST[DATE|TIME] OutputFn:  assets_wei_2_1_out.file
-TEST[DATE|TIME] Cache:  true
 TEST[DATE|TIME] Caps:  cache,decache,ether
 TEST[DATE|TIME] Format:  json
 INFO[DATE|TIME] { "outputFilename": "--output_filename--" }
@@ -111,24 +109,6 @@ Results in ./assets_wei_2_1_out.file
       "source": "Giveth website",
       "symbol": "USDT",
       "tags": "50-Tokens:ERC20"
-    },
-    {
-      "address": "0x15a5343e60affb7f711e5ed4d24c714e62a30ff6",
-      "decimals": 18,
-      "name": "0x15a...ff6",
-      "tags": ""
-    },
-    {
-      "address": "0x52d637f76af7143b147af97acde0b4b02984e1ae",
-      "decimals": 18,
-      "name": "0x52d...1ae",
-      "tags": ""
-    },
-    {
-      "address": "0x6bdf3f5cadee02748f6b3097f35b296438c4bffb",
-      "decimals": 18,
-      "name": "0x6bd...ffb",
-      "tags": ""
     }
   ]
 }

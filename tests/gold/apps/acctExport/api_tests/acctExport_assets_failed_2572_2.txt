@@ -1,4 +1,4 @@
-export?addrs=0x65b0d5e1dc0dee0704f53f660aa865c72e986fc7&accounting&assets&cache&ether&fmt=json&firstBlock=11670418&lastBlock=11670420&maxRecords=40
+export?addrs=0x65b0d5e1dc0dee0704f53f660aa865c72e986fc7&accounting&assets&ether&fmt=json&firstBlock=11670418&lastBlock=11670420&maxRecords=40
 {
   "data": [
     {

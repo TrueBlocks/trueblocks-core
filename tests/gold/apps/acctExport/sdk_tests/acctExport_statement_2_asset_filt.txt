@@ -1,14 +1,12 @@
-export?addrs=trueblocks.eth&accounting&statements&cache&asset=0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee&asset=0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359&firstBlock=8856476&lastBlock=9193814
-Args: [addrs=trueblocks.eth accounting statements cache asset=0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee asset=0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359 firstBlock=8856476 lastBlock=9193814]
-Opts: {"addrs":["trueblocks.eth"],"statements":true,"asset":["0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee","0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359"],"firstBlock":8856476,"lastBlock":9193814,"accounting":true,"cache":true}
+export?addrs=trueblocks.eth&accounting&statements&asset=0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee&asset=0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359&firstBlock=8856476&lastBlock=9193814
+Args: [addrs=trueblocks.eth accounting statements asset=0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee asset=0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359 firstBlock=8856476 lastBlock=9193814]
+Opts: {"addrs":["trueblocks.eth"],"statements":true,"asset":["0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee","0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359"],"firstBlock":8856476,"lastBlock":9193814,"accounting":true}
 Addrs:  [0xf503017d7baf7fbc0fff7492b751025c6a78179b]
 Statements:  true
 Asset:  [0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359]
 FirstBlock:  8856476
 LastBlock:  9193814
 Accounting:  true
-Enabled:  statements, transactions
-Cache:  true
 Caps:  cache,decache,ether
 Format:  json
 0: 8856476 55
@@ -238,6 +236,258 @@ No log transfers to process
 
 
 ------------------------------------
+~~~ Entering: 8860513.85 ~~~
+First pass: Fetching unreconciled transfers
+Fetched 2 unreconciled transfers
+Second pass: Reconciling transfers
+Processing ETH transfer
+Converted ETH transfer to statement
+Attempting to reconcile top-level ETH transfer: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-0xf503017d7baf7fbc0fff7492b751025c6a78179b
+XXX =============[ top-level ]======================
+XXX Case 1: Only statement in block
+XXX Block: 8860513 Tx: 85 Asset: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+XXX FirstInBlock: true, LastInBlock: true
+XXX ================================================
+Block 8860513 is prior to deployment (10000835) of Uniswap V2. Falling back to Maker (0x729d19f657bd0614b4985cf1d82531c67569197b)
+=========================================================
+===> PRICING FOR 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) using Maker
+=========================================================
+blockNumber:         8860513
+source1 (uni/mkr):   0x729d19f657bd0614b4985cf1d82531c67569197b
+str0 (call):         peek()
+str1 (call/data):    0x000000000000000000000000000000000000000000000009ece258f296450000
+int0:                18309000000000000000000000
+int1:                18309000
+bigPrice:            183.09
+price:               183.09
+source:              maker
+===================================================
+Previous:               8860511 47 ( true )
+Current:                8860513 85 ( true )
+Next:                   8860529 145 ( true )
+accountedFor:           0xf503017d7baf7fbc0fff7492b751025c6a78179b
+sender:                 0xf503017d7baf7fbc0fff7492b751025c6a78179b  ==>  0x30f938fed5de6e06a9a7cd2ac3517131c317b1e7
+asset:                  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
+hash:                   0xd5a49ef68f77357a5202ca09499b343b27cd02c1172c4ace3050a494dc218d8a
+timestamp:              1572720150
+blockNumber:            8860513.85.0
+priceSource:            183.09 (maker)
+--------------------------------------------------- 
+Trial balance:
+   prevBal:             4.999744015
+   begBal:              4.999744015 (0)
+   totalIn:             0
+   totalOut:            0.000034017
+   amountNet:           -0.000034017
+                       ======================= 
+   endBal:              4.999709998 (0)
+   endBalCalc:          4.999709998
+--------------------------------------------------- 
+   gasOut:              0.000034017
+   material:            true
+   reconciled:          true
+---------------------------------------------------
+Top-level statement is material and reconciled - appending
+Processing 1 log transfers
+Set BegSentinel for first log transfer
+Set EndSentinel for last log transfer
+Converted log transfer to statement for asset: 0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359
+XXX =============[ token ]======================
+XXX Case 1: Only statement in block
+XXX Block: 8860513 Tx: 85 Asset: 0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359
+XXX FirstInBlock: true, LastInBlock: true
+XXX ================================================
+=========================================================
+===> PRICING FOR 0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359 (DAI) 
+=========================================================
+stable-coin
+===================================================
+Previous:               8860511 47 ( true )
+Current:                8860513 85 ( true )
+Next:                   8860529 145 ( true )
+accountedFor:           0xf503017d7baf7fbc0fff7492b751025c6a78179b
+sender:                 0xf503017d7baf7fbc0fff7492b751025c6a78179b  ==>  0x30f938fed5de6e06a9a7cd2ac3517131c317b1e7
+asset:                  0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359 (DAI) decimals: 18
+hash:                   0xd5a49ef68f77357a5202ca09499b343b27cd02c1172c4ace3050a494dc218d8a
+timestamp:              1572720150
+blockNumber:            8860513.85.84
+priceSource:            1 (stable-coin)
+--------------------------------------------------- 
+Trial balance:
+   prevBal:             7500
+   begBal:              7500 (0)
+   totalIn:             0
+   totalOut:            500
+   amountNet:           -500
+                       ======================= 
+   endBal:              7000 (0)
+   endBalCalc:          7000
+--------------------------------------------------- 
+   amountOut:           500
+   material:            true
+   reconciled:          true
+---------------------------------------------------
+Log statement is material - appending. reconciled: true
+~~~ Leaving: 8860513.85 ~~~
+------------------------------------ 2 statements generated.
+
+
+------------------------------------
+~~~ Entering: 8860529.145 ~~~
+First pass: Fetching unreconciled transfers
+Fetched 1 unreconciled transfers
+Second pass: Reconciling transfers
+Processing ETH transfer
+Converted ETH transfer to statement
+Attempting to reconcile top-level ETH transfer: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-0xf503017d7baf7fbc0fff7492b751025c6a78179b
+XXX =============[ top-level ]======================
+XXX Case 1: Only statement in block
+XXX Block: 8860529 Tx: 145 Asset: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+XXX FirstInBlock: true, LastInBlock: true
+XXX ================================================
+Block 8860529 is prior to deployment (10000835) of Uniswap V2. Falling back to Maker (0x729d19f657bd0614b4985cf1d82531c67569197b)
+=========================================================
+===> PRICING FOR 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) using Maker
+=========================================================
+blockNumber:         8860529
+source1 (uni/mkr):   0x729d19f657bd0614b4985cf1d82531c67569197b
+str0 (call):         peek()
+str1 (call/data):    0x000000000000000000000000000000000000000000000009ece258f296450000
+int0:                18309000000000000000000000
+int1:                18309000
+bigPrice:            183.09
+price:               183.09
+source:              maker
+===================================================
+Previous:               8860513 85 ( true )
+Current:                8860529 145 ( true )
+Next:                   8860531 152 ( true )
+accountedFor:           0xf503017d7baf7fbc0fff7492b751025c6a78179b
+sender:                 0xf503017d7baf7fbc0fff7492b751025c6a78179b  ==>  0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359
+asset:                  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
+hash:                   0x3af5419098b5510f39ec64d6eb8ee08f3fe5cb538469fa9ef263cf7ebd4b607d
+timestamp:              1572720358
+blockNumber:            8860529.145.0
+priceSource:            183.09 (maker)
+--------------------------------------------------- 
+Trial balance:
+   prevBal:             4.999709998
+   begBal:              4.999709998 (0)
+   totalIn:             0
+   totalOut:            0.000046049
+   amountNet:           -0.000046049
+                       ======================= 
+   endBal:              4.999663949 (0)
+   endBalCalc:          4.999663949
+--------------------------------------------------- 
+   gasOut:              0.000046049
+   material:            true
+   reconciled:          true
+---------------------------------------------------
+Top-level statement is material and reconciled - appending
+No log transfers to process
+~~~ Leaving: 8860529.145 ~~~
+------------------------------------ 1 statements generated.
+
+
+------------------------------------
+~~~ Entering: 8860531.152 ~~~
+First pass: Fetching unreconciled transfers
+Fetched 2 unreconciled transfers
+Second pass: Reconciling transfers
+Processing ETH transfer
+Converted ETH transfer to statement
+Attempting to reconcile top-level ETH transfer: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-0xf503017d7baf7fbc0fff7492b751025c6a78179b
+XXX =============[ top-level ]======================
+XXX Case 1: Only statement in block
+XXX Block: 8860531 Tx: 152 Asset: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+XXX FirstInBlock: true, LastInBlock: true
+XXX ================================================
+Block 8860531 is prior to deployment (10000835) of Uniswap V2. Falling back to Maker (0x729d19f657bd0614b4985cf1d82531c67569197b)
+=========================================================
+===> PRICING FOR 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) using Maker
+=========================================================
+blockNumber:         8860531
+source1 (uni/mkr):   0x729d19f657bd0614b4985cf1d82531c67569197b
+str0 (call):         peek()
+str1 (call/data):    0x000000000000000000000000000000000000000000000009ece258f296450000
+int0:                18309000000000000000000000
+int1:                18309000
+bigPrice:            183.09
+price:               183.09
+source:              maker
+===================================================
+Previous:               8860529 145 ( true )
+Current:                8860531 152 ( true )
+Next:                   8867898 28 ( true )
+accountedFor:           0xf503017d7baf7fbc0fff7492b751025c6a78179b
+sender:                 0xf503017d7baf7fbc0fff7492b751025c6a78179b  ==>  0x30f938fed5de6e06a9a7cd2ac3517131c317b1e7
+asset:                  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
+hash:                   0x1cdbe0fcca2ee3f9e4504f25e6f2a485835caa920496d20b10fa6241cbfdb124
+timestamp:              1572720361
+blockNumber:            8860531.152.0
+priceSource:            183.09 (maker)
+--------------------------------------------------- 
+Trial balance:
+   prevBal:             4.999663949
+   begBal:              4.999663949 (0)
+   totalIn:             0
+   totalOut:            0.000024541
+   amountNet:           -0.000024541
+                       ======================= 
+   endBal:              4.999639408 (0)
+   endBalCalc:          4.999639408
+--------------------------------------------------- 
+   gasOut:              0.000024541
+   material:            true
+   reconciled:          true
+---------------------------------------------------
+Top-level statement is material and reconciled - appending
+Processing 1 log transfers
+Set BegSentinel for first log transfer
+Set EndSentinel for last log transfer
+Converted log transfer to statement for asset: 0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359
+XXX =============[ token ]======================
+XXX Case 1: Only statement in block
+XXX Block: 8860531 Tx: 152 Asset: 0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359
+XXX FirstInBlock: true, LastInBlock: true
+XXX ================================================
+=========================================================
+===> PRICING FOR 0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359 (DAI) 
+=========================================================
+stable-coin
+===================================================
+Previous:               8860529 145 ( true )
+Current:                8860531 152 ( true )
+Next:                   8867898 28 ( true )
+accountedFor:           0xf503017d7baf7fbc0fff7492b751025c6a78179b
+sender:                 0xf503017d7baf7fbc0fff7492b751025c6a78179b  ==>  0x30f938fed5de6e06a9a7cd2ac3517131c317b1e7
+asset:                  0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359 (DAI) decimals: 18
+hash:                   0x1cdbe0fcca2ee3f9e4504f25e6f2a485835caa920496d20b10fa6241cbfdb124
+timestamp:              1572720361
+blockNumber:            8860531.152.95
+priceSource:            1 (stable-coin)
+--------------------------------------------------- 
+Trial balance:
+   prevBal:             7000
+   begBal:              7000 (0)
+   totalIn:             0
+   totalOut:            7000
+   amountNet:           -7000
+                       ======================= 
+   endBal:              0 (0)
+   endBalCalc:          0
+--------------------------------------------------- 
+   amountOut:           7000
+   material:            true
+   reconciled:          true
+---------------------------------------------------
+Log statement is material - appending. reconciled: true
+~~~ Leaving: 8860531.152 ~~~
+------------------------------------ 2 statements generated.
+
+
+------------------------------------
 ~~~ Entering: 8867898.28 ~~~
 First pass: Fetching unreconciled transfers
 Fetched 1 unreconciled transfers
@@ -250,7 +500,6 @@ XXX Case 1: Only statement in block
 XXX Block: 8867898 Tx: 28 Asset: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
 XXX FirstInBlock: true, LastInBlock: true
 XXX ================================================
-Discrepancy detected for 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee at block 8867898 running: 4999744015000000000 chain: 4999639408000000000
 Block 8867898 is prior to deployment (10000835) of Uniswap V2. Falling back to Maker (0x729d19f657bd0614b4985cf1d82531c67569197b)
 =========================================================
 ===> PRICING FOR 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) using Maker
@@ -303,6 +552,36 @@ Fetched 0 unreconciled transfers
 Second pass: Reconciling transfers
 No log transfers to process
 ~~~ Leaving: 8875684.148 ~~~
+------------------------------------ 0 statements generated.
+
+
+------------------------------------
+~~~ Entering: 8876232.84 ~~~
+First pass: Fetching unreconciled transfers
+Fetched 0 unreconciled transfers
+Second pass: Reconciling transfers
+No log transfers to process
+~~~ Leaving: 8876232.84 ~~~
+------------------------------------ 0 statements generated.
+
+
+------------------------------------
+~~~ Entering: 9000998.70 ~~~
+First pass: Fetching unreconciled transfers
+Fetched 0 unreconciled transfers
+Second pass: Reconciling transfers
+No log transfers to process
+~~~ Leaving: 9000998.70 ~~~
+------------------------------------ 0 statements generated.
+
+
+------------------------------------
+~~~ Entering: 9024185.29 ~~~
+First pass: Fetching unreconciled transfers
+Fetched 0 unreconciled transfers
+Second pass: Reconciling transfers
+No log transfers to process
+~~~ Leaving: 9024185.29 ~~~
 ------------------------------------ 0 statements generated.
 
 

@@ -1,13 +1,11 @@
-chifra export  0xf503017d7baf7fbc0fff7492b751025c6a78179b --accounting --statements --cache --first_block 12704456 --last_block 12705893 --fmt json --traces --output statement_token_ibt_2_out.file
+chifra export  0xf503017d7baf7fbc0fff7492b751025c6a78179b --accounting --statements --first_block 12704456 --last_block 12705893 --fmt json --traces --output statement_token_ibt_2_out.file
 TEST[DATE|TIME] Addrs:  [0xf503017d7baf7fbc0fff7492b751025c6a78179b]
 TEST[DATE|TIME] Traces:  true
 TEST[DATE|TIME] Statements:  true
 TEST[DATE|TIME] FirstBlock:  12704456
 TEST[DATE|TIME] LastBlock:  12705893
 TEST[DATE|TIME] Accounting:  true
-TEST[DATE|TIME] Enabled:  statements, traces, transactions
 TEST[DATE|TIME] OutputFn:  statement_token_ibt_2_out.file
-TEST[DATE|TIME] Cache:  true
 TEST[DATE|TIME] Caps:  cache,decache,ether
 TEST[DATE|TIME] Format:  json
 INFO[DATE|TIME] { "outputFilename": "--output_filename--" }

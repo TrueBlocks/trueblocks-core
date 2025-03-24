@@ -1,14 +1,12 @@
-chifra export  0xf503017d7baf7fbc0fff7492b751025c6a78179b --accounting --assets --cache --first_block 8860513 --last_block 8860531 --ether --fmt json --reversed --output assets_filtered_rev_out.file
+chifra export  0xf503017d7baf7fbc0fff7492b751025c6a78179b --accounting --assets --first_block 8860513 --last_block 8860531 --ether --fmt json --reversed --output assets_filtered_rev_out.file
 TEST[DATE|TIME] Addrs:  [0xf503017d7baf7fbc0fff7492b751025c6a78179b]
 TEST[DATE|TIME] Assets:  true
 TEST[DATE|TIME] Reversed:  true
 TEST[DATE|TIME] FirstBlock:  8860513
 TEST[DATE|TIME] LastBlock:  8860531
 TEST[DATE|TIME] Accounting:  true
-TEST[DATE|TIME] Enabled:  transactions
 TEST[DATE|TIME] Ether:  true
 TEST[DATE|TIME] OutputFn:  assets_filtered_rev_out.file
-TEST[DATE|TIME] Cache:  true
 TEST[DATE|TIME] Caps:  cache,decache,ether
 TEST[DATE|TIME] Format:  json
 Error: The --reversed option is not available with the accounting options.

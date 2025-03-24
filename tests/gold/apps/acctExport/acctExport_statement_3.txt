@@ -1,17 +1,155 @@
-chifra export  0x08166f02313feae18bb044e7877c808b55b5bf58 --accounting --statements --cache --last_block 4000000 --fmt json --output statement_3_out.file
+chifra export  0x08166f02313feae18bb044e7877c808b55b5bf58 --accounting --statements --last_block 4000000 --fmt json --output statement_3_out.file
 TEST[DATE|TIME] Addrs:  [0x08166f02313feae18bb044e7877c808b55b5bf58]
 TEST[DATE|TIME] Statements:  true
 TEST[DATE|TIME] LastBlock:  4000000
 TEST[DATE|TIME] Accounting:  true
-TEST[DATE|TIME] Enabled:  statements, transactions
 TEST[DATE|TIME] OutputFn:  statement_3_out.file
-TEST[DATE|TIME] Cache:  true
 TEST[DATE|TIME] Caps:  cache,decache,ether
 TEST[DATE|TIME] Format:  json
 INFO[DATE|TIME] { "outputFilename": "--output_filename--" }
 TEST[DATE|TIME] 0: 0 270
 TEST[DATE|TIME] 1: 46685 0
 TEST[DATE|TIME] 2: 46709 0
+TEST[DATE|TIME] 
+TEST[DATE|TIME] ------------------------------------
+TEST[DATE|TIME] ~~~ Entering: 0.270 ~~~
+TEST[DATE|TIME] First pass: Fetching unreconciled transfers
+TEST[DATE|TIME] Fetched 1 unreconciled transfers
+TEST[DATE|TIME] Second pass: Reconciling transfers
+TEST[DATE|TIME] Processing ETH transfer
+TEST[DATE|TIME] Converted ETH transfer to statement
+TEST[DATE|TIME] Attempting to reconcile top-level ETH transfer: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-0x08166f02313feae18bb044e7877c808b55b5bf58
+TEST[DATE|TIME] XXX =============[ top-level ]======================
+TEST[DATE|TIME] XXX Case 1: Only statement in block
+TEST[DATE|TIME] XXX Block: 0 Tx: 270 Asset: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+TEST[DATE|TIME] XXX FirstInBlock: true, LastInBlock: true
+TEST[DATE|TIME] XXX ================================================
+TEST[DATE|TIME] Block 0 is prior to deployment (3684349) of Maker. No fallback pricing method
+TEST[DATE|TIME] ===================================================
+TEST[DATE|TIME] Previous:               0 0 ( false )
+TEST[DATE|TIME] Current:                0 270 ( true )
+TEST[DATE|TIME] Next:                   46685 0 ( true )
+TEST[DATE|TIME] accountedFor:           0x08166f02313feae18bb044e7877c808b55b5bf58
+TEST[DATE|TIME] sender:                 0x0000000000000000000000000050726566756e64  ==>  0x08166f02313feae18bb044e7877c808b55b5bf58
+TEST[DATE|TIME] asset:                  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
+TEST[DATE|TIME] hash:                   0x0000000000000000000000000000000000000000000000000000000000000000
+TEST[DATE|TIME] timestamp:              1438269975
+TEST[DATE|TIME] blockNumber:            0.270.0
+TEST[DATE|TIME] priceSource:            0 (eth-not-priced-pre-maker)
+TEST[DATE|TIME] --------------------------------------------------- 
+TEST[DATE|TIME] Trial balance:
+TEST[DATE|TIME]    prevBal:             0
+TEST[DATE|TIME]    begBal:              0 (0)
+TEST[DATE|TIME]    totalIn:             1970
+TEST[DATE|TIME]    totalOut:            0
+TEST[DATE|TIME]    amountNet:           1970
+TEST[DATE|TIME]                        ======================= 
+TEST[DATE|TIME]    endBal:              1970 (0)
+TEST[DATE|TIME]    endBalCalc:          1970
+TEST[DATE|TIME] --------------------------------------------------- 
+TEST[DATE|TIME]    prefundIn:           1970
+TEST[DATE|TIME]    material:            true
+TEST[DATE|TIME]    reconciled:          true
+TEST[DATE|TIME] ---------------------------------------------------
+TEST[DATE|TIME] Top-level statement is material and reconciled - appending
+TEST[DATE|TIME] No log transfers to process
+TEST[DATE|TIME] ~~~ Leaving: 0.270 ~~~
+TEST[DATE|TIME] ------------------------------------ 1 statements generated.
+TEST[DATE|TIME] 
+TEST[DATE|TIME] 
+TEST[DATE|TIME] ------------------------------------
+TEST[DATE|TIME] ~~~ Entering: 46685.0 ~~~
+TEST[DATE|TIME] First pass: Fetching unreconciled transfers
+TEST[DATE|TIME] Fetched 1 unreconciled transfers
+TEST[DATE|TIME] Second pass: Reconciling transfers
+TEST[DATE|TIME] Processing ETH transfer
+TEST[DATE|TIME] Converted ETH transfer to statement
+TEST[DATE|TIME] Attempting to reconcile top-level ETH transfer: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-0x08166f02313feae18bb044e7877c808b55b5bf58
+TEST[DATE|TIME] XXX =============[ top-level ]======================
+TEST[DATE|TIME] XXX Case 1: Only statement in block
+TEST[DATE|TIME] XXX Block: 46685 Tx: 0 Asset: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+TEST[DATE|TIME] XXX FirstInBlock: true, LastInBlock: true
+TEST[DATE|TIME] XXX ================================================
+TEST[DATE|TIME] Block 46685 is prior to deployment (3684349) of Maker. No fallback pricing method
+TEST[DATE|TIME] ===================================================
+TEST[DATE|TIME] Previous:               0 270 ( true )
+TEST[DATE|TIME] Current:                46685 0 ( true )
+TEST[DATE|TIME] Next:                   46709 0 ( true )
+TEST[DATE|TIME] accountedFor:           0x08166f02313feae18bb044e7877c808b55b5bf58
+TEST[DATE|TIME] sender:                 0x08166f02313feae18bb044e7877c808b55b5bf58  ==>  0xad00b7a324f31351d397408c8c3952ea198317eb
+TEST[DATE|TIME] asset:                  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
+TEST[DATE|TIME] hash:                   0x10893338fa5633ab747450b8698457fb047098f87f78e98b3dbee3134067b6b8
+TEST[DATE|TIME] timestamp:              1438927408
+TEST[DATE|TIME] blockNumber:            46685.0.0
+TEST[DATE|TIME] priceSource:            0 (eth-not-priced-pre-maker)
+TEST[DATE|TIME] --------------------------------------------------- 
+TEST[DATE|TIME] Trial balance:
+TEST[DATE|TIME]    prevBal:             1970
+TEST[DATE|TIME]    begBal:              1970 (0)
+TEST[DATE|TIME]    totalIn:             0
+TEST[DATE|TIME]    totalOut:            5.0105
+TEST[DATE|TIME]    amountNet:           -5.0105
+TEST[DATE|TIME]                        ======================= 
+TEST[DATE|TIME]    endBal:              1964.9895 (0)
+TEST[DATE|TIME]    endBalCalc:          1964.9895
+TEST[DATE|TIME] --------------------------------------------------- 
+TEST[DATE|TIME]    amountOut:           5
+TEST[DATE|TIME]    gasOut:              0.0105
+TEST[DATE|TIME]    material:            true
+TEST[DATE|TIME]    reconciled:          true
+TEST[DATE|TIME] ---------------------------------------------------
+TEST[DATE|TIME] Top-level statement is material and reconciled - appending
+TEST[DATE|TIME] No log transfers to process
+TEST[DATE|TIME] ~~~ Leaving: 46685.0 ~~~
+TEST[DATE|TIME] ------------------------------------ 1 statements generated.
+TEST[DATE|TIME] 
+TEST[DATE|TIME] 
+TEST[DATE|TIME] ------------------------------------
+TEST[DATE|TIME] ~~~ Entering: 46709.0 ~~~
+TEST[DATE|TIME] First pass: Fetching unreconciled transfers
+TEST[DATE|TIME] Fetched 1 unreconciled transfers
+TEST[DATE|TIME] Second pass: Reconciling transfers
+TEST[DATE|TIME] Processing ETH transfer
+TEST[DATE|TIME] Converted ETH transfer to statement
+TEST[DATE|TIME] Attempting to reconcile top-level ETH transfer: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-0x08166f02313feae18bb044e7877c808b55b5bf58
+TEST[DATE|TIME] XXX =============[ top-level ]======================
+TEST[DATE|TIME] XXX Case 1: Only statement in block
+TEST[DATE|TIME] XXX Block: 46709 Tx: 0 Asset: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+TEST[DATE|TIME] XXX FirstInBlock: true, LastInBlock: true
+TEST[DATE|TIME] XXX ================================================
+TEST[DATE|TIME] Block 46709 is prior to deployment (3684349) of Maker. No fallback pricing method
+TEST[DATE|TIME] ===================================================
+TEST[DATE|TIME] Previous:               46685 0 ( true )
+TEST[DATE|TIME] Current:                46709 0 ( true )
+TEST[DATE|TIME] Next:                   46710 0 ( true )
+TEST[DATE|TIME] accountedFor:           0x08166f02313feae18bb044e7877c808b55b5bf58
+TEST[DATE|TIME] sender:                 0x08166f02313feae18bb044e7877c808b55b5bf58  ==>  0xad00b7a324f31351d397408c8c3952ea198317eb
+TEST[DATE|TIME] asset:                  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
+TEST[DATE|TIME] hash:                   0x10d5c5f2386c6d6d93ca6b43fa25e8679971d07448db8d6c81d856ff3c3c001a
+TEST[DATE|TIME] timestamp:              1438927854
+TEST[DATE|TIME] blockNumber:            46709.0.0
+TEST[DATE|TIME] priceSource:            0 (eth-not-priced-pre-maker)
+TEST[DATE|TIME] --------------------------------------------------- 
+TEST[DATE|TIME] Trial balance:
+TEST[DATE|TIME]    prevBal:             1964.9895
+TEST[DATE|TIME]    begBal:              1964.9895 (0)
+TEST[DATE|TIME]    totalIn:             0
+TEST[DATE|TIME]    totalOut:            1964.9
+TEST[DATE|TIME]    amountNet:           -1964.9
+TEST[DATE|TIME]                        ======================= 
+TEST[DATE|TIME]    endBal:              0.0895 (0)
+TEST[DATE|TIME]    endBalCalc:          0.0895
+TEST[DATE|TIME] --------------------------------------------------- 
+TEST[DATE|TIME]    amountOut:           1964.8895
+TEST[DATE|TIME]    gasOut:              0.0105
+TEST[DATE|TIME]    material:            true
+TEST[DATE|TIME]    reconciled:          true
+TEST[DATE|TIME] ---------------------------------------------------
+TEST[DATE|TIME] Top-level statement is material and reconciled - appending
+TEST[DATE|TIME] No log transfers to process
+TEST[DATE|TIME] ~~~ Leaving: 46709.0 ~~~
+TEST[DATE|TIME] ------------------------------------ 1 statements generated.
+TEST[DATE|TIME] 
 ----
 Results in ./statement_3_out.file
 {

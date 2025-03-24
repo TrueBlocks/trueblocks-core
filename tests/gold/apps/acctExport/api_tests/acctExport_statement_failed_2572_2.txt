@@ -1,4 +1,4 @@
-export?addrs=0x65b0d5e1dc0dee0704f53f660aa865c72e986fc7&accounting&statements&cache&asset=0xc713e5e149d5d0715dcd1c156a020976e7e56b88&fmt=json&firstBlock=11670418&lastBlock=11670420
+export?addrs=0x65b0d5e1dc0dee0704f53f660aa865c72e986fc7&accounting&statements&asset=0xc713e5e149d5d0715dcd1c156a020976e7e56b88&fmt=json&firstBlock=11670418&lastBlock=11670420
 {
   "data": [
     {
