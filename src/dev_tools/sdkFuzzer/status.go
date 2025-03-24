@@ -150,16 +150,6 @@ func TestStatus(which, value, fn string, opts *sdk.StatusOptions) {
 				ReportOkay(fn)
 			}
 		}
-	case "transfers":
-		if transfers, _, err := opts.StatusTransfers(); err != nil {
-			ReportError(fn, opts, err)
-		} else {
-			if err := SaveToFile(fn, transfers); err != nil {
-				ReportError2(fn, err)
-			} else {
-				ReportOkay(fn)
-			}
-		}
 	case "statements":
 		if statements, _, err := opts.StatusStatements(); err != nil {
 			ReportError(fn, opts, err)

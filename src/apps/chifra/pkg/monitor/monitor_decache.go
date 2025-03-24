@@ -20,8 +20,7 @@ func (mon *Monitor) Decache(conn *rpc.Connection, showProgress bool) (string, er
 	} else {
 		if cnt > 0 {
 			monitorCacheTypes := []walk.CacheType{
-				walk.Cache_Statements,
-				walk.Cache_Transfers,
+				// walk.Cache_Statements, see  below
 				walk.Cache_Traces,
 				walk.Cache_Transactions,
 				walk.Cache_Receipts,
@@ -40,6 +39,10 @@ func (mon *Monitor) Decache(conn *rpc.Connection, showProgress bool) (string, er
 					logger.Progress(showProgress, msg)
 				}
 			}
+		}
+
+		if err := mon.RemoveStatements(); err != nil {
+			return "", err
 		}
 
 		abiPath := filepath.Join(walk.GetRootPathFromCacheType(conn.Chain, walk.Cache_Abis), mon.Address.Hex()+".json")
@@ -71,4 +74,16 @@ func (mon *Monitor) GetRemoveWarning() string {
 		return strings.Replace(strings.Replace(warning, "{1}", ". It may take a long time to process {2} records.", -1), "{2}", fmt.Sprintf("%d", count), -1)
 	}
 	return strings.Replace(warning, "{1}", "", -1)
+}
+
+func (mon *Monitor) RemoveStatements() error {
+	visitFunc := func(path string, vP any) (bool, error) {
+		if strings.Contains(path, "/"+mon.Address.Hex()[2:]) {
+			os.Remove(path)
+			// TODO: Clean empty folders here
+		}
+		return true, nil
+	}
+	path := walk.GetRootPathFromCacheType(mon.Chain, walk.Cache_Statements)
+	return walk.ForEveryFileInFolder(path, visitFunc, nil)
 }

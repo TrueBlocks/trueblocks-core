@@ -113,6 +113,10 @@ func (s *Structure) NeedsAddress() bool {
 	return strings.Contains(s.CacheBy, "address")
 }
 
+func (s *Structure) NeedsStatement() bool {
+	return strings.Contains(s.CacheBy, "statement")
+}
+
 func (s *Structure) GroupName() string {
 	parts := strings.Split(s.DocGroup, "-")
 	if len(parts) > 1 {
@@ -178,7 +182,7 @@ func (s *Structure) CacheIdStr() string {
 	case "address,tx":
 		return "\"%s-%09d-%05d\", s.Address.Hex()[2:], s.BlockNumber, s.TransactionIndex"
 	case "statement":
-		return "\"%s-%s-%09d-%05d\", s.Address.Hex()[2:], s.Address2.Hex()[2:], s.BlockNumber, s.TransactionIndex"
+		return "\"%s-%s-%09d-%05d\", s.Holder.Hex()[2:], s.Asset.Hex()[2:], s.BlockNumber, s.TransactionIndex"
 	case "block":
 		return "\"%09d\", s.BlockNumber"
 	case "tx":

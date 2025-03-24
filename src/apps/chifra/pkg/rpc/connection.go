@@ -21,19 +21,23 @@ type Connection struct {
 }
 
 func NewConnection(chain string, cacheEnabled bool, enabledMap map[walk.CacheType]bool) *Connection {
-	return newConnection(chain, cacheEnabled, enabledMap)
+	return newConnection(chain, cacheEnabled, enabledMap, cache.FsCache)
 }
 
 func TempConnection(chain string) *Connection {
-	return newConnection(chain, false, nil)
+	return newConnection(chain, false, nil, cache.FsCache)
+}
+
+func TestConnection(chain string, onOff bool, caches map[walk.CacheType]bool) *Connection {
+	return newConnection(chain, onOff, caches, cache.MemoryCache)
 }
 
 // newConnection builds the store and enables the caches and returns the RPC connection
-func newConnection(chain string, cacheEnabled bool, enabledMap map[walk.CacheType]bool) *Connection {
+func newConnection(chain string, cacheEnabled bool, enabledMap map[walk.CacheType]bool, loc cache.StoreLocation) *Connection {
 	var store *cache.Store
 	var err error
 	if store, err = cache.NewStore(&cache.StoreOptions{
-		Location:   cache.FsCache,
+		Location:   loc,
 		Chain:      chain,
 		Enabled:    cacheEnabled,
 		EnabledMap: enabledMap,

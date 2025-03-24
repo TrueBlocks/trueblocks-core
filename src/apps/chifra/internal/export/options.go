@@ -326,7 +326,6 @@ func (opts *ExportOptions) getCaches() (caches map[walk.CacheType]bool) {
 		// TODO: Enable neighbors cache
 		walk.Cache_Transactions: true,
 		walk.Cache_Statements:   opts.Statements,
-		walk.Cache_Transfers:    opts.Statements || opts.Transfers || opts.Assets,
 		walk.Cache_Traces:       opts.CacheTraces || (opts.Globals.Cache && (opts.Traces || opts.Neighbors)),
 	}
 	// EXISTING_CODE

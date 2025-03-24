@@ -1,6 +1,6 @@
 status?modes=staging&maxRecords=100
 Args: [modes=staging maxRecords=100]
-Opts: {"modes":65536,"maxRecords":100}
+Opts: {"modes":32768,"maxRecords":100}
 Modes:  [staging]
 MaxRecords:  100
 Format:  json

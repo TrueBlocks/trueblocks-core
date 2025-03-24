@@ -12,13 +12,8 @@ import (
 
 func (r *Reconciler) GetStatements(node *types.AppNode[types.Transaction]) ([]types.Statement, error) {
 	trans := node.Data()
-	statementGroup := &types.StatementGroup{
-		Address:          r.Opts.AccountFor,
-		BlockNumber:      trans.BlockNumber,
-		TransactionIndex: trans.TransactionIndex,
-	}
-	if err := r.Connection.ReadFromCache(statementGroup); err == nil {
-		return statementGroup.Statements, nil
+	if stmts, found := r.StatementsFromCache(trans); found {
+		return stmts, nil
 	}
 
 	logger.TestLog(true, "")
@@ -173,13 +168,8 @@ func (r *Reconciler) GetStatements(node *types.AppNode[types.Transaction]) ([]ty
 	logger.TestLog(true, "------------------------------------", len(results), "statements generated.")
 	logger.TestLog(true, "")
 
-	// we don't want to cache filtered results
-	if !r.HasFilters() {
-		statementGroup.Statements = results
-		err = r.Connection.WriteToCache(statementGroup, walk.Cache_Statements, trans.Timestamp)
-		return results, err
-	}
-	return results, nil
+	err = r.StatementsToCache(trans, results)
+	return results, err
 }
 
 func ReportProgress(stmt *types.Statement, warn bool) {
@@ -195,4 +185,78 @@ func ReportProgress(stmt *types.Statement, warn bool) {
 			logger.Warn(msg+" did not reconcile.", spacer)
 		}
 	}
+}
+
+// StatementsFromCache Retrieves statements from the cache, either for specific assets
+// (if filtered) or all assets (if unfiltered), ensuring efficiency by checking the
+// cache before recomputing data.
+func (r *Reconciler) StatementsFromCache(trans *types.Transaction) ([]types.Statement, bool) {
+	if r.HasFilters() {
+		nHits := 0
+		results := make([]types.Statement, 0)
+		for _, asset := range r.Opts.AssetFilters {
+			sg := &types.StatementGroup{
+				Holder:           r.Opts.AccountFor,
+				Asset:            asset,
+				BlockNumber:      trans.BlockNumber,
+				TransactionIndex: trans.TransactionIndex,
+			}
+			if err := r.Connection.ReadFromCache(sg); err == nil {
+				results = append(results, sg.Statements...)
+				nHits++
+			} else {
+				break
+			}
+		}
+		if nHits == len(r.Opts.AssetFilters) {
+			return results, true
+		}
+	}
+
+	sg := &types.StatementGroup{
+		Holder:           r.Opts.AccountFor,
+		BlockNumber:      trans.BlockNumber,
+		TransactionIndex: trans.TransactionIndex,
+	}
+	if err := r.Connection.ReadFromCache(sg); err == nil {
+		return sg.Statements, true
+	}
+
+	return nil, false
+}
+
+func (r *Reconciler) StatementsToCache(trans *types.Transaction, stmts []types.Statement) error {
+	if r.HasFilters() {
+		for _, asset := range r.Opts.AssetFilters {
+			out := make([]types.Statement, 0)
+			for _, stmt := range stmts {
+				if stmt.Asset == asset {
+					out = append(out, stmt)
+				}
+			}
+			if len(out) == 0 {
+				continue
+			}
+			sg := &types.StatementGroup{
+				Holder:           r.Opts.AccountFor,
+				Asset:            asset,
+				BlockNumber:      trans.BlockNumber,
+				TransactionIndex: trans.TransactionIndex,
+				Statements:       out,
+			}
+			err := r.Connection.WriteToCache(sg, walk.Cache_Statements, trans.Timestamp)
+			if err != nil {
+				return err
+			}
+		}
+		return nil
+	}
+
+	statementGroup := &types.StatementGroup{
+		Holder:           r.Opts.AccountFor,
+		BlockNumber:      trans.BlockNumber,
+		TransactionIndex: trans.TransactionIndex,
+		Statements:       stmts,
+	}
+	return r.Connection.WriteToCache(statementGroup, walk.Cache_Statements, trans.Timestamp)
 }

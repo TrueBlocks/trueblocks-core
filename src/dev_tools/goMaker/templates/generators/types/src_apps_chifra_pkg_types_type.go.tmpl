@@ -63,6 +63,8 @@ type {{.ClassOrClassGroup}} struct {
 	BlockNumber      base.Blknum
 	TransactionIndex base.Txnum
 	{{if .NeedsAddress}}Address          base.Address
+	{{end}}{{if .NeedsStatement}}Holder        base.Address
+	Asset base.Address
 	{{end}}{{.Class}}s      []{{.Class}}
 }
 

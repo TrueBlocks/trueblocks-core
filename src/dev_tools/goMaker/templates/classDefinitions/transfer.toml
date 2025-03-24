@@ -7,6 +7,3 @@
     attributes = ""
     produced_by = "export"
     contains = ""
-    cache_type = "cacheable"
-    cache_by = "address,tx"
-    cache_as = "group"

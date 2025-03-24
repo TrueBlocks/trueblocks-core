@@ -33,7 +33,6 @@ const (
 	Cache_Slurps
 	Cache_State
 	Cache_Statements
-	Cache_Transfers
 	Cache_Tokens
 	Cache_Traces
 	Cache_Transactions
@@ -63,7 +62,6 @@ var cacheTypeToName = map[CacheType]string{
 	Cache_Slurps:       "slurps",
 	Cache_State:        "state",
 	Cache_Statements:   "statements",
-	Cache_Transfers:    "transfers",
 	Cache_Tokens:       "tokens",
 	Cache_Traces:       "traces",
 	Cache_Transactions: "transactions",
@@ -92,7 +90,6 @@ var CacheTypeToFolder = map[CacheType]string{
 	Cache_Slurps:       "slurps",
 	Cache_State:        "state",
 	Cache_Statements:   "statements",
-	Cache_Transfers:    "transfers",
 	Cache_Tokens:       "tokens",
 	Cache_Traces:       "traces",
 	Cache_Transactions: "transactions",
@@ -120,7 +117,6 @@ var cacheTypeToExt = map[CacheType]string{
 	Cache_Slurps:       "bin",
 	Cache_State:        "bin",
 	Cache_Statements:   "bin",
-	Cache_Transfers:    "bin",
 	Cache_Tokens:       "bin",
 	Cache_Traces:       "bin",
 	Cache_Transactions: "bin",
@@ -173,8 +169,6 @@ func GetRootPathFromCacheType(chain string, cacheType CacheType) string {
 	case Cache_State:
 		fallthrough
 	case Cache_Statements:
-		fallthrough
-	case Cache_Transfers:
 		fallthrough
 	case Cache_Tokens:
 		fallthrough
@@ -286,8 +280,6 @@ func CacheTypesFromStringSlice(strs []string) []CacheType {
 				types = append(types, Cache_State)
 			case "statements":
 				types = append(types, Cache_Statements)
-			case "transfers":
-				types = append(types, Cache_Transfers)
 			case "tokens":
 				types = append(types, Cache_Tokens)
 			case "traces":
@@ -332,7 +324,6 @@ func CacheTypesFromStringSlice(strs []string) []CacheType {
 				types = append(types, Cache_Slurps)
 				types = append(types, Cache_State)
 				types = append(types, Cache_Statements)
-				types = append(types, Cache_Transfers)
 				types = append(types, Cache_Tokens)
 				types = append(types, Cache_Traces)
 				types = append(types, Cache_Transactions)

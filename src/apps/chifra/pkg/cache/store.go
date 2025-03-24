@@ -161,6 +161,11 @@ func (s *Store) Remove(value Locator) error {
 }
 
 func (s *Store) Decache(locators []Locator, procFunc, skipFunc func(*locations.ItemInfo) bool) error {
+	// TODO: The statements cache is unique in that it will store multiple versions of a statement
+	// TODO: file for the same holder address. If there is no filter when the cache is created,
+	// TODO: the cache will store the statements at holder-0-bn-txid. If there is a filter, it will
+	// TODO: store at holder-asset-bn-txid. The code that calls this code will only send in the
+	// TODO: first version leaving all others in place.
 	for _, locator := range locators {
 		if stats, err := s.Stat(locator); err != nil {
 			// many locations will not have been cached, but we want to report
@@ -232,20 +237,17 @@ func (s *StoreOptions) location() (loc Storer, err error) {
 	return
 }
 
-func (s *StoreOptions) rootDir() (dir string) {
-	if s != nil && s.Location == MemoryCache {
+func (s *StoreOptions) rootDir() string {
+	if s == nil {
+		logger.Error("should not happen ==> implementation error in location")
+		return ""
+	} else if s.Location == MemoryCache {
 		return "memory"
 	}
 
-	if s == nil {
-		log.Fatal("should not happen ==> implementation error in location.")
-	} else if s.RootDir == "" {
-		dir = config.PathToCache(s.Chain)
-	}
-
+	dir := config.PathToCache(s.Chain)
 	if dir != "" {
 		return filepath.Join(dir, "v1")
 	}
-
 	return s.RootDir
 }

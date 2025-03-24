@@ -240,7 +240,7 @@ num,folder,group,route,tool,longName,hotKey,def_val,attributes,handler,option_ty
 42040,apps,Admin,config,config,dump,d,,visible|docs,2,switch,<boolean>,config,,,,dump the configuration to stdout
 #
 43000,apps,Admin,status,cacheStatus,,,,visible|docs,,command,,,Get status on caches,<mode> [mode...] [flags],default|,Report on the state of the internal binary caches.
-43020,apps,Admin,status,cacheStatus,modes,,,visible|docs,2,positional,list<enum[index|blooms|blocks|transactions|traces|logs|transfers|statements|results|state|tokens|monitors|names|abis|slurps|staging|unripe|maps|some*|all]>,status,,,,the (optional) name of the binary cache to report on&#44; terse otherwise
+43020,apps,Admin,status,cacheStatus,modes,,,visible|docs,2,positional,list<enum[index|blooms|blocks|transactions|traces|logs|statements|results|state|tokens|monitors|names|abis|slurps|staging|unripe|maps|some*|all]>,status,,,,the (optional) name of the binary cache to report on&#44; terse otherwise
 43030,apps,Admin,status,cacheStatus,diagnose,d,,visible|docs,1,switch,<boolean>,status,,,,same as the default but with additional diagnostics
 43040,apps,Admin,status,cacheStatus,first_record,c,,visible|docs,,flag,<uint64>,,,,,the first record to process
 43050,apps,Admin,status,cacheStatus,max_records,e,10000,visible|docs,,flag,<uint64>,,,,,the maximum number of records to process

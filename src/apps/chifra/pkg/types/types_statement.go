@@ -211,7 +211,7 @@ func (s *Statement) Date() string {
 }
 
 func (s *StatementGroup) CacheLocations() (string, string, string) {
-	paddedId := fmt.Sprintf("%s-%09d-%05d", s.Address.Hex()[2:], s.BlockNumber, s.TransactionIndex)
+	paddedId := fmt.Sprintf("%s-%s-%09d-%05d", s.Holder.Hex()[2:], s.Asset.Hex()[2:], s.BlockNumber, s.TransactionIndex)
 	parts := make([]string, 3)
 	parts[0] = paddedId[:2]
 	parts[1] = paddedId[2:4]
@@ -224,7 +224,8 @@ func (s *StatementGroup) CacheLocations() (string, string, string) {
 type StatementGroup struct {
 	BlockNumber      base.Blknum
 	TransactionIndex base.Txnum
-	Address          base.Address
+	Holder           base.Address
+	Asset            base.Address
 	Statements       []Statement
 }
 

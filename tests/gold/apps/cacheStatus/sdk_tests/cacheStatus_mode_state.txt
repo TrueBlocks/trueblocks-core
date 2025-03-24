@@ -1,6 +1,6 @@
 status?modes=state&verbose&maxRecords=2
 Args: [modes=state verbose maxRecords=2]
-Opts: {"modes":1024,"maxRecords":2,"verbose":true}
+Opts: {"modes":512,"maxRecords":2,"verbose":true}
 Modes:  [state]
 MaxRecords:  2
 Verbose:  true

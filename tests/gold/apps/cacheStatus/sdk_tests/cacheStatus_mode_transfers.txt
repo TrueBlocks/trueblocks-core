@@ -1,23 +1,8 @@
 status?modes=transfers&verbose&maxRecords=2
 Args: [modes=transfers verbose maxRecords=2]
-Opts: {"modes":128,"maxRecords":2,"verbose":true}
-Modes:  [transfers]
-MaxRecords:  2
-Verbose:  true
-Format:  json
+Opts: null
 {
-  "data": [],
-  "meta": {
-    "client": "0xdeadbeef",
-    "finalized": "0xdeadbeef",
-    "staging": "0xdeadbeef",
-    "ripe": "0xdeadbeef",
-    "unripe": "0xdeadbeef",
-    "chainId": 1,
-    "networkId": 1,
-    "chain": "mainnet"
-  },
   "errors": [
-    "no files were found in the [transfers] caches"
+    "unknown modes: transfers"
   ]
 }

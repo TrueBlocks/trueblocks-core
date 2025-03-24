@@ -2519,7 +2519,6 @@ paths:
                 - transactions
                 - traces
                 - logs
-                - transfers
                 - statements
                 - results
                 - state

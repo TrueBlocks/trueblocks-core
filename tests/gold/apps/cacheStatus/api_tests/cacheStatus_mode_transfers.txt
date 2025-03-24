@@ -1,17 +1,6 @@
 status?modes=transfers&verbose&maxRecords=2
 {
-  "data": [],
-  "meta": {
-    "client": "0xdeadbeef",
-    "finalized": "0xdeadbeef",
-    "staging": "0xdeadbeef",
-    "ripe": "0xdeadbeef",
-    "unripe": "0xdeadbeef",
-    "chainId": 1,
-    "networkId": 1,
-    "chain": "mainnet"
-  },
   "errors": [
-    "no files were found in the [transfers] caches"
+    "The mode option (transfers) must be one of [ index | blooms | blocks | transactions | traces | logs | statements | results | state | tokens | monitors | names | abis | slurps | staging | unripe | maps | some | all ]"
   ]
 }
