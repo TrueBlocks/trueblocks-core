@@ -84,6 +84,7 @@ func (mon *Monitor) RemoveStatements(l int, showProgress bool) error {
 	})
 	itemsSeen := 0
 	visitFunc := func(path string, vP any) (bool, error) {
+		_ = vP
 		itemsSeen++
 		if itemsSeen%1000 == 0 {
 			bar.Tick()
