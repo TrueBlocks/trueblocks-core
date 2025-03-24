@@ -6,7 +6,7 @@ Transfers:  true
 FirstBlock:  8860513
 LastBlock:  8860531
 Accounting:  true
-Enabled:  transactions, transfers
+Enabled:  transactions
 Ether:  true
 Cache:  true
 Caps:  cache,decache,ether

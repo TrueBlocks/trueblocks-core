@@ -5,7 +5,7 @@ Addrs:  [0x08166f02313feae18bb044e7877c808b55b5bf58]
 Assets:  true
 LastBlock:  4000000
 Accounting:  true
-Enabled:  transactions, transfers
+Enabled:  transactions
 Cache:  true
 Caps:  cache,decache,ether
 Format:  json

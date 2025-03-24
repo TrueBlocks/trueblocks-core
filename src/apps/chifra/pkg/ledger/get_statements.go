@@ -2,6 +2,7 @@ package ledger
 
 import (
 	"fmt"
+	"sort"
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
@@ -208,6 +209,18 @@ func (r *Reconciler) StatementsFromCache(trans *types.Transaction) ([]types.Stat
 				break
 			}
 		}
+		sort.Slice(results, func(i, j int) bool {
+			if results[i].IsEth() != results[j].IsEth() {
+				results[i].IsEth()
+			}
+			if results[i].BlockNumber != results[j].BlockNumber {
+				return results[i].BlockNumber < results[j].BlockNumber
+			}
+			if results[i].TransactionIndex != results[j].TransactionIndex {
+				return results[i].TransactionIndex < results[j].TransactionIndex
+			}
+			return results[i].LogIndex < results[j].LogIndex
+		})
 		if nHits == len(r.Opts.AssetFilters) {
 			return results, true
 		}
@@ -219,6 +232,17 @@ func (r *Reconciler) StatementsFromCache(trans *types.Transaction) ([]types.Stat
 		TransactionIndex: trans.TransactionIndex,
 	}
 	if err := r.Connection.ReadFromCache(sg); err == nil {
+		if r.HasFilters() {
+			results := make([]types.Statement, 0)
+			for _, asset := range r.Opts.AssetFilters {
+				for _, stmt := range sg.Statements {
+					if stmt.Asset == asset {
+						results = append(results, stmt)
+					}
+				}
+			}
+			return results, true
+		}
 		return sg.Statements, true
 	}
 

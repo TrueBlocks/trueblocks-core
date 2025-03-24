@@ -4,7 +4,7 @@ TEST[DATE|TIME] Assets:  true
 TEST[DATE|TIME] FirstBlock:  8876230
 TEST[DATE|TIME] LastBlock:  9024186
 TEST[DATE|TIME] Accounting:  true
-TEST[DATE|TIME] Enabled:  transactions, transfers
+TEST[DATE|TIME] Enabled:  transactions
 TEST[DATE|TIME] OutputFn:  assets_nft_out.file
 TEST[DATE|TIME] Cache:  true
 TEST[DATE|TIME] Caps:  cache,decache,ether

@@ -3,7 +3,7 @@ TEST[DATE|TIME] Addrs:  [0x08166f02313feae18bb044e7877c808b55b5bf58]
 TEST[DATE|TIME] Assets:  true
 TEST[DATE|TIME] LastBlock:  4000000
 TEST[DATE|TIME] Accounting:  true
-TEST[DATE|TIME] Enabled:  transactions, transfers
+TEST[DATE|TIME] Enabled:  transactions
 TEST[DATE|TIME] OutputFn:  assets_3_out.file
 TEST[DATE|TIME] Cache:  true
 TEST[DATE|TIME] Caps:  cache,decache,ether

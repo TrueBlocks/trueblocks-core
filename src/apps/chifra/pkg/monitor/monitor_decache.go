@@ -41,7 +41,7 @@ func (mon *Monitor) Decache(conn *rpc.Connection, showProgress bool) (string, er
 			}
 		}
 
-		if err := mon.RemoveStatements(); err != nil {
+		if err := mon.RemoveStatements(len(apps), showProgress); err != nil {
 			return "", err
 		}
 
@@ -76,8 +76,20 @@ func (mon *Monitor) GetRemoveWarning() string {
 	return strings.Replace(warning, "{1}", "", -1)
 }
 
-func (mon *Monitor) RemoveStatements() error {
+func (mon *Monitor) RemoveStatements(l int, showProgress bool) error {
+	bar := logger.NewBar(logger.BarOptions{
+		Prefix:  "Decaching statements if present",
+		Enabled: showProgress,
+		Total:   int64(l),
+	})
+	itemsSeen := 0
 	visitFunc := func(path string, vP any) (bool, error) {
+		itemsSeen++
+		if itemsSeen%1000 == 0 {
+			bar.Tick()
+		} else {
+			bar.Bump()
+		}
 		if strings.Contains(path, "/"+mon.Address.Hex()[2:]) {
 			os.Remove(path)
 			// TODO: Clean empty folders here
@@ -85,5 +97,7 @@ func (mon *Monitor) RemoveStatements() error {
 		return true, nil
 	}
 	path := walk.GetRootPathFromCacheType(mon.Chain, walk.Cache_Statements)
-	return walk.ForEveryFileInFolder(path, visitFunc, nil)
+	err := walk.ForEveryFileInFolder(path, visitFunc, nil)
+	bar.Finish(true)
+	return err
 }

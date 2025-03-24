@@ -4,7 +4,7 @@ TEST[DATE|TIME] Assets:  true
 TEST[DATE|TIME] FirstBlock:  9278039
 TEST[DATE|TIME] LastBlock:  9279454
 TEST[DATE|TIME] Accounting:  true
-TEST[DATE|TIME] Enabled:  transactions, transfers
+TEST[DATE|TIME] Enabled:  transactions
 TEST[DATE|TIME] Cache:  true
 TEST[DATE|TIME] Caps:  cache,decache,ether
 TEST[DATE|TIME] Format:  json

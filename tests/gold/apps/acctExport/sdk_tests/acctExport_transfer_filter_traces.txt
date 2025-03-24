@@ -8,7 +8,7 @@ Asset:  [0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359]
 FirstBlock:  8860513
 LastBlock:  8860531
 Accounting:  true
-Enabled:  transactions, transfers
+Enabled:  transactions
 Ether:  true
 Cache:  true
 Caps:  cache,decache,ether

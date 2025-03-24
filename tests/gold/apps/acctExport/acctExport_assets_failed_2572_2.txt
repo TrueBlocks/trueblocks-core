@@ -5,7 +5,7 @@ TEST[DATE|TIME] MaxRecords:  40
 TEST[DATE|TIME] FirstBlock:  11670418
 TEST[DATE|TIME] LastBlock:  11670420
 TEST[DATE|TIME] Accounting:  true
-TEST[DATE|TIME] Enabled:  transactions, transfers
+TEST[DATE|TIME] Enabled:  transactions
 TEST[DATE|TIME] Ether:  true
 TEST[DATE|TIME] OutputFn:  assets_failed_2572_2_out.file
 TEST[DATE|TIME] Cache:  true

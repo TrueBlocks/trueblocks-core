@@ -7,7 +7,7 @@ MaxRecords:  40
 Asset:  [0xf5b2c59f6db42ffcdfc1625999c81fdf17953384]
 LastBlock:  15549163
 Accounting:  true
-Enabled:  transactions, transfers
+Enabled:  transactions
 Ether:  true
 Cache:  true
 Caps:  cache,decache,ether

@@ -6,7 +6,7 @@ Traces:  true
 Transfers:  true
 LastBlock:  8769141
 Accounting:  true
-Enabled:  transactions, transfers
+Enabled:  transactions
 Ether:  true
 Cache:  true
 Caps:  cache,decache,ether

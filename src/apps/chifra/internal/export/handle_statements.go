@@ -156,6 +156,9 @@ func (opts *ExportOptions) HandleStatements(rCtx *output.RenderCtx, monitorArray
 							var passes bool
 							passes, finished = filter.ApplyCountFilter()
 							if passes {
+								if opts.Globals.Ether {
+									item.Symbol = "ETH"
+								}
 								modelChan <- &item
 							}
 							if finished {

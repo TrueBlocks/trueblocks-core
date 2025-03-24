@@ -5,7 +5,7 @@ TEST[DATE|TIME] MaxRecords:  40
 TEST[DATE|TIME] Asset:  [0xf5b2c59f6db42ffcdfc1625999c81fdf17953384]
 TEST[DATE|TIME] LastBlock:  15549163
 TEST[DATE|TIME] Accounting:  true
-TEST[DATE|TIME] Enabled:  transactions, transfers
+TEST[DATE|TIME] Enabled:  transactions
 TEST[DATE|TIME] Ether:  true
 TEST[DATE|TIME] OutputFn:  transfer_failed_2572_1_out.file
 TEST[DATE|TIME] Cache:  true

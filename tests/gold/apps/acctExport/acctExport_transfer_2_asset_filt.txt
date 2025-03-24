@@ -5,7 +5,7 @@ TEST[DATE|TIME] Asset:  [0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0x89d24a6b4c
 TEST[DATE|TIME] FirstBlock:  8856476
 TEST[DATE|TIME] LastBlock:  9193814
 TEST[DATE|TIME] Accounting:  true
-TEST[DATE|TIME] Enabled:  transactions, transfers
+TEST[DATE|TIME] Enabled:  transactions
 TEST[DATE|TIME] Ether:  true
 TEST[DATE|TIME] OutputFn:  transfer_2_asset_filt_out.file
 TEST[DATE|TIME] Cache:  true

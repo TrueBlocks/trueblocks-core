@@ -5,7 +5,7 @@ TEST[DATE|TIME] Statements:  true
 TEST[DATE|TIME] FirstBlock:  12704456
 TEST[DATE|TIME] LastBlock:  12705893
 TEST[DATE|TIME] Accounting:  true
-TEST[DATE|TIME] Enabled:  statements, traces, transactions, transfers
+TEST[DATE|TIME] Enabled:  statements, traces, transactions
 TEST[DATE|TIME] OutputFn:  statement_token_ibt_2_out.file
 TEST[DATE|TIME] Cache:  true
 TEST[DATE|TIME] Caps:  cache,decache,ether

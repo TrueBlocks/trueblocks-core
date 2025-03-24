@@ -7,7 +7,7 @@ MaxRecords:  9
 FirstBlock:  12704456
 LastBlock:  12705893
 Accounting:  true
-Enabled:  transactions, transfers
+Enabled:  transactions
 Ether:  true
 Cache:  true
 Caps:  cache,decache,ether

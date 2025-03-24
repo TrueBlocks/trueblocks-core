@@ -6,7 +6,7 @@ Assets:  true
 FirstBlock:  9278039
 LastBlock:  9279454
 Accounting:  true
-Enabled:  transactions, transfers
+Enabled:  transactions
 Cache:  true
 Caps:  cache,decache,ether
 Format:  json

@@ -6,7 +6,7 @@ Statements:  true
 FirstBlock:  8876230
 LastBlock:  9024186
 Accounting:  true
-Enabled:  statements, transactions, transfers
+Enabled:  statements, transactions
 Cache:  true
 Caps:  cache,decache,ether
 Format:  json
