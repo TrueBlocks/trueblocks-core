@@ -161,8 +161,6 @@ func (m *Member) GoType() string {
 			switch m.Type {
 			case "address":
 				ret = "base.Address"
-			case "float":
-				ret = "base.Float"
 			case "blknum":
 				ret = "base.Blknum"
 			case "blkrange":
@@ -171,8 +169,10 @@ func (m *Member) GoType() string {
 				ret = "string"
 			case "datetime":
 				ret = "string"
+			case "float":
+				ret = "base.Float"
 			case "ether":
-				ret = "base.Ether"
+				ret = "base.Float"
 			case "gas":
 				ret = "base.Gas"
 			case "hash":
