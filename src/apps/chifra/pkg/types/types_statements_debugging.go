@@ -13,16 +13,16 @@ func (s *Statement) DebugStatement(node *AppNode[Transaction]) {
 		isZero := func(val *base.Wei) bool {
 			return val.Cmp(base.NewWei(0)) == 0
 		}
-		logger.TestLog(!isZero(val), msg, val.ToEtherStr(18))
+		logger.TestLog(!isZero(val), msg, val.ToFloatString(18))
 	}
 
 	report2 := func(msg string, v1 *base.Wei, v2 *base.Wei) {
 		s := ""
 		if v1 != nil {
-			s = v1.ToEtherStr(18)
+			s = v1.ToFloatString(18)
 		}
 		if v2 != nil {
-			s += " (" + v2.ToEtherStr(18) + ")"
+			s += " (" + v2.ToFloatString(18) + ")"
 		}
 		logger.TestLog(true, msg, s)
 	}

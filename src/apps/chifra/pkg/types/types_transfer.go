@@ -74,7 +74,7 @@ func (s *Transfer) Model(chain, format string, verbose bool, extraOpts map[strin
 
 	if extraOpts["ether"] == true {
 		decimals := int(s.Decimals)
-		model["amountEth"] = s.AmountNet().ToEtherStr(decimals)
+		model["amountEth"] = s.AmountNet().ToFloatString(decimals)
 		order = append(order, []string{"amountEth"}...)
 	}
 

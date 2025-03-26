@@ -4214,7 +4214,7 @@ components:
           description: "the holder's asset balance at the given block height"
         balanceDec:
           type: number
-          format: float64
+          format: float
           description: "the holder's asset balance (in Ether) at the given block height (calculated)"
         diff:
           type: string

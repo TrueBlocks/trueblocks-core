@@ -12,7 +12,7 @@ import (
 // TODO: Much of this reporting could be removed as it's only used for debugging
 
 // PriceUsd returns the price of the asset in USD
-func PriceUsd(conn *rpc.Connection, statement *types.Statement) (price base.Float, source string, err error) {
+func PriceUsd(conn *rpc.Connection, statement *types.Statement) (base.Float, string, error) {
 	if statement.IsStableCoin() {
 		r := priceDebugger{
 			address: statement.Asset,

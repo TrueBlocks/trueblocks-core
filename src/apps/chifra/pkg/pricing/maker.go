@@ -17,7 +17,7 @@ var (
 	makerDeployment = base.Blknum(3684349)
 )
 
-func priceUsdMaker(conn *rpc.Connection, statement *types.Statement) (price base.Float, source string, err error) {
+func priceUsdMaker(conn *rpc.Connection, statement *types.Statement) (base.Float, string, error) {
 	if statement.BlockNumber <= makerDeployment {
 		msg := fmt.Sprintf("Block %d is prior to deployment (%d) of Maker. No fallback pricing method", statement.BlockNumber, makerDeployment)
 		logger.TestLog(true, msg)
@@ -57,8 +57,7 @@ func priceUsdMaker(conn *rpc.Connection, statement *types.Statement) (price base
 
 	bigPrice := new(base.Float).SetRawWei(int1)
 	bigPrice = new(base.Float).Quo(bigPrice, new(base.Float).SetInt64(100000))
-	price = *bigPrice
-	source = "maker"
+	source := "maker"
 	r := priceDebugger{
 		address:     statement.Asset,
 		symbol:      statement.Symbol,
@@ -73,10 +72,9 @@ func priceUsdMaker(conn *rpc.Connection, statement *types.Statement) (price base
 		int0:        int0,
 		int1:        int1,
 		bigPrice:    bigPrice,
-		price:       price,
+		price:       *bigPrice,
 		source:      source,
 	}
 	r.report("using Maker")
-
-	return
+	return *bigPrice, source, err
 }

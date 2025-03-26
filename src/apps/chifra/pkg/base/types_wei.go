@@ -252,14 +252,14 @@ func (w *Wei) MarshalCache(writer io.Writer) error {
 
 // TODO: BOGUS - THIS NAME SUCKS
 
-func (w *Wei) ToEtherStr(decimals int) string {
-	return ToEther(w).Text('f', -1*decimals)
+func (w *Wei) ToFloatString(decimals int) string {
+	return ToFloat(w).Text('f', -1*decimals)
 }
 
-func ToEther(wei *Wei) *Ether {
-	f := NewEther(0)
-	e := NewEther(1e18)
-	return f.Quo(new(Ether).SetRawWei(wei), e)
+func ToFloat(wei *Wei) *Float {
+	f := NewFloat(0)
+	e := NewFloat(1e18)
+	return f.Quo(new(Float).SetRawWei(wei), e)
 }
 
 func BiFromBn(bn Blknum) *big.Int {

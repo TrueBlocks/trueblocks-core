@@ -78,7 +78,7 @@ func TestFormattedValue(t *testing.T) {
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			got := tt.bigIn.ToEtherStr(tt.decimals)
+			got := tt.bigIn.ToFloatString(tt.decimals)
 			if !tt.asEther {
 				got = tt.bigIn.String()
 			}
@@ -105,17 +105,17 @@ func TestToEther(t *testing.T) {
 	}
 
 	for _, test := range tests {
-		got := ToEther(test.input).Text('f', -18)
+		got := ToFloat(test.input).Text('f', -18)
 		if got != test.expected {
-			t.Errorf("ToEther(%v) want %v, got %v", test.input, test.expected, got)
+			t.Errorf("ToFloat(%v) want %v, got %v", test.input, test.expected, got)
 		}
-		got = ToEther(test.input).String()
+		got = ToFloat(test.input).String()
 		if got != test.expected {
-			t.Errorf("ToEther(%v) want %v, got %v", test.input, test.expected, got)
+			t.Errorf("ToFloat(%v) want %v, got %v", test.input, test.expected, got)
 		}
-		got = ToEther(test.input).String()
+		got = ToFloat(test.input).String()
 		if got != test.expected {
-			t.Errorf("ToEther(%v) want %v, got %v", test.input, test.expected, got)
+			t.Errorf("ToFloat(%v) want %v, got %v", test.input, test.expected, got)
 		}
 	}
 }
