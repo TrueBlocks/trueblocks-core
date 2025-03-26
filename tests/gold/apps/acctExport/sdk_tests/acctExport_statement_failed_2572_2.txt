@@ -38,11 +38,11 @@ str1 (call/data):    getReserves()
 first:               0x6b175474e89094c44da98b954eedeac495271d0f
 second:              0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2
 reversed:            false
-float0:              108885858975948005520000000
-float1:              87966329077991068615000
+float0:              1.08885859e+26
+float1:              8.796632908e+22
 float2:              1
-bigPrice:            1237.8129236177362007
-price:               1237.8129236177363
+bigPrice:            1237.812924
+price:               1237.812924
 source:              uniswap
 ===================================================
 Previous:               11670418 0 ( true )
@@ -116,7 +116,7 @@ Log statement is material - appending. reconciled: true
       "selfDestructIn": "0",
       "selfDestructOut": "0",
       "sender": "0x65b0d5e1dc0dee0704f53f660aa865c72e986fc7",
-      "spotPrice": 0,
+      "spotPrice": "0",
       "symbol": "aMKR",
       "timestamp": 1610856118,
       "totalIn": "38340920823",

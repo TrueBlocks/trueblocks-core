@@ -39,7 +39,7 @@ export?addrs=0x65b0d5e1dc0dee0704f53f660aa865c72e986fc7&accounting&statements&as
       "selfDestructIn": "0",
       "selfDestructOut": "0",
       "sender": "0x65b0d5e1dc0dee0704f53f660aa865c72e986fc7",
-      "spotPrice": 0,
+      "spotPrice": "0",
       "symbol": "aMKR",
       "timestamp": 1610856118,
       "totalIn": "38340920823",

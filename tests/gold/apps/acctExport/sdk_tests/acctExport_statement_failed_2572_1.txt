@@ -409,11 +409,11 @@ str1 (call/data):    getReserves()
 first:               0x6b175474e89094c44da98b954eedeac495271d0f
 second:              0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2
 reversed:            false
-float0:              7102397413752175341300000
-float1:              4931839383183232451600
+float0:              7.102397414e+24
+float1:              4.931839383e+21
 float2:              1
-bigPrice:            1440.1112570636812698
-price:               1440.1112570636813
+bigPrice:            1440.111257
+price:               1440.111257
 source:              uniswap
 ===================================================
 Previous:               14469880 33 ( true )
@@ -487,7 +487,7 @@ Log statement is material - appending. reconciled: true
       "selfDestructIn": "0",
       "selfDestructOut": "0",
       "sender": "0xa27f25d6a8f876c8cdd506f6cc59f3166f2a494f",
-      "spotPrice": 0,
+      "spotPrice": "0",
       "symbol": "mdai.io",
       "timestamp": 1663367531,
       "totalIn": "2017000000000000000000",

@@ -20,7 +20,7 @@ var (
 
 // priceUsdUniswap returns the price of the given asset in USD as of the given block number.
 func priceUsdUniswap(conn *rpc.Connection, statement *types.Statement) (price base.Float, source string, err error) {
-	multiplier := base.Float(1.0)
+	multiplier := *base.OneFloat
 	var first base.Address
 	var second base.Address
 	if statement.IsEth() {
@@ -33,7 +33,7 @@ func priceUsdUniswap(conn *rpc.Connection, statement *types.Statement) (price ba
 		temp.Symbol = "WEI"
 		multiplier, _, err = priceUsdUniswap(conn, &temp)
 		if err != nil {
-			return 0.0, "not-priced", err
+			return *base.ZeroFloat, "not-priced", err
 		}
 		first = wethAddress
 		second = statement.Asset
@@ -51,7 +51,7 @@ func priceUsdUniswap(conn *rpc.Connection, statement *types.Statement) (price ba
 	contractCall, _, err := call.NewContractCall(conn, uniswapFactoryV2, theCall1)
 	if err != nil {
 		wrapped := fmt.Errorf("the --calldata value provided (%s) was not found: %s", theCall1, err)
-		return 0.0, "not-priced", wrapped
+		return *base.ZeroFloat, "not-priced", wrapped
 	}
 	contractCall.BlockNumber = statement.BlockNumber
 
@@ -60,40 +60,39 @@ func priceUsdUniswap(conn *rpc.Connection, statement *types.Statement) (price ba
 	}
 	result, err := contractCall.Call(artFunc)
 	if err != nil {
-		return 0.0, "not-priced", err
+		return *base.ZeroFloat, "not-priced", err
 	}
 	pairAddress := base.HexToAddress(result.Values["val_0"])
 	if pairAddress.IsZero() {
 		msg := fmt.Sprintf("no pair found for %s and %s", first.Hex(), second.Hex())
-		return 0.0, "not-priced", errors.New(msg)
+		return *base.ZeroFloat, "not-priced", errors.New(msg)
 	}
 	theCall2 := "getReserves()"
 	contractCall, _, err = call.NewContractCall(conn, pairAddress, theCall2)
 	if err != nil {
 		wrapped := fmt.Errorf("the --calldata value provided (%s) was not found: %s", theCall2, err)
-		return 0.0, "not-priced", wrapped
+		return *base.ZeroFloat, "not-priced", wrapped
 	}
 	contractCall.BlockNumber = statement.BlockNumber
 	result, err = contractCall.Call(artFunc)
 	if err != nil {
-		return 0.0, "not-priced", err
+		return *base.ZeroFloat, "not-priced", err
 	}
-	reserve0 := new(base.Ether)
+	reserve0 := new(base.Float)
 	if result.Values != nil && (result.Values["_reserve0"] == "" || result.Values["_reserve0"] == "0") {
 		reserve0.SetString("1")
 	} else {
 		reserve0.SetString(result.Values["_reserve0"])
 	}
-	reserve1 := new(base.Ether)
+	reserve1 := new(base.Float)
 	if result.Values != nil && (result.Values["_reserve1"] == "" || result.Values["_reserve1"] == "0") {
 		reserve1.SetString("1")
 	} else {
 		reserve1.SetString(result.Values["_reserve1"])
 	}
-	bigPrice := new(base.Ether).Quo(reserve0, reserve1)
-
-	price = base.Float(bigPrice.Float64())
-	price *= multiplier
+	bigPrice := new(base.Float).Quo(reserve0, reserve1)
+	price = *bigPrice
+	price = *new(base.Float).Mul(&price, &multiplier)
 	source = "uniswap"
 
 	r := priceDebugger{
@@ -109,7 +108,7 @@ func priceUsdUniswap(conn *rpc.Connection, statement *types.Statement) (price ba
 		reversed:    reversed,
 		float0:      reserve0,
 		float1:      reserve1,
-		float2:      new(base.Ether).SetFloat64(float64(multiplier)),
+		float2:      &multiplier,
 		bigPrice:    bigPrice,
 		price:       price,
 		source:      source,

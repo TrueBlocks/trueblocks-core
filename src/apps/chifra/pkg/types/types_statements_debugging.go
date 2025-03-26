@@ -46,7 +46,7 @@ func (s *Statement) DebugStatement(node *AppNode[Transaction]) {
 	logger.TestLog(true, "hash:                  ", s.TransactionHash)
 	logger.TestLog(true, "timestamp:             ", s.Timestamp)
 	logger.TestLog(true, fmt.Sprintf("blockNumber:            %d.%d.%d", s.BlockNumber, s.TransactionIndex, s.LogIndex))
-	logger.TestLog(true, "priceSource:           ", s.SpotPrice, "("+s.PriceSource+")")
+	logger.TestLog(true, "priceSource:           ", s.SpotPrice.String(), "("+s.PriceSource+")")
 	reportL("---------------------------------------------------")
 	logger.TestLog(true, "Trial balance:")
 	report1("   prevBal:            ", &s.PrevBal)

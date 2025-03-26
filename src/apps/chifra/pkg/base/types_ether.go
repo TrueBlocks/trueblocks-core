@@ -11,9 +11,12 @@ import (
 // so we don't lose precision. The types mostly just cast to the big.Float and
 // call in to the identical functions.
 type Ether big.Float
+type Float big.Float
 
 var (
 	ZeroEther = NewEther(0)
+	ZeroFloat = NewFloat(0)
+	OneFloat  = NewFloat(1)
 )
 
 func NewEther(f float64) *Ether {
@@ -178,4 +181,78 @@ func (e *Ether) MarshalJSON() ([]byte, error) {
 		return []byte(`"0"`), nil
 	}
 	return []byte(`"` + e.String() + `"`), nil
+}
+
+func NewFloat(f float64) *Float {
+	e := new(Float)
+	(*big.Float)(e).SetPrec(236) // IEEE 754 octuple-precision binary floating-point format: binary256
+	(*big.Float)(e).SetMode(big.ToNearestEven)
+	return e.setFloat64(f)
+}
+
+func (e *Float) String() string {
+	if e == nil {
+		return "0"
+	}
+	// the negative number removes trailing zeros
+	return (*big.Float)(e).String()
+}
+
+func (e *Float) setFloat64(f float64) *Float {
+	if e == nil {
+		e = new(Float)
+	}
+	return (*Float)((*big.Float)(e).SetFloat64(f))
+}
+
+func (e *Float) Quo(a, b *Float) *Float {
+	if a == nil || b == nil || b.Float64() == 0 {
+		return nil
+	}
+	return (*Float)((*big.Float)(e).Quo((*big.Float)(a), (*big.Float)(b)))
+}
+
+func (e *Float) Mul(a, b *Float) *Float {
+	if a == nil || b == nil {
+		return nil
+	}
+	return (*Float)((*big.Float)(e).Mul((*big.Float)(a), (*big.Float)(b)))
+}
+
+func (e *Float) Float64() float64 {
+	if e == nil {
+		return 0.0
+	}
+	f, _ := (*big.Float)(e).Float64()
+	return f
+}
+
+func (e *Float) SetString(s string) (*Float, bool) {
+	str := strings.Trim(strings.TrimSpace(s), "\"")
+	if e == nil {
+		e = ZeroFloat
+	}
+	if f, _, err := (*big.Float)(e).Parse(str, 0); err == nil {
+		return (*Float)(f), true
+	}
+	return nil, false
+}
+
+// SetRawWei sets the Ether’s value directly from the Wei’s big.Int.
+// No scaling is done – it simply copies the Wei value into a big.Float.
+func (e *Float) SetRawWei(i *Wei) *Float {
+	if e == nil {
+		e = ZeroFloat
+	}
+	if i == nil {
+		return (*Float)((*big.Float)(e).SetInt64(0))
+	}
+	return (*Float)((*big.Float)(e).SetInt((*big.Int)(i)))
+}
+
+func (e *Float) SetInt64(i int64) *Float {
+	if e == nil {
+		e = ZeroFloat
+	}
+	return (*Float)((*big.Float)(e).SetInt64(i))
 }

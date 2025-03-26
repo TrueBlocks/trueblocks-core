@@ -21,7 +21,7 @@ func priceUsdMaker(conn *rpc.Connection, statement *types.Statement) (price base
 	if statement.BlockNumber <= makerDeployment {
 		msg := fmt.Sprintf("Block %d is prior to deployment (%d) of Maker. No fallback pricing method", statement.BlockNumber, makerDeployment)
 		logger.TestLog(true, msg)
-		return 0.0, "eth-not-priced-pre-maker", nil
+		return *base.ZeroFloat, "eth-not-priced-pre-maker", nil
 	}
 
 	msg := fmt.Sprintf("Block %d is prior to deployment (%d) of Uniswap V2. Falling back to Maker (%s)", statement.BlockNumber, uniswapFactoryV2_deployed, makerMedianizer)
@@ -31,7 +31,7 @@ func priceUsdMaker(conn *rpc.Connection, statement *types.Statement) (price base
 	contractCall, _, err := call.NewContractCall(conn, makerMedianizer, theCall)
 	if err != nil {
 		wrapped := fmt.Errorf("the --calldata value provided (%s) was not found: %s", theCall, err)
-		return 0.0, "not-priced", wrapped
+		return *base.ZeroFloat, "not-priced", wrapped
 	}
 
 	contractCall.BlockNumber = statement.BlockNumber
@@ -40,7 +40,7 @@ func priceUsdMaker(conn *rpc.Connection, statement *types.Statement) (price base
 	}
 	result, err := contractCall.Call(artFunc)
 	if err != nil {
-		return 0.0, "not-priced", err
+		return *base.ZeroFloat, "not-priced", err
 	}
 
 	divisor := new(base.Wei)
@@ -55,9 +55,9 @@ func priceUsdMaker(conn *rpc.Connection, statement *types.Statement) (price base
 	int0 = new(base.Wei).Mul(int0, new(base.Wei).SetInt64(100000))
 	int1 := new(base.Wei).Quo(int0, divisor)
 
-	bigPrice := new(base.Ether).SetRawWei(int1)
-	bigPrice = new(base.Ether).Quo(bigPrice, new(base.Ether).SetInt64(100000))
-	price = base.Float(bigPrice.Float64())
+	bigPrice := new(base.Float).SetRawWei(int1)
+	bigPrice = new(base.Float).Quo(bigPrice, new(base.Float).SetInt64(100000))
+	price = *bigPrice
 	source = "maker"
 	r := priceDebugger{
 		address:     statement.Asset,

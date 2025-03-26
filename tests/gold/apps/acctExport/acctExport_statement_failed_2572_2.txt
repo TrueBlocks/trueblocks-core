@@ -38,11 +38,11 @@ TEST[DATE|TIME] str1 (call/data):    getReserves()
 TEST[DATE|TIME] first:               0x6b175474e89094c44da98b954eedeac495271d0f
 TEST[DATE|TIME] second:              0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2
 TEST[DATE|TIME] reversed:            false
-TEST[DATE|TIME] float0:              108885858975948005520000000
-TEST[DATE|TIME] float1:              87966329077991068615000
+TEST[DATE|TIME] float0:              1.08885859e+26
+TEST[DATE|TIME] float1:              8.796632908e+22
 TEST[DATE|TIME] float2:              1
-TEST[DATE|TIME] bigPrice:            1237.8129236177362007
-TEST[DATE|TIME] price:               1237.8129236177363
+TEST[DATE|TIME] bigPrice:            1237.812924
+TEST[DATE|TIME] price:               1237.812924
 TEST[DATE|TIME] source:              uniswap
 TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] Previous:               11670418 0 ( true )
@@ -118,7 +118,7 @@ Results in ./statement_failed_2572_2_out.file
       "selfDestructIn": "0",
       "selfDestructOut": "0",
       "sender": "0x65b0d5e1dc0dee0704f53f660aa865c72e986fc7",
-      "spotPrice": 0,
+      "spotPrice": "0",
       "symbol": "aMKR",
       "timestamp": 1610856118,
       "totalIn": "38340920823",

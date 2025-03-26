@@ -51,11 +51,11 @@ str1 (call/data):    getReserves()
 first:               0x6b175474e89094c44da98b954eedeac495271d0f
 second:              0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2
 reversed:            false
-float0:              35717008095037952025000000
-float1:              11128119980749163400000
+float0:              3.57170081e+25
+float1:              1.112811998e+22
 float2:              1
-bigPrice:            3209.6174517192277884
-price:               3209.6174517192276
+bigPrice:            3209.617452
+price:               3209.617452
 source:              uniswap
 ===================================================
 Previous:               13960846 0 ( true )
@@ -67,7 +67,7 @@ asset:                  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimal
 hash:                   0x9d185a97a8825e220e2574a9cd0406c6a03b3215e91bebdcf7e159b37df91643
 timestamp:              1641592337
 blockNumber:            13960847.66.0
-priceSource:            3209.6174517192276 (uniswap)
+priceSource:            3209.617452 (uniswap)
 --------------------------------------------------- 
 Trial balance:
    prevBal:             0
@@ -114,11 +114,11 @@ str1 (call/data):    getReserves()
 first:               0x6b175474e89094c44da98b954eedeac495271d0f
 second:              0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2
 reversed:            false
-float0:              15754279803486889124000000
-float1:              5130026023545145506300
+float0:              1.57542798e+25
+float1:              5.130026024e+21
 float2:              1
-bigPrice:            3070.9941296944470635
-price:               3070.994129694447
+bigPrice:            3070.99413
+price:               3070.99413
 source:              uniswap
 =========================================================
 ===> PRICING FOR 0x0bc529c00c6401aef6d220be8c6ea1667f6ad93e (YFI) using Uniswap
@@ -131,11 +131,11 @@ str1 (call/data):    getReserves()
 first:               0x0bc529c00c6401aef6d220be8c6ea1667f6ad93e
 second:              0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2
 reversed:            true
-float0:              32096275837120306046
-float1:              242058450066398942560
-float2:              3070.994129694447
-bigPrice:            0.13259721289761209049
-price:               407.2052624224116
+float0:              3.209627584e+19
+float1:              2.420584501e+20
+float2:              3070.99413
+bigPrice:            0.1325972129
+price:               407.2052624
 source:              uniswap
 ===================================================
 Previous:               13960847 66 ( true )
@@ -147,7 +147,7 @@ asset:                  0x0bc529c00c6401aef6d220be8c6ea1667f6ad93e (YFI) decimal
 hash:                   0x3d630cf5a1626382924429d936d1b95d5e31be1ead3773f490b9fb0e95497ce4
 timestamp:              1645029438
 blockNumber:            14218245.11.3
-priceSource:            407.2052624224116 (uniswap)
+priceSource:            407.2052624 (uniswap)
 --------------------------------------------------- 
 Trial balance:
    prevBal:             0
@@ -192,11 +192,11 @@ str1 (call/data):    getReserves()
 first:               0x6b175474e89094c44da98b954eedeac495271d0f
 second:              0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2
 reversed:            false
-float0:              14982544649837402419000000
-float1:              5360043152901069617000
+float0:              1.498254465e+25
+float1:              5.360043153e+21
 float2:              1
-bigPrice:            2795.228363362755828
-price:               2795.2283633627558
+bigPrice:            2795.228363
+price:               2795.228363
 source:              uniswap
 ===================================================
 Previous:               14218245 11 ( true )
@@ -208,7 +208,7 @@ asset:                  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimal
 hash:                   0x4cdaa467819f6565f4767663be4181f00f01d4dee40423872fe67fbb1529c4b3
 timestamp:              1645207151
 blockNumber:            14231553.18.0
-priceSource:            2795.2283633627558 (uniswap)
+priceSource:            2795.228363 (uniswap)
 --------------------------------------------------- 
 Trial balance:
    prevBal:             371.7140475
@@ -255,11 +255,11 @@ str1 (call/data):    getReserves()
 first:               0x6b175474e89094c44da98b954eedeac495271d0f
 second:              0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2
 reversed:            false
-float0:              14980357925215561296000000
-float1:              5754334083011708314600
+float0:              1.498035793e+25
+float1:              5.754334083e+21
 float2:              1
-bigPrice:            2603.3173794065027067
-price:               2603.317379406503
+bigPrice:            2603.317379
+price:               2603.317379
 source:              uniswap
 ===================================================
 Previous:               14231553 18 ( true )
@@ -271,7 +271,7 @@ asset:                  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimal
 hash:                   0x85153f1861fc5ac65ac7cc1f026895c88869bbb88e4bc86162330e15bcd691a2
 timestamp:              1645570391
 blockNumber:            14258674.130.0
-priceSource:            2603.317379406503 (uniswap)
+priceSource:            2603.317379 (uniswap)
 --------------------------------------------------- 
 Trial balance:
    prevBal:             370.710531205713488
@@ -318,11 +318,11 @@ str1 (call/data):    getReserves()
 first:               0x6b175474e89094c44da98b954eedeac495271d0f
 second:              0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2
 reversed:            false
-float0:              15124056752521465429000000
-float1:              5713234691098483623000
+float0:              1.512405675e+25
+float1:              5.713234691e+21
 float2:              1
-bigPrice:            2647.1968281095701088
-price:               2647.19682810957
+bigPrice:            2647.196828
+price:               2647.196828
 source:              uniswap
 ===================================================
 Previous:               14258674 130 ( true )
@@ -334,7 +334,7 @@ asset:                  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimal
 hash:                   0xec6c0485289a9adc3c14f0dc3d30a524bf8ccf4a201bb0ee521779c53dc25a4f
 timestamp:              1645735140
 blockNumber:            14271011.355.0
-priceSource:            2647.19682810957 (uniswap)
+priceSource:            2647.196828 (uniswap)
 --------------------------------------------------- 
 Trial balance:
    prevBal:             365.707757534269896
@@ -381,11 +381,11 @@ str1 (call/data):    getReserves()
 first:               0x6b175474e89094c44da98b954eedeac495271d0f
 second:              0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2
 reversed:            false
-float0:              15107626025295544450000000
-float1:              5719513216664661746000
+float0:              1.510762603e+25
+float1:              5.719513217e+21
 float2:              1
-bigPrice:            2641.4181509848083633
-price:               2641.4181509848086
+bigPrice:            2641.418151
+price:               2641.418151
 source:              uniswap
 ===================================================
 Previous:               14271011 355 ( true )
@@ -397,7 +397,7 @@ asset:                  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimal
 hash:                   0x08b5e486fb0a0dcede5c0f11419185359e44cdadf1507492c76757b6b7e95ecb
 timestamp:              1645738120
 blockNumber:            14271262.30.0
-priceSource:            2641.4181509848086 (uniswap)
+priceSource:            2641.418151 (uniswap)
 --------------------------------------------------- 
 Trial balance:
    prevBal:             365.7003510935241614
@@ -445,11 +445,11 @@ str1 (call/data):    getReserves()
 first:               0x6b175474e89094c44da98b954eedeac495271d0f
 second:              0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2
 reversed:            false
-float0:              15027235501650365840000000
-float1:              5750310938585842521000
+float0:              1.50272355e+25
+float1:              5.750310939e+21
 float2:              1
-bigPrice:            2613.290944114749171
-price:               2613.290944114749
+bigPrice:            2613.290944
+price:               2613.290944
 source:              uniswap
 =========================================================
 ===> PRICING FOR 0x0bc529c00c6401aef6d220be8c6ea1667f6ad93e (YFI) using Uniswap
@@ -462,11 +462,11 @@ str1 (call/data):    getReserves()
 first:               0x0bc529c00c6401aef6d220be8c6ea1667f6ad93e
 second:              0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2
 reversed:            true
-float0:              31502650762766498252
-float1:              234593059953829676080
-float2:              2613.290944114749
-bigPrice:            0.13428637134008373272
-price:               350.9293581410712
+float0:              3.150265076e+19
+float1:              2.3459306e+20
+float2:              2613.290944
+bigPrice:            0.1342863713
+price:               350.9293581
 source:              uniswap
 ===================================================
 Previous:               14271262 30 ( true )
@@ -478,7 +478,7 @@ asset:                  0x0bc529c00c6401aef6d220be8c6ea1667f6ad93e (YFI) decimal
 hash:                   0x0542c4f8f837a933d6dd556830a585df49553c10563325d7b97ec51b05d7ef5e
 timestamp:              1645741808
 blockNumber:            14271515.128.239
-priceSource:            350.9293581410712 (uniswap)
+priceSource:            350.9293581 (uniswap)
 --------------------------------------------------- 
 Trial balance:
    prevBal:             0.42
@@ -524,11 +524,11 @@ str1 (call/data):    getReserves()
 first:               0x6b175474e89094c44da98b954eedeac495271d0f
 second:              0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2
 reversed:            false
-float0:              15225846169275790728000000
-float1:              5678387813567977109500
+float0:              1.522584617e+25
+float1:              5.678387814e+21
 float2:              1
-bigPrice:            2681.3677876835136131
-price:               2681.3677876835136
+bigPrice:            2681.367788
+price:               2681.367788
 source:              uniswap
 =========================================================
 ===> PRICING FOR 0x0bc529c00c6401aef6d220be8c6ea1667f6ad93e (YFI) using Uniswap
@@ -541,11 +541,11 @@ str1 (call/data):    getReserves()
 first:               0x0bc529c00c6401aef6d220be8c6ea1667f6ad93e
 second:              0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2
 reversed:            true
-float0:              31796810268899157244
-float1:              232441916353775817620
-float2:              2681.3677876835136
-bigPrice:            0.13679464860591029798
-price:               366.7967642993733
+float0:              3.179681027e+19
+float1:              2.324419164e+20
+float2:              2681.367788
+bigPrice:            0.1367946486
+price:               366.7967643
 source:              uniswap
 ===================================================
 Previous:               14271515 128 ( true )
@@ -557,7 +557,7 @@ asset:                  0x0bc529c00c6401aef6d220be8c6ea1667f6ad93e (YFI) decimal
 hash:                   0xd521ef2eb459a2419ccbecf9e0c0ba0471f56997534f4a02cc95e1dc0e13b90a
 timestamp:              1645815242
 blockNumber:            14276993.249.245
-priceSource:            366.7967642993733 (uniswap)
+priceSource:            366.7967643 (uniswap)
 --------------------------------------------------- 
 Trial balance:
    prevBal:             0.42136603
@@ -603,11 +603,11 @@ str1 (call/data):    getReserves()
 first:               0x6b175474e89094c44da98b954eedeac495271d0f
 second:              0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2
 reversed:            false
-float0:              13189176885977835570000000
-float1:              4694271998777720718300
+float0:              1.318917689e+25
+float1:              4.694271999e+21
 float2:              1
-bigPrice:            2809.6320131027751628
-price:               2809.632013102775
+bigPrice:            2809.632013
+price:               2809.632013
 source:              uniswap
 =========================================================
 ===> PRICING FOR 0x0bc529c00c6401aef6d220be8c6ea1667f6ad93e (YFI) using Uniswap
@@ -620,11 +620,11 @@ str1 (call/data):    getReserves()
 first:               0x0bc529c00c6401aef6d220be8c6ea1667f6ad93e
 second:              0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2
 reversed:            true
-float0:              31824442200280417168
-float1:              232445555056762679650
-float2:              2809.632013102775
-bigPrice:            0.13691138207615525385
-price:               384.6706020393113
+float0:              3.18244422e+19
+float1:              2.324455551e+20
+float2:              2809.632013
+bigPrice:            0.1369113821
+price:               384.670602
 source:              uniswap
 ===================================================
 Previous:               14276993 249 ( true )
@@ -636,7 +636,7 @@ asset:                  0x0bc529c00c6401aef6d220be8c6ea1667f6ad93e (YFI) decimal
 hash:                   0xe0836121c525f8452c5a99dea1da4794b3872a7ef6df43c6bc0719dbe1bc9fa2
 timestamp:              1646074703
 blockNumber:            14296398.98.142
-priceSource:            384.6706020393113 (uniswap)
+priceSource:            384.670602 (uniswap)
 --------------------------------------------------- 
 Trial balance:
    prevBal:             0.49389168
@@ -682,11 +682,11 @@ str1 (call/data):    getReserves()
 first:               0x6b175474e89094c44da98b954eedeac495271d0f
 second:              0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2
 reversed:            false
-float0:              13550849375276173571000000
-float1:              4571996442504507918000
+float0:              1.355084938e+25
+float1:              4.571996443e+21
 float2:              1
-bigPrice:            2963.8801223242230556
-price:               2963.880122324223
+bigPrice:            2963.880122
+price:               2963.880122
 source:              uniswap
 =========================================================
 ===> PRICING FOR 0xa0b73e1ff0b80914ab6fe0444e65848c4c34450b (CRO) using Uniswap
@@ -699,11 +699,11 @@ str1 (call/data):    getReserves()
 first:               0xa0b73e1ff0b80914ab6fe0444e65848c4c34450b
 second:              0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2
 reversed:            true
-float0:              9183871105683
-float1:              13485074862019183852
-float2:              2963.880122324223
-bigPrice:            0.00000068103968273468343727
-price:               0.0020185199781713238
+float0:              9.183871106e+12
+float1:              1.348507486e+19
+float2:              2963.880122
+bigPrice:            6.810396827e-07
+price:               0.002018519978
 source:              uniswap
 ===================================================
 Previous:               14296398 98 ( true )
@@ -715,7 +715,7 @@ asset:                  0xa0b73e1ff0b80914ab6fe0444e65848c4c34450b (CRO) decimal
 hash:                   0x428bc69806d9e2b5b49ffd0154c5ca85e946fbcaa2c0da126d00f5648fada254
 timestamp:              1646178247
 blockNumber:            14304199.69.168
-priceSource:            0.0020185199781713238 (uniswap)
+priceSource:            0.002018519978 (uniswap)
 --------------------------------------------------- 
 Trial balance:
    prevBal:             0
@@ -761,11 +761,11 @@ str1 (call/data):    getReserves()
 first:               0x6b175474e89094c44da98b954eedeac495271d0f
 second:              0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2
 reversed:            false
-float0:              13553288248122239329000000
-float1:              4571183720840455725300
+float0:              1.355328825e+25
+float1:              4.571183721e+21
 float2:              1
-bigPrice:            2964.9406096568654252
-price:               2964.9406096568655
+bigPrice:            2964.94061
+price:               2964.94061
 source:              uniswap
 =========================================================
 ===> PRICING FOR 0x0bc529c00c6401aef6d220be8c6ea1667f6ad93e (YFI) using Uniswap
@@ -778,11 +778,11 @@ str1 (call/data):    getReserves()
 first:               0x0bc529c00c6401aef6d220be8c6ea1667f6ad93e
 second:              0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2
 reversed:            true
-float0:              31842085409616156808
-float1:              232328143557838739630
-float2:              2964.9406096568655
-bigPrice:            0.13705651378258002906
-price:               406.3644235319674
+float0:              3.184208541e+19
+float1:              2.323281436e+20
+float2:              2964.94061
+bigPrice:            0.1370565138
+price:               406.3644235
 source:              uniswap
 ===================================================
 Previous:               14304199 69 ( true )
@@ -794,7 +794,7 @@ asset:                  0x0bc529c00c6401aef6d220be8c6ea1667f6ad93e (YFI) decimal
 hash:                   0x2a0480cba49121e1a1bf55eb1216ad3bb543d6798238b63aa4c9461510dbb5ca
 timestamp:              1646179627
 blockNumber:            14304289.8.5
-priceSource:            406.3644235319674 (uniswap)
+priceSource:            406.3644235 (uniswap)
 --------------------------------------------------- 
 Trial balance:
    prevBal:             0.65357365
@@ -840,11 +840,11 @@ str1 (call/data):    getReserves()
 first:               0x6b175474e89094c44da98b954eedeac495271d0f
 second:              0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2
 reversed:            false
-float0:              13481248949492314607000000
-float1:              4583439817822894484500
+float0:              1.348124895e+25
+float1:              4.583439818e+21
 float2:              1
-bigPrice:            2941.2950721137262213
-price:               2941.2950721137263
+bigPrice:            2941.295072
+price:               2941.295072
 source:              uniswap
 =========================================================
 ===> PRICING FOR 0x0bc529c00c6401aef6d220be8c6ea1667f6ad93e (YFI) using Uniswap
@@ -857,11 +857,11 @@ str1 (call/data):    getReserves()
 first:               0x0bc529c00c6401aef6d220be8c6ea1667f6ad93e
 second:              0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2
 reversed:            true
-float0:              31854049809558354282
-float1:              232263111760131095330
-float2:              2941.2950721137263
-bigPrice:            0.1371464007700693824
-price:               403.3880327431392
+float0:              3.185404981e+19
+float1:              2.322631118e+20
+float2:              2941.295072
+bigPrice:            0.1371464008
+price:               403.3880327
 source:              uniswap
 ===================================================
 Previous:               14304289 8 ( true )
@@ -873,7 +873,7 @@ asset:                  0x0bc529c00c6401aef6d220be8c6ea1667f6ad93e (YFI) decimal
 hash:                   0x73f004780c825bc01d102d4d3d21242cfe42ffd7cfd85eacc9ff521f048fb5fa
 timestamp:              1646257078
 blockNumber:            14310071.69.155
-priceSource:            403.3880327431392 (uniswap)
+priceSource:            403.3880327 (uniswap)
 --------------------------------------------------- 
 Trial balance:
    prevBal:             1.26115605
@@ -919,11 +919,11 @@ str1 (call/data):    getReserves()
 first:               0x6b175474e89094c44da98b954eedeac495271d0f
 second:              0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2
 reversed:            false
-float0:              13509389738419556500000000
-float1:              4574615449682203588400
+float0:              1.350938974e+25
+float1:              4.57461545e+21
 float2:              1
-bigPrice:            2953.1202976543192353
-price:               2953.120297654319
+bigPrice:            2953.120298
+price:               2953.120298
 source:              uniswap
 =========================================================
 ===> PRICING FOR 0xa0b73e1ff0b80914ab6fe0444e65848c4c34450b (CRO) using Uniswap
@@ -936,11 +936,11 @@ str1 (call/data):    getReserves()
 first:               0xa0b73e1ff0b80914ab6fe0444e65848c4c34450b
 second:              0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2
 reversed:            true
-float0:              9135515967853
-float1:              13577080605644103729
-float2:              2953.120297654319
-bigPrice:            0.00000067286305747166965393
-price:               0.0019870455525613324
+float0:              9.135515968e+12
+float1:              1.357708061e+19
+float2:              2953.120298
+bigPrice:            6.728630575e-07
+price:               0.001987045553
 source:              uniswap
 ===================================================
 Previous:               14310071 69 ( true )
@@ -952,7 +952,7 @@ asset:                  0xa0b73e1ff0b80914ab6fe0444e65848c4c34450b (CRO) decimal
 hash:                   0x6e2e8adb10316b28bb8225b1eb76e1dccdbed3505e828486e20fc141796e7359
 timestamp:              1646267700
 blockNumber:            14310827.166.239
-priceSource:            0.0019870455525613324 (uniswap)
+priceSource:            0.001987045553 (uniswap)
 --------------------------------------------------- 
 Trial balance:
    prevBal:             0.000071560937101954
@@ -998,11 +998,11 @@ str1 (call/data):    getReserves()
 first:               0x6b175474e89094c44da98b954eedeac495271d0f
 second:              0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2
 reversed:            false
-float0:              13179829166389478412000000
-float1:              4685940966844281351200
+float0:              1.317982917e+25
+float1:              4.685940967e+21
 float2:              1
-bigPrice:            2812.6323527428803226
-price:               2812.6323527428804
+bigPrice:            2812.632353
+price:               2812.632353
 source:              uniswap
 =========================================================
 ===> PRICING FOR 0x0bc529c00c6401aef6d220be8c6ea1667f6ad93e (YFI) using Uniswap
@@ -1015,11 +1015,11 @@ str1 (call/data):    getReserves()
 first:               0x0bc529c00c6401aef6d220be8c6ea1667f6ad93e
 second:              0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2
 reversed:            true
-float0:              31169565796333418144
-float1:              237438173586285199150
-float2:              2812.6323527428804
-bigPrice:            0.13127445063085601957
-price:               369.22676693289367
+float0:              3.11695658e+19
+float1:              2.374381736e+20
+float2:              2812.632353
+bigPrice:            0.1312744506
+price:               369.2267669
 source:              uniswap
 ===================================================
 Previous:               14310827 166 ( true )
@@ -1031,7 +1031,7 @@ asset:                  0x0bc529c00c6401aef6d220be8c6ea1667f6ad93e (YFI) decimal
 hash:                   0x1965e33b6d3d52163c31908986fa46b1ee8253ccc33836802ee6169aa0ce2799
 timestamp:              1646338749
 blockNumber:            14316149.98.115
-priceSource:            369.22676693289367 (uniswap)
+priceSource:            369.2267669 (uniswap)
 --------------------------------------------------- 
 Trial balance:
    prevBal:             1.4205335
@@ -1077,11 +1077,11 @@ str1 (call/data):    getReserves()
 first:               0x6b175474e89094c44da98b954eedeac495271d0f
 second:              0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2
 reversed:            false
-float0:              13179829166389478412000000
-float1:              4685940966844281351200
+float0:              1.317982917e+25
+float1:              4.685940967e+21
 float2:              1
-bigPrice:            2812.6323527428803226
-price:               2812.6323527428804
+bigPrice:            2812.632353
+price:               2812.632353
 source:              uniswap
 =========================================================
 ===> PRICING FOR 0xa0b73e1ff0b80914ab6fe0444e65848c4c34450b (CRO) using Uniswap
@@ -1094,11 +1094,11 @@ str1 (call/data):    getReserves()
 first:               0xa0b73e1ff0b80914ab6fe0444e65848c4c34450b
 second:              0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2
 reversed:            true
-float0:              8947894196742
-float1:              13606378078969008359
-float2:              2812.6323527428804
-bigPrice:            0.00000065762498622410805915
-price:               0.0018496573122260174
+float0:              8.947894197e+12
+float1:              1.360637808e+19
+float2:              2812.632353
+bigPrice:            6.576249862e-07
+price:               0.001849657312
 source:              uniswap
 ===================================================
 Previous:               14316149 98 ( true )
@@ -1110,7 +1110,7 @@ asset:                  0xa0b73e1ff0b80914ab6fe0444e65848c4c34450b (CRO) decimal
 hash:                   0xf747b87f11b03c9dbfb2fb30dc083b5199b0fee32bc4a20acbb95457c20cecae
 timestamp:              1646338826
 blockNumber:            14316157.253.420
-priceSource:            0.0018496573122260174 (uniswap)
+priceSource:            0.001849657312 (uniswap)
 --------------------------------------------------- 
 Trial balance:
    prevBal:             0.000083892778140949
@@ -1156,11 +1156,11 @@ str1 (call/data):    getReserves()
 first:               0x6b175474e89094c44da98b954eedeac495271d0f
 second:              0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2
 reversed:            false
-float0:              12892271961334227383000000
-float1:              4792660660181700762600
+float0:              1.289227196e+25
+float1:              4.79266066e+21
 float2:              1
-bigPrice:            2690.0030850182186215
-price:               2690.003085018219
+bigPrice:            2690.003085
+price:               2690.003085
 source:              uniswap
 =========================================================
 ===> PRICING FOR 0x0bc529c00c6401aef6d220be8c6ea1667f6ad93e (YFI) using Uniswap
@@ -1173,11 +1173,11 @@ str1 (call/data):    getReserves()
 first:               0x0bc529c00c6401aef6d220be8c6ea1667f6ad93e
 second:              0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2
 reversed:            true
-float0:              30841609573505220388
-float1:              239974137234543087980
-float2:              2690.003085018219
-bigPrice:            0.12852055612710303146
-price:               345.7206924701643
+float0:              3.084160957e+19
+float1:              2.399741372e+20
+float2:              2690.003085
+bigPrice:            0.1285205561
+price:               345.7206925
 source:              uniswap
 ===================================================
 Previous:               14316157 253 ( true )
@@ -1189,7 +1189,7 @@ asset:                  0x0bc529c00c6401aef6d220be8c6ea1667f6ad93e (YFI) decimal
 hash:                   0x66cfc8ce04a1b7a3f51dd3a2782f577db94060998f4bd0bcef4aadcb4d18098a
 timestamp:              1646416755
 blockNumber:            14322020.266.477
-priceSource:            345.7206924701643 (uniswap)
+priceSource:            345.7206925 (uniswap)
 --------------------------------------------------- 
 Trial balance:
    prevBal:             1.49445584
@@ -1235,11 +1235,11 @@ str1 (call/data):    getReserves()
 first:               0x6b175474e89094c44da98b954eedeac495271d0f
 second:              0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2
 reversed:            false
-float0:              12892271961334227383000000
-float1:              4792660660181700762600
+float0:              1.289227196e+25
+float1:              4.79266066e+21
 float2:              1
-bigPrice:            2690.0030850182186215
-price:               2690.003085018219
+bigPrice:            2690.003085
+price:               2690.003085
 source:              uniswap
 =========================================================
 ===> PRICING FOR 0xa0b73e1ff0b80914ab6fe0444e65848c4c34450b (CRO) using Uniswap
@@ -1252,11 +1252,11 @@ str1 (call/data):    getReserves()
 first:               0xa0b73e1ff0b80914ab6fe0444e65848c4c34450b
 second:              0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2
 reversed:            true
-float0:              8894430276734
-float1:              13716915025228224147
-float2:              2690.003085018219
-bigPrice:            0.00000064842789070102977457
-price:               0.0017442730263976264
+float0:              8.894430277e+12
+float1:              1.371691503e+19
+float2:              2690.003085
+bigPrice:            6.484278907e-07
+price:               0.001744273026
 source:              uniswap
 ===================================================
 Previous:               14322020 266 ( true )
@@ -1268,7 +1268,7 @@ asset:                  0xa0b73e1ff0b80914ab6fe0444e65848c4c34450b (CRO) decimal
 hash:                   0x2b6026c915bb606be4806cd361531957a9e591bd0304b00a60e0cdd160d2d025
 timestamp:              1646416874
 blockNumber:            14322028.199.357
-priceSource:            0.0017442730263976264 (uniswap)
+priceSource:            0.001744273026 (uniswap)
 --------------------------------------------------- 
 Trial balance:
    prevBal:             0.000088757701013562
@@ -1314,11 +1314,11 @@ str1 (call/data):    getReserves()
 first:               0x6b175474e89094c44da98b954eedeac495271d0f
 second:              0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2
 reversed:            false
-float0:              12709095773345606544000000
-float1:              4862055009544841135000
+float0:              1.270909577e+25
+float1:              4.86205501e+21
 float2:              1
-bigPrice:            2613.9350024621301503
-price:               2613.9350024621303
+bigPrice:            2613.935002
+price:               2613.935002
 source:              uniswap
 =========================================================
 ===> PRICING FOR 0x95ad61b0a150d79219dcf64e1e6cc01f0b64c4ce (SHIB) using Uniswap
@@ -1331,11 +1331,11 @@ str1 (call/data):    getReserves()
 first:               0x95ad61b0a150d79219dcf64e1e6cc01f0b64c4ce
 second:              0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2
 reversed:            true
-float0:              93153303706777032920000000000
-float1:              840527748347987976200
-float2:              2613.9350024621303
-bigPrice:            110827160.54272429994
-price:               2.8969499416611694e+11
+float0:              9.315330371e+28
+float1:              8.405277483e+20
+float2:              2613.935002
+bigPrice:            110827160.5
+price:               2.896949942e+11
 source:              uniswap
 ===================================================
 Previous:               14322028 199 ( true )
@@ -1347,7 +1347,7 @@ asset:                  0x95ad61b0a150d79219dcf64e1e6cc01f0b64c4ce (SHIB) decima
 hash:                   0x81866cd08eca2c7bf7bdcd370acdea8f0b57095c412704106d9ff1c25e888e6c
 timestamp:              1646431842
 blockNumber:            14323108.93.108
-priceSource:            2.8969499416611694e+11 (uniswap)
+priceSource:            2.896949942e+11 (uniswap)
 --------------------------------------------------- 
 Trial balance:
    prevBal:             0
@@ -1393,11 +1393,11 @@ str1 (call/data):    getReserves()
 first:               0x6b175474e89094c44da98b954eedeac495271d0f
 second:              0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2
 reversed:            false
-float0:              12617932221538000835000000
-float1:              4896301105314152760300
+float0:              1.261793222e+25
+float1:              4.896301105e+21
 float2:              1
-bigPrice:            2577.0335504577630814
-price:               2577.033550457763
+bigPrice:            2577.03355
+price:               2577.03355
 source:              uniswap
 =========================================================
 ===> PRICING FOR 0x0bc529c00c6401aef6d220be8c6ea1667f6ad93e (YFI) using Uniswap
@@ -1410,11 +1410,11 @@ str1 (call/data):    getReserves()
 first:               0x0bc529c00c6401aef6d220be8c6ea1667f6ad93e
 second:              0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2
 reversed:            true
-float0:              32919146403909491894
-float1:              242422532636740067740
-float2:              2577.033550457763
-bigPrice:            0.13579243664299738684
-price:               349.9416651274144
+float0:              3.29191464e+19
+float1:              2.424225326e+20
+float2:              2577.03355
+bigPrice:            0.1357924366
+price:               349.9416651
 source:              uniswap
 ===================================================
 Previous:               14323108 93 ( true )
@@ -1426,7 +1426,7 @@ asset:                  0x0bc529c00c6401aef6d220be8c6ea1667f6ad93e (YFI) decimal
 hash:                   0x1c8353958e28d5c39336bed322ff5f0f65aab37c006393f7c18701b2eb2a3707
 timestamp:              1646673952
 blockNumber:            14341057.158.145
-priceSource:            349.9416651274144 (uniswap)
+priceSource:            349.9416651 (uniswap)
 --------------------------------------------------- 
 Trial balance:
    prevBal:             1.67631669
@@ -1472,11 +1472,11 @@ str1 (call/data):    getReserves()
 first:               0x6b175474e89094c44da98b954eedeac495271d0f
 second:              0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2
 reversed:            false
-float0:              12487706707171550394000000
-float1:              4947570433223828941000
+float0:              1.248770671e+25
+float1:              4.947570433e+21
 float2:              1
-bigPrice:            2524.0078692592923388
-price:               2524.0078692592924
+bigPrice:            2524.007869
+price:               2524.007869
 source:              uniswap
 =========================================================
 ===> PRICING FOR 0xa0b73e1ff0b80914ab6fe0444e65848c4c34450b (CRO) using Uniswap
@@ -1489,11 +1489,11 @@ str1 (call/data):    getReserves()
 first:               0xa0b73e1ff0b80914ab6fe0444e65848c4c34450b
 second:              0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2
 reversed:            true
-float0:              9043459908433
-float1:              13576454053364840690
-float2:              2524.0078692592924
-bigPrice:            0.000000666113542820972023
-price:               0.00168127582390032
+float0:              9.043459908e+12
+float1:              1.357645405e+19
+float2:              2524.007869
+bigPrice:            6.661135428e-07
+price:               0.001681275824
 source:              uniswap
 ===================================================
 Previous:               14341057 158 ( true )
@@ -1505,7 +1505,7 @@ asset:                  0xa0b73e1ff0b80914ab6fe0444e65848c4c34450b (CRO) decimal
 hash:                   0x51c5cadbd054741d9a1962c1e3a938cb193af315ebb13d7749fcb2fbd9bdb947
 timestamp:              1646680324
 blockNumber:            14341533.111.265
-priceSource:            0.00168127582390032 (uniswap)
+priceSource:            0.001681275824 (uniswap)
 --------------------------------------------------- 
 Trial balance:
    prevBal:             0.000095459044566615
@@ -1565,7 +1565,7 @@ Log statement is material - appending. reconciled: true
       "selfDestructIn": "0",
       "selfDestructOut": "0",
       "sender": "0xe081abb7d9e327e89a13e65b3e2b6fcaf2eceb97",
-      "spotPrice": 3209.6174517192276,
+      "spotPrice": "3209.617452",
       "symbol": "WEI",
       "timestamp": 1641592337,
       "totalIn": "371714047500000000000",
@@ -1611,7 +1611,7 @@ Log statement is material - appending. reconciled: true
       "selfDestructIn": "0",
       "selfDestructOut": "0",
       "sender": "0xaca096d2e6492d7380c5d8e70d90e13eecc72dd4",
-      "spotPrice": 407.2052624224116,
+      "spotPrice": "407.2052624",
       "symbol": "YFI",
       "timestamp": 1645029438,
       "totalIn": "420000000000000000",
@@ -1657,7 +1657,7 @@ Log statement is material - appending. reconciled: true
       "selfDestructIn": "0",
       "selfDestructOut": "0",
       "sender": "0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e",
-      "spotPrice": 2795.2283633627558,
+      "spotPrice": "2795.228363",
       "symbol": "WEI",
       "timestamp": 1645207151,
       "totalIn": "0",

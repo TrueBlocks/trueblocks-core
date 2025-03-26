@@ -18,12 +18,12 @@ type priceDebugger struct {
 	first       base.Address
 	second      base.Address
 	reversed    bool
-	float0      *base.Ether
-	float1      *base.Ether
-	float2      *base.Ether
+	float0      *base.Float
+	float1      *base.Float
+	float2      *base.Float
 	int0        *base.Wei
 	int1        *base.Wei
-	bigPrice    *base.Ether
+	bigPrice    *base.Float
 	price       base.Float
 	source      string
 }
@@ -67,16 +67,16 @@ func (r *priceDebugger) report(msg string) {
 			logger.TestLog(true, "int1:               ", r.int1)
 		}
 		if r.float0 != nil {
-			logger.TestLog(true, "float0:             ", r.float0)
+			logger.TestLog(true, "float0:             ", r.float0.String())
 		}
 		if r.float1 != nil {
-			logger.TestLog(true, "float1:             ", r.float1)
+			logger.TestLog(true, "float1:             ", r.float1.String())
 		}
 		if r.float2 != nil {
-			logger.TestLog(true, "float2:             ", r.float2)
+			logger.TestLog(true, "float2:             ", r.float2.String())
 		}
-		logger.TestLog(true, "bigPrice:           ", r.bigPrice)
-		logger.TestLog(true, "price:              ", r.price)
+		logger.TestLog(true, "bigPrice:           ", r.bigPrice.String())
+		logger.TestLog(true, "price:              ", r.price.String())
 		logger.TestLog(true, "source:             ", r.source)
 	}
 }

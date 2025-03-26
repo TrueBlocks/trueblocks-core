@@ -115,7 +115,7 @@ TEST[DATE|TIME]
       "selfDestructIn": "0",
       "selfDestructOut": "0",
       "sender": "0x0",
-      "spotPrice": 0,
+      "spotPrice": "0",
       "symbol": "CSTK",
       "timestamp": 1572938328,
       "totalIn": "22500000000000000000000",

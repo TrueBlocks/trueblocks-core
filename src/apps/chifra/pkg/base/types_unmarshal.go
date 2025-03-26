@@ -24,7 +24,7 @@ func (t *Timestamp) UnmarshalJSON(data []byte) error {
 func (f *Float) UnmarshalJSON(data []byte) error {
 	str := safeUnquote(string(data))
 	result, _ := strconv.ParseFloat(str, 64)
-	*f = Float(result)
+	*f = *NewFloat(result)
 	return nil
 }
 

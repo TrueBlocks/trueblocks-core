@@ -39,11 +39,11 @@ TEST[DATE|TIME] str1 (call/data):    getReserves()
 TEST[DATE|TIME] first:               0x6b175474e89094c44da98b954eedeac495271d0f
 TEST[DATE|TIME] second:              0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2
 TEST[DATE|TIME] reversed:            false
-TEST[DATE|TIME] float0:              36936252061481304330000000
-TEST[DATE|TIME] float1:              20243962597672319668000
+TEST[DATE|TIME] float0:              3.693625206e+25
+TEST[DATE|TIME] float1:              2.02439626e+22
 TEST[DATE|TIME] float2:              1
-TEST[DATE|TIME] bigPrice:            1824.5564267999728689
-TEST[DATE|TIME] price:               1824.5564267999728
+TEST[DATE|TIME] bigPrice:            1824.556427
+TEST[DATE|TIME] price:               1824.556427
 TEST[DATE|TIME] source:              uniswap
 TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] Previous:               12704455 0 ( true )
@@ -55,7 +55,7 @@ TEST[DATE|TIME] asset:                  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
 TEST[DATE|TIME] hash:                   0xc4d90e497f91f7feb1f9d1019bee148d3b00b7c900c9ba657cacdb156b67d781
 TEST[DATE|TIME] timestamp:              1624640874
 TEST[DATE|TIME] blockNumber:            12704456.92.0
-TEST[DATE|TIME] priceSource:            1824.5564267999728 (uniswap)
+TEST[DATE|TIME] priceSource:            1824.556427 (uniswap)
 TEST[DATE|TIME] --------------------------------------------------- 
 TEST[DATE|TIME] Trial balance:
 TEST[DATE|TIME]    prevBal:             36.711034261192445316
@@ -248,11 +248,11 @@ TEST[DATE|TIME] str1 (call/data):    getReserves()
 TEST[DATE|TIME] first:               0x6b175474e89094c44da98b954eedeac495271d0f
 TEST[DATE|TIME] second:              0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2
 TEST[DATE|TIME] reversed:            false
-TEST[DATE|TIME] float0:              37180643455112622587000000
-TEST[DATE|TIME] float1:              20114701524999621489000
+TEST[DATE|TIME] float0:              3.718064346e+25
+TEST[DATE|TIME] float1:              2.011470152e+22
 TEST[DATE|TIME] float2:              1
-TEST[DATE|TIME] bigPrice:            1848.4312784309794644
-TEST[DATE|TIME] price:               1848.4312784309795
+TEST[DATE|TIME] bigPrice:            1848.431278
+TEST[DATE|TIME] price:               1848.431278
 TEST[DATE|TIME] source:              uniswap
 TEST[DATE|TIME] ===================================================
 TEST[DATE|TIME] Previous:               12705275 212 ( true )
@@ -264,7 +264,7 @@ TEST[DATE|TIME] asset:                  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
 TEST[DATE|TIME] hash:                   0xc44f178622833c7e4bfb02e49203e4c7b4d4d4b10f436eb9a18a868029375d73
 TEST[DATE|TIME] timestamp:              1624660254
 TEST[DATE|TIME] blockNumber:            12705892.117.0
-TEST[DATE|TIME] priceSource:            1848.4312784309795 (uniswap)
+TEST[DATE|TIME] priceSource:            1848.431278 (uniswap)
 TEST[DATE|TIME] --------------------------------------------------- 
 TEST[DATE|TIME] Trial balance:
 TEST[DATE|TIME]    prevBal:             36.720534261192445316
@@ -1958,7 +1958,7 @@ Results in ./statement_token_ibt_2_out.file
       "selfDestructOut": "0",
       "sender": "0x7d655c57f71464b6f83811c55d84009cd9f5221c",
       "senderName": "GitCoin Grant 6,7,8",
-      "spotPrice": 1824.5564267999728,
+      "spotPrice": "1824.556427",
       "symbol": "WEI",
       "timestamp": 1624640874,
       "totalIn": "9500000000000000",
@@ -2004,7 +2004,7 @@ Results in ./statement_token_ibt_2_out.file
       "selfDestructIn": "0",
       "selfDestructOut": "0",
       "sender": "0x467a755ba59267678e14e414ed214c3cea836498",
-      "spotPrice": 1,
+      "spotPrice": "1",
       "symbol": "DAI",
       "timestamp": 1624644135,
       "totalIn": "4750000000000000000",
@@ -2050,7 +2050,7 @@ Results in ./statement_token_ibt_2_out.file
       "selfDestructIn": "0",
       "selfDestructOut": "0",
       "sender": "0x5c04e7808455ee0e22c2773328c151d0dd79dc62",
-      "spotPrice": 1,
+      "spotPrice": "1",
       "symbol": "DAI",
       "timestamp": 1624645515,
       "totalIn": "5000000000000000000",
@@ -2096,7 +2096,7 @@ Results in ./statement_token_ibt_2_out.file
       "selfDestructIn": "0",
       "selfDestructOut": "0",
       "sender": "0xc7d0961e09ef783b02e951b3a0704236ae7cabb5",
-      "spotPrice": 1,
+      "spotPrice": "1",
       "symbol": "DAI",
       "timestamp": 1624651859,
       "totalIn": "3800000000000000000",
@@ -2143,7 +2143,7 @@ Results in ./statement_token_ibt_2_out.file
       "selfDestructIn": "0",
       "selfDestructOut": "0",
       "sender": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
-      "spotPrice": 1848.4312784309795,
+      "spotPrice": "1848.431278",
       "symbol": "WEI",
       "timestamp": 1624660254,
       "totalIn": "0",
@@ -2190,7 +2190,7 @@ Results in ./statement_token_ibt_2_out.file
       "selfDestructIn": "0",
       "selfDestructOut": "0",
       "sender": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
-      "spotPrice": 1,
+      "spotPrice": "1",
       "symbol": "DAI",
       "timestamp": 1624660254,
       "totalIn": "0",
@@ -2237,7 +2237,7 @@ Results in ./statement_token_ibt_2_out.file
       "selfDestructIn": "0",
       "selfDestructOut": "0",
       "sender": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
-      "spotPrice": 1,
+      "spotPrice": "1",
       "symbol": "DAI",
       "timestamp": 1624660254,
       "totalIn": "0",
@@ -2283,7 +2283,7 @@ Results in ./statement_token_ibt_2_out.file
       "selfDestructIn": "0",
       "selfDestructOut": "0",
       "sender": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
-      "spotPrice": 1,
+      "spotPrice": "1",
       "symbol": "DAI",
       "timestamp": 1624660254,
       "totalIn": "0",
@@ -2330,7 +2330,7 @@ Results in ./statement_token_ibt_2_out.file
       "selfDestructIn": "0",
       "selfDestructOut": "0",
       "sender": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
-      "spotPrice": 1,
+      "spotPrice": "1",
       "symbol": "DAI",
       "timestamp": 1624660254,
       "totalIn": "0",
@@ -2377,7 +2377,7 @@ Results in ./statement_token_ibt_2_out.file
       "selfDestructIn": "0",
       "selfDestructOut": "0",
       "sender": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
-      "spotPrice": 1,
+      "spotPrice": "1",
       "symbol": "DAI",
       "timestamp": 1624660254,
       "totalIn": "0",
@@ -2424,7 +2424,7 @@ Results in ./statement_token_ibt_2_out.file
       "selfDestructIn": "0",
       "selfDestructOut": "0",
       "sender": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
-      "spotPrice": 1,
+      "spotPrice": "1",
       "symbol": "DAI",
       "timestamp": 1624660254,
       "totalIn": "0",
@@ -2471,7 +2471,7 @@ Results in ./statement_token_ibt_2_out.file
       "selfDestructIn": "0",
       "selfDestructOut": "0",
       "sender": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
-      "spotPrice": 1,
+      "spotPrice": "1",
       "symbol": "DAI",
       "timestamp": 1624660254,
       "totalIn": "0",
@@ -2518,7 +2518,7 @@ Results in ./statement_token_ibt_2_out.file
       "selfDestructIn": "0",
       "selfDestructOut": "0",
       "sender": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
-      "spotPrice": 1,
+      "spotPrice": "1",
       "symbol": "DAI",
       "timestamp": 1624660254,
       "totalIn": "0",
@@ -2565,7 +2565,7 @@ Results in ./statement_token_ibt_2_out.file
       "selfDestructIn": "0",
       "selfDestructOut": "0",
       "sender": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
-      "spotPrice": 1,
+      "spotPrice": "1",
       "symbol": "DAI",
       "timestamp": 1624660254,
       "totalIn": "0",
@@ -2612,7 +2612,7 @@ Results in ./statement_token_ibt_2_out.file
       "selfDestructIn": "0",
       "selfDestructOut": "0",
       "sender": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
-      "spotPrice": 1,
+      "spotPrice": "1",
       "symbol": "DAI",
       "timestamp": 1624660254,
       "totalIn": "0",
@@ -2659,7 +2659,7 @@ Results in ./statement_token_ibt_2_out.file
       "selfDestructIn": "0",
       "selfDestructOut": "0",
       "sender": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
-      "spotPrice": 1,
+      "spotPrice": "1",
       "symbol": "DAI",
       "timestamp": 1624660254,
       "totalIn": "0",
@@ -2706,7 +2706,7 @@ Results in ./statement_token_ibt_2_out.file
       "selfDestructIn": "0",
       "selfDestructOut": "0",
       "sender": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
-      "spotPrice": 1,
+      "spotPrice": "1",
       "symbol": "DAI",
       "timestamp": 1624660254,
       "totalIn": "0",
@@ -2753,7 +2753,7 @@ Results in ./statement_token_ibt_2_out.file
       "selfDestructIn": "0",
       "selfDestructOut": "0",
       "sender": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
-      "spotPrice": 1,
+      "spotPrice": "1",
       "symbol": "DAI",
       "timestamp": 1624660254,
       "totalIn": "0",
@@ -2800,7 +2800,7 @@ Results in ./statement_token_ibt_2_out.file
       "selfDestructIn": "0",
       "selfDestructOut": "0",
       "sender": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
-      "spotPrice": 1,
+      "spotPrice": "1",
       "symbol": "DAI",
       "timestamp": 1624660254,
       "totalIn": "0",
@@ -2847,7 +2847,7 @@ Results in ./statement_token_ibt_2_out.file
       "selfDestructIn": "0",
       "selfDestructOut": "0",
       "sender": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
-      "spotPrice": 1,
+      "spotPrice": "1",
       "symbol": "DAI",
       "timestamp": 1624660254,
       "totalIn": "0",
@@ -2894,7 +2894,7 @@ Results in ./statement_token_ibt_2_out.file
       "selfDestructIn": "0",
       "selfDestructOut": "0",
       "sender": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
-      "spotPrice": 1,
+      "spotPrice": "1",
       "symbol": "DAI",
       "timestamp": 1624660254,
       "totalIn": "0",
@@ -2941,7 +2941,7 @@ Results in ./statement_token_ibt_2_out.file
       "selfDestructIn": "0",
       "selfDestructOut": "0",
       "sender": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
-      "spotPrice": 1,
+      "spotPrice": "1",
       "symbol": "DAI",
       "timestamp": 1624660254,
       "totalIn": "0",
@@ -2988,7 +2988,7 @@ Results in ./statement_token_ibt_2_out.file
       "selfDestructIn": "0",
       "selfDestructOut": "0",
       "sender": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
-      "spotPrice": 1,
+      "spotPrice": "1",
       "symbol": "DAI",
       "timestamp": 1624660254,
       "totalIn": "0",
@@ -3035,7 +3035,7 @@ Results in ./statement_token_ibt_2_out.file
       "selfDestructIn": "0",
       "selfDestructOut": "0",
       "sender": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
-      "spotPrice": 1,
+      "spotPrice": "1",
       "symbol": "DAI",
       "timestamp": 1624660254,
       "totalIn": "0",
@@ -3082,7 +3082,7 @@ Results in ./statement_token_ibt_2_out.file
       "selfDestructIn": "0",
       "selfDestructOut": "0",
       "sender": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
-      "spotPrice": 1,
+      "spotPrice": "1",
       "symbol": "DAI",
       "timestamp": 1624660254,
       "totalIn": "0",
@@ -3129,7 +3129,7 @@ Results in ./statement_token_ibt_2_out.file
       "selfDestructIn": "0",
       "selfDestructOut": "0",
       "sender": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
-      "spotPrice": 1,
+      "spotPrice": "1",
       "symbol": "DAI",
       "timestamp": 1624660254,
       "totalIn": "0",
@@ -3176,7 +3176,7 @@ Results in ./statement_token_ibt_2_out.file
       "selfDestructIn": "0",
       "selfDestructOut": "0",
       "sender": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
-      "spotPrice": 1,
+      "spotPrice": "1",
       "symbol": "DAI",
       "timestamp": 1624660254,
       "totalIn": "0",
@@ -3223,7 +3223,7 @@ Results in ./statement_token_ibt_2_out.file
       "selfDestructIn": "0",
       "selfDestructOut": "0",
       "sender": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
-      "spotPrice": 1,
+      "spotPrice": "1",
       "symbol": "DAI",
       "timestamp": 1624660254,
       "totalIn": "0",
@@ -3270,7 +3270,7 @@ Results in ./statement_token_ibt_2_out.file
       "selfDestructIn": "0",
       "selfDestructOut": "0",
       "sender": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
-      "spotPrice": 1,
+      "spotPrice": "1",
       "symbol": "DAI",
       "timestamp": 1624660254,
       "totalIn": "0",
@@ -3317,7 +3317,7 @@ Results in ./statement_token_ibt_2_out.file
       "selfDestructIn": "0",
       "selfDestructOut": "0",
       "sender": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
-      "spotPrice": 1,
+      "spotPrice": "1",
       "symbol": "DAI",
       "timestamp": 1624660254,
       "totalIn": "0",
@@ -3364,7 +3364,7 @@ Results in ./statement_token_ibt_2_out.file
       "selfDestructIn": "0",
       "selfDestructOut": "0",
       "sender": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
-      "spotPrice": 1,
+      "spotPrice": "1",
       "symbol": "DAI",
       "timestamp": 1624660254,
       "totalIn": "0",
@@ -3411,7 +3411,7 @@ Results in ./statement_token_ibt_2_out.file
       "selfDestructIn": "0",
       "selfDestructOut": "0",
       "sender": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
-      "spotPrice": 1,
+      "spotPrice": "1",
       "symbol": "DAI",
       "timestamp": 1624660254,
       "totalIn": "0",
@@ -3458,7 +3458,7 @@ Results in ./statement_token_ibt_2_out.file
       "selfDestructIn": "0",
       "selfDestructOut": "0",
       "sender": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
-      "spotPrice": 1,
+      "spotPrice": "1",
       "symbol": "DAI",
       "timestamp": 1624660254,
       "totalIn": "0",
@@ -3505,7 +3505,7 @@ Results in ./statement_token_ibt_2_out.file
       "selfDestructIn": "0",
       "selfDestructOut": "0",
       "sender": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
-      "spotPrice": 1,
+      "spotPrice": "1",
       "symbol": "DAI",
       "timestamp": 1624660254,
       "totalIn": "0",
@@ -3552,7 +3552,7 @@ Results in ./statement_token_ibt_2_out.file
       "selfDestructIn": "0",
       "selfDestructOut": "0",
       "sender": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
-      "spotPrice": 1,
+      "spotPrice": "1",
       "symbol": "DAI",
       "timestamp": 1624660254,
       "totalIn": "0",
@@ -3599,7 +3599,7 @@ Results in ./statement_token_ibt_2_out.file
       "selfDestructIn": "0",
       "selfDestructOut": "0",
       "sender": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
-      "spotPrice": 1,
+      "spotPrice": "1",
       "symbol": "DAI",
       "timestamp": 1624660254,
       "totalIn": "0",
@@ -3646,7 +3646,7 @@ Results in ./statement_token_ibt_2_out.file
       "selfDestructIn": "0",
       "selfDestructOut": "0",
       "sender": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
-      "spotPrice": 1,
+      "spotPrice": "1",
       "symbol": "DAI",
       "timestamp": 1624660254,
       "totalIn": "0",
@@ -3693,7 +3693,7 @@ Results in ./statement_token_ibt_2_out.file
       "selfDestructIn": "0",
       "selfDestructOut": "0",
       "sender": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
-      "spotPrice": 1,
+      "spotPrice": "1",
       "symbol": "DAI",
       "timestamp": 1624660254,
       "totalIn": "0",
@@ -3740,7 +3740,7 @@ Results in ./statement_token_ibt_2_out.file
       "selfDestructIn": "0",
       "selfDestructOut": "0",
       "sender": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
-      "spotPrice": 1,
+      "spotPrice": "1",
       "symbol": "DAI",
       "timestamp": 1624660254,
       "totalIn": "0",
@@ -3787,7 +3787,7 @@ Results in ./statement_token_ibt_2_out.file
       "selfDestructIn": "0",
       "selfDestructOut": "0",
       "sender": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
-      "spotPrice": 1,
+      "spotPrice": "1",
       "symbol": "DAI",
       "timestamp": 1624660254,
       "totalIn": "0",
@@ -3834,7 +3834,7 @@ Results in ./statement_token_ibt_2_out.file
       "selfDestructIn": "0",
       "selfDestructOut": "0",
       "sender": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
-      "spotPrice": 1,
+      "spotPrice": "1",
       "symbol": "DAI",
       "timestamp": 1624660254,
       "totalIn": "0",
@@ -3881,7 +3881,7 @@ Results in ./statement_token_ibt_2_out.file
       "selfDestructIn": "0",
       "selfDestructOut": "0",
       "sender": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
-      "spotPrice": 1,
+      "spotPrice": "1",
       "symbol": "DAI",
       "timestamp": 1624660254,
       "totalIn": "0",
@@ -3928,7 +3928,7 @@ Results in ./statement_token_ibt_2_out.file
       "selfDestructIn": "0",
       "selfDestructOut": "0",
       "sender": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
-      "spotPrice": 1,
+      "spotPrice": "1",
       "symbol": "DAI",
       "timestamp": 1624660254,
       "totalIn": "0",
@@ -3975,7 +3975,7 @@ Results in ./statement_token_ibt_2_out.file
       "selfDestructIn": "0",
       "selfDestructOut": "0",
       "sender": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
-      "spotPrice": 1,
+      "spotPrice": "1",
       "symbol": "DAI",
       "timestamp": 1624660254,
       "totalIn": "0",
@@ -4022,7 +4022,7 @@ Results in ./statement_token_ibt_2_out.file
       "selfDestructIn": "0",
       "selfDestructOut": "0",
       "sender": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
-      "spotPrice": 1,
+      "spotPrice": "1",
       "symbol": "DAI",
       "timestamp": 1624660254,
       "totalIn": "0",
@@ -4069,7 +4069,7 @@ Results in ./statement_token_ibt_2_out.file
       "selfDestructIn": "0",
       "selfDestructOut": "0",
       "sender": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
-      "spotPrice": 1,
+      "spotPrice": "1",
       "symbol": "DAI",
       "timestamp": 1624660254,
       "totalIn": "0",
@@ -4116,7 +4116,7 @@ Results in ./statement_token_ibt_2_out.file
       "selfDestructIn": "0",
       "selfDestructOut": "0",
       "sender": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
-      "spotPrice": 1,
+      "spotPrice": "1",
       "symbol": "DAI",
       "timestamp": 1624660254,
       "totalIn": "0",
@@ -4163,7 +4163,7 @@ Results in ./statement_token_ibt_2_out.file
       "selfDestructIn": "0",
       "selfDestructOut": "0",
       "sender": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
-      "spotPrice": 1,
+      "spotPrice": "1",
       "symbol": "DAI",
       "timestamp": 1624660254,
       "totalIn": "0",
@@ -4210,7 +4210,7 @@ Results in ./statement_token_ibt_2_out.file
       "selfDestructIn": "0",
       "selfDestructOut": "0",
       "sender": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
-      "spotPrice": 1,
+      "spotPrice": "1",
       "symbol": "DAI",
       "timestamp": 1624660254,
       "totalIn": "0",

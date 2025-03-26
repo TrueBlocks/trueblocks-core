@@ -19,7 +19,7 @@ func PriceUsd(conn *rpc.Connection, statement *types.Statement) (price base.Floa
 			symbol:  statement.Symbol,
 		}
 		r.report("stable-coin")
-		return 1.0, "stable-coin", nil
+		return *base.OneFloat, "stable-coin", nil
 	}
 
 	if statement.BlockNumber <= uniswapFactoryV2_deployed {
@@ -28,7 +28,7 @@ func PriceUsd(conn *rpc.Connection, statement *types.Statement) (price base.Floa
 		} else {
 			msg := fmt.Sprintf("Block %d is prior to deployment (%d) of Uniswap V2. No other source for tokens prior to UniSwap", statement.BlockNumber, uniswapFactoryV2_deployed)
 			logger.TestLog(true, msg)
-			return 0.0, "token-not-priced-pre-uni", nil
+			return *base.ZeroFloat, "token-not-priced-pre-uni", nil
 		}
 	}
 

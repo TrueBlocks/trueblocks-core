@@ -120,7 +120,7 @@ func (s *Statement) Model(chain, format string, verbose bool, extraOpts map[stri
 		"selfDestructIn":      s.SelfDestructIn.Text(10),
 		"selfDestructOut":     s.SelfDestructOut.Text(10),
 		"sender":              s.Sender,
-		"spotPrice":           s.SpotPrice,
+		"spotPrice":           s.SpotPrice.String(),
 		"symbol":              s.Symbol,
 		"timestamp":           s.Timestamp,
 		"totalIn":             s.TotalIn().Text(10),

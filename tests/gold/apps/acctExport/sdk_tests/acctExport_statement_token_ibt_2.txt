@@ -39,11 +39,11 @@ str1 (call/data):    getReserves()
 first:               0x6b175474e89094c44da98b954eedeac495271d0f
 second:              0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2
 reversed:            false
-float0:              36936252061481304330000000
-float1:              20243962597672319668000
+float0:              3.693625206e+25
+float1:              2.02439626e+22
 float2:              1
-bigPrice:            1824.5564267999728689
-price:               1824.5564267999728
+bigPrice:            1824.556427
+price:               1824.556427
 source:              uniswap
 ===================================================
 Previous:               12704455 0 ( true )
@@ -55,7 +55,7 @@ asset:                  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimal
 hash:                   0xc4d90e497f91f7feb1f9d1019bee148d3b00b7c900c9ba657cacdb156b67d781
 timestamp:              1624640874
 blockNumber:            12704456.92.0
-priceSource:            1824.5564267999728 (uniswap)
+priceSource:            1824.556427 (uniswap)
 --------------------------------------------------- 
 Trial balance:
    prevBal:             36.711034261192445316
@@ -248,11 +248,11 @@ str1 (call/data):    getReserves()
 first:               0x6b175474e89094c44da98b954eedeac495271d0f
 second:              0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2
 reversed:            false
-float0:              37180643455112622587000000
-float1:              20114701524999621489000
+float0:              3.718064346e+25
+float1:              2.011470152e+22
 float2:              1
-bigPrice:            1848.4312784309794644
-price:               1848.4312784309795
+bigPrice:            1848.431278
+price:               1848.431278
 source:              uniswap
 ===================================================
 Previous:               12705275 212 ( true )
@@ -264,7 +264,7 @@ asset:                  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimal
 hash:                   0xc44f178622833c7e4bfb02e49203e4c7b4d4d4b10f436eb9a18a868029375d73
 timestamp:              1624660254
 blockNumber:            12705892.117.0
-priceSource:            1848.4312784309795 (uniswap)
+priceSource:            1848.431278 (uniswap)
 --------------------------------------------------- 
 Trial balance:
    prevBal:             36.720534261192445316
@@ -1956,7 +1956,7 @@ Log statement is material - appending. reconciled: true
       "selfDestructOut": "0",
       "sender": "0x7d655c57f71464b6f83811c55d84009cd9f5221c",
       "senderName": "GitCoin Grant 6,7,8",
-      "spotPrice": 1824.5564267999728,
+      "spotPrice": "1824.556427",
       "symbol": "WEI",
       "timestamp": 1624640874,
       "totalIn": "9500000000000000",
@@ -2002,7 +2002,7 @@ Log statement is material - appending. reconciled: true
       "selfDestructIn": "0",
       "selfDestructOut": "0",
       "sender": "0x467a755ba59267678e14e414ed214c3cea836498",
-      "spotPrice": 1,
+      "spotPrice": "1",
       "symbol": "DAI",
       "timestamp": 1624644135,
       "totalIn": "4750000000000000000",
@@ -2048,7 +2048,7 @@ Log statement is material - appending. reconciled: true
       "selfDestructIn": "0",
       "selfDestructOut": "0",
       "sender": "0x5c04e7808455ee0e22c2773328c151d0dd79dc62",
-      "spotPrice": 1,
+      "spotPrice": "1",
       "symbol": "DAI",
       "timestamp": 1624645515,
       "totalIn": "5000000000000000000",
@@ -2094,7 +2094,7 @@ Log statement is material - appending. reconciled: true
       "selfDestructIn": "0",
       "selfDestructOut": "0",
       "sender": "0xc7d0961e09ef783b02e951b3a0704236ae7cabb5",
-      "spotPrice": 1,
+      "spotPrice": "1",
       "symbol": "DAI",
       "timestamp": 1624651859,
       "totalIn": "3800000000000000000",
@@ -2141,7 +2141,7 @@ Log statement is material - appending. reconciled: true
       "selfDestructIn": "0",
       "selfDestructOut": "0",
       "sender": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
-      "spotPrice": 1848.4312784309795,
+      "spotPrice": "1848.431278",
       "symbol": "WEI",
       "timestamp": 1624660254,
       "totalIn": "0",
@@ -2188,7 +2188,7 @@ Log statement is material - appending. reconciled: true
       "selfDestructIn": "0",
       "selfDestructOut": "0",
       "sender": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
-      "spotPrice": 1,
+      "spotPrice": "1",
       "symbol": "DAI",
       "timestamp": 1624660254,
       "totalIn": "0",
@@ -2235,7 +2235,7 @@ Log statement is material - appending. reconciled: true
       "selfDestructIn": "0",
       "selfDestructOut": "0",
       "sender": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
-      "spotPrice": 1,
+      "spotPrice": "1",
       "symbol": "DAI",
       "timestamp": 1624660254,
       "totalIn": "0",
@@ -2281,7 +2281,7 @@ Log statement is material - appending. reconciled: true
       "selfDestructIn": "0",
       "selfDestructOut": "0",
       "sender": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
-      "spotPrice": 1,
+      "spotPrice": "1",
       "symbol": "DAI",
       "timestamp": 1624660254,
       "totalIn": "0",
@@ -2328,7 +2328,7 @@ Log statement is material - appending. reconciled: true
       "selfDestructIn": "0",
       "selfDestructOut": "0",
       "sender": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
-      "spotPrice": 1,
+      "spotPrice": "1",
       "symbol": "DAI",
       "timestamp": 1624660254,
       "totalIn": "0",
@@ -2375,7 +2375,7 @@ Log statement is material - appending. reconciled: true
       "selfDestructIn": "0",
       "selfDestructOut": "0",
       "sender": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
-      "spotPrice": 1,
+      "spotPrice": "1",
       "symbol": "DAI",
       "timestamp": 1624660254,
       "totalIn": "0",
@@ -2422,7 +2422,7 @@ Log statement is material - appending. reconciled: true
       "selfDestructIn": "0",
       "selfDestructOut": "0",
       "sender": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
-      "spotPrice": 1,
+      "spotPrice": "1",
       "symbol": "DAI",
       "timestamp": 1624660254,
       "totalIn": "0",
@@ -2469,7 +2469,7 @@ Log statement is material - appending. reconciled: true
       "selfDestructIn": "0",
       "selfDestructOut": "0",
       "sender": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
-      "spotPrice": 1,
+      "spotPrice": "1",
       "symbol": "DAI",
       "timestamp": 1624660254,
       "totalIn": "0",
@@ -2516,7 +2516,7 @@ Log statement is material - appending. reconciled: true
       "selfDestructIn": "0",
       "selfDestructOut": "0",
       "sender": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
-      "spotPrice": 1,
+      "spotPrice": "1",
       "symbol": "DAI",
       "timestamp": 1624660254,
       "totalIn": "0",
@@ -2563,7 +2563,7 @@ Log statement is material - appending. reconciled: true
       "selfDestructIn": "0",
       "selfDestructOut": "0",
       "sender": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
-      "spotPrice": 1,
+      "spotPrice": "1",
       "symbol": "DAI",
       "timestamp": 1624660254,
       "totalIn": "0",
@@ -2610,7 +2610,7 @@ Log statement is material - appending. reconciled: true
       "selfDestructIn": "0",
       "selfDestructOut": "0",
       "sender": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
-      "spotPrice": 1,
+      "spotPrice": "1",
       "symbol": "DAI",
       "timestamp": 1624660254,
       "totalIn": "0",
@@ -2657,7 +2657,7 @@ Log statement is material - appending. reconciled: true
       "selfDestructIn": "0",
       "selfDestructOut": "0",
       "sender": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
-      "spotPrice": 1,
+      "spotPrice": "1",
       "symbol": "DAI",
       "timestamp": 1624660254,
       "totalIn": "0",
@@ -2704,7 +2704,7 @@ Log statement is material - appending. reconciled: true
       "selfDestructIn": "0",
       "selfDestructOut": "0",
       "sender": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
-      "spotPrice": 1,
+      "spotPrice": "1",
       "symbol": "DAI",
       "timestamp": 1624660254,
       "totalIn": "0",
@@ -2751,7 +2751,7 @@ Log statement is material - appending. reconciled: true
       "selfDestructIn": "0",
       "selfDestructOut": "0",
       "sender": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
-      "spotPrice": 1,
+      "spotPrice": "1",
       "symbol": "DAI",
       "timestamp": 1624660254,
       "totalIn": "0",
@@ -2798,7 +2798,7 @@ Log statement is material - appending. reconciled: true
       "selfDestructIn": "0",
       "selfDestructOut": "0",
       "sender": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
-      "spotPrice": 1,
+      "spotPrice": "1",
       "symbol": "DAI",
       "timestamp": 1624660254,
       "totalIn": "0",
@@ -2845,7 +2845,7 @@ Log statement is material - appending. reconciled: true
       "selfDestructIn": "0",
       "selfDestructOut": "0",
       "sender": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
-      "spotPrice": 1,
+      "spotPrice": "1",
       "symbol": "DAI",
       "timestamp": 1624660254,
       "totalIn": "0",
@@ -2892,7 +2892,7 @@ Log statement is material - appending. reconciled: true
       "selfDestructIn": "0",
       "selfDestructOut": "0",
       "sender": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
-      "spotPrice": 1,
+      "spotPrice": "1",
       "symbol": "DAI",
       "timestamp": 1624660254,
       "totalIn": "0",
@@ -2939,7 +2939,7 @@ Log statement is material - appending. reconciled: true
       "selfDestructIn": "0",
       "selfDestructOut": "0",
       "sender": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
-      "spotPrice": 1,
+      "spotPrice": "1",
       "symbol": "DAI",
       "timestamp": 1624660254,
       "totalIn": "0",
@@ -2986,7 +2986,7 @@ Log statement is material - appending. reconciled: true
       "selfDestructIn": "0",
       "selfDestructOut": "0",
       "sender": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
-      "spotPrice": 1,
+      "spotPrice": "1",
       "symbol": "DAI",
       "timestamp": 1624660254,
       "totalIn": "0",
@@ -3033,7 +3033,7 @@ Log statement is material - appending. reconciled: true
       "selfDestructIn": "0",
       "selfDestructOut": "0",
       "sender": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
-      "spotPrice": 1,
+      "spotPrice": "1",
       "symbol": "DAI",
       "timestamp": 1624660254,
       "totalIn": "0",
@@ -3080,7 +3080,7 @@ Log statement is material - appending. reconciled: true
       "selfDestructIn": "0",
       "selfDestructOut": "0",
       "sender": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
-      "spotPrice": 1,
+      "spotPrice": "1",
       "symbol": "DAI",
       "timestamp": 1624660254,
       "totalIn": "0",
@@ -3127,7 +3127,7 @@ Log statement is material - appending. reconciled: true
       "selfDestructIn": "0",
       "selfDestructOut": "0",
       "sender": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
-      "spotPrice": 1,
+      "spotPrice": "1",
       "symbol": "DAI",
       "timestamp": 1624660254,
       "totalIn": "0",
@@ -3174,7 +3174,7 @@ Log statement is material - appending. reconciled: true
       "selfDestructIn": "0",
       "selfDestructOut": "0",
       "sender": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
-      "spotPrice": 1,
+      "spotPrice": "1",
       "symbol": "DAI",
       "timestamp": 1624660254,
       "totalIn": "0",
@@ -3221,7 +3221,7 @@ Log statement is material - appending. reconciled: true
       "selfDestructIn": "0",
       "selfDestructOut": "0",
       "sender": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
-      "spotPrice": 1,
+      "spotPrice": "1",
       "symbol": "DAI",
       "timestamp": 1624660254,
       "totalIn": "0",
@@ -3268,7 +3268,7 @@ Log statement is material - appending. reconciled: true
       "selfDestructIn": "0",
       "selfDestructOut": "0",
       "sender": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
-      "spotPrice": 1,
+      "spotPrice": "1",
       "symbol": "DAI",
       "timestamp": 1624660254,
       "totalIn": "0",
@@ -3315,7 +3315,7 @@ Log statement is material - appending. reconciled: true
       "selfDestructIn": "0",
       "selfDestructOut": "0",
       "sender": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
-      "spotPrice": 1,
+      "spotPrice": "1",
       "symbol": "DAI",
       "timestamp": 1624660254,
       "totalIn": "0",
@@ -3362,7 +3362,7 @@ Log statement is material - appending. reconciled: true
       "selfDestructIn": "0",
       "selfDestructOut": "0",
       "sender": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
-      "spotPrice": 1,
+      "spotPrice": "1",
       "symbol": "DAI",
       "timestamp": 1624660254,
       "totalIn": "0",
@@ -3409,7 +3409,7 @@ Log statement is material - appending. reconciled: true
       "selfDestructIn": "0",
       "selfDestructOut": "0",
       "sender": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
-      "spotPrice": 1,
+      "spotPrice": "1",
       "symbol": "DAI",
       "timestamp": 1624660254,
       "totalIn": "0",
@@ -3456,7 +3456,7 @@ Log statement is material - appending. reconciled: true
       "selfDestructIn": "0",
       "selfDestructOut": "0",
       "sender": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
-      "spotPrice": 1,
+      "spotPrice": "1",
       "symbol": "DAI",
       "timestamp": 1624660254,
       "totalIn": "0",
@@ -3503,7 +3503,7 @@ Log statement is material - appending. reconciled: true
       "selfDestructIn": "0",
       "selfDestructOut": "0",
       "sender": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
-      "spotPrice": 1,
+      "spotPrice": "1",
       "symbol": "DAI",
       "timestamp": 1624660254,
       "totalIn": "0",
@@ -3550,7 +3550,7 @@ Log statement is material - appending. reconciled: true
       "selfDestructIn": "0",
       "selfDestructOut": "0",
       "sender": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
-      "spotPrice": 1,
+      "spotPrice": "1",
       "symbol": "DAI",
       "timestamp": 1624660254,
       "totalIn": "0",
@@ -3597,7 +3597,7 @@ Log statement is material - appending. reconciled: true
       "selfDestructIn": "0",
       "selfDestructOut": "0",
       "sender": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
-      "spotPrice": 1,
+      "spotPrice": "1",
       "symbol": "DAI",
       "timestamp": 1624660254,
       "totalIn": "0",
@@ -3644,7 +3644,7 @@ Log statement is material - appending. reconciled: true
       "selfDestructIn": "0",
       "selfDestructOut": "0",
       "sender": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
-      "spotPrice": 1,
+      "spotPrice": "1",
       "symbol": "DAI",
       "timestamp": 1624660254,
       "totalIn": "0",
@@ -3691,7 +3691,7 @@ Log statement is material - appending. reconciled: true
       "selfDestructIn": "0",
       "selfDestructOut": "0",
       "sender": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
-      "spotPrice": 1,
+      "spotPrice": "1",
       "symbol": "DAI",
       "timestamp": 1624660254,
       "totalIn": "0",
@@ -3738,7 +3738,7 @@ Log statement is material - appending. reconciled: true
       "selfDestructIn": "0",
       "selfDestructOut": "0",
       "sender": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
-      "spotPrice": 1,
+      "spotPrice": "1",
       "symbol": "DAI",
       "timestamp": 1624660254,
       "totalIn": "0",
@@ -3785,7 +3785,7 @@ Log statement is material - appending. reconciled: true
       "selfDestructIn": "0",
       "selfDestructOut": "0",
       "sender": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
-      "spotPrice": 1,
+      "spotPrice": "1",
       "symbol": "DAI",
       "timestamp": 1624660254,
       "totalIn": "0",
@@ -3832,7 +3832,7 @@ Log statement is material - appending. reconciled: true
       "selfDestructIn": "0",
       "selfDestructOut": "0",
       "sender": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
-      "spotPrice": 1,
+      "spotPrice": "1",
       "symbol": "DAI",
       "timestamp": 1624660254,
       "totalIn": "0",
@@ -3879,7 +3879,7 @@ Log statement is material - appending. reconciled: true
       "selfDestructIn": "0",
       "selfDestructOut": "0",
       "sender": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
-      "spotPrice": 1,
+      "spotPrice": "1",
       "symbol": "DAI",
       "timestamp": 1624660254,
       "totalIn": "0",
@@ -3926,7 +3926,7 @@ Log statement is material - appending. reconciled: true
       "selfDestructIn": "0",
       "selfDestructOut": "0",
       "sender": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
-      "spotPrice": 1,
+      "spotPrice": "1",
       "symbol": "DAI",
       "timestamp": 1624660254,
       "totalIn": "0",
@@ -3973,7 +3973,7 @@ Log statement is material - appending. reconciled: true
       "selfDestructIn": "0",
       "selfDestructOut": "0",
       "sender": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
-      "spotPrice": 1,
+      "spotPrice": "1",
       "symbol": "DAI",
       "timestamp": 1624660254,
       "totalIn": "0",
@@ -4020,7 +4020,7 @@ Log statement is material - appending. reconciled: true
       "selfDestructIn": "0",
       "selfDestructOut": "0",
       "sender": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
-      "spotPrice": 1,
+      "spotPrice": "1",
       "symbol": "DAI",
       "timestamp": 1624660254,
       "totalIn": "0",
@@ -4067,7 +4067,7 @@ Log statement is material - appending. reconciled: true
       "selfDestructIn": "0",
       "selfDestructOut": "0",
       "sender": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
-      "spotPrice": 1,
+      "spotPrice": "1",
       "symbol": "DAI",
       "timestamp": 1624660254,
       "totalIn": "0",
@@ -4114,7 +4114,7 @@ Log statement is material - appending. reconciled: true
       "selfDestructIn": "0",
       "selfDestructOut": "0",
       "sender": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
-      "spotPrice": 1,
+      "spotPrice": "1",
       "symbol": "DAI",
       "timestamp": 1624660254,
       "totalIn": "0",
@@ -4161,7 +4161,7 @@ Log statement is material - appending. reconciled: true
       "selfDestructIn": "0",
       "selfDestructOut": "0",
       "sender": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
-      "spotPrice": 1,
+      "spotPrice": "1",
       "symbol": "DAI",
       "timestamp": 1624660254,
       "totalIn": "0",
@@ -4208,7 +4208,7 @@ Log statement is material - appending. reconciled: true
       "selfDestructIn": "0",
       "selfDestructOut": "0",
       "sender": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
-      "spotPrice": 1,
+      "spotPrice": "1",
       "symbol": "DAI",
       "timestamp": 1624660254,
       "totalIn": "0",

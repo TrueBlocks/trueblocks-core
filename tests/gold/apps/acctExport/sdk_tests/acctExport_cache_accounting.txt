@@ -36,11 +36,11 @@ str1 (call/data):    getReserves()
 first:               0x6b175474e89094c44da98b954eedeac495271d0f
 second:              0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2
 reversed:            false
-float0:              3858607329697142770200000
-float1:              16688697640320095115000
+float0:              3.85860733e+24
+float1:              1.668869764e+22
 float2:              1
-bigPrice:            231.21081182360814338
-price:               231.21081182360814
+bigPrice:            231.2108118
+price:               231.2108118
 source:              uniswap
 ===================================================
 Previous:               10277779 0 ( true )
@@ -52,7 +52,7 @@ asset:                  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimal
 hash:                   0x898b6f4a308973eea278f316dff337d4ab6b07192701bbef8593979a3061c17a
 timestamp:              1592323744
 blockNumber:            10277780.88.0
-priceSource:            231.21081182360814 (uniswap)
+priceSource:            231.2108118 (uniswap)
 --------------------------------------------------- 
 Trial balance:
    prevBal:             0.006511482167631885
@@ -153,7 +153,7 @@ Log statement is material - appending. reconciled: true
       "selfDestructIn": "0",
       "selfDestructOut": "0",
       "sender": "0x04fe1f0c597fbc65700f4fba6f87501edc20e665",
-      "spotPrice": 231.21081182360814,
+      "spotPrice": "231.2108118",
       "symbol": "WEI",
       "timestamp": 1592323744,
       "totalIn": "0",
@@ -199,7 +199,7 @@ Log statement is material - appending. reconciled: true
       "selfDestructIn": "0",
       "selfDestructOut": "0",
       "sender": "0x04fe1f0c597fbc65700f4fba6f87501edc20e665",
-      "spotPrice": 1,
+      "spotPrice": "1",
       "symbol": "USDT",
       "timestamp": 1592323744,
       "totalIn": "0",
