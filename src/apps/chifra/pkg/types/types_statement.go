@@ -751,6 +751,11 @@ func (s *Statement) TotalOut() *base.Wei {
 	return sum
 }
 
+func (s *Statement) TotalOutLessGas() *base.Wei {
+	totalOut := s.TotalOut()
+	return totalOut.Sub(totalOut, &s.GasOut)
+}
+
 func (s Statement) Report() string {
 	return fmt.Sprintf("%s,%s,%s,%s,%s,%s,%s\n",
 		s.CorrectAmountIn.Text(10), s.CorrectAmountOut.Text(10), s.CorrectBegBalIn.Text(10),
@@ -767,6 +772,27 @@ func (s *Statement) Type() string {
 
 func (s *Statement) DateTime() base.DateTime {
 	return base.NewDateTimeTs(s.Timestamp)
+}
+
+func (s *Statement) Encoding() string {
+	if s.Transaction == nil || len(s.Transaction.Input) < 10 {
+		return "0x"
+	}
+	return s.Transaction.Input[:10]
+}
+
+func (s *Statement) Signature() string {
+	if s.Transaction == nil || s.Transaction.ArticulatedTx == nil {
+		return s.Encoding()
+	}
+	return s.Transaction.ArticulatedTx.Signature
+}
+
+func (s *Statement) ReconciliationType() string {
+	// if s.Reconciled() {
+	// 	return "ok"
+	// }
+	return "reconciliationType"
 }
 
 // EXISTING_CODE

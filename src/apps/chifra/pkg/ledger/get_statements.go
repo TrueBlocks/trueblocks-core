@@ -222,6 +222,7 @@ func (r *Reconciler) StatementsFromCache(trans *types.Transaction) ([]types.Stat
 			return results[i].LogIndex < results[j].LogIndex
 		})
 		if nHits == len(r.Opts.AssetFilters) {
+			r.attachPointers(trans, results)
 			return results, true
 		}
 	}
@@ -241,8 +242,10 @@ func (r *Reconciler) StatementsFromCache(trans *types.Transaction) ([]types.Stat
 					}
 				}
 			}
+			r.attachPointers(trans, results)
 			return results, true
 		}
+		r.attachPointers(trans, sg.Statements)
 		return sg.Statements, true
 	}
 
@@ -283,4 +286,13 @@ func (r *Reconciler) StatementsToCache(trans *types.Transaction, stmts []types.S
 		Statements:       stmts,
 	}
 	return r.Connection.WriteToCache(statementGroup, walk.Cache_Statements, trans.Timestamp)
+}
+
+func (r *Reconciler) attachPointers(trans *types.Transaction, stmts []types.Statement) {
+	for i := range stmts {
+		stmts[i].Transaction = trans
+		if !stmts[i].IsEth() && trans.Receipt != nil && len(trans.Receipt.Logs) > int(stmts[i].LogIndex) {
+			stmts[i].Log = &trans.Receipt.Logs[stmts[i].LogIndex]
+		}
+	}
 }

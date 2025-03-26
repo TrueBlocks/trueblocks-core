@@ -349,4 +349,11 @@ func (log *Log) IsNFT() bool {
 	return len(log.Topics) == 4 && log.Topics[0] == topics.TransferTopic
 }
 
+func (log *Log) CompressedLog() string {
+	if log.ArticulatedLog == nil {
+		return ""
+	}
+	return MakeCompressed(log.ArticulatedLog)
+}
+
 // EXISTING_CODE
