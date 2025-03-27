@@ -50,6 +50,7 @@ func (p *PageNumberPaginator) SetPage(newPage any) error {
 }
 
 func (p *PageNumberPaginator) SetNextPage(newPage any) error {
+	_ = newPage
 	return errors.New("set next page not implemented for this paginator")
 }
 

@@ -52,6 +52,8 @@ func (opts *ChunksOptions) HandleTruncate(rCtx *output.RenderCtx, blockNums []ba
 		latestChunk := base.Blknum(0)
 		nChunksRemoved := 0
 		truncateIndex := func(walker *walk.CacheWalker, path string, first bool) (bool, error) {
+			_ = walker
+			_ = first
 			if path != index.ToBloomPath(path) {
 				logger.Fatal("should not happen ==> we're spinning through the bloom filters")
 			}

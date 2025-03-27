@@ -7,6 +7,7 @@ import (
 )
 
 func (mon *Monitor) TruncateTo(chain string, num uint32) (bool, error) {
+	_ = chain
 	err := mon.ReadMonitorHeader()
 	if err != nil {
 		return false, err

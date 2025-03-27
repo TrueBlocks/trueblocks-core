@@ -115,7 +115,7 @@ func (opts *BlocksOptions) validateBlocks() error {
 			}
 		}
 
-		// We cannot cache uncles because they are identical to the cannonical blocks of the same number and would be incorrectly retreived.
+		// We cannot cache uncles because they are identical to the canonical blocks of the same number and would be incorrectly retreived.
 		if opts.Globals.Cache && opts.Uncles {
 			return validate.Usage("The {0} option is currently not available{1}.", "--cache", " with the --uncles option")
 		}

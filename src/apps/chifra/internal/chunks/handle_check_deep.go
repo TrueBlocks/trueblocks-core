@@ -57,6 +57,7 @@ func (opts *ChunksOptions) CheckDeep(cacheMan *manifest.Manifest, report *types.
 	if opts.Mode == "index" {
 		logger.Info("Checking each address in each index against its Bloom filter...")
 		iterFunc = func(rangeStr string, item *reporter) (err error) {
+			_ = rangeStr
 			rng := base.RangeFromRangeString(item.chunk.Range)
 			path := rng.RangeToFilename(chain)
 			bl, err := index.OpenBloom(index.ToBloomPath(path), true /* check */)
@@ -111,6 +112,7 @@ func (opts *ChunksOptions) CheckDeep(cacheMan *manifest.Manifest, report *types.
 	} else if opts.Mode == "manifest" {
 		sh = shell.NewShell(config.GetPinning().LocalPinUrl)
 		iterFunc = func(rangeStr string, item *reporter) (err error) {
+			_ = rangeStr
 			bar.Tick()
 			err = checkHashes(item.chunk, "bloom", sh, item)
 			if err != nil {

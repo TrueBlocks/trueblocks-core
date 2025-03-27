@@ -29,6 +29,7 @@ func (opts *MonitorsOptions) HandleList(rCtx *output.RenderCtx) error {
 	chain := opts.Globals.Chain
 	fetchData := func(modelChan chan types.Modeler, errorChan chan error) {
 		vFunc := func(fn string, vP any) (bool, error) {
+			_ = vP
 			_, name := filepath.Split(fn)
 			incStaged := opts.Staged
 			isStaging := strings.Contains(fn, "staging")

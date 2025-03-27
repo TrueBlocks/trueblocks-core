@@ -8,6 +8,7 @@ import (
 
 func (opts *ExploreOptions) HandleShow(rCtx *output.RenderCtx) error {
 	fetchData := func(modelChan chan types.Modeler, errorChan chan error) {
+		_ = errorChan
 		for _, dest := range opts.Destinations {
 			dests := dest.Resolve(opts.Globals.Chain, opts.Google, opts.Dalle, opts.Local)
 			for _, d := range dests {

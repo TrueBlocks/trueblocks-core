@@ -105,7 +105,7 @@ func getRoutesAndModes() ([]string, []string) {
 							if key == "status" {
 								on = false
 								if strings.Contains(filter, "status") {
-									fmt.Println("Tests for the status route may not be run seperately.")
+									fmt.Println("Tests for the status route may not be run separately.")
 									os.Exit(1)
 								}
 							}

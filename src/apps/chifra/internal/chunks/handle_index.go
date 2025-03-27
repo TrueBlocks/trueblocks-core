@@ -24,6 +24,8 @@ func (opts *ChunksOptions) HandleIndex(rCtx *output.RenderCtx, blockNums []base.
 	chain := opts.Globals.Chain
 	fetchData := func(modelChan chan types.Modeler, errorChan chan error) {
 		showIndex := func(walker *walk.CacheWalker, fileName string, first bool) (bool, error) {
+			_ = walker
+			_ = first
 			if fileName != index.ToBloomPath(fileName) {
 				return false, fmt.Errorf("should not happen in showIndex")
 			}

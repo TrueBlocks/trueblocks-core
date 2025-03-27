@@ -55,7 +55,7 @@ func (opts *TokensOptions) validateTokens() error {
 				}
 			}
 		} else {
-			// the first is assumed to be a smart contract, the rest can be either non-existant, another smart contract or an EOA
+			// the first is assumed to be a smart contract, the rest can be either non-existent, another smart contract or an EOA
 			addr := opts.Addrs[0]
 			err := opts.Conn.IsContractAtLatest(base.HexToAddress(addr))
 			if err != nil {

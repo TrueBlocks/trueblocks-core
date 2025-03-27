@@ -56,6 +56,7 @@ func (opts *BlocksOptions) HandleUniq(rCtx *output.RenderCtx) error {
 
 				apps := make([]types.Appearance, 0, len(thisMap))
 				iterFunc := func(app types.Appearance, value *types.Appearance) error {
+					_ = value
 					bn := base.Blknum(app.BlockNumber)
 					procFunc := func(s *types.Appearance) error {
 						apps = append(apps, *s)

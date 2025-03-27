@@ -7,5 +7,7 @@ import (
 )
 
 func (opts *ChunksOptions) HandlePublish(rCtx *output.RenderCtx, blockNums []base.Blknum) error {
+	_ = rCtx
+	_ = blockNums
 	return validate.Usage("Handler for {0} --publish not yet implemented.", opts.Mode)
 }

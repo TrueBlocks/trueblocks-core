@@ -254,7 +254,7 @@ func (conn *Connection) GetTransactionRewardByTypeAndApp(rt base.Txnum, theApp *
 		if uncles, err := conn.GetUncleBodiesByNumber(base.Blknum(theApp.BlockNumber)); err != nil {
 			return nil, err
 		} else {
-			var blockReward = base.NewWei(0)
+			var blockReward *base.Wei
 			var nephewReward = base.NewWei(0)
 			var feeReward = base.NewWei(0)
 			var uncleReward = base.NewWei(0)

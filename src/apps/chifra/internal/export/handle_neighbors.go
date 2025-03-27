@@ -69,6 +69,7 @@ func (opts *ExportOptions) HandleNeighbors(rCtx *output.RenderCtx, monitorArray 
 
 						neighbors := make([]Reason, 0)
 						iterFunc := func(app types.Appearance, unused *bool) error {
+							_ = unused
 							if theseNeighbors, err := GetNeighbors(&app); err != nil {
 								return err
 							} else {

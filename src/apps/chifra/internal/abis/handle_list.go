@@ -21,8 +21,10 @@ func (opts *AbisOptions) HandleList(rCtx *output.RenderCtx) error {
 	testMode := opts.Globals.TestMode
 
 	fetchData := func(modelChan chan types.Modeler, errorChan chan error) {
+		_ = errorChan
 		abiArray := make([]types.Abi, 0, 100)
 		vFunc := func(fn string, vP any) (bool, error) {
+			_ = vP
 			if strings.HasSuffix(fn, ".json") {
 				info, _ := os.Stat(fn)
 				abi := types.Abi{

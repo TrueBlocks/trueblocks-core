@@ -22,6 +22,7 @@ type Service struct {
 }
 
 func NewService(chain string, serviceType ServiceType) (Service, error) {
+	_ = chain
 	apiKey, secret, jwt := config.GetKey("pinata").ApiKey, config.GetKey("pinata").Secret, config.GetKey("pinata").Jwt
 	switch serviceType {
 	case Local:

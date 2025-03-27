@@ -43,6 +43,7 @@ func (opts *StatusOptions) HandleShow(rCtx *output.RenderCtx) error {
 }
 
 func ToProgress(chain string, diagnose bool, meta *types.MetaData) string {
+	_ = diagnose
 	nTs, _ := tslib.NTimestamps(chain) // when the file has one record, the block is zero, etc.
 	if nTs > 0 {
 		nTs--
@@ -208,7 +209,7 @@ INFO Progress:[PROGRESS]
 
 /*
 TODO: Better diagnostics (see #3209)
-TODO: When Node synced, successfull chifra init but scraper not running
+TODO: When Node synced, successful chifra init but scraper not running
 TODO:
 TODO: WARN: Index is behind the chain head, but scraper is not running.
 TODO: WARN: This means chifra is not aware of latest transactions and can return incomplete data.

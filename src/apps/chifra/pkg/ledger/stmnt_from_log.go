@@ -88,19 +88,19 @@ func (l *Ledger) getStatementsFromLog(conn *rpc.Connection, logIn *types.Log) (t
 
 		if ofInterest {
 			var err error
-			pBal := new(base.Wei)
+			var pBal *base.Wei
 			if pBal, err = conn.GetBalanceAtToken(log.Address, l.AccountFor, fmt.Sprintf("0x%x", ctx.PrevBlock)); pBal == nil {
 				return s, err
 			}
 			s.PrevBal = *pBal
 
-			bBal := new(base.Wei)
+			var bBal *base.Wei
 			if bBal, err = conn.GetBalanceAtToken(log.Address, l.AccountFor, fmt.Sprintf("0x%x", ctx.CurBlock-1)); bBal == nil {
 				return s, err
 			}
 			s.BegBal = *bBal
 
-			eBal := new(base.Wei)
+			var eBal *base.Wei
 			if eBal, err = conn.GetBalanceAtToken(log.Address, l.AccountFor, fmt.Sprintf("0x%x", ctx.CurBlock)); eBal == nil {
 				return s, err
 			}

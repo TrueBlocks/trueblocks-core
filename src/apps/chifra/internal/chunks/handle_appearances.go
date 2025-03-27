@@ -22,6 +22,7 @@ func (opts *ChunksOptions) HandleAppearances(rCtx *output.RenderCtx, blockNums [
 
 	fetchData := func(modelChan chan types.Modeler, errorChan chan error) {
 		showAppearances := func(walker *walk.CacheWalker, path string, first bool) (bool, error) {
+			_ = first
 			if path != index.ToBloomPath(path) {
 				return false, fmt.Errorf("should not happen in showAppearances")
 			}

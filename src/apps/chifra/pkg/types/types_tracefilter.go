@@ -80,6 +80,8 @@ func (s *TraceFilter) FinishUnmarshal(fileVersion uint64) {
 //
 
 func (s *TraceFilter) PassesBasic(trace *Trace, nTested uint64, nPassed uint64) (bool, string) {
+	_ = nTested
+	_ = nPassed
 	if s.FromBlock != 0 && trace.BlockNumber < s.FromBlock {
 		reason := fmt.Sprintf("block number (%d) less than fromBlock (%d)", trace.BlockNumber, s.FromBlock)
 		return false, reason

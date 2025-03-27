@@ -44,6 +44,7 @@ func MustGetLatestFileTime(folders ...string) time.Time {
 
 func GetNewestInDirectory(directory string) (fileInfo os.FileInfo, err error) {
 	err = filepath.WalkDir(directory, func(path string, entry fs.DirEntry, err error) error {
+		_ = path
 		if err != nil {
 			return err
 		}

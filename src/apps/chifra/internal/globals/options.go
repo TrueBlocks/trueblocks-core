@@ -120,7 +120,7 @@ func InitGlobals(whoAmI string, cmd *cobra.Command, opts *GlobalOptions, c caps.
 	_ = cmd.Flags().MarkHidden("nocolor")
 
 	if opts.Caps.Has(caps.NoHeader) {
-		cmd.Flags().BoolVarP(&opts.NoHeader, "no_header", "", false, "supress export of header row for csv and txt exports")
+		cmd.Flags().BoolVarP(&opts.NoHeader, "no_header", "", false, "suppres export of header row for csv and txt exports")
 	}
 	_ = cmd.Flags().MarkHidden("no_header")
 
@@ -213,6 +213,7 @@ func (opts *GlobalOptions) FinishParseApi(w io.Writer, values url.Values, caches
 }
 
 func (opts *GlobalOptions) FinishParse(args []string, caches map[walk.CacheType]bool) *rpc.Connection {
+	_ = args
 	if (len(opts.Format) == 0 || opts.Format == "none") && len(opts.OutputFn) > 0 {
 		parts := strings.Split(opts.OutputFn, ".")
 		if len(parts) > 0 {

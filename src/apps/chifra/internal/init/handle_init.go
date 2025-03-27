@@ -22,6 +22,7 @@ import (
 
 // HandleInit initializes local copy of UnchainedIndex by downloading manifests and chunks
 func (opts *InitOptions) HandleInit(rCtx *output.RenderCtx) error {
+	_ = rCtx
 	// Make the code below cleaner...
 	chain := opts.Globals.Chain
 

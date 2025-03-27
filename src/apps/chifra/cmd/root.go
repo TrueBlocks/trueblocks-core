@@ -38,6 +38,7 @@ func init() {
 }
 
 func ErrFunc(cmd *cobra.Command, errMsg error) error {
+	_ = cmd
 	msg := fmt.Sprintf("%s", errMsg)
 	if base.IsTestMode() {
 		msg = "\n  " + msg + "\n"

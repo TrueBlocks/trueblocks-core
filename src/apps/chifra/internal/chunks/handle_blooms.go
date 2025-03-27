@@ -21,6 +21,8 @@ func (opts *ChunksOptions) HandleBlooms(rCtx *output.RenderCtx, blockNums []base
 
 	fetchData := func(modelChan chan types.Modeler, errorChan chan error) {
 		showBloom := func(walker *walk.CacheWalker, path string, first bool) (bool, error) {
+			_ = walker
+			_ = first
 			if path != index.ToBloomPath(path) {
 				return false, fmt.Errorf("should not happen in showBloom")
 			}

@@ -69,7 +69,7 @@ func (opts *ExploreOptions) validateExplore() error {
 				opts.Destinations = append(opts.Destinations, types.NewDestination(txHash, types.DestinationTx))
 				continue
 			}
-			// an error here is okay since we can't distinquish between tx hashes and block hashes...
+			// an error here is okay since we can't distinguish between tx hashes and block hashes...
 		}
 
 		valid, _ = validate.IsValidBlockId(chain, []string{arg}, validate.ValidBlockIdWithRangeAndDate)

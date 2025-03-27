@@ -30,7 +30,7 @@ func newLedgerContext(prev, cur, next base.Blknum, isFirst, isLast, reversed boo
 		}
 	}
 
-	reconType := types.Invalid
+	var reconType types.ReconType
 	if cur == 0 {
 		reconType = types.Genesis
 	} else {
@@ -91,6 +91,7 @@ const maxTestingBlock = 17000000
 // appearance's and if they are the same or different. Because balances are only available per block,
 // we must know this information to be able to calculate the correct post-tx balance.
 func (l *Ledger) SetContexts(chain string, apps []types.Appearance) error {
+	_ = chain
 	for i := 0; i < len(apps); i++ {
 		cur := base.Blknum(apps[i].BlockNumber)
 		prev := base.Blknum(apps[base.Max(1, i)-1].BlockNumber)

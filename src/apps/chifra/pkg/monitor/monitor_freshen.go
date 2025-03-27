@@ -202,7 +202,7 @@ func (updater *MonitorUpdate) FreshenMonitors(monitorArray *[]Monitor) (bool, er
 		lines := []string{}
 		for addr, mon := range updater.MonitorMap {
 			bn := base.Blknum(mon.LastScanned)
-			if !rng.LaterThanB(bn) { // the range preceeds the block number
+			if !rng.LaterThanB(bn) { // the range precedes the block number
 				if len(lines) == 0 {
 					lines = file.AsciiFileToLines(stageFn)
 					sort.Slice(lines, func(i, j int) bool {
@@ -235,7 +235,7 @@ func (updater *MonitorUpdate) FreshenMonitors(monitorArray *[]Monitor) (bool, er
 // visitChunkToFreshenFinal opens an index file, searches for the address(es) we're looking for and pushes
 // the appearance records down the resultsChannel (even if there are none).
 func (updater *MonitorUpdate) visitChunkToFreshenFinal(fileName string, resultChannel chan<- []index.AppearanceResult, wg *sync.WaitGroup) {
-	var results []index.AppearanceResult
+	results := make([]index.AppearanceResult, 0)
 	defer func() {
 		resultChannel <- results
 		wg.Done()

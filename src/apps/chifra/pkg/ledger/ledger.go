@@ -11,7 +11,7 @@ import (
 // TODO: balances in a concurrent way before spinning through the appearances. And (2) if we did that
 // TODO: prior to doing the accounting, we could easily travers in reverse order.
 
-// Ledger is a structure that carries enough information to complate a reconciliation
+// Ledger is a structure that carries enough information to complete a reconciliation
 type Ledger struct {
 	Chain       string
 	AccountFor  base.Address
@@ -74,7 +74,7 @@ func (l *Ledger) assetOfInterest(needle base.Address) bool {
 	return false
 }
 
-// See issue #2791 - This is the code that used to generate extra traces to make reconcilation work
+// See issue #2791 - This is the code that used to generate extra traces to make reconciliation work
 // (or, at least, similar code in `chifra export` generated these traces.
 // bool isSuicide = trace.action.selfDestructed != "";
 // bool isCreation = trace.result.address != "";

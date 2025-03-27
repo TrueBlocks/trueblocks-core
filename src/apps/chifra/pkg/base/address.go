@@ -35,6 +35,7 @@ func (a *Address) Hex() string {
 }
 
 func (a *Address) Prefix(n int) string {
+	_ = n
 	return a.Hex()[:Min(len(a.Hex()), 6)]
 }
 
@@ -48,6 +49,7 @@ func (a Address) String() string {
 
 // Format is used by Stringer don't remove
 func (a Address) Format(s fmt.State, c rune) {
+	_ = c
 	_, _ = s.Write([]byte(a.Hex()))
 }
 

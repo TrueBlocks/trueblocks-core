@@ -7,6 +7,8 @@ import (
 )
 
 func (opts *ChunksOptions) HandleDump(rCtx *output.RenderCtx, blockNums []base.Blknum) error {
+	_ = rCtx
+	_ = blockNums
 	return validate.Usage("Extractor for {0} not yet implemented.", opts.Mode)
 }
 

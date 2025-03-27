@@ -32,6 +32,8 @@ func (walker *CacheWalker) MaxTests() int {
 
 func ForEveryFileInFolder(path string, forEvery ForEveryFunc, vP any) error {
 	visitFunc := func(walker *CacheWalker, path string, first bool) (bool, error) {
+		_ = walker
+		_ = first
 		return forEvery(path, vP)
 	}
 	walker := NewCacheWalker("", false, int(base.NOPOSI), visitFunc)

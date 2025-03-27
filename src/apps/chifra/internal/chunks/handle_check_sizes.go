@@ -16,6 +16,7 @@ import (
 
 // CheckSizes compares the file on disc to the file size suggested in the manifest
 func (opts *ChunksOptions) CheckSizes(fileNames []string, blockNums []base.Blknum, cacheManifest *manifest.Manifest, remoteManifest *manifest.Manifest, report *types.ReportCheck) error {
+	_ = blockNums
 
 	// Figure out which manifest we're going to check against
 	theManifest := cacheManifest

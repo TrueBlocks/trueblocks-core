@@ -139,6 +139,7 @@ func GetUniqAddressesInTransaction(chain string, procFunc UniqProcFunc, flow str
 
 // uniqFromLogsDetails extracts addresses from the logs
 func uniqFromLogsDetails(chain string, procFunc UniqProcFunc, flow string, logs []types.Log, ts base.Timestamp, addrMap AddressBooleanMap) (err error) {
+	_ = chain
 	traceid := base.NOPOSN
 	for l, log := range logs {
 		generator := log.Address.Hex()
@@ -206,6 +207,7 @@ func traceReason(traceId base.Tracenum, trace *types.Trace, r string) string {
 
 // uniqFromTracesDetails extracts addresses from traces
 func uniqFromTracesDetails(chain string, procFunc UniqProcFunc, flow string, traces []types.Trace, ts base.Timestamp, addrMap AddressBooleanMap, conn *rpc.Connection) (err error) {
+	_ = chain
 	for _, trace := range traces {
 		traceid := trace.TraceIndex
 		bn := base.Blknum(trace.BlockNumber)

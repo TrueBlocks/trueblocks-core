@@ -27,6 +27,7 @@ import (
 // ReadUnchainedIndex calls UnchainedIndex smart contract to get the current manifest IPFS CID as
 // published by the given publisher
 func ReadUnchainedIndex(chain string, publisher base.Address, database string) (string, error) {
+	_ = chain
 	cid := os.Getenv("TB_OVERRIDE_CID")
 	if cid != "" {
 		return cid, nil

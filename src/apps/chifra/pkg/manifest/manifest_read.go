@@ -26,7 +26,7 @@ func LoadManifest(chain string, publisher base.Address, source Source) (man *Man
 	man = &Manifest{}
 
 	if exists {
-		// We will either return this or use it to compare with the downlaoded manifest
+		// We will either return this or use it to compare with the downloaded manifest
 		// to see if we need to update the file.
 		man, err = readManifestFile(manifestFn)
 		if err != nil {

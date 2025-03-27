@@ -28,6 +28,7 @@ func (opts *MonitorsOptions) HandleCount(rCtx *output.RenderCtx) error {
 			}
 		} else {
 			vFunc := func(fn string, vP any) (bool, error) {
+				_ = vP
 				_, name := filepath.Split(fn)
 				incStaged := opts.Staged
 				isStaging := strings.Contains(fn, "staging")

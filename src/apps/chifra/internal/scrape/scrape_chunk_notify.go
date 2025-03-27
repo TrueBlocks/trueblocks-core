@@ -8,6 +8,7 @@ import (
 )
 
 func (opts *ScrapeOptions) NotifyChunkWritten(chunk index.Chunk, chunkPath string) (err error) {
+	_ = chunk
 	if !opts.Notify {
 		return nil
 	}

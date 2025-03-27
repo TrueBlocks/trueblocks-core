@@ -688,6 +688,7 @@ func (s *Statement) CorrectForNullTransfer(tx *Transaction) bool {
 }
 
 func (s *Statement) CorrectForSomethingElse(tx *Transaction) bool {
+	_ = tx
 	if s.IsEth() {
 		if s.AssetType == "trace-eth" && s.ReconType&First != 0 && s.ReconType&Last != 0 {
 			if s.EndBalCalc().Cmp(&s.EndBal) != 0 {

@@ -10,6 +10,7 @@ import (
 )
 
 func (opts *ConfigOptions) HandleEdit(rCtx *output.RenderCtx) error {
+	_ = rCtx
 	if opts.Globals.TestMode {
 		logger.Info("Can not process this command in test mode.")
 		return nil

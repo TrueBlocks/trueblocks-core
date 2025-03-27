@@ -207,9 +207,9 @@ func Test_Relative(t *testing.T) {
 		},
 	}
 	for _, tt := range tests {
-		s := tt.left.Preceeds(tt.right, false)
+		s := tt.left.Precedes(tt.right, false)
 		if s != tt.want[0] {
-			t.Error("Test", tt.name, "failed Preceeds.")
+			t.Error("Test", tt.name, "failed Precedes.")
 		}
 		s = tt.left.Follows(tt.right, false)
 		if s != tt.want[1] {

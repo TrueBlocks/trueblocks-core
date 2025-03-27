@@ -14,6 +14,7 @@ import (
 
 // HandleTimestampsUpdate update the timestamp file to the latest block
 func (opts *WhenOptions) HandleTimestampsUpdate(rCtx *output.RenderCtx) error {
+	_ = rCtx
 	chain := opts.Globals.Chain
 
 	if opts.Globals.TestMode {

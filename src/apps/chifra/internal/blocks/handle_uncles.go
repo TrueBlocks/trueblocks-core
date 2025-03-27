@@ -55,6 +55,7 @@ func (opts *BlocksOptions) HandleUncles(rCtx *output.RenderCtx) error {
 
 				items := make([]*types.Block, 0, len(thisMap))
 				iterFunc := func(app types.Appearance, value *types.LightBlock) error {
+					_ = value
 					bn := base.Blknum(app.BlockNumber)
 					if uncles, err := opts.Conn.GetUncleBodiesByNumber(bn); err != nil {
 						delete(thisMap, app)

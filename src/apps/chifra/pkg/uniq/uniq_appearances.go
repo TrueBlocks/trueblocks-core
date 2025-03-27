@@ -13,12 +13,14 @@ import (
 
 // AddMiner adds the miner address (for use with post-merge)
 func AddMiner(chain string, miner base.Address, bn base.Blknum, addrMap AddressBooleanMap) (err error) {
+	_ = chain
 	addAddressToMaps(miner.Hex(), bn, types.BlockReward, addrMap)
 	return nil
 }
 
 // UniqFromWithdrawals extracts addresses from an array of receipts
 func UniqFromWithdrawals(chain string, withdrawals []types.Withdrawal, bn base.Blknum, addrMap AddressBooleanMap) (err error) {
+	_ = chain
 	for _, withdrawal := range withdrawals {
 		addAddressToMaps(withdrawal.Address.Hex(), bn, types.WithdrawalAmt, addrMap)
 	}
@@ -39,6 +41,7 @@ func UniqFromReceipts(chain string, receipts []types.Receipt, addrMap AddressBoo
 
 // uniqFromLogs extracts addresses from the logs
 func uniqFromLogs(chain string, logs []types.Log, addrMap AddressBooleanMap) (err error) {
+	_ = chain
 	for _, log := range logs {
 		for _, topic := range log.Topics {
 			str := string(topic.Hex()[2:])

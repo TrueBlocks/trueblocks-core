@@ -45,6 +45,8 @@ func (opts *ChunksOptions) HandleTag(rCtx *output.RenderCtx, blockNums []base.Bl
 			Total:   int64(len(man.Chunks)),
 		})
 		tagIndex := func(walker *walk.CacheWalker, path string, first bool) (bool, error) {
+			_ = walker
+			_ = first
 			if !strings.HasSuffix(path, ".bloom") {
 				logger.Fatal("should not happen ==> walked to a non-bloom file")
 			} else if path != index.ToBloomPath(path) {

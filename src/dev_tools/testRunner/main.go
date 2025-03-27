@@ -264,7 +264,7 @@ func toCamelCase(s string) string {
 }
 
 func toSnakeCase(str string) string {
-	var result []rune
+	result := make([]rune, 0, len(str)*2)
 	for i, r := range str {
 		if unicode.IsUpper(r) && i > 0 {
 			result = append(result, '_')
@@ -371,6 +371,6 @@ func loadTestCases() (map[string][]TestCase, string, error) {
 		return testMap, casesPath, fmt.Errorf("error walking the path %q: %v", casesPath, err)
 	}
 
-	file.StringToAsciiFile(filepath.Join(getGeneratedPath(), "testCases.json"), toJson(testMap))
+	_ = file.StringToAsciiFile(filepath.Join(getGeneratedPath(), "testCases.json"), toJson(testMap))
 	return testMap, casesPath, nil
 }

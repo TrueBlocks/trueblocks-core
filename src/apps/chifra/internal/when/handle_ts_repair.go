@@ -13,6 +13,7 @@ import (
 
 // HandleTimestampsRepair handles chifra when --timestamps --reset <bn> to reset a single block's timestamps (call repeatedly if needed)
 func (opts *WhenOptions) HandleTimestampsRepair(rCtx *output.RenderCtx) error {
+	_ = rCtx
 	chain := opts.Globals.Chain
 
 	cnt, err := tslib.NTimestamps(chain)

@@ -26,6 +26,7 @@ import (
 
 // HandleWatch starts the monitor watcher
 func (opts *MonitorsOptions) HandleWatch(rCtx *output.RenderCtx) error {
+	_ = rCtx
 	opts.Globals.Cache = true
 	scraper := NewScraper(colors.Magenta, "MonitorScraper", opts.Sleep, 0)
 

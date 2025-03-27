@@ -61,6 +61,8 @@ func (opts *ChunksOptions) HandlePin(rCtx *output.RenderCtx, blockNums []base.Bl
 
 		fileList := make([]string, 0, len(man.Chunks))
 		listFiles := func(walker *walk.CacheWalker, path string, first bool) (bool, error) {
+			_ = walker
+			_ = first
 			rng, err := base.RangeFromFilenameE(path)
 			if err != nil {
 				return false, err

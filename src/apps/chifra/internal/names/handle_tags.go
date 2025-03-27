@@ -22,6 +22,7 @@ func (opts *NamesOptions) HandleTags(rCtx *output.RenderCtx) error {
 	tagsMap := make(map[string]bool, len(namesArray)/10)
 
 	fetchData := func(modelChan chan types.Modeler, errorChan chan error) {
+		_ = errorChan
 		for _, name := range namesArray {
 			if len(name.Tags) > 0 && !tagsMap[name.Tags] {
 				s := types.Name{

@@ -89,11 +89,11 @@ func (r *FileRange) Follows(needle FileRange, sequential bool) bool {
 	return r.LaterThan(needle)
 }
 
-// Preceeds returns true if the range is strictly before the needle range.
+// Precedes returns true if the range is strictly before the needle range.
 // (If 'sequential' is true, then the last block in the range must be
 // one less than the first block in the needle range.) If the needle range
 // starts at zero, returns false (nothing is before the first range)
-func (r *FileRange) Preceeds(needle FileRange, sequential bool) bool {
+func (r *FileRange) Precedes(needle FileRange, sequential bool) bool {
 	if sequential {
 		if needle.First == 0 {
 			return false
