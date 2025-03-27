@@ -43,7 +43,7 @@ func (opts *ConfigOptions) testLog() {
 	logger.TestLog(len(opts.Mode) > 0, "Mode: ", opts.Mode)
 	logger.TestLog(opts.Paths, "Paths: ", opts.Paths)
 	logger.TestLog(opts.Dump, "Dump: ", opts.Dump)
-	opts.Conn.TestLog()
+	opts.Conn.TestLog(opts.getCaches())
 	opts.Globals.TestLog()
 }
 

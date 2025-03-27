@@ -77,7 +77,7 @@ func (opts *NamesOptions) testLog() {
 	logger.TestLog(opts.Delete, "Delete: ", opts.Delete)
 	logger.TestLog(opts.Undelete, "Undelete: ", opts.Undelete)
 	logger.TestLog(opts.Remove, "Remove: ", opts.Remove)
-	opts.Conn.TestLog()
+	opts.Conn.TestLog(opts.getCaches())
 	opts.Globals.TestLog()
 }
 

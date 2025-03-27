@@ -61,7 +61,7 @@ func (opts *WhenOptions) testLog() {
 	logger.TestLog(opts.Check, "Check: ", opts.Check)
 	logger.TestLog(opts.Update, "Update: ", opts.Update)
 	logger.TestLog(opts.Deep, "Deep: ", opts.Deep)
-	opts.Conn.TestLog()
+	opts.Conn.TestLog(opts.getCaches())
 	opts.Globals.TestLog()
 }
 

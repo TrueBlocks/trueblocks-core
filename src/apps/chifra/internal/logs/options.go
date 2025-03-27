@@ -48,7 +48,7 @@ func (opts *LogsOptions) testLog() {
 	logger.TestLog(len(opts.Emitter) > 0, "Emitter: ", opts.Emitter)
 	logger.TestLog(len(opts.Topic) > 0, "Topic: ", opts.Topic)
 	logger.TestLog(opts.Articulate, "Articulate: ", opts.Articulate)
-	opts.Conn.TestLog()
+	opts.Conn.TestLog(opts.getCaches())
 	opts.Globals.TestLog()
 }
 

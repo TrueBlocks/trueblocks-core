@@ -254,7 +254,7 @@ func (m *Member) MarshalCode() string {
 		m.GoName() != "Uncles" {
 		tmplName += "3"
 		tmpl = `// {{.GoName}}
-	{{.Lower}} := make([]cache.Marshaler, 0, len(s.{{.GoName}}))
+	{{.Lower}} := make([]base.Marshaler, 0, len(s.{{.GoName}}))
 	for _, {{.LowerSingular}} := range s.{{.GoName}} {
 		{{.Lower}} = append({{.Lower}}, {{if .NeedsPtr}}&{{end}}{{.LowerSingular}})
 	}

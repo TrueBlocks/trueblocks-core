@@ -93,7 +93,7 @@ func (opts *ChunksOptions) testLog() {
 	logger.TestLog(opts.Count, "Count: ", opts.Count)
 	logger.TestLog(len(opts.Tag) > 0, "Tag: ", opts.Tag)
 	logger.TestLog(opts.Sleep != float64(0.0), "Sleep: ", opts.Sleep)
-	opts.Conn.TestLog()
+	opts.Conn.TestLog(opts.getCaches())
 	opts.Globals.TestLog()
 }
 

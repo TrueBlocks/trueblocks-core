@@ -43,7 +43,7 @@ var defaultDaemonOptions = DaemonOptions{
 func (opts *DaemonOptions) testLog() {
 	logger.TestLog(len(opts.Url) > 0 && opts.Url != "localhost:8080", "Url: ", opts.Url)
 	logger.TestLog(opts.Silent, "Silent: ", opts.Silent)
-	opts.Conn.TestLog()
+	opts.Conn.TestLog(opts.getCaches())
 	opts.Globals.TestLog()
 }
 

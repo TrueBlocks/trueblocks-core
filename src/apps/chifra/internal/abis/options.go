@@ -56,7 +56,7 @@ func (opts *AbisOptions) testLog() {
 	logger.TestLog(len(opts.Find) > 0, "Find: ", opts.Find)
 	logger.TestLog(len(opts.Hint) > 0, "Hint: ", opts.Hint)
 	logger.TestLog(len(opts.Encode) > 0, "Encode: ", opts.Encode)
-	opts.Conn.TestLog()
+	opts.Conn.TestLog(opts.getCaches())
 	opts.Globals.TestLog()
 }
 

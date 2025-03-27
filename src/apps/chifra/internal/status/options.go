@@ -54,7 +54,7 @@ func (opts *StatusOptions) testLog() {
 	logger.TestLog(opts.MaxRecords != 10000, "MaxRecords: ", opts.MaxRecords)
 	logger.TestLog(opts.Chains, "Chains: ", opts.Chains)
 	logger.TestLog(opts.Healthcheck, "Healthcheck: ", opts.Healthcheck)
-	opts.Conn.TestLog()
+	opts.Conn.TestLog(opts.getCaches())
 	opts.Globals.TestLog()
 }
 

@@ -63,7 +63,7 @@ func (opts *StateOptions) testLog() {
 	logger.TestLog(len(opts.Calldata) > 0, "Calldata: ", opts.Calldata)
 	logger.TestLog(opts.Articulate, "Articulate: ", opts.Articulate)
 	logger.TestLog(len(opts.ProxyFor) > 0, "ProxyFor: ", opts.ProxyFor)
-	opts.Conn.TestLog()
+	opts.Conn.TestLog(opts.getCaches())
 	opts.Globals.TestLog()
 }
 

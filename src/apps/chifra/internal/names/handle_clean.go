@@ -209,7 +209,8 @@ func cleanName(chain string, name *types.Name) (modified bool, err error) {
 	// If this address is not a token, we're done
 	tokenState, err := conn.GetTokenState(name.Address, "latest")
 	if err != nil {
-		return
+		logger.Error(err.Error())
+		err = nil
 	}
 
 	contractModified, err := cleanContract(tokenState, name)

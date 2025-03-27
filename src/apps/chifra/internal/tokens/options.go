@@ -53,7 +53,7 @@ func (opts *TokensOptions) testLog() {
 	logger.TestLog(opts.ByAcct, "ByAcct: ", opts.ByAcct)
 	logger.TestLog(opts.Changes, "Changes: ", opts.Changes)
 	logger.TestLog(opts.NoZero, "NoZero: ", opts.NoZero)
-	opts.Conn.TestLog()
+	opts.Conn.TestLog(opts.getCaches())
 	opts.Globals.TestLog()
 }
 

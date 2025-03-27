@@ -354,7 +354,7 @@ The `--known` option prints a list of semi-standard function signatures such as 
 ERC 721 standard, various functions from OpenZeppelin, various Uniswap functions, etc. As an
 optimization, the `known` signatures are searched first during articulation.
 
-The `--encode` option generates a 32-byte encoding for a given cannonical function or event signature. For
+The `--encode` option generates a 32-byte encoding for a given canonical function or event signature. For
 functions, you may manually extract the first four bytes of the hash.
 
 The `--find` option is experimental. Please see the notes below for more information.
@@ -376,7 +376,7 @@ Flags:
   -c, --count              show the number of abis downloaded
   -f, --find strings       search for function or event declarations given a four- or 32-byte code(s)
   -n, --hint strings       for the --find option only, provide hints to speed up the search
-  -e, --encode string      generate the 32-byte encoding for a given cannonical function or event signature
+  -e, --encode string      generate the 32-byte encoding for a given canonical function or event signature
   -o, --cache              force the results of the query into the cache
   -D, --decache            removes related items from the cache
   -x, --fmt string         export format, one of [none|json*|txt|csv]

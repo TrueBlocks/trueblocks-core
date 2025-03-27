@@ -41,4 +41,4 @@ Notes:
   - Your use of the unaudited --send option legally absolves TrueBlocks, LLC or any associated parties from liability or loss related to such use.
   - The --send option does not validate its input before sending your transaction to the network. If you provide invalid data, you may lose your funds. Be warned.
   - As of version 4.0.0, use --call --calldata <cmd> to provide your command.
-  - --calldata may be one or more colon-seperated solidity calls, four-byte plus parameters, or encoded call data strings.
+  - --calldata may be one or more colon-separated solidity calls, four-byte plus parameters, or encoded call data strings.

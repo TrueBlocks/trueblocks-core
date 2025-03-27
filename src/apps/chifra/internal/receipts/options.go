@@ -44,7 +44,7 @@ var defaultReceiptsOptions = ReceiptsOptions{}
 func (opts *ReceiptsOptions) testLog() {
 	logger.TestLog(len(opts.Transactions) > 0, "Transactions: ", opts.Transactions)
 	logger.TestLog(opts.Articulate, "Articulate: ", opts.Articulate)
-	opts.Conn.TestLog()
+	opts.Conn.TestLog(opts.getCaches())
 	opts.Globals.TestLog()
 }
 
