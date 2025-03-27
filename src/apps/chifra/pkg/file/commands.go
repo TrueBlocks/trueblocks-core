@@ -125,7 +125,7 @@ func RunWithFileSupport(
 			return err
 		}
 
-		testMode := IsTestMode()
+		testMode := os.Getenv("TEST_MODE") == "true"
 		for _, line := range commandsFile.Lines {
 			resetOptions(testMode)
 			// first, parse flags from the command line
@@ -146,8 +146,4 @@ func RunWithFileSupport(
 		}
 		return nil
 	}
-}
-
-func IsTestMode() bool {
-	return os.Getenv("TEST_MODE") == "true"
 }

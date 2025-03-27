@@ -14,6 +14,7 @@ import (
 
 	explorePkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/explore"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/caps"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	outputHelpers "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output/helpers"
@@ -56,7 +57,7 @@ func init() {
 	exploreCmd.Flags().BoolVarP(&explorePkg.GetOptions().Local, "local", "l", false, `open the local TrueBlocks explorer`)
 	exploreCmd.Flags().BoolVarP(&explorePkg.GetOptions().Google, "google", "g", false, `search google excluding popular blockchain explorers`)
 	exploreCmd.Flags().BoolVarP(&explorePkg.GetOptions().Dalle, "dalle", "d", false, `open the address to the DalleDress explorer (hidden)`)
-	if os.Getenv("TEST_MODE") != "true" {
+	if !base.IsTestMode() {
 		_ = exploreCmd.Flags().MarkHidden("dalle")
 	}
 	globals.InitGlobals("explore", exploreCmd, &explorePkg.GetOptions().Globals, capabilities)

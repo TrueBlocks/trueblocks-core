@@ -1,11 +1,9 @@
 package sdk
 
-import (
-	"os"
-)
+import "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 
 var sdkTestMode = false
 
 func init() {
-	sdkTestMode = os.Getenv("TEST_MODE") == "true"
+	sdkTestMode = base.IsTestMode()
 }

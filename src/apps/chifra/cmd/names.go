@@ -14,6 +14,7 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
 	namesPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/names"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/caps"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	outputHelpers "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output/helpers"
@@ -71,7 +72,7 @@ func init() {
 	namesCmd.Flags().BoolVarP(&namesPkg.GetOptions().Delete, "delete", "", false, `delete a name, but do not remove it (hidden)`)
 	namesCmd.Flags().BoolVarP(&namesPkg.GetOptions().Undelete, "undelete", "", false, `undelete a previously deleted name (hidden)`)
 	namesCmd.Flags().BoolVarP(&namesPkg.GetOptions().Remove, "remove", "", false, `remove a previously deleted name (hidden)`)
-	if os.Getenv("TEST_MODE") != "true" {
+	if !base.IsTestMode() {
 		_ = namesCmd.Flags().MarkHidden("create")
 		_ = namesCmd.Flags().MarkHidden("update")
 		_ = namesCmd.Flags().MarkHidden("delete")

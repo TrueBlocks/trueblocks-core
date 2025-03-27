@@ -14,6 +14,7 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
 	scrapePkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/scrape"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/caps"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	outputHelpers "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output/helpers"
@@ -70,7 +71,7 @@ func init() {
 	scrapeCmd.Flags().Uint64VarP(&scrapePkg.GetOptions().Settings.UnripeDist, "unripe_dist", "", 28, `the distance (in blocks) from the front of the chain under which (inclusive) a block is considered unripe (hidden)`)
 	scrapeCmd.Flags().Uint64VarP(&scrapePkg.GetOptions().Settings.ChannelCount, "channel_count", "", 20, `number of concurrent processing channels (hidden)`)
 	scrapeCmd.Flags().BoolVarP(&scrapePkg.GetOptions().Settings.AllowMissing, "allow_missing", "", false, `do not report errors for blockchains that contain blocks with zero addresses (hidden)`)
-	if os.Getenv("TEST_MODE") != "true" {
+	if !base.IsTestMode() {
 		_ = scrapeCmd.Flags().MarkHidden("publisher")
 		_ = scrapeCmd.Flags().MarkHidden("apps_per_chunk")
 		_ = scrapeCmd.Flags().MarkHidden("snap_to_grid")

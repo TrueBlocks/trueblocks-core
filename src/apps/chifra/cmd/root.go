@@ -9,6 +9,7 @@ import (
 	"fmt"
 	"os"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/spf13/cobra"
 )
 
@@ -38,7 +39,7 @@ func init() {
 
 func ErrFunc(cmd *cobra.Command, errMsg error) error {
 	msg := fmt.Sprintf("%s", errMsg)
-	if os.Getenv("TEST_MODE") == "true" {
+	if base.IsTestMode() {
 		msg = "\n  " + msg + "\n"
 	} else {
 		msg = "\n  \033[31m" + msg + "\033[0m\n"
