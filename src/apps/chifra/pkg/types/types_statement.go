@@ -389,7 +389,7 @@ func (s *Statement) MarshalCache(writer io.Writer) (err error) {
 	}
 
 	// SpotPrice
-	if err = base.WriteValue(writer, s.SpotPrice); err != nil {
+	if err = base.WriteValue(writer, &s.SpotPrice); err != nil {
 		return err
 	}
 

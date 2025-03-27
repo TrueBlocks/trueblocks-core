@@ -36,7 +36,7 @@ func NewWeiStr(x string) *Wei {
 	return (*Wei)(val)
 }
 
-func (b *Wei) ToInt() *big.Int {
+func (b *Wei) ToBigInt() *big.Int {
 	return (*big.Int)(b)
 }
 
@@ -246,7 +246,7 @@ func (w *Wei) MarshalCache(writer io.Writer) error {
 	if w == nil {
 		return WriteValue(writer, big.NewInt(0))
 	}
-	v := *w.ToInt()
+	v := *w.ToBigInt()
 	return WriteValue(writer, &v)
 }
 

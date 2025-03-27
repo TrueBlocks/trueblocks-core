@@ -1,6 +1,7 @@
 package base
 
 import (
+	"io"
 	"math/big"
 	"strconv"
 	"strings"
@@ -170,6 +171,10 @@ func (f *Float) Mul(a, b *Float) *Float {
 	return (*Float)((*big.Float)(f).Mul((*big.Float)(a), (*big.Float)(b)))
 }
 
+func (f *Float) ToBigFloat() *big.Float {
+	return (*big.Float)(f)
+}
+
 func (f *Float) UnmarshalJSON(data []byte) error {
 	str := safeUnquote(string(data))
 	result, _ := strconv.ParseFloat(str, 64)
@@ -182,4 +187,21 @@ func (f *Float) MarshalJSON() ([]byte, error) {
 		return []byte(`"0"`), nil
 	}
 	return []byte(`"` + f.String() + `"`), nil
+}
+
+func (f *Float) UnmarshalCache(fileVersion uint64, reader io.Reader) error {
+	var v big.Float
+	if err := ReadValue(reader, &v, fileVersion); err != nil {
+		return err
+	}
+	*f = (Float)(v)
+	return nil
+}
+
+func (f *Float) MarshalCache(writer io.Writer) error {
+	if f == nil {
+		return WriteValue(writer, big.NewFloat(0))
+	}
+	v := *f.ToBigFloat()
+	return WriteValue(writer, &v)
 }

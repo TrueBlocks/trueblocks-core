@@ -15,36 +15,36 @@ type Unmarshaler interface {
 // ReadValue reads binary representation of fixed-size values, strings,
 // big.Int, Unmarshaler and slices of these values. Version number
 // is passed to any Unmarshaler to ease reading older formats.
-func ReadValue(reader io.Reader, value any, fileVersion uint64) (err error) {
-	switch v := value.(type) {
+func ReadValue(reader io.Reader, dest any, fileVersion uint64) (err error) {
+	switch d := dest.(type) {
 	case Unmarshaler:
-		err = v.UnmarshalCache(fileVersion, reader)
+		err = d.UnmarshalCache(fileVersion, reader)
 	case *[]string:
-		err = readSlice(reader, v, fileVersion)
+		err = readSlice(reader, d, fileVersion)
 	case *[]big.Int:
-		err = readSlice(reader, v, fileVersion)
+		err = readSlice(reader, d, fileVersion)
 	case *string:
-		err = readString(reader, v)
+		err = readString(reader, d)
 	case *big.Int:
-		err = readBigInt(reader, v)
+		err = readBigInt(reader, d)
+	case *big.Float:
+		err = readBigFloat(reader, d)
 	default:
 		// Reading []Unmarshaler is a bit more complex. The type switch won't work and
 		// we'll end up here. If value is a pointer to a slice, then it may contain Unmarshalers
-		reflectedValue := reflect.ValueOf(value)
+		reflectedValue := reflect.ValueOf(dest)
 		if reflectedValue.Kind() == reflect.Pointer {
 			if reflectedValue.Elem().Kind() == reflect.Slice {
 				// It is what we want, so let's try to read. If we get an error, we'll ignore it and still
-				err = readSliceReflect(reader, reflect.TypeOf(value).Elem(), reflectedValue.Elem(), fileVersion)
+				err = readSliceReflect(reader, reflect.TypeOf(dest).Elem(), reflectedValue.Elem(), fileVersion)
 				if err == nil {
 					return
 				}
 			}
 		}
-
-		err = binary.Read(reader, binary.LittleEndian, value)
+		err = binary.Read(reader, binary.LittleEndian, dest)
 	}
-
-	return
+	return err
 }
 
 // readSlice reads binary representation of slice of T. ReadValue is called for each
@@ -141,4 +141,16 @@ func readBigInt(reader io.Reader, target *big.Int) (err error) {
 	// and use big.Int.GobDecode to decode the value
 	err = target.GobDecode(data)
 	return
+}
+
+func readBigFloat(reader io.Reader, dest *big.Float) (err error) {
+	var length uint64
+	if err = binary.Read(reader, binary.LittleEndian, &length); err != nil {
+		return err
+	}
+	data := make([]byte, length)
+	if _, err = io.ReadFull(reader, data); err != nil {
+		return err
+	}
+	return dest.GobDecode(data)
 }

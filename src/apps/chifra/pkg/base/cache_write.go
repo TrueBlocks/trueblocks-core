@@ -33,11 +33,12 @@ func WriteValue(writer io.Writer, value any) (err error) {
 		err = writeString(writer, &v)
 	case *big.Int:
 		err = writeBigInt(writer, v)
+	case *big.Float:
+		err = writeBigFloat(writer, v)
 	default:
 		if rf := reflect.ValueOf(value); rf.Kind() == reflect.Slice {
 			return writeSliceReflect(writer, &rf)
 		}
-
 		err = binary.Write(writer, binary.LittleEndian, value)
 	}
 	return err
@@ -112,4 +113,16 @@ func writeBigInt(writer io.Writer, value *big.Int) (err error) {
 	// write the data
 	_, err = writer.Write(data)
 	return
+}
+
+func writeBigFloat(writer io.Writer, value *big.Float) (err error) {
+	data, err := value.GobEncode()
+	if err != nil {
+		return err
+	}
+	if err = binary.Write(writer, binary.LittleEndian, uint64(len(data))); err != nil {
+		return err
+	}
+	_, err = writer.Write(data)
+	return err
 }

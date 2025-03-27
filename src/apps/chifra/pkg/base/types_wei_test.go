@@ -168,10 +168,10 @@ func TestWeiBasicOperations(t *testing.T) {
 		t.Errorf("IsZero() for non-zero value should be false")
 	}
 
-	// Test ToInt and Bytes
-	bigInt := w1.ToInt()
+	// Test ToBigInt and Bytes
+	bigInt := w1.ToBigInt()
 	if bigInt.Int64() != 100 {
-		t.Errorf("ToInt() = %d; want 100", bigInt.Int64())
+		t.Errorf("ToBigInt() = %d; want 100", bigInt.Int64())
 	}
 	bytesVal := w1.Bytes()
 	expectedBytes := big.NewInt(100).Bytes()
@@ -314,7 +314,7 @@ func TestHexToWeiAndWeiToHash(t *testing.T) {
 	hexLong := "0x" + strings.Repeat("f", 70)
 	wLong := HexToWei(hexLong)
 	expected, _ := new(big.Int).SetString(strings.Repeat("f", 64), 16)
-	if wLong.ToInt().Cmp(expected) != 0 {
+	if wLong.ToBigInt().Cmp(expected) != 0 {
 		t.Errorf("HexToWei(long) = %s; want %s", wLong.String(), expected.String())
 	}
 
