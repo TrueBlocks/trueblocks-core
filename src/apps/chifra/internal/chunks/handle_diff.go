@@ -143,7 +143,7 @@ func (opts *ChunksOptions) exportTo(dest, source string, rd base.RangeDiff) (boo
 	post := make([]string, 0, len(apps))
 	for _, app := range apps {
 		if !filtered(app) &&
-			(app.Address != base.SentinalAddr || base.Txnum(app.TransactionIndex) != types.MisconfigReward) {
+			(app.Address != base.SentinelAddr || base.Txnum(app.TransactionIndex) != types.MisconfigReward) {
 			line := fmt.Sprintf("%d\t%d\t%s", app.BlockNumber, app.TransactionIndex, app.Address)
 			bn := base.Blknum(app.BlockNumber)
 			if bn < rd.In {

@@ -40,7 +40,7 @@ type AbisOptions struct {
 	Conn     *rpc.Connection       `json:"conn,omitempty"`     // The connection to the RPC server
 	BadFlag  error                 `json:"badFlag,omitempty"`  // An error flag if needed
 	// EXISTING_CODE
-	ProxyForAddr base.Address `json:"proxyForAddr,omitempty"` // The address of the proxy for the given proxyFor
+	ProxyForAddr base.Address `json:"-"`
 	// EXISTING_CODE
 }
 

@@ -45,7 +45,7 @@ type StateOptions struct {
 	BadFlag    error                    `json:"badFlag,omitempty"`    // An error flag if needed
 	// EXISTING_CODE
 	Calls        []string     `json:"-"`
-	ProxyForAddr base.Address `json:"proxyForAddr,omitempty"` // The address of the proxy for the given proxyFor
+	ProxyForAddr base.Address `json:"-"`
 	// EXISTING_CODE
 }
 

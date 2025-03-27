@@ -47,7 +47,7 @@ func (opts *AbisOptions) LoadAbis(addrs []string, loadKnown bool) ([]*types.Func
 	abiCache := articulate.NewAbiCache(opts.Conn, opts.Known)
 	for _, addr := range addrs {
 		address := base.HexToAddress(addr)
-		proxy := base.HexToAddress(opts.ProxyFor)
+		proxy := opts.ProxyForAddr
 		if !proxy.IsZero() {
 			address = proxy
 		}

@@ -61,6 +61,7 @@ func (opts *DaemonOptions) DaemonInternal(rCtx *output.RenderCtx) error {
 	timer := logger.NewTimer()
 	msg := "chifra daemon"
 	// EXISTING_CODE
+	_ = rCtx
 	chain := opts.Globals.Chain
 	provider := config.GetChain(chain).RpcProvider
 

@@ -5,14 +5,13 @@
 package abisPkg
 
 import (
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
 
 func (opts *AbisOptions) validateAbis() error {
 	chain := opts.Globals.Chain
-	proxy := base.HexToAddress(opts.ProxyFor)
+	proxy := opts.ProxyForAddr
 
 	opts.testLog()
 

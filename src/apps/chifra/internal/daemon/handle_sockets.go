@@ -34,15 +34,15 @@ type Message struct {
 	Content string      `json:"content"`
 }
 
-// Connection is a structure representing a websocket connection
-type Connection struct {
+// socketConnection is a structure representing a websocket connection
+type socketConnection struct {
 	connection *websocket.Conn
 	pool       *ConnectionPool
 	send       chan *Message
 }
 
 // write the message to the connection
-func (c *Connection) write() {
+func (c *socketConnection) write() {
 	defer func() {
 		c.connection.Close()
 	}()
@@ -53,7 +53,7 @@ func (c *Connection) write() {
 		select {
 		case message, ok := <-c.send:
 			if !ok {
-				c.Log("Connection closed")
+				c.Log("socketConnection closed")
 				_ = c.connection.WriteMessage(websocket.CloseMessage, []byte{})
 				return
 			}
@@ -68,12 +68,12 @@ func (c *Connection) write() {
 }
 
 // RemoteAddr is the other end of the connection
-func (c *Connection) RemoteAddr() net.Addr {
+func (c *socketConnection) RemoteAddr() net.Addr {
 	return c.connection.RemoteAddr()
 }
 
 // Log writes a log messages to the server's stderr
-func (c *Connection) Log(s string, args ...interface{}) {
+func (c *socketConnection) Log(s string, args ...interface{}) {
 	subMsg := fmt.Sprintf(s, args...)
 	msg := fmt.Sprintf("%s %s", c.RemoteAddr(), subMsg)
 	logger.Info(msg)
@@ -81,14 +81,14 @@ func (c *Connection) Log(s string, args ...interface{}) {
 
 // ConnectionPool is the collection of all connections
 type ConnectionPool struct {
-	connections map[*Connection]bool
+	connections map[*socketConnection]bool
 	broadcast   chan *Message
-	register    chan *Connection
-	unregister  chan *Connection
+	register    chan *socketConnection
+	unregister  chan *socketConnection
 }
 
 // closeAndDelete cleans up a connection
-func closeAndDelete(pool *ConnectionPool, connection *Connection) {
+func closeAndDelete(pool *ConnectionPool, connection *socketConnection) {
 	delete(pool.connections, connection)
 	close(connection.send)
 }
@@ -96,10 +96,10 @@ func closeAndDelete(pool *ConnectionPool, connection *Connection) {
 // newConnectionPool returns a new connection structure
 func newConnectionPool() *ConnectionPool {
 	return &ConnectionPool{
-		connections: make(map[*Connection]bool),
+		connections: make(map[*socketConnection]bool),
 		broadcast:   make(chan *Message),
-		register:    make(chan *Connection),
-		unregister:  make(chan *Connection),
+		register:    make(chan *socketConnection),
+		unregister:  make(chan *socketConnection),
 	}
 }
 
@@ -142,7 +142,7 @@ func HandleWebsockets(pool *ConnectionPool, w http.ResponseWriter, r *http.Reque
 		return
 	}
 
-	connection := &Connection{connection: c, send: make(chan *Message), pool: pool}
+	connection := &socketConnection{connection: c, send: make(chan *Message), pool: pool}
 	pool.register <- connection
 
 	go connection.write()
