@@ -6,7 +6,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
-// GetTransfers returns a statement from a given transaction
+// -----------------------------------------------------------------
 func (r *Reconciler) GetTransfers(txs []*types.Transaction) ([]*types.Transfer, bool, error) {
 	ethTransfers, tokenTransfers, _, err := r.getTransfersInternal(txs, false)
 	if err != nil {

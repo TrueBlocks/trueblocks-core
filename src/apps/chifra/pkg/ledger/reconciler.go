@@ -2,7 +2,6 @@ package ledger
 
 import (
 	"encoding/json"
-	"fmt"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/names"
@@ -10,64 +9,40 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
-// AssetHolder Struct combining an asset and holder address to key the Running map for
-// balance tracking per asset-holder pair.
-type AssetHolder struct {
-	Asset  base.Address
-	Holder base.Address
-}
-
-// NewAssetHolderKey Creates a new AssetHolder key.
-func NewAssetHolderKey(asset, holder base.Address) AssetHolder {
-	return AssetHolder{Asset: asset, Holder: holder}
-}
-
+// -----------------------------------------------------------------
+// ReconcilerOptions defines the configuration options for the Reconciler.
+// It includes filters, block ranges, and appearance settings for reconciliation.
 type ReconcilerOptions struct {
-	AccountFor   base.Address            `json:"accountFor"`
-	FirstBlock   base.Blknum             `json:"firstBlock"`
-	LastBlock    base.Blknum             `json:"lastBlock"`
-	AsEther      bool                    `json:"asEther"`
-	UseTraces    bool                    `json:"useTraces"`
-	Reversed     bool                    `json:"reversed"`
-	AssetFilters []base.Address          `json:"assetFilters"`
-	AppFilters   *types.AppearanceFilter `json:"appFilters"`
+	AccountFor   base.Address
+	FirstBlock   base.Blknum
+	LastBlock    base.Blknum
+	AsEther      bool
+	UseTraces    bool
+	Reversed     bool
+	AssetFilters []base.Address
+	AppFilters   *types.AppearanceFilter
 }
 
-type Running struct {
-	amt  base.Wei
-	stmt *types.Statement
-}
-
-func (r *Running) String() string {
-	return fmt.Sprintf("running blkid: %d amount: %s", r.Block(), r.Amount().Text(10))
-}
-
-func (r *Running) Block() base.Blknum {
-	if r.stmt == nil {
-		return 0
-	}
-	return r.stmt.BlockNumber
-}
-
-func (r *Running) Amount() *base.Wei {
-	return &r.amt
-}
-
+// -----------------------------------------------------------------
+// Reconciler performs reconciliation of blockchain data for a specific account.
+// It manages connections, options, and intermediate data structures.
 type Reconciler struct {
-	Connection     *rpc.Connection             `json:"-"`
-	Opts           *ReconcilerOptions          `json:"opts"`
-	ShowDebugging  bool                        `json:"showDebugging"`
-	RemoveAirdrops bool                        `json:"removeAirdrops"`
-	Running        map[AssetHolder]Running     `json:"running"`
-	AssetMap       map[AssetHolder]*types.Name `json:"assetMap"`
-	Names          map[base.Address]types.Name `json:"-"`
+	Connection     *rpc.Connection
+	Opts           *ReconcilerOptions
+	ShowDebugging  bool
+	RemoveAirdrops bool
+	Running        map[assetHolder]runningBalance
+	AssetMap       map[assetHolder]*types.Name
+	Names          map[base.Address]types.Name
 }
 
+// -----------------------------------------------------------------
 func (r *Reconciler) String() string {
 	bytes, _ := json.MarshalIndent(r, "", "  ")
 	return string(bytes)
 }
 
+// -----------------------------------------------------------------
 func NewReconciler(conn *rpc.Connection, opts *ReconcilerOptions) *Reconciler {
 	parts := types.Custom | types.Prefund | types.Regular
 	names, _ := names.LoadNamesMap("mainnet", parts, []string{})
@@ -77,8 +52,8 @@ func NewReconciler(conn *rpc.Connection, opts *ReconcilerOptions) *Reconciler {
 		Names:          names,
 		ShowDebugging:  true,
 		RemoveAirdrops: true,
-		Running:        make(map[AssetHolder]Running),
-		AssetMap:       make(map[AssetHolder]*types.Name),
+		Running:        make(map[assetHolder]runningBalance),
+		AssetMap:       make(map[assetHolder]*types.Name),
 	}
 	return r
 }

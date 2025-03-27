@@ -6,6 +6,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
+// -----------------------------------------------------------------
 func (r *Reconciler) GetAssets(txs []*types.Transaction) ([]*types.Name, bool, error) {
 	ethTransfers, tokenTransfers, _, err := r.getTransfersInternal(txs, false)
 	if err != nil {
@@ -17,7 +18,7 @@ func (r *Reconciler) GetAssets(txs []*types.Transaction) ([]*types.Name, bool, e
 	finished := false
 	slice := make([]*types.Name, 0, len(transfers))
 	for _, item := range transfers {
-		key := NewAssetHolderKey(item.Asset, r.Opts.AccountFor)
+		key := newAssetHolderKey(item.Asset, r.Opts.AccountFor)
 		if _, ok := r.AssetMap[key]; !ok {
 			var name types.Name
 			if name, ok = r.Names[item.Asset]; !ok {

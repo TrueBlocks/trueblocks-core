@@ -5,7 +5,10 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
-// getUnreconciledTransfers returns a list of transfers from a given transaction
+// -----------------------------------------------------------------
+// getUnreconciledTransfers extracts and returns unreconciled ETH and token
+// transfers from a transaction. It uses traces or logs based on the
+// configuration and applies filters to determine material transfers.
 func (r *Reconciler) getUnreconciledTransfers(trans *types.Transaction) ([]*types.Transfer, []*types.Transfer, error) {
 	var ethTransfers, tokenTransfers []*types.Transfer
 	if types.IsAssetOfInterest(base.FAKE_ETH_ADDRESS, r.Opts.AssetFilters) {
@@ -25,7 +28,6 @@ func (r *Reconciler) getUnreconciledTransfers(trans *types.Transaction) ([]*type
 				return nil, nil, err
 			}
 		}
-		// Append only if the statement is material
 		if xfr.IsMaterial() {
 			ethTransfers = append(ethTransfers, xfr)
 		}
@@ -47,6 +49,7 @@ func (r *Reconciler) getUnreconciledTransfers(trans *types.Transaction) ([]*type
 	return ethTransfers, tokenTransfers, nil
 }
 
+// -----------------------------------------------------------------
 func (r *Reconciler) HasFilters() bool {
 	return len(r.Opts.AssetFilters) > 0
 }

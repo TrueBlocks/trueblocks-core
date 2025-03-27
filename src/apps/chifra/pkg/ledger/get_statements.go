@@ -2,18 +2,17 @@ package ledger
 
 import (
 	"fmt"
-	"sort"
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/walk"
 )
 
+// -----------------------------------------------------------------
 func (r *Reconciler) GetStatements(node *types.AppNode[types.Transaction]) ([]types.Statement, error) {
 	trans := node.Data()
-	if stmts, found := r.StatementsFromCache(trans); found {
+	if stmts, found := r.statementsFromCache(trans); found {
 		return stmts, nil
 	}
 
@@ -25,7 +24,6 @@ func (r *Reconciler) GetStatements(node *types.AppNode[types.Transaction]) ([]ty
 		logger.TestLog(true, fmt.Sprintf("~fail %d~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~", n))
 	}
 
-	// First Pass: Fetch unreconciled transfers
 	logger.TestLog(true, "First pass: Fetching unreconciled transfers")
 	ethTransfers, tokenTransfers, balances, err := r.getTransfersInternal([]*types.Transaction{trans}, true)
 	if err != nil {
@@ -37,16 +35,13 @@ func (r *Reconciler) GetStatements(node *types.AppNode[types.Transaction]) ([]ty
 
 	results := make([]types.Statement, 0, len(ethTransfers)+len(tokenTransfers))
 
-	// Second Pass: Reconcile transfers
 	logger.TestLog(true, "Second pass: Reconciling transfers")
 
-	// Handle ETH transfer if present
 	if len(ethTransfers) > 0 {
 		ethXfr := ethTransfers[0]
 		if ethXfr != nil {
 			logger.TestLog(true, "Processing ETH transfer")
 			stmt := ethXfr.ToStatement(trans, r.Opts.AsEther)
-			// stmt.Symbol = "ETH" // Assuming ETH has a fixed symbol
 			stmt.Decimals = 18
 			logger.TestLog(true, "Converted ETH transfer to statement")
 
@@ -57,8 +52,8 @@ func (r *Reconciler) GetStatements(node *types.AppNode[types.Transaction]) ([]ty
 					logger.TestLog(true, "Error in trialBalance for traces:", err)
 					return nil, err
 				} else {
-					if stmt.IsMaterial() { // Append even if not reconciled
-						ReportProgress(stmt, true)
+					if stmt.IsMaterial() {
+						reportProgress(stmt, true)
 						logger.TestLog(true, "Trace-based statement is material - appending. reconciled:", stmt.Reconciled())
 						results = append(results, *stmt)
 					} else {
@@ -74,7 +69,7 @@ func (r *Reconciler) GetStatements(node *types.AppNode[types.Transaction]) ([]ty
 					return nil, err
 				} else if reconciled {
 					if stmt.IsMaterial() {
-						ReportProgress(stmt, false)
+						reportProgress(stmt, false)
 						logger.TestLog(true, "Top-level statement is material and reconciled - appending")
 						results = append(results, *stmt)
 					} else {
@@ -102,7 +97,7 @@ func (r *Reconciler) GetStatements(node *types.AppNode[types.Transaction]) ([]ty
 								return nil, err
 							} else {
 								if traceStmt.IsMaterial() { // Append even if not reconciled
-									ReportProgress(traceStmt, true)
+									reportProgress(traceStmt, true)
 									logger.TestLog(true, "Trace-based statement is material - appending. reconciled:", traceStmt.Reconciled())
 									results = append(results, *traceStmt)
 								} else {
@@ -118,7 +113,6 @@ func (r *Reconciler) GetStatements(node *types.AppNode[types.Transaction]) ([]ty
 		}
 	}
 
-	// Handle log transfers
 	if len(tokenTransfers) == 0 {
 		logger.TestLog(true, "No log transfers to process")
 	} else {
@@ -152,10 +146,10 @@ func (r *Reconciler) GetStatements(node *types.AppNode[types.Transaction]) ([]ty
 			if _, err := r.trialBalance("token", stmt, node, true, balances); err != nil {
 				debugFail(7)
 				logger.TestLog(true, "Error in trialBalance for token:", err)
-				continue // Continue processing other transfers as in original
+				continue
 			} else {
-				if stmt.IsMaterial() { // Append even if not reconciled
-					ReportProgress(stmt, true)
+				if stmt.IsMaterial() {
+					reportProgress(stmt, true)
 					logger.TestLog(true, "Log statement is material - appending. reconciled:", stmt.Reconciled())
 					results = append(results, *stmt)
 				} else {
@@ -169,130 +163,18 @@ func (r *Reconciler) GetStatements(node *types.AppNode[types.Transaction]) ([]ty
 	logger.TestLog(true, "------------------------------------", len(results), "statements generated.")
 	logger.TestLog(true, "")
 
-	err = r.StatementsToCache(trans, results)
+	err = r.statementsToCache(trans, results)
 	return results, err
 }
 
-func ReportProgress(stmt *types.Statement, warn bool) {
+// -----------------------------------------------------------------
+func reportProgress(stmt *types.Statement, warn bool) {
 	msg := fmt.Sprintf("Ether statement at % 9d.%d.%d %s %s", stmt.BlockNumber, stmt.TransactionIndex, stmt.LogIndex, stmt.Asset.Hex(), stmt.Holder.Hex())
 	if !stmt.IsEth() {
 		msg = fmt.Sprintf("Token statement at % 9d.%d.%d %s %s", stmt.BlockNumber, stmt.TransactionIndex, stmt.LogIndex, stmt.Asset.Hex(), stmt.Holder.Hex())
 	}
 	spacer := strings.Repeat(" ", 100-base.Min(100, len(msg)))
-	if !stmt.Reconciled() {
-		// logger.Progress(true, colors.Green+msg+" reconciled.", colors.Off, spacer)
-		// } else {
-		if warn {
-			logger.Warn(msg+" did not reconcile.", spacer)
-		}
-	}
-}
-
-// StatementsFromCache Retrieves statements from the cache, either for specific assets
-// (if filtered) or all assets (if unfiltered), ensuring efficiency by checking the
-// cache before recomputing data.
-func (r *Reconciler) StatementsFromCache(trans *types.Transaction) ([]types.Statement, bool) {
-	if r.HasFilters() {
-		nHits := 0
-		results := make([]types.Statement, 0)
-		for _, asset := range r.Opts.AssetFilters {
-			sg := &types.StatementGroup{
-				Holder:           r.Opts.AccountFor,
-				Asset:            asset,
-				BlockNumber:      trans.BlockNumber,
-				TransactionIndex: trans.TransactionIndex,
-			}
-			if err := r.Connection.ReadFromCache(sg); err == nil {
-				results = append(results, sg.Statements...)
-				nHits++
-			} else {
-				break
-			}
-		}
-		sort.Slice(results, func(i, j int) bool {
-			if results[i].IsEth() != results[j].IsEth() {
-				results[i].IsEth()
-			}
-			if results[i].BlockNumber != results[j].BlockNumber {
-				return results[i].BlockNumber < results[j].BlockNumber
-			}
-			if results[i].TransactionIndex != results[j].TransactionIndex {
-				return results[i].TransactionIndex < results[j].TransactionIndex
-			}
-			return results[i].LogIndex < results[j].LogIndex
-		})
-		if nHits == len(r.Opts.AssetFilters) {
-			r.attachPointers(trans, results)
-			return results, true
-		}
-	}
-
-	sg := &types.StatementGroup{
-		Holder:           r.Opts.AccountFor,
-		BlockNumber:      trans.BlockNumber,
-		TransactionIndex: trans.TransactionIndex,
-	}
-	if err := r.Connection.ReadFromCache(sg); err == nil {
-		if r.HasFilters() {
-			results := make([]types.Statement, 0)
-			for _, asset := range r.Opts.AssetFilters {
-				for _, stmt := range sg.Statements {
-					if stmt.Asset == asset {
-						results = append(results, stmt)
-					}
-				}
-			}
-			r.attachPointers(trans, results)
-			return results, true
-		}
-		r.attachPointers(trans, sg.Statements)
-		return sg.Statements, true
-	}
-
-	return nil, false
-}
-
-func (r *Reconciler) StatementsToCache(trans *types.Transaction, stmts []types.Statement) error {
-	if r.HasFilters() {
-		for _, asset := range r.Opts.AssetFilters {
-			out := make([]types.Statement, 0)
-			for _, stmt := range stmts {
-				if stmt.Asset == asset {
-					out = append(out, stmt)
-				}
-			}
-			if len(out) == 0 {
-				continue
-			}
-			sg := &types.StatementGroup{
-				Holder:           r.Opts.AccountFor,
-				Asset:            asset,
-				BlockNumber:      trans.BlockNumber,
-				TransactionIndex: trans.TransactionIndex,
-				Statements:       out,
-			}
-			err := r.Connection.WriteToCache(sg, walk.Cache_Statements, trans.Timestamp)
-			if err != nil {
-				return err
-			}
-		}
-		return nil
-	}
-
-	statementGroup := &types.StatementGroup{
-		Holder:           r.Opts.AccountFor,
-		BlockNumber:      trans.BlockNumber,
-		TransactionIndex: trans.TransactionIndex,
-		Statements:       stmts,
-	}
-	return r.Connection.WriteToCache(statementGroup, walk.Cache_Statements, trans.Timestamp)
-}
-
-func (r *Reconciler) attachPointers(trans *types.Transaction, stmts []types.Statement) {
-	for i := range stmts {
-		stmts[i].Transaction = trans
-		if !stmts[i].IsEth() && trans.Receipt != nil && len(trans.Receipt.Logs) > int(stmts[i].LogIndex) {
-			stmts[i].Log = &trans.Receipt.Logs[stmts[i].LogIndex]
-		}
+	if !stmt.Reconciled() && warn {
+		logger.Warn(msg+" did not reconcile.", spacer)
 	}
 }

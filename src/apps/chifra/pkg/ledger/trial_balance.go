@@ -8,21 +8,20 @@ import (
 )
 
 // -----------------------------------------------------------------
-func (r *Reconciler) trialBalance(reason string, stmt *types.Statement, node *types.AppNode[types.Transaction], correct bool, balances map[BalanceOptions]*base.Wei) (bool, error) {
+func (r *Reconciler) trialBalance(reason string, stmt *types.Statement, node *types.AppNode[types.Transaction], correct bool, balances map[balanceOptions]*base.Wei) (bool, error) {
 	trans := node.Data()
-	key := NewAssetHolderKey(stmt.Asset, stmt.AccountedFor)
+	key := newAssetHolderKey(stmt.Asset, stmt.AccountedFor)
 	running, found := r.Running[key]
 	isFirstInBlock := !found || running.stmt == nil || running.stmt.BlockNumber != trans.BlockNumber
 	isLastInBlock := node.IsLastInBlock()
 
 	if reason == "token" {
-		if !stmt.BegSentinel { // Not the first log statement
-			isFirstInBlock = false // Force Case 1 or 3
+		if !stmt.BegSentinel {
+			isFirstInBlock = false
 		}
-		if !stmt.EndSentinel { // Not the last log statement
-			isLastInBlock = false // Force Case 2 or 3, depending on isFirstInBlock
+		if !stmt.EndSentinel {
+			isLastInBlock = false
 		}
-		// If Sentinel = true, retain node.IsLastInBlock() to determine Case 4
 	}
 
 	switch {
@@ -44,7 +43,7 @@ func (r *Reconciler) trialBalance(reason string, stmt *types.Statement, node *ty
 }
 
 // -----------------------------------------------------------------
-func (r *Reconciler) case1FirstLast(key AssetHolder, reason string, stmt *types.Statement, node *types.AppNode[types.Transaction], correct bool, balances map[BalanceOptions]*base.Wei) (bool, error) {
+func (r *Reconciler) case1FirstLast(key assetHolder, reason string, stmt *types.Statement, node *types.AppNode[types.Transaction], correct bool, balances map[balanceOptions]*base.Wei) (bool, error) {
 	trans := node.Data()
 	logger.TestLog(true, "XXX =============[ "+reason+" ]======================")
 	logger.TestLog(true, "XXX Case 1: Only statement in block")
@@ -52,12 +51,12 @@ func (r *Reconciler) case1FirstLast(key AssetHolder, reason string, stmt *types.
 	logger.TestLog(true, "XXX FirstInBlock: true, LastInBlock: true")
 	logger.TestLog(true, "XXX ================================================")
 
-	balOpts := BalanceOptions{
+	balOpts := balanceOptions{
 		BlockNumber: trans.BlockNumber,
 		Asset:       stmt.Asset,
 		Holder:      stmt.AccountedFor,
 	}
-	if b, e, err := r.GetReconBalances(&balOpts, balances); err != nil {
+	if b, e, err := r.getReconBalances(&balOpts, balances); err != nil {
 		return false, err
 	} else {
 		stmt.BegBal = *b
@@ -75,7 +74,7 @@ func (r *Reconciler) case1FirstLast(key AssetHolder, reason string, stmt *types.
 
 	stmt.PrevBal = stmt.BegBal
 	newEndBal := stmt.EndBalCalc()
-	r.Running[key] = Running{
+	r.Running[key] = runningBalance{
 		amt:  *newEndBal,
 		stmt: stmt,
 	}
@@ -100,7 +99,7 @@ func (r *Reconciler) case1FirstLast(key AssetHolder, reason string, stmt *types.
 }
 
 // -----------------------------------------------------------------
-func (r *Reconciler) case2MidMid(key AssetHolder, reason string, stmt *types.Statement, node *types.AppNode[types.Transaction], balances map[BalanceOptions]*base.Wei) (bool, error) {
+func (r *Reconciler) case2MidMid(key assetHolder, reason string, stmt *types.Statement, node *types.AppNode[types.Transaction], balances map[balanceOptions]*base.Wei) (bool, error) {
 	_ = balances
 	trans := node.Data()
 	logger.TestLog(true, "XXX =============[ "+reason+" ]======================")
@@ -114,7 +113,7 @@ func (r *Reconciler) case2MidMid(key AssetHolder, reason string, stmt *types.Sta
 	stmt.PrevBal = stmt.BegBal
 	newEndBal := stmt.EndBalCalc()
 	stmt.EndBal = *newEndBal
-	r.Running[key] = Running{
+	r.Running[key] = runningBalance{
 		amt:  *newEndBal,
 		stmt: stmt,
 	}
@@ -128,7 +127,7 @@ func (r *Reconciler) case2MidMid(key AssetHolder, reason string, stmt *types.Sta
 }
 
 // -----------------------------------------------------------------
-func (r *Reconciler) case3FirstMid(key AssetHolder, reason string, stmt *types.Statement, node *types.AppNode[types.Transaction], correct bool, balances map[BalanceOptions]*base.Wei) (bool, error) {
+func (r *Reconciler) case3FirstMid(key assetHolder, reason string, stmt *types.Statement, node *types.AppNode[types.Transaction], correct bool, balances map[balanceOptions]*base.Wei) (bool, error) {
 	_ = correct
 	trans := node.Data()
 	logger.TestLog(true, "XXX =============[ "+reason+" ]======================")
@@ -141,12 +140,12 @@ func (r *Reconciler) case3FirstMid(key AssetHolder, reason string, stmt *types.S
 	if found && running.stmt.BlockNumber == trans.BlockNumber {
 		stmt.BegBal = running.amt
 	} else {
-		balOpts := BalanceOptions{
+		balOpts := balanceOptions{
 			BlockNumber: trans.BlockNumber,
 			Asset:       stmt.Asset,
 			Holder:      stmt.AccountedFor,
 		}
-		if b, _, err := r.GetReconBalances(&balOpts, balances); err != nil {
+		if b, _, err := r.getReconBalances(&balOpts, balances); err != nil {
 			return false, err
 		} else {
 			stmt.BegBal = *b
@@ -161,7 +160,7 @@ func (r *Reconciler) case3FirstMid(key AssetHolder, reason string, stmt *types.S
 	stmt.PrevBal = stmt.BegBal
 	newEndBal := stmt.EndBalCalc()
 	stmt.EndBal = *newEndBal
-	r.Running[key] = Running{
+	r.Running[key] = runningBalance{
 		amt:  *newEndBal,
 		stmt: stmt,
 	}
@@ -175,7 +174,7 @@ func (r *Reconciler) case3FirstMid(key AssetHolder, reason string, stmt *types.S
 }
 
 // -----------------------------------------------------------------
-func (r *Reconciler) case4MidLast(key AssetHolder, reason string, stmt *types.Statement, node *types.AppNode[types.Transaction], correct bool, balances map[BalanceOptions]*base.Wei) (bool, error) {
+func (r *Reconciler) case4MidLast(key assetHolder, reason string, stmt *types.Statement, node *types.AppNode[types.Transaction], correct bool, balances map[balanceOptions]*base.Wei) (bool, error) {
 	_ = reason
 	trans := node.Data()
 	logger.TestLog(true, "XXX =============[ "+reason+" ]======================")
@@ -191,12 +190,12 @@ func (r *Reconciler) case4MidLast(key AssetHolder, reason string, stmt *types.St
 	stmt.EndBal = *newEndBal
 
 	var blockchainEndBal base.Wei
-	balOpts := BalanceOptions{
+	balOpts := balanceOptions{
 		BlockNumber: trans.BlockNumber,
 		Asset:       stmt.Asset,
 		Holder:      stmt.AccountedFor,
 	}
-	if _, e, err := r.GetReconBalances(&balOpts, balances); err != nil {
+	if _, e, err := r.getReconBalances(&balOpts, balances); err != nil {
 		return false, err
 	} else {
 		blockchainEndBal = *e
@@ -214,7 +213,7 @@ func (r *Reconciler) case4MidLast(key AssetHolder, reason string, stmt *types.St
 		reconciled = stmt.EndBalCalc().Cmp(&blockchainEndBal) == 0
 	}
 
-	r.Running[key] = Running{
+	r.Running[key] = runningBalance{
 		amt:  *stmt.EndBalCalc(),
 		stmt: stmt,
 	}
