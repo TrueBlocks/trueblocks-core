@@ -23,6 +23,7 @@ import (
 
 // RunNames handles the names command for the command line. Returns error only as per cobra.
 func RunNames(cmd *cobra.Command, args []string) error {
+	_ = cmd
 	opts := namesFinishParse(args)
 	rCtx := output.NewRenderContext()
 	// EXISTING_CODE

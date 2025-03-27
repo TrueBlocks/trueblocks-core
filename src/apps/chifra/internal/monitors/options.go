@@ -70,7 +70,7 @@ func (opts *MonitorsOptions) testLog() {
 	logger.TestLog(opts.BatchSize != 8, "BatchSize: ", opts.BatchSize)
 	logger.TestLog(opts.RunCount != 0, "RunCount: ", opts.RunCount)
 	logger.TestLog(opts.Sleep != float64(14), "Sleep: ", opts.Sleep)
-	opts.Conn.TestLog(opts.getCaches())
+	opts.Conn.TestLog()
 	opts.Globals.TestLog()
 }
 

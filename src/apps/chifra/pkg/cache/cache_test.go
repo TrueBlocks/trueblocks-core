@@ -5,8 +5,11 @@ import (
 	"errors"
 	"fmt"
 	"io"
+	"reflect"
 	"strconv"
+	"testing"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/version"
 )
 
@@ -25,13 +28,13 @@ func (e *ExampleBlock) MarshalCache(writer io.Writer) (err error) {
 	// WriteValue serializes its second argument. It works for
 	// fixed-size numeric types, slices and structs that implement
 	// CacheMarshaler interface (and slices of such types).
-	if err = WriteValue(writer, e.BlockNumber); err != nil {
+	if err = base.WriteValue(writer, e.BlockNumber); err != nil {
 		return err
 	}
-	if err = WriteValue(writer, e.Name); err != nil {
+	if err = base.WriteValue(writer, e.Name); err != nil {
 		return err
 	}
-	if err = WriteValue(writer, e.Timestamp); err != nil {
+	if err = base.WriteValue(writer, e.Timestamp); err != nil {
 		return err
 	}
 
@@ -53,13 +56,13 @@ func (e *ExampleBlock) UnmarshalCache(itemVersion uint64, reader io.Reader) (err
 		return errors.New("unsupported version")
 	}
 
-	if err = ReadValue(reader, &e.BlockNumber, itemVersion); err != nil {
+	if err = base.ReadValue(reader, &e.BlockNumber, itemVersion); err != nil {
 		return err
 	}
-	if err = ReadValue(reader, &e.Name, itemVersion); err != nil {
+	if err = base.ReadValue(reader, &e.Name, itemVersion); err != nil {
 		return err
 	}
-	if err = ReadValue(reader, &e.Timestamp, itemVersion); err != nil {
+	if err = base.ReadValue(reader, &e.Timestamp, itemVersion); err != nil {
 		return err
 	}
 	return
@@ -89,19 +92,19 @@ func Example() {
 
 	// we will store it in memory cache (if StoreOptions is nil, then file system
 	// cache is used)
-	cacheStore, err := NewStore(&StoreOptions{Location: MemoryCache})
+	store, err := NewStore(&StoreOptions{Location: MemoryCache})
 	if err != nil {
 		panic(err)
 	}
 
-	if err := cacheStore.Write(block, nil); err != nil {
+	if err := store.Write(block, nil); err != nil {
 		panic(err)
 	}
 
 	readFromCache := &ExampleBlock{
 		BlockNumber: 4436721,
 	}
-	if err := cacheStore.Read(readFromCache, nil); err != nil {
+	if err := store.Read(readFromCache, nil); err != nil {
 		panic(err)
 	}
 
@@ -161,4 +164,37 @@ func ExampleMarshaler() {
 	// Output:
 	// 1688667358
 	// &{BlockNumber:17636511 Date: Name:Nice Block Timestamp:1688667358}
+}
+
+func TestAddressCache(t *testing.T) {
+	buf := new(bytes.Buffer)
+	item := NewItem(buf)
+
+	addr := base.HexToAddress("0xf503017d7baf7fbc0fff7492b751025c6a78179b")
+	if err := item.Encode(addr); err != nil {
+		t.Fatal(err)
+	}
+	result := buf.Bytes()[HeaderByteSize:]
+	if !reflect.DeepEqual(result, addr.Bytes()) {
+		t.Fatalf("values are not same: got %x, expected %x", result, addr.Bytes())
+	}
+	readerItem := NewItem(buf)
+	var readAddr base.Address
+	if err := readerItem.Decode(&readAddr); err != nil {
+		return
+	}
+	if readAddr.Hex() != addr.Hex() {
+		t.Fatal("read wrong value:", readAddr)
+	}
+
+	// 0x0 case
+	zeroAddr := base.Address{}
+	buf.Reset()
+	if err := item.Encode(zeroAddr); err != nil {
+		t.Fatal(err)
+	}
+	resultAddr := base.BytesToAddress(buf.Bytes()[HeaderByteSize:])
+	if !resultAddr.IsZero() {
+		t.Fatalf("expected zero address, but got %s", resultAddr)
+	}
 }

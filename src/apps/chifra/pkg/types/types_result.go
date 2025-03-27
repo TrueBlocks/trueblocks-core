@@ -43,6 +43,10 @@ func (s Result) String() string {
 }
 
 func (s *Result) Model(chain, format string, verbose bool, extraOpts map[string]any) Model {
+	_ = chain
+	_ = format
+	_ = verbose
+	_ = extraOpts
 	var model = map[string]any{}
 	var order = []string{}
 
@@ -140,7 +144,7 @@ func (s *Result) CacheLocations() (string, string, string) {
 
 func (s *Result) MarshalCache(writer io.Writer) (err error) {
 	// Address
-	if err = cache.WriteValue(writer, s.Address); err != nil {
+	if err = base.WriteValue(writer, s.Address); err != nil {
 		return err
 	}
 
@@ -148,50 +152,50 @@ func (s *Result) MarshalCache(writer io.Writer) (err error) {
 	optArticulatedOut := &cache.Optional[Function]{
 		Value: s.ArticulatedOut,
 	}
-	if err = cache.WriteValue(writer, optArticulatedOut); err != nil {
+	if err = base.WriteValue(writer, optArticulatedOut); err != nil {
 		return err
 	}
 
 	// BlockNumber
-	if err = cache.WriteValue(writer, s.BlockNumber); err != nil {
+	if err = base.WriteValue(writer, s.BlockNumber); err != nil {
 		return err
 	}
 
 	// EncodedArguments
-	if err = cache.WriteValue(writer, s.EncodedArguments); err != nil {
+	if err = base.WriteValue(writer, s.EncodedArguments); err != nil {
 		return err
 	}
 
 	// Encoding
-	if err = cache.WriteValue(writer, s.Encoding); err != nil {
+	if err = base.WriteValue(writer, s.Encoding); err != nil {
 		return err
 	}
 
 	// Name
-	if err = cache.WriteValue(writer, s.Name); err != nil {
+	if err = base.WriteValue(writer, s.Name); err != nil {
 		return err
 	}
 
 	// Signature
-	if err = cache.WriteValue(writer, s.Signature); err != nil {
+	if err = base.WriteValue(writer, s.Signature); err != nil {
 		return err
 	}
 
 	// Timestamp
-	if err = cache.WriteValue(writer, s.Timestamp); err != nil {
+	if err = base.WriteValue(writer, s.Timestamp); err != nil {
 		return err
 	}
 
 	return nil
 }
 
-func (s *Result) UnmarshalCache(vers uint64, reader io.Reader) (err error) {
+func (s *Result) UnmarshalCache(fileVersion uint64, reader io.Reader) (err error) {
 	// Check for compatibility and return cache.ErrIncompatibleVersion to invalidate this item (see #3638)
 	// EXISTING_CODE
 	// EXISTING_CODE
 
 	// Address
-	if err = cache.ReadValue(reader, &s.Address, vers); err != nil {
+	if err = base.ReadValue(reader, &s.Address, fileVersion); err != nil {
 		return err
 	}
 
@@ -199,48 +203,49 @@ func (s *Result) UnmarshalCache(vers uint64, reader io.Reader) (err error) {
 	optArticulatedOut := &cache.Optional[Function]{
 		Value: s.ArticulatedOut,
 	}
-	if err = cache.ReadValue(reader, optArticulatedOut, vers); err != nil {
+	if err = base.ReadValue(reader, optArticulatedOut, fileVersion); err != nil {
 		return err
 	}
 	s.ArticulatedOut = optArticulatedOut.Get()
 
 	// BlockNumber
-	if err = cache.ReadValue(reader, &s.BlockNumber, vers); err != nil {
+	if err = base.ReadValue(reader, &s.BlockNumber, fileVersion); err != nil {
 		return err
 	}
 
 	// EncodedArguments
-	if err = cache.ReadValue(reader, &s.EncodedArguments, vers); err != nil {
+	if err = base.ReadValue(reader, &s.EncodedArguments, fileVersion); err != nil {
 		return err
 	}
 
 	// Encoding
-	if err = cache.ReadValue(reader, &s.Encoding, vers); err != nil {
+	if err = base.ReadValue(reader, &s.Encoding, fileVersion); err != nil {
 		return err
 	}
 
 	// Name
-	if err = cache.ReadValue(reader, &s.Name, vers); err != nil {
+	if err = base.ReadValue(reader, &s.Name, fileVersion); err != nil {
 		return err
 	}
 
 	// Signature
-	if err = cache.ReadValue(reader, &s.Signature, vers); err != nil {
+	if err = base.ReadValue(reader, &s.Signature, fileVersion); err != nil {
 		return err
 	}
 
 	// Timestamp
-	if err = cache.ReadValue(reader, &s.Timestamp, vers); err != nil {
+	if err = base.ReadValue(reader, &s.Timestamp, fileVersion); err != nil {
 		return err
 	}
 
-	s.FinishUnmarshal()
+	s.FinishUnmarshal(fileVersion)
 
 	return nil
 }
 
 // FinishUnmarshal is used by the cache. It may be unused depending on auto-code-gen
-func (s *Result) FinishUnmarshal() {
+func (s *Result) FinishUnmarshal(fileVersion uint64) {
+	_ = fileVersion
 	// EXISTING_CODE
 	s.Values = make(map[string]string)
 	for index, output := range s.ArticulatedOut.Outputs {

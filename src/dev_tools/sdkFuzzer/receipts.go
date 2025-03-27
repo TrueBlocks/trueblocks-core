@@ -14,7 +14,6 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	sdk "github.com/TrueBlocks/trueblocks-sdk/v4"
 )
 
@@ -64,7 +63,7 @@ func TestReceipts(which, value, fn string, opts *sdk.ReceiptsOptions) {
 		if receipts, _, err := opts.Receipts(); err != nil {
 			ReportError(fn, opts, err)
 		} else {
-			if err := SaveToFile[types.Receipt](fn, receipts); err != nil {
+			if err := SaveToFile(fn, receipts); err != nil {
 				ReportError2(fn, err)
 			} else {
 				ReportOkay(fn)

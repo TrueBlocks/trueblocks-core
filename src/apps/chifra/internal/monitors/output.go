@@ -25,6 +25,7 @@ import (
 
 // RunMonitors handles the monitors command for the command line. Returns error only as per cobra.
 func RunMonitors(cmd *cobra.Command, args []string) error {
+	_ = cmd
 	opts := monitorsFinishParse(args)
 	rCtx := output.NewRenderContext()
 	// EXISTING_CODE

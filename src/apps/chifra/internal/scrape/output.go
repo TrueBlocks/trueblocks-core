@@ -24,6 +24,7 @@ import (
 
 // RunScrape handles the scrape command for the command line. Returns error only as per cobra.
 func RunScrape(cmd *cobra.Command, args []string) error {
+	_ = cmd
 	opts := scrapeFinishParse(args)
 	rCtx := output.NewRenderContext()
 	// EXISTING_CODE

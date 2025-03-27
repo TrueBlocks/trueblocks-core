@@ -557,7 +557,7 @@ paths:
               schema:
                 properties:
                   data:
-                    description: Produces <a href="/data-model/accounts/#appearance">Appearance</a>, <a href="/data-model/other/#function">Function</a>, <a href="/data-model/chaindata/#log">Log</a>, <a href="/data-model/other/#message">Message</a>, <a href="/data-model/accounts/#monitor">Monitor</a>, <a href="/data-model/other/#parameter">Parameter</a>, <a href="/data-model/chaindata/#receipt">Receipt</a>, <a href="/data-model/accounts/#statement">Statement</a>, <a href="/data-model/chainstate/#token">Token</a>, <a href="/data-model/chaindata/#trace">Trace</a>, <a href="/data-model/chaindata/#traceaction">TraceAction</a>, <a href="/data-model/chaindata/#traceresult">TraceResult</a>, <a href="/data-model/chaindata/#transaction">Transaction</a> or <a href="/data-model/chaindata/#withdrawal">Withdrawal</a> data. Corresponds to the <a href="/chifra/accounts/#chifra-export">chifra export</a> command line.
+                    description: Produces <a href="/data-model/accounts/#appearance">Appearance</a>, <a href="/data-model/other/#function">Function</a>, <a href="/data-model/chaindata/#log">Log</a>, <a href="/data-model/other/#message">Message</a>, <a href="/data-model/accounts/#monitor">Monitor</a>, <a href="/data-model/other/#parameter">Parameter</a>, <a href="/data-model/chaindata/#receipt">Receipt</a>, <a href="/data-model/accounts/#statement">Statement</a>, <a href="/data-model/chainstate/#token">Token</a>, <a href="/data-model/chaindata/#trace">Trace</a>, <a href="/data-model/chaindata/#traceaction">TraceAction</a>, <a href="/data-model/chaindata/#traceresult">TraceResult</a>, <a href="/data-model/chaindata/#transaction">Transaction</a>, <a href="/data-model/accounts/#transfer">Transfer</a> or <a href="/data-model/chaindata/#withdrawal">Withdrawal</a> data. Corresponds to the <a href="/chifra/accounts/#chifra-export">chifra export</a> command line.
                     type: array
                     items:
                       oneOf:
@@ -574,6 +574,7 @@ paths:
                         - $ref: "#/components/schemas/traceAction"
                         - $ref: "#/components/schemas/traceResult"
                         - $ref: "#/components/schemas/transaction"
+                        - $ref: "#/components/schemas/transfer"
                         - $ref: "#/components/schemas/withdrawal"
                 examples:
                   [
@@ -1016,7 +1017,7 @@ paths:
               type: string
               format: string
         - name: encode
-          description: generate the 32-byte encoding for a given cannonical function or event signature
+          description: generate the 32-byte encoding for a given canonical function or event signature
           required: false
           style: form
           in: query
@@ -3381,6 +3382,100 @@ components:
           type: string
           format: string
           description: "the reason for the correcting entries, if any"
+    transfer:
+      description: "a movement of an asset from one address to another (derived from a transaction or a log)"
+      type: object
+      properties:
+        blockNumber:
+          type: number
+          format: blknum
+          description: "the number of the block"
+        transactionIndex:
+          type: number
+          format: txnum
+          description: "the zero-indexed position of the transaction in the block"
+        logIndex:
+          type: number
+          format: lognum
+          description: "the zero-indexed position the log in the block, if applicable"
+        holder:
+          type: string
+          format: address
+          description: "the address of the holder of the asset"
+        asset:
+          type: string
+          format: address
+          description: "0xeeee...eeee for ETH transfers, the token address otherwise"
+        decimals:
+          type: number
+          format: uint64
+          description: "the number of decimal places in the asset units"
+        sender:
+          type: string
+          format: address
+          description: "the initiator of the transfer (the sender)"
+        recipient:
+          type: string
+          format: address
+          description: "the receiver of the transfer (the recipient)"
+        amountIn:
+          type: string
+          format: int256
+          description: "the top-level value of the incoming transfer for the holder address"
+        internalIn:
+          type: string
+          format: int256
+          description: "the internal value of the incoming transfer for the holder address"
+        minerBaseRewardIn:
+          type: string
+          format: int256
+          description: "the base fee reward if the miner is the holder address"
+        minerNephewRewardIn:
+          type: string
+          format: int256
+          description: "the nephew reward if the miner is the holder address"
+        minerTxFeeIn:
+          type: string
+          format: int256
+          description: "the transaction fee reward if the miner is the holder address"
+        minerUncleRewardIn:
+          type: string
+          format: int256
+          description: "the uncle reward if the miner who won the uncle block is the holder address"
+        prefundIn:
+          type: string
+          format: int256
+          description: "at block zero (0) only, the amount of genesis income for the holder address"
+        selfDestructIn:
+          type: string
+          format: int256
+          description: "the incoming value of a self-destruct if recipient is the holder address"
+        amountOut:
+          type: string
+          format: int256
+          description: "the amount (in units of the asset) of regular outflow during this transaction"
+        internalOut:
+          type: string
+          format: int256
+          description: "the value of any internal value transfers out of the holder account"
+        gasOut:
+          type: string
+          format: int256
+          description: "if the transaction's original sender is the holder address, the amount of gas expended"
+        selfDestructOut:
+          type: string
+          format: int256
+          description: "the outgoing value of a self-destruct if sender is the holder address"
+        transaction:
+          type: object
+          items:
+            $ref: "#/components/schemas/transaction"
+          description: "the transaction that triggered the transfer (calculated)"
+        log:
+          type: object
+          items:
+            $ref: "#/components/schemas/log"
+          description: "if a token transfer, the log that triggered the transfer (calculated)"
     appearanceTable:
       description: "an appearance table for an address"
       type: object
@@ -3518,7 +3613,7 @@ components:
           type: array
           items:
             $ref: "#/components/schemas/statement"
-          description: "array of reconciliations (calculated)"
+          description: "array of reconciliation statements (calculated)"
         articulatedTx:
           type: object
           items:
@@ -3600,7 +3695,7 @@ components:
         status:
           type: number
           format: value
-          description: "`1` on transaction suceess, `null` if tx preceeds Byzantium, `0` otherwise"
+          description: "`1` on transaction suceess, `null` if tx precedes Byzantium, `0` otherwise"
         transactionHash:
           type: string
           format: hash
@@ -3661,6 +3756,10 @@ components:
           type: string
           format: string
           description: "a truncated, more readable version of the articulation (calculated)"
+        isNFT:
+          type: boolean
+          format: boolean
+          description: "true if the log is an NFT transfer (calculated)"
     trace:
       description: "trace data as returned from the RPC (with slight enhancements)"
       type: object
@@ -4078,7 +4177,7 @@ components:
           description: "the holder's asset balance at the given block height"
         balanceDec:
           type: number
-          format: float64
+          format: float
           description: "the holder's asset balance (in Ether) at the given block height (calculated)"
         diff:
           type: string

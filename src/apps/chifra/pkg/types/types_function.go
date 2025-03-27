@@ -17,7 +17,6 @@ import (
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
 	"github.com/ethereum/go-ethereum/accounts/abi"
 )
 
@@ -49,6 +48,10 @@ func (s Function) String() string {
 }
 
 func (s *Function) Model(chain, format string, verbose bool, extraOpts map[string]any) Model {
+	_ = chain
+	_ = format
+	_ = verbose
+	_ = extraOpts
 	var model = map[string]any{}
 	var order = []string{}
 
@@ -111,130 +114,131 @@ func (s *Function) Model(chain, format string, verbose bool, extraOpts map[strin
 
 func (s *Function) MarshalCache(writer io.Writer) (err error) {
 	// Anonymous
-	if err = cache.WriteValue(writer, s.Anonymous); err != nil {
+	if err = base.WriteValue(writer, s.Anonymous); err != nil {
 		return err
 	}
 
 	// Constant
-	if err = cache.WriteValue(writer, s.Constant); err != nil {
+	if err = base.WriteValue(writer, s.Constant); err != nil {
 		return err
 	}
 
 	// Encoding
-	if err = cache.WriteValue(writer, s.Encoding); err != nil {
+	if err = base.WriteValue(writer, s.Encoding); err != nil {
 		return err
 	}
 
 	// Inputs
-	inputs := make([]cache.Marshaler, 0, len(s.Inputs))
+	inputs := make([]base.Marshaler, 0, len(s.Inputs))
 	for _, input := range s.Inputs {
 		inputs = append(inputs, &input)
 	}
-	if err = cache.WriteValue(writer, inputs); err != nil {
+	if err = base.WriteValue(writer, inputs); err != nil {
 		return err
 	}
 
 	// Message
-	if err = cache.WriteValue(writer, s.Message); err != nil {
+	if err = base.WriteValue(writer, s.Message); err != nil {
 		return err
 	}
 
 	// Name
-	if err = cache.WriteValue(writer, s.Name); err != nil {
+	if err = base.WriteValue(writer, s.Name); err != nil {
 		return err
 	}
 
 	// Outputs
-	outputs := make([]cache.Marshaler, 0, len(s.Outputs))
+	outputs := make([]base.Marshaler, 0, len(s.Outputs))
 	for _, output := range s.Outputs {
 		outputs = append(outputs, &output)
 	}
-	if err = cache.WriteValue(writer, outputs); err != nil {
+	if err = base.WriteValue(writer, outputs); err != nil {
 		return err
 	}
 
 	// Signature
-	if err = cache.WriteValue(writer, s.Signature); err != nil {
+	if err = base.WriteValue(writer, s.Signature); err != nil {
 		return err
 	}
 
 	// StateMutability
-	if err = cache.WriteValue(writer, s.StateMutability); err != nil {
+	if err = base.WriteValue(writer, s.StateMutability); err != nil {
 		return err
 	}
 
 	// FunctionType
-	if err = cache.WriteValue(writer, s.FunctionType); err != nil {
+	if err = base.WriteValue(writer, s.FunctionType); err != nil {
 		return err
 	}
 
 	return nil
 }
 
-func (s *Function) UnmarshalCache(vers uint64, reader io.Reader) (err error) {
+func (s *Function) UnmarshalCache(fileVersion uint64, reader io.Reader) (err error) {
 	// Check for compatibility and return cache.ErrIncompatibleVersion to invalidate this item (see #3638)
 	// EXISTING_CODE
 	// EXISTING_CODE
 
 	// Anonymous
-	if err = cache.ReadValue(reader, &s.Anonymous, vers); err != nil {
+	if err = base.ReadValue(reader, &s.Anonymous, fileVersion); err != nil {
 		return err
 	}
 
 	// Constant
-	if err = cache.ReadValue(reader, &s.Constant, vers); err != nil {
+	if err = base.ReadValue(reader, &s.Constant, fileVersion); err != nil {
 		return err
 	}
 
 	// Encoding
-	if err = cache.ReadValue(reader, &s.Encoding, vers); err != nil {
+	if err = base.ReadValue(reader, &s.Encoding, fileVersion); err != nil {
 		return err
 	}
 
 	// Inputs
 	s.Inputs = make([]Parameter, 0)
-	if err = cache.ReadValue(reader, &s.Inputs, vers); err != nil {
+	if err = base.ReadValue(reader, &s.Inputs, fileVersion); err != nil {
 		return err
 	}
 
 	// Message
-	if err = cache.ReadValue(reader, &s.Message, vers); err != nil {
+	if err = base.ReadValue(reader, &s.Message, fileVersion); err != nil {
 		return err
 	}
 
 	// Name
-	if err = cache.ReadValue(reader, &s.Name, vers); err != nil {
+	if err = base.ReadValue(reader, &s.Name, fileVersion); err != nil {
 		return err
 	}
 
 	// Outputs
 	s.Outputs = make([]Parameter, 0)
-	if err = cache.ReadValue(reader, &s.Outputs, vers); err != nil {
+	if err = base.ReadValue(reader, &s.Outputs, fileVersion); err != nil {
 		return err
 	}
 
 	// Signature
-	if err = cache.ReadValue(reader, &s.Signature, vers); err != nil {
+	if err = base.ReadValue(reader, &s.Signature, fileVersion); err != nil {
 		return err
 	}
 
 	// StateMutability
-	if err = cache.ReadValue(reader, &s.StateMutability, vers); err != nil {
+	if err = base.ReadValue(reader, &s.StateMutability, fileVersion); err != nil {
 		return err
 	}
 
 	// FunctionType
-	if err = cache.ReadValue(reader, &s.FunctionType, vers); err != nil {
+	if err = base.ReadValue(reader, &s.FunctionType, fileVersion); err != nil {
 		return err
 	}
 
-	s.FinishUnmarshal()
+	s.FinishUnmarshal(fileVersion)
 
 	return nil
 }
 
 // FinishUnmarshal is used by the cache. It may be unused depending on auto-code-gen
-func (s *Function) FinishUnmarshal() {
+func (s *Function) FinishUnmarshal(fileVersion uint64) {
+	_ = fileVersion
 	// EXISTING_CODE
 	// EXISTING_CODE
 }

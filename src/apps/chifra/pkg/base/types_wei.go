@@ -4,8 +4,6 @@ import (
 	"io"
 	"math/big"
 	"strings"
-
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
 )
 
 // Wei is a type in its own right. This means we can extend it by
@@ -110,7 +108,7 @@ func (e *Wei) UnmarshalJSON(data []byte) error {
 
 func (w *Wei) UnmarshalCache(version uint64, reader io.Reader) error {
 	var v big.Int
-	if err := cache.ReadValue(reader, &v, version); err != nil {
+	if err := ReadValue(reader, &v, version); err != nil {
 		return err
 	}
 	*w = (Wei)(v)
@@ -119,7 +117,7 @@ func (w *Wei) UnmarshalCache(version uint64, reader io.Reader) error {
 
 func (w *Wei) MarshalCache(writer io.Writer) error {
 	v := *w.ToInt()
-	return cache.WriteValue(writer, &v)
+	return WriteValue(writer, &v)
 }
 
 func (w *Wei) UnmarshalText(text []byte) error {

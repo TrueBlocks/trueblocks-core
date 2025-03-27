@@ -23,6 +23,7 @@ import (
 
 // RunConfig handles the config command for the command line. Returns error only as per cobra.
 func RunConfig(cmd *cobra.Command, args []string) error {
+	_ = cmd
 	opts := configFinishParse(args)
 	rCtx := output.NewRenderContext()
 	// EXISTING_CODE

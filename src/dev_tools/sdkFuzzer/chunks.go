@@ -15,7 +15,6 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	sdk "github.com/TrueBlocks/trueblocks-sdk/v4"
 )
 
@@ -103,7 +102,7 @@ func TestChunks(which, value, fn string, opts *sdk.ChunksOptions) {
 		if manifest, _, err := opts.ChunksManifest(); err != nil {
 			ReportError(fn, opts, err)
 		} else {
-			if err := SaveToFile[types.ChunkManifest](fn, manifest); err != nil {
+			if err := SaveToFile(fn, manifest); err != nil {
 				ReportError2(fn, err)
 			} else {
 				ReportOkay(fn)
@@ -113,7 +112,7 @@ func TestChunks(which, value, fn string, opts *sdk.ChunksOptions) {
 		if index, _, err := opts.ChunksIndex(); err != nil {
 			ReportError(fn, opts, err)
 		} else {
-			if err := SaveToFile[types.ChunkIndex](fn, index); err != nil {
+			if err := SaveToFile(fn, index); err != nil {
 				ReportError2(fn, err)
 			} else {
 				ReportOkay(fn)
@@ -123,7 +122,7 @@ func TestChunks(which, value, fn string, opts *sdk.ChunksOptions) {
 		if blooms, _, err := opts.ChunksBlooms(); err != nil {
 			ReportError(fn, opts, err)
 		} else {
-			if err := SaveToFile[types.ChunkBloom](fn, blooms); err != nil {
+			if err := SaveToFile(fn, blooms); err != nil {
 				ReportError2(fn, err)
 			} else {
 				ReportOkay(fn)
@@ -133,7 +132,7 @@ func TestChunks(which, value, fn string, opts *sdk.ChunksOptions) {
 		if pins, _, err := opts.ChunksPins(); err != nil {
 			ReportError(fn, opts, err)
 		} else {
-			if err := SaveToFile[types.ChunkPin](fn, pins); err != nil {
+			if err := SaveToFile(fn, pins); err != nil {
 				ReportError2(fn, err)
 			} else {
 				ReportOkay(fn)
@@ -143,7 +142,7 @@ func TestChunks(which, value, fn string, opts *sdk.ChunksOptions) {
 		if addresses, _, err := opts.ChunksAddresses(); err != nil {
 			ReportError(fn, opts, err)
 		} else {
-			if err := SaveToFile[types.ChunkAddress](fn, addresses); err != nil {
+			if err := SaveToFile(fn, addresses); err != nil {
 				ReportError2(fn, err)
 			} else {
 				ReportOkay(fn)
@@ -153,7 +152,7 @@ func TestChunks(which, value, fn string, opts *sdk.ChunksOptions) {
 		if appearances, _, err := opts.ChunksAppearances(); err != nil {
 			ReportError(fn, opts, err)
 		} else {
-			if err := SaveToFile[types.ChunkAppearance](fn, appearances); err != nil {
+			if err := SaveToFile(fn, appearances); err != nil {
 				ReportError2(fn, err)
 			} else {
 				ReportOkay(fn)
@@ -163,7 +162,7 @@ func TestChunks(which, value, fn string, opts *sdk.ChunksOptions) {
 		if stats, _, err := opts.ChunksStats(); err != nil {
 			ReportError(fn, opts, err)
 		} else {
-			if err := SaveToFile[types.ChunkStats](fn, stats); err != nil {
+			if err := SaveToFile(fn, stats); err != nil {
 				ReportError2(fn, err)
 			} else {
 				ReportOkay(fn)
@@ -173,7 +172,7 @@ func TestChunks(which, value, fn string, opts *sdk.ChunksOptions) {
 		if truncate, _, err := opts.ChunksTruncate(base.MustParseBlknum(value)); err != nil {
 			ReportError(fn, opts, err)
 		} else {
-			if err := SaveToFile[types.Message](fn, truncate); err != nil {
+			if err := SaveToFile(fn, truncate); err != nil {
 				ReportError2(fn, err)
 			} else {
 				ReportOkay(fn)
@@ -183,7 +182,7 @@ func TestChunks(which, value, fn string, opts *sdk.ChunksOptions) {
 		if diff, _, err := opts.ChunksDiff(); err != nil {
 			ReportError(fn, opts, err)
 		} else {
-			if err := SaveToFile[types.Message](fn, diff); err != nil {
+			if err := SaveToFile(fn, diff); err != nil {
 				ReportError2(fn, err)
 			} else {
 				ReportOkay(fn)
@@ -193,7 +192,7 @@ func TestChunks(which, value, fn string, opts *sdk.ChunksOptions) {
 		if count, _, err := opts.ChunksCount(); err != nil {
 			ReportError(fn, opts, err)
 		} else {
-			if err := SaveToFile[types.Count](fn, count); err != nil {
+			if err := SaveToFile(fn, count); err != nil {
 				ReportError2(fn, err)
 			} else {
 				ReportOkay(fn)
@@ -203,7 +202,7 @@ func TestChunks(which, value, fn string, opts *sdk.ChunksOptions) {
 		if tag, _, err := opts.ChunksTag(value); err != nil {
 			ReportError(fn, opts, err)
 		} else {
-			if err := SaveToFile[types.Message](fn, tag); err != nil {
+			if err := SaveToFile(fn, tag); err != nil {
 				ReportError2(fn, err)
 			} else {
 				ReportOkay(fn)

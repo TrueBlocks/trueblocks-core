@@ -74,7 +74,6 @@ func getDiscUsage() ([]DiskUsage, error) {
 // processMachineData parses the raw disk usage data for a single machine
 // It returns a slice of DiskUsage structs for the given machine
 func processMachineData(machine, data, alias string) []DiskUsage {
-	var usages []DiskUsage
 	uniqueRecords := make(map[string]DiskUsage)
 
 	lines := strings.Split(strings.TrimSpace(data), "\n")
@@ -127,6 +126,7 @@ func processMachineData(machine, data, alias string) []DiskUsage {
 		}
 	}
 
+	var usages = make([]DiskUsage, 0, len(uniqueRecords))
 	for _, usage := range uniqueRecords {
 		usages = append(usages, usage)
 	}

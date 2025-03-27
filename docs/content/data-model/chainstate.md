@@ -69,7 +69,7 @@ Tokens consist of the following fields:
 | holder           | the holder address for which we are reporting                                | address   |
 | priorBalance     | the holder's asset balance at its prior appearance                           | int256    |
 | balance          | the holder's asset balance at the given block height                         | int256    |
-| balanceDec       | the holder's asset balance (in Ether) at the given block height (calculated) | float64   |
+| balanceDec       | the holder's asset balance (in Ether) at the given block height (calculated) | float     |
 | diff             | the difference, if any, between the prior and current balance (calculated)   | int256    |
 | name             | the name of the token contract, if available                                 | string    |
 | symbol           | the symbol of the token contract                                             | string    |
@@ -109,7 +109,6 @@ This documentation mentions the following basic data types.
 | blknum    | an alias for a uint64                  |                |
 | datetime  | a JSON formatted date                  | as a string    |
 | ether     | a big number float                     | as a string    |
-| float64   | a double precision float               | 64 bits        |
 | int256    | a signed big number                    | as a string    |
 | string    | a normal character string              |                |
 | timestamp | a 64-bit unsigned integer              | Unix timestamp |

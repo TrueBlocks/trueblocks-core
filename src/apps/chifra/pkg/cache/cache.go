@@ -37,18 +37,6 @@ type Locator interface {
 	CacheLocations() (string, string, string)
 }
 
-// Unmarshaler is a struct implementing Unmarshaler can be read from binary by
-// calling UnmarshalCache
-type Unmarshaler interface {
-	UnmarshalCache(vers uint64, reader io.Reader) error
-}
-
-// Marshaler is a struct implementing the Marshaler interface. It can be
-// written to binary by calling MarshalCache
-type Marshaler interface {
-	MarshalCache(writer io.Writer) error
-}
-
 // StoreOptions used by Store
 type StoreOptions struct {
 	Location StoreLocation

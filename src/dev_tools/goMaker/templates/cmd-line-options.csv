@@ -110,7 +110,7 @@ num,folder,group,route,tool,longName,hotKey,def_val,attributes,handler,option_ty
 16060,tools,Accounts,abis,grabABI,count,c,,visible|docs,2,switch,<boolean>,count,,,,show the number of abis downloaded
 16070,tools,Accounts,abis,grabABI,find,f,,visible|docs,1,flag,list<string>,function,,,,search for function or event declarations given a four- or 32-byte code(s)
 16080,tools,Accounts,abis,grabABI,hint,n,,visible|docs,,flag,list<string>,,,,,for the --find option only&#44; provide hints to speed up the search
-16090,tools,Accounts,abis,grabABI,encode,e,,visible|docs,4,flag,<string>,function,,,,generate the 32-byte encoding for a given cannonical function or event signature
+16090,tools,Accounts,abis,grabABI,encode,e,,visible|docs,4,flag,<string>,function,,,,generate the 32-byte encoding for a given canonical function or event signature
 16100,tools,Accounts,abis,grabABI,n1,,,,,note,,,,,,Search for either four byte signatures or event signatures with the --find option.
 #
 21000,,Chain Data,,,,,,,,group,,,,,,Access and cache blockchain-related data
@@ -222,7 +222,7 @@ num,folder,group,route,tool,longName,hotKey,def_val,attributes,handler,option_ty
 32180,tools,Chain State,state,getState,n9,,,,,note,,,,,,Your use of the unaudited --send option legally absolves TrueBlocks&#44; LLC or any associated parties from liability or loss related to such use.
 32185,tools,Chain State,state,getState,n10,,,,,note,,,,,,The --send option does not validate its input before sending your transaction to the network. If you provide invalid data&#44; you may lose your funds. Be warned.
 32190,tools,Chain State,state,getState,n11,,,,,note,,,,,,As of version 4.0.0&#44; use `--call --calldata <cmd>` to provide your command.
-32195,tools,Chain State,state,getState,n12,,,,,note,,,,,,--calldata may be one or more colon-seperated solidity calls&#44; four-byte plus parameters&#44; or encoded call data strings.
+32195,tools,Chain State,state,getState,n12,,,,,note,,,,,,--calldata may be one or more colon-separated solidity calls&#44; four-byte plus parameters&#44; or encoded call data strings.
 #
 33000,tools,Chain State,tokens,getTokens,,,,visible|docs,,command,,,Get token balance(s),[flags] <address> <address> [address...] [block...],default|caching|names|,Retrieve token balance(s) for one or more addresses at given block(s).
 33020,tools,Chain State,tokens,getTokens,addrs,,,required|visible|docs,2,positional,list<addr>,token,,,,two or more addresses (0x...)&#44; the first is an ERC20 token&#44; balances for the rest are reported

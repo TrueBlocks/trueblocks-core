@@ -97,7 +97,8 @@ func (conn *Connection) StoreWritable() bool {
 }
 
 // TestLog prints the enabledMap to the log. Note this routine gets called prior to full initialization, thus it takes the enabledMap
-func (conn *Connection) TestLog(caches map[walk.CacheType]bool) {
+func (conn *Connection) TestLog() {
+	caches := make(map[walk.CacheType]bool)
 	if conn.StoreWritable() {
 		enabled := []string{}
 		for k, v := range caches {

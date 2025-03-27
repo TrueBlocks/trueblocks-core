@@ -14,7 +14,6 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	sdk "github.com/TrueBlocks/trueblocks-sdk/v4"
 )
 
@@ -100,7 +99,7 @@ func TestTokens(which, value, fn string, opts *sdk.TokensOptions) {
 		if tokens, _, err := opts.Tokens(); err != nil {
 			ReportError(fn, opts, err)
 		} else {
-			if err := SaveToFile[types.Token](fn, tokens); err != nil {
+			if err := SaveToFile(fn, tokens); err != nil {
 				ReportError2(fn, err)
 			} else {
 				ReportOkay(fn)

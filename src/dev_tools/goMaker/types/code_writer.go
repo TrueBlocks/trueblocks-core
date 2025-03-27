@@ -37,7 +37,7 @@ func WriteCode(existingFn, newCode string) (bool, error) {
 	}()
 
 	// save the new code in a temporary file
-	file.StringToAsciiFile(tempFn, newCode)
+	_ = file.StringToAsciiFile(tempFn, newCode)
 
 	// extract the EXISTING_CODE from the existing file
 	existingParts, err := extractExistingCode(existingFn)
@@ -186,7 +186,7 @@ func updateFile(tempFn, newCode string) (bool, error) {
 			// do nothing
 		}
 		if parser != "" {
-			file.StringToAsciiFile(tmpSrcFn, codeToWrite)
+			_ = file.StringToAsciiFile(tmpSrcFn, codeToWrite)
 			cmd := fmt.Sprintf("prettier --parser %s %s > %s 2> %s", parser, tmpSrcFn, outFn, errFn)
 			utils.System(cmd)
 			errors := file.AsciiFileToString(errFn)
@@ -203,7 +203,7 @@ func updateFile(tempFn, newCode string) (bool, error) {
 	if string(codeToWrite) == file.AsciiFileToString(origFn) {
 		return false, nil
 	} else {
-		file.StringToAsciiFile(origFn, string(codeToWrite)) // modified code is in the original file
+		_ = file.StringToAsciiFile(origFn, string(codeToWrite)) // modified code is in the original file
 		return true, nil
 	}
 }

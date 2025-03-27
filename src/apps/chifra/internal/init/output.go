@@ -23,6 +23,7 @@ import (
 
 // RunInit handles the init command for the command line. Returns error only as per cobra.
 func RunInit(cmd *cobra.Command, args []string) error {
+	_ = cmd
 	opts := initFinishParse(args)
 	rCtx := output.NewRenderContext()
 	// EXISTING_CODE

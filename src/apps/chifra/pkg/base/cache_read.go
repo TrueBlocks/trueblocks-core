@@ -1,4 +1,4 @@
-package cache
+package base
 
 import (
 	"encoding/binary"
@@ -7,6 +7,18 @@ import (
 	"math/big"
 	"reflect"
 )
+
+// Unmarshaler is a struct implementing Unmarshaler can be read from binary by
+// calling UnmarshalCache
+type Unmarshaler interface {
+	UnmarshalCache(vers uint64, reader io.Reader) error
+}
+
+// Marshaler is a struct implementing the Marshaler interface. It can be
+// written to binary by calling MarshalCache
+type Marshaler interface {
+	MarshalCache(writer io.Writer) error
+}
 
 // read reads bytes in a correct byte order
 func read(reader io.Reader, value any) (err error) {

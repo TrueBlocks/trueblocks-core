@@ -24,6 +24,7 @@ import (
 
 // RunList handles the list command for the command line. Returns error only as per cobra.
 func RunList(cmd *cobra.Command, args []string) error {
+	_ = cmd
 	opts := listFinishParse(args)
 	rCtx := output.NewRenderContext()
 	// EXISTING_CODE

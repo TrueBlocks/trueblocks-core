@@ -14,7 +14,6 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	sdk "github.com/TrueBlocks/trueblocks-sdk/v4"
 )
 
@@ -104,7 +103,7 @@ func TestSlurp(which, value, fn string, opts *sdk.SlurpOptions) {
 		if slurp, _, err := opts.Slurp(); err != nil {
 			ReportError(fn, opts, err)
 		} else {
-			if err := SaveToFile[types.Slurp](fn, slurp); err != nil {
+			if err := SaveToFile(fn, slurp); err != nil {
 				ReportError2(fn, err)
 			} else {
 				ReportOkay(fn)
@@ -114,7 +113,7 @@ func TestSlurp(which, value, fn string, opts *sdk.SlurpOptions) {
 		if appearances, _, err := opts.SlurpAppearances(); err != nil {
 			ReportError(fn, opts, err)
 		} else {
-			if err := SaveToFile[types.Appearance](fn, appearances); err != nil {
+			if err := SaveToFile(fn, appearances); err != nil {
 				ReportError2(fn, err)
 			} else {
 				ReportOkay(fn)
@@ -124,7 +123,7 @@ func TestSlurp(which, value, fn string, opts *sdk.SlurpOptions) {
 		if count, _, err := opts.SlurpCount(); err != nil {
 			ReportError(fn, opts, err)
 		} else {
-			if err := SaveToFile[types.Monitor](fn, count); err != nil {
+			if err := SaveToFile(fn, count); err != nil {
 				ReportError2(fn, err)
 			} else {
 				ReportOkay(fn)

@@ -14,7 +14,6 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	sdk "github.com/TrueBlocks/trueblocks-sdk/v4"
 )
 
@@ -68,7 +67,7 @@ func TestInit(which, value, fn string, opts *sdk.InitOptions) {
 		if all, _, err := opts.InitAll(); err != nil {
 			ReportError(fn, opts, err)
 		} else {
-			if err := SaveToFile[types.Message](fn, all); err != nil {
+			if err := SaveToFile(fn, all); err != nil {
 				ReportError2(fn, err)
 			} else {
 				ReportOkay(fn)
@@ -78,7 +77,7 @@ func TestInit(which, value, fn string, opts *sdk.InitOptions) {
 		if example, _, err := opts.InitExample(value); err != nil {
 			ReportError(fn, opts, err)
 		} else {
-			if err := SaveToFile[types.Message](fn, example); err != nil {
+			if err := SaveToFile(fn, example); err != nil {
 				ReportError2(fn, err)
 			} else {
 				ReportOkay(fn)
@@ -88,7 +87,7 @@ func TestInit(which, value, fn string, opts *sdk.InitOptions) {
 		if dryrun, _, err := opts.InitDryRun(); err != nil {
 			ReportError(fn, opts, err)
 		} else {
-			if err := SaveToFile[types.Message](fn, dryrun); err != nil {
+			if err := SaveToFile(fn, dryrun); err != nil {
 				ReportError2(fn, err)
 			} else {
 				ReportOkay(fn)

@@ -173,6 +173,7 @@ Data models produced by this tool:
 - [traceaction](/data-model/chaindata/#traceaction)
 - [traceresult](/data-model/chaindata/#traceresult)
 - [transaction](/data-model/chaindata/#transaction)
+- [transfer](/data-model/accounts/#transfer)
 - [withdrawal](/data-model/chaindata/#withdrawal)
 
 Links:

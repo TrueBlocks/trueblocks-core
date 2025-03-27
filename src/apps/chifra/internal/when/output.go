@@ -23,6 +23,7 @@ import (
 
 // RunWhen handles the when command for the command line. Returns error only as per cobra.
 func RunWhen(cmd *cobra.Command, args []string) error {
+	_ = cmd
 	opts := whenFinishParse(args)
 	rCtx := output.NewRenderContext()
 	// EXISTING_CODE

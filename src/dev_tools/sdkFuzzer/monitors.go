@@ -111,7 +111,7 @@ func TestMonitors(which, value, fn string, opts *sdk.MonitorsOptions) {
 		if monitors, _, err := opts.Monitors(); err != nil {
 			ReportError(fn, opts, err)
 		} else {
-			if err := SaveToFile[types.Message](fn, monitors); err != nil {
+			if err := SaveToFile(fn, monitors); err != nil {
 				ReportError2(fn, err)
 			} else {
 				ReportOkay(fn)
@@ -121,7 +121,7 @@ func TestMonitors(which, value, fn string, opts *sdk.MonitorsOptions) {
 		if clean, _, err := opts.MonitorsClean(); err != nil {
 			ReportError(fn, opts, err)
 		} else {
-			if err := SaveToFile[types.MonitorClean](fn, clean); err != nil {
+			if err := SaveToFile(fn, clean); err != nil {
 				ReportError2(fn, err)
 			} else {
 				ReportOkay(fn)
@@ -131,7 +131,7 @@ func TestMonitors(which, value, fn string, opts *sdk.MonitorsOptions) {
 		if list, _, err := opts.MonitorsList(); err != nil {
 			ReportError(fn, opts, err)
 		} else {
-			if err := SaveToFile[types.Monitor](fn, list); err != nil {
+			if err := SaveToFile(fn, list); err != nil {
 				ReportError2(fn, err)
 			} else {
 				ReportOkay(fn)
@@ -141,7 +141,7 @@ func TestMonitors(which, value, fn string, opts *sdk.MonitorsOptions) {
 		if count, _, err := opts.MonitorsCount(); err != nil {
 			ReportError(fn, opts, err)
 		} else {
-			if err := SaveToFile[types.Count](fn, count); err != nil {
+			if err := SaveToFile(fn, count); err != nil {
 				ReportError2(fn, err)
 			} else {
 				ReportOkay(fn)

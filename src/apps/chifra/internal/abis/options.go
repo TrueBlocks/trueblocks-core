@@ -35,11 +35,12 @@ type AbisOptions struct {
 	Count    bool                  `json:"count,omitempty"`    // Show the number of abis downloaded
 	Find     []string              `json:"find,omitempty"`     // Search for function or event declarations given a four- or 32-byte code(s)
 	Hint     []string              `json:"hint,omitempty"`     // For the --find option only, provide hints to speed up the search
-	Encode   string                `json:"encode,omitempty"`   // Generate the 32-byte encoding for a given cannonical function or event signature
+	Encode   string                `json:"encode,omitempty"`   // Generate the 32-byte encoding for a given canonical function or event signature
 	Globals  globals.GlobalOptions `json:"globals,omitempty"`  // The global options
 	Conn     *rpc.Connection       `json:"conn,omitempty"`     // The connection to the RPC server
 	BadFlag  error                 `json:"badFlag,omitempty"`  // An error flag if needed
 	// EXISTING_CODE
+	ProxyForAddr base.Address `json:"proxyForAddr,omitempty"` // The address of the proxy for the given proxyFor
 	// EXISTING_CODE
 }
 
@@ -55,7 +56,7 @@ func (opts *AbisOptions) testLog() {
 	logger.TestLog(len(opts.Find) > 0, "Find: ", opts.Find)
 	logger.TestLog(len(opts.Hint) > 0, "Hint: ", opts.Hint)
 	logger.TestLog(len(opts.Encode) > 0, "Encode: ", opts.Encode)
-	opts.Conn.TestLog(opts.getCaches())
+	opts.Conn.TestLog()
 	opts.Globals.TestLog()
 }
 
@@ -115,11 +116,12 @@ func AbisFinishParseInternal(w io.Writer, values url.Values) *AbisOptions {
 		}
 	}
 	opts.Conn = opts.Globals.FinishParseApi(w, values, opts.getCaches())
+	opts.ProxyFor, _ = opts.Conn.GetEnsAddress(opts.ProxyFor)
+	opts.ProxyForAddr = base.HexToAddress(opts.ProxyFor)
 
 	// EXISTING_CODE
 	// EXISTING_CODE
 	opts.Addrs, _ = opts.Conn.GetEnsAddresses(opts.Addrs)
-	opts.ProxyFor, _ = opts.Conn.GetEnsAddress(opts.ProxyFor)
 
 	return opts
 }
@@ -142,6 +144,8 @@ func abisFinishParse(args []string) *AbisOptions {
 	defFmt := "txt"
 	opts := GetOptions()
 	opts.Conn = opts.Globals.FinishParse(args, opts.getCaches())
+	opts.ProxyFor, _ = opts.Conn.GetEnsAddress(opts.ProxyFor)
+	opts.ProxyForAddr = base.HexToAddress(opts.ProxyFor)
 
 	// EXISTING_CODE
 	for _, arg := range args {
@@ -151,7 +155,6 @@ func abisFinishParse(args []string) *AbisOptions {
 	}
 	// EXISTING_CODE
 	opts.Addrs, _ = opts.Conn.GetEnsAddresses(opts.Addrs)
-	opts.ProxyFor, _ = opts.Conn.GetEnsAddress(opts.ProxyFor)
 	if len(opts.Globals.Format) == 0 || opts.Globals.Format == "none" {
 		opts.Globals.Format = defFmt
 	}

@@ -17,7 +17,6 @@ import (
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
 )
 
 // EXISTING_CODE
@@ -39,6 +38,10 @@ func (s Withdrawal) String() string {
 }
 
 func (s *Withdrawal) Model(chain, format string, verbose bool, extraOpts map[string]any) Model {
+	_ = chain
+	_ = format
+	_ = verbose
+	_ = extraOpts
 	var model = map[string]any{}
 	var order = []string{}
 
@@ -107,89 +110,90 @@ type WithdrawalGroup struct {
 }
 
 func (s *WithdrawalGroup) MarshalCache(writer io.Writer) (err error) {
-	return cache.WriteValue(writer, s.Withdrawals)
+	return base.WriteValue(writer, s.Withdrawals)
 }
 
-func (s *WithdrawalGroup) UnmarshalCache(vers uint64, reader io.Reader) (err error) {
-	return cache.ReadValue(reader, &s.Withdrawals, vers)
+func (s *WithdrawalGroup) UnmarshalCache(fileVersion uint64, reader io.Reader) (err error) {
+	return base.ReadValue(reader, &s.Withdrawals, fileVersion)
 }
 
 func (s *Withdrawal) MarshalCache(writer io.Writer) (err error) {
 	// Address
-	if err = cache.WriteValue(writer, s.Address); err != nil {
+	if err = base.WriteValue(writer, s.Address); err != nil {
 		return err
 	}
 
 	// Amount
-	if err = cache.WriteValue(writer, &s.Amount); err != nil {
+	if err = base.WriteValue(writer, &s.Amount); err != nil {
 		return err
 	}
 
 	// BlockNumber
-	if err = cache.WriteValue(writer, s.BlockNumber); err != nil {
+	if err = base.WriteValue(writer, s.BlockNumber); err != nil {
 		return err
 	}
 
 	// Index
-	if err = cache.WriteValue(writer, s.Index); err != nil {
+	if err = base.WriteValue(writer, s.Index); err != nil {
 		return err
 	}
 
 	// Timestamp
-	if err = cache.WriteValue(writer, s.Timestamp); err != nil {
+	if err = base.WriteValue(writer, s.Timestamp); err != nil {
 		return err
 	}
 
 	// ValidatorIndex
-	if err = cache.WriteValue(writer, s.ValidatorIndex); err != nil {
+	if err = base.WriteValue(writer, s.ValidatorIndex); err != nil {
 		return err
 	}
 
 	return nil
 }
 
-func (s *Withdrawal) UnmarshalCache(vers uint64, reader io.Reader) (err error) {
+func (s *Withdrawal) UnmarshalCache(fileVersion uint64, reader io.Reader) (err error) {
 	// Check for compatibility and return cache.ErrIncompatibleVersion to invalidate this item (see #3638)
 	// EXISTING_CODE
 	// EXISTING_CODE
 
 	// Address
-	if err = cache.ReadValue(reader, &s.Address, vers); err != nil {
+	if err = base.ReadValue(reader, &s.Address, fileVersion); err != nil {
 		return err
 	}
 
 	// Amount
-	if err = cache.ReadValue(reader, &s.Amount, vers); err != nil {
+	if err = base.ReadValue(reader, &s.Amount, fileVersion); err != nil {
 		return err
 	}
 
 	// BlockNumber
-	if err = cache.ReadValue(reader, &s.BlockNumber, vers); err != nil {
+	if err = base.ReadValue(reader, &s.BlockNumber, fileVersion); err != nil {
 		return err
 	}
 
 	// Index
-	if err = cache.ReadValue(reader, &s.Index, vers); err != nil {
+	if err = base.ReadValue(reader, &s.Index, fileVersion); err != nil {
 		return err
 	}
 
 	// Timestamp
-	if err = cache.ReadValue(reader, &s.Timestamp, vers); err != nil {
+	if err = base.ReadValue(reader, &s.Timestamp, fileVersion); err != nil {
 		return err
 	}
 
 	// ValidatorIndex
-	if err = cache.ReadValue(reader, &s.ValidatorIndex, vers); err != nil {
+	if err = base.ReadValue(reader, &s.ValidatorIndex, fileVersion); err != nil {
 		return err
 	}
 
-	s.FinishUnmarshal()
+	s.FinishUnmarshal(fileVersion)
 
 	return nil
 }
 
 // FinishUnmarshal is used by the cache. It may be unused depending on auto-code-gen
-func (s *Withdrawal) FinishUnmarshal() {
+func (s *Withdrawal) FinishUnmarshal(fileVersion uint64) {
+	_ = fileVersion
 	// EXISTING_CODE
 	// EXISTING_CODE
 }

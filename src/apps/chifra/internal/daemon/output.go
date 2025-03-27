@@ -27,6 +27,7 @@ import (
 
 // RunDaemon handles the daemon command for the command line. Returns error only as per cobra.
 func RunDaemon(cmd *cobra.Command, args []string) error {
+	_ = cmd
 	opts := daemonFinishParse(args)
 	rCtx := output.NewRenderContext()
 	// EXISTING_CODE

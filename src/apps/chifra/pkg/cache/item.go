@@ -4,6 +4,7 @@ import (
 	"errors"
 	"io"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/version"
 )
 
@@ -66,12 +67,12 @@ func (i *Item) readHeader() (h *header, err error) {
 }
 
 func (i *Item) marshal(value any) (err error) {
-	return WriteValue(i.readWriter, value)
+	return base.WriteValue(i.readWriter, value)
 }
 
 func (i *Item) unmarshal(value any) (err error) {
 	// i.header.Version will be 0 when reading header
-	return ReadValue(i.readWriter, value, i.header.Version)
+	return base.ReadValue(i.readWriter, value, i.header.Version)
 }
 
 func (i *Item) Encode(value any) (err error) {
