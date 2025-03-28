@@ -13,6 +13,20 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 cd "$SCRIPT_DIR/.."
 
 #------------------------------------------------
+# Function to check if git submodules are initialized
+check_submodules() {
+    echo "===> Checking Git submodules..."
+    if git submodule status | grep -q '^-'; then
+        echo "Error: Some submodules are not initialized!"
+        echo "Run: git submodule update --init --recursive"
+        exit 1
+    fi
+}
+
+# Run submodule check
+check_submodules
+
+#------------------------------------------------
 # Check if the go.work file already exists
 GO_WORK_FILE="go.work"
 rm -f "$GO_WORK_FILE"
