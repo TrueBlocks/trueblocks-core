@@ -172,8 +172,8 @@ acctgood ,both ,fast  ,export   ,apps ,acctExport ,cache_accounting        ,y   
 acctgood ,both ,fast  ,export   ,apps ,acctExport ,decache_accounting      ,y    ,addrs = 0x04fe1f0c597fbc65700f4fba6f87501edc20e665 & first_block = 10277780 & last_block = 10278000 & accounting & decache
 
 # Testing --accounting --statements
-on       ,both ,fast  ,export   ,apps ,acctExport ,statement_2             ,y    ,addrs = 0x08166f02313feae18bb044e7877c808b55b5bf58 & accounting & statements & last_block = 4000000 & fmt = json
-on       ,both ,fast  ,export   ,apps ,acctExport ,statement_2_ether       ,y    ,addrs = 0x08166f02313feae18bb044e7877c808b55b5bf58 & accounting & statements & last_block = 4000000 & fmt = json & ether
+junk     ,both ,fast  ,export   ,apps ,acctExport ,statement_2             ,y    ,addrs = 0x08166f02313feae18bb044e7877c808b55b5bf58 & accounting & statements & last_block = 4000000 & fmt = json
+junk     ,both ,fast  ,export   ,apps ,acctExport ,statement_2_ether       ,y    ,addrs = 0x08166f02313feae18bb044e7877c808b55b5bf58 & accounting & statements & last_block = 4000000 & fmt = json & ether
 statgood ,both ,fast  ,export   ,apps ,acctExport ,statement_3             ,y    ,addrs = 0x08166f02313feae18bb044e7877c808b55b5bf58 & accounting & statements & last_block = 4000000 & fmt = json
 statgood ,both ,fast  ,export   ,apps ,acctExport ,statement_3_bad         ,y    ,addrs = 0x08166f02313feae18bb044e7877c808b55b5bf58 & statements & last_block = 4000000 & fmt = json
 statgood ,both ,fast  ,export   ,apps ,acctExport ,failed_statement_2572_1 ,y    ,addrs = 0x054993ab0f2b1acc0fdc65405ee203b4271bebe6 & accounting & statements & ether & asset = 0xf5b2c59f6db42ffcdfc1625999c81fdf17953384 & fmt = json & last_block = 15549163 & max_records = 40

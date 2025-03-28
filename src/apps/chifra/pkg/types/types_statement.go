@@ -85,7 +85,7 @@ func (s *Statement) Model(chain, format string, verbose bool, extraOpts map[stri
 		"assetType":          s.AssetType,
 		"assetSymbol":        s.Symbol,
 		"decimals":           s.Decimals,
-		"spotPrice":          s.SpotPrice,
+		"spotPrice":          s.SpotPrice.String(),
 		"priceSource":        s.PriceSource,
 		"accountedFor":       s.AccountedFor,
 		"sender":             s.Sender,
