@@ -1,0 +1,14 @@
+{
+  "data": [
+    {
+      "amount": "-14922878243871414864",
+      "amountEth": "-14.922878243871414864",
+      "asset": "0xc713e5e149d5d0715dcd1c156a020976e7e56b88",
+      "assetName": "Aave interest bearing MKR",
+      "blockNumber": 11670419,
+      "holder": "0x65b0d5e1dc0dee0704f53f660aa865c72e986fc7",
+      "logIndex": 195,
+      "transactionIndex": 91
+    }
+  ]
+}

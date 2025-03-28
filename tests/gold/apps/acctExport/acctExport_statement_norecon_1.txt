@@ -1,12 +1,14 @@
-chifra export  trueblocks.eth --accounting --statements --first_block 9278039 --last_block 9279454 --fmt json --asset 0x6b175474e89094c44da98b954eedeac495271d0f
+chifra export  trueblocks.eth --accounting --statements --first_block 9278039 --last_block 9279454 --fmt json --asset 0x6b175474e89094c44da98b954eedeac495271d0f --output statement_norecon_1_out.file
 TEST[DATE|TIME] Addrs:  [0xf503017d7baf7fbc0fff7492b751025c6a78179b]
 TEST[DATE|TIME] Statements:  true
 TEST[DATE|TIME] Asset:  [0x6b175474e89094c44da98b954eedeac495271d0f]
 TEST[DATE|TIME] FirstBlock:  9278039
 TEST[DATE|TIME] LastBlock:  9279454
 TEST[DATE|TIME] Accounting:  true
+TEST[DATE|TIME] OutputFn:  statement_norecon_1_out.file
 TEST[DATE|TIME] Caps:  cache,decache,ether
 TEST[DATE|TIME] Format:  json
+INFO[DATE|TIME] { "outputFilename": "--output_filename--" }
 TEST[DATE|TIME] 0: 9278039 26
 TEST[DATE|TIME] 1: 9279447 73
 TEST[DATE|TIME] 2: 9279453 208
@@ -155,6 +157,8 @@ TEST[DATE|TIME] Log statement is material - appending. reconciled: true
 TEST[DATE|TIME] ~~~ Leaving: 9279453.208 ~~~
 TEST[DATE|TIME] ------------------------------------ 2 statements generated.
 TEST[DATE|TIME] 
+----
+Results in ./statement_norecon_1_out.file
 {
   "data": [
     {

@@ -1,10 +1,12 @@
-chifra export  0x05a56e2d52c817161883f50c441c3228cfe54d9f --accounting --statements --fmt json --max_records 15
+chifra export  0x05a56e2d52c817161883f50c441c3228cfe54d9f --accounting --statements --fmt json --max_records 15 --output statement_wei_2_1_out.file
 TEST[DATE|TIME] Addrs:  [0x05a56e2d52c817161883f50c441c3228cfe54d9f]
 TEST[DATE|TIME] Statements:  true
 TEST[DATE|TIME] MaxRecords:  15
 TEST[DATE|TIME] Accounting:  true
+TEST[DATE|TIME] OutputFn:  statement_wei_2_1_out.file
 TEST[DATE|TIME] Caps:  cache,decache,ether
 TEST[DATE|TIME] Format:  json
+INFO[DATE|TIME] { "outputFilename": "--output_filename--" }
 TEST[DATE|TIME] 0: 1 99999
 TEST[DATE|TIME] 1: 5 99999
 TEST[DATE|TIME] 2: 56 99998
@@ -947,6 +949,8 @@ TEST[DATE|TIME] No log transfers to process
 TEST[DATE|TIME] ~~~ Leaving: 4256.99998 ~~~
 TEST[DATE|TIME] ------------------------------------ 1 statements generated.
 TEST[DATE|TIME] 
+----
+Results in ./statement_wei_2_1_out.file
 {
   "data": [
     {
