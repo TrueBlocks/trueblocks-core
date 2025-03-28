@@ -120,7 +120,7 @@ func InitGlobals(whoAmI string, cmd *cobra.Command, opts *GlobalOptions, c caps.
 	_ = cmd.Flags().MarkHidden("nocolor")
 
 	if opts.Caps.Has(caps.NoHeader) {
-		cmd.Flags().BoolVarP(&opts.NoHeader, "no_header", "", false, "supress export of header row for csv and txt exports")
+		cmd.Flags().BoolVarP(&opts.NoHeader, "no_header", "", false, "suppress export of header row for csv and txt exports")
 	}
 	_ = cmd.Flags().MarkHidden("no_header")
 
