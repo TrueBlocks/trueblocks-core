@@ -2,64 +2,285 @@
 
 This file details changes made to TrueBlocks over time. All version prior to version 3.0.0 are now no longer supported.
 
-## v5.0.0 - All About Them Reconcolications - Luzerne (2025/03/28)
+## v5.0.0 - All About Them Recons - Lancaster (2025/03/28)
 
-Bumps version to 5.0.0
-Updates CI pipeline and linters
-Updates various build scripts
-Removes key option from chifra slurp --source
-Deprecates and discontinues TrueBlocks Key
-Various spelling lints
-Breaking: deprecates various chifra deamon options (use khedra instead)
-  - The --port option is deprecated, use --url instead.
-  - The --grpc option is deprecated, there is no replacement.
-  - The --api option is deprecated, there is no replacement.
-  - The --scrape option is deprecated, use chifra scrape instead.
-  - The --monitor option is deprecated, use chifra monitors --watch instead.
-Removes --accounting option from chifra export -- API key is no longer needed to use the Accounting options
-Adds --transfers and --assets to chifra export command
-Adds --nfts option to chifra export
-Adds the Transfer type with these fields
-Removes `watch` relelated options from chifra monitors (use khedra instead)
-  -w, --watch              continually scan for new blocks and extract data as per the command file
-  -a, --watchlist string   available with --watch option only, a file containing the addresses to watch
-  -d, --commands string    available with --watch option only, the file containing the list of commands to apply to each watched address
-  -b, --batch_size uint    available with --watch option only, the number of monitors to process in each batch (default 8)
-  -u, --run_count uint     available with --watch option only, run the monitor this many times, then quit
-  -s, --sleep float        available with --watch option only, the number of seconds to sleep between runs (default 14)
-For Statements type
-	assetAddr ==> asset
-	assetSymbol ==> symbol
-	reconciliationType (removed)
-	correctingIn (removed)
-	correctingOut (removed)
-	correctBegBalIn (added)
-	correctBegBalOut (added)
-	correctEndBalIn (added)
-	correctEndBalOut (added)
-	correctAmountIn (added)
-	correctAmountOut (added)
-Adds Transfer type
-	blockNumber,transactionIndex,logIndex,holder,asset,decimals,sender,recipient,amountIn,internalIn,
-	minerBaseRewardIn,minerNephewRewardIn,minerTxFeeIn,minerUncleRewardIn,prefundIn,selfDestructIn,
-	amountOut,internalOut,gasOut,selfDestructOut,transaction,log
-Adds isNFT field to Log type
-Updates all go.mod files
-Updates GoLang version to 1.23.1
-Renames base.Ether type (and associated methods/functions) to base.Float since that's what it was anyway.
-Removed base.Min and base.Max in favor of GoLang native min/max.
-Small updates to khedra including adding a Dockerfile and adding a README
-Better fuzzing
-About 90 new tests against chifra export
-Improvements to the testing harness code
-Addition of Statements cache to greatly speed up chifra export --statements
-Improvements to auto-code-gen
-Fixes a bug related to chifra tokens --by_acct not working correctly.
-Fixes all known issues with chifra export --statements. No unreconciled transfers. Only correcting entries are now nullTransfers.
-SpotPrice in Statement is now a big.Float so appears as quoted
-Much better caching code including upgrading and modifying already-cached auto-generated types
-A lot more unit testing throughout the entire code base
-Much improved base package - more robust
+**Summary**
+
+- xxx
+
+## Breaking Changes
+
+- See Modified Data Models below. Statement and Transfer types have breaking changes to the list of fields produced.
+
+## System Wide Changes
+
+- Bumps version to `v5.0.0`.
+- base package: Much improved base package - more robust dealing with nil objects
+- base package: Removed `base.Min` and `base.Max` in favor of GoLang native `min`/`max`.
+- base package: Renames `base.Ether` type (and associated methods/functions) to `base.Float` since that's what it was anyway.
+- build: Updates CI pipeline and linters.
+- build: Updates GoLang version to 1.23.1.
+- build: Updates various build scripts.
+- build: Various spelling lints.
+- build: Updates all `go.mod` and `go.sum` files.
+- caches: Addition of `Statements` cache to greatly speed up `chifra export --statements`.
+- caches: Easier UX for cacheing for all types including upgrades to already-cached existing auto-generated types.
+- codeGen: Improvements to auto-code-generator.
+- Key: Deprecates and discontinues support for TrueBlocks Key.
+
+## SDK
+
+- Added `chifra export --transfers`.
+- Added `chifra export --assets`.
+- Added `chifra export --nfts`.
+- Removes all `--watch` related options from `chifra monitors`.
+- Improved JSON parsing of the SDK.
+
+## Changes to the Unchained Index Specification
+
+- No changes.
+
+## Changes to Khedra
+
+- Small updates including a version 1.0.0 Dockerfile and adding an informative README.
+
+## Changes to Testing
+
+- Nearly 90 new tests added against `chifra export` (mostly for `--statements`, `--assets`, or `--transfers`).
+- Better fuzz testing.
+- Flexibility / usablitly improvements to the testing harness.
+- A lot a additional GoLang unit testing throughout the code base.
+
+## Changes to Data Models
+
+- xxx
+
+### Modified data models
+
+| model     | change  | description                                                            |
+| --------- | ------- | ---------------------------------------------------------------------- |
+| Log       | added   | `isNFT` - `true` this log is an NFT transfers                          |
+| Statement | added   | `correctAmountIn` - `correcting amount in if any`                      |
+|           |         | `correctAmountOut` - `so on...`                                        |
+|           |         | `correctBegBalIn`                                                      |
+|           |         | `correctBegBalOut`                                                     |
+|           |         | `correctEndBalIn`                                                      |
+|           |         | `correctEndBalOut`                                                     |
+|           | changed | `assetAddr` changed name to `asset`                                    |
+|           |         | `assetSymbol` changed name to `symbol`                                 |
+|           | removed | `correctingIn` field was removed                                       |
+|           |         | `correctingOut` field was removed                                      |
+|           |         | `reconciliationType` field was removed                                 |
+| Transfer  | added   | `amountOut,internalOut,gasOut,selfDestructOut,transaction,log,`        |
+|           |         | `blockNumber,transactionIndex,logIndex,holder,asset,decimals,sender,`  |
+|           |         | `recipient,amountIn,internalIn,minerBaseRewardIn,minerNephewRewardIn,` |
+|           |         | `minerTxFeeIn,minerUncleRewardIn,prefundIn,selfDestructIn,`            |
+
+### New data models
+
+| model | description |
+| ----- | ----------- |
+| None  |             |
+
+### Removed data models
+
+| model | description |
+| ----- | ----------- |
+| None  |             |
+
+### Renamed data models
+
+| model | description |
+| ----- | ----------- |
+| None  |             |
+
+## Tool Specific Changes
+
+**chifra list**
+
+- No changes.
+
+**chifra export**
+
+- Adds `--nfts` option to `chifra export` command. This will export all NFTs in the address's history.
+- Adds `--transfers` and `--assets` to `chifra export` command.
+- Fixes all known issues with `chifra export --statements`.
+- There are no longer any known unreconciled transfers. Correcting entries are now only needed for `nullTransfers`.
+- Deprecates `--accounting` option from `chifra export` -- an API key is no longer needed to use the accounting options.
+- Changes `SpotPrice` in `Statement` type from a float64 to a `big.Float` to make math easier. Rendered as quoted text (breaking change).
+
+**chifra monitors**
+
+- Removes all of the following command line options from `chifra monitors`:
+  - -`-watchlist`, `--batch_size`, `--commands`, `--sleep`, `--run_count`, `--watch`
+
+**chifra names**
+
+- Added a few (three or four only) pre-canned named addresses to the database.
+
+**chifra abis**
+
+- No changes.
+
+**chifra blocks**
+
+- No changes.
+
+**chifra transactions**
+
+- No changes.
+
+**chifra receipts**
+
+- No changes.
+
+**chifra logs**
+
+- No changes.
+
+**chifra traces**
+
+- No changes.
+
+**chifra when**
+
+- No changes.
+
+**chifra state**
+
+- No changes.
+
+**chifra tokens**
+
+- Fixes a bug related to `chifra tokens --by_acct` not working correctly.
+
+**chifra config**
+
+- No changes.
+
+**chifra status**
+
+- No changes.
+
+**chifra daemon**
+
+- Deprecates all of the following options. See `khedra` instead.
+  - `--api`, `--grpc`, `--monitor`, `--port`, `--scrape`
+
+**chifra scrape**
+
+- No changes.
+
+**chifra chunks**
+
+- No changes.
+
+**chifra init**
+
+- No changes.
+
+**chifra explore**
+
+- No changes.
+
+**chifra slurp**
+
+- Removes `key` option from `chifra slurp --source` command. TrueBlocks Key is retired.
+
+**goMaker**
+
+- No changes.
+
+**testRunner**
+
+- No changes.
+
+## Pull Requests (0)
+
+<!--
+gh pr list --search "is:pr is:closed closed:>2024-12.16" --limit 300 --state merged | cut -f1,2 | sed 's/^/- #/' | tr '\t' ' '
+-->
+
+- None?
+
+## Issues Closed (44)
+
+<!--
+gh issue list --search "closed:>2024-12-16 is:closed is:issue sort:created-desc" --limit 300 --state closed | cut -f1,3 | sort -r | sed 's/^/- #/' | tr '\t' ' '
+-->
+
+- #3973 besu panic: interface conversion: interface {} is nil, not map [ string ] interface {}
+- #3972 Change chifra export --asset to chifra export --assets
+- #3971 Does chifra blocks --uniq --cache send traces to the cache? It used to. It should. One tests (getBlocks_cache_uniq.txt) reports no. (Might be a reporting bug)
+- #3970 Search and destroy os.Getenv("TEST_MODE") -- use an in memory cache instead - note that we must be able to turn it on and off at runtime
+- #3967 Token reconciliation is still broken -- note that many test cases have `false` for reconciled, so don't forget to fix those.
+- #3964 tokens --by_acct is ignored, only first address is treated as token
+- #3961 convertObjectToArray is slow when the string is small...
+- #3953 tb_GetFourByte(hex) - FourBytes
+- #3952 Future article
+- #3951 tb_GetEnsFromAddress / tb_GetAddressFromEns
+- #3950 tb_getAddressesInBlock(block)
+- #3949 tb_getAddressesInTx(block, txid)
+- #3948 tb_getAddressBounds(address) - Very easy to add `chifra list --bounds` functionality to key
+- #3947 tb_getAddressesIn...
+- #3922 block range with `latest` and non-empty period causes error
+- #3912 chifra locked up
+- #3908 Multiple connections being created
+- #3899 Dryrun
+- #3892 loadFromEnv panics
+- #3861 Document the sortable fields for each type
+- #3855 Strange behaviour with staged/unripe blocks.
+- #3836 Copying the executable
+- #3830 chifra serve: Cancelling
+- #3824 Possible speedups for getting data from the node
+- #3791 Check for valid rpc provider during `func init`
+- #3790 Change instructions to run chifra config --check
+- #3789 Better Configuration
+- #3788 state: add send functionality
+- #3787 Automatic Index Publishing
+- #3758 Auto code gen should update something on the website that shows the current version.
+- #3754 Detecting tracing on partial archive node.
+- #3751 chifra manifest --pins
+- #3694 chifra scrape - does accessList add previously missed addresses?
+- #3514 chifra export - check post-merge block reward
+- #3501 Add an example listener in core
+- #3499 A note about intentional sloppyness
+- #3439 chifra cmd - files that could use IterateOverMap
+- #3408 chifra scrape - should allow for building an index that ignore traces
+- #3319 chifra chunks - additional --deep checks
+- #3306 Quick look at JSON-RPC batching
+- #3241 chifra scrape - performance
+- #3225 Utilize BlockRange on eth_getLogs querys
+- #2857 chifra cmd - should have backup rpcEndpoints in case of downtime
+- #2847 chifra export creates huge number of abi files when scraping UniSwap contracts
+
+## Issues Opened (3)
+
+<!--
+gh issue list --search "created:>2025-03-27 is:open is:issue sort:created-desc" --limit 300 --state closed | cut -f1,3 | sort -r | sed 's/^/- #/'  | tr '\t' ' '
+-->
+
+- #3976 Build Failure on macOS 15.4 Beta (24E5238a)
+- #3974 Timestamps on optimism are wrong
+- #3946 chifra when 0-latest:montly fails
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 ## v4.2.0 - Khedra - Lackawanna (2025/01/30)
