@@ -36,7 +36,7 @@ func TestBlockCache(t *testing.T) {
 	readBack := &LightBlock{
 		BlockNumber: expected.BlockNumber,
 	}
-	if err := store.Read(readBack); err != nil {
+	if err := store.ReadFromStore(readBack); err != nil {
 		t.Fatal(err)
 	}
 

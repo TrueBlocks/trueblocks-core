@@ -40,12 +40,13 @@ func (opts *ExportOptions) validateExport() error {
 	if opts.Neighbors && !strings.Contains(key, "+neighbors") {
 		return validate.Usage("The {0} option requires a license key. Please contact us in our discord.", "--neighbors")
 	}
-	if opts.Accounting && !strings.Contains(key, "+accounting") {
-		return validate.Usage("The {0} option requires a license key. Please contact us in our discord.", "--accounting")
+
+	if opts.Accounting && !opts.IsAccounting() {
+		opts.Statements = true
 	}
 
-	if opts.tooMany() {
-		return validate.Usage("Please choose only a single mode (--appearances, --logs, etc.)")
+	if which, tooMany := opts.tooMany(); tooMany {
+		return validate.Usage("Please choose only a single mode ({0}, etc.)", strings.Join(which, ", "))
 	}
 
 	if opts.Traces {
@@ -119,7 +120,11 @@ func (opts *ExportOptions) validateExport() error {
 				return validate.Usage("Invalid topic: {0}", t)
 			}
 		}
+
 	} else {
+		if opts.Nfts {
+			return validate.Usage("The {0} option is only available with the {1} option.", "--nfts", "--logs")
+		}
 		if len(opts.Emitter) > 0 {
 			return validate.Usage("The {0} option is only available with the {1} option.", "--emitter", "--logs")
 		}
@@ -142,7 +147,7 @@ func (opts *ExportOptions) validateExport() error {
 
 	if len(opts.Fourbytes) > 0 {
 		if opts.Logs || opts.Receipts || opts.Appearances {
-			return validate.Usage("The {0} option is only available {1} option.", "--fourbyte", "when exporting or with the --accounting")
+			return validate.Usage("The {0} option is not available {1} options.", "--fourbyte", "with the --logs, --receipts, or --appearances")
 		}
 		for _, t := range opts.Fourbytes {
 			if !validate.IsValidFourByte(t) {
@@ -151,41 +156,48 @@ func (opts *ExportOptions) validateExport() error {
 		}
 	}
 
-	if opts.Accounting {
+	if opts.IsAccounting() {
 		if len(opts.Addrs) != 1 {
-			return validate.Usage("The {0} option is allows with only a single address.", "--accounting")
+			return validate.Usage("The {0} options allow only a single address.", "accounting")
 		}
 
 		if !opts.Conn.IsNodeArchive() {
-			return validate.Usage("The {0} option requires {1}.", "--accounting", "an archive node")
+			return validate.Usage("The {0} options requires {1}.", "accounting", "an archive node")
 		}
 
 		if opts.Globals.Chain != "mainnet" {
-			logger.Warn("The --accounting option reports a spotPrice of one for all assets on non-mainnet chains.")
+			logger.Warn("The accounting options report a spotPrice of 1.00 (one) for all assets on non-mainnet chains.")
+		}
+
+		if opts.Statements && opts.Transfers ||
+			opts.Statements && opts.Assets ||
+			opts.Transfers && opts.Assets {
+			return validate.Usage("Choose only one of {0}, {1}, or {2}.", "--statements", "--transfers", "--assets")
 		}
 
 		if len(opts.Flow) > 0 {
 			if err := validate.ValidateEnum("--flow", opts.Flow, "[in|out|zero]"); err != nil {
 				return err
 			}
-
-			if !opts.Statements {
-				return validate.Usage("The {0} option is only available with the {1} option.", "--flow", "--statements")
-			}
 		}
 
+		if opts.FirstRecord != 0 {
+			return validate.Usage("The {0} option is not available with the {1} options.", "--first-record", "accounting")
+		}
+
+		if opts.Reversed {
+			return validate.Usage("The {0} option is not available with the {1} options.", "--reversed", "accounting")
+		}
 	} else {
-		if opts.Statements {
-			return validate.Usage("The {0} option is only available with the {1} option.", "--statements", "--accounting")
-		}
-
-		if opts.Globals.Format == "ofx" {
-			return validate.Usage("The {0} option is only available with the {1} option.", "--fmt ofx", "--accounting")
+		if len(opts.Flow) > 0 {
+			return validate.Usage("The {0} option is only available with the {1} option.", "--flow", "--statements, --transfers, or --asset")
 		}
 	}
 
-	if len(opts.Asset) > 0 && !opts.Statements {
-		return validate.Usage("The {0} option is only available with the {1} option.", "--asset", "--statements")
+	if len(opts.Asset) > 0 && (!opts.Statements && !opts.Transfers && !opts.Balances) {
+		return validate.Usage("The {0} option is only available with the {1} option.", "--asset", "--transfers, --balances, or --statements")
+	} else if opts.Balances && len(opts.Asset) == 0 {
+		opts.Asset = []string{base.FAKE_ETH_ADDRESS.Hex()}
 	}
 
 	if !validate.HasArticulationKey(opts.Articulate) {
@@ -207,28 +219,62 @@ func (opts *ExportOptions) validateExport() error {
 	// return err
 }
 
-func (opts *ExportOptions) tooMany() bool {
+func (opts *ExportOptions) tooMany() ([]string, bool) {
 	cnt := 0
+	which := []string{}
 	if opts.Appearances {
+		which = append(which, "--appearances")
 		cnt++
 	}
 	if opts.Receipts {
+		which = append(which, "--receipts")
 		cnt++
 	}
 	if opts.Logs {
+		which = append(which, "--logs")
 		cnt++
 	}
 	if opts.Traces {
+		which = append(which, "--traces")
 		cnt++
 	}
 	if opts.Neighbors {
+		which = append(which, "--neighbors")
 		cnt++
 	}
-	if opts.Accounting {
+	if opts.Statements {
+		which = append(which, "--statements")
+		cnt++
+	}
+	if opts.Transfers {
+		which = append(which, "--transfers")
+		cnt++
+	}
+	if opts.Assets {
+		which = append(which, "--assets")
 		cnt++
 	}
 	if opts.Withdrawals {
+		which = append(which, "--withdrawals")
 		cnt++
 	}
-	return cnt > 1
+
+	if len(which) > 2 {
+		which = which[:2]
+	}
+
+	m := map[string]bool{}
+	for _, w := range which {
+		m[w] = true
+	}
+
+	if len(which) == 2 && (m["--accounting"] || m["--transfers"] || m["--statements"] || m["--assets"]) && m["--traces"] {
+		return []string{}, false
+	}
+
+	return which, cnt > 1
+}
+
+func (opts *ExportOptions) IsAccounting() bool {
+	return opts.Statements || opts.Transfers || opts.Assets
 }

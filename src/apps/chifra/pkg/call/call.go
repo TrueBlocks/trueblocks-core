@@ -187,16 +187,13 @@ func (call *ContractCall) forceEncoding(encoding string) {
 }
 
 func (call *ContractCall) Call(artFunc func(string, *types.Function) error) (results *types.Result, err error) {
-	if call.Conn.StoreReadable() {
-		// walk.Cache_Results
-		results = &types.Result{
-			BlockNumber: call.BlockNumber,
-			Address:     call.Address,
-			Encoding:    call.Method.Encoding,
-		}
-		if err := call.Conn.Store.Read(results); err == nil {
-			return results, nil
-		}
+	results = &types.Result{
+		BlockNumber: call.BlockNumber,
+		Address:     call.Address,
+		Encoding:    call.Method.Encoding,
+	}
+	if err := call.Conn.ReadFromCache(results); err == nil {
+		return results, nil
 	}
 
 	blockTs := call.Conn.GetBlockTimestamp(call.BlockNumber)
@@ -260,11 +257,6 @@ func (call *ContractCall) Call(artFunc func(string, *types.Function) error) (res
 		results.Values[output.DisplayName(index)] = fmt.Sprint(output.Value)
 	}
 
-	conn := call.Conn
-	isFinal := base.IsFinal(conn.LatestBlockTimestamp, blockTs)
-	if isFinal && conn.StoreWritable() && conn.EnabledMap[walk.Cache_Results] {
-		_ = conn.Store.Write(results)
-	}
-
-	return results, nil
+	err = call.Conn.WriteToCache(results, walk.Cache_Results, blockTs)
+	return results, err
 }

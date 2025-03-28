@@ -16,47 +16,43 @@ import (
 
 // GetBlockBodyByNumber fetches the block with transactions from the RPC.
 func (conn *Connection) GetBlockBodyByNumber(bn base.Blknum) (types.Block, error) {
-	var err error
-	if conn.StoreReadable() {
-		// walk.Cache_Transactions, walk.Cache_Blocks
-		lightBlock := &types.LightBlock{
-			BlockNumber: bn,
+	lightBlock := &types.LightBlock{
+		BlockNumber: bn,
+	}
+	if err := conn.ReadFromCache(lightBlock); err == nil {
+		// We need to fill in the actual transactions (from cache hopefully, but
+		// if not, then from the RPC)
+		transactions := make([]types.Transaction, 0, len(lightBlock.Transactions))
+		for index := range lightBlock.Transactions {
+			tx, thisErr := conn.GetTransactionByNumberAndId(lightBlock.BlockNumber, base.Txnum(index))
+			if thisErr != nil {
+				err = thisErr
+				break
+			}
+			transactions = append(transactions, *tx)
 		}
-		if err := conn.Store.Read(lightBlock); err == nil {
-			// We need to fill in the actual transactions (from cache hopefully, but
-			// if not, then from the RPC)
-			transactions := make([]types.Transaction, 0, len(lightBlock.Transactions))
-			for index := range lightBlock.Transactions {
-				tx, thisErr := conn.GetTransactionByNumberAndId(lightBlock.BlockNumber, base.Txnum(index))
-				if thisErr != nil {
-					err = thisErr
-					break
-				}
-				transactions = append(transactions, *tx)
+
+		if err == nil && len(transactions) == len(lightBlock.Transactions) {
+			lightToBody := func(block *types.LightBlock) *types.Block {
+				var ret types.Block
+				ret.BaseFeePerGas = block.BaseFeePerGas
+				ret.BlockNumber = block.BlockNumber
+				ret.Difficulty = block.Difficulty
+				ret.GasLimit = block.GasLimit
+				ret.GasUsed = block.GasUsed
+				ret.Hash = block.Hash
+				ret.Miner = block.Miner
+				ret.ParentHash = block.ParentHash
+				ret.Timestamp = block.Timestamp
+				ret.Uncles = block.Uncles
+				ret.Withdrawals = block.Withdrawals
+				return &ret
 			}
 
-			if err == nil && len(transactions) == len(lightBlock.Transactions) {
-				lightToBody := func(block *types.LightBlock) *types.Block {
-					var ret types.Block
-					ret.BaseFeePerGas = block.BaseFeePerGas
-					ret.BlockNumber = block.BlockNumber
-					ret.Difficulty = block.Difficulty
-					ret.GasLimit = block.GasLimit
-					ret.GasUsed = block.GasUsed
-					ret.Hash = block.Hash
-					ret.Miner = block.Miner
-					ret.ParentHash = block.ParentHash
-					ret.Timestamp = block.Timestamp
-					ret.Uncles = block.Uncles
-					ret.Withdrawals = block.Withdrawals
-					return &ret
-				}
-
-				ret := lightToBody(lightBlock)
-				ret.Transactions = transactions
-				// TODO: BOGUS - avoid copy
-				return *ret, err
-			}
+			ret := lightToBody(lightBlock)
+			ret.Transactions = transactions
+			// TODO: BOGUS - avoid copy
+			return *ret, err
 		}
 	}
 
@@ -66,7 +62,6 @@ func (conn *Connection) GetBlockBodyByNumber(bn base.Blknum) (types.Block, error
 	if err != nil {
 		return types.Block{}, err
 	}
-	isFinal := base.IsFinal(conn.LatestBlockTimestamp, block.Timestamp)
 
 	_, receiptMap, _ := conn.GetReceiptsByNumber(bn, block.Timestamp)
 	for i := 0; i < len(block.Transactions); i++ {
@@ -83,17 +78,12 @@ func (conn *Connection) GetBlockBodyByNumber(bn base.Blknum) (types.Block, error
 		block.Transactions[i].Receipt = receipt
 		block.Transactions[i].Timestamp = block.Timestamp
 		block.Transactions[i].HasToken = types.IsTokenFunction(block.Transactions[i].Input)
-		if isFinal && conn.StoreWritable() && conn.EnabledMap[walk.Cache_Transactions] {
-			_ = conn.Store.Write(&block.Transactions[i])
-		}
+
+		_ = conn.WriteToCache(&block.Transactions[i], walk.Cache_Transactions, block.Timestamp)
 	}
 
-	if isFinal && conn.StoreWritable() && conn.EnabledMap[walk.Cache_Blocks] {
-		_ = conn.Store.Write(block)
-	}
-
-	// TODO: BOGUS - avoid copy
-	return *block, nil
+	err = conn.WriteToCache(block, walk.Cache_Blocks, block.Timestamp)
+	return *block, err
 }
 
 // getBlockFromRpc returns the block as received from the node

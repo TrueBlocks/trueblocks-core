@@ -7,6 +7,7 @@ require (
 	github.com/alecthomas/participle/v2 v2.0.0
 	github.com/bykof/gostradamus v1.0.4
 	github.com/ethereum/go-ethereum v1.14.13
+	github.com/go-test/deep v1.1.1
 	github.com/gocarina/gocsv v0.0.0-20230123225133-763e25b40669
 	github.com/gorilla/mux v1.8.0
 	github.com/gorilla/websocket v1.5.0
@@ -41,7 +42,6 @@ require (
 	github.com/ethereum/go-verkle v0.1.1-0.20240829091221-dffa7562dbe9 // indirect
 	github.com/fsnotify/fsnotify v1.7.0 // indirect
 	github.com/go-ole/go-ole v1.3.0 // indirect
-	github.com/go-test/deep v1.1.1 // indirect
 	github.com/google/go-cmp v0.6.0 // indirect
 	github.com/google/uuid v1.3.0 // indirect
 	github.com/holiman/uint256 v1.3.1 // indirect

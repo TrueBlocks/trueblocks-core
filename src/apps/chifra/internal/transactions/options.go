@@ -58,7 +58,7 @@ func (opts *TransactionsOptions) testLog() {
 	logger.TestLog(len(opts.Emitter) > 0, "Emitter: ", opts.Emitter)
 	logger.TestLog(len(opts.Topic) > 0, "Topic: ", opts.Topic)
 	logger.TestLog(opts.CacheTraces, "CacheTraces: ", opts.CacheTraces)
-	opts.Conn.TestLog(opts.getCaches())
+	opts.Conn.TestLog()
 	opts.Globals.TestLog()
 }
 

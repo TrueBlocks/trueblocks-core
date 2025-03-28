@@ -50,7 +50,7 @@ func (opts *ExploreOptions) testLog() {
 	logger.TestLog(opts.Local, "Local: ", opts.Local)
 	logger.TestLog(opts.Google, "Google: ", opts.Google)
 	logger.TestLog(opts.Dalle, "Dalle: ", opts.Dalle)
-	opts.Conn.TestLog(opts.getCaches())
+	opts.Conn.TestLog()
 	opts.Globals.TestLog()
 }
 

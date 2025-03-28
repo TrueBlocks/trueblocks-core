@@ -47,7 +47,7 @@ func TestTraceCache(t *testing.T) {
 		BlockNumber:      17432262,
 		TransactionIndex: 44,
 	}
-	if err := store.Read(readBack); err != nil {
+	if err := store.ReadFromStore(readBack); err != nil {
 		t.Fatal(err)
 	}
 
@@ -109,7 +109,7 @@ func TestTraceCacheArticulated(t *testing.T) {
 		BlockNumber:      17432262,
 		TransactionIndex: 44,
 	}
-	if err := store.Read(readBack); err != nil {
+	if err := store.ReadFromStore(readBack); err != nil {
 		t.Fatal(err)
 	}
 

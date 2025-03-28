@@ -57,7 +57,7 @@ func TestTransactionCache(t *testing.T) {
 		BlockNumber:      expected.BlockNumber,
 		TransactionIndex: 10,
 	}
-	if err := store.Read(readBack); err != nil {
+	if err := store.ReadFromStore(readBack); err != nil {
 		t.Fatal(err)
 	}
 
@@ -127,7 +127,7 @@ func TestTransactionCacheArticulated(t *testing.T) {
 		BlockNumber:      expected.BlockNumber,
 		TransactionIndex: 44,
 	}
-	if err := store.Read(readBack); err != nil {
+	if err := store.ReadFromStore(readBack); err != nil {
 		t.Fatal(err)
 	}
 

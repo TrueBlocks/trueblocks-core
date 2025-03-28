@@ -28,12 +28,12 @@ func DoExport() {
 	globs := globals
 	topics := fuzzTopics
 	fourbytes := fuzzFourbytes
-	accounting := []bool{false, true}
 	articulate := []bool{false, true}
 	cacheTraces := []bool{false, true}
 	relevant := []bool{false, true}
 	emitter := fuzzEmitters
 	topic := fuzzTopics
+	nfts := []bool{false, true}
 	reverted := []bool{false, true}
 	asset := fuzzAssets
 	// Option 'flow.enum' is an emum
@@ -41,6 +41,7 @@ func DoExport() {
 	unripe := []bool{false, true}
 	reversed := []bool{false, true}
 	noZero := []bool{false, true}
+	accounting := []bool{false, true}
 	// firstBlock is a <blknum> --other
 	// lastBlock is a <blknum> --other
 	// firstRecord is not fuzzed
@@ -51,6 +52,7 @@ func DoExport() {
 	_ = topic
 	_ = fourbytes
 	_ = articulate
+	_ = nfts
 	baseFn := "export/export"
 	opts = sdk.ExportOptions{
 		Addrs:       fuzzAddresses,
@@ -69,6 +71,8 @@ func DoExport() {
 		// TestExport("neighbors", "", fn, &opts)
 		TestExport("balances", "", fn, &opts)
 		TestExport("withdrawals", "", fn, &opts)
+		TestExport("statements", "", fn, &opts)
+		TestExport("transfers", "", fn, &opts)
 	}
 
 	/*
@@ -158,6 +162,26 @@ func TestExport(which, value, fn string, opts *sdk.ExportOptions) {
 			ReportError(fn, opts, err)
 		} else {
 			if err := SaveToFile(fn, statements); err != nil {
+				ReportError2(fn, err)
+			} else {
+				ReportOkay(fn)
+			}
+		}
+	case "transfers":
+		if transfers, _, err := opts.ExportTransfers(); err != nil {
+			ReportError(fn, opts, err)
+		} else {
+			if err := SaveToFile(fn, transfers); err != nil {
+				ReportError2(fn, err)
+			} else {
+				ReportOkay(fn)
+			}
+		}
+	case "assets":
+		if assets, _, err := opts.ExportAssets(); err != nil {
+			ReportError(fn, opts, err)
+		} else {
+			if err := SaveToFile(fn, assets); err != nil {
 				ReportError2(fn, err)
 			} else {
 				ReportOkay(fn)
@@ -260,7 +284,6 @@ func TestExportExport(reverted, unripe, accounting, reversed []bool, asset []str
 					opts := *opts
 					opts.Reverted = r
 					opts.Unripe = u
-					opts.Accounting = a
 					opts.Reversed = rv
 					ff := fmt.Sprintf("%s--%t-%t-%t-%t", fn, r, u, a, rv)
 					TestExport("export", "", ff, &opts)

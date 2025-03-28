@@ -172,7 +172,7 @@ func (m *Member) GoType() string {
 			case "float":
 				ret = "base.Float"
 			case "ether":
-				ret = "base.Ether"
+				ret = "base.Float"
 			case "gas":
 				ret = "base.Gas"
 			case "hash":

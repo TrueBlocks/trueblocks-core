@@ -58,7 +58,7 @@ on      ,both ,fast  ,chunks ,apps ,chunkMan ,belongs2                ,y    ,mod
 
 on      ,both ,fast  ,chunks ,apps ,chunkMan ,pin_chunks_bad          ,y    ,mode = addresses & pin
 on      ,both ,fast  ,chunks ,apps ,chunkMan ,pin_data_bad            ,y    ,mode = manifest & publish
-on      ,both ,fast  ,chunks ,apps ,chunkMan ,pin_rewrite_not_deep    ,y    ,mode = manifest & pin & rewrite
+local   ,both ,fast  ,chunks ,apps ,chunkMan ,pin_rewrite_not_deep    ,y    ,mode = manifest & pin & rewrite
 on      ,both ,fast  ,chunks ,apps ,chunkMan ,pin_rewrite_not_pin     ,y    ,mode = manifest & rewrite
 
 on      ,both ,fast  ,chunks ,apps ,chunkMan ,check_bad               ,y    ,mode = addresses & check

@@ -113,6 +113,9 @@ func (opts *ExportOptions) HandleWithdrawals(rCtx *output.RenderCtx, monitorArra
 							if opts.Reversed {
 								i, j = j, i
 							}
+							if items[i].BlockNumber == items[j].BlockNumber {
+								return items[i].Index < items[j].Index
+							}
 							return items[i].BlockNumber < items[j].BlockNumber
 						})
 

@@ -6,7 +6,6 @@ package rpc
 
 import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/walk"
 )
@@ -34,32 +33,23 @@ func (conn *Connection) GetWithdrawalsByNumber(bn base.Blknum) ([]types.Withdraw
 		return []types.Withdrawal{}, nil
 	}
 
-	if conn.StoreReadable() {
-		// walk.Cache_Withdrawals
-		withdrawalGroup := &types.WithdrawalGroup{
-			BlockNumber:      bn,
-			TransactionIndex: base.NOPOSN,
-		}
-		if err := conn.Store.Read(withdrawalGroup); err == nil {
-			return withdrawalGroup.Withdrawals, nil
-		}
+	withdrawalGroup := &types.WithdrawalGroup{
+		BlockNumber:      bn,
+		TransactionIndex: base.NOPOSN,
+	}
+	if err := conn.ReadFromCache(withdrawalGroup); err == nil {
+		return withdrawalGroup.Withdrawals, nil
 	}
 
 	if withdrawals, ts, err := conn.getWithdrawals(bn); err != nil {
 		return withdrawals, err
 	} else {
-		isFinal := base.IsFinal(conn.LatestBlockTimestamp, ts)
-		if isFinal && conn.StoreWritable() && conn.EnabledMap[walk.Cache_Withdrawals] {
-			withdrawalGroup := &types.WithdrawalGroup{
-				BlockNumber:      bn,
-				TransactionIndex: base.NOPOSN,
-				Withdrawals:      withdrawals,
-			}
-			if err = conn.Store.Write(withdrawalGroup); err != nil {
-				logger.Warn("Failed to write withdrawals to cache", err)
-			}
+		withdrawalGroup := &types.WithdrawalGroup{
+			BlockNumber:      bn,
+			TransactionIndex: base.NOPOSN,
+			Withdrawals:      withdrawals,
 		}
-
+		err := conn.WriteToCache(withdrawalGroup, walk.Cache_Withdrawals, ts)
 		return withdrawals, err
 	}
 }

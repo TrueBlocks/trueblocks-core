@@ -56,7 +56,7 @@ func (opts *ExportOptions) ExportInternal(rCtx *output.RenderCtx) error {
 	msg := "chifra export"
 	// EXISTING_CODE
 	monitorArray := make([]monitor.Monitor, 0, len(opts.Addrs))
-	if canceled, err := opts.FreshenMonitorsForExport(rCtx, &monitorArray); err != nil || canceled {
+	if canceled, err := opts.FreshenMonitorsForExport(&monitorArray); err != nil || canceled {
 		return err
 	}
 	// EXISTING_CODE
@@ -68,20 +68,22 @@ func (opts *ExportOptions) ExportInternal(rCtx *output.RenderCtx) error {
 		err = opts.HandleReceipts(rCtx, monitorArray)
 	} else if opts.Logs {
 		err = opts.HandleLogs(rCtx, monitorArray)
-	} else if opts.Traces {
-		err = opts.HandleTraces(rCtx, monitorArray)
 	} else if opts.Withdrawals {
 		err = opts.HandleWithdrawals(rCtx, monitorArray)
 	} else if opts.Appearances {
 		err = opts.HandleAppearances(rCtx, monitorArray)
+	} else if opts.Assets {
+		err = opts.HandleAssets(rCtx, monitorArray)
 	} else if opts.Balances {
 		err = opts.HandleBalances(rCtx, monitorArray)
 	} else if opts.Neighbors {
 		err = opts.HandleNeighbors(rCtx, monitorArray)
 	} else if opts.Statements {
 		err = opts.HandleStatements(rCtx, monitorArray)
-	} else if opts.Accounting {
-		err = opts.HandleAccounting(rCtx, monitorArray)
+	} else if opts.Transfers {
+		err = opts.HandleTransfers(rCtx, monitorArray)
+	} else if opts.Traces {
+		err = opts.HandleTraces(rCtx, monitorArray)
 	} else {
 		err = opts.HandleShow(rCtx, monitorArray)
 	}

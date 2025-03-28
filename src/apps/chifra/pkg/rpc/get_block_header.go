@@ -16,29 +16,21 @@ import (
 
 // GetBlockHeaderByNumber fetches the block with only transactions' hashes from the RPC
 func (conn *Connection) GetBlockHeaderByNumber(bn base.Blknum) (types.LightBlock, error) {
-	if conn.StoreReadable() && bn != base.NOPOSN {
-		// walk.Cache_Blocks
+	if bn != base.NOPOSN {
 		block := types.LightBlock{
 			BlockNumber: bn,
 		}
-		if err := conn.Store.Read(&block); err == nil {
-			// read was successful
+		if err := conn.ReadFromCache(&block); err == nil {
 			return block, nil
 		}
 	}
 
-	block, err := conn.getLightBlockFromRpc(bn, notAHash)
-	if err != nil {
+	if block, err := conn.getLightBlockFromRpc(bn, notAHash); err != nil {
 		return types.LightBlock{}, err
+	} else {
+		err = conn.WriteToCache(block, walk.Cache_Blocks, block.Timestamp)
+		return *block, err
 	}
-
-	isFinal := base.IsFinal(conn.LatestBlockTimestamp, block.Timestamp)
-	if isFinal && conn.StoreWritable() && conn.EnabledMap[walk.Cache_Blocks] {
-		_ = conn.Store.Write(block)
-	}
-
-	// TODO: BOGUS - avoid copies
-	return *block, nil
 }
 
 // getLightBlockFromRpc returns the block as received from the node

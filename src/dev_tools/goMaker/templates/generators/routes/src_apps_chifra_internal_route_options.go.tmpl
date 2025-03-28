@@ -25,7 +25,7 @@ var default{{toProper .Route}}Options = {{toProper .Route}}Options{
 
 // testLog is used only during testing to export the options for this test case.
 func (opts *{{toProper .Route}}Options) testLog() {
-{{.TestLogs}}	opts.Conn.TestLog(opts.getCaches())
+{{.TestLogs}}	opts.Conn.TestLog()
 	opts.Globals.TestLog()
 }
 

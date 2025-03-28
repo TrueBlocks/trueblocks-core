@@ -17,24 +17,19 @@ type StateFilters struct {
 
 // GetState returns account state (search: FromRpc)
 func (conn *Connection) GetState(fieldBits types.StatePart, address base.Address, blockNumber base.Blknum, filters StateFilters) (*types.State, error) {
-	blockTs := base.Timestamp(0)
-	if conn.StoreReadable() {
-		// walk.Cache_State
-		state := &types.State{
-			BlockNumber: blockNumber,
-			Address:     address,
-		}
-		if err := conn.Store.Read(state); err == nil {
-			if state.Parts&fieldBits == fieldBits {
-				// we have what we need
-				return state, nil
-			}
+	state := &types.State{
+		BlockNumber: blockNumber,
+		Address:     address,
+	}
+	if err := conn.ReadFromCache(state); err == nil {
+		if state.Parts&fieldBits == fieldBits {
+			return state, nil
 		}
 		fieldBits |= state.Parts // preserve what's there
-		blockTs = conn.GetBlockTimestamp(blockNumber)
 	}
 
 	// We always ask for balance even if we dont' need it. Not sure why.
+	blockTs := conn.GetBlockTimestamp(blockNumber)
 	rpcPayload := []query.BatchPayload{
 		{
 			Key: "balance",
@@ -83,7 +78,7 @@ func (conn *Connection) GetState(fieldBits types.StatePart, address base.Address
 	balance := base.NewWei(0)
 	balance.SetString(*value, 0)
 
-	state := &types.State{
+	state = &types.State{
 		Address:     address,
 		BlockNumber: blockNumber,
 		Deployed:    base.NOPOSN,
@@ -141,30 +136,47 @@ func (conn *Connection) GetState(fieldBits types.StatePart, address base.Address
 		}
 	}
 
-	isFinal := base.IsFinal(conn.LatestBlockTimestamp, blockTs)
-	if isFinal && conn.StoreWritable() && conn.EnabledMap[walk.Cache_State] {
-		_ = conn.Store.Write(state)
-	}
-
+	err = conn.WriteToCache(state, walk.Cache_State, blockTs)
 	if filters.BalanceCheck != nil {
 		if !filters.BalanceCheck(address, &state.Balance) {
-			return nil, nil
+			return nil, err
 		}
 	}
-
-	return state, nil
+	return state, err
 }
 
 // GetBalanceAt returns a balance for an address at a block
 func (conn *Connection) GetBalanceAt(addr base.Address, bn base.Blknum) (*base.Wei, error) {
+	var balance *base.Wei
+
+	// TODO: BOGUS - COULD ME A BINARY FILE?
+	key := fmt.Sprintf("%s|%d", addr.Hex(), bn)
+	conn.cacheMutex.Lock()
+	var ok bool
+	if balance, ok = conn.balanceCache[key]; ok {
+		conn.cacheMutex.Unlock()
+		return balance, nil
+	}
+	conn.cacheMutex.Unlock()
+
 	if ec, err := conn.getClient(); err != nil {
 		var zero base.Wei
 		return &zero, err
 	} else {
 		defer ec.Close()
-		ret, err := ec.BalanceAt(context.Background(), addr.Common(), base.BiFromBn(bn))
-		return (*base.Wei)(ret), err
+		if ret, err := ec.BalanceAt(context.Background(), addr.Common(), base.BiFromBn(bn)); err != nil {
+			return (*base.Wei)(ret), err
+		} else {
+			balance = (*base.Wei)(ret)
+		}
 	}
+
+	// TODO: BOGUS - COULD ME A BINARY FILE?
+	conn.cacheMutex.Lock()
+	conn.balanceCache[key] = balance
+	conn.cacheMutex.Unlock()
+
+	return balance, nil
 }
 
 func (conn *Connection) getTypeNonProxy(address base.Address, bn base.Blknum) string {

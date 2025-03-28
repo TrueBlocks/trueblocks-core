@@ -8,7 +8,7 @@
 
 // monitorsPkg implements the chifra monitors command.
 //
-// # TODO: BOGUS - THIS IS OUT OF DATE
+// TODO: BOGUS - THIS IS OUT OF DATE
 //
 // chifra monitors has two purposes: (1) to display information about the current set of monitors, and (2)
 // to --watch a set of addresses. The --watch function allows one to "follow" an address (or set
