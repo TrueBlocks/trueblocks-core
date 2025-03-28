@@ -29,7 +29,7 @@ func (l *Ledger) getStatementsFromLog(conn *rpc.Connection, logIn *types.Log) (t
 		return types.Statement{}, err
 
 	} else {
-		sym := log.Address.Prefix(6)
+		sym := log.Address.DefaultSymbol()
 		decimals := base.Value(18)
 		name := l.Names[log.Address]
 		if name.Address == log.Address {

@@ -21,13 +21,6 @@ func (t *Timestamp) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (f *Float) UnmarshalJSON(data []byte) error {
-	str := safeUnquote(string(data))
-	result, _ := strconv.ParseFloat(str, 64)
-	*f = Float(result)
-	return nil
-}
-
 // safeUnquote attempts to unquote a string if it is quoted.
 // If the string is not quoted, it returns the original string.
 func safeUnquote(s string) string {

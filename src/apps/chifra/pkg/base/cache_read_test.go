@@ -14,13 +14,13 @@ type testUnmarshaler struct {
 	value int32
 }
 
-func (t *testUnmarshaler) UnmarshalCache(version uint64, reader io.Reader) error {
+func (t *testUnmarshaler) UnmarshalCache(fileVersion uint64, reader io.Reader) error {
 	return binary.Read(reader, binary.LittleEndian, &t.value)
 }
 
 type likeString string
 
-func (l *likeString) UnmarshalCache(version uint64, reader io.Reader) error {
+func (l *likeString) UnmarshalCache(fileVersion uint64, reader io.Reader) error {
 	var v int32
 	if err := binary.Read(reader, binary.LittleEndian, &v); err != nil {
 		return err
@@ -171,10 +171,10 @@ func TestReadBigInt(t *testing.T) {
 		t.Fatal(err)
 	}
 	size := uint64(len(data))
-	if err := write(buf, size); err != nil {
+	if err := binary.Write(buf, binary.LittleEndian, size); err != nil {
 		t.Fatal(err)
 	}
-	if err := write(buf, data); err != nil {
+	if err := binary.Write(buf, binary.LittleEndian, data); err != nil {
 		t.Fatal(err)
 	}
 

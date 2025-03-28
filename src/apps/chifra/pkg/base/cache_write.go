@@ -8,9 +8,8 @@ import (
 	"reflect"
 )
 
-// write writes bytes in a correct byte order
-func write(writer io.Writer, value any) (err error) {
-	return binary.Write(writer, binary.LittleEndian, value)
+type Marshaler interface {
+	MarshalCache(writer io.Writer) error
 }
 
 // WriteValue writes binary representation of fixed-size values, strings,
@@ -34,12 +33,13 @@ func WriteValue(writer io.Writer, value any) (err error) {
 		err = writeString(writer, &v)
 	case *big.Int:
 		err = writeBigInt(writer, v)
+	case *big.Float:
+		err = writeBigFloat(writer, v)
 	default:
 		if rf := reflect.ValueOf(value); rf.Kind() == reflect.Slice {
 			return writeSliceReflect(writer, &rf)
 		}
-
-		err = write(writer, value)
+		err = binary.Write(writer, binary.LittleEndian, value)
 	}
 	return err
 }
@@ -50,7 +50,7 @@ func writeSlice[T any](writer io.Writer, slice []T) (err error) {
 	buffer := new(bytes.Buffer)
 	sliceLen := uint64(len(slice))
 
-	if err = write(buffer, sliceLen); err != nil {
+	if err = binary.Write(buffer, binary.LittleEndian, sliceLen); err != nil {
 		return
 	}
 	for _, sliceItem := range slice {
@@ -69,7 +69,7 @@ func writeSliceReflect(writer io.Writer, sliceValue *reflect.Value) (err error) 
 	buffer := new(bytes.Buffer)
 	sliceLen := sliceValue.Len()
 
-	if err = write(buffer, uint64(sliceLen)); err != nil {
+	if err = binary.Write(buffer, binary.LittleEndian, uint64(sliceLen)); err != nil {
 		return
 	}
 	for i := 0; i < sliceLen; i++ {
@@ -94,10 +94,10 @@ func writeSliceReflect(writer io.Writer, sliceValue *reflect.Value) (err error) 
 }
 
 func writeString(writer io.Writer, str *string) (err error) {
-	if err = write(writer, uint64(len(*str))); err != nil {
+	if err = binary.Write(writer, binary.LittleEndian, uint64(len(*str))); err != nil {
 		return
 	}
-	return write(writer, []byte(*str))
+	return binary.Write(writer, binary.LittleEndian, []byte(*str))
 }
 
 func writeBigInt(writer io.Writer, value *big.Int) (err error) {
@@ -106,11 +106,23 @@ func writeBigInt(writer io.Writer, value *big.Int) (err error) {
 		return
 	}
 	// write length of data, so readBigInt knows how many bytes to read
-	if err = write(writer, uint64(len(data))); err != nil {
+	if err = binary.Write(writer, binary.LittleEndian, uint64(len(data))); err != nil {
 		return err
 	}
 
 	// write the data
 	_, err = writer.Write(data)
 	return
+}
+
+func writeBigFloat(writer io.Writer, value *big.Float) (err error) {
+	data, err := value.GobEncode()
+	if err != nil {
+		return err
+	}
+	if err = binary.Write(writer, binary.LittleEndian, uint64(len(data))); err != nil {
+		return err
+	}
+	_, err = writer.Write(data)
+	return err
 }

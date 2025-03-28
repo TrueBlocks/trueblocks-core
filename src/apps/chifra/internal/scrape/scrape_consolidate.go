@@ -214,7 +214,7 @@ func (bm *BlazeManager) hasNoAddresses(bn base.Blknum) bool {
 	if block, err := bm.opts.Conn.GetBlockHeaderByNumber(bn); err != nil {
 		return false
 	} else {
-		return base.IsPrecompile(block.Miner.Hex()) &&
+		return block.Miner.IsPrecompile() &&
 			len(block.Transactions) == 0 &&
 			len(block.Uncles) == 0 &&
 			len(block.Withdrawals) == 0
