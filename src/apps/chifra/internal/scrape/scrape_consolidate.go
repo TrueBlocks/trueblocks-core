@@ -134,7 +134,7 @@ func (bm *BlazeManager) Consolidate(ctx context.Context, blocks []base.Blknum) e
 				}
 				record := fmt.Sprintf("%s\t%09d\t%05d", addr, app.BlockNumber, app.TransactionIndex)
 				appearances = append(appearances, record)
-				newRange.Last = base.Max(newRange.Last, base.Blknum(app.BlockNumber))
+				newRange.Last = max(newRange.Last, base.Blknum(app.BlockNumber))
 			}
 		}
 
@@ -191,8 +191,8 @@ func (bm *BlazeManager) AsciiFileToAppearanceMap(fn string) (map[string][]types.
 			if addr == base.SentinalAddr.Hex() && txid == types.MisconfigReward {
 				continue
 			}
-			fileRange.First = base.Min(fileRange.First, bn)
-			fileRange.Last = base.Max(fileRange.Last, bn)
+			fileRange.First = min(fileRange.First, bn)
+			fileRange.Last = max(fileRange.Last, bn)
 			appMap[addr] = append(appMap[addr], types.AppRecord{
 				BlockNumber:      uint32(bn),
 				TransactionIndex: uint32(txid),

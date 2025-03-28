@@ -139,7 +139,7 @@ func (opts *MonitorsOptions) Refresh(monitors []monitor.Monitor) (bool, error) {
 		fmt.Printf("%s%d-%d of %d:%s chifra export --freshen",
 			colors.BrightBlue,
 			i*batchSize,
-			base.Min(((i+1)*batchSize)-1, len(monitors)),
+			min(((i+1)*batchSize)-1, len(monitors)),
 			len(monitors),
 			colors.Green)
 		for _, addr := range addrs {

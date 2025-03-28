@@ -73,7 +73,7 @@ func DoAbis() {
 	opts = sdk.AbisOptions{}
 	globs = noCache(globs)
 	for _, s := range sigs {
-		baseFn := "abis/abis-encode" + s[:base.Max(1, base.Min(5, len(s)))]
+		baseFn := "abis/abis-encode" + s[:max(1, min(5, len(s)))]
 		for _, g := range globs {
 			opts.Globals = g
 			fn := getFilename(baseFn, &opts.Globals)

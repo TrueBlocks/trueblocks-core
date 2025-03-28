@@ -44,10 +44,10 @@ func (conn *Connection) IsNodeArchive() bool {
 // It queries block 1 or a user supplied block (which we presume exists). The function
 // returns false if block_trace returns an error or doesn't exist.
 func (conn *Connection) IsNodeTracing() (error, bool) {
-	firstTrace := base.Max(1, base.KnownBlock(conn.Chain, base.FirstTrace))
+	firstTrace := max(1, base.KnownBlock(conn.Chain, base.FirstTrace))
 	varName := "TB_" + strings.ToUpper(conn.Chain) + "_FIRSTTRACE"
 	if len(os.Getenv(varName)) > 0 {
-		firstTrace = base.Max(firstTrace, base.MustParseValue(os.Getenv(varName)))
+		firstTrace = max(firstTrace, base.MustParseValue(os.Getenv(varName)))
 	}
 	_, err := conn.GetTracesByBlockNumber(firstTrace)
 	return err, err == nil

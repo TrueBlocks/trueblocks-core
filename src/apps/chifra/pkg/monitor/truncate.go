@@ -1,7 +1,6 @@
 package monitor
 
 import (
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/filter"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
@@ -28,7 +27,7 @@ func (mon *Monitor) TruncateTo(chain string, num uint32) (bool, error) {
 				})
 			}
 		}
-		lastScanned := base.Min(num, mon.Header.LastScanned)
+		lastScanned := min(num, mon.Header.LastScanned)
 
 		mon.Close() // so when we open it, it gets replaced
 		// Very important to note - if you use false for append, the header gets overwritten

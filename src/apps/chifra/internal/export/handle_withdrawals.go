@@ -22,7 +22,7 @@ func (opts *ExportOptions) HandleWithdrawals(rCtx *output.RenderCtx, monitorArra
 	chain := opts.Globals.Chain
 	testMode := opts.Globals.TestMode
 	nErrors := 0
-	first := base.Max(base.KnownBlock(chain, "shanghai"), opts.FirstBlock)
+	first := max(base.KnownBlock(chain, "shanghai"), opts.FirstBlock)
 	filter := filter.NewFilter(
 		opts.Reversed,
 		false,
