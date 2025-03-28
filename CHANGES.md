@@ -2,6 +2,66 @@
 
 This file details changes made to TrueBlocks over time. All version prior to version 3.0.0 are now no longer supported.
 
+## v5.0.0 - All About Them Reconcolications - Luzerne (2025/03/28)
+
+Bumps version to 5.0.0
+Updates CI pipeline and linters
+Updates various build scripts
+Removes key option from chifra slurp --source
+Deprecates and discontinues TrueBlocks Key
+Various spelling lints
+Breaking: deprecates various chifra deamon options (use khedra instead)
+  - The --port option is deprecated, use --url instead.
+  - The --grpc option is deprecated, there is no replacement.
+  - The --api option is deprecated, there is no replacement.
+  - The --scrape option is deprecated, use chifra scrape instead.
+  - The --monitor option is deprecated, use chifra monitors --watch instead.
+Removes --accounting option from chifra export -- API key is no longer needed to use the Accounting options
+Adds --transfers and --assets to chifra export command
+Adds --nfts option to chifra export
+Adds the Transfer type with these fields
+Removes `watch` relelated options from chifra monitors (use khedra instead)
+  -w, --watch              continually scan for new blocks and extract data as per the command file
+  -a, --watchlist string   available with --watch option only, a file containing the addresses to watch
+  -d, --commands string    available with --watch option only, the file containing the list of commands to apply to each watched address
+  -b, --batch_size uint    available with --watch option only, the number of monitors to process in each batch (default 8)
+  -u, --run_count uint     available with --watch option only, run the monitor this many times, then quit
+  -s, --sleep float        available with --watch option only, the number of seconds to sleep between runs (default 14)
+For Statements type
+	assetAddr ==> asset
+	assetSymbol ==> symbol
+	reconciliationType (removed)
+	correctingIn (removed)
+	correctingOut (removed)
+	correctBegBalIn (added)
+	correctBegBalOut (added)
+	correctEndBalIn (added)
+	correctEndBalOut (added)
+	correctAmountIn (added)
+	correctAmountOut (added)
+Adds Transfer type
+	blockNumber,transactionIndex,logIndex,holder,asset,decimals,sender,recipient,amountIn,internalIn,
+	minerBaseRewardIn,minerNephewRewardIn,minerTxFeeIn,minerUncleRewardIn,prefundIn,selfDestructIn,
+	amountOut,internalOut,gasOut,selfDestructOut,transaction,log
+Adds isNFT field to Log type
+Updates all go.mod files
+Updates GoLang version to 1.23.1
+Renames base.Ether type (and associated methods/functions) to base.Float since that's what it was anyway.
+Removed base.Min and base.Max in favor of GoLang native min/max.
+Small updates to khedra including adding a Dockerfile and adding a README
+Better fuzzing
+About 90 new tests against chifra export
+Improvements to the testing harness code
+Addition of Statements cache to greatly speed up chifra export --statements
+Improvements to auto-code-gen
+Fixes a bug related to chifra tokens --by_acct not working correctly.
+Fixes all known issues with chifra export --statements. No unreconciled transfers. Only correcting entries are now nullTransfers.
+SpotPrice in Statement is now a big.Float so appears as quoted
+Much better caching code including upgrading and modifying already-cached auto-generated types
+A lot more unit testing throughout the entire code base
+Much improved base package - more robust
+
+
 ## v4.2.0 - Khedra - Lackawanna (2025/01/30)
 
 **Summary**
