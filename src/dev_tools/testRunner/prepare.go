@@ -15,7 +15,6 @@ func downloadAbis() error {
 		"0x45f783cce6b7ff23b2ab2d70e416cdb7d6055f51",
 		"0x9ba00d6856a4edf4665bca2c2309936572473b7e",
 		"0xdbd27635a534a3d3169ef0498beb56fb9c937489",
-		// "0xbb9bc244d798123fde783fcc1c72d3bb8c189413",
 	}
 
 	opts := sdk.AbisOptions{

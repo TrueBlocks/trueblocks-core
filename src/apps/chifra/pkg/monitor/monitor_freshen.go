@@ -236,7 +236,7 @@ func (updater *MonitorUpdate) FreshenMonitors(monitorArray *[]Monitor) (bool, er
 // visitChunkToFreshenFinal opens an index file, searches for the address(es) we're looking for and pushes
 // the appearance records down the resultsChannel (even if there are none).
 func (updater *MonitorUpdate) visitChunkToFreshenFinal(fileName string, resultChannel chan<- []index.AppearanceResult, wg *sync.WaitGroup) {
-	results := make([]index.AppearanceResult, 0)
+	results := make([]index.AppearanceResult, 0, len(updater.MonitorMap))
 	defer func() {
 		resultChannel <- results
 		wg.Done()
