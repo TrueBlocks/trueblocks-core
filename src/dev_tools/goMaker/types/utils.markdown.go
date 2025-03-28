@@ -3,7 +3,6 @@ package types
 import (
 	"strings"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 )
 
@@ -47,12 +46,12 @@ func widths(header []string, rows [][]string) []int {
 	nFields := len(header)
 	wids := make([]int, nFields)
 	for i := 0; i < nFields; i++ {
-		wids[i] = base.Max(wids[i], len(header[i]))
+		wids[i] = max(wids[i], len(header[i]))
 		for j := 0; j < len(rows); j++ {
 			if len(rows[j]) != nFields {
 				logger.Fatal("fields[j] has the wrong number of fields")
 			}
-			wids[i] = base.Max(wids[i], len(rows[j][i]))
+			wids[i] = max(wids[i], len(rows[j][i]))
 		}
 	}
 

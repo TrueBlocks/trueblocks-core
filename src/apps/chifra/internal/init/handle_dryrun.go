@@ -43,7 +43,7 @@ func (opts *InitOptions) HandleDryRun(rCtx *output.RenderCtx) error {
 
 	spec := manifest.Specification()
 	if opts.Globals.TestMode {
-		nToDownload = base.Min(10, nToDownload)
+		nToDownload = min(10, nToDownload)
 		spec = "--testing-hash--"
 	}
 

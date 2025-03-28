@@ -4,7 +4,6 @@ import (
 	"sort"
 	"strings"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/names"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
@@ -39,7 +38,7 @@ func loadNamesArray(chain string, parts types.Parts, sortBy types.SortBy, terms 
 	isTesting := parts&types.Testing != 0
 	isTags := sortBy == types.SortByTags
 	if isTesting && !isTags {
-		ret = ret[:base.Min(200, len(ret))]
+		ret = ret[:min(200, len(ret))]
 	}
 
 	return ret, nil
