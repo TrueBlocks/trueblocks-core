@@ -62,6 +62,16 @@ func (s *Name) Model(chain, format string, verbose bool, extraOpts map[string]an
 			Data:  model,
 			Order: order,
 		}
+	} else if extraOpts["single"] == "asset" {
+		model["address"] = s.Address.Hex()
+		model["symbol"] = s.Symbol
+		model["name"] = s.Name
+		model["decimals"] = s.Decimals
+		order = append(order, []string{"address", "symbol", "name", "decimals"}...)
+		return Model{
+			Data:  model,
+			Order: order,
+		}
 	}
 
 	model = map[string]any{
@@ -235,5 +245,16 @@ const (
 	SortByAddress SortBy = iota
 	SortByTags
 )
+
+func (n *Name) IsAirdrop() bool {
+	str := strings.ToLower(n.Name + " " + n.Symbol + " " + n.Source + " " + n.Tags)
+	searches := []string{"airdrop", "claim", "visit"}
+	for _, search := range searches {
+		if strings.Contains(str, search) {
+			return true
+		}
+	}
+	return false
+}
 
 // EXISTING_CODE

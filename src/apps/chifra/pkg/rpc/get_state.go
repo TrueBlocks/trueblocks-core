@@ -24,7 +24,7 @@ func (conn *Connection) GetState(fieldBits types.StatePart, address base.Address
 			BlockNumber: blockNumber,
 			Address:     address,
 		}
-		if err := conn.Store.Read(state, nil); err == nil {
+		if err := conn.Store.Read(state); err == nil {
 			if state.Parts&fieldBits == fieldBits {
 				// we have what we need
 				return state, nil
@@ -143,7 +143,7 @@ func (conn *Connection) GetState(fieldBits types.StatePart, address base.Address
 
 	isFinal := base.IsFinal(conn.LatestBlockTimestamp, blockTs)
 	if isFinal && conn.StoreWritable() && conn.EnabledMap[walk.Cache_State] {
-		_ = conn.Store.Write(state, nil)
+		_ = conn.Store.Write(state)
 	}
 
 	if filters.BalanceCheck != nil {

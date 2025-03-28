@@ -24,7 +24,7 @@ func (l *Ledger) GetStatements(conn *rpc.Connection, filter *types.AppearanceFil
 			TransactionIndex: trans.TransactionIndex,
 			Address:          l.AccountFor,
 		}
-		if err := conn.Store.Read(statementGroup, nil); err == nil {
+		if err := conn.Store.Read(statementGroup); err == nil {
 			return statementGroup.Statements, nil
 		}
 	}
@@ -137,7 +137,7 @@ func (l *Ledger) GetStatements(conn *rpc.Connection, filter *types.AppearanceFil
 			Address:          l.AccountFor,
 			Statements:       statements,
 		}
-		_ = conn.Store.Write(statementGroup, nil)
+		_ = conn.Store.Write(statementGroup)
 	}
 
 	return statements, nil

@@ -194,7 +194,7 @@ func (call *ContractCall) Call(artFunc func(string, *types.Function) error) (res
 			Address:     call.Address,
 			Encoding:    call.Method.Encoding,
 		}
-		if err := call.Conn.Store.Read(results, nil); err == nil {
+		if err := call.Conn.Store.Read(results); err == nil {
 			return results, nil
 		}
 	}
@@ -263,7 +263,7 @@ func (call *ContractCall) Call(artFunc func(string, *types.Function) error) (res
 	conn := call.Conn
 	isFinal := base.IsFinal(conn.LatestBlockTimestamp, blockTs)
 	if isFinal && conn.StoreWritable() && conn.EnabledMap[walk.Cache_Results] {
-		_ = conn.Store.Write(results, nil)
+		_ = conn.Store.Write(results)
 	}
 
 	return results, nil

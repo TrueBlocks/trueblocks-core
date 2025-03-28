@@ -46,7 +46,7 @@ func TestStoreWrite(t *testing.T) {
 	}
 
 	// Write
-	if err := cacheStore.Write(value, nil); err != nil {
+	if err := cacheStore.Write(value); err != nil {
 		t.Fatal(err)
 	}
 
@@ -54,7 +54,7 @@ func TestStoreWrite(t *testing.T) {
 	result := &testStoreData{
 		Id: "1",
 	}
-	if err := cacheStore.Read(result, nil); err != nil {
+	if err := cacheStore.Read(result); err != nil {
 		t.Fatal(err)
 	}
 	if result.Value != value.Value {

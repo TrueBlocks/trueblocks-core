@@ -75,8 +75,7 @@ type WriteOptions interface{}
 // Write saves value to a location defined by options.Location. If options is nil,
 // then FileSystem is used. The value has to implement Locator interface, which
 // provides information about in-cache path and ID.
-func (s *Store) Write(value Locator, options *WriteOptions) (err error) {
-	_ = options
+func (s *Store) Write(value Locator) (err error) {
 	if s.readOnly {
 		err = ErrReadOnly
 		return
@@ -116,8 +115,7 @@ type ReadOptions interface{}
 // Read retrieves value from a location defined by options.Location. If options is nil,
 // then FileSystem is used. The value has to implement Locator interface, which
 // provides information about in-cache path
-func (s *Store) Read(value Locator, options *ReadOptions) (err error) {
-	_ = options
+func (s *Store) Read(value Locator) (err error) {
 	if itemPath, err := s.resolvePath(value); err != nil {
 		return err
 	} else {

@@ -97,14 +97,14 @@ func Example() {
 		panic(err)
 	}
 
-	if err := store.Write(block, nil); err != nil {
+	if err := store.Write(block); err != nil {
 		panic(err)
 	}
 
 	readFromCache := &ExampleBlock{
 		BlockNumber: 4436721,
 	}
-	if err := store.Read(readFromCache, nil); err != nil {
+	if err := store.Read(readFromCache); err != nil {
 		panic(err)
 	}
 

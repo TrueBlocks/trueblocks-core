@@ -22,7 +22,7 @@ func (conn *Connection) GetBlockHashByHash(hash string) (base.Hash, error) {
 	} else {
 		isFinal := base.IsFinal(conn.LatestBlockTimestamp, block.Timestamp)
 		if isFinal && conn.StoreWritable() && conn.EnabledMap[walk.Cache_Blocks] {
-			_ = conn.Store.Write(block, nil)
+			_ = conn.Store.Write(block)
 		}
 		return block.Hash, nil
 	}
@@ -35,7 +35,7 @@ func (conn *Connection) GetBlockNumberByHash(hash string) (base.Blknum, error) {
 	} else {
 		isFinal := base.IsFinal(conn.LatestBlockTimestamp, block.Timestamp)
 		if isFinal && conn.StoreWritable() && conn.EnabledMap[walk.Cache_Blocks] {
-			_ = conn.Store.Write(block, nil)
+			_ = conn.Store.Write(block)
 		}
 		return block.BlockNumber, nil
 	}

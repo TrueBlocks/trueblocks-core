@@ -38,7 +38,7 @@ func (conn *Connection) GetReceiptNoTimestamp(bn base.Blknum, txid base.Txnum) (
 			BlockNumber:      bn,
 			TransactionIndex: txid,
 		}
-		if err := conn.Store.Read(tx, nil); err == nil {
+		if err := conn.Store.Read(tx); err == nil {
 			// success
 			if tx.Receipt == nil {
 				return receipt, nil
@@ -77,7 +77,7 @@ func (conn *Connection) GetReceiptsByNumber(bn base.Blknum, ts base.Timestamp) (
 			BlockNumber:      bn,
 			TransactionIndex: base.NOPOSN,
 		}
-		if err := conn.Store.Read(receiptGroup, nil); err == nil {
+		if err := conn.Store.Read(receiptGroup); err == nil {
 			receiptMap := make(map[base.Txnum]*types.Receipt, len(receiptGroup.Receipts))
 			for index := 0; index < len(receiptGroup.Receipts); index++ {
 				pReceipt := &receiptGroup.Receipts[index]
@@ -97,7 +97,7 @@ func (conn *Connection) GetReceiptsByNumber(bn base.Blknum, ts base.Timestamp) (
 				TransactionIndex: base.NOPOSN,
 				Receipts:         receipts,
 			}
-			if err = conn.Store.Write(receiptGroup, nil); err != nil {
+			if err = conn.Store.Write(receiptGroup); err != nil {
 				logger.Warn("Failed to write receipts to cache", err)
 			}
 		}

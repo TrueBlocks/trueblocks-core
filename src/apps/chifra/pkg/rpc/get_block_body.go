@@ -22,7 +22,7 @@ func (conn *Connection) GetBlockBodyByNumber(bn base.Blknum) (types.Block, error
 		lightBlock := &types.LightBlock{
 			BlockNumber: bn,
 		}
-		if err := conn.Store.Read(lightBlock, nil); err == nil {
+		if err := conn.Store.Read(lightBlock); err == nil {
 			// We need to fill in the actual transactions (from cache hopefully, but
 			// if not, then from the RPC)
 			transactions := make([]types.Transaction, 0, len(lightBlock.Transactions))
@@ -84,12 +84,12 @@ func (conn *Connection) GetBlockBodyByNumber(bn base.Blknum) (types.Block, error
 		block.Transactions[i].Timestamp = block.Timestamp
 		block.Transactions[i].HasToken = types.IsTokenFunction(block.Transactions[i].Input)
 		if isFinal && conn.StoreWritable() && conn.EnabledMap[walk.Cache_Transactions] {
-			_ = conn.Store.Write(&block.Transactions[i], nil)
+			_ = conn.Store.Write(&block.Transactions[i])
 		}
 	}
 
 	if isFinal && conn.StoreWritable() && conn.EnabledMap[walk.Cache_Blocks] {
-		_ = conn.Store.Write(block, nil)
+		_ = conn.Store.Write(block)
 	}
 
 	// TODO: BOGUS - avoid copy

@@ -21,7 +21,7 @@ func (conn *Connection) GetBlockHeaderByNumber(bn base.Blknum) (types.LightBlock
 		block := types.LightBlock{
 			BlockNumber: bn,
 		}
-		if err := conn.Store.Read(&block, nil); err == nil {
+		if err := conn.Store.Read(&block); err == nil {
 			// read was successful
 			return block, nil
 		}
@@ -34,7 +34,7 @@ func (conn *Connection) GetBlockHeaderByNumber(bn base.Blknum) (types.LightBlock
 
 	isFinal := base.IsFinal(conn.LatestBlockTimestamp, block.Timestamp)
 	if isFinal && conn.StoreWritable() && conn.EnabledMap[walk.Cache_Blocks] {
-		_ = conn.Store.Write(block, nil)
+		_ = conn.Store.Write(block)
 	}
 
 	// TODO: BOGUS - avoid copies

@@ -10,6 +10,7 @@ package types
 
 // EXISTING_CODE
 import (
+	"bytes"
 	"encoding/json"
 	"fmt"
 	"io"
@@ -18,6 +19,7 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/topics"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/version"
 )
 
@@ -77,6 +79,7 @@ func (s *Log) Model(chain, format string, verbose bool, extraOpts map[string]any
 		"topic2",
 		"topic3",
 		"data",
+		"isNFT",
 	}
 
 	isArticulated := extraOpts["articulate"] == true && s.ArticulatedLog != nil
@@ -90,9 +93,14 @@ func (s *Log) Model(chain, format string, verbose bool, extraOpts map[string]any
 	}
 
 	if format == "json" {
+		if s.IsNFT() {
+			model["isNFT"] = s.IsNFT()
+		}
+
 		if len(s.Data) > 2 {
 			model["data"] = s.Data
 		}
+
 		if isArticulated {
 			model["articulatedLog"] = articulatedLog
 		}
@@ -100,6 +108,8 @@ func (s *Log) Model(chain, format string, verbose bool, extraOpts map[string]any
 		model["topics"] = s.Topics
 
 	} else {
+		model["isNFT"] = s.IsNFT()
+
 		if len(s.Data) > 2 {
 			model["data"] = s.Data
 		} else {
@@ -313,4 +323,37 @@ func (s *Log) FinishUnmarshal(fileVersion uint64) {
 }
 
 // EXISTING_CODE
+func (l *Log) IsRelevant(addr base.Address, checkAddress bool) bool {
+	target := addr.Bytes()
+
+	if checkAddress {
+		if bytes.Equal(l.Address.Bytes(), target) {
+			return true
+		}
+	}
+
+	if bytes.Contains([]byte(l.Data), target) {
+		return true
+	}
+
+	for _, topic := range l.Topics {
+		if bytes.Contains(topic.Bytes(), target) {
+			return true
+		}
+	}
+
+	return false
+}
+
+func (log *Log) IsNFT() bool {
+	return len(log.Topics) == 4 && log.Topics[0] == topics.TransferTopic
+}
+
+func (log *Log) CompressedLog() string {
+	if log.ArticulatedLog == nil {
+		return ""
+	}
+	return MakeCompressed(log.ArticulatedLog)
+}
+
 // EXISTING_CODE
