@@ -99,7 +99,7 @@ func (s *State) Model(chain, format string, verbose bool, extraOpts map[string]a
 	}
 
 	if _, ok := model["balance"]; ok {
-		model["ether"] = s.Balance.ToEtherStr(18)
+		model["ether"] = s.Balance.ToFloatStr(18)
 		asEther := extraOpts["ether"] == true
 		if asEther {
 			order = append(order, "ether")

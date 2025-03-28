@@ -93,7 +93,7 @@ func (s *Token) Model(chain, format string, verbose bool, extraOpts map[string]a
 		case "balance":
 			model["balance"] = s.Balance.String()
 		case "balanceDec":
-			model["balanceDec"] = s.Balance.ToEtherStr(int(name.Decimals))
+			model["balanceDec"] = s.Balance.ToFloatStr(int(name.Decimals))
 		case "blockNumber":
 			model["blockNumber"] = s.BlockNumber
 		case "date":
@@ -115,7 +115,7 @@ func (s *Token) Model(chain, format string, verbose bool, extraOpts map[string]a
 		case "timestamp":
 			model["timestamp"] = s.Timestamp
 		case "totalSupply":
-			model["totalSupply"] = s.TotalSupply.ToEtherStr(int(name.Decimals))
+			model["totalSupply"] = s.TotalSupply.ToFloatStr(int(name.Decimals))
 		case "transactionIndex":
 			model["transactionIndex"] = s.TransactionIndex
 		case "version":
@@ -170,9 +170,9 @@ func (s *Token) formattedDiff(dec uint64) string {
 	diff := new(big.Int).Sub(b, pB)
 	if diff.Sign() == -1 {
 		diff = diff.Neg(diff)
-		return "-" + (*base.Wei)(diff).ToEtherStr(int(dec))
+		return "-" + (*base.Wei)(diff).ToFloatStr(int(dec))
 	}
-	return (*base.Wei)(diff).ToEtherStr(int(dec))
+	return (*base.Wei)(diff).ToFloatStr(int(dec))
 }
 
 type TokenType int

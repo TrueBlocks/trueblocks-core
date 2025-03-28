@@ -193,3 +193,32 @@ func TestReadBigInt(t *testing.T) {
 		t.Fatal("values are not same")
 	}
 }
+
+func TestReadBigFloat(t *testing.T) {
+	buf := new(bytes.Buffer)
+	bigfloat := big.NewFloat(0)
+	if _, ok := bigfloat.SetString("123.456"); !ok {
+		t.Fatal("cannot set test value")
+	}
+
+	data, err := bigfloat.GobEncode()
+	if err != nil {
+		t.Fatal(err)
+	}
+	size := uint64(len(data))
+	if err := binary.Write(buf, binary.LittleEndian, size); err != nil {
+		t.Fatal(err)
+	}
+	if err := binary.Write(buf, binary.LittleEndian, data); err != nil {
+		t.Fatal(err)
+	}
+
+	result := new(big.Float)
+	if err := readBigFloat(buf, result); err != nil {
+		t.Fatal(err)
+	}
+
+	if result.Cmp(bigfloat) != 0 {
+		t.Fatal("values are not same")
+	}
+}

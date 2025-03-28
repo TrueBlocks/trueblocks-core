@@ -149,7 +149,7 @@ func (s *Trace) Model(chain, format string, verbose bool, extraOpts map[string]a
 				model["action::from"] = hexutil.Encode(s.Action.From.Bytes())
 				model["action::to"] = hexutil.Encode(s.Action.RefundAddress.Bytes())
 				model["action::value"] = s.Action.Balance.String()
-				model["action::ether"] = s.Action.Balance.ToEtherStr(18)
+				model["action::ether"] = s.Action.Balance.ToFloatStr(18)
 				model["action::input"] = "0x"
 				model["action::callType"] = "self-destruct"
 				items = append(items, namer{addr: s.Action.RefundAddress, name: "action::toName"})
@@ -157,7 +157,7 @@ func (s *Trace) Model(chain, format string, verbose bool, extraOpts map[string]a
 				model["action::from"] = hexutil.Encode(s.Action.From.Bytes())
 				model["action::to"] = to
 				model["action::value"] = s.Action.Value.String()
-				model["action::ether"] = s.Action.Value.ToEtherStr(18)
+				model["action::ether"] = s.Action.Value.ToFloatStr(18)
 				items = append(items, namer{addr: s.Action.To, name: "action::toName"})
 			}
 			for _, item := range items {

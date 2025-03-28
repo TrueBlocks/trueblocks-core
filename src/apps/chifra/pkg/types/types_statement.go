@@ -137,31 +137,31 @@ func (s *Statement) Model(chain, format string, verbose bool, extraOpts map[stri
 
 	asEther := extraOpts["ether"] == true
 	if asEther {
-		model["begBalEth"] = s.BegBal.ToEtherStr(decimals)
-		model["amountNetEth"] = s.AmountNet().ToEtherStr(decimals)
-		model["endBalEth"] = s.EndBal.ToEtherStr(decimals)
-		model["totalInEth"] = s.TotalIn().ToEtherStr(decimals)
-		model["amountInEth"] = s.AmountIn.ToEtherStr(decimals)
-		model["internalInEth"] = s.InternalIn.ToEtherStr(decimals)
-		model["selfDestructInEth"] = s.SelfDestructIn.ToEtherStr(decimals)
-		model["minerBaseRewardInEth"] = s.MinerBaseRewardIn.ToEtherStr(decimals)
-		model["minerNephewRewardInEth"] = s.MinerNephewRewardIn.ToEtherStr(decimals)
-		model["minerTxFeeInEth"] = s.MinerTxFeeIn.ToEtherStr(decimals)
-		model["minerUncleRewardInEth"] = s.MinerUncleRewardIn.ToEtherStr(decimals)
-		model["correctingInEth"] = s.CorrectingIn.ToEtherStr(decimals)
-		model["prefundInEth"] = s.PrefundIn.ToEtherStr(decimals)
-		model["totalOutEth"] = s.TotalOut().ToEtherStr(decimals)
-		model["amountOutEth"] = s.AmountOut.ToEtherStr(decimals)
-		model["internalOutEth"] = s.InternalOut.ToEtherStr(decimals)
-		model["correctingOutEth"] = s.CorrectingOut.ToEtherStr(decimals)
-		model["selfDestructOutEth"] = s.SelfDestructOut.ToEtherStr(decimals)
-		model["gasOutEth"] = s.GasOut.ToEtherStr(decimals)
-		model["totalOutLessGasEth"] = s.TotalOutLessGas().ToEtherStr(decimals)
-		model["begBalDiffEth"] = s.BegBalDiff().ToEtherStr(decimals)
-		model["endBalDiffEth"] = s.EndBalDiff().ToEtherStr(decimals)
-		model["endBalCalcEth"] = s.EndBalCalc().ToEtherStr(decimals)
+		model["begBalEth"] = s.BegBal.ToFloatStr(decimals)
+		model["amountNetEth"] = s.AmountNet().ToFloatStr(decimals)
+		model["endBalEth"] = s.EndBal.ToFloatStr(decimals)
+		model["totalInEth"] = s.TotalIn().ToFloatStr(decimals)
+		model["amountInEth"] = s.AmountIn.ToFloatStr(decimals)
+		model["internalInEth"] = s.InternalIn.ToFloatStr(decimals)
+		model["selfDestructInEth"] = s.SelfDestructIn.ToFloatStr(decimals)
+		model["minerBaseRewardInEth"] = s.MinerBaseRewardIn.ToFloatStr(decimals)
+		model["minerNephewRewardInEth"] = s.MinerNephewRewardIn.ToFloatStr(decimals)
+		model["minerTxFeeInEth"] = s.MinerTxFeeIn.ToFloatStr(decimals)
+		model["minerUncleRewardInEth"] = s.MinerUncleRewardIn.ToFloatStr(decimals)
+		model["correctingInEth"] = s.CorrectingIn.ToFloatStr(decimals)
+		model["prefundInEth"] = s.PrefundIn.ToFloatStr(decimals)
+		model["totalOutEth"] = s.TotalOut().ToFloatStr(decimals)
+		model["amountOutEth"] = s.AmountOut.ToFloatStr(decimals)
+		model["internalOutEth"] = s.InternalOut.ToFloatStr(decimals)
+		model["correctingOutEth"] = s.CorrectingOut.ToFloatStr(decimals)
+		model["selfDestructOutEth"] = s.SelfDestructOut.ToFloatStr(decimals)
+		model["gasOutEth"] = s.GasOut.ToFloatStr(decimals)
+		model["totalOutLessGasEth"] = s.TotalOutLessGas().ToFloatStr(decimals)
+		model["begBalDiffEth"] = s.BegBalDiff().ToFloatStr(decimals)
+		model["endBalDiffEth"] = s.EndBalDiff().ToFloatStr(decimals)
+		model["endBalCalcEth"] = s.EndBalCalc().ToFloatStr(decimals)
 		if s.ReconType&First == 0 {
-			model["prevBalEth"] = s.PrevBal.ToEtherStr(decimals)
+			model["prevBalEth"] = s.PrevBal.ToFloatStr(decimals)
 		} else if format != "json" {
 			model["prevBalEth"] = ""
 		}
@@ -797,16 +797,16 @@ func isZero(val *base.Wei) bool {
 }
 
 func reportE(msg string, val *base.Wei) {
-	logger.TestLog(!isZero(val), msg, val.ToEtherStr(18))
+	logger.TestLog(!isZero(val), msg, val.ToFloatStr(18))
 }
 
 func report2(msg string, v1 *base.Wei, v2 *base.Wei) {
 	s := ""
 	if v1 != nil {
-		s = v1.ToEtherStr(18)
+		s = v1.ToFloatStr(18)
 	}
 	if v2 != nil {
-		s += " (" + v2.ToEtherStr(18) + ")"
+		s += " (" + v2.ToFloatStr(18) + ")"
 	}
 	logger.TestLog(true, msg, s)
 }

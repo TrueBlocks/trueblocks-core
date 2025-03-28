@@ -73,9 +73,10 @@ func (settings settings) GetRpcConnection() *Connection {
 	}
 
 	ret := &Connection{
-		Chain:      settings.Chain,
-		Store:      store,
-		EnabledMap: settings.EnabledMap,
+		Chain:             settings.Chain,
+		Store:             store,
+		EnabledMap:        settings.EnabledMap,
+		tokenBalanceCache: make(map[string]*base.Wei),
 	}
 
 	if store != nil && !store.ReadOnly() {

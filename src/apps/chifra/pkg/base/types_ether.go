@@ -11,7 +11,7 @@ import (
 // call in to the identical functions.
 type Ether big.Float
 
-func NewEther(f float64) *Ether {
+func NewFloat(f float64) *Ether {
 	e := new(Ether)
 	(*big.Float)(e).SetPrec(236) //  IEEE 754 octuple-precision binary floating-point format: binary256
 	(*big.Float)(e).SetMode(big.ToNearestEven)
