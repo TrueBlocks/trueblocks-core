@@ -210,6 +210,7 @@ func (m *Member) GoType() string {
 func (m *Member) NeedsPtr() bool {
 	return m.GoType() == "base.Hash" ||
 		m.GoType() == "base.Wei" ||
+		m.GoType() == "base.Float" ||
 		m.IsObject()
 }
 
