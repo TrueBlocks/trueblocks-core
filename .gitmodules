@@ -4,7 +4,3 @@
 [submodule "khedra"]
 	path = khedra
 	url = https://github.com/TrueBlocks/trueblocks-khedra.git
-[submodule "sdk"]
-	path = sdk
-	url = https://github.com/TrueBlocks/trueblocks-sdk.git
-	branch = main
