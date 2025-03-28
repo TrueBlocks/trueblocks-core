@@ -7,12 +7,12 @@ import (
 	"testing"
 )
 
-// TestEtherUnmarshal tests the UnmarshalJSON method of Ether. Note this is the whole
-// point of the Ether type: to be able to unmarshal JSON strings into big.Floats.
-func TestUnmarshalEther(t *testing.T) {
-	type withEther struct {
+// TestUnmarshalFloat tests the UnmarshalJSON method of Float. Note this is the whole
+// point of the Float type: to be able to unmarshal JSON strings into big.Floats.
+func TestUnmarshalFloat(t *testing.T) {
+	type withFloat struct {
 		Name  string  `json:"name"`
-		Value *Ether  `json:"value"`
+		Value *Float  `json:"value"`
 		Float float64 `json:"float"`
 	}
 	type withBigFloat struct {
@@ -53,8 +53,8 @@ func TestUnmarshalEther(t *testing.T) {
 	}
 
 	expected := [][]bool{
-		{true, true, true, true, true, true, true, true},     // unquoted both Ether and Float work
-		{true, false, true, false, true, false, true, false}, // quoted only Ether works (that's the point)
+		{true, true, true, true, true, true, true, true},     // unquoted both Float and Float work
+		{true, false, true, false, true, false, true, false}, // quoted only Float works (that's the point)
 	}
 
 	for i, inputArray := range [][]string{unquoted, quoted} { /* four quoted and four unquoted */
@@ -66,14 +66,14 @@ func TestUnmarshalEther(t *testing.T) {
 			passFloat := expected[i][j*2+1]
 			// fmt.Printf("Running test %s [%d][%d] (expects: %t, %t)\n", tag, i, j, passEther, passFloat)
 
-			if e, ok := new(Ether).SetString(inputStr); !ok {
+			if e, ok := new(Float).SetString(inputStr); !ok {
 				if passEther {
 					t.Errorf("error: %s %s %s", tag, ethName, inputStr)
 					continue
 				}
 			} else {
 				fe := e.Float64()
-				se := withEther{
+				se := withFloat{
 					Name:  ethName,
 					Value: e,
 					Float: fe,
@@ -129,5 +129,51 @@ func TestUnmarshalEther(t *testing.T) {
 				t.Errorf("error: %s %s", ethName, inputStr)
 			}
 		}
+	}
+}
+
+func TestFloatBasicOperations(t *testing.T) {
+	// Test NewFloat and its String method.
+	e1 := NewFloat(1.5)
+	// The String method calls Text('f', -18) which removes trailing zeros.
+	if e1.String() != "1.5" {
+		t.Errorf("NewFloat(1.5).String() = %s; want 1.5", e1.String())
+	}
+
+	// Test SetWei: 1 ether is 1e18 wei.
+	weiVal := NewWeiStr("1000000000000000000")
+	e2 := new(Float).SetWei(weiVal)
+	if e2.String() != "1" {
+		t.Errorf("SetWei(1e18) = %s; want 1", e2.String())
+	}
+
+	// Test SetString.
+	e3, ok := new(Float).SetString("2.5")
+	if !ok {
+		t.Errorf("SetString('2.5') failed")
+	}
+	if e3.String() != "2.5" {
+		t.Errorf("SetString('2.5') = %s; want 2.5", e3.String())
+	}
+
+	// Test arithmetic: Quo. (e2/e1 = 1/1.5 ≈ 0.666666666666666667)
+	e4 := new(Float).Quo(e2, e1)
+	diff := e4.Float64() - 0.6666666666666667
+	if diff < -1e-10 || diff > 1e-10 {
+		t.Errorf("Quo: 1 / 1.5 = %f; want approximately 0.6666666666666667", e4.Float64())
+	}
+
+	// Test JSON marshalling and unmarshalling.
+	jsonData, err := e3.MarshalJSON()
+	if err != nil {
+		t.Errorf("Float MarshalJSON error: %v", err)
+	}
+	e5 := new(Float)
+	err = e5.UnmarshalJSON(jsonData)
+	if err != nil {
+		t.Errorf("Float UnmarshalJSON error: %v", err)
+	}
+	if e5.String() != e3.String() {
+		t.Errorf("Float JSON round-trip: got %s; want %s", e5.String(), e3.String())
 	}
 }

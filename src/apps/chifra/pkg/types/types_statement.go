@@ -26,8 +26,8 @@ type Statement struct {
 	AccountedFor        base.Address   `json:"accountedFor"`
 	AmountIn            base.Wei       `json:"amountIn,omitempty"`
 	AmountOut           base.Wei       `json:"amountOut,omitempty"`
-	AssetAddr           base.Address   `json:"assetAddr"`
-	AssetSymbol         string         `json:"assetSymbol"`
+	Asset               base.Address   `json:"assetAddr"`
+	Symbol              string         `json:"assetSymbol"`
 	BegBal              base.Wei       `json:"begBal"`
 	BlockNumber         base.Blknum    `json:"blockNumber"`
 	CorrectingIn        base.Wei       `json:"correctingIn,omitempty"`
@@ -81,9 +81,9 @@ func (s *Statement) Model(chain, format string, verbose bool, extraOpts map[stri
 		"transactionHash":    s.TransactionHash,
 		"timestamp":          s.Timestamp,
 		"date":               s.Date(),
-		"assetAddr":          s.AssetAddr,
+		"assetAddr":          s.Asset,
 		"assetType":          s.AssetType,
-		"assetSymbol":        s.AssetSymbol,
+		"assetSymbol":        s.Symbol,
 		"decimals":           s.Decimals,
 		"spotPrice":          s.SpotPrice,
 		"priceSource":        s.PriceSource,
@@ -227,13 +227,13 @@ func (s *Statement) MarshalCache(writer io.Writer) (err error) {
 		return err
 	}
 
-	// AssetAddr
-	if err = base.WriteValue(writer, s.AssetAddr); err != nil {
+	// Asset
+	if err = base.WriteValue(writer, s.Asset); err != nil {
 		return err
 	}
 
-	// AssetSymbol
-	if err = base.WriteValue(writer, s.AssetSymbol); err != nil {
+	// Symbol
+	if err = base.WriteValue(writer, s.Symbol); err != nil {
 		return err
 	}
 
@@ -390,13 +390,13 @@ func (s *Statement) UnmarshalCache(fileVersion uint64, reader io.Reader) (err er
 		return err
 	}
 
-	// AssetAddr
-	if err = base.ReadValue(reader, &s.AssetAddr, fileVersion); err != nil {
+	// Asset
+	if err = base.ReadValue(reader, &s.Asset, fileVersion); err != nil {
 		return err
 	}
 
-	// AssetSymbol
-	if err = base.ReadValue(reader, &s.AssetSymbol, fileVersion); err != nil {
+	// Symbol
+	if err = base.ReadValue(reader, &s.Symbol, fileVersion); err != nil {
 		return err
 	}
 
@@ -622,7 +622,7 @@ func (s *Statement) Reconciled() bool {
 }
 
 func (s *Statement) IsEth() bool {
-	return s.AssetAddr == base.FAKE_ETH_ADDRESS
+	return s.Asset == base.FAKE_ETH_ADDRESS
 }
 
 var (
@@ -639,7 +639,7 @@ func (s *Statement) IsStableCoin() bool {
 		usdc: true,
 		usdt: true,
 	}
-	return stables[s.AssetAddr]
+	return stables[s.Asset]
 }
 
 func (s *Statement) isNullTransfer(tx *Transaction) bool {
@@ -649,7 +649,7 @@ func (s *Statement) isNullTransfer(tx *Transaction) bool {
 	ret := (lotsOfLogs || mayBeAirdrop) && noBalanceChange
 
 	// TODO: BOGUS PERF
-	// logger.Warn("Statement is not reconciled", s.AssetSymbol, "at", s.BlockNumber, s.TransactionIndex, s.LogIndex)
+	// logger.Warn("Statement is not reconciled", s.Symbol, "at", s.BlockNumber, s.TransactionIndex, s.LogIndex)
 	logger.TestLog(true, "A possible nullTransfer")
 	logger.TestLog(true, "  nLogs:            ", len(tx.Receipt.Logs))
 	logger.TestLog(true, "    lotsOfLogs:      -->", lotsOfLogs)
@@ -748,7 +748,7 @@ func (s *Statement) DebugStatement(ctx Ledgerer) {
 	logger.TestLog(true, "assetType:             ", s.AssetType)
 	logger.TestLog(true, "accountedFor:          ", s.AccountedFor)
 	logger.TestLog(true, "sender:                ", s.Sender, " ==> ", s.Recipient)
-	logger.TestLog(true, "assetAddr:             ", s.AssetAddr, "("+s.AssetSymbol+")", fmt.Sprintf("decimals: %d", s.Decimals))
+	logger.TestLog(true, "assetAddr:             ", s.Asset, "("+s.Symbol+")", fmt.Sprintf("decimals: %d", s.Decimals))
 	logger.TestLog(true, "hash:                  ", s.TransactionHash)
 	logger.TestLog(true, "timestamp:             ", s.Timestamp)
 	if s.AssetType == "eth" {

@@ -12,6 +12,10 @@ import (
 // are required because our Json encodes big.Ints as strings. Note that
 type Wei big.Int
 
+var (
+	ZeroWei = NewWei(0)
+)
+
 func NewWei(x int64) *Wei {
 	return (*Wei)(big.NewInt(x))
 }
@@ -252,10 +256,10 @@ func (w *Wei) ToFloatString(decimals int) string {
 	return ToFloat(w).Text('f', -1*decimals)
 }
 
-func ToFloat(wei *Wei) *Ether {
+func ToFloat(wei *Wei) *Float {
 	f := NewFloat(0)
 	e := NewFloat(1e18)
-	return f.Quo(new(Ether).SetWei(wei), e)
+	return f.Quo(new(Float).SetRawWei(wei), e)
 }
 
 func BiFromBn(bn Blknum) *big.Int {

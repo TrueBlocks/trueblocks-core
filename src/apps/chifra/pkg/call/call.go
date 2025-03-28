@@ -187,7 +187,6 @@ func (call *ContractCall) forceEncoding(encoding string) {
 }
 
 func (call *ContractCall) Call(artFunc func(string, *types.Function) error) (results *types.Result, err error) {
-	blockTs := base.Timestamp(0)
 	if call.Conn.StoreReadable() {
 		// walk.Cache_Results
 		results = &types.Result{
@@ -198,9 +197,9 @@ func (call *ContractCall) Call(artFunc func(string, *types.Function) error) (res
 		if err := call.Conn.Store.Read(results, nil); err == nil {
 			return results, nil
 		}
-		blockTs = call.Conn.GetBlockTimestamp(call.BlockNumber)
 	}
 
+	blockTs := call.Conn.GetBlockTimestamp(call.BlockNumber)
 	if artFunc == nil {
 		logger.Fatal("should not happen ==> implementation error: artFunc is nil")
 	}

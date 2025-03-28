@@ -109,11 +109,11 @@ func TestToEther(t *testing.T) {
 		if got != test.expected {
 			t.Errorf("ToFloat(%v) want %v, got %v", test.input, test.expected, got)
 		}
-		got = ToFloat(test.input).String()
+		got = ToFloat(test.input).Text('f', -18)
 		if got != test.expected {
 			t.Errorf("ToFloat(%v) want %v, got %v", test.input, test.expected, got)
 		}
-		got = ToFloat(test.input).String()
+		got = ToFloat(test.input).Text('f', -18)
 		if got != test.expected {
 			t.Errorf("ToFloat(%v) want %v, got %v", test.input, test.expected, got)
 		}

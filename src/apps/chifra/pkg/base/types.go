@@ -24,7 +24,6 @@ type Lognum = Value
 type Gas = Value
 type Topic = string
 type Timestamp int64
-type Float float64
 
 const NOPOS = uint64(^uint64(0))
 const NOPOSI = Timestamp(0xdeadbeef)

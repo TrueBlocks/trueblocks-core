@@ -54,10 +54,10 @@ func (l *Ledger) GetStatements(conn *rpc.Connection, filter *types.AppearanceFil
 			TransactionHash:  trans.Hash,
 			LogIndex:         0,
 			Timestamp:        trans.Timestamp,
-			AssetAddr:        base.FAKE_ETH_ADDRESS,
-			AssetSymbol:      "WEI",
+			Asset:            base.FAKE_ETH_ADDRESS,
+			Symbol:           "WEI",
 			Decimals:         18,
-			SpotPrice:        0.0,
+			SpotPrice:        *base.ZeroFloat,
 			PriceSource:      "not-priced",
 			PrevBal:          *prevBal,
 			BegBal:           *begBal,
@@ -100,7 +100,7 @@ func (l *Ledger) GetStatements(conn *rpc.Connection, filter *types.AppearanceFil
 		}
 
 		if l.AsEther {
-			ret.AssetSymbol = "ETH"
+			ret.Symbol = "ETH"
 		}
 
 		if !l.UseTraces && l.trialBalance("eth", &ret) {
