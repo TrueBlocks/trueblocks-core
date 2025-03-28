@@ -6,7 +6,10 @@ This file details changes made to TrueBlocks over time. All version prior to ver
 
 **Summary**
 
-- xxx
+- This is a major release focused almost exclusively on a single issue: fully automated ETH and ERC20 token balance reconciliation.
+- New features are added for `chifra export --assets`, `chifra export --transfers`, and a much improved `chifra export --statements` including a massive performance increase due to caching of statements and transfers.
+- Also include are various bug fixes, improvements to data models, and many new unit tests improving the overall quality of the code base.
+- The SDK is now much more robust and easier to use and more fully tested through the advent of TrueBlocks Browse use case.
 
 ## Breaking Changes
 
@@ -53,7 +56,7 @@ This file details changes made to TrueBlocks over time. All version prior to ver
 
 ## Changes to Data Models
 
-- xxx
+- See below.
 
 ### Modified data models
 
