@@ -248,7 +248,7 @@ func (w *Wei) MarshalCache(writer io.Writer) error {
 
 // TODO: BOGUS - THIS NAME SUCKS
 
-func (w *Wei) ToFloatStr(decimals int) string {
+func (w *Wei) ToFloatString(decimals int) string {
 	return ToFloat(w).Text('f', -1*decimals)
 }
 
