@@ -67,7 +67,6 @@ func (opts *ExportOptions) HandleTransfers(rCtx *output.RenderCtx, monitorArray 
 						Total:   int64(cnt),
 					})
 
-					// TODO: BOGUS - THIS IS NOT CONCURRENCY SAFE
 					finished := false
 					for _, thisMap := range sliceOfMaps {
 						if rCtx.WasCanceled() {

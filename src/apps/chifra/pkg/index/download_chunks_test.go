@@ -4,7 +4,6 @@
 
 package index
 
-// TODO: BOGUS TEST
 // func Test_exclude(t *testing.T) {
 // 	onDisc := map[string]bool{
 // 		"013337527-013340418": true,

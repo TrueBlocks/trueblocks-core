@@ -60,7 +60,6 @@ func (opts *ExportOptions) HandleBalances(rCtx *output.RenderCtx, monitorArray [
 							Total:   int64(cnt),
 						})
 
-						// TODO: BOGUS - THIS IS NOT CONCURRENCY SAFE
 						finished := false
 						prevBalance, _ = opts.Conn.GetBalanceAtToken(asset, mon.Address, filter.GetOuterBounds().First)
 						for _, thisMap := range sliceOfMaps {

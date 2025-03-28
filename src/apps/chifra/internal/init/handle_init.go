@@ -102,7 +102,7 @@ func (opts *InitOptions) HandleInit(rCtx *output.RenderCtx) error {
 		bloomsDoneChannel <- true
 	}()
 
-	// TODO: BOGUS - WHY DOES THERE NEED TO BE TWO OF THESE?
+	// TODO: WHY DOES THERE NEED TO BE TWO OF THESE?
 	// Set up another go routine to download the index chunks if the user told us to...
 	go func() {
 		getChunks(walk.Index_Final)

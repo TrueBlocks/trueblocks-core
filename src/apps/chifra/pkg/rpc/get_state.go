@@ -149,7 +149,7 @@ func (conn *Connection) GetState(fieldBits types.StatePart, address base.Address
 func (conn *Connection) GetBalanceAt(addr base.Address, bn base.Blknum) (*base.Wei, error) {
 	var balance *base.Wei
 
-	// TODO: BOGUS - COULD ME A BINARY FILE?
+	// TODO: BOGUS - THIS IN MEMORY CACHE IS GOOD, BUT COULD BE BINARY FILE
 	key := fmt.Sprintf("%s|%d", addr.Hex(), bn)
 	conn.cacheMutex.Lock()
 	var ok bool
@@ -171,7 +171,7 @@ func (conn *Connection) GetBalanceAt(addr base.Address, bn base.Blknum) (*base.W
 		}
 	}
 
-	// TODO: BOGUS - COULD ME A BINARY FILE?
+	// TODO: BOGUS - THIS IN MEMORY CACHE IS GOOD, BUT COULD BE BINARY FILE
 	conn.cacheMutex.Lock()
 	conn.balanceCache[key] = balance
 	conn.cacheMutex.Unlock()

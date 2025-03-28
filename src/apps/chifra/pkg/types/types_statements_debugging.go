@@ -80,7 +80,6 @@ func (s *Statement) DebugStatement(node *AppNode[Transaction]) {
 	logger.TestLog(true, "   material:           ", s.IsMaterial())
 	logger.TestLog(true, "   reconciled:         ", s.Reconciled())
 	if !s.Reconciled() {
-		// TODO: BOGUS - FIX THIS
 		logger.TestLog(true, " ^^ we need to fix this ^^")
 	}
 	logger.TestLog(true, "---------------------------------------------------")

@@ -13,8 +13,7 @@ import (
 type Connection struct {
 	Chain string
 	Store *cache.Store
-	// TODO BOGUS: The following three fields were added as part of reconciliation. The can
-	// TODO BOGUS: be removed once we properly cache balance queries.
+	// TODO: BOGUS - THIS IN MEMORY CACHE IS GOOD, BUT COULD BE BINARY FILE
 	balanceCache      map[string]*base.Wei
 	tokenBalanceCache map[string]*base.Wei
 	cacheMutex        sync.Mutex

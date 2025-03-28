@@ -54,7 +54,6 @@ func (opts *ExportOptions) HandleWithdrawals(rCtx *output.RenderCtx, monitorArra
 						Total:   int64(cnt),
 					})
 
-					// TODO: BOGUS - THIS IS NOT CONCURRENCY SAFE
 					finished := false
 					for _, thisMap := range sliceOfMaps {
 						if rCtx.WasCanceled() {

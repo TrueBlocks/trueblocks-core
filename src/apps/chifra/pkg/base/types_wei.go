@@ -250,8 +250,6 @@ func (w *Wei) MarshalCache(writer io.Writer) error {
 	return WriteValue(writer, &v)
 }
 
-// TODO: BOGUS - THIS NAME SUCKS
-
 func (w *Wei) ToFloatString(decimals int) string {
 	return ToFloat(w).Text('f', -1*decimals)
 }
@@ -268,8 +266,6 @@ func BiFromBn(bn Blknum) *big.Int {
 	}
 	return new(big.Int).SetUint64(uint64(bn))
 }
-
-// TODO: This is probably the same as String (could be removed)
 
 func HexToWei(hex string) *Wei {
 	result := new(Wei)

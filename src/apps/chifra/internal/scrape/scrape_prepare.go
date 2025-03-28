@@ -65,7 +65,7 @@ func (opts *ScrapeOptions) Prepare() (ok bool, err error) {
 	} else {
 		logger.Info(report.Report(true /* isSnapped */, file.FileSize(indexPath)))
 	}
-	// TODO: BOGUS - NOTIFY CODE
+	// TODO: THIS IS PART OF THE NOTIFY CODE TO BE USED FOR MONITORING
 	if err = opts.NotifyChunkWritten(chunk, indexPath); err != nil {
 		return false, err
 	}

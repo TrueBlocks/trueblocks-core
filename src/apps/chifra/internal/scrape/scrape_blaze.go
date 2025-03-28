@@ -199,7 +199,7 @@ func (bm *BlazeManager) WriteAppearances(bn base.Blknum, addrMap uniq.AddressBoo
 		}
 	}
 
-	// TODO: BOGUS - NOTIFY CODE
+	// TODO: THIS IS PART OF THE NOTIFY CODE TO BE USED FOR MONITORING
 	if bm.opts.Notify && bn <= bm.ripeBlock {
 		err = Notify(notify.Notification[[]notify.NotificationPayloadAppearance]{
 			Msg:     notify.MessageAppearance,

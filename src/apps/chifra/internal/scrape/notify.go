@@ -14,7 +14,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/notify"
 )
 
-// TODO: BOGUS - NOTIFY CODE
+// TODO: THIS IS PART OF THE NOTIFY CODE TO BE USED FOR MONITORING
 
 var ErrConfiguredButNotRunning = fmt.Errorf("listener is configured but not running")
 
