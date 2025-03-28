@@ -3,6 +3,7 @@ package rpc
 import (
 	"sort"
 	"strings"
+	"sync"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
@@ -16,6 +17,11 @@ type Connection struct {
 	Store                *cache.Store // Cache Store to use for read/write. Write can be disabled by setting Store to read-only mode
 	LatestBlockTimestamp base.Timestamp
 	EnabledMap           map[walk.CacheType]bool
+	// TODO BOGUS: The following three fields were added as part of reconciliation. The can
+	// TODO BOGUS: be removed once we properly cache balance queries.
+	// balanceCache      map[string]*base.Wei
+	tokenBalanceCache map[string]*base.Wei
+	cacheMutex        sync.Mutex
 }
 
 // settings allows every command has its own options type, we have to

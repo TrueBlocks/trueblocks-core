@@ -2,7 +2,6 @@ package tokensPkg
 
 import (
 	"errors"
-	"fmt"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
@@ -48,7 +47,7 @@ func (opts *TokensOptions) HandleShow(rCtx *output.RenderCtx) error {
 						holder = singleAddr
 					}
 
-					if balance, err := opts.Conn.GetBalanceAtToken(tokenAddr, holder, fmt.Sprintf("0x%x", bn)); balance == nil {
+					if balance, err := opts.Conn.GetBalanceAtToken(tokenAddr, holder, bn); balance == nil {
 						errorChan <- err
 					} else {
 						if opts.Globals.Verbose {
