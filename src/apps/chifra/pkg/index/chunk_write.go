@@ -12,12 +12,13 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/ranges"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
 type writeReport struct {
 	chain        string
-	fileRange    base.FileRange
+	fileRange    ranges.FileRange
 	nAddresses   int
 	nAppearances int
 }
@@ -125,7 +126,7 @@ func (chunk *Chunk) Write(chain string, publisher base.Address, fileName string,
 			backup.Clear()
 			return &writeReport{
 				chain:        chain,
-				fileRange:    base.RangeFromFilename(indexFn),
+				fileRange:    ranges.RangeFromFilename(indexFn),
 				nAddresses:   len(addressTable),
 				nAppearances: len(appearanceTable),
 			}, nil

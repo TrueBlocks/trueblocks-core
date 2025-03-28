@@ -11,6 +11,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/ranges"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/tslib"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/walk"
@@ -42,7 +43,7 @@ func (opts *ChunksOptions) HandleIndex(rCtx *output.RenderCtx, blockNums []base.
 			}
 			defer indexChunk.File.Close()
 
-			rng, err := base.RangeFromFilenameE(fileName)
+			rng, err := ranges.RangeFromFilenameE(fileName)
 			if err != nil {
 				return false, err
 			}

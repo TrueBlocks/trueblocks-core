@@ -14,6 +14,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/monitor"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/ranges"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
@@ -27,11 +28,8 @@ func (opts *ExportOptions) HandleWithdrawals(rCtx *output.RenderCtx, monitorArra
 		opts.Reversed,
 		false,
 		[]string{},
-		base.BlockRange{First: first, Last: opts.LastBlock},
-		// TODO: I feel (but have not investigated) that this may be a misake
-		// TODO: Shouldn't the RecordRange start with zero not block number?
-		// TODO: It means firstRecord, after all.
-		base.RecordRange{First: uint64(first), Last: opts.GetMax()},
+		ranges.BlockRange{First: first, Last: opts.LastBlock},
+		ranges.RecordRange{First: 0, Last: opts.GetMax()},
 	)
 
 	fetchData := func(modelChan chan types.Modeler, errorChan chan error) {

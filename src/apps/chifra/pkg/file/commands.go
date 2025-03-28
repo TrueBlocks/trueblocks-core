@@ -7,6 +7,7 @@ import (
 	"os"
 	"strings"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/spf13/cobra"
 )
 
@@ -125,7 +126,7 @@ func RunWithFileSupport(
 			return err
 		}
 
-		testMode := os.Getenv("TEST_MODE") == "true"
+		testMode := base.IsTestMode()
 		for _, line := range commandsFile.Lines {
 			resetOptions(testMode)
 			// first, parse flags from the command line

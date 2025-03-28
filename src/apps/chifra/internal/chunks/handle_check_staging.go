@@ -13,6 +13,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/ranges"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
@@ -30,7 +31,7 @@ func (opts *ChunksOptions) CheckStaging(lastBlock uint64, allow_missing bool, re
 		return nil
 	}
 
-	fileRange := base.RangeFromFilename(stageFn)
+	fileRange := ranges.RangeFromFilename(stageFn)
 	meta, err := opts.Conn.GetMetaData(opts.Globals.TestMode)
 	if err != nil {
 		return err

@@ -178,7 +178,7 @@ func (s *Trace) Model(chain, format string, verbose bool, extraOpts map[string]a
 			model["result::output"] = ""
 		}
 		if isArticulated {
-			model["compressedTrace"] = makeCompressed(articulatedTrace)
+			model["compressedTrace"] = MakeCompressed(articulatedTrace)
 			order = append(order, "compressedTrace")
 		}
 		order = reorderOrdering(order)

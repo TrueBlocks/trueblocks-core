@@ -16,6 +16,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/manifest"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/ranges"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/walk"
 )
@@ -96,7 +97,7 @@ func (opts *ChunksOptions) check(rCtx *output.RenderCtx, blockNums []base.Blknum
 	// a string array of the actual files in the index
 	fnArray := []string{}
 	for _, fileName := range fileNames {
-		rng := base.RangeFromFilename(fileName)
+		rng := ranges.RangeFromFilename(fileName)
 		fnArray = append(fnArray, rng.String())
 	}
 	sort.Slice(fnArray, func(i, j int) bool {

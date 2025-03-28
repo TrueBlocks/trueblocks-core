@@ -10,6 +10,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/ranges"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
@@ -61,7 +62,7 @@ func PinOneChunk(chain, path string, remote bool) (types.ChunkRecord, types.Chun
 	indexFile := index.ToIndexPath(path)
 	local := config.IpfsRunning()
 
-	rng := base.RangeFromFilename(bloomFile)
+	rng := ranges.RangeFromFilename(bloomFile)
 	localPin := types.ChunkRecord{Range: rng.String()}
 	remotePin := types.ChunkRecord{Range: rng.String()}
 	var err error

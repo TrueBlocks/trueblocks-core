@@ -63,6 +63,7 @@ func DoStatus() {
 					TestStatus("traces", "", fn, &opts)
 					TestStatus("logs", "", fn, &opts)
 					TestStatus("statements", "", fn, &opts)
+					TestStatus("transfers", "", fn, &opts)
 					TestStatus("results", "", fn, &opts)
 					TestStatus("state", "", fn, &opts)
 					TestStatus("tokens", "", fn, &opts)

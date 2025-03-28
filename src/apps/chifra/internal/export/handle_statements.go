@@ -9,12 +9,12 @@ import (
 	"fmt"
 	"sort"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/filter"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/ledger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/monitor"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/ranges"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
@@ -26,8 +26,8 @@ func (opts *ExportOptions) HandleStatements(rCtx *output.RenderCtx, monitorArray
 		opts.Reversed,
 		opts.Reverted,
 		opts.Fourbytes,
-		base.BlockRange{First: opts.FirstBlock, Last: opts.LastBlock},
-		base.RecordRange{First: opts.FirstRecord, Last: opts.GetMax()},
+		ranges.BlockRange{First: opts.FirstBlock, Last: opts.LastBlock},
+		ranges.RecordRange{First: opts.FirstRecord, Last: opts.GetMax()},
 	)
 
 	fetchData := func(modelChan chan types.Modeler, errorChan chan error) {
@@ -35,16 +35,13 @@ func (opts *ExportOptions) HandleStatements(rCtx *output.RenderCtx, monitorArray
 			if apps, cnt, err := mon.ReadAndFilterAppearances(filter, false /* withCount */); err != nil {
 				errorChan <- err
 				rCtx.Cancel()
-
 			} else if cnt == 0 {
 				errorChan <- fmt.Errorf("no blocks found for the query")
 				continue
-
 			} else {
 				if sliceOfMaps, _, err := types.AsSliceOfMaps[types.Transaction](apps, filter.Reversed); err != nil {
 					errorChan <- err
 					rCtx.Cancel()
-
 				} else {
 					showProgress := opts.Globals.ShowProgress()
 					bar := logger.NewBar(logger.BarOptions{
@@ -83,7 +80,6 @@ func (opts *ExportOptions) HandleStatements(rCtx *output.RenderCtx, monitorArray
 							}
 						}
 
-						// Set up and interate over the map calling iterFunc for each appearance
 						iterCtx, iterCancel := context.WithCancel(context.Background())
 						defer iterCancel()
 						errChan := make(chan error)

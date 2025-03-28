@@ -45,7 +45,7 @@ func DoInit() {
 	// if init, _, err := opts.InitAll(); err != nil {
 	// 	logger.Error(err)
 	// } else {
-	// 	if err := SaveAndClean[bool]("sdkFuzzer-output/init.json", init, &opts, func() error {
+	// 	if err := SaveAndClean("sdkFuzzer-output/init.json", init, &opts, func() error {
 	// 		_, _, err := opts.InitAll()
 	// 		return err
 	// 	}); err != nil {

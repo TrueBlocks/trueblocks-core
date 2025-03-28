@@ -107,7 +107,7 @@ func (s *Log) Model(chain, format string, verbose bool, extraOpts map[string]any
 		}
 
 		if isArticulated {
-			model["compressedLog"] = makeCompressed(articulatedLog)
+			model["compressedLog"] = MakeCompressed(articulatedLog)
 			order = append(order, "compressedLog")
 		}
 

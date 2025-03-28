@@ -8,6 +8,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/manifest"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/ranges"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/tslib"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
@@ -36,7 +37,7 @@ func (opts *ChunksOptions) HandleManifest(rCtx *output.RenderCtx, blockNums []ba
 		fetchData := func(modelChan chan types.Modeler, errorChan chan error) {
 			_ = errorChan
 			for _, chunk := range man.Chunks {
-				rng := base.RangeFromRangeString(chunk.Range)
+				rng := ranges.RangeFromRangeString(chunk.Range)
 				s := types.ChunkRecord{
 					Range:     rng.String(),
 					BloomHash: chunk.BloomHash,
@@ -61,7 +62,7 @@ func (opts *ChunksOptions) HandleManifest(rCtx *output.RenderCtx, blockNums []ba
 				Specification: man.Specification,
 			}
 			for _, chunk := range man.Chunks {
-				rng := base.RangeFromRangeString(chunk.Range)
+				rng := ranges.RangeFromRangeString(chunk.Range)
 				ch := types.ChunkRecord{
 					Range:     rng.String(),
 					BloomHash: chunk.BloomHash,

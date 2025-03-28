@@ -12,6 +12,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/manifest"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/ranges"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/sigintTrap"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/usage"
@@ -60,7 +61,7 @@ func (opts *ChunksOptions) HandleTag(rCtx *output.RenderCtx, blockNums []base.Bl
 
 			nChunksTagged++
 			if opts.Globals.Verbose {
-				rng := base.RangeFromFilename(path)
+				rng := ranges.RangeFromFilename(path)
 				logger.Info(colors.Green+"Tagging chunk at "+rng.String()+" with "+opts.Tag+strings.Repeat(" ", 20), colors.Off)
 			}
 			bar.Tick()

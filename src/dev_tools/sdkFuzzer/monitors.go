@@ -14,7 +14,6 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	sdk "github.com/TrueBlocks/trueblocks-sdk/v4"
 )
 
@@ -66,7 +65,7 @@ func DoMonitors() {
 	if monitors, _, err := opts.MonitorsList(); err != nil {
 		logger.Error(err)
 	} else {
-		if err := SaveAndClean[types.Monitor]("sdkFuzzer-output/monitors.json", monitors, &opts, func() error {
+		if err := SaveAndClean("sdkFuzzer-output/monitors.json", monitors, &opts, func() error {
 			_, _, err := opts.MonitorsList()
 			return err
 		}); err != nil {
@@ -78,7 +77,7 @@ func DoMonitors() {
 	// if monitors, _, err := opts.Monitors(); err != nil {
 	// 	logger.Error(err)
 	// } else {
-	// 	if err := SaveAndClean[bool]("sdkFuzzer-output/monitors.json", monitors, &opts, func() error {
+	// 	if err := SaveAndClean("sdkFuzzer-output/monitors.json", monitors, &opts, func() error {
 	// 		_, _, err := opts.Monitors()
 	// 		return err
 	// 	}); err != nil {
@@ -89,7 +88,7 @@ func DoMonitors() {
 	// if monitors, _, err := opts.MonitorsClean(); err != nil {
 	// 	logger.Error(err)
 	// } else {
-	// 	if err := SaveAndClean[types.MonitorClean]("sdkFuzzer-output/monitors.json", monitors, &opts, func() error {
+	// 	if err := SaveAndClean("sdkFuzzer-output/monitors.json", monitors, &opts, func() error {
 	// 		_, _, err := opts.MonitorsClean()
 	// 		return err
 	// 	}); err != nil {

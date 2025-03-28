@@ -15,6 +15,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/manifest"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/monitor"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/ranges"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/usage"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/walk"
@@ -63,12 +64,12 @@ func (opts *ChunksOptions) HandleTruncate(rCtx *output.RenderCtx, blockNums []ba
 				return true, nil
 			}
 
-			rng, err := base.RangeFromFilenameE(path)
+			rng, err := ranges.RangeFromFilenameE(path)
 			if err != nil {
 				return false, err
 			}
 
-			testRange := base.FileRange{First: opts.Truncate, Last: base.NOPOSN}
+			testRange := ranges.FileRange{First: opts.Truncate, Last: base.NOPOSN}
 			if rng.Intersects(testRange) {
 				if err = manifest.RemoveChunk(chain, opts.PublisherAddr, index.ToBloomPath(path), index.ToIndexPath(path)); err != nil {
 					return false, err

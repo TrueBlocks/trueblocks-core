@@ -7,12 +7,12 @@ import (
 	"strings"
 	"time"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/ranges"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/tslib"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
@@ -80,7 +80,7 @@ func (opts *StatusOptions) HandleModes(rCtx *output.RenderCtx) error {
 							counterMap[cT].NFiles++
 							counterMap[cT].SizeInBytes += file.FileSize(result.Path)
 							if opts.Globals.Verbose && counterMap[cT].NFiles <= opts.MaxRecords {
-								result.FileRange = base.RangeFromFilename(result.Path)
+								result.FileRange = ranges.RangeFromFilename(result.Path)
 								result.TsRange.First, _ = tslib.FromBnToTs(chain, result.FileRange.First)
 								result.TsRange.Last, _ = tslib.FromBnToTs(chain, result.FileRange.Last)
 								cI, _ := walk.GetCacheItem(chain, testMode, cT, &result)

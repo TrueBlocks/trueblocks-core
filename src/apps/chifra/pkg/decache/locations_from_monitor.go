@@ -8,6 +8,7 @@ import (
 )
 
 func LocationsFromAddressAndAppearances(address base.Address, apps []types.Appearance, cT walk.CacheType) ([]cache.Locator, error) {
+	_ = address
 	locations := make([]cache.Locator, 0)
 	for _, app := range apps {
 		bn := base.Blknum(app.BlockNumber)
@@ -33,11 +34,7 @@ func LocationsFromAddressAndAppearances(address base.Address, apps []types.Appea
 				BlockNumber: bn,
 			})
 		case walk.Cache_Statements:
-			locations = append(locations, &types.StatementGroup{
-				Address:          address,
-				BlockNumber:      bn,
-				TransactionIndex: txid,
-			})
+			// see caller
 		}
 	}
 

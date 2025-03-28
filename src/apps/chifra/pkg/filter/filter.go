@@ -8,17 +8,18 @@ import (
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/ranges"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
 type AppearanceFilter struct {
-	OuterBounds base.BlockRange
+	OuterBounds ranges.BlockRange
 	sortBy      AppearanceSort
 	Reversed    bool
 	reverted    bool
 	fourBytes   []string
-	exportRange base.BlockRange
-	recordRange base.RecordRange
+	exportRange ranges.BlockRange
+	recordRange ranges.RecordRange
 	nSeen       int64
 	nExported   uint64
 	currentBn   uint32
@@ -26,7 +27,7 @@ type AppearanceFilter struct {
 	BlocksOnly  bool
 }
 
-func NewFilter(reversed, reverted bool, fourBytes []string, exportRange base.BlockRange, recordRange base.RecordRange) *AppearanceFilter {
+func NewFilter(reversed, reverted bool, fourBytes []string, exportRange ranges.BlockRange, recordRange ranges.RecordRange) *AppearanceFilter {
 	sortBy := Sorted
 	if reversed {
 		sortBy = Reversed
@@ -34,7 +35,7 @@ func NewFilter(reversed, reverted bool, fourBytes []string, exportRange base.Blo
 	return &AppearanceFilter{
 		exportRange: exportRange,
 		recordRange: recordRange,
-		OuterBounds: base.BlockRange{First: 0, Last: base.NOPOSN},
+		OuterBounds: ranges.BlockRange{First: 0, Last: base.NOPOSN},
 		sortBy:      sortBy,
 		Reversed:    reversed,
 		reverted:    reverted,
@@ -48,8 +49,8 @@ func NewEmptyFilter() *AppearanceFilter {
 		false,
 		false,
 		[]string{},
-		base.BlockRange{First: 0, Last: base.NOPOSN},
-		base.RecordRange{First: 0, Last: base.NOPOS},
+		ranges.BlockRange{First: 0, Last: base.NOPOSN},
+		ranges.RecordRange{First: 0, Last: base.NOPOS},
 	)
 }
 
@@ -62,14 +63,14 @@ func (f *AppearanceFilter) Reset() {
 	f.currentTs = int64(0)
 }
 
-func (f *AppearanceFilter) GetOuterBounds() base.BlockRange {
+func (f *AppearanceFilter) GetOuterBounds() ranges.BlockRange {
 	return f.OuterBounds
 }
 
 // ApplyFilter checks to see if the appearance intersects with the user-supplied --first_block/--last_block pair (if any)
 func (f *AppearanceFilter) ApplyFilter(app *types.AppRecord) (passed, finished bool) {
-	appRange := base.FileRange{First: base.Blknum(app.BlockNumber), Last: base.Blknum(app.BlockNumber)} // --first_block/--last_block
-	if !appRange.Intersects(base.FileRange(f.exportRange)) {
+	appRange := ranges.FileRange{First: base.Blknum(app.BlockNumber), Last: base.Blknum(app.BlockNumber)} // --first_block/--last_block
+	if !appRange.Intersects(ranges.FileRange(f.exportRange)) {
 		return false, false
 	}
 	return f.ApplyCountFilter()
@@ -77,8 +78,8 @@ func (f *AppearanceFilter) ApplyFilter(app *types.AppRecord) (passed, finished b
 
 // ApplyRangeFilter checks to see if the appearance intersects with the user-supplied --first_block/--last_block pair (if any)
 func (f *AppearanceFilter) ApplyRangeFilter(app *types.AppRecord) (passed, finished bool) {
-	appRange := base.FileRange{First: base.Blknum(app.BlockNumber), Last: base.Blknum(app.BlockNumber)} // --first_block/--last_block
-	return appRange.Intersects(base.FileRange(f.exportRange)), false
+	appRange := ranges.FileRange{First: base.Blknum(app.BlockNumber), Last: base.Blknum(app.BlockNumber)} // --first_block/--last_block
+	return appRange.Intersects(ranges.FileRange(f.exportRange)), false
 }
 
 // ApplyCountFilter checks to see if the appearance is at or later than the --first_record and less than (because it's zero-based) --max_records.

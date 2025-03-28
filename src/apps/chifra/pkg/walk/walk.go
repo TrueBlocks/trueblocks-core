@@ -11,10 +11,10 @@ import (
 	"path/filepath"
 	"strings"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/ranges"
 )
 
 type CacheType uint
@@ -236,7 +236,7 @@ func walkFolder(ctx context.Context, path string, cacheType CacheType, data inte
 
 		} else {
 			// TODO: This does not need to be part of walker. It could be in the caller and sent through the data pointer
-			rng := base.RangeFromFilename(path)
+			rng := ranges.RangeFromFilename(path)
 			filenameChan <- CacheFileInfo{Type: cacheType, Path: path, FileRange: rng, Data: data}
 		}
 
@@ -422,8 +422,8 @@ func WalkCacheName(ct CacheType) string {
 
 type CacheFileInfo struct {
 	Type      CacheType
-	FileRange base.FileRange
-	TsRange   base.TimestampRange
+	FileRange ranges.FileRange
+	TsRange   ranges.TimestampRange
 	Path      string
 	IsDir     bool
 	Data      interface{}

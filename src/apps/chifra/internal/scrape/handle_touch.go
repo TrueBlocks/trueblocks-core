@@ -17,6 +17,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/ranges"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/sigintTrap"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/tslib"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
@@ -26,7 +27,7 @@ func (opts *ScrapeOptions) HandleTouch(rCtx *output.RenderCtx) error {
 	chain := opts.Globals.Chain
 	fetchData := func(modelChan chan types.Modeler, errorChan chan error) {
 		meta, _ := opts.Conn.GetMetaData(false)
-		rng := base.FileRange{
+		rng := ranges.FileRange{
 			First: meta.Finalized,
 			Last:  opts.Touch,
 		}

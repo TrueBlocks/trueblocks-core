@@ -46,7 +46,7 @@ func reorderOrdering(fields []string) []string {
 		}
 	}
 
-	var result = make([]string, 0, len(normalFields))
+	result := make([]string, 0, 2*len(normalFields))
 	for _, field := range normalFields {
 		result = append(result, field)
 		if nameField, found := nameFieldsMap[field]; found {

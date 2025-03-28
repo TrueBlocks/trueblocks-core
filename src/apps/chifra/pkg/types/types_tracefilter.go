@@ -15,6 +15,7 @@ import (
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/ranges"
 )
 
 // EXISTING_CODE
@@ -101,7 +102,7 @@ func (s *TraceFilter) PassesBasic(trace *Trace, nTested uint64, nPassed uint64) 
 	return true, ""
 }
 
-func (s *TraceFilter) ParseBangString(chain, filter string) (ret map[string]any, br base.BlockRange) {
+func (s *TraceFilter) ParseBangString(chain, filter string) (ret map[string]any, br ranges.BlockRange) {
 	parts := strings.Split(filter, "!")
 	for {
 		if len(parts) >= 6 {
@@ -127,7 +128,7 @@ func (s *TraceFilter) ParseBangString(chain, filter string) (ret map[string]any,
 	if s.Count == 0 {
 		s.Count = base.NOPOS
 	}
-	return s.Model(chain, "", false, nil).Data, base.BlockRange{First: s.FromBlock, Last: s.ToBlock}
+	return s.Model(chain, "", false, nil).Data, ranges.BlockRange{First: s.FromBlock, Last: s.ToBlock}
 }
 
 // EXISTING_CODE

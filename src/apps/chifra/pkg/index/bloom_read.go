@@ -10,11 +10,12 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/ranges"
 )
 
 // Read reads the entire contents of the bloom filter
 func (bl *Bloom) Read(fileName string) (err error) {
-	bl.Range, err = base.RangeFromFilenameE(fileName)
+	bl.Range, err = ranges.RangeFromFilenameE(fileName)
 	if err != nil {
 		return err
 	}

@@ -13,6 +13,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/ranges"
 )
 
 const (
@@ -43,7 +44,7 @@ type bloomHeader struct {
 type Bloom struct {
 	File       *os.File
 	SizeOnDisc int64
-	Range      base.FileRange
+	Range      ranges.FileRange
 	HeaderSize int64
 	Header     bloomHeader
 	Count      uint32 // Do not change the size of this field, it's stored on disc
@@ -63,7 +64,7 @@ func OpenBloom(path string, check bool) (Bloom, error) {
 	}
 
 	bl.SizeOnDisc = file.FileSize(path)
-	if bl.Range, err = base.RangeFromFilenameE(path); err != nil {
+	if bl.Range, err = ranges.RangeFromFilenameE(path); err != nil {
 		return bl, err
 	}
 

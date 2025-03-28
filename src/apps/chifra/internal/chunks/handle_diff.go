@@ -16,6 +16,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/ranges"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/walk"
 )
@@ -92,7 +93,7 @@ func writeArray(disp, dest, fn string, lines []string) error {
 	return nil
 }
 
-func (opts *ChunksOptions) exportTo(dest, source string, rd base.RangeDiff) (bool, error) {
+func (opts *ChunksOptions) exportTo(dest, source string, rd ranges.RangeDiff) (bool, error) {
 	indexChunk, err := index.OpenIndex(source, true /* check */)
 	if err != nil {
 		return false, err
@@ -200,7 +201,7 @@ func findFileByBlockNumber(chain, path string, bn base.Blknum) (fileName string,
 		func(walker *walk.CacheWalker, path string, first bool) (bool, error) {
 			_ = walker
 			_ = first
-			rng := base.RangeFromFilename(path)
+			rng := ranges.RangeFromFilename(path)
 			if rng.IntersectsB(bn) {
 				fileName = index.ToIndexPath(path)
 				return false, nil // stop walking
@@ -211,12 +212,12 @@ func findFileByBlockNumber(chain, path string, bn base.Blknum) (fileName string,
 	return fileName, walker.WalkRegularFolder(path)
 }
 
-func (opts *ChunksOptions) getParams(chain, path string) (string, string, base.RangeDiff) {
+func (opts *ChunksOptions) getParams(chain, path string) (string, string, ranges.RangeDiff) {
 	srcPath := index.ToIndexPath(path)
-	thisRange := base.RangeFromFilename(srcPath)
+	thisRange := ranges.RangeFromFilename(srcPath)
 	middleMark := thisRange.First + (thisRange.Last-thisRange.First)/2 // this mark is used to find the diffPath
 	diffPath := toDiffPath(chain, middleMark)
-	diffRange := base.RangeFromFilename(diffPath)
+	diffRange := ranges.RangeFromFilename(diffPath)
 
 	return srcPath, diffPath, thisRange.Overlaps(diffRange)
 }

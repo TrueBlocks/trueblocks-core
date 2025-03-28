@@ -10,6 +10,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/identifiers"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/ranges"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/tslib"
 )
 
@@ -37,9 +38,9 @@ const ValidBlockIdWithRange = ValidBlockId | ValidArgumentRange
 const ValidBlockIdWithRangeAndDate = ValidBlockIdWithRange | ValidArgumentDate
 
 // ValidateIdentifiersWithBounds Is a helper function to return bounds in addition to validating identifiers
-func ValidateIdentifiersWithBounds(chain string, ids []string, validTypes ValidArgumentType, maxRanges int, results *[]identifiers.Identifier) (base.BlockRange, error) {
+func ValidateIdentifiersWithBounds(chain string, ids []string, validTypes ValidArgumentType, maxRanges int, results *[]identifiers.Identifier) (ranges.BlockRange, error) {
 	if err := ValidateIdentifiers(chain, ids, validTypes, maxRanges, results); err != nil {
-		return base.BlockRange{First: 0, Last: base.NOPOSN}, err
+		return ranges.BlockRange{First: 0, Last: base.NOPOSN}, err
 	}
 	return identifiers.GetBounds(chain, results)
 }

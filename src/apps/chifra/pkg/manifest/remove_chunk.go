@@ -6,6 +6,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/ranges"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
@@ -70,7 +71,7 @@ func RemoveChunk(chain string, publisher base.Address, bloomFn, indexFn string) 
 	}
 
 	if exists {
-		removedRange, err1 := base.RangeFromFilenameE(bloomFn)
+		removedRange, err1 := ranges.RangeFromFilenameE(bloomFn)
 		if err1 != nil {
 			err = err1
 			return err
@@ -78,7 +79,7 @@ func RemoveChunk(chain string, publisher base.Address, bloomFn, indexFn string) 
 
 		newChunks := []types.ChunkRecord{}
 		for _, chunk := range man.Chunks {
-			chunkRange := base.RangeFromRangeString(chunk.Range)
+			chunkRange := ranges.RangeFromRangeString(chunk.Range)
 			if chunkRange.EarlierThan(removedRange) {
 				newChunks = append(newChunks, chunk)
 				// 	fmt.Println(colors.Green, "Keeping", chunk.Range, colors.Off)

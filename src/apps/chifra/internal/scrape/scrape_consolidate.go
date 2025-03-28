@@ -15,6 +15,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/notify"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/ranges"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
@@ -49,7 +50,7 @@ func (bm *BlazeManager) Consolidate(ctx context.Context, blocks []base.Blknum) e
 	appMap, chunkRange, nAppearances := bm.AsciiFileToAppearanceMap(stageFn)
 	if !exists {
 		// Brand new stage.
-		chunkRange = base.FileRange{First: bm.meta.Finalized + 1, Last: blocks[0]}
+		chunkRange = ranges.FileRange{First: bm.meta.Finalized + 1, Last: blocks[0]}
 	}
 
 	// For each block...
@@ -120,9 +121,9 @@ func (bm *BlazeManager) Consolidate(ctx context.Context, blocks []base.Blknum) e
 		}
 	}
 
-	var newRange base.FileRange
+	var newRange ranges.FileRange
 	if len(appMap) > 0 { // are there any appearances in this block range?
-		newRange = base.FileRange{First: bm.meta.Finalized + 1, Last: 0}
+		newRange = ranges.FileRange{First: bm.meta.Finalized + 1, Last: 0}
 
 		// We need an array because we're going to write it back to disc
 		appearances := make([]string, 0, nAppearances)
@@ -169,15 +170,15 @@ func (bm *BlazeManager) Consolidate(ctx context.Context, blocks []base.Blknum) e
 }
 
 // AsciiFileToAppearanceMap reads the appearances from the stage file and returns them as a map
-func (bm *BlazeManager) AsciiFileToAppearanceMap(fn string) (map[string][]types.AppRecord, base.FileRange, int) {
+func (bm *BlazeManager) AsciiFileToAppearanceMap(fn string) (map[string][]types.AppRecord, ranges.FileRange, int) {
 	appearances := file.AsciiFileToLines(fn)
 	os.Remove(fn) // It's okay to remove this. If it fails, we'll just start over.
 
 	appMap := make(map[string][]types.AppRecord, len(appearances))
-	fileRange := base.FileRange{First: base.NOPOSN, Last: 0}
+	fileRange := ranges.FileRange{First: base.NOPOSN, Last: 0}
 
 	if len(appearances) == 0 {
-		return appMap, base.FileRange{First: 0, Last: 0}, 0
+		return appMap, ranges.FileRange{First: 0, Last: 0}, 0
 	}
 
 	nAdded := 0

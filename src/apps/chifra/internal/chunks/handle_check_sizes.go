@@ -11,6 +11,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/manifest"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/ranges"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
@@ -25,11 +26,11 @@ func (opts *ChunksOptions) CheckSizes(fileNames []string, blockNums []base.Blknu
 	}
 
 	// Store the sizes of the index and bloom files in the manifest for easy access
-	idxSizeInMan := make(map[base.FileRange]int64, len(theManifest.Chunks))
-	bloomSizeInMan := make(map[base.FileRange]int64, len(theManifest.Chunks))
-	maxInManifest := base.FileRange{}
+	idxSizeInMan := make(map[ranges.FileRange]int64, len(theManifest.Chunks))
+	bloomSizeInMan := make(map[ranges.FileRange]int64, len(theManifest.Chunks))
+	maxInManifest := ranges.FileRange{}
 	for _, r := range theManifest.Chunks {
-		rng := base.RangeFromRangeString(r.Range)
+		rng := ranges.RangeFromRangeString(r.Range)
 		idxSizeInMan[rng] = r.IndexSize
 		bloomSizeInMan[rng] = r.BloomSize
 		if rng.LaterThan(maxInManifest) {
@@ -40,7 +41,7 @@ func (opts *ChunksOptions) CheckSizes(fileNames []string, blockNums []base.Blknu
 	// We will check both the index and the bloom even though `--check` is only available for index
 	for _, fileName := range fileNames {
 		indexFn := index.ToIndexPath(fileName)
-		rng := base.RangeFromFilename(indexFn)
+		rng := ranges.RangeFromFilename(indexFn)
 		if !rng.LaterThan(maxInManifest) {
 			okay := true // the test passes only if both pass unless there's only one
 			if file.FileExists(indexFn) {

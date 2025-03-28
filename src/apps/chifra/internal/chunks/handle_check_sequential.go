@@ -7,7 +7,7 @@ package chunksPkg
 import (
 	"fmt"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/ranges"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
@@ -35,16 +35,16 @@ func (opts *ChunksOptions) CheckSequential(fnArray, cacheArray, remoteArray []st
 
 // TODO: Can this be made concurrent?
 func (opts *ChunksOptions) checkSequential(which string, array []string, allowMissing bool, report *types.ReportCheck) error {
-	prev := base.NotARange
+	prev := ranges.NotARange
 	for _, item := range array {
-		var fR base.FileRange
+		var fR ranges.FileRange
 		var err error
-		if fR, err = base.RangeFromFilenameE(item); err != nil {
+		if fR, err = ranges.RangeFromFilenameE(item); err != nil {
 			return err
 		}
 
 		w := utils.MakeFirstUpperCase(which)
-		if prev != base.NotARange {
+		if prev != ranges.NotARange {
 			report.VisitedCnt++
 			report.CheckedCnt++
 			if prev != fR {

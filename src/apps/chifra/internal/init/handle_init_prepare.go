@@ -18,6 +18,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/manifest"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/ranges"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/walk"
 )
@@ -42,18 +43,18 @@ import (
 // on disc.
 func (opts *InitOptions) prepareDownloadList(chain string, man *manifest.Manifest, blockNums []base.Blknum) ([]types.ChunkRecord, int, int, error) {
 	// The list of files on disc that need to be removed because they are invalid in some way or not in the manifest
-	deleteMap := make(map[base.FileRange]InitReason, len(man.Chunks))
+	deleteMap := make(map[ranges.FileRange]InitReason, len(man.Chunks))
 
 	// The list of files in the manifest but not on disc so they need to be downloaded
-	downloadMap := make(map[base.FileRange]InitReason, len(man.Chunks))
+	downloadMap := make(map[ranges.FileRange]InitReason, len(man.Chunks))
 
 	// The list of files that are on disc and later than the latest entry in the manifest. These are
 	// okay and should not be deleted.
-	afterMap := make(map[base.FileRange]InitReason, len(man.Chunks))
+	afterMap := make(map[ranges.FileRange]InitReason, len(man.Chunks))
 
 	// We assume we're going to have download everything...
 	for _, chunk := range man.Chunks {
-		downloadMap[base.RangeFromRangeString(chunk.Range)] = FILE_MISSING
+		downloadMap[ranges.RangeFromRangeString(chunk.Range)] = FILE_MISSING
 	}
 
 	// Visit each chunk on disc. If the chunk belongs and is of the right size and shape, mark it as OKAY,
@@ -67,7 +68,7 @@ func (opts *InitOptions) prepareDownloadList(chain string, man *manifest.Manifes
 		}
 
 		// Is the on-disc chunk in the manifest?
-		rng := base.RangeFromFilename(path)
+		rng := ranges.RangeFromFilename(path)
 		chunk := man.ChunkMap[rng.String()]
 
 		if chunk != nil {
@@ -99,10 +100,10 @@ func (opts *InitOptions) prepareDownloadList(chain string, man *manifest.Manifes
 			return true, nil
 
 		} else {
-			lastInManifest := base.FileRange{}
+			lastInManifest := ranges.FileRange{}
 			if len(man.Chunks) > 0 {
 				lastChunk := man.Chunks[len(man.Chunks)-1]
-				lastInManifest = base.RangeFromRangeString(lastChunk.Range)
+				lastInManifest = ranges.RangeFromRangeString(lastChunk.Range)
 			}
 
 			// The chunk is on disc but not in the manifest. We need to delete it
@@ -158,7 +159,7 @@ func (opts *InitOptions) prepareDownloadList(chain string, man *manifest.Manifes
 	downloadList := make([]types.ChunkRecord, 0, len(man.ChunkMap))
 	nToDownload := 0
 	for _, chunk := range man.ChunkMap {
-		rng := base.RangeFromRangeString(chunk.Range)
+		rng := ranges.RangeFromRangeString(chunk.Range)
 		if downloadMap[rng] == OKAY || rng.Last < opts.FirstBlock {
 			continue
 		}
@@ -204,7 +205,7 @@ func (opts *InitOptions) reportReason(prefix string, status InitReason, path str
 
 	if status == OKAY || status == AFTER_MANIFEST {
 		col := colors.BrightGreen
-		rng := base.RangeFromFilename(path)
+		rng := ranges.RangeFromFilename(path)
 		msg := fmt.Sprintf("%schunk %s%s %s", col, Reasons[status], colors.Off, rng)
 		logger.Info(msg)
 	} else {
@@ -214,7 +215,7 @@ func (opts *InitOptions) reportReason(prefix string, status InitReason, path str
 		} else if strings.Contains(path, string(os.PathSeparator)+"blooms"+string(os.PathSeparator)) {
 			col = colors.BrightYellow
 		}
-		rng := base.RangeFromFilename(path)
+		rng := ranges.RangeFromFilename(path)
 		msg := fmt.Sprintf("%s%s [%s]%s %s", col, prefix, Reasons[status], colors.Off, rng)
 		logger.Warn(msg)
 	}
