@@ -35,7 +35,7 @@ func (a *Address) Hex() string {
 }
 
 func (a *Address) DefaultSymbol() string {
-	return a.Hex()[:Min(len(a.Hex()), 6)]
+	return a.Hex()[:min(len(a.Hex()), 6)]
 }
 
 func (a Address) String() string {
