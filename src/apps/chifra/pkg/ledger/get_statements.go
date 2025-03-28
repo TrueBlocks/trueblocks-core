@@ -173,7 +173,7 @@ func reportProgress(stmt *types.Statement, warn bool) {
 	if !stmt.IsEth() {
 		msg = fmt.Sprintf("Token statement at % 9d.%d.%d %s %s", stmt.BlockNumber, stmt.TransactionIndex, stmt.LogIndex, stmt.Asset.Hex(), stmt.Holder.Hex())
 	}
-	spacer := strings.Repeat(" ", 100-base.Min(100, len(msg)))
+	spacer := strings.Repeat(" ", 100-min(100, len(msg)))
 	if !stmt.Reconciled() && warn {
 		logger.Warn(msg+" did not reconcile.", spacer)
 	}

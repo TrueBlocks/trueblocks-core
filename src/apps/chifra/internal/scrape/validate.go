@@ -76,7 +76,7 @@ func (opts *ScrapeOptions) validateScrape() error {
 	if err != nil {
 		return err
 	}
-	m := base.Max(meta.Ripe, base.Max(meta.Staging, meta.Finalized)) + 1
+	m := max(meta.Ripe, max(meta.Staging, meta.Finalized)) + 1
 	if !opts.DryRun && m > meta.Latest {
 		fmt.Println(validate.Usage("The index ({0}) is ahead of the chain ({1}).", fmt.Sprintf("%d", m), fmt.Sprintf("%d", meta.Latest)))
 	}

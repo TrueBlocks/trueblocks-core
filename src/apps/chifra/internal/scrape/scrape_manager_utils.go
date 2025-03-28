@@ -14,7 +14,7 @@ import (
 // Report prints out a report of the progress of the scraper.
 func (bm *BlazeManager) report(nBlocks, perChunk, nChunks, nAppsNow, nAppsFound, nAddrsFound int) {
 	_ = nBlocks // linter
-	nNeeded := perChunk - base.Min(perChunk, nAppsNow)
+	nNeeded := perChunk - min(perChunk, nAppsNow)
 	appsPerAddr := float64(nAppsFound) / float64(nAddrsFound)
 	pctFull := float64(nAppsNow) / float64(perChunk)
 	pctStr := fmt.Sprintf("%0.1f%%", pctFull*100)

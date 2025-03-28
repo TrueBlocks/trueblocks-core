@@ -67,7 +67,7 @@ func (a *AppNode[T]) Prev() *AppNode[T] {
 
 func (a *AppNode[T]) PrevBlock() base.Blknum {
 	if a.IsHead() {
-		return base.Blknum(base.Max(int(a.CurBlock()), 1) - 1)
+		return base.Blknum(max(int(a.CurBlock()), 1) - 1)
 	}
 	return base.Blknum(a.prev.current.BlockNumber)
 }

@@ -78,7 +78,7 @@ func (opts *ChunksOptions) HandleTruncate(rCtx *output.RenderCtx, blockNums []ba
 				nChunksRemoved++
 			} else {
 				// We did not remove the chunk, so we need to keep track of where the truncated index ends
-				latestChunk = base.Max(latestChunk, rng.Last)
+				latestChunk = max(latestChunk, rng.Last)
 				bar.Prefix = fmt.Sprintf("Not removing %s", rng)
 			}
 			bar.Tick()

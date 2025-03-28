@@ -7,7 +7,6 @@ package rpc
 import (
 	"context"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/walk"
 )
@@ -52,13 +51,13 @@ func (conn *Connection) GetMetaData(testmode bool) (*types.MetaData, error) {
 		case walk.Index_Bloom:
 			fallthrough
 		case walk.Index_Final:
-			meta.Finalized = base.Max(meta.Finalized, result.FileRange.Last)
+			meta.Finalized = max(meta.Finalized, result.FileRange.Last)
 		case walk.Index_Staging:
-			meta.Staging = base.Max(meta.Staging, result.FileRange.Last)
+			meta.Staging = max(meta.Staging, result.FileRange.Last)
 		case walk.Index_Ripe:
-			meta.Ripe = base.Max(meta.Ripe, result.FileRange.Last)
+			meta.Ripe = max(meta.Ripe, result.FileRange.Last)
 		case walk.Index_Unripe:
-			meta.Unripe = base.Max(meta.Unripe, result.FileRange.Last)
+			meta.Unripe = max(meta.Unripe, result.FileRange.Last)
 		case walk.Cache_NotACache:
 			nRoutines--
 			if nRoutines == 0 {
@@ -70,8 +69,8 @@ func (conn *Connection) GetMetaData(testmode bool) (*types.MetaData, error) {
 	if meta.Staging == 0 {
 		meta.Staging = meta.Finalized
 	}
-	meta.Ripe = base.Max(meta.Staging, meta.Ripe)
-	meta.Unripe = base.Max(meta.Ripe, meta.Unripe)
+	meta.Ripe = max(meta.Staging, meta.Ripe)
+	meta.Unripe = max(meta.Ripe, meta.Unripe)
 
 	return &meta, nil
 }
