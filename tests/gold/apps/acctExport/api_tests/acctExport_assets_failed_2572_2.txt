@@ -1,0 +1,44 @@
+export?addrs=0x65b0d5e1dc0dee0704f53f660aa865c72e986fc7&accounting&assets&ether&fmt=json&firstBlock=11670418&lastBlock=11670420&maxRecords=40
+{
+  "data": [
+    {
+      "address": "0x9f8f72aa9304c8b593d555f12ef6589cc3a579a2",
+      "decimals": 18,
+      "isContract": true,
+      "isErc20": true,
+      "name": "Maker",
+      "source": "Giveth website",
+      "symbol": "MKR",
+      "tags": "50-Tokens:ERC20"
+    },
+    {
+      "address": "0xc713e5e149d5d0715dcd1c156a020976e7e56b88",
+      "decimals": 18,
+      "isContract": true,
+      "isErc20": true,
+      "name": "Aave interest bearing MKR",
+      "source": "On chain",
+      "symbol": "aMKR",
+      "tags": "50-Tokens:ERC20"
+    },
+    {
+      "address": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+      "decimals": 18,
+      "isErc20": true,
+      "name": "ETH",
+      "source": "defipulse.com",
+      "symbol": "ETH",
+      "tags": "50-Ethereum"
+    }
+  ],
+  "meta": {
+    "client": "0xdeadbeef",
+    "finalized": "0xdeadbeef",
+    "staging": "0xdeadbeef",
+    "ripe": "0xdeadbeef",
+    "unripe": "0xdeadbeef",
+    "chainId": 1,
+    "networkId": 1,
+    "chain": "mainnet"
+  }
+}

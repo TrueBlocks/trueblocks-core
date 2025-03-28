@@ -1,0 +1,31 @@
+chifra export  0x868b8fd259abfcfdf9634c343593b34ef359641d --accounting --transfers --first_block 8769018 --last_block 8769053 --fmt json --asset 0x0ba45a8b5d5575935b8158a88c631e9f9c95a2e5
+TEST[DATE|TIME] Addrs:  [0x868b8fd259abfcfdf9634c343593b34ef359641d]
+TEST[DATE|TIME] Transfers:  true
+TEST[DATE|TIME] Asset:  [0x0ba45a8b5d5575935b8158a88c631e9f9c95a2e5]
+TEST[DATE|TIME] FirstBlock:  8769018
+TEST[DATE|TIME] LastBlock:  8769053
+TEST[DATE|TIME] Accounting:  true
+TEST[DATE|TIME] Caps:  cache,decache,ether
+TEST[DATE|TIME] Format:  json
+{
+  "data": [
+    {
+      "amount": "85000000000000000000",
+      "asset": "0x0ba45a8b5d5575935b8158a88c631e9f9c95a2e5",
+      "assetName": "Tellor Tributes",
+      "blockNumber": 8769029,
+      "holder": "0x868b8fd259abfcfdf9634c343593b34ef359641d",
+      "logIndex": 61,
+      "transactionIndex": 80
+    },
+    {
+      "amount": "-85000000000000000000",
+      "asset": "0x0ba45a8b5d5575935b8158a88c631e9f9c95a2e5",
+      "assetName": "Tellor Tributes",
+      "blockNumber": 8769052,
+      "holder": "0x868b8fd259abfcfdf9634c343593b34ef359641d",
+      "logIndex": 73,
+      "transactionIndex": 74
+    }
+  ]
+}

@@ -1,68 +1,37 @@
 chifra export  0x08166f02313feae18bb044e7877c808b55b5bf58 --accounting --statements --last_block 4000000 --fmt json --output statement_2_out.file
 TEST[DATE|TIME] Addrs:  [0x08166f02313feae18bb044e7877c808b55b5bf58]
-TEST[DATE|TIME] Accounting:  true
 TEST[DATE|TIME] Statements:  true
 TEST[DATE|TIME] LastBlock:  4000000
+TEST[DATE|TIME] Accounting:  true
 TEST[DATE|TIME] OutputFn:  statement_2_out.file
 TEST[DATE|TIME] Caps:  cache,decache,ether
 TEST[DATE|TIME] Format:  json
 INFO[DATE|TIME] { "outputFilename": "--output_filename--" }
-INFO[DATE|TIME] ------------------------------------------------------------
-INFO[DATE|TIME] Contexts (3)
-INFO[DATE|TIME] 000000000-00270:          0          0       46685 genesis-diff
-INFO[DATE|TIME] 000046685-00000:          0      46685       46709 diff-diff
-INFO[DATE|TIME] 000046709-00000:      46685      46709       46709 diff-last
-TEST[DATE|TIME] Start of trial balance report
-TEST[DATE|TIME] Needs correction for eth
-TEST[DATE|TIME] Needs correction for eth
+TEST[DATE|TIME] 0: 0 270
+TEST[DATE|TIME] 1: 46685 0
+TEST[DATE|TIME] 2: 46709 0
+TEST[DATE|TIME] 
+TEST[DATE|TIME] ------------------------------------
+TEST[DATE|TIME] ~~~ Entering: 0.270 ~~~
+TEST[DATE|TIME] First pass: Fetching unreconciled transfers
+TEST[DATE|TIME] Fetched 1 unreconciled transfers
+TEST[DATE|TIME] Second pass: Reconciling transfers
+TEST[DATE|TIME] Processing ETH transfer
+TEST[DATE|TIME] Converted ETH transfer to statement
+TEST[DATE|TIME] Attempting to reconcile top-level ETH transfer: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-0x08166f02313feae18bb044e7877c808b55b5bf58
+TEST[DATE|TIME] XXX =============[ top-level ]======================
+TEST[DATE|TIME] XXX Case 1: Only statement in block
+TEST[DATE|TIME] XXX Block: 0 Tx: 270 Asset: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+TEST[DATE|TIME] XXX FirstInBlock: true, LastInBlock: true
+TEST[DATE|TIME] XXX ================================================
 TEST[DATE|TIME] Block 0 is prior to deployment (3684349) of Maker. No fallback pricing method
 TEST[DATE|TIME] ===================================================
-TEST[DATE|TIME] ====> eth
-TEST[DATE|TIME] ===================================================
-TEST[DATE|TIME] Previous:               0
-TEST[DATE|TIME] Current:                0
-TEST[DATE|TIME] Next:                   46685
-TEST[DATE|TIME] reconciliationType:     genesis
-TEST[DATE|TIME] assetType:              eth
+TEST[DATE|TIME] Previous:               0 0 ( false )
+TEST[DATE|TIME] Current:                0 270 ( true )
+TEST[DATE|TIME] Next:                   46685 0 ( true )
 TEST[DATE|TIME] accountedFor:           0x08166f02313feae18bb044e7877c808b55b5bf58
 TEST[DATE|TIME] sender:                 0x0000000000000000000000000050726566756e64  ==>  0x08166f02313feae18bb044e7877c808b55b5bf58
-TEST[DATE|TIME] assetAddr:              0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
-TEST[DATE|TIME] hash:                   0x0000000000000000000000000000000000000000000000000000000000000000
-TEST[DATE|TIME] timestamp:              1438269975
-TEST[DATE|TIME] blockNumber:            0.270
-TEST[DATE|TIME] priceSource:            0 (eth-not-priced-pre-maker)
-TEST[DATE|TIME] --------------------------------------------------- 
-TEST[DATE|TIME] Trial balance:
-TEST[DATE|TIME]    prevBal:             0
-TEST[DATE|TIME]    begBal:              0.0895 (0.0895)
-TEST[DATE|TIME]    totalIn:             1970
-TEST[DATE|TIME]    totalOut:            0
-TEST[DATE|TIME]    amountNet:           1970
-TEST[DATE|TIME]                        ======================= 
-TEST[DATE|TIME]    endBal:              1970 (0)
-TEST[DATE|TIME]    endBalCalc:          1970.0895
-TEST[DATE|TIME] --------------------------------------------------- 
-TEST[DATE|TIME]    prefundIn:           1970
-TEST[DATE|TIME]    material:            true
-TEST[DATE|TIME]    reconciled:          false
-TEST[DATE|TIME]  ^^ we need to fix this ^^
-TEST[DATE|TIME] ---------------------------------------------------
-TEST[DATE|TIME] End of trial balance report
-TEST[DATE|TIME] Trial balance failed for  0x0000000000000000000000000000000000000000000000000000000000000000 need to decend into traces
-TEST[DATE|TIME] Start of trial balance report
-TEST[DATE|TIME] Needs correction for eth
-TEST[DATE|TIME] Needs correction for eth
-TEST[DATE|TIME] ===================================================
-TEST[DATE|TIME] ====> trace-eth
-TEST[DATE|TIME] ===================================================
-TEST[DATE|TIME] Previous:               0
-TEST[DATE|TIME] Current:                0
-TEST[DATE|TIME] Next:                   46685
-TEST[DATE|TIME] reconciliationType:     genesis
-TEST[DATE|TIME] assetType:              trace-eth
-TEST[DATE|TIME] accountedFor:           0x08166f02313feae18bb044e7877c808b55b5bf58
-TEST[DATE|TIME] sender:                 0x0000000000000000000000000050726566756e64  ==>  0x08166f02313feae18bb044e7877c808b55b5bf58
-TEST[DATE|TIME] assetAddr:              0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
+TEST[DATE|TIME] asset:                  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
 TEST[DATE|TIME] hash:                   0x0000000000000000000000000000000000000000000000000000000000000000
 TEST[DATE|TIME] timestamp:              1438269975
 TEST[DATE|TIME] blockNumber:            0.270.0
@@ -70,35 +39,48 @@ TEST[DATE|TIME] priceSource:            0 (eth-not-priced-pre-maker)
 TEST[DATE|TIME] --------------------------------------------------- 
 TEST[DATE|TIME] Trial balance:
 TEST[DATE|TIME]    prevBal:             0
-TEST[DATE|TIME]    begBal:              0.0895 (-1969.9105)
-TEST[DATE|TIME]    totalIn:             0
+TEST[DATE|TIME]    begBal:              0 (0)
+TEST[DATE|TIME]    totalIn:             1970
 TEST[DATE|TIME]    totalOut:            0
-TEST[DATE|TIME]    amountNet:           0
+TEST[DATE|TIME]    amountNet:           1970
 TEST[DATE|TIME]                        ======================= 
 TEST[DATE|TIME]    endBal:              1970 (0)
-TEST[DATE|TIME]    endBalCalc:          0.0895
+TEST[DATE|TIME]    endBalCalc:          1970
 TEST[DATE|TIME] --------------------------------------------------- 
-TEST[DATE|TIME]    material:            false
-TEST[DATE|TIME]    reconciled:          false
-TEST[DATE|TIME]  ^^ we need to fix this ^^
+TEST[DATE|TIME]    prefundIn:           1970
+TEST[DATE|TIME]    material:            true
+TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
-TEST[DATE|TIME] End of trial balance report
-TEST[DATE|TIME] Start of trial balance report
+TEST[DATE|TIME] Top-level statement is material and reconciled - appending
+TEST[DATE|TIME] No log transfers to process
+TEST[DATE|TIME] ~~~ Leaving: 0.270 ~~~
+TEST[DATE|TIME] ------------------------------------ 1 statements generated.
+TEST[DATE|TIME] 
+TEST[DATE|TIME] 
+TEST[DATE|TIME] ------------------------------------
+TEST[DATE|TIME] ~~~ Entering: 46685.0 ~~~
+TEST[DATE|TIME] First pass: Fetching unreconciled transfers
+TEST[DATE|TIME] Fetched 1 unreconciled transfers
+TEST[DATE|TIME] Second pass: Reconciling transfers
+TEST[DATE|TIME] Processing ETH transfer
+TEST[DATE|TIME] Converted ETH transfer to statement
+TEST[DATE|TIME] Attempting to reconcile top-level ETH transfer: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-0x08166f02313feae18bb044e7877c808b55b5bf58
+TEST[DATE|TIME] XXX =============[ top-level ]======================
+TEST[DATE|TIME] XXX Case 1: Only statement in block
+TEST[DATE|TIME] XXX Block: 46685 Tx: 0 Asset: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+TEST[DATE|TIME] XXX FirstInBlock: true, LastInBlock: true
+TEST[DATE|TIME] XXX ================================================
 TEST[DATE|TIME] Block 46685 is prior to deployment (3684349) of Maker. No fallback pricing method
 TEST[DATE|TIME] ===================================================
-TEST[DATE|TIME] ====> eth
-TEST[DATE|TIME] ===================================================
-TEST[DATE|TIME] Previous:               0
-TEST[DATE|TIME] Current:                46685
-TEST[DATE|TIME] Next:                   46709
-TEST[DATE|TIME] reconciliationType:     diff-diff
-TEST[DATE|TIME] assetType:              eth
+TEST[DATE|TIME] Previous:               0 270 ( true )
+TEST[DATE|TIME] Current:                46685 0 ( true )
+TEST[DATE|TIME] Next:                   46709 0 ( true )
 TEST[DATE|TIME] accountedFor:           0x08166f02313feae18bb044e7877c808b55b5bf58
 TEST[DATE|TIME] sender:                 0x08166f02313feae18bb044e7877c808b55b5bf58  ==>  0xad00b7a324f31351d397408c8c3952ea198317eb
-TEST[DATE|TIME] assetAddr:              0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
+TEST[DATE|TIME] asset:                  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
 TEST[DATE|TIME] hash:                   0x10893338fa5633ab747450b8698457fb047098f87f78e98b3dbee3134067b6b8
 TEST[DATE|TIME] timestamp:              1438927408
-TEST[DATE|TIME] blockNumber:            46685.0
+TEST[DATE|TIME] blockNumber:            46685.0.0
 TEST[DATE|TIME] priceSource:            0 (eth-not-priced-pre-maker)
 TEST[DATE|TIME] --------------------------------------------------- 
 TEST[DATE|TIME] Trial balance:
@@ -116,23 +98,36 @@ TEST[DATE|TIME]    gasOut:              0.0105
 TEST[DATE|TIME]    material:            true
 TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
-TEST[DATE|TIME] End of trial balance report
-TEST[DATE|TIME] Start of trial balance report
+TEST[DATE|TIME] Top-level statement is material and reconciled - appending
+TEST[DATE|TIME] No log transfers to process
+TEST[DATE|TIME] ~~~ Leaving: 46685.0 ~~~
+TEST[DATE|TIME] ------------------------------------ 1 statements generated.
+TEST[DATE|TIME] 
+TEST[DATE|TIME] 
+TEST[DATE|TIME] ------------------------------------
+TEST[DATE|TIME] ~~~ Entering: 46709.0 ~~~
+TEST[DATE|TIME] First pass: Fetching unreconciled transfers
+TEST[DATE|TIME] Fetched 1 unreconciled transfers
+TEST[DATE|TIME] Second pass: Reconciling transfers
+TEST[DATE|TIME] Processing ETH transfer
+TEST[DATE|TIME] Converted ETH transfer to statement
+TEST[DATE|TIME] Attempting to reconcile top-level ETH transfer: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-0x08166f02313feae18bb044e7877c808b55b5bf58
+TEST[DATE|TIME] XXX =============[ top-level ]======================
+TEST[DATE|TIME] XXX Case 1: Only statement in block
+TEST[DATE|TIME] XXX Block: 46709 Tx: 0 Asset: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+TEST[DATE|TIME] XXX FirstInBlock: true, LastInBlock: true
+TEST[DATE|TIME] XXX ================================================
 TEST[DATE|TIME] Block 46709 is prior to deployment (3684349) of Maker. No fallback pricing method
 TEST[DATE|TIME] ===================================================
-TEST[DATE|TIME] ====> eth
-TEST[DATE|TIME] ===================================================
-TEST[DATE|TIME] Previous:               46685
-TEST[DATE|TIME] Current:                46709
-TEST[DATE|TIME] Next:                   46709
-TEST[DATE|TIME] reconciliationType:     diff-last
-TEST[DATE|TIME] assetType:              eth
+TEST[DATE|TIME] Previous:               46685 0 ( true )
+TEST[DATE|TIME] Current:                46709 0 ( true )
+TEST[DATE|TIME] Next:                   46710 0 ( true )
 TEST[DATE|TIME] accountedFor:           0x08166f02313feae18bb044e7877c808b55b5bf58
 TEST[DATE|TIME] sender:                 0x08166f02313feae18bb044e7877c808b55b5bf58  ==>  0xad00b7a324f31351d397408c8c3952ea198317eb
-TEST[DATE|TIME] assetAddr:              0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
+TEST[DATE|TIME] asset:                  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
 TEST[DATE|TIME] hash:                   0x10d5c5f2386c6d6d93ca6b43fa25e8679971d07448db8d6c81d856ff3c3c001a
 TEST[DATE|TIME] timestamp:              1438927854
-TEST[DATE|TIME] blockNumber:            46709.0
+TEST[DATE|TIME] blockNumber:            46709.0.0
 TEST[DATE|TIME] priceSource:            0 (eth-not-priced-pre-maker)
 TEST[DATE|TIME] --------------------------------------------------- 
 TEST[DATE|TIME] Trial balance:
@@ -150,30 +145,38 @@ TEST[DATE|TIME]    gasOut:              0.0105
 TEST[DATE|TIME]    material:            true
 TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
-TEST[DATE|TIME] End of trial balance report
+TEST[DATE|TIME] Top-level statement is material and reconciled - appending
+TEST[DATE|TIME] No log transfers to process
+TEST[DATE|TIME] ~~~ Leaving: 46709.0 ~~~
+TEST[DATE|TIME] ------------------------------------ 1 statements generated.
+TEST[DATE|TIME] 
 ----
 Results in ./statement_2_out.file
 {
   "data": [
     {
       "accountedFor": "0x08166f02313feae18bb044e7877c808b55b5bf58",
+      "accountedForName": "Prefund_0270",
       "amountIn": "0",
-      "amountNet": "0",
+      "amountNet": "1970000000000000000000",
       "amountOut": "0",
-      "assetAddr": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
-      "assetSymbol": "WEI",
-      "assetType": "trace-eth",
-      "begBal": "89500000000000000",
+      "asset": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+      "assetName": "ETH",
+      "begBal": "0",
       "begBalDiff": "0",
       "blockNumber": 0,
-      "correctingIn": "0",
-      "correctingOut": "0",
-      "correctingReason": "",
+      "correctAmountIn": "0",
+      "correctAmountOut": "0",
+      "correctBegBalIn": "0",
+      "correctBegBalOut": "0",
+      "correctEndBalIn": "0",
+      "correctEndBalOut": "0",
+      "correctingReasons": "",
       "date": "2015-07-30 15:26:15 UTC",
       "decimals": 18,
       "endBal": "1970000000000000000000",
-      "endBalCalc": "89500000000000000",
-      "endBalDiff": "-1969910500000000000000",
+      "endBalCalc": "1970000000000000000000",
+      "endBalDiff": "0",
       "gasOut": "0",
       "internalIn": "0",
       "internalOut": "0",
@@ -182,36 +185,41 @@ Results in ./statement_2_out.file
       "minerNephewRewardIn": "0",
       "minerTxFeeIn": "0",
       "minerUncleRewardIn": "0",
-      "prefundIn": "0",
+      "prefundIn": "1970000000000000000000",
+      "prevBal": "0",
       "priceSource": "eth-not-priced-pre-maker",
       "recipient": "0x08166f02313feae18bb044e7877c808b55b5bf58",
-      "reconciled": false,
-      "reconciliationType": "genesis",
+      "recipientName": "Prefund_0270",
+      "reconciled": true,
       "selfDestructIn": "0",
       "selfDestructOut": "0",
       "sender": "0x0000000000000000000000000050726566756e64",
-      "spotPrice": 0,
+      "spotPrice": "0",
+      "symbol": "WEI",
       "timestamp": 1438269975,
-      "totalIn": "0",
+      "totalIn": "1970000000000000000000",
       "totalOut": "0",
-      "totalOutLessGas": "0",
       "transactionHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
       "transactionIndex": 270
     },
     {
       "accountedFor": "0x08166f02313feae18bb044e7877c808b55b5bf58",
+      "accountedForName": "Prefund_0270",
       "amountIn": "0",
       "amountNet": "-5010500000000000000",
       "amountOut": "5000000000000000000",
-      "assetAddr": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
-      "assetSymbol": "WEI",
-      "assetType": "eth",
+      "asset": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+      "assetName": "ETH",
       "begBal": "1970000000000000000000",
       "begBalDiff": "0",
       "blockNumber": 46685,
-      "correctingIn": "0",
-      "correctingOut": "0",
-      "correctingReason": "",
+      "correctAmountIn": "0",
+      "correctAmountOut": "0",
+      "correctBegBalIn": "0",
+      "correctBegBalOut": "0",
+      "correctEndBalIn": "0",
+      "correctEndBalOut": "0",
+      "correctingReasons": "",
       "date": "2015-08-07 06:03:28 UTC",
       "decimals": 18,
       "endBal": "1964989500000000000000",
@@ -230,32 +238,36 @@ Results in ./statement_2_out.file
       "priceSource": "eth-not-priced-pre-maker",
       "recipient": "0xad00b7a324f31351d397408c8c3952ea198317eb",
       "reconciled": true,
-      "reconciliationType": "diff-diff",
       "selfDestructIn": "0",
       "selfDestructOut": "0",
       "sender": "0x08166f02313feae18bb044e7877c808b55b5bf58",
-      "spotPrice": 0,
+      "senderName": "Prefund_0270",
+      "spotPrice": "0",
+      "symbol": "WEI",
       "timestamp": 1438927408,
       "totalIn": "0",
       "totalOut": "5010500000000000000",
-      "totalOutLessGas": "5000000000000000000",
       "transactionHash": "0x10893338fa5633ab747450b8698457fb047098f87f78e98b3dbee3134067b6b8",
       "transactionIndex": 0
     },
     {
       "accountedFor": "0x08166f02313feae18bb044e7877c808b55b5bf58",
+      "accountedForName": "Prefund_0270",
       "amountIn": "0",
       "amountNet": "-1964900000000000000000",
       "amountOut": "1964889500000000000000",
-      "assetAddr": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
-      "assetSymbol": "WEI",
-      "assetType": "eth",
+      "asset": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+      "assetName": "ETH",
       "begBal": "1964989500000000000000",
       "begBalDiff": "0",
       "blockNumber": 46709,
-      "correctingIn": "0",
-      "correctingOut": "0",
-      "correctingReason": "",
+      "correctAmountIn": "0",
+      "correctAmountOut": "0",
+      "correctBegBalIn": "0",
+      "correctBegBalOut": "0",
+      "correctEndBalIn": "0",
+      "correctEndBalOut": "0",
+      "correctingReasons": "",
       "date": "2015-08-07 06:10:54 UTC",
       "decimals": 18,
       "endBal": "89500000000000000",
@@ -274,15 +286,15 @@ Results in ./statement_2_out.file
       "priceSource": "eth-not-priced-pre-maker",
       "recipient": "0xad00b7a324f31351d397408c8c3952ea198317eb",
       "reconciled": true,
-      "reconciliationType": "diff-last",
       "selfDestructIn": "0",
       "selfDestructOut": "0",
       "sender": "0x08166f02313feae18bb044e7877c808b55b5bf58",
-      "spotPrice": 0,
+      "senderName": "Prefund_0270",
+      "spotPrice": "0",
+      "symbol": "WEI",
       "timestamp": 1438927854,
       "totalIn": "0",
       "totalOut": "1964900000000000000000",
-      "totalOutLessGas": "1964889500000000000000",
       "transactionHash": "0x10d5c5f2386c6d6d93ca6b43fa25e8679971d07448db8d6c81d856ff3c3c001a",
       "transactionIndex": 0
     }

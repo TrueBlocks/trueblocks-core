@@ -1,0 +1,127 @@
+chifra export  trueblocks.eth --accounting --statements --first_block 8876230 --last_block 9024186 --fmt json
+TEST[DATE|TIME] Addrs:  [0xf503017d7baf7fbc0fff7492b751025c6a78179b]
+TEST[DATE|TIME] Statements:  true
+TEST[DATE|TIME] FirstBlock:  8876230
+TEST[DATE|TIME] LastBlock:  9024186
+TEST[DATE|TIME] Accounting:  true
+TEST[DATE|TIME] Caps:  cache,decache,ether
+TEST[DATE|TIME] Format:  json
+TEST[DATE|TIME] 0: 8876232 84
+TEST[DATE|TIME] 1: 9000998 70
+TEST[DATE|TIME] 2: 9024185 29
+TEST[DATE|TIME] 
+TEST[DATE|TIME] ------------------------------------
+TEST[DATE|TIME] ~~~ Entering: 8876232.84 ~~~
+TEST[DATE|TIME] First pass: Fetching unreconciled transfers
+TEST[DATE|TIME] Fetched 1 unreconciled transfers
+TEST[DATE|TIME] Second pass: Reconciling transfers
+TEST[DATE|TIME] Processing 1 log transfers
+TEST[DATE|TIME] Set BegSentinel for first log transfer
+TEST[DATE|TIME] Set EndSentinel for last log transfer
+TEST[DATE|TIME] Converted log transfer to statement for asset: 0xd53b50a6213ee7ff2fcc41a7cf69d22ded0a43b3
+TEST[DATE|TIME] XXX =============[ token ]======================
+TEST[DATE|TIME] XXX Case 1: Only statement in block
+TEST[DATE|TIME] XXX Block: 8876232 Tx: 84 Asset: 0xd53b50a6213ee7ff2fcc41a7cf69d22ded0a43b3
+TEST[DATE|TIME] XXX FirstInBlock: true, LastInBlock: true
+TEST[DATE|TIME] XXX ================================================
+TEST[DATE|TIME] Block 8876232 is prior to deployment (10000835) of Uniswap V2. No other source for tokens prior to UniSwap
+TEST[DATE|TIME] ===================================================
+TEST[DATE|TIME] Previous:               8876231 0 ( true )
+TEST[DATE|TIME] Current:                8876232 84 ( true )
+TEST[DATE|TIME] Next:                   9000998 70 ( true )
+TEST[DATE|TIME] accountedFor:           0xf503017d7baf7fbc0fff7492b751025c6a78179b
+TEST[DATE|TIME] sender:                 0x0  ==>  0xf503017d7baf7fbc0fff7492b751025c6a78179b
+TEST[DATE|TIME] asset:                  0xd53b50a6213ee7ff2fcc41a7cf69d22ded0a43b3 (CSTK) decimals: 18
+TEST[DATE|TIME] hash:                   0x389e24356a19c24cac14e99574553a33662099559921691fb592fba3232748fa
+TEST[DATE|TIME] timestamp:              1572938328
+TEST[DATE|TIME] blockNumber:            8876232.84.169
+TEST[DATE|TIME] priceSource:            0 (token-not-priced-pre-uni)
+TEST[DATE|TIME] --------------------------------------------------- 
+TEST[DATE|TIME] Trial balance:
+TEST[DATE|TIME]    prevBal:             0
+TEST[DATE|TIME]    begBal:              0 (0)
+TEST[DATE|TIME]    totalIn:             22500
+TEST[DATE|TIME]    totalOut:            0
+TEST[DATE|TIME]    amountNet:           22500
+TEST[DATE|TIME]                        ======================= 
+TEST[DATE|TIME]    endBal:              22500 (0)
+TEST[DATE|TIME]    endBalCalc:          22500
+TEST[DATE|TIME] --------------------------------------------------- 
+TEST[DATE|TIME]    amountIn:            22500
+TEST[DATE|TIME]    material:            true
+TEST[DATE|TIME]    reconciled:          true
+TEST[DATE|TIME] ---------------------------------------------------
+TEST[DATE|TIME] Log statement is material - appending. reconciled: true
+TEST[DATE|TIME] ~~~ Leaving: 8876232.84 ~~~
+TEST[DATE|TIME] ------------------------------------ 1 statements generated.
+TEST[DATE|TIME] 
+TEST[DATE|TIME] 
+TEST[DATE|TIME] ------------------------------------
+TEST[DATE|TIME] ~~~ Entering: 9000998.70 ~~~
+TEST[DATE|TIME] First pass: Fetching unreconciled transfers
+TEST[DATE|TIME] Fetched 0 unreconciled transfers
+TEST[DATE|TIME] Second pass: Reconciling transfers
+TEST[DATE|TIME] No log transfers to process
+TEST[DATE|TIME] ~~~ Leaving: 9000998.70 ~~~
+TEST[DATE|TIME] ------------------------------------ 0 statements generated.
+TEST[DATE|TIME] 
+TEST[DATE|TIME] 
+TEST[DATE|TIME] ------------------------------------
+TEST[DATE|TIME] ~~~ Entering: 9024185.29 ~~~
+TEST[DATE|TIME] First pass: Fetching unreconciled transfers
+TEST[DATE|TIME] Fetched 0 unreconciled transfers
+TEST[DATE|TIME] Second pass: Reconciling transfers
+TEST[DATE|TIME] No log transfers to process
+TEST[DATE|TIME] ~~~ Leaving: 9024185.29 ~~~
+TEST[DATE|TIME] ------------------------------------ 0 statements generated.
+TEST[DATE|TIME] 
+{
+  "data": [
+    {
+      "accountedFor": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
+      "amountIn": "22500000000000000000000",
+      "amountNet": "22500000000000000000000",
+      "amountOut": "0",
+      "asset": "0xd53b50a6213ee7ff2fcc41a7cf69d22ded0a43b3",
+      "assetName": "CommonsStackToken",
+      "begBal": "0",
+      "begBalDiff": "0",
+      "blockNumber": 8876232,
+      "correctAmountIn": "0",
+      "correctAmountOut": "0",
+      "correctBegBalIn": "0",
+      "correctBegBalOut": "0",
+      "correctEndBalIn": "0",
+      "correctEndBalOut": "0",
+      "correctingReasons": "",
+      "date": "2019-11-05 07:18:48 UTC",
+      "decimals": 18,
+      "endBal": "22500000000000000000000",
+      "endBalCalc": "22500000000000000000000",
+      "endBalDiff": "0",
+      "gasOut": "0",
+      "internalIn": "0",
+      "internalOut": "0",
+      "logIndex": 169,
+      "minerBaseRewardIn": "0",
+      "minerNephewRewardIn": "0",
+      "minerTxFeeIn": "0",
+      "minerUncleRewardIn": "0",
+      "prefundIn": "0",
+      "prevBal": "0",
+      "priceSource": "token-not-priced-pre-uni",
+      "recipient": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
+      "reconciled": true,
+      "selfDestructIn": "0",
+      "selfDestructOut": "0",
+      "sender": "0x0",
+      "spotPrice": "0",
+      "symbol": "CSTK",
+      "timestamp": 1572938328,
+      "totalIn": "22500000000000000000000",
+      "totalOut": "0",
+      "transactionHash": "0x389e24356a19c24cac14e99574553a33662099559921691fb592fba3232748fa",
+      "transactionIndex": 84
+    }
+  ]
+}

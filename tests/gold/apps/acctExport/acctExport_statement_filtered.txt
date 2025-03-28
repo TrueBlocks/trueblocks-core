@@ -1,44 +1,51 @@
-chifra export  0xf503017d7baf7fbc0fff7492b751025c6a78179b --accounting --statements --first_block 8860513 --last_block 8860531 --ether --asset 0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359 --fmt json
+chifra export  0xf503017d7baf7fbc0fff7492b751025c6a78179b --accounting --statements --first_block 8860513 --last_block 8860531 --asset 0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359 --fmt json --output statement_filtered_out.file
 TEST[DATE|TIME] Addrs:  [0xf503017d7baf7fbc0fff7492b751025c6a78179b]
-TEST[DATE|TIME] Accounting:  true
 TEST[DATE|TIME] Statements:  true
 TEST[DATE|TIME] Asset:  [0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359]
 TEST[DATE|TIME] FirstBlock:  8860513
 TEST[DATE|TIME] LastBlock:  8860531
-TEST[DATE|TIME] Ether:  true
+TEST[DATE|TIME] Accounting:  true
 TEST[DATE|TIME] OutputFn:  statement_filtered_out.file
 TEST[DATE|TIME] Caps:  cache,decache,ether
 TEST[DATE|TIME] Format:  json
-{ "outputFilename": "--output_filename--" }
-INFO[DATE|TIME] ------------------------------------------------------------
-INFO[DATE|TIME] Contexts (3)
-INFO[DATE|TIME] 008860513-00085:    8860513    8860513     8860529 first-diff
-INFO[DATE|TIME] 008860529-00145:    8860513    8860529     8860531 diff-diff
-INFO[DATE|TIME] 008860531-00152:    8860529    8860531     8860531 diff-last
-TEST[DATE|TIME] Start of trial balance report
+INFO[DATE|TIME] { "outputFilename": "--output_filename--" }
+TEST[DATE|TIME] 0: 8860513 85
+TEST[DATE|TIME] 1: 8860529 145
+TEST[DATE|TIME] 2: 8860531 152
+TEST[DATE|TIME] 
+TEST[DATE|TIME] ------------------------------------
+TEST[DATE|TIME] ~~~ Entering: 8860513.85 ~~~
+TEST[DATE|TIME] First pass: Fetching unreconciled transfers
+TEST[DATE|TIME] Fetched 1 unreconciled transfers
+TEST[DATE|TIME] Second pass: Reconciling transfers
+TEST[DATE|TIME] Processing 1 log transfers
+TEST[DATE|TIME] Set BegSentinel for first log transfer
+TEST[DATE|TIME] Set EndSentinel for last log transfer
+TEST[DATE|TIME] Converted log transfer to statement for asset: 0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359
+TEST[DATE|TIME] XXX =============[ token ]======================
+TEST[DATE|TIME] XXX Case 1: Only statement in block
+TEST[DATE|TIME] XXX Block: 8860513 Tx: 85 Asset: 0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359
+TEST[DATE|TIME] XXX FirstInBlock: true, LastInBlock: true
+TEST[DATE|TIME] XXX ================================================
 TEST[DATE|TIME] =========================================================
 TEST[DATE|TIME] ===> PRICING FOR 0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359 (DAI) 
 TEST[DATE|TIME] =========================================================
 TEST[DATE|TIME] stable-coin
 TEST[DATE|TIME] ===================================================
-TEST[DATE|TIME] ====> token
-TEST[DATE|TIME] ===================================================
-TEST[DATE|TIME] Previous:               8860513
-TEST[DATE|TIME] Current:                8860513
-TEST[DATE|TIME] Next:                   8860529
-TEST[DATE|TIME] reconciliationType:     first-diff
-TEST[DATE|TIME] assetType:              token
+TEST[DATE|TIME] Previous:               8860512 0 ( true )
+TEST[DATE|TIME] Current:                8860513 85 ( true )
+TEST[DATE|TIME] Next:                   8860529 145 ( true )
 TEST[DATE|TIME] accountedFor:           0xf503017d7baf7fbc0fff7492b751025c6a78179b
 TEST[DATE|TIME] sender:                 0xf503017d7baf7fbc0fff7492b751025c6a78179b  ==>  0x30f938fed5de6e06a9a7cd2ac3517131c317b1e7
-TEST[DATE|TIME] assetAddr:              0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359 (DAI) decimals: 18
+TEST[DATE|TIME] asset:                  0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359 (DAI) decimals: 18
 TEST[DATE|TIME] hash:                   0xd5a49ef68f77357a5202ca09499b343b27cd02c1172c4ace3050a494dc218d8a
 TEST[DATE|TIME] timestamp:              1572720150
 TEST[DATE|TIME] blockNumber:            8860513.85.84
 TEST[DATE|TIME] priceSource:            1 (stable-coin)
 TEST[DATE|TIME] --------------------------------------------------- 
 TEST[DATE|TIME] Trial balance:
-TEST[DATE|TIME]    prevBal:             -
-TEST[DATE|TIME]    begBal:              7500 (-)
+TEST[DATE|TIME]    prevBal:             7500
+TEST[DATE|TIME]    begBal:              7500 (0)
 TEST[DATE|TIME]    totalIn:             0
 TEST[DATE|TIME]    totalOut:            500
 TEST[DATE|TIME]    amountNet:           -500
@@ -50,23 +57,46 @@ TEST[DATE|TIME]    amountOut:           500
 TEST[DATE|TIME]    material:            true
 TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
-TEST[DATE|TIME] End of trial balance report
-TEST[DATE|TIME] Start of trial balance report
+TEST[DATE|TIME] Log statement is material - appending. reconciled: true
+TEST[DATE|TIME] ~~~ Leaving: 8860513.85 ~~~
+TEST[DATE|TIME] ------------------------------------ 1 statements generated.
+TEST[DATE|TIME] 
+TEST[DATE|TIME] 
+TEST[DATE|TIME] ------------------------------------
+TEST[DATE|TIME] ~~~ Entering: 8860529.145 ~~~
+TEST[DATE|TIME] First pass: Fetching unreconciled transfers
+TEST[DATE|TIME] Fetched 0 unreconciled transfers
+TEST[DATE|TIME] Second pass: Reconciling transfers
+TEST[DATE|TIME] No log transfers to process
+TEST[DATE|TIME] ~~~ Leaving: 8860529.145 ~~~
+TEST[DATE|TIME] ------------------------------------ 0 statements generated.
+TEST[DATE|TIME] 
+TEST[DATE|TIME] 
+TEST[DATE|TIME] ------------------------------------
+TEST[DATE|TIME] ~~~ Entering: 8860531.152 ~~~
+TEST[DATE|TIME] First pass: Fetching unreconciled transfers
+TEST[DATE|TIME] Fetched 1 unreconciled transfers
+TEST[DATE|TIME] Second pass: Reconciling transfers
+TEST[DATE|TIME] Processing 1 log transfers
+TEST[DATE|TIME] Set BegSentinel for first log transfer
+TEST[DATE|TIME] Set EndSentinel for last log transfer
+TEST[DATE|TIME] Converted log transfer to statement for asset: 0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359
+TEST[DATE|TIME] XXX =============[ token ]======================
+TEST[DATE|TIME] XXX Case 1: Only statement in block
+TEST[DATE|TIME] XXX Block: 8860531 Tx: 152 Asset: 0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359
+TEST[DATE|TIME] XXX FirstInBlock: true, LastInBlock: true
+TEST[DATE|TIME] XXX ================================================
 TEST[DATE|TIME] =========================================================
 TEST[DATE|TIME] ===> PRICING FOR 0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359 (DAI) 
 TEST[DATE|TIME] =========================================================
 TEST[DATE|TIME] stable-coin
 TEST[DATE|TIME] ===================================================
-TEST[DATE|TIME] ====> token
-TEST[DATE|TIME] ===================================================
-TEST[DATE|TIME] Previous:               8860529
-TEST[DATE|TIME] Current:                8860531
-TEST[DATE|TIME] Next:                   8860531
-TEST[DATE|TIME] reconciliationType:     diff-last
-TEST[DATE|TIME] assetType:              token
+TEST[DATE|TIME] Previous:               8860529 145 ( true )
+TEST[DATE|TIME] Current:                8860531 152 ( true )
+TEST[DATE|TIME] Next:                   8860532 0 ( true )
 TEST[DATE|TIME] accountedFor:           0xf503017d7baf7fbc0fff7492b751025c6a78179b
 TEST[DATE|TIME] sender:                 0xf503017d7baf7fbc0fff7492b751025c6a78179b  ==>  0x30f938fed5de6e06a9a7cd2ac3517131c317b1e7
-TEST[DATE|TIME] assetAddr:              0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359 (DAI) decimals: 18
+TEST[DATE|TIME] asset:                  0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359 (DAI) decimals: 18
 TEST[DATE|TIME] hash:                   0x1cdbe0fcca2ee3f9e4504f25e6f2a485835caa920496d20b10fa6241cbfdb124
 TEST[DATE|TIME] timestamp:              1572720361
 TEST[DATE|TIME] blockNumber:            8860531.152.95
@@ -86,7 +116,10 @@ TEST[DATE|TIME]    amountOut:           7000
 TEST[DATE|TIME]    material:            true
 TEST[DATE|TIME]    reconciled:          true
 TEST[DATE|TIME] ---------------------------------------------------
-TEST[DATE|TIME] End of trial balance report
+TEST[DATE|TIME] Log statement is material - appending. reconciled: true
+TEST[DATE|TIME] ~~~ Leaving: 8860531.152 ~~~
+TEST[DATE|TIME] ------------------------------------ 1 statements generated.
+TEST[DATE|TIME] 
 ----
 Results in ./statement_filtered_out.file
 {
@@ -94,21 +127,24 @@ Results in ./statement_filtered_out.file
     {
       "accountedFor": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
       "amountIn": "0",
-      "amountNet": "-500",
-      "amountOut": "500",
-      "assetAddr": "0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359",
-      "assetSymbol": "DAI",
-      "assetType": "token",
-      "begBal": "7500",
+      "amountNet": "-500000000000000000000",
+      "amountOut": "500000000000000000000",
+      "asset": "0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359",
+      "assetName": "Dai Stablecoin v1.0",
+      "begBal": "7500000000000000000000",
       "begBalDiff": "0",
       "blockNumber": 8860513,
-      "correctingIn": "0",
-      "correctingOut": "0",
-      "correctingReason": "",
+      "correctAmountIn": "0",
+      "correctAmountOut": "0",
+      "correctBegBalIn": "0",
+      "correctBegBalOut": "0",
+      "correctEndBalIn": "0",
+      "correctEndBalOut": "0",
+      "correctingReasons": "",
       "date": "2019-11-02 18:42:30 UTC",
       "decimals": 18,
-      "endBal": "7000",
-      "endBalCalc": "7000",
+      "endBal": "7000000000000000000000",
+      "endBalCalc": "7000000000000000000000",
       "endBalDiff": "0",
       "gasOut": "0",
       "internalIn": "0",
@@ -119,35 +155,39 @@ Results in ./statement_filtered_out.file
       "minerTxFeeIn": "0",
       "minerUncleRewardIn": "0",
       "prefundIn": "0",
+      "prevBal": "7500000000000000000000",
       "priceSource": "stable-coin",
       "recipient": "0x30f938fed5de6e06a9a7cd2ac3517131c317b1e7",
+      "recipientName": "Giveth Bridge",
       "reconciled": true,
-      "reconciliationType": "first-diff",
       "selfDestructIn": "0",
       "selfDestructOut": "0",
       "sender": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
-      "spotPrice": 1,
+      "spotPrice": "1",
+      "symbol": "DAI",
       "timestamp": 1572720150,
       "totalIn": "0",
-      "totalOut": "500",
-      "totalOutLessGas": "500",
+      "totalOut": "500000000000000000000",
       "transactionHash": "0xd5a49ef68f77357a5202ca09499b343b27cd02c1172c4ace3050a494dc218d8a",
       "transactionIndex": 85
     },
     {
       "accountedFor": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
       "amountIn": "0",
-      "amountNet": "-7000",
-      "amountOut": "7000",
-      "assetAddr": "0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359",
-      "assetSymbol": "DAI",
-      "assetType": "token",
-      "begBal": "7000",
+      "amountNet": "-7000000000000000000000",
+      "amountOut": "7000000000000000000000",
+      "asset": "0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359",
+      "assetName": "Dai Stablecoin v1.0",
+      "begBal": "7000000000000000000000",
       "begBalDiff": "0",
       "blockNumber": 8860531,
-      "correctingIn": "0",
-      "correctingOut": "0",
-      "correctingReason": "",
+      "correctAmountIn": "0",
+      "correctAmountOut": "0",
+      "correctBegBalIn": "0",
+      "correctBegBalOut": "0",
+      "correctEndBalIn": "0",
+      "correctEndBalOut": "0",
+      "correctingReasons": "",
       "date": "2019-11-02 18:46:01 UTC",
       "decimals": 18,
       "endBal": "0",
@@ -162,22 +202,21 @@ Results in ./statement_filtered_out.file
       "minerTxFeeIn": "0",
       "minerUncleRewardIn": "0",
       "prefundIn": "0",
-      "prevBal": "7000",
+      "prevBal": "7000000000000000000000",
       "priceSource": "stable-coin",
       "recipient": "0x30f938fed5de6e06a9a7cd2ac3517131c317b1e7",
+      "recipientName": "Giveth Bridge",
       "reconciled": true,
-      "reconciliationType": "diff-last",
       "selfDestructIn": "0",
       "selfDestructOut": "0",
       "sender": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
-      "spotPrice": 1,
+      "spotPrice": "1",
+      "symbol": "DAI",
       "timestamp": 1572720361,
       "totalIn": "0",
-      "totalOut": "7000",
-      "totalOutLessGas": "7000",
+      "totalOut": "7000000000000000000000",
       "transactionHash": "0x1cdbe0fcca2ee3f9e4504f25e6f2a485835caa920496d20b10fa6241cbfdb124",
       "transactionIndex": 152
     }
   ]
 }
-

@@ -1,0 +1,497 @@
+chifra export  0x054993ab0f2b1acc0fdc65405ee203b4271bebe6 --accounting --statements --asset 0xf5b2c59f6db42ffcdfc1625999c81fdf17953384 --fmt json --last_block 15549163 --max_records 40
+TEST[DATE|TIME] Addrs:  [0x054993ab0f2b1acc0fdc65405ee203b4271bebe6]
+TEST[DATE|TIME] Statements:  true
+TEST[DATE|TIME] MaxRecords:  40
+TEST[DATE|TIME] Asset:  [0xf5b2c59f6db42ffcdfc1625999c81fdf17953384]
+TEST[DATE|TIME] LastBlock:  15549163
+TEST[DATE|TIME] Accounting:  true
+TEST[DATE|TIME] Caps:  cache,decache,ether
+TEST[DATE|TIME] Format:  json
+TEST[DATE|TIME] 0: 10277683 200
+TEST[DATE|TIME] 1: 10277711 64
+TEST[DATE|TIME] 2: 10277776 94
+TEST[DATE|TIME] 3: 10277780 102
+TEST[DATE|TIME] 4: 10367593 194
+TEST[DATE|TIME] 5: 10367608 23
+TEST[DATE|TIME] 6: 10958509 72
+TEST[DATE|TIME] 7: 10958518 77
+TEST[DATE|TIME] 8: 10972535 102
+TEST[DATE|TIME] 9: 10972735 84
+TEST[DATE|TIME] 10: 11472274 222
+TEST[DATE|TIME] 11: 11947926 77
+TEST[DATE|TIME] 12: 12110203 88
+TEST[DATE|TIME] 13: 12517694 73
+TEST[DATE|TIME] 14: 12655959 195
+TEST[DATE|TIME] 15: 12697277 188
+TEST[DATE|TIME] 16: 12697303 99
+TEST[DATE|TIME] 17: 12697322 281
+TEST[DATE|TIME] 18: 12697324 88
+TEST[DATE|TIME] 19: 13193257 227
+TEST[DATE|TIME] 
+TEST[DATE|TIME] ------------------------------------
+TEST[DATE|TIME] ~~~ Entering: 10277683.200 ~~~
+TEST[DATE|TIME] First pass: Fetching unreconciled transfers
+TEST[DATE|TIME] Fetched 0 unreconciled transfers
+TEST[DATE|TIME] Second pass: Reconciling transfers
+TEST[DATE|TIME] No log transfers to process
+TEST[DATE|TIME] ~~~ Leaving: 10277683.200 ~~~
+TEST[DATE|TIME] ------------------------------------ 0 statements generated.
+TEST[DATE|TIME] 
+TEST[DATE|TIME] 
+TEST[DATE|TIME] ------------------------------------
+TEST[DATE|TIME] ~~~ Entering: 10277711.64 ~~~
+TEST[DATE|TIME] First pass: Fetching unreconciled transfers
+TEST[DATE|TIME] Fetched 0 unreconciled transfers
+TEST[DATE|TIME] Second pass: Reconciling transfers
+TEST[DATE|TIME] No log transfers to process
+TEST[DATE|TIME] ~~~ Leaving: 10277711.64 ~~~
+TEST[DATE|TIME] ------------------------------------ 0 statements generated.
+TEST[DATE|TIME] 
+TEST[DATE|TIME] 
+TEST[DATE|TIME] ------------------------------------
+TEST[DATE|TIME] ~~~ Entering: 10277776.94 ~~~
+TEST[DATE|TIME] First pass: Fetching unreconciled transfers
+TEST[DATE|TIME] Fetched 0 unreconciled transfers
+TEST[DATE|TIME] Second pass: Reconciling transfers
+TEST[DATE|TIME] No log transfers to process
+TEST[DATE|TIME] ~~~ Leaving: 10277776.94 ~~~
+TEST[DATE|TIME] ------------------------------------ 0 statements generated.
+TEST[DATE|TIME] 
+TEST[DATE|TIME] 
+TEST[DATE|TIME] ------------------------------------
+TEST[DATE|TIME] ~~~ Entering: 10277780.102 ~~~
+TEST[DATE|TIME] First pass: Fetching unreconciled transfers
+TEST[DATE|TIME] Fetched 0 unreconciled transfers
+TEST[DATE|TIME] Second pass: Reconciling transfers
+TEST[DATE|TIME] No log transfers to process
+TEST[DATE|TIME] ~~~ Leaving: 10277780.102 ~~~
+TEST[DATE|TIME] ------------------------------------ 0 statements generated.
+TEST[DATE|TIME] 
+TEST[DATE|TIME] 
+TEST[DATE|TIME] ------------------------------------
+TEST[DATE|TIME] ~~~ Entering: 10367593.194 ~~~
+TEST[DATE|TIME] First pass: Fetching unreconciled transfers
+TEST[DATE|TIME] Fetched 0 unreconciled transfers
+TEST[DATE|TIME] Second pass: Reconciling transfers
+TEST[DATE|TIME] No log transfers to process
+TEST[DATE|TIME] ~~~ Leaving: 10367593.194 ~~~
+TEST[DATE|TIME] ------------------------------------ 0 statements generated.
+TEST[DATE|TIME] 
+TEST[DATE|TIME] 
+TEST[DATE|TIME] ------------------------------------
+TEST[DATE|TIME] ~~~ Entering: 10367608.23 ~~~
+TEST[DATE|TIME] First pass: Fetching unreconciled transfers
+TEST[DATE|TIME] Fetched 0 unreconciled transfers
+TEST[DATE|TIME] Second pass: Reconciling transfers
+TEST[DATE|TIME] No log transfers to process
+TEST[DATE|TIME] ~~~ Leaving: 10367608.23 ~~~
+TEST[DATE|TIME] ------------------------------------ 0 statements generated.
+TEST[DATE|TIME] 
+TEST[DATE|TIME] 
+TEST[DATE|TIME] ------------------------------------
+TEST[DATE|TIME] ~~~ Entering: 10958509.72 ~~~
+TEST[DATE|TIME] First pass: Fetching unreconciled transfers
+TEST[DATE|TIME] Fetched 0 unreconciled transfers
+TEST[DATE|TIME] Second pass: Reconciling transfers
+TEST[DATE|TIME] No log transfers to process
+TEST[DATE|TIME] ~~~ Leaving: 10958509.72 ~~~
+TEST[DATE|TIME] ------------------------------------ 0 statements generated.
+TEST[DATE|TIME] 
+TEST[DATE|TIME] 
+TEST[DATE|TIME] ------------------------------------
+TEST[DATE|TIME] ~~~ Entering: 10958518.77 ~~~
+TEST[DATE|TIME] First pass: Fetching unreconciled transfers
+TEST[DATE|TIME] Fetched 0 unreconciled transfers
+TEST[DATE|TIME] Second pass: Reconciling transfers
+TEST[DATE|TIME] No log transfers to process
+TEST[DATE|TIME] ~~~ Leaving: 10958518.77 ~~~
+TEST[DATE|TIME] ------------------------------------ 0 statements generated.
+TEST[DATE|TIME] 
+TEST[DATE|TIME] 
+TEST[DATE|TIME] ------------------------------------
+TEST[DATE|TIME] ~~~ Entering: 10972535.102 ~~~
+TEST[DATE|TIME] First pass: Fetching unreconciled transfers
+TEST[DATE|TIME] Fetched 0 unreconciled transfers
+TEST[DATE|TIME] Second pass: Reconciling transfers
+TEST[DATE|TIME] No log transfers to process
+TEST[DATE|TIME] ~~~ Leaving: 10972535.102 ~~~
+TEST[DATE|TIME] ------------------------------------ 0 statements generated.
+TEST[DATE|TIME] 
+TEST[DATE|TIME] 
+TEST[DATE|TIME] ------------------------------------
+TEST[DATE|TIME] ~~~ Entering: 10972735.84 ~~~
+TEST[DATE|TIME] First pass: Fetching unreconciled transfers
+TEST[DATE|TIME] Fetched 0 unreconciled transfers
+TEST[DATE|TIME] Second pass: Reconciling transfers
+TEST[DATE|TIME] No log transfers to process
+TEST[DATE|TIME] ~~~ Leaving: 10972735.84 ~~~
+TEST[DATE|TIME] ------------------------------------ 0 statements generated.
+TEST[DATE|TIME] 
+TEST[DATE|TIME] 
+TEST[DATE|TIME] ------------------------------------
+TEST[DATE|TIME] ~~~ Entering: 11472274.222 ~~~
+TEST[DATE|TIME] First pass: Fetching unreconciled transfers
+TEST[DATE|TIME] Fetched 0 unreconciled transfers
+TEST[DATE|TIME] Second pass: Reconciling transfers
+TEST[DATE|TIME] No log transfers to process
+TEST[DATE|TIME] ~~~ Leaving: 11472274.222 ~~~
+TEST[DATE|TIME] ------------------------------------ 0 statements generated.
+TEST[DATE|TIME] 
+TEST[DATE|TIME] 
+TEST[DATE|TIME] ------------------------------------
+TEST[DATE|TIME] ~~~ Entering: 11947926.77 ~~~
+TEST[DATE|TIME] First pass: Fetching unreconciled transfers
+TEST[DATE|TIME] Fetched 0 unreconciled transfers
+TEST[DATE|TIME] Second pass: Reconciling transfers
+TEST[DATE|TIME] No log transfers to process
+TEST[DATE|TIME] ~~~ Leaving: 11947926.77 ~~~
+TEST[DATE|TIME] ------------------------------------ 0 statements generated.
+TEST[DATE|TIME] 
+TEST[DATE|TIME] 
+TEST[DATE|TIME] ------------------------------------
+TEST[DATE|TIME] ~~~ Entering: 12110203.88 ~~~
+TEST[DATE|TIME] First pass: Fetching unreconciled transfers
+TEST[DATE|TIME] Fetched 0 unreconciled transfers
+TEST[DATE|TIME] Second pass: Reconciling transfers
+TEST[DATE|TIME] No log transfers to process
+TEST[DATE|TIME] ~~~ Leaving: 12110203.88 ~~~
+TEST[DATE|TIME] ------------------------------------ 0 statements generated.
+TEST[DATE|TIME] 
+TEST[DATE|TIME] 
+TEST[DATE|TIME] ------------------------------------
+TEST[DATE|TIME] ~~~ Entering: 12517694.73 ~~~
+TEST[DATE|TIME] First pass: Fetching unreconciled transfers
+TEST[DATE|TIME] Fetched 0 unreconciled transfers
+TEST[DATE|TIME] Second pass: Reconciling transfers
+TEST[DATE|TIME] No log transfers to process
+TEST[DATE|TIME] ~~~ Leaving: 12517694.73 ~~~
+TEST[DATE|TIME] ------------------------------------ 0 statements generated.
+TEST[DATE|TIME] 
+TEST[DATE|TIME] 
+TEST[DATE|TIME] ------------------------------------
+TEST[DATE|TIME] ~~~ Entering: 12655959.195 ~~~
+TEST[DATE|TIME] First pass: Fetching unreconciled transfers
+TEST[DATE|TIME] Fetched 0 unreconciled transfers
+TEST[DATE|TIME] Second pass: Reconciling transfers
+TEST[DATE|TIME] No log transfers to process
+TEST[DATE|TIME] ~~~ Leaving: 12655959.195 ~~~
+TEST[DATE|TIME] ------------------------------------ 0 statements generated.
+TEST[DATE|TIME] 
+TEST[DATE|TIME] 
+TEST[DATE|TIME] ------------------------------------
+TEST[DATE|TIME] ~~~ Entering: 12697277.188 ~~~
+TEST[DATE|TIME] First pass: Fetching unreconciled transfers
+TEST[DATE|TIME] Fetched 0 unreconciled transfers
+TEST[DATE|TIME] Second pass: Reconciling transfers
+TEST[DATE|TIME] No log transfers to process
+TEST[DATE|TIME] ~~~ Leaving: 12697277.188 ~~~
+TEST[DATE|TIME] ------------------------------------ 0 statements generated.
+TEST[DATE|TIME] 
+TEST[DATE|TIME] 
+TEST[DATE|TIME] ------------------------------------
+TEST[DATE|TIME] ~~~ Entering: 12697303.99 ~~~
+TEST[DATE|TIME] First pass: Fetching unreconciled transfers
+TEST[DATE|TIME] Fetched 0 unreconciled transfers
+TEST[DATE|TIME] Second pass: Reconciling transfers
+TEST[DATE|TIME] No log transfers to process
+TEST[DATE|TIME] ~~~ Leaving: 12697303.99 ~~~
+TEST[DATE|TIME] ------------------------------------ 0 statements generated.
+TEST[DATE|TIME] 
+TEST[DATE|TIME] 
+TEST[DATE|TIME] ------------------------------------
+TEST[DATE|TIME] ~~~ Entering: 12697322.281 ~~~
+TEST[DATE|TIME] First pass: Fetching unreconciled transfers
+TEST[DATE|TIME] Fetched 0 unreconciled transfers
+TEST[DATE|TIME] Second pass: Reconciling transfers
+TEST[DATE|TIME] No log transfers to process
+TEST[DATE|TIME] ~~~ Leaving: 12697322.281 ~~~
+TEST[DATE|TIME] ------------------------------------ 0 statements generated.
+TEST[DATE|TIME] 
+TEST[DATE|TIME] 
+TEST[DATE|TIME] ------------------------------------
+TEST[DATE|TIME] ~~~ Entering: 12697324.88 ~~~
+TEST[DATE|TIME] First pass: Fetching unreconciled transfers
+TEST[DATE|TIME] Fetched 0 unreconciled transfers
+TEST[DATE|TIME] Second pass: Reconciling transfers
+TEST[DATE|TIME] No log transfers to process
+TEST[DATE|TIME] ~~~ Leaving: 12697324.88 ~~~
+TEST[DATE|TIME] ------------------------------------ 0 statements generated.
+TEST[DATE|TIME] 
+TEST[DATE|TIME] 
+TEST[DATE|TIME] ------------------------------------
+TEST[DATE|TIME] ~~~ Entering: 13193257.227 ~~~
+TEST[DATE|TIME] First pass: Fetching unreconciled transfers
+TEST[DATE|TIME] Fetched 0 unreconciled transfers
+TEST[DATE|TIME] Second pass: Reconciling transfers
+TEST[DATE|TIME] No log transfers to process
+TEST[DATE|TIME] ~~~ Leaving: 13193257.227 ~~~
+TEST[DATE|TIME] ------------------------------------ 0 statements generated.
+TEST[DATE|TIME] 
+TEST[DATE|TIME] 0: 13269886 45
+TEST[DATE|TIME] 1: 13269900 177
+TEST[DATE|TIME] 2: 13269973 178
+TEST[DATE|TIME] 3: 13772984 129
+TEST[DATE|TIME] 4: 14359849 140
+TEST[DATE|TIME] 5: 14359857 202
+TEST[DATE|TIME] 6: 14359877 153
+TEST[DATE|TIME] 7: 14360325 141
+TEST[DATE|TIME] 8: 14360361 80
+TEST[DATE|TIME] 9: 14366254 17
+TEST[DATE|TIME] 10: 14436713 58
+TEST[DATE|TIME] 11: 14436713 59
+TEST[DATE|TIME] 12: 14469880 33
+TEST[DATE|TIME] 13: 15549162 83
+TEST[DATE|TIME] 
+TEST[DATE|TIME] ------------------------------------
+TEST[DATE|TIME] ~~~ Entering: 13269886.45 ~~~
+TEST[DATE|TIME] First pass: Fetching unreconciled transfers
+TEST[DATE|TIME] Fetched 0 unreconciled transfers
+TEST[DATE|TIME] Second pass: Reconciling transfers
+TEST[DATE|TIME] No log transfers to process
+TEST[DATE|TIME] ~~~ Leaving: 13269886.45 ~~~
+TEST[DATE|TIME] ------------------------------------ 0 statements generated.
+TEST[DATE|TIME] 
+TEST[DATE|TIME] 
+TEST[DATE|TIME] ------------------------------------
+TEST[DATE|TIME] ~~~ Entering: 13269900.177 ~~~
+TEST[DATE|TIME] First pass: Fetching unreconciled transfers
+TEST[DATE|TIME] Fetched 0 unreconciled transfers
+TEST[DATE|TIME] Second pass: Reconciling transfers
+TEST[DATE|TIME] No log transfers to process
+TEST[DATE|TIME] ~~~ Leaving: 13269900.177 ~~~
+TEST[DATE|TIME] ------------------------------------ 0 statements generated.
+TEST[DATE|TIME] 
+TEST[DATE|TIME] 
+TEST[DATE|TIME] ------------------------------------
+TEST[DATE|TIME] ~~~ Entering: 13269973.178 ~~~
+TEST[DATE|TIME] First pass: Fetching unreconciled transfers
+TEST[DATE|TIME] Fetched 0 unreconciled transfers
+TEST[DATE|TIME] Second pass: Reconciling transfers
+TEST[DATE|TIME] No log transfers to process
+TEST[DATE|TIME] ~~~ Leaving: 13269973.178 ~~~
+TEST[DATE|TIME] ------------------------------------ 0 statements generated.
+TEST[DATE|TIME] 
+TEST[DATE|TIME] 
+TEST[DATE|TIME] ------------------------------------
+TEST[DATE|TIME] ~~~ Entering: 13772984.129 ~~~
+TEST[DATE|TIME] First pass: Fetching unreconciled transfers
+TEST[DATE|TIME] Fetched 0 unreconciled transfers
+TEST[DATE|TIME] Second pass: Reconciling transfers
+TEST[DATE|TIME] No log transfers to process
+TEST[DATE|TIME] ~~~ Leaving: 13772984.129 ~~~
+TEST[DATE|TIME] ------------------------------------ 0 statements generated.
+TEST[DATE|TIME] 
+TEST[DATE|TIME] 
+TEST[DATE|TIME] ------------------------------------
+TEST[DATE|TIME] ~~~ Entering: 14359849.140 ~~~
+TEST[DATE|TIME] First pass: Fetching unreconciled transfers
+TEST[DATE|TIME] Fetched 0 unreconciled transfers
+TEST[DATE|TIME] Second pass: Reconciling transfers
+TEST[DATE|TIME] No log transfers to process
+TEST[DATE|TIME] ~~~ Leaving: 14359849.140 ~~~
+TEST[DATE|TIME] ------------------------------------ 0 statements generated.
+TEST[DATE|TIME] 
+TEST[DATE|TIME] 
+TEST[DATE|TIME] ------------------------------------
+TEST[DATE|TIME] ~~~ Entering: 14359857.202 ~~~
+TEST[DATE|TIME] First pass: Fetching unreconciled transfers
+TEST[DATE|TIME] Fetched 0 unreconciled transfers
+TEST[DATE|TIME] Second pass: Reconciling transfers
+TEST[DATE|TIME] No log transfers to process
+TEST[DATE|TIME] ~~~ Leaving: 14359857.202 ~~~
+TEST[DATE|TIME] ------------------------------------ 0 statements generated.
+TEST[DATE|TIME] 
+TEST[DATE|TIME] 
+TEST[DATE|TIME] ------------------------------------
+TEST[DATE|TIME] ~~~ Entering: 14359877.153 ~~~
+TEST[DATE|TIME] First pass: Fetching unreconciled transfers
+TEST[DATE|TIME] Fetched 0 unreconciled transfers
+TEST[DATE|TIME] Second pass: Reconciling transfers
+TEST[DATE|TIME] No log transfers to process
+TEST[DATE|TIME] ~~~ Leaving: 14359877.153 ~~~
+TEST[DATE|TIME] ------------------------------------ 0 statements generated.
+TEST[DATE|TIME] 
+TEST[DATE|TIME] 
+TEST[DATE|TIME] ------------------------------------
+TEST[DATE|TIME] ~~~ Entering: 14360325.141 ~~~
+TEST[DATE|TIME] First pass: Fetching unreconciled transfers
+TEST[DATE|TIME] Fetched 0 unreconciled transfers
+TEST[DATE|TIME] Second pass: Reconciling transfers
+TEST[DATE|TIME] No log transfers to process
+TEST[DATE|TIME] ~~~ Leaving: 14360325.141 ~~~
+TEST[DATE|TIME] ------------------------------------ 0 statements generated.
+TEST[DATE|TIME] 
+TEST[DATE|TIME] 
+TEST[DATE|TIME] ------------------------------------
+TEST[DATE|TIME] ~~~ Entering: 14360361.80 ~~~
+TEST[DATE|TIME] First pass: Fetching unreconciled transfers
+TEST[DATE|TIME] Fetched 0 unreconciled transfers
+TEST[DATE|TIME] Second pass: Reconciling transfers
+TEST[DATE|TIME] No log transfers to process
+TEST[DATE|TIME] ~~~ Leaving: 14360361.80 ~~~
+TEST[DATE|TIME] ------------------------------------ 0 statements generated.
+TEST[DATE|TIME] 
+TEST[DATE|TIME] 
+TEST[DATE|TIME] ------------------------------------
+TEST[DATE|TIME] ~~~ Entering: 14366254.17 ~~~
+TEST[DATE|TIME] First pass: Fetching unreconciled transfers
+TEST[DATE|TIME] Fetched 0 unreconciled transfers
+TEST[DATE|TIME] Second pass: Reconciling transfers
+TEST[DATE|TIME] No log transfers to process
+TEST[DATE|TIME] ~~~ Leaving: 14366254.17 ~~~
+TEST[DATE|TIME] ------------------------------------ 0 statements generated.
+TEST[DATE|TIME] 
+TEST[DATE|TIME] 
+TEST[DATE|TIME] ------------------------------------
+TEST[DATE|TIME] ~~~ Entering: 14436713.58 ~~~
+TEST[DATE|TIME] First pass: Fetching unreconciled transfers
+TEST[DATE|TIME] Fetched 0 unreconciled transfers
+TEST[DATE|TIME] Second pass: Reconciling transfers
+TEST[DATE|TIME] No log transfers to process
+TEST[DATE|TIME] ~~~ Leaving: 14436713.58 ~~~
+TEST[DATE|TIME] ------------------------------------ 0 statements generated.
+TEST[DATE|TIME] 
+TEST[DATE|TIME] 
+TEST[DATE|TIME] ------------------------------------
+TEST[DATE|TIME] ~~~ Entering: 14436713.59 ~~~
+TEST[DATE|TIME] First pass: Fetching unreconciled transfers
+TEST[DATE|TIME] Fetched 0 unreconciled transfers
+TEST[DATE|TIME] Second pass: Reconciling transfers
+TEST[DATE|TIME] No log transfers to process
+TEST[DATE|TIME] ~~~ Leaving: 14436713.59 ~~~
+TEST[DATE|TIME] ------------------------------------ 0 statements generated.
+TEST[DATE|TIME] 
+TEST[DATE|TIME] 
+TEST[DATE|TIME] ------------------------------------
+TEST[DATE|TIME] ~~~ Entering: 14469880.33 ~~~
+TEST[DATE|TIME] First pass: Fetching unreconciled transfers
+TEST[DATE|TIME] Fetched 0 unreconciled transfers
+TEST[DATE|TIME] Second pass: Reconciling transfers
+TEST[DATE|TIME] No log transfers to process
+TEST[DATE|TIME] ~~~ Leaving: 14469880.33 ~~~
+TEST[DATE|TIME] ------------------------------------ 0 statements generated.
+TEST[DATE|TIME] 
+TEST[DATE|TIME] 
+TEST[DATE|TIME] ------------------------------------
+TEST[DATE|TIME] ~~~ Entering: 15549162.83 ~~~
+TEST[DATE|TIME] First pass: Fetching unreconciled transfers
+TEST[DATE|TIME] Fetched 1 unreconciled transfers
+TEST[DATE|TIME] Second pass: Reconciling transfers
+TEST[DATE|TIME] Processing 1 log transfers
+TEST[DATE|TIME] Set BegSentinel for first log transfer
+TEST[DATE|TIME] Set EndSentinel for last log transfer
+TEST[DATE|TIME] Converted log transfer to statement for asset: 0xf5b2c59f6db42ffcdfc1625999c81fdf17953384
+TEST[DATE|TIME] XXX =============[ token ]======================
+TEST[DATE|TIME] XXX Case 1: Only statement in block
+TEST[DATE|TIME] XXX Block: 15549162 Tx: 83 Asset: 0xf5b2c59f6db42ffcdfc1625999c81fdf17953384
+TEST[DATE|TIME] XXX FirstInBlock: true, LastInBlock: true
+TEST[DATE|TIME] XXX ================================================
+TEST[DATE|TIME] A possible nullTransfer
+TEST[DATE|TIME]   nLogs:             1000
+TEST[DATE|TIME]     lotsOfLogs:      --> true
+TEST[DATE|TIME]   Sender.IsZero:     0xa27f25d6a8f876c8cdd506f6cc59f3166f2a494f false
+TEST[DATE|TIME]   or Sender == To:   false
+TEST[DATE|TIME]     mayBeAirdrop:    --> false
+TEST[DATE|TIME]   EndBal-BegBal:     0
+TEST[DATE|TIME]   Material:          true
+TEST[DATE|TIME]     hasBalanceChange: --> false
+TEST[DATE|TIME] Correcting token transfer for a null transfer
+TEST[DATE|TIME] =========================================================
+TEST[DATE|TIME] ===> PRICING FOR 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) using Uniswap
+TEST[DATE|TIME] =========================================================
+TEST[DATE|TIME] blockNumber:         15549162
+TEST[DATE|TIME] source1 (uni/mkr):   0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f
+TEST[DATE|TIME] str0 (call):         getPair(0x6b175474e89094c44da98b954eedeac495271d0f, 0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2)
+TEST[DATE|TIME] source2 (pair):      0xa478c2975ab1ea89e8196811f51a7b7ade33eb11
+TEST[DATE|TIME] str1 (call/data):    getReserves()
+TEST[DATE|TIME] first:               0x6b175474e89094c44da98b954eedeac495271d0f
+TEST[DATE|TIME] second:              0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2
+TEST[DATE|TIME] reversed:            false
+TEST[DATE|TIME] float0:              7.102397414e+24
+TEST[DATE|TIME] float1:              4.931839383e+21
+TEST[DATE|TIME] float2:              1
+TEST[DATE|TIME] bigPrice:            1440.111257
+TEST[DATE|TIME] price:               1440.111257
+TEST[DATE|TIME] source:              uniswap
+TEST[DATE|TIME] ===================================================
+TEST[DATE|TIME] Previous:               14469880 33 ( true )
+TEST[DATE|TIME] Current:                15549162 83 ( true )
+TEST[DATE|TIME] Next:                   15549163 0 ( true )
+TEST[DATE|TIME] accountedFor:           0x054993ab0f2b1acc0fdc65405ee203b4271bebe6
+TEST[DATE|TIME] sender:                 0xa27f25d6a8f876c8cdd506f6cc59f3166f2a494f  ==>  0x054993ab0f2b1acc0fdc65405ee203b4271bebe6
+TEST[DATE|TIME] asset:                  0xf5b2c59f6db42ffcdfc1625999c81fdf17953384 (mdai.io) decimals: 18
+TEST[DATE|TIME] hash:                   0x506e7978ba52886681b75797e4403579ba703b5f9df576a34602ada1709085fb
+TEST[DATE|TIME] timestamp:              1663367531
+TEST[DATE|TIME] blockNumber:            15549162.83.1774
+TEST[DATE|TIME] priceSource:            0 (not-priced)
+TEST[DATE|TIME] --------------------------------------------------- 
+TEST[DATE|TIME] Trial balance:
+TEST[DATE|TIME]    prevBal:             2017.044745122853478376
+TEST[DATE|TIME]    begBal:              2017.044745122853478376 (0)
+TEST[DATE|TIME]    totalIn:             2017
+TEST[DATE|TIME]    totalOut:            2017
+TEST[DATE|TIME]    amountNet:           0
+TEST[DATE|TIME]                        ======================= 
+TEST[DATE|TIME]    endBal:              2017.044745122853478376 (0)
+TEST[DATE|TIME]    endBalCalc:          2017.044745122853478376
+TEST[DATE|TIME] --------------------------------------------------- 
+TEST[DATE|TIME]    correctAmountIn:     2017
+TEST[DATE|TIME]    correctAmountOut:    2017
+TEST[DATE|TIME]    correctingReasons:   nullTransfer
+TEST[DATE|TIME]    material:            true
+TEST[DATE|TIME]    reconciled:          true
+TEST[DATE|TIME] ---------------------------------------------------
+TEST[DATE|TIME] Log statement is material - appending. reconciled: true
+TEST[DATE|TIME] ~~~ Leaving: 15549162.83 ~~~
+TEST[DATE|TIME] ------------------------------------ 1 statements generated.
+TEST[DATE|TIME] 
+{
+  "data": [
+    {
+      "accountedFor": "0x054993ab0f2b1acc0fdc65405ee203b4271bebe6",
+      "amountIn": "0",
+      "amountNet": "0",
+      "amountOut": "0",
+      "asset": "0xf5b2c59f6db42ffcdfc1625999c81fdf17953384",
+      "assetName": "mdai.io",
+      "begBal": "2017044745122853478376",
+      "begBalDiff": "0",
+      "blockNumber": 15549162,
+      "correctAmountIn": "2017000000000000000000",
+      "correctAmountOut": "2017000000000000000000",
+      "correctBegBalIn": "0",
+      "correctBegBalOut": "0",
+      "correctEndBalIn": "0",
+      "correctEndBalOut": "0",
+      "correctingReasons": "nullTransfer",
+      "date": "2022-09-16 22:32:11 UTC",
+      "decimals": 18,
+      "endBal": "2017044745122853478376",
+      "endBalCalc": "2017044745122853478376",
+      "endBalDiff": "0",
+      "gasOut": "0",
+      "internalIn": "0",
+      "internalOut": "0",
+      "logIndex": 1774,
+      "minerBaseRewardIn": "0",
+      "minerNephewRewardIn": "0",
+      "minerTxFeeIn": "0",
+      "minerUncleRewardIn": "0",
+      "prefundIn": "0",
+      "prevBal": "2017044745122853478376",
+      "priceSource": "not-priced",
+      "recipient": "0x054993ab0f2b1acc0fdc65405ee203b4271bebe6",
+      "reconciled": true,
+      "selfDestructIn": "0",
+      "selfDestructOut": "0",
+      "sender": "0xa27f25d6a8f876c8cdd506f6cc59f3166f2a494f",
+      "spotPrice": "0",
+      "symbol": "mdai.io",
+      "timestamp": 1663367531,
+      "totalIn": "2017000000000000000000",
+      "totalOut": "2017000000000000000000",
+      "transactionHash": "0x506e7978ba52886681b75797e4403579ba703b5f9df576a34602ada1709085fb",
+      "transactionIndex": 83
+    }
+  ]
+}

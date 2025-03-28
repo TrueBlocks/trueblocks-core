@@ -1,5 +1,5 @@
 export?addrs=trueblocks.eth&balances&fmt=txt&maxRecords=2
-blockNumber	date	holder	balance	diff	units
-8854723	2019-11-01 20:18:58 UTC	0xf503017d7baf7fbc0fff7492b751025c6a78179b	5	0	5000000000000000000
-8856290	2019-11-02 02:16:06 UTC	0xf503017d7baf7fbc0fff7492b751025c6a78179b	4.98979	-0.01021	4989790000000000000
+blockNumber	date	address	holder	balance	diff	balanceDec
+8854723	2019-11-01 20:18:58 UTC	0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee	0xf503017d7baf7fbc0fff7492b751025c6a78179b	5000000000000000000	0	5
+8856290	2019-11-02 02:16:06 UTC	0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee	0xf503017d7baf7fbc0fff7492b751025c6a78179b	4989790000000000000	-0.01021	4.98979
 

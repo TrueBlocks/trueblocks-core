@@ -1,0 +1,509 @@
+export?addrs=0x054993ab0f2b1acc0fdc65405ee203b4271bebe6&accounting&statements&asset=0xf5b2c59f6db42ffcdfc1625999c81fdf17953384&lastBlock=15549163&maxRecords=40
+Args: [addrs=0x054993ab0f2b1acc0fdc65405ee203b4271bebe6 accounting statements asset=0xf5b2c59f6db42ffcdfc1625999c81fdf17953384 lastBlock=15549163 maxRecords=40]
+Opts: {"addrs":["0x054993ab0f2b1acc0fdc65405ee203b4271bebe6"],"statements":true,"maxRecords":40,"asset":["0xf5b2c59f6db42ffcdfc1625999c81fdf17953384"],"lastBlock":15549163,"accounting":true}
+Addrs:  [0x054993ab0f2b1acc0fdc65405ee203b4271bebe6]
+Statements:  true
+MaxRecords:  40
+Asset:  [0xf5b2c59f6db42ffcdfc1625999c81fdf17953384]
+LastBlock:  15549163
+Accounting:  true
+Caps:  cache,decache,ether
+Format:  json
+0: 10277683 200
+1: 10277711 64
+2: 10277776 94
+3: 10277780 102
+4: 10367593 194
+5: 10367608 23
+6: 10958509 72
+7: 10958518 77
+8: 10972535 102
+9: 10972735 84
+10: 11472274 222
+11: 11947926 77
+12: 12110203 88
+13: 12517694 73
+14: 12655959 195
+15: 12697277 188
+16: 12697303 99
+17: 12697322 281
+18: 12697324 88
+19: 13193257 227
+
+------------------------------------
+~~~ Entering: 10277683.200 ~~~
+First pass: Fetching unreconciled transfers
+Fetched 0 unreconciled transfers
+Second pass: Reconciling transfers
+No log transfers to process
+~~~ Leaving: 10277683.200 ~~~
+------------------------------------ 0 statements generated.
+
+
+------------------------------------
+~~~ Entering: 10277711.64 ~~~
+First pass: Fetching unreconciled transfers
+Fetched 0 unreconciled transfers
+Second pass: Reconciling transfers
+No log transfers to process
+~~~ Leaving: 10277711.64 ~~~
+------------------------------------ 0 statements generated.
+
+
+------------------------------------
+~~~ Entering: 10277776.94 ~~~
+First pass: Fetching unreconciled transfers
+Fetched 0 unreconciled transfers
+Second pass: Reconciling transfers
+No log transfers to process
+~~~ Leaving: 10277776.94 ~~~
+------------------------------------ 0 statements generated.
+
+
+------------------------------------
+~~~ Entering: 10277780.102 ~~~
+First pass: Fetching unreconciled transfers
+Fetched 0 unreconciled transfers
+Second pass: Reconciling transfers
+No log transfers to process
+~~~ Leaving: 10277780.102 ~~~
+------------------------------------ 0 statements generated.
+
+
+------------------------------------
+~~~ Entering: 10367593.194 ~~~
+First pass: Fetching unreconciled transfers
+Fetched 0 unreconciled transfers
+Second pass: Reconciling transfers
+No log transfers to process
+~~~ Leaving: 10367593.194 ~~~
+------------------------------------ 0 statements generated.
+
+
+------------------------------------
+~~~ Entering: 10367608.23 ~~~
+First pass: Fetching unreconciled transfers
+Fetched 0 unreconciled transfers
+Second pass: Reconciling transfers
+No log transfers to process
+~~~ Leaving: 10367608.23 ~~~
+------------------------------------ 0 statements generated.
+
+
+------------------------------------
+~~~ Entering: 10958509.72 ~~~
+First pass: Fetching unreconciled transfers
+Fetched 0 unreconciled transfers
+Second pass: Reconciling transfers
+No log transfers to process
+~~~ Leaving: 10958509.72 ~~~
+------------------------------------ 0 statements generated.
+
+
+------------------------------------
+~~~ Entering: 10958518.77 ~~~
+First pass: Fetching unreconciled transfers
+Fetched 0 unreconciled transfers
+Second pass: Reconciling transfers
+No log transfers to process
+~~~ Leaving: 10958518.77 ~~~
+------------------------------------ 0 statements generated.
+
+
+------------------------------------
+~~~ Entering: 10972535.102 ~~~
+First pass: Fetching unreconciled transfers
+Fetched 0 unreconciled transfers
+Second pass: Reconciling transfers
+No log transfers to process
+~~~ Leaving: 10972535.102 ~~~
+------------------------------------ 0 statements generated.
+
+
+------------------------------------
+~~~ Entering: 10972735.84 ~~~
+First pass: Fetching unreconciled transfers
+Fetched 0 unreconciled transfers
+Second pass: Reconciling transfers
+No log transfers to process
+~~~ Leaving: 10972735.84 ~~~
+------------------------------------ 0 statements generated.
+
+
+------------------------------------
+~~~ Entering: 11472274.222 ~~~
+First pass: Fetching unreconciled transfers
+Fetched 0 unreconciled transfers
+Second pass: Reconciling transfers
+No log transfers to process
+~~~ Leaving: 11472274.222 ~~~
+------------------------------------ 0 statements generated.
+
+
+------------------------------------
+~~~ Entering: 11947926.77 ~~~
+First pass: Fetching unreconciled transfers
+Fetched 0 unreconciled transfers
+Second pass: Reconciling transfers
+No log transfers to process
+~~~ Leaving: 11947926.77 ~~~
+------------------------------------ 0 statements generated.
+
+
+------------------------------------
+~~~ Entering: 12110203.88 ~~~
+First pass: Fetching unreconciled transfers
+Fetched 0 unreconciled transfers
+Second pass: Reconciling transfers
+No log transfers to process
+~~~ Leaving: 12110203.88 ~~~
+------------------------------------ 0 statements generated.
+
+
+------------------------------------
+~~~ Entering: 12517694.73 ~~~
+First pass: Fetching unreconciled transfers
+Fetched 0 unreconciled transfers
+Second pass: Reconciling transfers
+No log transfers to process
+~~~ Leaving: 12517694.73 ~~~
+------------------------------------ 0 statements generated.
+
+
+------------------------------------
+~~~ Entering: 12655959.195 ~~~
+First pass: Fetching unreconciled transfers
+Fetched 0 unreconciled transfers
+Second pass: Reconciling transfers
+No log transfers to process
+~~~ Leaving: 12655959.195 ~~~
+------------------------------------ 0 statements generated.
+
+
+------------------------------------
+~~~ Entering: 12697277.188 ~~~
+First pass: Fetching unreconciled transfers
+Fetched 0 unreconciled transfers
+Second pass: Reconciling transfers
+No log transfers to process
+~~~ Leaving: 12697277.188 ~~~
+------------------------------------ 0 statements generated.
+
+
+------------------------------------
+~~~ Entering: 12697303.99 ~~~
+First pass: Fetching unreconciled transfers
+Fetched 0 unreconciled transfers
+Second pass: Reconciling transfers
+No log transfers to process
+~~~ Leaving: 12697303.99 ~~~
+------------------------------------ 0 statements generated.
+
+
+------------------------------------
+~~~ Entering: 12697322.281 ~~~
+First pass: Fetching unreconciled transfers
+Fetched 0 unreconciled transfers
+Second pass: Reconciling transfers
+No log transfers to process
+~~~ Leaving: 12697322.281 ~~~
+------------------------------------ 0 statements generated.
+
+
+------------------------------------
+~~~ Entering: 12697324.88 ~~~
+First pass: Fetching unreconciled transfers
+Fetched 0 unreconciled transfers
+Second pass: Reconciling transfers
+No log transfers to process
+~~~ Leaving: 12697324.88 ~~~
+------------------------------------ 0 statements generated.
+
+
+------------------------------------
+~~~ Entering: 13193257.227 ~~~
+First pass: Fetching unreconciled transfers
+Fetched 0 unreconciled transfers
+Second pass: Reconciling transfers
+No log transfers to process
+~~~ Leaving: 13193257.227 ~~~
+------------------------------------ 0 statements generated.
+
+0: 13269886 45
+1: 13269900 177
+2: 13269973 178
+3: 13772984 129
+4: 14359849 140
+5: 14359857 202
+6: 14359877 153
+7: 14360325 141
+8: 14360361 80
+9: 14366254 17
+10: 14436713 58
+11: 14436713 59
+12: 14469880 33
+13: 15549162 83
+
+------------------------------------
+~~~ Entering: 13269886.45 ~~~
+First pass: Fetching unreconciled transfers
+Fetched 0 unreconciled transfers
+Second pass: Reconciling transfers
+No log transfers to process
+~~~ Leaving: 13269886.45 ~~~
+------------------------------------ 0 statements generated.
+
+
+------------------------------------
+~~~ Entering: 13269900.177 ~~~
+First pass: Fetching unreconciled transfers
+Fetched 0 unreconciled transfers
+Second pass: Reconciling transfers
+No log transfers to process
+~~~ Leaving: 13269900.177 ~~~
+------------------------------------ 0 statements generated.
+
+
+------------------------------------
+~~~ Entering: 13269973.178 ~~~
+First pass: Fetching unreconciled transfers
+Fetched 0 unreconciled transfers
+Second pass: Reconciling transfers
+No log transfers to process
+~~~ Leaving: 13269973.178 ~~~
+------------------------------------ 0 statements generated.
+
+
+------------------------------------
+~~~ Entering: 13772984.129 ~~~
+First pass: Fetching unreconciled transfers
+Fetched 0 unreconciled transfers
+Second pass: Reconciling transfers
+No log transfers to process
+~~~ Leaving: 13772984.129 ~~~
+------------------------------------ 0 statements generated.
+
+
+------------------------------------
+~~~ Entering: 14359849.140 ~~~
+First pass: Fetching unreconciled transfers
+Fetched 0 unreconciled transfers
+Second pass: Reconciling transfers
+No log transfers to process
+~~~ Leaving: 14359849.140 ~~~
+------------------------------------ 0 statements generated.
+
+
+------------------------------------
+~~~ Entering: 14359857.202 ~~~
+First pass: Fetching unreconciled transfers
+Fetched 0 unreconciled transfers
+Second pass: Reconciling transfers
+No log transfers to process
+~~~ Leaving: 14359857.202 ~~~
+------------------------------------ 0 statements generated.
+
+
+------------------------------------
+~~~ Entering: 14359877.153 ~~~
+First pass: Fetching unreconciled transfers
+Fetched 0 unreconciled transfers
+Second pass: Reconciling transfers
+No log transfers to process
+~~~ Leaving: 14359877.153 ~~~
+------------------------------------ 0 statements generated.
+
+
+------------------------------------
+~~~ Entering: 14360325.141 ~~~
+First pass: Fetching unreconciled transfers
+Fetched 0 unreconciled transfers
+Second pass: Reconciling transfers
+No log transfers to process
+~~~ Leaving: 14360325.141 ~~~
+------------------------------------ 0 statements generated.
+
+
+------------------------------------
+~~~ Entering: 14360361.80 ~~~
+First pass: Fetching unreconciled transfers
+Fetched 0 unreconciled transfers
+Second pass: Reconciling transfers
+No log transfers to process
+~~~ Leaving: 14360361.80 ~~~
+------------------------------------ 0 statements generated.
+
+
+------------------------------------
+~~~ Entering: 14366254.17 ~~~
+First pass: Fetching unreconciled transfers
+Fetched 0 unreconciled transfers
+Second pass: Reconciling transfers
+No log transfers to process
+~~~ Leaving: 14366254.17 ~~~
+------------------------------------ 0 statements generated.
+
+
+------------------------------------
+~~~ Entering: 14436713.58 ~~~
+First pass: Fetching unreconciled transfers
+Fetched 0 unreconciled transfers
+Second pass: Reconciling transfers
+No log transfers to process
+~~~ Leaving: 14436713.58 ~~~
+------------------------------------ 0 statements generated.
+
+
+------------------------------------
+~~~ Entering: 14436713.59 ~~~
+First pass: Fetching unreconciled transfers
+Fetched 0 unreconciled transfers
+Second pass: Reconciling transfers
+No log transfers to process
+~~~ Leaving: 14436713.59 ~~~
+------------------------------------ 0 statements generated.
+
+
+------------------------------------
+~~~ Entering: 14469880.33 ~~~
+First pass: Fetching unreconciled transfers
+Fetched 0 unreconciled transfers
+Second pass: Reconciling transfers
+No log transfers to process
+~~~ Leaving: 14469880.33 ~~~
+------------------------------------ 0 statements generated.
+
+
+------------------------------------
+~~~ Entering: 15549162.83 ~~~
+First pass: Fetching unreconciled transfers
+Fetched 1 unreconciled transfers
+Second pass: Reconciling transfers
+Processing 1 log transfers
+Set BegSentinel for first log transfer
+Set EndSentinel for last log transfer
+Converted log transfer to statement for asset: 0xf5b2c59f6db42ffcdfc1625999c81fdf17953384
+XXX =============[ token ]======================
+XXX Case 1: Only statement in block
+XXX Block: 15549162 Tx: 83 Asset: 0xf5b2c59f6db42ffcdfc1625999c81fdf17953384
+XXX FirstInBlock: true, LastInBlock: true
+XXX ================================================
+A possible nullTransfer
+  nLogs:             1000
+    lotsOfLogs:      --> true
+  Sender.IsZero:     0xa27f25d6a8f876c8cdd506f6cc59f3166f2a494f false
+  or Sender == To:   false
+    mayBeAirdrop:    --> false
+  EndBal-BegBal:     0
+  Material:          true
+    hasBalanceChange: --> false
+Correcting token transfer for a null transfer
+=========================================================
+===> PRICING FOR 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) using Uniswap
+=========================================================
+blockNumber:         15549162
+source1 (uni/mkr):   0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f
+str0 (call):         getPair(0x6b175474e89094c44da98b954eedeac495271d0f, 0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2)
+source2 (pair):      0xa478c2975ab1ea89e8196811f51a7b7ade33eb11
+str1 (call/data):    getReserves()
+first:               0x6b175474e89094c44da98b954eedeac495271d0f
+second:              0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2
+reversed:            false
+float0:              7.102397414e+24
+float1:              4.931839383e+21
+float2:              1
+bigPrice:            1440.111257
+price:               1440.111257
+source:              uniswap
+===================================================
+Previous:               14469880 33 ( true )
+Current:                15549162 83 ( true )
+Next:                   15549163 0 ( true )
+accountedFor:           0x054993ab0f2b1acc0fdc65405ee203b4271bebe6
+sender:                 0xa27f25d6a8f876c8cdd506f6cc59f3166f2a494f  ==>  0x054993ab0f2b1acc0fdc65405ee203b4271bebe6
+asset:                  0xf5b2c59f6db42ffcdfc1625999c81fdf17953384 (mdai.io) decimals: 18
+hash:                   0x506e7978ba52886681b75797e4403579ba703b5f9df576a34602ada1709085fb
+timestamp:              1663367531
+blockNumber:            15549162.83.1774
+priceSource:            0 (not-priced)
+--------------------------------------------------- 
+Trial balance:
+   prevBal:             2017.044745122853478376
+   begBal:              2017.044745122853478376 (0)
+   totalIn:             2017
+   totalOut:            2017
+   amountNet:           0
+                       ======================= 
+   endBal:              2017.044745122853478376 (0)
+   endBalCalc:          2017.044745122853478376
+--------------------------------------------------- 
+   correctAmountIn:     2017
+   correctAmountOut:    2017
+   correctingReasons:   nullTransfer
+   material:            true
+   reconciled:          true
+---------------------------------------------------
+Log statement is material - appending. reconciled: true
+~~~ Leaving: 15549162.83 ~~~
+------------------------------------ 1 statements generated.
+
+{
+  "data": [
+    {
+      "accountedFor": "0x054993ab0f2b1acc0fdc65405ee203b4271bebe6",
+      "amountIn": "0",
+      "amountNet": "0",
+      "amountOut": "0",
+      "asset": "0xf5b2c59f6db42ffcdfc1625999c81fdf17953384",
+      "assetName": "mdai.io",
+      "begBal": "2017044745122853478376",
+      "begBalDiff": "0",
+      "blockNumber": 15549162,
+      "correctAmountIn": "2017000000000000000000",
+      "correctAmountOut": "2017000000000000000000",
+      "correctBegBalIn": "0",
+      "correctBegBalOut": "0",
+      "correctEndBalIn": "0",
+      "correctEndBalOut": "0",
+      "correctingReasons": "nullTransfer",
+      "date": "2022-09-16 22:32:11 UTC",
+      "decimals": 18,
+      "endBal": "2017044745122853478376",
+      "endBalCalc": "2017044745122853478376",
+      "endBalDiff": "0",
+      "gasOut": "0",
+      "internalIn": "0",
+      "internalOut": "0",
+      "logIndex": 1774,
+      "minerBaseRewardIn": "0",
+      "minerNephewRewardIn": "0",
+      "minerTxFeeIn": "0",
+      "minerUncleRewardIn": "0",
+      "prefundIn": "0",
+      "prevBal": "2017044745122853478376",
+      "priceSource": "not-priced",
+      "recipient": "0x054993ab0f2b1acc0fdc65405ee203b4271bebe6",
+      "reconciled": true,
+      "selfDestructIn": "0",
+      "selfDestructOut": "0",
+      "sender": "0xa27f25d6a8f876c8cdd506f6cc59f3166f2a494f",
+      "spotPrice": "0",
+      "symbol": "mdai.io",
+      "timestamp": 1663367531,
+      "totalIn": "2017000000000000000000",
+      "totalOut": "2017000000000000000000",
+      "transactionHash": "0x506e7978ba52886681b75797e4403579ba703b5f9df576a34602ada1709085fb",
+      "transactionIndex": 83
+    }
+  ],
+  "meta": {
+    "client": "0xdeadbeef",
+    "finalized": "0xdeadbeef",
+    "staging": "0xdeadbeef",
+    "ripe": "0xdeadbeef",
+    "unripe": "0xdeadbeef",
+    "chainId": 1,
+    "networkId": 1,
+    "chain": "mainnet"
+  }
+}

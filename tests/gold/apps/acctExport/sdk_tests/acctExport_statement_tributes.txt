@@ -1,0 +1,234 @@
+export?addrs=0x868b8fd259abfcfdf9634c343593b34ef359641d&accounting&statements&firstBlock=8769018&lastBlock=8769053&asset=0x0ba45a8b5d5575935b8158a88c631e9f9c95a2e5
+Args: [addrs=0x868b8fd259abfcfdf9634c343593b34ef359641d accounting statements firstBlock=8769018 lastBlock=8769053 asset=0x0ba45a8b5d5575935b8158a88c631e9f9c95a2e5]
+Opts: {"addrs":["0x868b8fd259abfcfdf9634c343593b34ef359641d"],"statements":true,"asset":["0x0ba45a8b5d5575935b8158a88c631e9f9c95a2e5"],"firstBlock":8769018,"lastBlock":8769053,"accounting":true}
+Addrs:  [0x868b8fd259abfcfdf9634c343593b34ef359641d]
+Statements:  true
+Asset:  [0x0ba45a8b5d5575935b8158a88c631e9f9c95a2e5]
+FirstBlock:  8769018
+LastBlock:  8769053
+Accounting:  true
+Caps:  cache,decache,ether
+Format:  json
+0: 8769019 124
+1: 8769029 80
+2: 8769052 73
+3: 8769052 74
+
+------------------------------------
+~~~ Entering: 8769019.124 ~~~
+First pass: Fetching unreconciled transfers
+Fetched 0 unreconciled transfers
+Second pass: Reconciling transfers
+No log transfers to process
+~~~ Leaving: 8769019.124 ~~~
+------------------------------------ 0 statements generated.
+
+
+------------------------------------
+~~~ Entering: 8769029.80 ~~~
+First pass: Fetching unreconciled transfers
+Fetched 1 unreconciled transfers
+Second pass: Reconciling transfers
+Processing 1 log transfers
+Set BegSentinel for first log transfer
+Set EndSentinel for last log transfer
+Converted log transfer to statement for asset: 0x0ba45a8b5d5575935b8158a88c631e9f9c95a2e5
+XXX =============[ token ]======================
+XXX Case 1: Only statement in block
+XXX Block: 8769029 Tx: 80 Asset: 0x0ba45a8b5d5575935b8158a88c631e9f9c95a2e5
+XXX FirstInBlock: true, LastInBlock: true
+XXX ================================================
+Block 8769029 is prior to deployment (10000835) of Uniswap V2. No other source for tokens prior to UniSwap
+===================================================
+Previous:               8769019 124 ( true )
+Current:                8769029 80 ( true )
+Next:                   8769052 73 ( true )
+accountedFor:           0x868b8fd259abfcfdf9634c343593b34ef359641d
+sender:                 0x103348c47ffc3254aff761894e7c13ca0c680465  ==>  0x868b8fd259abfcfdf9634c343593b34ef359641d
+asset:                  0x0ba45a8b5d5575935b8158a88c631e9f9c95a2e5 (TRB) decimals: 18
+hash:                   0x22f3135a1c2b201456a4770ef9c1ac65a759db3aebe5cb8ad36ad7373f48532f
+timestamp:              1571457649
+blockNumber:            8769029.80.61
+priceSource:            0 (token-not-priced-pre-uni)
+--------------------------------------------------- 
+Trial balance:
+   prevBal:             0
+   begBal:              0 (0)
+   totalIn:             85
+   totalOut:            0
+   amountNet:           85
+                       ======================= 
+   endBal:              85 (0)
+   endBalCalc:          85
+--------------------------------------------------- 
+   amountIn:            85
+   material:            true
+   reconciled:          true
+---------------------------------------------------
+Log statement is material - appending. reconciled: true
+~~~ Leaving: 8769029.80 ~~~
+------------------------------------ 1 statements generated.
+
+
+------------------------------------
+~~~ Entering: 8769052.73 ~~~
+First pass: Fetching unreconciled transfers
+Fetched 0 unreconciled transfers
+Second pass: Reconciling transfers
+No log transfers to process
+~~~ Leaving: 8769052.73 ~~~
+------------------------------------ 0 statements generated.
+
+
+------------------------------------
+~~~ Entering: 8769052.74 ~~~
+First pass: Fetching unreconciled transfers
+Fetched 1 unreconciled transfers
+Second pass: Reconciling transfers
+Processing 1 log transfers
+Set BegSentinel for first log transfer
+Set EndSentinel for last log transfer
+Converted log transfer to statement for asset: 0x0ba45a8b5d5575935b8158a88c631e9f9c95a2e5
+XXX =============[ token ]======================
+XXX Case 1: Only statement in block
+XXX Block: 8769052 Tx: 74 Asset: 0x0ba45a8b5d5575935b8158a88c631e9f9c95a2e5
+XXX FirstInBlock: true, LastInBlock: true
+XXX ================================================
+Block 8769052 is prior to deployment (10000835) of Uniswap V2. No other source for tokens prior to UniSwap
+===================================================
+Previous:               8769052 73 ( false )
+Current:                8769052 74 ( true )
+Next:                   8769053 0 ( true )
+accountedFor:           0x868b8fd259abfcfdf9634c343593b34ef359641d
+sender:                 0x868b8fd259abfcfdf9634c343593b34ef359641d  ==>  0x2a0c0dbecc7e4d658f48e01e3fa353f44050c208
+asset:                  0x0ba45a8b5d5575935b8158a88c631e9f9c95a2e5 (TRB) decimals: 18
+hash:                   0x90feb158340931c051ccb4def6112b6d46794f739499d7255b5109481b991265
+timestamp:              1571458005
+blockNumber:            8769052.74.73
+priceSource:            0 (token-not-priced-pre-uni)
+--------------------------------------------------- 
+Trial balance:
+   prevBal:             85
+   begBal:              85 (0)
+   totalIn:             0
+   totalOut:            85
+   amountNet:           -85
+                       ======================= 
+   endBal:              0 (0)
+   endBalCalc:          0
+--------------------------------------------------- 
+   amountOut:           85
+   material:            true
+   reconciled:          true
+---------------------------------------------------
+Log statement is material - appending. reconciled: true
+~~~ Leaving: 8769052.74 ~~~
+------------------------------------ 1 statements generated.
+
+{
+  "data": [
+    {
+      "accountedFor": "0x868b8fd259abfcfdf9634c343593b34ef359641d",
+      "amountIn": "85000000000000000000",
+      "amountNet": "85000000000000000000",
+      "amountOut": "0",
+      "asset": "0x0ba45a8b5d5575935b8158a88c631e9f9c95a2e5",
+      "assetName": "Tellor Tributes",
+      "begBal": "0",
+      "begBalDiff": "0",
+      "blockNumber": 8769029,
+      "correctAmountIn": "0",
+      "correctAmountOut": "0",
+      "correctBegBalIn": "0",
+      "correctBegBalOut": "0",
+      "correctEndBalIn": "0",
+      "correctEndBalOut": "0",
+      "correctingReasons": "",
+      "date": "2019-10-19 04:00:49 UTC",
+      "decimals": 18,
+      "endBal": "85000000000000000000",
+      "endBalCalc": "85000000000000000000",
+      "endBalDiff": "0",
+      "gasOut": "0",
+      "internalIn": "0",
+      "internalOut": "0",
+      "logIndex": 61,
+      "minerBaseRewardIn": "0",
+      "minerNephewRewardIn": "0",
+      "minerTxFeeIn": "0",
+      "minerUncleRewardIn": "0",
+      "prefundIn": "0",
+      "prevBal": "0",
+      "priceSource": "token-not-priced-pre-uni",
+      "recipient": "0x868b8fd259abfcfdf9634c343593b34ef359641d",
+      "reconciled": true,
+      "selfDestructIn": "0",
+      "selfDestructOut": "0",
+      "sender": "0x103348c47ffc3254aff761894e7c13ca0c680465",
+      "spotPrice": "0",
+      "symbol": "TRB",
+      "timestamp": 1571457649,
+      "totalIn": "85000000000000000000",
+      "totalOut": "0",
+      "transactionHash": "0x22f3135a1c2b201456a4770ef9c1ac65a759db3aebe5cb8ad36ad7373f48532f",
+      "transactionIndex": 80
+    },
+    {
+      "accountedFor": "0x868b8fd259abfcfdf9634c343593b34ef359641d",
+      "amountIn": "0",
+      "amountNet": "-85000000000000000000",
+      "amountOut": "85000000000000000000",
+      "asset": "0x0ba45a8b5d5575935b8158a88c631e9f9c95a2e5",
+      "assetName": "Tellor Tributes",
+      "begBal": "85000000000000000000",
+      "begBalDiff": "0",
+      "blockNumber": 8769052,
+      "correctAmountIn": "0",
+      "correctAmountOut": "0",
+      "correctBegBalIn": "0",
+      "correctBegBalOut": "0",
+      "correctEndBalIn": "0",
+      "correctEndBalOut": "0",
+      "correctingReasons": "",
+      "date": "2019-10-19 04:06:45 UTC",
+      "decimals": 18,
+      "endBal": "0",
+      "endBalCalc": "0",
+      "endBalDiff": "0",
+      "gasOut": "0",
+      "internalIn": "0",
+      "internalOut": "0",
+      "logIndex": 73,
+      "minerBaseRewardIn": "0",
+      "minerNephewRewardIn": "0",
+      "minerTxFeeIn": "0",
+      "minerUncleRewardIn": "0",
+      "prefundIn": "0",
+      "prevBal": "85000000000000000000",
+      "priceSource": "token-not-priced-pre-uni",
+      "recipient": "0x2a0c0dbecc7e4d658f48e01e3fa353f44050c208",
+      "recipientName": "IDEX",
+      "reconciled": true,
+      "selfDestructIn": "0",
+      "selfDestructOut": "0",
+      "sender": "0x868b8fd259abfcfdf9634c343593b34ef359641d",
+      "spotPrice": "0",
+      "symbol": "TRB",
+      "timestamp": 1571458005,
+      "totalIn": "0",
+      "totalOut": "85000000000000000000",
+      "transactionHash": "0x90feb158340931c051ccb4def6112b6d46794f739499d7255b5109481b991265",
+      "transactionIndex": 74
+    }
+  ],
+  "meta": {
+    "client": "0xdeadbeef",
+    "finalized": "0xdeadbeef",
+    "staging": "0xdeadbeef",
+    "ripe": "0xdeadbeef",
+    "unripe": "0xdeadbeef",
+    "chainId": 1,
+    "networkId": 1,
+    "chain": "mainnet"
+  }
+}

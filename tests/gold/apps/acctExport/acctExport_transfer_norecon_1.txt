@@ -1,0 +1,40 @@
+chifra export  trueblocks.eth --accounting --transfers --first_block 9278039 --last_block 9279454 --fmt json --asset 0x6b175474e89094c44da98b954eedeac495271d0f
+TEST[DATE|TIME] Addrs:  [0xf503017d7baf7fbc0fff7492b751025c6a78179b]
+TEST[DATE|TIME] Transfers:  true
+TEST[DATE|TIME] Asset:  [0x6b175474e89094c44da98b954eedeac495271d0f]
+TEST[DATE|TIME] FirstBlock:  9278039
+TEST[DATE|TIME] LastBlock:  9279454
+TEST[DATE|TIME] Accounting:  true
+TEST[DATE|TIME] Caps:  cache,decache,ether
+TEST[DATE|TIME] Format:  json
+{
+  "data": [
+    {
+      "amount": "1000000000000000000",
+      "asset": "0x6b175474e89094c44da98b954eedeac495271d0f",
+      "assetName": "Dai Stablecoin",
+      "blockNumber": 9278039,
+      "holder": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
+      "logIndex": 38,
+      "transactionIndex": 26
+    },
+    {
+      "amount": "-950000000000000000",
+      "asset": "0x6b175474e89094c44da98b954eedeac495271d0f",
+      "assetName": "Dai Stablecoin",
+      "blockNumber": 9279453,
+      "holder": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
+      "logIndex": 43,
+      "transactionIndex": 208
+    },
+    {
+      "amount": "-50000000000000000",
+      "asset": "0x6b175474e89094c44da98b954eedeac495271d0f",
+      "assetName": "Dai Stablecoin",
+      "blockNumber": 9279453,
+      "holder": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
+      "logIndex": 44,
+      "transactionIndex": 208
+    }
+  ]
+}

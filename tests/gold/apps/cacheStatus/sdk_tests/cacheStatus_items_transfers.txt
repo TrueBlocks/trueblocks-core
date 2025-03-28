@@ -1,0 +1,8 @@
+status?modes=transfers&maxRecords=100
+Args: [modes=transfers maxRecords=100]
+Opts: null
+{
+  "errors": [
+    "unknown modes: transfers"
+  ]
+}

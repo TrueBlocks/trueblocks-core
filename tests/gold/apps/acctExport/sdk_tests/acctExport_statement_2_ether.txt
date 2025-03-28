@@ -1,69 +1,38 @@
 export?addrs=0x08166f02313feae18bb044e7877c808b55b5bf58&accounting&statements&lastBlock=4000000&ether
 Args: [addrs=0x08166f02313feae18bb044e7877c808b55b5bf58 accounting statements lastBlock=4000000 ether]
-Opts: {"addrs":["0x08166f02313feae18bb044e7877c808b55b5bf58"],"accounting":true,"statements":true,"lastBlock":4000000,"ether":true}
+Opts: {"addrs":["0x08166f02313feae18bb044e7877c808b55b5bf58"],"statements":true,"lastBlock":4000000,"accounting":true,"ether":true}
 Addrs:  [0x08166f02313feae18bb044e7877c808b55b5bf58]
-Accounting:  true
 Statements:  true
 LastBlock:  4000000
+Accounting:  true
 Ether:  true
 Caps:  cache,decache,ether
 Format:  json
-------------------------------------------------------------
-Contexts (3)
-000000000-00270:          0          0       46685 genesis-diff
-000046685-00000:          0      46685       46709 diff-diff
-000046709-00000:      46685      46709       46709 diff-last
-Start of trial balance report
-Needs correction for eth
-Needs correction for eth
+0: 0 270
+1: 46685 0
+2: 46709 0
+
+------------------------------------
+~~~ Entering: 0.270 ~~~
+First pass: Fetching unreconciled transfers
+Fetched 1 unreconciled transfers
+Second pass: Reconciling transfers
+Processing ETH transfer
+Converted ETH transfer to statement
+Attempting to reconcile top-level ETH transfer: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-0x08166f02313feae18bb044e7877c808b55b5bf58
+XXX =============[ top-level ]======================
+XXX Case 1: Only statement in block
+XXX Block: 0 Tx: 270 Asset: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+XXX FirstInBlock: true, LastInBlock: true
+XXX ================================================
 Block 0 is prior to deployment (3684349) of Maker. No fallback pricing method
 ===================================================
-====> eth
-===================================================
-Previous:               0
-Current:                0
-Next:                   46685
-reconciliationType:     genesis
-assetType:              eth
+Previous:               0 0 ( false )
+Current:                0 270 ( true )
+Next:                   46685 0 ( true )
 accountedFor:           0x08166f02313feae18bb044e7877c808b55b5bf58
 sender:                 0x0000000000000000000000000050726566756e64  ==>  0x08166f02313feae18bb044e7877c808b55b5bf58
-assetAddr:              0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (ETH) decimals: 18
-hash:                   0x0000000000000000000000000000000000000000000000000000000000000000
-timestamp:              1438269975
-blockNumber:            0.270
-priceSource:            0 (eth-not-priced-pre-maker)
---------------------------------------------------- 
-Trial balance:
-   prevBal:             0
-   begBal:              0.0895 (0.0895)
-   totalIn:             1970
-   totalOut:            0
-   amountNet:           1970
-                       ======================= 
-   endBal:              1970 (0)
-   endBalCalc:          1970.0895
---------------------------------------------------- 
-   prefundIn:           1970
-   material:            true
-   reconciled:          false
- ^^ we need to fix this ^^
----------------------------------------------------
-End of trial balance report
-Trial balance failed for  0x0000000000000000000000000000000000000000000000000000000000000000 need to decend into traces
-Start of trial balance report
-Needs correction for eth
-Needs correction for eth
-===================================================
-====> trace-eth
-===================================================
-Previous:               0
-Current:                0
-Next:                   46685
-reconciliationType:     genesis
-assetType:              trace-eth
-accountedFor:           0x08166f02313feae18bb044e7877c808b55b5bf58
-sender:                 0x0000000000000000000000000050726566756e64  ==>  0x08166f02313feae18bb044e7877c808b55b5bf58
-assetAddr:              0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (ETH) decimals: 18
+asset:                  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (ETH) decimals: 18
 hash:                   0x0000000000000000000000000000000000000000000000000000000000000000
 timestamp:              1438269975
 blockNumber:            0.270.0
@@ -71,35 +40,48 @@ priceSource:            0 (eth-not-priced-pre-maker)
 --------------------------------------------------- 
 Trial balance:
    prevBal:             0
-   begBal:              0.0895 (-1969.9105)
-   totalIn:             0
+   begBal:              0 (0)
+   totalIn:             1970
    totalOut:            0
-   amountNet:           0
+   amountNet:           1970
                        ======================= 
    endBal:              1970 (0)
-   endBalCalc:          0.0895
+   endBalCalc:          1970
 --------------------------------------------------- 
-   material:            false
-   reconciled:          false
- ^^ we need to fix this ^^
+   prefundIn:           1970
+   material:            true
+   reconciled:          true
 ---------------------------------------------------
-End of trial balance report
-Start of trial balance report
+Top-level statement is material and reconciled - appending
+No log transfers to process
+~~~ Leaving: 0.270 ~~~
+------------------------------------ 1 statements generated.
+
+
+------------------------------------
+~~~ Entering: 46685.0 ~~~
+First pass: Fetching unreconciled transfers
+Fetched 1 unreconciled transfers
+Second pass: Reconciling transfers
+Processing ETH transfer
+Converted ETH transfer to statement
+Attempting to reconcile top-level ETH transfer: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-0x08166f02313feae18bb044e7877c808b55b5bf58
+XXX =============[ top-level ]======================
+XXX Case 1: Only statement in block
+XXX Block: 46685 Tx: 0 Asset: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+XXX FirstInBlock: true, LastInBlock: true
+XXX ================================================
 Block 46685 is prior to deployment (3684349) of Maker. No fallback pricing method
 ===================================================
-====> eth
-===================================================
-Previous:               0
-Current:                46685
-Next:                   46709
-reconciliationType:     diff-diff
-assetType:              eth
+Previous:               0 270 ( true )
+Current:                46685 0 ( true )
+Next:                   46709 0 ( true )
 accountedFor:           0x08166f02313feae18bb044e7877c808b55b5bf58
 sender:                 0x08166f02313feae18bb044e7877c808b55b5bf58  ==>  0xad00b7a324f31351d397408c8c3952ea198317eb
-assetAddr:              0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (ETH) decimals: 18
+asset:                  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (ETH) decimals: 18
 hash:                   0x10893338fa5633ab747450b8698457fb047098f87f78e98b3dbee3134067b6b8
 timestamp:              1438927408
-blockNumber:            46685.0
+blockNumber:            46685.0.0
 priceSource:            0 (eth-not-priced-pre-maker)
 --------------------------------------------------- 
 Trial balance:
@@ -117,23 +99,36 @@ Trial balance:
    material:            true
    reconciled:          true
 ---------------------------------------------------
-End of trial balance report
-Start of trial balance report
+Top-level statement is material and reconciled - appending
+No log transfers to process
+~~~ Leaving: 46685.0 ~~~
+------------------------------------ 1 statements generated.
+
+
+------------------------------------
+~~~ Entering: 46709.0 ~~~
+First pass: Fetching unreconciled transfers
+Fetched 1 unreconciled transfers
+Second pass: Reconciling transfers
+Processing ETH transfer
+Converted ETH transfer to statement
+Attempting to reconcile top-level ETH transfer: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-0x08166f02313feae18bb044e7877c808b55b5bf58
+XXX =============[ top-level ]======================
+XXX Case 1: Only statement in block
+XXX Block: 46709 Tx: 0 Asset: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+XXX FirstInBlock: true, LastInBlock: true
+XXX ================================================
 Block 46709 is prior to deployment (3684349) of Maker. No fallback pricing method
 ===================================================
-====> eth
-===================================================
-Previous:               46685
-Current:                46709
-Next:                   46709
-reconciliationType:     diff-last
-assetType:              eth
+Previous:               46685 0 ( true )
+Current:                46709 0 ( true )
+Next:                   46710 0 ( true )
 accountedFor:           0x08166f02313feae18bb044e7877c808b55b5bf58
 sender:                 0x08166f02313feae18bb044e7877c808b55b5bf58  ==>  0xad00b7a324f31351d397408c8c3952ea198317eb
-assetAddr:              0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (ETH) decimals: 18
+asset:                  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (ETH) decimals: 18
 hash:                   0x10d5c5f2386c6d6d93ca6b43fa25e8679971d07448db8d6c81d856ff3c3c001a
 timestamp:              1438927854
-blockNumber:            46709.0
+blockNumber:            46709.0.0
 priceSource:            0 (eth-not-priced-pre-maker)
 --------------------------------------------------- 
 Trial balance:
@@ -151,37 +146,49 @@ Trial balance:
    material:            true
    reconciled:          true
 ---------------------------------------------------
-End of trial balance report
+Top-level statement is material and reconciled - appending
+No log transfers to process
+~~~ Leaving: 46709.0 ~~~
+------------------------------------ 1 statements generated.
+
 {
   "data": [
     {
       "accountedFor": "0x08166f02313feae18bb044e7877c808b55b5bf58",
+      "accountedForName": "Prefund_0270",
       "amountIn": "0",
       "amountInEth": "0",
-      "amountNet": "0",
-      "amountNetEth": "0",
+      "amountNet": "1970000000000000000000",
+      "amountNetEth": "1970",
       "amountOut": "0",
       "amountOutEth": "0",
-      "assetAddr": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
-      "assetSymbol": "ETH",
-      "assetType": "trace-eth",
-      "begBal": "89500000000000000",
+      "asset": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+      "assetName": "ETH",
+      "begBal": "0",
       "begBalDiff": "0",
       "begBalDiffEth": "0",
-      "begBalEth": "0.0895",
+      "begBalEth": "0",
       "blockNumber": 0,
-      "correctingIn": "0",
-      "correctingInEth": "0",
-      "correctingOut": "0",
-      "correctingOutEth": "0",
-      "correctingReason": "",
+      "correctAmountIn": "0",
+      "correctAmountInEth": "0",
+      "correctAmountOut": "0",
+      "correctAmountOutEth": "0",
+      "correctBegBalIn": "0",
+      "correctBegBalInEth": "0",
+      "correctBegBalOut": "0",
+      "correctBegBalOutEth": "0",
+      "correctEndBalIn": "0",
+      "correctEndBalInEth": "0",
+      "correctEndBalOut": "0",
+      "correctEndBalOutEth": "0",
+      "correctingReasons": "",
       "date": "2015-07-30 15:26:15 UTC",
       "decimals": 18,
       "endBal": "1970000000000000000000",
-      "endBalCalc": "89500000000000000",
-      "endBalCalcEth": "0.0895",
-      "endBalDiff": "-1969910500000000000000",
-      "endBalDiffEth": "-1969.9105",
+      "endBalCalc": "1970000000000000000000",
+      "endBalCalcEth": "1970",
+      "endBalDiff": "0",
+      "endBalDiffEth": "0",
       "endBalEth": "1970",
       "gasOut": "0",
       "gasOutEth": "0",
@@ -198,49 +205,58 @@ End of trial balance report
       "minerTxFeeInEth": "0",
       "minerUncleRewardIn": "0",
       "minerUncleRewardInEth": "0",
-      "prefundIn": "0",
-      "prefundInEth": "0",
+      "prefundIn": "1970000000000000000000",
+      "prefundInEth": "1970",
+      "prevBal": "0",
+      "prevBalEth": "0",
       "priceSource": "eth-not-priced-pre-maker",
       "recipient": "0x08166f02313feae18bb044e7877c808b55b5bf58",
-      "reconciled": false,
-      "reconciliationType": "genesis",
+      "recipientName": "Prefund_0270",
+      "reconciled": true,
       "selfDestructIn": "0",
       "selfDestructInEth": "0",
       "selfDestructOut": "0",
       "selfDestructOutEth": "0",
       "sender": "0x0000000000000000000000000050726566756e64",
-      "spotPrice": 0,
+      "spotPrice": "0",
+      "symbol": "ETH",
       "timestamp": 1438269975,
-      "totalIn": "0",
-      "totalInEth": "0",
+      "totalIn": "1970000000000000000000",
+      "totalInEth": "1970",
       "totalOut": "0",
       "totalOutEth": "0",
-      "totalOutLessGas": "0",
-      "totalOutLessGasEth": "0",
       "transactionHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
       "transactionIndex": 270
     },
     {
       "accountedFor": "0x08166f02313feae18bb044e7877c808b55b5bf58",
+      "accountedForName": "Prefund_0270",
       "amountIn": "0",
       "amountInEth": "0",
       "amountNet": "-5010500000000000000",
       "amountNetEth": "-5.0105",
       "amountOut": "5000000000000000000",
       "amountOutEth": "5",
-      "assetAddr": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
-      "assetSymbol": "ETH",
-      "assetType": "eth",
+      "asset": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+      "assetName": "ETH",
       "begBal": "1970000000000000000000",
       "begBalDiff": "0",
       "begBalDiffEth": "0",
       "begBalEth": "1970",
       "blockNumber": 46685,
-      "correctingIn": "0",
-      "correctingInEth": "0",
-      "correctingOut": "0",
-      "correctingOutEth": "0",
-      "correctingReason": "",
+      "correctAmountIn": "0",
+      "correctAmountInEth": "0",
+      "correctAmountOut": "0",
+      "correctAmountOutEth": "0",
+      "correctBegBalIn": "0",
+      "correctBegBalInEth": "0",
+      "correctBegBalOut": "0",
+      "correctBegBalOutEth": "0",
+      "correctEndBalIn": "0",
+      "correctEndBalInEth": "0",
+      "correctEndBalOut": "0",
+      "correctEndBalOutEth": "0",
+      "correctingReasons": "",
       "date": "2015-08-07 06:03:28 UTC",
       "decimals": 18,
       "endBal": "1964989500000000000000",
@@ -271,44 +287,51 @@ End of trial balance report
       "priceSource": "eth-not-priced-pre-maker",
       "recipient": "0xad00b7a324f31351d397408c8c3952ea198317eb",
       "reconciled": true,
-      "reconciliationType": "diff-diff",
       "selfDestructIn": "0",
       "selfDestructInEth": "0",
       "selfDestructOut": "0",
       "selfDestructOutEth": "0",
       "sender": "0x08166f02313feae18bb044e7877c808b55b5bf58",
-      "spotPrice": 0,
+      "senderName": "Prefund_0270",
+      "spotPrice": "0",
+      "symbol": "ETH",
       "timestamp": 1438927408,
       "totalIn": "0",
       "totalInEth": "0",
       "totalOut": "5010500000000000000",
       "totalOutEth": "5.0105",
-      "totalOutLessGas": "5000000000000000000",
-      "totalOutLessGasEth": "5",
       "transactionHash": "0x10893338fa5633ab747450b8698457fb047098f87f78e98b3dbee3134067b6b8",
       "transactionIndex": 0
     },
     {
       "accountedFor": "0x08166f02313feae18bb044e7877c808b55b5bf58",
+      "accountedForName": "Prefund_0270",
       "amountIn": "0",
       "amountInEth": "0",
       "amountNet": "-1964900000000000000000",
       "amountNetEth": "-1964.9",
       "amountOut": "1964889500000000000000",
       "amountOutEth": "1964.8895",
-      "assetAddr": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
-      "assetSymbol": "ETH",
-      "assetType": "eth",
+      "asset": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+      "assetName": "ETH",
       "begBal": "1964989500000000000000",
       "begBalDiff": "0",
       "begBalDiffEth": "0",
       "begBalEth": "1964.9895",
       "blockNumber": 46709,
-      "correctingIn": "0",
-      "correctingInEth": "0",
-      "correctingOut": "0",
-      "correctingOutEth": "0",
-      "correctingReason": "",
+      "correctAmountIn": "0",
+      "correctAmountInEth": "0",
+      "correctAmountOut": "0",
+      "correctAmountOutEth": "0",
+      "correctBegBalIn": "0",
+      "correctBegBalInEth": "0",
+      "correctBegBalOut": "0",
+      "correctBegBalOutEth": "0",
+      "correctEndBalIn": "0",
+      "correctEndBalInEth": "0",
+      "correctEndBalOut": "0",
+      "correctEndBalOutEth": "0",
+      "correctingReasons": "",
       "date": "2015-08-07 06:10:54 UTC",
       "decimals": 18,
       "endBal": "89500000000000000",
@@ -339,20 +362,19 @@ End of trial balance report
       "priceSource": "eth-not-priced-pre-maker",
       "recipient": "0xad00b7a324f31351d397408c8c3952ea198317eb",
       "reconciled": true,
-      "reconciliationType": "diff-last",
       "selfDestructIn": "0",
       "selfDestructInEth": "0",
       "selfDestructOut": "0",
       "selfDestructOutEth": "0",
       "sender": "0x08166f02313feae18bb044e7877c808b55b5bf58",
-      "spotPrice": 0,
+      "senderName": "Prefund_0270",
+      "spotPrice": "0",
+      "symbol": "ETH",
       "timestamp": 1438927854,
       "totalIn": "0",
       "totalInEth": "0",
       "totalOut": "1964900000000000000000",
       "totalOutEth": "1964.9",
-      "totalOutLessGas": "1964889500000000000000",
-      "totalOutLessGasEth": "1964.8895",
       "transactionHash": "0x10d5c5f2386c6d6d93ca6b43fa25e8679971d07448db8d6c81d856ff3c3c001a",
       "transactionIndex": 0
     }

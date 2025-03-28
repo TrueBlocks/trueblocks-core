@@ -1,0 +1,19 @@
+chifra export  0xec3ef464bf821c3b10a18adf9ac7177a628e87cc --accounting --assets --first_block 7005600 --last_block 7005780 --ether --fmt json
+TEST[DATE|TIME] Addrs:  [0xec3ef464bf821c3b10a18adf9ac7177a628e87cc]
+TEST[DATE|TIME] Assets:  true
+TEST[DATE|TIME] FirstBlock:  7005600
+TEST[DATE|TIME] LastBlock:  7005780
+TEST[DATE|TIME] Accounting:  true
+TEST[DATE|TIME] Ether:  true
+TEST[DATE|TIME] Caps:  cache,decache,ether
+TEST[DATE|TIME] Format:  json
+{
+  "data": [
+    {
+      "address": "0x5c2c629feefcc07b338e97e39c73d2db33a85548",
+      "decimals": 18,
+      "name": "0x5c2...548",
+      "tags": ""
+    }
+  ]
+}

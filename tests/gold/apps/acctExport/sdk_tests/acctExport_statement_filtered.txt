@@ -1,24 +1,148 @@
-export?addrs=0xf503017d7baf7fbc0fff7492b751025c6a78179b&accounting&statements&firstBlock=8860513&lastBlock=8860531&ether&asset=0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359&fmt=json
+export?addrs=0xf503017d7baf7fbc0fff7492b751025c6a78179b&accounting&statements&firstBlock=8860513&lastBlock=8860531&asset=0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359
+Args: [addrs=0xf503017d7baf7fbc0fff7492b751025c6a78179b accounting statements firstBlock=8860513 lastBlock=8860531 asset=0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359]
+Opts: {"addrs":["0xf503017d7baf7fbc0fff7492b751025c6a78179b"],"statements":true,"asset":["0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359"],"firstBlock":8860513,"lastBlock":8860531,"accounting":true}
+Addrs:  [0xf503017d7baf7fbc0fff7492b751025c6a78179b]
+Statements:  true
+Asset:  [0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359]
+FirstBlock:  8860513
+LastBlock:  8860531
+Accounting:  true
+Caps:  cache,decache,ether
+Format:  json
+0: 8860513 85
+1: 8860529 145
+2: 8860531 152
+
+------------------------------------
+~~~ Entering: 8860513.85 ~~~
+First pass: Fetching unreconciled transfers
+Fetched 1 unreconciled transfers
+Second pass: Reconciling transfers
+Processing 1 log transfers
+Set BegSentinel for first log transfer
+Set EndSentinel for last log transfer
+Converted log transfer to statement for asset: 0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359
+XXX =============[ token ]======================
+XXX Case 1: Only statement in block
+XXX Block: 8860513 Tx: 85 Asset: 0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359
+XXX FirstInBlock: true, LastInBlock: true
+XXX ================================================
+=========================================================
+===> PRICING FOR 0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359 (DAI) 
+=========================================================
+stable-coin
+===================================================
+Previous:               8860512 0 ( true )
+Current:                8860513 85 ( true )
+Next:                   8860529 145 ( true )
+accountedFor:           0xf503017d7baf7fbc0fff7492b751025c6a78179b
+sender:                 0xf503017d7baf7fbc0fff7492b751025c6a78179b  ==>  0x30f938fed5de6e06a9a7cd2ac3517131c317b1e7
+asset:                  0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359 (DAI) decimals: 18
+hash:                   0xd5a49ef68f77357a5202ca09499b343b27cd02c1172c4ace3050a494dc218d8a
+timestamp:              1572720150
+blockNumber:            8860513.85.84
+priceSource:            1 (stable-coin)
+--------------------------------------------------- 
+Trial balance:
+   prevBal:             7500
+   begBal:              7500 (0)
+   totalIn:             0
+   totalOut:            500
+   amountNet:           -500
+                       ======================= 
+   endBal:              7000 (0)
+   endBalCalc:          7000
+--------------------------------------------------- 
+   amountOut:           500
+   material:            true
+   reconciled:          true
+---------------------------------------------------
+Log statement is material - appending. reconciled: true
+~~~ Leaving: 8860513.85 ~~~
+------------------------------------ 1 statements generated.
+
+
+------------------------------------
+~~~ Entering: 8860529.145 ~~~
+First pass: Fetching unreconciled transfers
+Fetched 0 unreconciled transfers
+Second pass: Reconciling transfers
+No log transfers to process
+~~~ Leaving: 8860529.145 ~~~
+------------------------------------ 0 statements generated.
+
+
+------------------------------------
+~~~ Entering: 8860531.152 ~~~
+First pass: Fetching unreconciled transfers
+Fetched 1 unreconciled transfers
+Second pass: Reconciling transfers
+Processing 1 log transfers
+Set BegSentinel for first log transfer
+Set EndSentinel for last log transfer
+Converted log transfer to statement for asset: 0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359
+XXX =============[ token ]======================
+XXX Case 1: Only statement in block
+XXX Block: 8860531 Tx: 152 Asset: 0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359
+XXX FirstInBlock: true, LastInBlock: true
+XXX ================================================
+=========================================================
+===> PRICING FOR 0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359 (DAI) 
+=========================================================
+stable-coin
+===================================================
+Previous:               8860529 145 ( true )
+Current:                8860531 152 ( true )
+Next:                   8860532 0 ( true )
+accountedFor:           0xf503017d7baf7fbc0fff7492b751025c6a78179b
+sender:                 0xf503017d7baf7fbc0fff7492b751025c6a78179b  ==>  0x30f938fed5de6e06a9a7cd2ac3517131c317b1e7
+asset:                  0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359 (DAI) decimals: 18
+hash:                   0x1cdbe0fcca2ee3f9e4504f25e6f2a485835caa920496d20b10fa6241cbfdb124
+timestamp:              1572720361
+blockNumber:            8860531.152.95
+priceSource:            1 (stable-coin)
+--------------------------------------------------- 
+Trial balance:
+   prevBal:             7000
+   begBal:              7000 (0)
+   totalIn:             0
+   totalOut:            7000
+   amountNet:           -7000
+                       ======================= 
+   endBal:              0 (0)
+   endBalCalc:          0
+--------------------------------------------------- 
+   amountOut:           7000
+   material:            true
+   reconciled:          true
+---------------------------------------------------
+Log statement is material - appending. reconciled: true
+~~~ Leaving: 8860531.152 ~~~
+------------------------------------ 1 statements generated.
+
 {
   "data": [
     {
       "accountedFor": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
       "amountIn": "0",
-      "amountNet": "-500",
-      "amountOut": "500",
-      "assetAddr": "0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359",
-      "assetSymbol": "DAI",
-      "assetType": "token",
-      "begBal": "7500",
+      "amountNet": "-500000000000000000000",
+      "amountOut": "500000000000000000000",
+      "asset": "0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359",
+      "assetName": "Dai Stablecoin v1.0",
+      "begBal": "7500000000000000000000",
       "begBalDiff": "0",
       "blockNumber": 8860513,
-      "correctingIn": "0",
-      "correctingOut": "0",
-      "correctingReason": "",
+      "correctAmountIn": "0",
+      "correctAmountOut": "0",
+      "correctBegBalIn": "0",
+      "correctBegBalOut": "0",
+      "correctEndBalIn": "0",
+      "correctEndBalOut": "0",
+      "correctingReasons": "",
       "date": "2019-11-02 18:42:30 UTC",
       "decimals": 18,
-      "endBal": "7000",
-      "endBalCalc": "7000",
+      "endBal": "7000000000000000000000",
+      "endBalCalc": "7000000000000000000000",
       "endBalDiff": "0",
       "gasOut": "0",
       "internalIn": "0",
@@ -29,35 +153,39 @@ export?addrs=0xf503017d7baf7fbc0fff7492b751025c6a78179b&accounting&statements&fi
       "minerTxFeeIn": "0",
       "minerUncleRewardIn": "0",
       "prefundIn": "0",
+      "prevBal": "7500000000000000000000",
       "priceSource": "stable-coin",
       "recipient": "0x30f938fed5de6e06a9a7cd2ac3517131c317b1e7",
+      "recipientName": "Giveth Bridge",
       "reconciled": true,
-      "reconciliationType": "first-diff",
       "selfDestructIn": "0",
       "selfDestructOut": "0",
       "sender": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
-      "spotPrice": 1,
+      "spotPrice": "1",
+      "symbol": "DAI",
       "timestamp": 1572720150,
       "totalIn": "0",
-      "totalOut": "500",
-      "totalOutLessGas": "500",
+      "totalOut": "500000000000000000000",
       "transactionHash": "0xd5a49ef68f77357a5202ca09499b343b27cd02c1172c4ace3050a494dc218d8a",
       "transactionIndex": 85
     },
     {
       "accountedFor": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
       "amountIn": "0",
-      "amountNet": "-7000",
-      "amountOut": "7000",
-      "assetAddr": "0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359",
-      "assetSymbol": "DAI",
-      "assetType": "token",
-      "begBal": "7000",
+      "amountNet": "-7000000000000000000000",
+      "amountOut": "7000000000000000000000",
+      "asset": "0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359",
+      "assetName": "Dai Stablecoin v1.0",
+      "begBal": "7000000000000000000000",
       "begBalDiff": "0",
       "blockNumber": 8860531,
-      "correctingIn": "0",
-      "correctingOut": "0",
-      "correctingReason": "",
+      "correctAmountIn": "0",
+      "correctAmountOut": "0",
+      "correctBegBalIn": "0",
+      "correctBegBalOut": "0",
+      "correctEndBalIn": "0",
+      "correctEndBalOut": "0",
+      "correctingReasons": "",
       "date": "2019-11-02 18:46:01 UTC",
       "decimals": 18,
       "endBal": "0",
@@ -72,19 +200,19 @@ export?addrs=0xf503017d7baf7fbc0fff7492b751025c6a78179b&accounting&statements&fi
       "minerTxFeeIn": "0",
       "minerUncleRewardIn": "0",
       "prefundIn": "0",
-      "prevBal": "7000",
+      "prevBal": "7000000000000000000000",
       "priceSource": "stable-coin",
       "recipient": "0x30f938fed5de6e06a9a7cd2ac3517131c317b1e7",
+      "recipientName": "Giveth Bridge",
       "reconciled": true,
-      "reconciliationType": "diff-last",
       "selfDestructIn": "0",
       "selfDestructOut": "0",
       "sender": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
-      "spotPrice": 1,
+      "spotPrice": "1",
+      "symbol": "DAI",
       "timestamp": 1572720361,
       "totalIn": "0",
-      "totalOut": "7000",
-      "totalOutLessGas": "7000",
+      "totalOut": "7000000000000000000000",
       "transactionHash": "0x1cdbe0fcca2ee3f9e4504f25e6f2a485835caa920496d20b10fa6241cbfdb124",
       "transactionIndex": 152
     }
