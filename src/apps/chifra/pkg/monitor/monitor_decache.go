@@ -8,19 +8,19 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/decache"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/filter"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/walk"
 )
 
 func (mon *Monitor) Decache(conn *rpc.Connection, showProgress bool) (string, error) {
-	if apps, cnt, err := mon.ReadAndFilterAppearances(filter.NewEmptyFilter(), true /* withCount */); err != nil {
+	if apps, cnt, err := mon.ReadAndFilterAppearances(types.NewEmptyFilter(), true /* withCount */); err != nil {
 		return "", err
 	} else {
 		if cnt > 0 {
 			monitorCacheTypes := []walk.CacheType{
-				walk.Cache_Statements,
+				// walk.Cache_Statements, see  below
 				walk.Cache_Traces,
 				walk.Cache_Transactions,
 				walk.Cache_Receipts,
@@ -39,6 +39,10 @@ func (mon *Monitor) Decache(conn *rpc.Connection, showProgress bool) (string, er
 					logger.Progress(showProgress, msg)
 				}
 			}
+		}
+
+		if err := mon.RemoveStatements(len(apps), showProgress); err != nil {
+			return "", err
 		}
 
 		abiPath := filepath.Join(walk.GetRootPathFromCacheType(conn.Chain, walk.Cache_Abis), mon.Address.Hex()+".json")
@@ -70,4 +74,31 @@ func (mon *Monitor) GetRemoveWarning() string {
 		return strings.Replace(strings.Replace(warning, "{1}", ". It may take a long time to process {2} records.", -1), "{2}", fmt.Sprintf("%d", count), -1)
 	}
 	return strings.Replace(warning, "{1}", "", -1)
+}
+
+func (mon *Monitor) RemoveStatements(l int, showProgress bool) error {
+	bar := logger.NewBar(logger.BarOptions{
+		Prefix:  "Decaching statements if present",
+		Enabled: showProgress,
+		Total:   int64(l),
+	})
+	itemsSeen := 0
+	visitFunc := func(path string, vP any) (bool, error) {
+		_ = vP
+		itemsSeen++
+		if itemsSeen%1000 == 0 {
+			bar.Tick()
+		} else {
+			bar.Bump()
+		}
+		if strings.Contains(path, "/"+mon.Address.Hex()[2:]) {
+			os.Remove(path)
+			// TODO: Clean empty folders here
+		}
+		return true, nil
+	}
+	path := walk.GetRootPathFromCacheType(mon.Chain, walk.Cache_Statements)
+	err := walk.ForEveryFileInFolder(path, visitFunc, nil)
+	bar.Finish(true)
+	return err
 }

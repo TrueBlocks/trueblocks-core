@@ -47,7 +47,10 @@ func articulateLogFromMap(log *types.Log, abiMap *abi.SelectorSyncMap) (*types.F
 	}
 
 	// Try to articulate the log using some common events
-	artLog := findCommonEvent(log)
+	artLog, err := findCommonEvent(log)
+	if err != nil {
+		return nil, err
+	}
 
 	// If we couldn't, then try to find the event in `abiMap`
 	if artLog == nil {
@@ -76,16 +79,16 @@ func articulateLogFromMap(log *types.Log, abiMap *abi.SelectorSyncMap) (*types.F
 	return artLog, nil
 }
 
-func findCommonEvent(log *types.Log) *types.Function {
-	if artLog := parseTransferEvent(log); artLog != nil {
-		return artLog
+func findCommonEvent(logIn *types.Log) (*types.Function, error) {
+	if artLog := parseTransferEvent(logIn); artLog != nil {
+		return artLog, nil
 
-	} else if artLog = parseEnsTransferEvent(log); artLog != nil {
-		return artLog
+	} else if artLog = parseEnsTransferEvent(logIn); artLog != nil {
+		return artLog, nil
 
-	} else if artLog = parseApprovalEvent(log); artLog != nil {
-		return artLog
+	} else if artLog = parseApprovalEvent(logIn); artLog != nil {
+		return artLog, nil
 	}
 
-	return nil
+	return nil, nil
 }

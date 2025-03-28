@@ -5,7 +5,6 @@ import (
 	"fmt"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/filter"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/monitor"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/ranges"
@@ -15,7 +14,7 @@ import (
 
 func (opts *ListOptions) HandleBounds(rCtx *output.RenderCtx, monitorArray []monitor.Monitor) error {
 	chain := opts.Globals.Chain
-	filter := filter.NewFilter(
+	filter := types.NewFilter(
 		opts.Reversed,
 		false,
 		[]string{},

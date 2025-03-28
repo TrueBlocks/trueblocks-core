@@ -2,13 +2,12 @@ package ledger
 
 import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/filter"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
 // getStatementsFromReceipt returns a statement from a given receipt
-func (l *Ledger) getStatementsFromReceipt(conn *rpc.Connection, filter *filter.AppearanceFilter, receipt *types.Receipt) ([]types.Statement, error) {
+func (l *Ledger) getStatementsFromReceipt(conn *rpc.Connection, filter *types.AppearanceFilter, receipt *types.Receipt) ([]types.Statement, error) {
 	if receipt == nil {
 		return []types.Statement{}, nil
 	}

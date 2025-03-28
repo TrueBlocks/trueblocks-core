@@ -5,7 +5,6 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/filter"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
@@ -14,7 +13,7 @@ import (
 )
 
 // GetStatements returns a statement from a given transaction
-func (l *Ledger) GetStatements(conn *rpc.Connection, filter *filter.AppearanceFilter, trans *types.Transaction) ([]types.Statement, error) {
+func (l *Ledger) GetStatements(conn *rpc.Connection, filter *types.AppearanceFilter, trans *types.Transaction) ([]types.Statement, error) {
 	// We need this below...
 	l.theTx = trans
 
