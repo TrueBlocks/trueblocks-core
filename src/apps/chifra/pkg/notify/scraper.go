@@ -7,6 +7,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/uniq"
 )
 
+// TODO: BOGUS - NOTIFY CODE
 const (
 	MessageChunkWritten Message = "chunkWritten"
 	MessageStageUpdated Message = "stageUpdated"

@@ -7,6 +7,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/ranges"
 )
 
+// TODO: BOGUS - NOTIFY CODE
 func (opts *ScrapeOptions) NotifyChunkWritten(chunk index.Chunk, chunkPath string) (err error) {
 	_ = chunk
 	if !opts.Notify {
@@ -23,6 +24,7 @@ func (opts *ScrapeOptions) NotifyChunkWritten(chunk index.Chunk, chunkPath strin
 
 	// Generate range from path, as chunks sometimes don't have Range set
 	chunkRange := ranges.RangeFromFilename(index.ToIndexPath(chunkPath))
+	// TODO: BOGUS - NOTIFY CODE
 	return Notify(notify.Notification[[]notify.NotificationPayloadChunkWritten]{
 		Msg:  notify.MessageChunkWritten,
 		Meta: nil,

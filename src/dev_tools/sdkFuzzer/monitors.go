@@ -30,15 +30,8 @@ func DoMonitors() {
 	undelete := []bool{false, true}
 	remove := []bool{false, true}
 	staged := []bool{false, true}
-	watch := []bool{false, true}
-	// watchlist is not fuzzed
-	// commands is not fuzzed
-	// batchSize is not fuzzed
-	// runCount is not fuzzed
-	// sleep is not fuzzed
 	// Fuzz Loop
 	// EXISTING_CODE
-	_ = watch
 	_ = staged
 	_ = delete
 	_ = undelete
@@ -52,11 +45,6 @@ func DoMonitors() {
 	// Delete    bool     `json:"delete,omitempty"`
 	// Undelete  bool     `json:"undelete,omitempty"`
 	// Remove    bool     `json:"remove,omitempty"`
-	// Watch     bool     `json:"watch,omitempty"`
-	// Watchlist string   `json:"watchlist,omitempty"`
-	// Commands  string   `json:"commands,omitempty"`
-	// BatchSize uint64   `json:"batchSize,omitempty"`
-	// RunCount  uint64   `json:"runCount,omitempty"`
 	// Sleep     float64  `json:"sleep,omitempty"`
 	// func (opts *MonitorsOptions) Monitors() ([]bool, *types.MetaData, error) {
 	// func (opts *MonitorsOptions) MonitorsClean() ([]types.MonitorClean, *types.MetaData, error) {

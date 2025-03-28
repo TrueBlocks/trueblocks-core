@@ -2,6 +2,7 @@ package notify
 
 import "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 
+// TODO: BOGUS - NOTIFY CODE
 type Message string
 
 type Notification[T NotificationPayload] struct {

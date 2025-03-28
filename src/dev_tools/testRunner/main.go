@@ -88,7 +88,7 @@ func parseCsv(filePath string) ([]TestCase, error) {
 	const requiredFields = 9
 	lineNumber := 0
 	testCases := make([]TestCase, 0, 200)
-	enableMark := os.Getenv("TB_TEST_ENABLE")
+	enableMarks := strings.Split(os.Getenv("TB_TEST_ENABLE"), ",")
 	for {
 		lineNumber++
 		csvRecord, err := reader.Read()
@@ -124,9 +124,17 @@ func parseCsv(filePath string) ([]TestCase, error) {
 			}
 
 			isEnabled := rec.Enabled == "on"
-			if enableMark != "" {
-				isEnabled = rec.Enabled == enableMark
+			if len(enableMarks) > 0 && enableMarks[0] != "" {
+				isEnabled = false
+				for _, mark := range enableMarks {
+					mark = strings.Trim(mark, " ")
+					if rec.Enabled == mark {
+						isEnabled = true
+						break
+					}
+				}
 			}
+
 			testCase := TestCase{
 				record:       rec,
 				IsEnabled:    isEnabled,
@@ -264,7 +272,7 @@ func toCamelCase(s string) string {
 }
 
 func toSnakeCase(str string) string {
-	result := make([]rune, 0, len(str)*2)
+	var result = make([]rune, 0, len(str))
 	for i, r := range str {
 		if unicode.IsUpper(r) && i > 0 {
 			result = append(result, '_')
