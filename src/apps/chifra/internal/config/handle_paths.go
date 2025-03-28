@@ -11,6 +11,7 @@ func (opts *ConfigOptions) HandlePaths(rCtx *output.RenderCtx) error {
 	testMode := opts.Globals.TestMode
 
 	fetchData := func(modelChan chan types.Modeler, errorChan chan error) {
+		_ = errorChan
 		root, cache, index := config.PathToRootConfig(),
 			config.PathToCache(opts.Globals.Chain),
 			config.PathToIndex(opts.Globals.Chain)

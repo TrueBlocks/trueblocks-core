@@ -14,7 +14,6 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	sdk "github.com/TrueBlocks/trueblocks-sdk/v4"
 )
 
@@ -29,12 +28,12 @@ func DoExport() {
 	globs := globals
 	topics := fuzzTopics
 	fourbytes := fuzzFourbytes
-	accounting := []bool{false, true}
 	articulate := []bool{false, true}
 	cacheTraces := []bool{false, true}
 	relevant := []bool{false, true}
 	emitter := fuzzEmitters
 	topic := fuzzTopics
+	nfts := []bool{false, true}
 	reverted := []bool{false, true}
 	asset := fuzzAssets
 	// Option 'flow.enum' is an emum
@@ -42,6 +41,7 @@ func DoExport() {
 	unripe := []bool{false, true}
 	reversed := []bool{false, true}
 	noZero := []bool{false, true}
+	accounting := []bool{false, true}
 	// firstBlock is a <blknum> --other
 	// lastBlock is a <blknum> --other
 	// firstRecord is not fuzzed
@@ -52,6 +52,7 @@ func DoExport() {
 	_ = topic
 	_ = fourbytes
 	_ = articulate
+	_ = nfts
 	baseFn := "export/export"
 	opts = sdk.ExportOptions{
 		Addrs:       fuzzAddresses,
@@ -70,6 +71,8 @@ func DoExport() {
 		// TestExport("neighbors", "", fn, &opts)
 		TestExport("balances", "", fn, &opts)
 		TestExport("withdrawals", "", fn, &opts)
+		TestExport("statements", "", fn, &opts)
+		TestExport("transfers", "", fn, &opts)
 	}
 
 	/*
@@ -98,7 +101,7 @@ func TestExport(which, value, fn string, opts *sdk.ExportOptions) {
 		if export, _, err := opts.Export(); err != nil {
 			ReportError(fn, opts, err)
 		} else {
-			if err := SaveToFile[types.Transaction](fn, export); err != nil {
+			if err := SaveToFile(fn, export); err != nil {
 				ReportError2(fn, err)
 			} else {
 				ReportOkay(fn)
@@ -108,7 +111,7 @@ func TestExport(which, value, fn string, opts *sdk.ExportOptions) {
 		if appearances, _, err := opts.ExportAppearances(); err != nil {
 			ReportError(fn, opts, err)
 		} else {
-			if err := SaveToFile[types.Appearance](fn, appearances); err != nil {
+			if err := SaveToFile(fn, appearances); err != nil {
 				ReportError2(fn, err)
 			} else {
 				ReportOkay(fn)
@@ -118,7 +121,7 @@ func TestExport(which, value, fn string, opts *sdk.ExportOptions) {
 		if receipts, _, err := opts.ExportReceipts(); err != nil {
 			ReportError(fn, opts, err)
 		} else {
-			if err := SaveToFile[types.Receipt](fn, receipts); err != nil {
+			if err := SaveToFile(fn, receipts); err != nil {
 				ReportError2(fn, err)
 			} else {
 				ReportOkay(fn)
@@ -128,7 +131,7 @@ func TestExport(which, value, fn string, opts *sdk.ExportOptions) {
 		if logs, _, err := opts.ExportLogs(); err != nil {
 			ReportError(fn, opts, err)
 		} else {
-			if err := SaveToFile[types.Log](fn, logs); err != nil {
+			if err := SaveToFile(fn, logs); err != nil {
 				ReportError2(fn, err)
 			} else {
 				ReportOkay(fn)
@@ -138,7 +141,7 @@ func TestExport(which, value, fn string, opts *sdk.ExportOptions) {
 		if traces, _, err := opts.ExportTraces(); err != nil {
 			ReportError(fn, opts, err)
 		} else {
-			if err := SaveToFile[types.Trace](fn, traces); err != nil {
+			if err := SaveToFile(fn, traces); err != nil {
 				ReportError2(fn, err)
 			} else {
 				ReportOkay(fn)
@@ -148,7 +151,7 @@ func TestExport(which, value, fn string, opts *sdk.ExportOptions) {
 		if neighbors, _, err := opts.ExportNeighbors(); err != nil {
 			ReportError(fn, opts, err)
 		} else {
-			if err := SaveToFile[types.Message](fn, neighbors); err != nil {
+			if err := SaveToFile(fn, neighbors); err != nil {
 				ReportError2(fn, err)
 			} else {
 				ReportOkay(fn)
@@ -158,7 +161,27 @@ func TestExport(which, value, fn string, opts *sdk.ExportOptions) {
 		if statements, _, err := opts.ExportStatements(); err != nil {
 			ReportError(fn, opts, err)
 		} else {
-			if err := SaveToFile[types.Statement](fn, statements); err != nil {
+			if err := SaveToFile(fn, statements); err != nil {
+				ReportError2(fn, err)
+			} else {
+				ReportOkay(fn)
+			}
+		}
+	case "transfers":
+		if transfers, _, err := opts.ExportTransfers(); err != nil {
+			ReportError(fn, opts, err)
+		} else {
+			if err := SaveToFile(fn, transfers); err != nil {
+				ReportError2(fn, err)
+			} else {
+				ReportOkay(fn)
+			}
+		}
+	case "assets":
+		if assets, _, err := opts.ExportAssets(); err != nil {
+			ReportError(fn, opts, err)
+		} else {
+			if err := SaveToFile(fn, assets); err != nil {
 				ReportError2(fn, err)
 			} else {
 				ReportOkay(fn)
@@ -168,7 +191,7 @@ func TestExport(which, value, fn string, opts *sdk.ExportOptions) {
 		if balances, _, err := opts.ExportBalances(); err != nil {
 			ReportError(fn, opts, err)
 		} else {
-			if err := SaveToFile[types.State](fn, balances); err != nil {
+			if err := SaveToFile(fn, balances); err != nil {
 				ReportError2(fn, err)
 			} else {
 				ReportOkay(fn)
@@ -178,7 +201,7 @@ func TestExport(which, value, fn string, opts *sdk.ExportOptions) {
 		if withdrawals, _, err := opts.ExportWithdrawals(); err != nil {
 			ReportError(fn, opts, err)
 		} else {
-			if err := SaveToFile[types.Withdrawal](fn, withdrawals); err != nil {
+			if err := SaveToFile(fn, withdrawals); err != nil {
 				ReportError2(fn, err)
 			} else {
 				ReportOkay(fn)
@@ -188,7 +211,7 @@ func TestExport(which, value, fn string, opts *sdk.ExportOptions) {
 		if count, _, err := opts.ExportCount(); err != nil {
 			ReportError(fn, opts, err)
 		} else {
-			if err := SaveToFile[types.Monitor](fn, count); err != nil {
+			if err := SaveToFile(fn, count); err != nil {
 				ReportError2(fn, err)
 			} else {
 				ReportOkay(fn)
@@ -261,7 +284,6 @@ func TestExportExport(reverted, unripe, accounting, reversed []bool, asset []str
 					opts := *opts
 					opts.Reverted = r
 					opts.Unripe = u
-					opts.Accounting = a
 					opts.Reversed = rv
 					ff := fmt.Sprintf("%s--%t-%t-%t-%t", fn, r, u, a, rv)
 					TestExport("export", "", ff, &opts)

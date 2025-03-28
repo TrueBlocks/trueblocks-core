@@ -11,10 +11,10 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/articulate"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/filter"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/monitor"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/ranges"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
@@ -22,12 +22,12 @@ import (
 
 func (opts *ExportOptions) HandleLogs(rCtx *output.RenderCtx, monitorArray []monitor.Monitor) error {
 	abiCache := articulate.NewAbiCache(opts.Conn, opts.Articulate)
-	filter := filter.NewFilter(
+	filter := types.NewFilter(
 		opts.Reversed,
 		opts.Reverted,
 		opts.Fourbytes,
-		base.BlockRange{First: opts.FirstBlock, Last: opts.LastBlock},
-		base.RecordRange{First: opts.FirstRecord, Last: opts.GetMax()},
+		ranges.BlockRange{First: opts.FirstBlock, Last: opts.LastBlock},
+		ranges.RecordRange{First: opts.FirstRecord, Last: opts.GetMax()},
 	)
 
 	addrArray := make([]base.Address, 0, len(monitorArray))
@@ -59,7 +59,6 @@ func (opts *ExportOptions) HandleLogs(rCtx *output.RenderCtx, monitorArray []mon
 						Total:   int64(cnt),
 					})
 
-					// TODO: BOGUS - THIS IS NOT CONCURRENCY SAFE
 					finished := false
 					for _, thisMap := range sliceOfMaps {
 						if rCtx.WasCanceled() {
@@ -130,9 +129,10 @@ func (opts *ExportOptions) HandleLogs(rCtx *output.RenderCtx, monitorArray []mon
 						})
 
 						for _, item := range items {
-							var passes bool
-							passes, finished = filter.ApplyCountFilter()
-							if passes {
+							var passes1, passes2 bool
+							passes1, finished = filter.ApplyCountFilter()
+							passes2 = !opts.Nfts || item.IsNFT()
+							if passes1 && passes2 {
 								modelChan <- item
 							}
 							if finished {

@@ -20,6 +20,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/manifest"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/ranges"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/sigintTrap"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
@@ -148,7 +149,7 @@ func (updater *MonitorUpdate) FreshenMonitors(monitorArray *[]Monitor) (bool, er
 			if !walk.IsCacheType(fileName, walk.Index_Bloom, true /* checkExt */) {
 				continue // sometimes there are .gz files in this folder, for example
 			}
-			fileRange, err := base.RangeFromFilenameE(fileName)
+			fileRange, err := ranges.RangeFromFilenameE(fileName)
 			if err != nil {
 				// don't respond further -- there may be foreign files in the folder
 				fmt.Println(err)
@@ -198,11 +199,11 @@ func (updater *MonitorUpdate) FreshenMonitors(monitorArray *[]Monitor) (bool, er
 		// TODO: Note we could actually test this if we had the concept of a FAKE_HEAD block
 		stagePath := index.ToStagingPath(filepath.Join(config.PathToIndex(updater.Chain), "staging"))
 		stageFn, _ := file.LatestFileInFolder(stagePath)
-		rng := base.RangeFromFilename(stageFn)
+		rng := ranges.RangeFromFilename(stageFn)
 		lines := []string{}
 		for addr, mon := range updater.MonitorMap {
 			bn := base.Blknum(mon.LastScanned)
-			if !rng.LaterThanB(bn) { // the range preceeds the block number
+			if !rng.LaterThanB(bn) { // the range precedes the block number
 				if len(lines) == 0 {
 					lines = file.AsciiFileToLines(stageFn)
 					sort.Slice(lines, func(i, j int) bool {
@@ -235,7 +236,7 @@ func (updater *MonitorUpdate) FreshenMonitors(monitorArray *[]Monitor) (bool, er
 // visitChunkToFreshenFinal opens an index file, searches for the address(es) we're looking for and pushes
 // the appearance records down the resultsChannel (even if there are none).
 func (updater *MonitorUpdate) visitChunkToFreshenFinal(fileName string, resultChannel chan<- []index.AppearanceResult, wg *sync.WaitGroup) {
-	var results []index.AppearanceResult
+	results := make([]index.AppearanceResult, 0, len(updater.MonitorMap))
 	defer func() {
 		resultChannel <- results
 		wg.Done()

@@ -1,8 +1,7 @@
 package rpc
 
 import (
-	"sort"
-	"strings"
+	"sync"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
@@ -12,101 +11,70 @@ import (
 
 // Connection carries additional context to rpc calls
 type Connection struct {
-	Chain                string
-	Store                *cache.Store // Cache Store to use for read/write. Write can be disabled by setting Store to read-only mode
-	LatestBlockTimestamp base.Timestamp
-	EnabledMap           map[walk.CacheType]bool
+	Chain string
+	Store *cache.Store
+	// TODO: BOGUS - THIS IN MEMORY CACHE IS GOOD, BUT COULD BE BINARY FILE
+	balanceCache      map[string]*base.Wei
+	tokenBalanceCache map[string]*base.Wei
+	cacheMutex        sync.Mutex
 }
 
-// settings allows every command has its own options type, we have to
-// accept any here, but will use interfaces to read the needed information
-type settings struct {
-	Chain         string
-	ReadonlyCache bool
-	CacheEnabled  bool
-	EnabledMap    map[walk.CacheType]bool
-}
-
-func NewConnection(chain string, cacheEnabled bool, caches map[walk.CacheType]bool) *Connection {
-	settings := settings{
-		Chain:        chain,
-		CacheEnabled: cacheEnabled,
-		EnabledMap:   caches,
-	}
-	return settings.GetRpcConnection()
+func NewConnection(chain string, cacheEnabled bool, enabledMap map[walk.CacheType]bool) *Connection {
+	return newConnection(chain, cacheEnabled, enabledMap, cache.FsCache)
 }
 
 func TempConnection(chain string) *Connection {
-	settings := settings{
-		Chain: chain,
-	}
-	return settings.GetRpcConnection()
+	return newConnection(chain, false, nil, cache.FsCache)
 }
 
-func NewReadOnlyConnection(chain string) *Connection {
-	settings := settings{
-		Chain:         chain,
-		ReadonlyCache: true,
-	}
-	return settings.GetRpcConnection()
+func TestConnection(chain string, onOff bool, caches map[walk.CacheType]bool) *Connection {
+	return newConnection(chain, onOff, caches, cache.MemoryCache)
 }
 
-// GetRpcConnection builds the store and enables the caches and returns the RPC connection
-func (settings settings) GetRpcConnection() *Connection {
-	forceReadonly := !settings.CacheEnabled || settings.ReadonlyCache
-
+// newConnection builds the store and enables the caches and returns the RPC connection
+func newConnection(chain string, cacheEnabled bool, enabledMap map[walk.CacheType]bool, loc cache.StoreLocation) *Connection {
 	var store *cache.Store
 	var err error
 	if store, err = cache.NewStore(&cache.StoreOptions{
-		Location: cache.FsCache,
-		Chain:    settings.Chain,
-		ReadOnly: forceReadonly,
+		Location:   loc,
+		Chain:      chain,
+		Enabled:    cacheEnabled,
+		EnabledMap: enabledMap,
 	}); err != nil {
-		// If there was an error, we won't use the cache
 		logger.Warn("Cannot initialize cache:", err)
 	}
 
 	ret := &Connection{
-		Chain:      settings.Chain,
-		Store:      store,
-		EnabledMap: settings.EnabledMap,
+		Chain:             chain,
+		Store:             store,
+		balanceCache:      make(map[string]*base.Wei),
+		tokenBalanceCache: make(map[string]*base.Wei),
 	}
 
-	if store != nil && !store.ReadOnly() {
-		ret.LatestBlockTimestamp = ret.GetBlockTimestamp(base.NOPOSN)
+	if store != nil && store.Enabled() {
+		ret.Store.SetLatest(ret.GetBlockTimestamp(base.NOPOSN))
 	}
 
 	return ret
 }
 
-// StoreReadable is a shorthand to check if Store is initialized. It will return
-// false for nil pointer to Connection
-func (conn *Connection) StoreReadable() bool {
-	if conn == nil {
-		logger.Fatal("should not happen ==> implementation error in StoreReadable.")
-	}
-
-	return conn.Store != nil
-}
-
-func (conn *Connection) StoreWritable() bool {
-	if !conn.StoreReadable() {
-		return false
-	}
-	return !conn.Store.ReadOnly()
-}
-
 // TestLog prints the enabledMap to the log. Note this routine gets called prior to full initialization, thus it takes the enabledMap
-func (conn *Connection) TestLog(caches map[walk.CacheType]bool) {
-	if conn.StoreWritable() {
-		enabled := []string{}
-		for k, v := range caches {
-			if v {
-				enabled = append(enabled, k.String())
-			}
-		}
-		sort.Strings(enabled)
-		logger.TestLog(len(enabled) > 0, "Enabled: ", strings.Join(enabled, ", "))
+func (conn *Connection) TestLog() {
+	conn.Store.TestLog()
+}
+
+// ReadFromCache is syntactic sugar for the store. Cleans calling code by testing for nil store
+func (conn *Connection) ReadFromCache(value cache.Locator) error {
+	if conn.Store == nil {
+		return nil
 	}
-	// logger.TestLog(options.LatestBlockTimestamp != 0, "LatestBlockTimestamp: ", options.LatestBlockTimestamp)
+	return conn.Store.ReadFromStore(value)
+}
+
+// WriteToCache is syntactic sugar for the store. Cleans calling code by testing for nil store
+func (conn *Connection) WriteToCache(data cache.Locator, cacheType walk.CacheType, ts base.Timestamp, conditions ...bool) error {
+	if conn.Store == nil {
+		return nil
+	}
+	return conn.Store.WriteToStore(data, cacheType, ts, conditions...)
 }

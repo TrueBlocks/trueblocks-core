@@ -13,6 +13,7 @@ import (
 )
 
 func (opts *ChunksOptions) HandleList(rCtx *output.RenderCtx, blockNums []base.Blknum) error {
+	_ = blockNums
 	testMode := opts.Globals.TestMode
 	if testMode {
 		logger.Info("Test mode: list pins not tested")

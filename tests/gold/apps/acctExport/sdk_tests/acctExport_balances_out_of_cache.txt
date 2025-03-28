@@ -12,6 +12,7 @@ Format:  json
 {
   "data": [
     {
+      "address": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
       "balance": "1233063180000000000",
       "balanceDec": "1.23306318",
       "blockNumber": 10277683,
@@ -20,6 +21,7 @@ Format:  json
       "holder": "0x054993ab0f2b1acc0fdc65405ee203b4271bebe6"
     },
     {
+      "address": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
       "balance": "1004988080000000000",
       "balanceDec": "1.00498808",
       "blockNumber": 10277711,
@@ -28,6 +30,7 @@ Format:  json
       "holder": "0x054993ab0f2b1acc0fdc65405ee203b4271bebe6"
     },
     {
+      "address": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
       "balance": "1002830414000000000",
       "balanceDec": "1.002830414",
       "blockNumber": 10277776,
@@ -36,6 +39,7 @@ Format:  json
       "holder": "0x054993ab0f2b1acc0fdc65405ee203b4271bebe6"
     },
     {
+      "address": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
       "balance": "1000086814000000000",
       "balanceDec": "1.000086814",
       "blockNumber": 10277780,
@@ -44,6 +48,7 @@ Format:  json
       "holder": "0x054993ab0f2b1acc0fdc65405ee203b4271bebe6"
     },
     {
+      "address": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
       "balance": "997134928000000000",
       "balanceDec": "0.997134928",
       "blockNumber": 10367593,

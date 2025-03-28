@@ -25,6 +25,7 @@ import (
 
 // RunMonitors handles the monitors command for the command line. Returns error only as per cobra.
 func RunMonitors(cmd *cobra.Command, args []string) error {
+	_ = cmd
 	opts := monitorsFinishParse(args)
 	rCtx := output.NewRenderContext()
 	// EXISTING_CODE
@@ -82,8 +83,6 @@ func (opts *MonitorsOptions) MonitorsInternal(rCtx *output.RenderCtx) error {
 		err = opts.HandleClean(rCtx)
 	} else if opts.List {
 		err = opts.HandleList(rCtx)
-	} else if opts.Watch {
-		err = opts.HandleWatch(rCtx)
 	} else if opts.anyCrud() {
 		err = opts.HandleCrud(rCtx)
 	} else {

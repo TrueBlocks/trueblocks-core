@@ -28,10 +28,12 @@ func (opts *ChunksOptions) HandleAddresses(rCtx *output.RenderCtx, blockNums []b
 		var showAddresses func(walker *walk.CacheWalker, path string, first bool) (bool, error)
 		if opts.Globals.Verbose {
 			showAddresses = func(walker *walk.CacheWalker, path string, first bool) (bool, error) {
+				_ = first
 				return opts.handleResolvedRecords1(modelChan, walker, path)
 			}
 		} else {
 			showAddresses = func(walker *walk.CacheWalker, path string, first bool) (bool, error) {
+				_ = first
 				if path != index.ToBloomPath(path) {
 					return false, fmt.Errorf("should not happen in showAddresses")
 				}

@@ -17,7 +17,6 @@ import (
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/caps"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/identifiers"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
@@ -43,7 +42,6 @@ type TransactionsOptions struct {
 	Conn           *rpc.Connection          `json:"conn,omitempty"`           // The connection to the RPC server
 	BadFlag        error                    `json:"badFlag,omitempty"`        // An error flag if needed
 	// EXISTING_CODE
-	AccountForAddr base.Address `json:"-"`
 	// EXISTING_CODE
 }
 
@@ -60,7 +58,7 @@ func (opts *TransactionsOptions) testLog() {
 	logger.TestLog(len(opts.Emitter) > 0, "Emitter: ", opts.Emitter)
 	logger.TestLog(len(opts.Topic) > 0, "Topic: ", opts.Topic)
 	logger.TestLog(opts.CacheTraces, "CacheTraces: ", opts.CacheTraces)
-	opts.Conn.TestLog(opts.getCaches())
+	opts.Conn.TestLog()
 	opts.Globals.TestLog()
 }
 

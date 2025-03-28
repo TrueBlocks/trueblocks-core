@@ -1,0 +1,114 @@
+chifra export  0x05a56e2d52c817161883f50c441c3228cfe54d9f --accounting --assets --fmt json --max_records 15 --output assets_wei_2_1_out.file
+TEST[DATE|TIME] Addrs:  [0x05a56e2d52c817161883f50c441c3228cfe54d9f]
+TEST[DATE|TIME] Assets:  true
+TEST[DATE|TIME] MaxRecords:  15
+TEST[DATE|TIME] Accounting:  true
+TEST[DATE|TIME] OutputFn:  assets_wei_2_1_out.file
+TEST[DATE|TIME] Caps:  cache,decache,ether
+TEST[DATE|TIME] Format:  json
+INFO[DATE|TIME] { "outputFilename": "--output_filename--" }
+----
+Results in ./assets_wei_2_1_out.file
+{
+  "data": [
+    {
+      "address": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+      "decimals": 18,
+      "isErc20": true,
+      "name": "ETH",
+      "source": "defipulse.com",
+      "symbol": "ETH",
+      "tags": "50-Ethereum"
+    },
+    {
+      "address": "0x4fbb0b4cd8f960ac3428194f1c94c805d5b35836",
+      "decimals": 8,
+      "isContract": true,
+      "isErc20": true,
+      "name": "BigBang Game Coin Token",
+      "source": "On chain",
+      "symbol": "BBGC",
+      "tags": "50-Tokens:ERC20"
+    },
+    {
+      "address": "0x6867958907fb5a7064748388221da5209184409e",
+      "decimals": 18,
+      "isContract": true,
+      "isErc20": true,
+      "name": "bobabet.dcl.eth.link",
+      "source": "On chain",
+      "symbol": "BOBA",
+      "tags": "50-Tokens:ERC20"
+    },
+    {
+      "address": "0x6b92d76c9d0d40e53019ffa51b6f0c9b6bc657c9",
+      "decimals": 8,
+      "isContract": true,
+      "isErc20": true,
+      "name": "Ethereum Utility",
+      "source": "On chain",
+      "symbol": "ETHU",
+      "tags": "50-Tokens:ERC20"
+    },
+    {
+      "address": "0x7f4c7b32b822d2b61826d9345078198ef9668505",
+      "decimals": 18,
+      "name": "0x7f4...505",
+      "tags": ""
+    },
+    {
+      "address": "0x8f179114235842978d8917e08721541072c46584",
+      "decimals": 18,
+      "name": "0x8f1...584",
+      "tags": ""
+    },
+    {
+      "address": "0xf5ba8a8c87f976b79b17ccd25ee8dc2f8e82fb59",
+      "decimals": 18,
+      "isContract": true,
+      "isErc20": true,
+      "name": "EtherStone",
+      "source": "Etherscan ",
+      "symbol": "ETHS",
+      "tags": "30-Contracts"
+    },
+    {
+      "address": "0x1da4858ad385cc377165a298cc2ce3fce0c5fd31",
+      "decimals": 18,
+      "name": "0x1da...d31",
+      "tags": ""
+    },
+    {
+      "address": "0x4c6719bf85903d18c295da44216f862b01b36f43",
+      "decimals": 18,
+      "name": "0x4c6...f43",
+      "tags": ""
+    },
+    {
+      "address": "0x6c936d4ae98e6d2172db18c16c4b601c99918ee6",
+      "decimals": 18,
+      "name": "0x6c9...ee6",
+      "tags": ""
+    },
+    {
+      "address": "0x95aa5d2dbd3c16ee3fdea82d5c6ec3e38ce3314f",
+      "decimals": 18,
+      "isContract": true,
+      "isErc20": true,
+      "name": "PointPay Crypto Banking Token V2",
+      "source": "Rotki",
+      "symbol": "PXP",
+      "tags": "50-Tokens:ERC20"
+    },
+    {
+      "address": "0xdac17f958d2ee523a2206206994597c13d831ec7",
+      "decimals": 6,
+      "isContract": true,
+      "isErc20": true,
+      "name": "Tether USD",
+      "source": "Giveth website",
+      "symbol": "USDT",
+      "tags": "50-Tokens:ERC20"
+    }
+  ]
+}

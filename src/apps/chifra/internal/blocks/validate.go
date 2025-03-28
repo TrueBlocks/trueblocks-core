@@ -6,6 +6,7 @@ package blocksPkg
 
 import (
 	"errors"
+	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
@@ -39,8 +40,8 @@ func (opts *BlocksOptions) validateBlocks() error {
 		}
 	}
 
-	if opts.tooMany() {
-		return validate.Usage("Please choose only a single mode (--uncles, --logs, --withdrawal, etc.)")
+	if which, tooMany := opts.tooMany(); tooMany {
+		return validate.Usage("Please choose only a single mode ({0}, etc.)", strings.Join(which, ", "))
 	}
 
 	err := validate.ValidateIdentifiers(
@@ -115,7 +116,7 @@ func (opts *BlocksOptions) validateBlocks() error {
 			}
 		}
 
-		// We cannot cache uncles because they are identical to the cannonical blocks of the same number and would be incorrectly retreived.
+		// We cannot cache uncles because they are identical to the canonical blocks of the same number and would be incorrectly retreived.
 		if opts.Globals.Cache && opts.Uncles {
 			return validate.Usage("The {0} option is currently not available{1}.", "--cache", " with the --uncles option")
 		}
@@ -127,22 +128,33 @@ func (opts *BlocksOptions) validateBlocks() error {
 	return opts.Globals.Validate()
 }
 
-func (opts *BlocksOptions) tooMany() bool {
+func (opts *BlocksOptions) tooMany() ([]string, bool) {
+	which := []string{}
 	cnt := 0
 	if opts.Uncles {
+		which = append(which, "--uncles")
 		cnt++
 	}
 	if opts.Traces {
+		which = append(which, "--traces")
 		cnt++
 	}
 	if opts.Uniq {
+		which = append(which, "--uniq")
 		cnt++
 	}
 	if opts.Logs {
+		which = append(which, "--logs")
 		cnt++
 	}
 	if opts.Withdrawals {
+		which = append(which, "--withdrawals")
 		cnt++
 	}
-	return !opts.Count && cnt > 1
+
+	if len(which) > 2 {
+		which = which[:2]
+	}
+
+	return which, !opts.Count && cnt > 1
 }

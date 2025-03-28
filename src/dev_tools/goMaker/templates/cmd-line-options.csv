@@ -18,18 +18,19 @@ num,folder,group,route,tool,longName,hotKey,def_val,attributes,handler,option_ty
 12150,apps,Accounts,list,acctExport,n2,,,,,note,,,,,,No other options are permitted when --silent is selected.
 #
 13000,apps,Accounts,export,acctExport,,,,visible|docs,,command,,,Export details,[flags] <address> [address...] [topics...] [fourbytes...],default|caching|ether|names|,Export full details of transactions for one or more addresses.
-13020,apps,Accounts,export,acctExport,addrs,,,required|visible|docs,11,positional,list<addr>,transaction,,,,one or more addresses (0x...) to export
+13020,apps,Accounts,export,acctExport,addrs,,,required|visible|docs,13,positional,list<addr>,transaction,,,,one or more addresses (0x...) to export
 13030,apps,Accounts,export,acctExport,topics,,,visible|docs,,positional,list<topic>,,,,,filter by one or more log topics (only for --logs option)
 13040,apps,Accounts,export,acctExport,fourbytes,,,visible|docs,,positional,list<fourbyte>,,,,,filter by one or more fourbytes (only for transactions and trace options)
-13050,apps,Accounts,export,acctExport,appearances,p,,visible|docs,6,switch,<boolean>,appearance,,,,export a list of appearances
+13050,apps,Accounts,export,acctExport,appearances,p,,visible|docs,5,switch,<boolean>,appearance,,,,export a list of appearances
 13060,apps,Accounts,export,acctExport,receipts,r,,visible|docs,2,switch,<boolean>,receipt,,,,export receipts instead of transactional data
 13070,apps,Accounts,export,acctExport,logs,l,,visible|docs,3,switch,<boolean>,log,,,,export logs instead of transactional data
-13080,apps,Accounts,export,acctExport,traces,t,,visible|docs,4,switch,<boolean>,trace,,,,export traces instead of transactional data
+13080,apps,Accounts,export,acctExport,traces,t,,visible|docs,12,switch,<boolean>,trace,,,,export traces instead of transactional data
 13090,apps,Accounts,export,acctExport,neighbors,n,,visible|docs,8,switch,<boolean>,message,,,,export the neighbors of the given address
-13100,apps,Accounts,export,acctExport,accounting,C,,visible|docs,10,switch,<boolean>,,,,,attach accounting records to the exported data (applies to transactions export only)
-13110,apps,Accounts,export,acctExport,statements,A,,visible|docs,9,switch,<boolean>,statement,,,,for the accounting options only&#44; export only statements
+13110,apps,Accounts,export,acctExport,statements,A,,visible|docs,9,switch,<boolean>,statement,,,,export only statements
+13110,apps,Accounts,export,acctExport,transfers,X,,visible|docs,10,switch,<boolean>,transfer,,,,export only eth or token transfers
+13120,apps,Accounts,export,acctExport,assets,s,,visible|docs,6,switch,<boolean>,name,,,,list all assets (with names) that appear in any transfer
 13120,apps,Accounts,export,acctExport,balances,b,,visible|docs,7,switch,<boolean>,state,,,,traverse the transaction history and show each change in ETH balances
-13130,apps,Accounts,export,acctExport,withdrawals,i,,visible|docs,5,switch,<boolean>,withdrawal,,,,export withdrawals for the given address
+13130,apps,Accounts,export,acctExport,withdrawals,i,,visible|docs,4,switch,<boolean>,withdrawal,,,,export withdrawals for the given address
 13140,apps,Accounts,export,acctExport,articulate,a,,visible|docs,,switch,<boolean>,,,,,articulate transactions&#44; traces&#44; logs&#44; and outputs
 13150,apps,Accounts,export,acctExport,cache_traces,R,,visible|docs,,switch,<boolean>,,,,,force the transaction's traces into the cache
 13160,apps,Accounts,export,acctExport,count,U,,visible|docs,1,switch,<boolean>,monitor,,,,for --appearances mode only&#44; display only the count of records
@@ -38,15 +39,17 @@ num,folder,group,route,tool,longName,hotKey,def_val,attributes,handler,option_ty
 13190,apps,Accounts,export,acctExport,relevant,N,,visible|docs,,switch,<boolean>,,,,,for log and accounting export only&#44; export only logs relevant to one of the given export addresses
 13200,apps,Accounts,export,acctExport,emitter,m,,visible|docs,,flag,list<addr>,,,,,for the --logs option only&#44; filter logs to show only those logs emitted by the given address(es)
 13210,apps,Accounts,export,acctExport,topic,B,,visible|docs,,flag,list<topic>,,,,,for the --logs option only&#44; filter logs to show only those with this topic(s)
+13215,apps,Accounts,export,acctExport,nfts,T,,visible|docs,,switch,<boolean>,,,,,for the --logs option only&#44; filter logs to show only nft transfers
 13220,apps,Accounts,export,acctExport,reverted,V,,visible|docs,,switch,<boolean>,,,,,export only transactions that were reverted
-13230,apps,Accounts,export,acctExport,asset,P,,visible|docs,,flag,list<addr>,,,,,for the accounting options only&#44; export statements only for this asset
-13240,apps,Accounts,export,acctExport,flow,f,,visible|docs,,flag,enum[in|out|zero],,,,,for the accounting options only&#44; export statements with incoming&#44; outgoing&#44; or zero value
+13230,apps,Accounts,export,acctExport,asset,P,,visible|docs,,flag,list<addr>,,,,,export transfers&#44; balances&#44; or statements only for this asset
+13240,apps,Accounts,export,acctExport,flow,f,,visible|docs,,flag,enum[in|out|zero],,,,,export transfers&#44; balances&#44; or statements with incoming&#44; outgoing&#44; or zero value
 13250,apps,Accounts,export,acctExport,factory,y,,visible|docs,,switch,<boolean>,,,,,for --traces only&#44; report addresses created by (or self-destructed by) the given address(es)
 13260,apps,Accounts,export,acctExport,unripe,u,,visible|docs,,switch,<boolean>,,,,,export transactions labeled unripe (i.e. less than 28 blocks old)
 13280,apps,Accounts,export,acctExport,reversed,E,,visible|docs,,switch,<boolean>,,,,,produce results in reverse chronological order
 13290,apps,Accounts,export,acctExport,no_zero,z,,visible|docs,,switch,<boolean>,,,,,for the --count option only&#44; suppress the display of zero appearance accounts
 13300,apps,Accounts,export,acctExport,first_block,F,,visible|docs,,flag,<blknum>,,,,,first block to process (inclusive)
 13310,apps,Accounts,export,acctExport,last_block,L,NOPOSN,visible|docs,,flag,<blknum>,,,,,last block to process (inclusive)
+13315,apps,Accounts,export,acctExport,accounting,C,,visible|docs,,switch,<boolean>,,,,,deprecated option&#44; you may simply remove it
 13320,apps,Accounts,export,acctExport,n1,,,,,note,,,,,,An `address` must be either an ENS name or start with '0x' and be forty-two characters long.
 13330,apps,Accounts,export,acctExport,n2,,,,,note,,,,,,Articulating the export means turn the EVM's byte data into human-readable text (if possible).
 13340,apps,Accounts,export,acctExport,n3,,,,,note,,,,,,For the --logs option&#44; you may optionally specify one or more --emitter&#44; one or more --topics&#44; or both.
@@ -69,17 +72,8 @@ num,folder,group,route,tool,longName,hotKey,def_val,attributes,handler,option_ty
 14070,apps,Accounts,monitors,acctExport,list,l,,visible|docs,3,switch,<boolean>,monitor,,,,list monitors in the cache (--verbose for more detail)
 14075,apps,Accounts,monitors,acctExport,count,c,,visible|docs,1,switch,<boolean>,count,,,,show the number of active monitors (included deleted but not removed monitors)
 14065,apps,Accounts,monitors,acctExport,staged,S,,visible|docs,,switch,<boolean>,,,,,for --clean&#44; --list&#44; and --count options only&#44; include staged monitors
-14080,apps,Accounts,monitors,acctExport,watch,w,,visible|docs|notApi,4,switch,<boolean>,,,,,continually scan for new blocks and extract data as per the command file
-14090,apps,Accounts,monitors,acctExport,watchlist,a,,visible|docs|notApi,,flag,<string>,,,,,available with --watch option only&#44; a file containing the addresses to watch
-14100,apps,Accounts,monitors,acctExport,commands,d,,visible|docs|notApi,,flag,<string>,,,,,available with --watch option only&#44; the file containing the list of commands to apply to each watched address
-14110,apps,Accounts,monitors,acctExport,batch_size,b,8,visible|docs|notApi,,flag,<uint64>,,,,,available with --watch option only&#44; the number of monitors to process in each batch
-14120,apps,Accounts,monitors,acctExport,run_count,u,,visible|docs|notApi,,flag,<uint64>,,,,,available with --watch option only&#44; run the monitor this many times&#44; then quit
-14130,apps,Accounts,monitors,acctExport,sleep,s,14,visible|docs|notApi,,flag,<float64>,,,,,available with --watch option only&#44; the number of seconds to sleep between runs
 14140,apps,Accounts,monitors,acctExport,n1,,,,,note,,,,,,An `address` must be either an ENS name or start with '0x' and be forty-two characters long.
 14150,apps,Accounts,monitors,acctExport,n2,,,,,note,,,,,,If no address is presented to the --clean command&#44; all existing monitors will be cleaned.
-14160,apps,Accounts,monitors,acctExport,n3,,,,,note,,,,,,The --watch option requires two additional parameters to be specified: `--watchlist` and `--commands`.
-14170,apps,Accounts,monitors,acctExport,n4,,,,,note,,,,,,Addresses provided on the command line are ignored in `--watch` mode.
-14180,apps,Accounts,monitors,acctExport,n5,,,,,note,,,,,,Providing the value `existing` to the `--watchlist` monitors all existing monitor files (see --list).
 #
 15000,tools,Accounts,names,ethNames,,,,visible|docs,,command,,,Manage names,[flags] <term> [term...],default|,Query addresses or names of well-known accounts.
 15020,tools,Accounts,names,ethNames,terms,,,required|visible|docs,4,positional,list<string>,name,,,,a space separated list of one or more search terms
@@ -110,7 +104,7 @@ num,folder,group,route,tool,longName,hotKey,def_val,attributes,handler,option_ty
 16060,tools,Accounts,abis,grabABI,count,c,,visible|docs,2,switch,<boolean>,count,,,,show the number of abis downloaded
 16070,tools,Accounts,abis,grabABI,find,f,,visible|docs,1,flag,list<string>,function,,,,search for function or event declarations given a four- or 32-byte code(s)
 16080,tools,Accounts,abis,grabABI,hint,n,,visible|docs,,flag,list<string>,,,,,for the --find option only&#44; provide hints to speed up the search
-16090,tools,Accounts,abis,grabABI,encode,e,,visible|docs,4,flag,<string>,function,,,,generate the 32-byte encoding for a given cannonical function or event signature
+16090,tools,Accounts,abis,grabABI,encode,e,,visible|docs,4,flag,<string>,function,,,,generate the 32-byte encoding for a given canonical function or event signature
 16100,tools,Accounts,abis,grabABI,n1,,,,,note,,,,,,Search for either four byte signatures or event signatures with the --find option.
 #
 21000,,Chain Data,,,,,,,,group,,,,,,Access and cache blockchain-related data
@@ -222,7 +216,7 @@ num,folder,group,route,tool,longName,hotKey,def_val,attributes,handler,option_ty
 32180,tools,Chain State,state,getState,n9,,,,,note,,,,,,Your use of the unaudited --send option legally absolves TrueBlocks&#44; LLC or any associated parties from liability or loss related to such use.
 32185,tools,Chain State,state,getState,n10,,,,,note,,,,,,The --send option does not validate its input before sending your transaction to the network. If you provide invalid data&#44; you may lose your funds. Be warned.
 32190,tools,Chain State,state,getState,n11,,,,,note,,,,,,As of version 4.0.0&#44; use `--call --calldata <cmd>` to provide your command.
-32195,tools,Chain State,state,getState,n12,,,,,note,,,,,,--calldata may be one or more colon-seperated solidity calls&#44; four-byte plus parameters&#44; or encoded call data strings.
+32195,tools,Chain State,state,getState,n12,,,,,note,,,,,,--calldata may be one or more colon-separated solidity calls&#44; four-byte plus parameters&#44; or encoded call data strings.
 #
 33000,tools,Chain State,tokens,getTokens,,,,visible|docs,,command,,,Get token balance(s),[flags] <address> <address> [address...] [block...],default|caching|names|,Retrieve token balance(s) for one or more addresses at given block(s).
 33020,tools,Chain State,tokens,getTokens,addrs,,,required|visible|docs,2,positional,list<addr>,token,,,,two or more addresses (0x...)&#44; the first is an ERC20 token&#44; balances for the rest are reported

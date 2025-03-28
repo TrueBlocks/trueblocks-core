@@ -1,4 +1,12 @@
-export?addrs=0xf503017d7baf7fbc0fff7492b751025c6a78179b&lastBlock=8856511&fmt=json&ether&maxRecords=10
+export?addrs=0xf503017d7baf7fbc0fff7492b751025c6a78179b&lastBlock=8856511&ether&maxRecords=10
+Args: [addrs=0xf503017d7baf7fbc0fff7492b751025c6a78179b lastBlock=8856511 ether maxRecords=10]
+Opts: {"addrs":["0xf503017d7baf7fbc0fff7492b751025c6a78179b"],"maxRecords":10,"lastBlock":8856511,"ether":true}
+Addrs:  [0xf503017d7baf7fbc0fff7492b751025c6a78179b]
+MaxRecords:  10
+LastBlock:  8856511
+Ether:  true
+Caps:  cache,decache,ether
+Format:  json
 {
   "data": [
     {
@@ -23,7 +31,7 @@ export?addrs=0xf503017d7baf7fbc0fff7492b751025c6a78179b&lastBlock=8856511&fmt=js
       "to": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
       "traces": [],
       "transactionIndex": 61,
-      "value": "5"
+      "value": "5000000000000000000"
     },
     {
       "blockHash": "0xeea275e000cb2119986bb0c4aa30a5e22bbafd92f140aff8c2a191aa84797e22",
@@ -96,7 +104,7 @@ export?addrs=0xf503017d7baf7fbc0fff7492b751025c6a78179b&lastBlock=8856511&fmt=js
       "to": "0xb97073b754660bb356dfe12f78ae366d77dbc80f",
       "traces": [],
       "transactionIndex": 62,
-      "value": "0.01"
+      "value": "10000000000000000"
     },
     {
       "blockHash": "0x43e22796bc84f41d76c289867c883438070d9fc90c90ae54305e9f46d7848a69",
@@ -121,7 +129,7 @@ export?addrs=0xf503017d7baf7fbc0fff7492b751025c6a78179b&lastBlock=8856511&fmt=js
       "to": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
       "traces": [],
       "transactionIndex": 91,
-      "value": "0.01"
+      "value": "10000000000000000"
     },
     {
       "blockHash": "0x7b6c8640eb6e951e4f27370b8ddce33416df0c88a36133ed530d89bf70851f7a",

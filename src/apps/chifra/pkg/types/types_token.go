@@ -41,6 +41,10 @@ func (s Token) String() string {
 }
 
 func (s *Token) Model(chain, format string, verbose bool, extraOpts map[string]any) Model {
+	_ = chain
+	_ = format
+	_ = verbose
+	_ = extraOpts
 	var model = map[string]any{}
 	var order = []string{}
 
@@ -53,7 +57,7 @@ func (s *Token) Model(chain, format string, verbose bool, extraOpts map[string]a
 		name.Decimals = 18
 	}
 	if name.Symbol == "" {
-		name.Symbol = name.Address.Prefix(6)
+		name.Symbol = name.Address.DefaultSymbol()
 	}
 
 	wanted := extraOpts["parts"].([]string)
@@ -89,7 +93,7 @@ func (s *Token) Model(chain, format string, verbose bool, extraOpts map[string]a
 		case "balance":
 			model["balance"] = s.Balance.String()
 		case "balanceDec":
-			model["balanceDec"] = s.Balance.ToEtherStr(int(name.Decimals))
+			model["balanceDec"] = s.Balance.ToFloatString(int(name.Decimals))
 		case "blockNumber":
 			model["blockNumber"] = s.BlockNumber
 		case "date":
@@ -111,7 +115,7 @@ func (s *Token) Model(chain, format string, verbose bool, extraOpts map[string]a
 		case "timestamp":
 			model["timestamp"] = s.Timestamp
 		case "totalSupply":
-			model["totalSupply"] = s.TotalSupply.ToEtherStr(int(name.Decimals))
+			model["totalSupply"] = s.TotalSupply.ToFloatString(int(name.Decimals))
 		case "transactionIndex":
 			model["transactionIndex"] = s.TransactionIndex
 		case "version":
@@ -143,7 +147,8 @@ func (s *Token) Date() string {
 }
 
 // FinishUnmarshal is used by the cache. It may be unused depending on auto-code-gen
-func (s *Token) FinishUnmarshal() {
+func (s *Token) FinishUnmarshal(fileVersion uint64) {
+	_ = fileVersion
 	// EXISTING_CODE
 	// EXISTING_CODE
 }
@@ -165,9 +170,9 @@ func (s *Token) formattedDiff(dec uint64) string {
 	diff := new(big.Int).Sub(b, pB)
 	if diff.Sign() == -1 {
 		diff = diff.Neg(diff)
-		return "-" + (*base.Wei)(diff).ToEtherStr(int(dec))
+		return "-" + (*base.Wei)(diff).ToFloatString(int(dec))
 	}
-	return (*base.Wei)(diff).ToEtherStr(int(dec))
+	return (*base.Wei)(diff).ToFloatString(int(dec))
 }
 
 type TokenType int

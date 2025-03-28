@@ -1,4 +1,11 @@
-export?addrs=0x6193f68d97921f4765d72a3e6964fc990c59e0e5&firstBlock=17013606&lastBlock=17083530&fmt=json
+export?addrs=0x6193f68d97921f4765d72a3e6964fc990c59e0e5&firstBlock=17013606&lastBlock=17083530
+Args: [addrs=0x6193f68d97921f4765d72a3e6964fc990c59e0e5 firstBlock=17013606 lastBlock=17083530]
+Opts: {"addrs":["0x6193f68d97921f4765d72a3e6964fc990c59e0e5"],"firstBlock":17013606,"lastBlock":17083530}
+Addrs:  [0x6193f68d97921f4765d72a3e6964fc990c59e0e5]
+FirstBlock:  17013606
+LastBlock:  17083530
+Caps:  cache,decache,ether
+Format:  json
 {
   "data": [
     {

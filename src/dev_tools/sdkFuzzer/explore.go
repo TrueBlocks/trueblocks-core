@@ -14,7 +14,6 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	sdk "github.com/TrueBlocks/trueblocks-sdk/v4"
 )
 
@@ -52,7 +51,7 @@ func TestExplore(which, value, fn string, opts *sdk.ExploreOptions) {
 		if explore, _, err := opts.Explore(); err != nil {
 			ReportError(fn, opts, err)
 		} else {
-			if err := SaveToFile[types.Destination](fn, explore); err != nil {
+			if err := SaveToFile(fn, explore); err != nil {
 				ReportError2(fn, err)
 			} else {
 				ReportOkay(fn)

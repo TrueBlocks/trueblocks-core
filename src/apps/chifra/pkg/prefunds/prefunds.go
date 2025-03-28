@@ -28,6 +28,7 @@ type allocCallback func(*Allocation, *any) (bool, error)
 
 // LoadPrefunds loads the prefunds from the genesis file and processes each with provided callback if present
 func LoadPrefunds(chain string, thePath string, userCallback allocCallback) ([]Allocation, error) {
+	_ = chain
 	allocations := make([]Allocation, 0, 4000)
 	callbackFunc := func(record Allocation) error {
 		if base.IsValidAddress(record.Address.Hex()) {
@@ -66,6 +67,7 @@ func LoadPrefunds(chain string, thePath string, userCallback allocCallback) ([]A
 func GetLargestPrefund(chain, thePath string) (Allocation, error) {
 	largest := Allocation{}
 	getLargest := func(alloc *Allocation, data *any) (bool, error) {
+		_ = data
 		if alloc.Balance.Cmp(&largest.Balance) > 0 {
 			largest = *alloc
 		}

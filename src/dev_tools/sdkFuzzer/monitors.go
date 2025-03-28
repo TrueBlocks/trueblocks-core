@@ -14,7 +14,6 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	sdk "github.com/TrueBlocks/trueblocks-sdk/v4"
 )
 
@@ -31,19 +30,12 @@ func DoMonitors() {
 	undelete := []bool{false, true}
 	remove := []bool{false, true}
 	staged := []bool{false, true}
-	watch := []bool{false, true}
-	// watchlist is not fuzzed
-	// commands is not fuzzed
-	// batchSize is not fuzzed
-	// runCount is not fuzzed
-	// sleep is not fuzzed
 	// Fuzz Loop
 	// EXISTING_CODE
 	_ = staged
 	_ = delete
 	_ = undelete
 	_ = remove
-	_ = watch
 	_ = globs
 	opts = sdk.MonitorsOptions{
 		Addrs: []string{fuzzAddresses[0]},
@@ -53,11 +45,6 @@ func DoMonitors() {
 	// Delete    bool     `json:"delete,omitempty"`
 	// Undelete  bool     `json:"undelete,omitempty"`
 	// Remove    bool     `json:"remove,omitempty"`
-	// Watch     bool     `json:"watch,omitempty"`
-	// Watchlist string   `json:"watchlist,omitempty"`
-	// Commands  string   `json:"commands,omitempty"`
-	// BatchSize uint64   `json:"batchSize,omitempty"`
-	// RunCount  uint64   `json:"runCount,omitempty"`
 	// Sleep     float64  `json:"sleep,omitempty"`
 	// func (opts *MonitorsOptions) Monitors() ([]bool, *types.MetaData, error) {
 	// func (opts *MonitorsOptions) MonitorsClean() ([]types.MonitorClean, *types.MetaData, error) {
@@ -66,7 +53,7 @@ func DoMonitors() {
 	if monitors, _, err := opts.MonitorsList(); err != nil {
 		logger.Error(err)
 	} else {
-		if err := SaveAndClean[types.Monitor]("sdkFuzzer-output/monitors.json", monitors, &opts, func() error {
+		if err := SaveAndClean("sdkFuzzer-output/monitors.json", monitors, &opts, func() error {
 			_, _, err := opts.MonitorsList()
 			return err
 		}); err != nil {
@@ -78,7 +65,7 @@ func DoMonitors() {
 	// if monitors, _, err := opts.Monitors(); err != nil {
 	// 	logger.Error(err)
 	// } else {
-	// 	if err := SaveAndClean[bool]("sdkFuzzer-output/monitors.json", monitors, &opts, func() error {
+	// 	if err := SaveAndClean("sdkFuzzer-output/monitors.json", monitors, &opts, func() error {
 	// 		_, _, err := opts.Monitors()
 	// 		return err
 	// 	}); err != nil {
@@ -89,7 +76,7 @@ func DoMonitors() {
 	// if monitors, _, err := opts.MonitorsClean(); err != nil {
 	// 	logger.Error(err)
 	// } else {
-	// 	if err := SaveAndClean[types.MonitorClean]("sdkFuzzer-output/monitors.json", monitors, &opts, func() error {
+	// 	if err := SaveAndClean("sdkFuzzer-output/monitors.json", monitors, &opts, func() error {
 	// 		_, _, err := opts.MonitorsClean()
 	// 		return err
 	// 	}); err != nil {
@@ -111,7 +98,7 @@ func TestMonitors(which, value, fn string, opts *sdk.MonitorsOptions) {
 		if monitors, _, err := opts.Monitors(); err != nil {
 			ReportError(fn, opts, err)
 		} else {
-			if err := SaveToFile[types.Message](fn, monitors); err != nil {
+			if err := SaveToFile(fn, monitors); err != nil {
 				ReportError2(fn, err)
 			} else {
 				ReportOkay(fn)
@@ -121,7 +108,7 @@ func TestMonitors(which, value, fn string, opts *sdk.MonitorsOptions) {
 		if clean, _, err := opts.MonitorsClean(); err != nil {
 			ReportError(fn, opts, err)
 		} else {
-			if err := SaveToFile[types.MonitorClean](fn, clean); err != nil {
+			if err := SaveToFile(fn, clean); err != nil {
 				ReportError2(fn, err)
 			} else {
 				ReportOkay(fn)
@@ -131,7 +118,7 @@ func TestMonitors(which, value, fn string, opts *sdk.MonitorsOptions) {
 		if list, _, err := opts.MonitorsList(); err != nil {
 			ReportError(fn, opts, err)
 		} else {
-			if err := SaveToFile[types.Monitor](fn, list); err != nil {
+			if err := SaveToFile(fn, list); err != nil {
 				ReportError2(fn, err)
 			} else {
 				ReportOkay(fn)
@@ -141,7 +128,7 @@ func TestMonitors(which, value, fn string, opts *sdk.MonitorsOptions) {
 		if count, _, err := opts.MonitorsCount(); err != nil {
 			ReportError(fn, opts, err)
 		} else {
-			if err := SaveToFile[types.Count](fn, count); err != nil {
+			if err := SaveToFile(fn, count); err != nil {
 				ReportError2(fn, err)
 			} else {
 				ReportOkay(fn)

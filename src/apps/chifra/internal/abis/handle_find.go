@@ -114,7 +114,7 @@ func (opts *AbisOptions) HandleFind(rCtx *output.RenderCtx) error {
 		defer wg.Wait()
 
 		if opts.Globals.TestMode {
-			// Otherwise the test is not reproducable
+			// Otherwise the test is not reproducible
 			sort.Slice(results, func(i, j int) bool {
 				return results[i].Signature < results[j].Signature
 			})

@@ -78,7 +78,7 @@ Transactions consist of the following fields:
 | gasPrice         | the number of wei per unit of gas the sender is willing to spend                                      | gas                                            |
 | input            | byte data either containing a message or funcational data for a smart contracts. See the --articulate | bytes                                          |
 | receipt          |                                                                                                       | [Receipt](/data-model/chaindata/#receipt)      |
-| statements       | array of reconciliations (calculated)                                                                 | [Statement[]](/data-model/accounts/#statement) |
+| statements       | array of reconciliation statements (calculated)                                                       | [Statement[]](/data-model/accounts/#statement) |
 | articulatedTx    |                                                                                                       | [Function](/data-model/other/#function)        |
 | hasToken         | `true` if the transaction is token related, `false` otherwise                                         | bool                                           |
 | isError          | `true` if the transaction ended in error, `false` otherwise                                           | bool                                           |
@@ -130,7 +130,7 @@ Receipts consist of the following fields:
 | gasUsed          | the amount of gas actually used by the transaction                         | gas                                 |
 | isError          |                                                                            | bool                                |
 | logs             | a possibly empty array of logs                                             | [Log[]](/data-model/chaindata/#log) |
-| status           | `1` on transaction suceess, `null` if tx preceeds Byzantium, `0` otherwise | value                               |
+| status           | `1` on transaction suceess, `null` if tx precedes Byzantium, `0` otherwise | value                               |
 | transactionHash  |                                                                            | hash                                |
 | transactionIndex |                                                                            | txnum                               |
 
@@ -164,6 +164,7 @@ Logs consist of the following fields:
 | blockHash        | the hash of the block                                                                             | hash                                    |
 | articulatedLog   | a human-readable version of the topic and data fields                                             | [Function](/data-model/other/#function) |
 | compressedLog    | a truncated, more readable version of the articulation (calculated)                               | string                                  |
+| isNFT            | true if the log is an NFT transfer (calculated)                                                   | bool                                    |
 
 ## Trace
 

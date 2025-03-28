@@ -8,7 +8,6 @@ import (
 	"fmt"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc/query"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/walk"
@@ -32,19 +31,15 @@ func (conn *Connection) GetReceipt(bn base.Blknum, txid base.Txnum, suggested ba
 // GetReceiptNoTimestamp fetches receipt from the RPC. If txGasPrice is provided, it will be used for
 // receipts in blocks before London
 func (conn *Connection) GetReceiptNoTimestamp(bn base.Blknum, txid base.Txnum) (receipt types.Receipt, err error) {
-	if conn.StoreReadable() {
-		// walk.Cache_Transactions
-		tx := &types.Transaction{
-			BlockNumber:      bn,
-			TransactionIndex: txid,
+	tx := &types.Transaction{
+		BlockNumber:      bn,
+		TransactionIndex: txid,
+	}
+	if err := conn.ReadFromCache(tx); err == nil {
+		if tx.Receipt == nil {
+			return receipt, nil
 		}
-		if err := conn.Store.Read(tx, nil); err == nil {
-			// success
-			if tx.Receipt == nil {
-				return receipt, nil
-			}
-			return *tx.Receipt, nil
-		}
+		return *tx.Receipt, nil
 	}
 
 	// TODO: Bogus - weird code related to with or without timestamp. There's a better way
@@ -71,38 +66,32 @@ func (conn *Connection) getReceiptFromRpc(bn base.Blknum, txid base.Txnum) (rece
 
 // GetReceiptsByNumber returns all receipts in a blocks along with their logs
 func (conn *Connection) GetReceiptsByNumber(bn base.Blknum, ts base.Timestamp) ([]types.Receipt, map[base.Txnum]*types.Receipt, error) {
-	if conn.StoreReadable() {
-		// walk.Cache_Receipts
-		receiptGroup := &types.ReceiptGroup{
-			BlockNumber:      bn,
-			TransactionIndex: base.NOPOSN,
+	receiptGroup := &types.ReceiptGroup{
+		BlockNumber:      bn,
+		TransactionIndex: base.NOPOSN,
+	}
+	if err := conn.ReadFromCache(receiptGroup); err == nil {
+		receiptMap := make(map[base.Txnum]*types.Receipt, len(receiptGroup.Receipts))
+		for index := 0; index < len(receiptGroup.Receipts); index++ {
+			pReceipt := &receiptGroup.Receipts[index]
+			receiptMap[pReceipt.TransactionIndex] = pReceipt
 		}
-		if err := conn.Store.Read(receiptGroup, nil); err == nil {
-			receiptMap := make(map[base.Txnum]*types.Receipt, len(receiptGroup.Receipts))
-			for index := 0; index < len(receiptGroup.Receipts); index++ {
-				pReceipt := &receiptGroup.Receipts[index]
-				receiptMap[pReceipt.TransactionIndex] = pReceipt
-			}
-			return receiptGroup.Receipts, receiptMap, nil
-		}
+		return receiptGroup.Receipts, receiptMap, nil
 	}
 
 	if receipts, err := conn.getBlockReceiptsFromRpc(bn); err != nil {
 		return receipts, nil, err
 	} else {
-		isFinal := base.IsFinal(conn.LatestBlockTimestamp, ts)
-		if isFinal && conn.StoreWritable() && conn.EnabledMap[walk.Cache_Receipts] {
-			receiptGroup := &types.ReceiptGroup{
-				BlockNumber:      bn,
-				TransactionIndex: base.NOPOSN,
-				Receipts:         receipts,
-			}
-			if err = conn.Store.Write(receiptGroup, nil); err != nil {
-				logger.Warn("Failed to write receipts to cache", err)
-			}
+		receiptGroup := &types.ReceiptGroup{
+			BlockNumber:      bn,
+			TransactionIndex: base.NOPOSN,
+			Receipts:         receipts,
 		}
 
 		receiptMap := make(map[base.Txnum]*types.Receipt, len(receipts))
+
+		// even if there's an error, this spin through won't matter
+		err = conn.WriteToCache(receiptGroup, walk.Cache_Receipts, ts)
 		for index := 0; index < len(receipts); index++ {
 			pReceipt := &receipts[index]
 			receiptMap[pReceipt.TransactionIndex] = pReceipt

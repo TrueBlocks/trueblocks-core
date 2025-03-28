@@ -4,7 +4,6 @@ import (
 	"fmt"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc/query"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/walk"
@@ -12,15 +11,12 @@ import (
 
 // GetLogsByNumber returns the logs of a block
 func (conn *Connection) GetLogsByNumber(bn base.Blknum, ts base.Timestamp) ([]types.Log, error) {
-	if conn.StoreReadable() {
-		// walk.Cache_Logs
-		logGroup := &types.LogGroup{
-			BlockNumber:      bn,
-			TransactionIndex: base.NOPOSN,
-		}
-		if err := conn.Store.Read(logGroup, nil); err == nil {
-			return logGroup.Logs, nil
-		}
+	logGroup := &types.LogGroup{
+		BlockNumber:      bn,
+		TransactionIndex: base.NOPOSN,
+	}
+	if err := conn.ReadFromCache(logGroup); err == nil {
+		return logGroup.Logs, nil
 	}
 
 	filter := LogFilter{
@@ -31,17 +27,12 @@ func (conn *Connection) GetLogsByNumber(bn base.Blknum, ts base.Timestamp) ([]ty
 	if logs, err := conn.getLogsFromRpc(filter); err != nil {
 		return logs, err
 	} else {
-		isFinal := base.IsFinal(conn.LatestBlockTimestamp, ts)
-		if isFinal && conn.StoreWritable() && conn.EnabledMap[walk.Cache_Logs] {
-			logGroup := &types.LogGroup{
-				BlockNumber:      bn,
-				TransactionIndex: base.NOPOSN,
-				Logs:             logs,
-			}
-			if err = conn.Store.Write(logGroup, nil); err != nil {
-				logger.Warn("Failed to write logs to cache", err)
-			}
+		logGroup := &types.LogGroup{
+			BlockNumber:      bn,
+			TransactionIndex: base.NOPOSN,
+			Logs:             logs,
 		}
+		err = conn.WriteToCache(logGroup, walk.Cache_Logs, ts)
 		return logs, err
 	}
 }

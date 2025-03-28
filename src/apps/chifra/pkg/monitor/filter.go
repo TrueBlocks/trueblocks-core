@@ -7,12 +7,11 @@ import (
 	"os"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/filter"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
-func (mon *Monitor) ReadAndFilterAppearances(filt *filter.AppearanceFilter, withCount bool) (apps []types.Appearance, cnt int, err error) {
+func (mon *Monitor) ReadAndFilterAppearances(filt *types.AppearanceFilter, withCount bool) (apps []types.Appearance, cnt int, err error) {
 	readAppearances := func(apps *[]types.AppRecord) (err error) {
 		if int64(len(*apps)) > mon.Count() {
 			err = fmt.Errorf("array is larger than the size of the file (%d,%d)", len(*apps), mon.Count())

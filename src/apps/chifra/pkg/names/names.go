@@ -176,7 +176,7 @@ func openDatabaseFile(chain string, dbType DatabaseType, openFlag int) (*os.File
 	filePath := filepath.Join(config.MustGetPathToChainConfig(chain), string(dbType))
 	var permissions fs.FileMode = 0666
 
-	if dbType == DatabaseCustom && os.Getenv("TEST_MODE") == "true" {
+	if dbType == DatabaseCustom && base.IsTestMode() {
 		// Create temp database, just for tests. On Mac, the permissions must be set to 0777
 		openFlag |= os.O_CREATE
 		// On Mac, the permissions must be set to 0777

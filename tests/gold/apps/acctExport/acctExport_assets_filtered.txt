@@ -1,0 +1,36 @@
+chifra export  0xf503017d7baf7fbc0fff7492b751025c6a78179b --accounting --assets --first_block 8860513 --last_block 8860531 --ether --fmt json --output assets_filtered_out.file
+TEST[DATE|TIME] Addrs:  [0xf503017d7baf7fbc0fff7492b751025c6a78179b]
+TEST[DATE|TIME] Assets:  true
+TEST[DATE|TIME] FirstBlock:  8860513
+TEST[DATE|TIME] LastBlock:  8860531
+TEST[DATE|TIME] Accounting:  true
+TEST[DATE|TIME] Ether:  true
+TEST[DATE|TIME] OutputFn:  assets_filtered_out.file
+TEST[DATE|TIME] Caps:  cache,decache,ether
+TEST[DATE|TIME] Format:  json
+INFO[DATE|TIME] { "outputFilename": "--output_filename--" }
+----
+Results in ./assets_filtered_out.file
+{
+  "data": [
+    {
+      "address": "0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359",
+      "decimals": 18,
+      "isContract": true,
+      "isErc20": true,
+      "name": "Dai Stablecoin v1.0",
+      "source": "On chain",
+      "symbol": "DAI",
+      "tags": "50-Tokens:ERC20"
+    },
+    {
+      "address": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+      "decimals": 18,
+      "isErc20": true,
+      "name": "ETH",
+      "source": "defipulse.com",
+      "symbol": "ETH",
+      "tags": "50-Ethereum"
+    }
+  ]
+}

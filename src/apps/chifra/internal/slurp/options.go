@@ -68,7 +68,7 @@ func (opts *SlurpOptions) testLog() {
 	logger.TestLog(len(opts.PageId) > 0, "PageId: ", opts.PageId)
 	logger.TestLog(opts.PerPage != 1000, "PerPage: ", opts.PerPage)
 	logger.TestLog(opts.Sleep != float64(.25), "Sleep: ", opts.Sleep)
-	opts.Conn.TestLog(opts.getCaches())
+	opts.Conn.TestLog()
 	opts.Globals.TestLog()
 }
 

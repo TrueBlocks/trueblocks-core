@@ -24,6 +24,10 @@ func (s Config) String() string {
 }
 
 func (s *Config) Model(chain, format string, verbose bool, extraOpts map[string]any) Model {
+	_ = chain
+	_ = format
+	_ = verbose
+	_ = extraOpts
 	// keys := map[string]any{}
 	// for key, value := range s.Keys {
 	// 	keys[key] = value
@@ -45,7 +49,8 @@ func (s *Config) Model(chain, format string, verbose bool, extraOpts map[string]
 	}
 }
 
-func (s *Config) FinishUnmarshal() {
+func (s *Config) FinishUnmarshal(fileVersion uint64) {
+	_ = fileVersion
 }
 
 func (s *Config) ShallowCopy() Config {

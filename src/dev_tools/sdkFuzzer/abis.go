@@ -15,7 +15,6 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	sdk "github.com/TrueBlocks/trueblocks-sdk/v4"
 )
 
@@ -120,7 +119,7 @@ func TestAbis(which, value, fn string, opts *sdk.AbisOptions) {
 		if abis, _, err := opts.Abis(); err != nil {
 			ReportError(fn, opts, err)
 		} else {
-			if err := SaveToFile[types.Function](fn, abis); err != nil {
+			if err := SaveToFile(fn, abis); err != nil {
 				ReportError2(fn, err)
 			} else {
 				ReportOkay(fn)
@@ -130,7 +129,7 @@ func TestAbis(which, value, fn string, opts *sdk.AbisOptions) {
 		if list, _, err := opts.AbisList(); err != nil {
 			ReportError(fn, opts, err)
 		} else {
-			if err := SaveToFile[types.Abi](fn, list); err != nil {
+			if err := SaveToFile(fn, list); err != nil {
 				ReportError2(fn, err)
 			} else {
 				ReportOkay(fn)
@@ -140,7 +139,7 @@ func TestAbis(which, value, fn string, opts *sdk.AbisOptions) {
 		if count, _, err := opts.AbisCount(); err != nil {
 			ReportError(fn, opts, err)
 		} else {
-			if err := SaveToFile[types.Count](fn, count); err != nil {
+			if err := SaveToFile(fn, count); err != nil {
 				ReportError2(fn, err)
 			} else {
 				ReportOkay(fn)
@@ -150,7 +149,7 @@ func TestAbis(which, value, fn string, opts *sdk.AbisOptions) {
 		if find, _, err := opts.AbisFind([]string{value}); err != nil {
 			ReportError(fn, opts, err)
 		} else {
-			if err := SaveToFile[types.Function](fn, find); err != nil {
+			if err := SaveToFile(fn, find); err != nil {
 				ReportError2(fn, err)
 			} else {
 				ReportOkay(fn)
@@ -160,7 +159,7 @@ func TestAbis(which, value, fn string, opts *sdk.AbisOptions) {
 		if encode, _, err := opts.AbisEncode(value); err != nil {
 			ReportError(fn, opts, err)
 		} else {
-			if err := SaveToFile[types.Function](fn, encode); err != nil {
+			if err := SaveToFile(fn, encode); err != nil {
 				ReportError2(fn, err)
 			} else {
 				ReportOkay(fn)

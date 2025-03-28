@@ -52,6 +52,10 @@ func (s Status) String() string {
 }
 
 func (s *Status) Model(chain, format string, verbose bool, extraOpts map[string]any) Model {
+	_ = chain
+	_ = format
+	_ = verbose
+	_ = extraOpts
 	var model = map[string]any{}
 	var order = []string{}
 
@@ -146,7 +150,8 @@ func (s *Status) Model(chain, format string, verbose bool, extraOpts map[string]
 }
 
 // FinishUnmarshal is used by the cache. It may be unused depending on auto-code-gen
-func (s *Status) FinishUnmarshal() {
+func (s *Status) FinishUnmarshal(fileVersion uint64) {
+	_ = fileVersion
 	// EXISTING_CODE
 	// EXISTING_CODE
 }

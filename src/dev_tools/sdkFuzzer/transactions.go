@@ -14,7 +14,6 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	sdk "github.com/TrueBlocks/trueblocks-sdk/v4"
 )
 
@@ -117,7 +116,7 @@ func TestTransactions(which, value, fn string, opts *sdk.TransactionsOptions) {
 		if transactions, _, err := opts.Transactions(); err != nil {
 			ReportError(fn, opts, err)
 		} else {
-			if err := SaveToFile[types.Transaction](fn, transactions); err != nil {
+			if err := SaveToFile(fn, transactions); err != nil {
 				ReportError2(fn, err)
 			} else {
 				ReportOkay(fn)
@@ -127,7 +126,7 @@ func TestTransactions(which, value, fn string, opts *sdk.TransactionsOptions) {
 		if traces, _, err := opts.TransactionsTraces(); err != nil {
 			ReportError(fn, opts, err)
 		} else {
-			if err := SaveToFile[types.Trace](fn, traces); err != nil {
+			if err := SaveToFile(fn, traces); err != nil {
 				ReportError2(fn, err)
 			} else {
 				ReportOkay(fn)
@@ -137,7 +136,7 @@ func TestTransactions(which, value, fn string, opts *sdk.TransactionsOptions) {
 		if uniq, _, err := opts.TransactionsUniq(); err != nil {
 			ReportError(fn, opts, err)
 		} else {
-			if err := SaveToFile[types.Appearance](fn, uniq); err != nil {
+			if err := SaveToFile(fn, uniq); err != nil {
 				ReportError2(fn, err)
 			} else {
 				ReportOkay(fn)
@@ -147,7 +146,7 @@ func TestTransactions(which, value, fn string, opts *sdk.TransactionsOptions) {
 		if logs, _, err := opts.TransactionsLogs(); err != nil {
 			ReportError(fn, opts, err)
 		} else {
-			if err := SaveToFile[types.Log](fn, logs); err != nil {
+			if err := SaveToFile(fn, logs); err != nil {
 				ReportError2(fn, err)
 			} else {
 				ReportOkay(fn)

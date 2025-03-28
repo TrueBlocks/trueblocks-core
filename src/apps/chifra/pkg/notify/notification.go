@@ -2,6 +2,7 @@ package notify
 
 import "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 
+// TODO: THIS IS PART OF THE NOTIFY CODE TO BE USED FOR MONITORING
 type Message string
 
 type Notification[T NotificationPayload] struct {

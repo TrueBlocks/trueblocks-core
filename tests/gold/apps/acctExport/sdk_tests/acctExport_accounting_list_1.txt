@@ -1,4 +1,9 @@
-list?addrs=0x001d14804b399c6ef80e64576f657660804fec0b&fmt=json
+list?addrs=0x001d14804b399c6ef80e64576f657660804fec0b
+Args: [addrs=0x001d14804b399c6ef80e64576f657660804fec0b]
+Opts: {"addrs":["0x001d14804b399c6ef80e64576f657660804fec0b"],"publisher":"0x0"}
+Addrs:  [0x001d14804b399c6ef80e64576f657660804fec0b]
+Publisher:  0x02f2b09b33fdbd406ead954a31f98bd29a2a3492
+Format:  json
 {
   "data": [
     {

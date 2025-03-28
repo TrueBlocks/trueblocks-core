@@ -2,7 +2,6 @@ package tokensPkg
 
 import (
 	"errors"
-	"fmt"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
@@ -48,7 +47,7 @@ func (opts *TokensOptions) HandleShow(rCtx *output.RenderCtx) error {
 						holder = singleAddr
 					}
 
-					if balance, err := opts.Conn.GetBalanceAtToken(tokenAddr, holder, fmt.Sprintf("0x%x", bn)); balance == nil {
+					if balance, err := opts.Conn.GetBalanceAtToken(tokenAddr, holder, bn); balance == nil {
 						errorChan <- err
 					} else {
 						if opts.Globals.Verbose {
@@ -79,17 +78,3 @@ func (opts *TokensOptions) HandleShow(rCtx *output.RenderCtx) error {
 
 	return output.StreamMany(rCtx, fetchData, opts.Globals.OutputOptsWithExtra(extraOpts))
 }
-
-// TODO: NOTE THIS - DOES IT STILL WORK THIS WAY?
-// } else if (by_acct) {
-//     // All user-provided addresses are assumed to be tokens, except the last one which is the holder
-//     holders.push_back(addrs[addrs.size() - 1]);
-//     CAddressArray::iterator it;
-//     it = prev(addrs.end());
-//     addrs.erase(it);
-//     for (auto addr : addrs) {
-//         if (!isContractAt(addr, latestBlock))
-//             errors.push_back("Address '" + addr + "' is not a token contract.");
-//         else
-//             tokens.push_back(addr);
-//     }

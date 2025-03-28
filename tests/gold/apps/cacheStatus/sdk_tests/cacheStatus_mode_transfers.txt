@@ -1,0 +1,8 @@
+status?modes=transfers&verbose&maxRecords=2
+Args: [modes=transfers verbose maxRecords=2]
+Opts: null
+{
+  "errors": [
+    "unknown modes: transfers"
+  ]
+}

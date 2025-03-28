@@ -10,6 +10,7 @@ import (
 )
 
 func (opts *TokensOptions) HandleDecache(rCtx *output.RenderCtx) error {
+	_ = rCtx
 	// TODO: decache.Decache --decache not implemented
 	logger.Error("chifra tokens --decache is not yet implemented")
 	return nil

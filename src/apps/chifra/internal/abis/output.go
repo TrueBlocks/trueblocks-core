@@ -23,6 +23,7 @@ import (
 
 // RunAbis handles the abis command for the command line. Returns error only as per cobra.
 func RunAbis(cmd *cobra.Command, args []string) error {
+	_ = cmd
 	opts := abisFinishParse(args)
 	rCtx := output.NewRenderContext()
 	// EXISTING_CODE

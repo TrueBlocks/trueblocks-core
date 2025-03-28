@@ -20,7 +20,10 @@ func init() {
 }
 
 func PreRunWithJsonWriter(cmdName string, getOptions func() *globals.GlobalOptions) func(cmd *cobra.Command, args []string) {
+	_ = cmdName
 	return func(cmd *cobra.Command, args []string) {
+		_ = cmd
+		_ = args
 		opts := getOptions()
 		var outputWriter io.Writer
 		// Prepare the default writer (stdout or --output file)
@@ -45,6 +48,8 @@ func PreRunWithJsonWriter(cmdName string, getOptions func() *globals.GlobalOptio
 
 func PostRunWithJsonWriter(getOptions func() *globals.GlobalOptions) func(cmd *cobra.Command, args []string) {
 	return func(cmd *cobra.Command, args []string) {
+		_ = cmd
+		_ = args
 		opts := getOptions()
 		w := opts.Writer
 		// Try to cast the global writer to JsonWriter
@@ -61,6 +66,7 @@ func PostRunWithJsonWriter(getOptions func() *globals.GlobalOptions) func(cmd *c
 // SetWriterForCommand sets the writer for currently running command, but only if
 // we are running with --file
 func SetWriterForCommand(cmdName string, opts *globals.GlobalOptions) {
+	_ = cmdName
 	// Try to cast the default writer to JsonWriter
 	jw, ok := opts.Writer.(*output.JsonWriter)
 	wantsJson := (opts.Format == "json")
@@ -94,6 +100,7 @@ func SetWriterForCommand(cmdName string, opts *globals.GlobalOptions) {
 
 // InitJsonWriterApi inits JsonWriter for API responses
 func InitJsonWriterApi(cmdName string, w io.Writer, opts *globals.GlobalOptions) {
+	_ = cmdName
 	_, ok := opts.Writer.(*output.JsonWriter)
 	if opts.Format == "json" && !ok {
 		jw := output.NewDefaultJsonWriter(w, false)
@@ -109,6 +116,7 @@ func InitJsonWriterApi(cmdName string, w io.Writer, opts *globals.GlobalOptions)
 
 // CloseJsonWriterIfNeededApi will close JsonWriter if the format is json
 func CloseJsonWriterIfNeededApi(cmdName string, err error, opts *globals.GlobalOptions) {
+	_ = cmdName
 	if opts.Format == "json" && err == nil {
 		opts.Writer.(*output.JsonWriter).Close()
 	}

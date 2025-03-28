@@ -26,7 +26,7 @@ func LoadManifest(chain string, publisher base.Address, source Source) (man *Man
 	man = &Manifest{}
 
 	if exists {
-		// We will either return this or use it to compare with the downlaoded manifest
+		// We will either return this or use it to compare with the downloaded manifest
 		// to see if we need to update the file.
 		man, err = readManifestFile(manifestFn)
 		if err != nil {
@@ -46,14 +46,14 @@ func LoadManifest(chain string, publisher base.Address, source Source) (man *Man
 		} else if len(cid) == 0 {
 			return nil, fmt.Errorf("no record found in the Unchained Index for database %s from publisher %s", database, publisher.Hex())
 		}
-		gatewayUrl := config.GetChain(chain).IpfsGateway
+		gatewayURL := config.GetChain(chain).IpfsGateway
 		logger.InfoTable("Chain:", chain)
 		logger.InfoTable("Database:", database)
 		logger.InfoTable("Publisher:", publisher)
-		logger.InfoTable("Gateway:", gatewayUrl)
+		logger.InfoTable("Gateway:", gatewayURL)
 		logger.InfoTable("CID:", cid)
 
-		newManifest, err := downloadManifest(chain, gatewayUrl, cid)
+		newManifest, err := downloadManifest(chain, gatewayURL, cid)
 		if err != nil {
 			return nil, err
 		}

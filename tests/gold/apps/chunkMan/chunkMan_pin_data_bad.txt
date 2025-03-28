@@ -3,7 +3,7 @@ TEST[DATE|TIME] Mode:  manifest
 TEST[DATE|TIME] Publish:  true
 TEST[DATE|TIME] Publisher:  0x02f2b09b33fdbd406ead954a31f98bd29a2a3492
 TEST[DATE|TIME] Format:  txt
-Error: The --publish option is currenlty unavailable.
+Error: The --publish option is currently unavailable.
 Usage:
   chifra chunks <mode> [flags] [blocks...] [address...]
 

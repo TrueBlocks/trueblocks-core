@@ -15,6 +15,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/notify"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/ranges"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
@@ -49,7 +50,7 @@ func (bm *BlazeManager) Consolidate(ctx context.Context, blocks []base.Blknum) e
 	appMap, chunkRange, nAppearances := bm.AsciiFileToAppearanceMap(stageFn)
 	if !exists {
 		// Brand new stage.
-		chunkRange = base.FileRange{First: bm.meta.Finalized + 1, Last: blocks[0]}
+		chunkRange = ranges.FileRange{First: bm.meta.Finalized + 1, Last: blocks[0]}
 	}
 
 	// For each block...
@@ -106,6 +107,7 @@ func (bm *BlazeManager) Consolidate(ctx context.Context, blocks []base.Blknum) e
 			} else {
 				logger.Info(report.Report(isSnap, file.FileSize(chunkPath)))
 			}
+			// TODO: THIS IS PART OF THE NOTIFY CODE TO BE USED FOR MONITORING
 			if err = bm.opts.NotifyChunkWritten(chunk, chunkPath); err != nil {
 				return err
 			}
@@ -120,9 +122,9 @@ func (bm *BlazeManager) Consolidate(ctx context.Context, blocks []base.Blknum) e
 		}
 	}
 
-	var newRange base.FileRange
+	var newRange ranges.FileRange
 	if len(appMap) > 0 { // are there any appearances in this block range?
-		newRange = base.FileRange{First: bm.meta.Finalized + 1, Last: 0}
+		newRange = ranges.FileRange{First: bm.meta.Finalized + 1, Last: 0}
 
 		// We need an array because we're going to write it back to disc
 		appearances := make([]string, 0, nAppearances)
@@ -152,6 +154,7 @@ func (bm *BlazeManager) Consolidate(ctx context.Context, blocks []base.Blknum) e
 	nAppsNow := int(file.FileSize(stageFn) / asciiAppearanceSize)
 	bm.report(len(blocks), int(bm.PerChunk()), nChunks, nAppsNow, nAppsFound, nAddrsFound)
 
+	// TODO: THIS IS PART OF THE NOTIFY CODE TO BE USED FOR MONITORING
 	if bm.opts.Notify {
 		if err := Notify(notify.Notification[string]{
 			Msg:     notify.MessageStageUpdated,
@@ -169,15 +172,15 @@ func (bm *BlazeManager) Consolidate(ctx context.Context, blocks []base.Blknum) e
 }
 
 // AsciiFileToAppearanceMap reads the appearances from the stage file and returns them as a map
-func (bm *BlazeManager) AsciiFileToAppearanceMap(fn string) (map[string][]types.AppRecord, base.FileRange, int) {
+func (bm *BlazeManager) AsciiFileToAppearanceMap(fn string) (map[string][]types.AppRecord, ranges.FileRange, int) {
 	appearances := file.AsciiFileToLines(fn)
 	os.Remove(fn) // It's okay to remove this. If it fails, we'll just start over.
 
 	appMap := make(map[string][]types.AppRecord, len(appearances))
-	fileRange := base.FileRange{First: base.NOPOSN, Last: 0}
+	fileRange := ranges.FileRange{First: base.NOPOSN, Last: 0}
 
 	if len(appearances) == 0 {
-		return appMap, base.FileRange{First: 0, Last: 0}, 0
+		return appMap, ranges.FileRange{First: 0, Last: 0}, 0
 	}
 
 	nAdded := 0
@@ -188,7 +191,7 @@ func (bm *BlazeManager) AsciiFileToAppearanceMap(fn string) (map[string][]types.
 			bn := base.MustParseBlknum(strings.TrimLeft(parts[1], "0"))
 			txid := base.MustParseTxnum(strings.TrimLeft(parts[2], "0"))
 			// See #3252
-			if addr == base.SentinalAddr.Hex() && txid == types.MisconfigReward {
+			if addr == base.SentinelAddr.Hex() && txid == types.MisconfigReward {
 				continue
 			}
 			fileRange.First = base.Min(fileRange.First, bn)
@@ -204,13 +207,14 @@ func (bm *BlazeManager) AsciiFileToAppearanceMap(fn string) (map[string][]types.
 	return appMap, fileRange, nAdded
 }
 
-// hasNoAddresses returns true if (a) the miner is zero, (b) there are no transactions, uncles, or withdrawals.
-// (It is truly a block with no addresses -- for example block 15537860 on mainnet.)
+// hasNoAddresses returns true if (a) the miner is zero, (b) there are no transactions,
+// uncles, or withdrawals. (It is truly a block with no addresses -- for example block
+// 15537860 on mainnet.)
 func (bm *BlazeManager) hasNoAddresses(bn base.Blknum) bool {
 	if block, err := bm.opts.Conn.GetBlockHeaderByNumber(bn); err != nil {
 		return false
 	} else {
-		return base.IsPrecompile(block.Miner.Hex()) &&
+		return block.Miner.IsPrecompile() &&
 			len(block.Transactions) == 0 &&
 			len(block.Uncles) == 0 &&
 			len(block.Withdrawals) == 0

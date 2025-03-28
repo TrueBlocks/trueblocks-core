@@ -14,6 +14,7 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
 	listPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/list"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/caps"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	outputHelpers "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output/helpers"
@@ -67,7 +68,7 @@ func init() {
 	listCmd.Flags().StringVarP(&listPkg.GetOptions().Publisher, "publisher", "P", "", `for some query options, the publisher of the index (hidden)`)
 	listCmd.Flags().Uint64VarP((*uint64)(&listPkg.GetOptions().FirstBlock), "first_block", "F", 0, `first block to export (inclusive, ignored when freshening)`)
 	listCmd.Flags().Uint64VarP((*uint64)(&listPkg.GetOptions().LastBlock), "last_block", "L", 0, `last block to export (inclusive, ignored when freshening)`)
-	if os.Getenv("TEST_MODE") != "true" {
+	if !base.IsTestMode() {
 		_ = listCmd.Flags().MarkHidden("publisher")
 	}
 	globals.InitGlobals("list", listCmd, &listPkg.GetOptions().Globals, capabilities)

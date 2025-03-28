@@ -15,10 +15,12 @@ func FromDateToBn(chain, dateStr string) (base.Blknum, error) {
 		return 0, err
 	}
 	ret, err := FromTs(chain, ts)
-	if err != nil {
+	if err == ErrInTheFuture {
+		return base.Blknum(ret.Bn), nil
+	} else if err != nil {
 		return 0, err
 	}
-	return base.Blknum(ret.Bn), err
+	return base.Blknum(ret.Bn), nil
 }
 
 // FromNameToBn returns the chain-specific block number (if found) given the name of a special block. The list of special blocks is per-chain.
@@ -45,8 +47,10 @@ func FromNameToBn(chain, name string) (base.Blknum, error) {
 // FromTsToBn returns a chain-specific block number given a Linux timestamp.
 func FromTsToBn(chain string, ts base.Timestamp) (base.Blknum, error) {
 	ret, err := FromTs(chain, ts)
-	if err != nil {
+	if err == ErrInTheFuture {
+		return base.Blknum(ret.Bn), nil
+	} else if err != nil {
 		return 0, err
 	}
-	return base.Blknum(ret.Bn), err
+	return base.Blknum(ret.Bn), nil
 }

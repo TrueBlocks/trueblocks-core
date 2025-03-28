@@ -1,12 +1,9 @@
 chifra export  0x04fe1f0c597fbc65700f4fba6f87501edc20e665 --first_block 10277780 --last_block 10278000 --accounting --decache
 TEST[DATE|TIME] Addrs:  [0x04fe1f0c597fbc65700f4fba6f87501edc20e665]
-TEST[DATE|TIME] Accounting:  true
 TEST[DATE|TIME] FirstBlock:  10277780
 TEST[DATE|TIME] LastBlock:  10278000
+TEST[DATE|TIME] Accounting:  true
 TEST[DATE|TIME] Decache:  true
 TEST[DATE|TIME] Caps:  cache,decache,ether
 TEST[DATE|TIME] Format:  txt
-INFO[DATE|TIME] 0 items totaling 0 bytes were removed from the statements cache.
-INFO[DATE|TIME] 0 items totaling 0 bytes were removed from the traces cache.
-INFO[DATE|TIME] 1 items totaling 845 bytes were removed from the transactions cache.
-Monitor for 0x04fe1f0c597fbc65700f4fba6f87501edc20e665 was permanently removed.
+Monitor for 0x04fe1f0c597fbc65700f4fba6f87501edc20e665 was permanently removed.                              

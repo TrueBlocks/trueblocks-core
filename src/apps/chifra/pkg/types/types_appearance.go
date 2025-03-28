@@ -12,7 +12,6 @@ package types
 import (
 	"encoding/json"
 	"fmt"
-	"sort"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 )
@@ -50,6 +49,10 @@ func (s Appearance) String() string {
 }
 
 func (s *Appearance) Model(chain, format string, verbose bool, extraOpts map[string]any) Model {
+	_ = chain
+	_ = format
+	_ = verbose
+	_ = extraOpts
 	var model = map[string]any{}
 	var order = []string{}
 
@@ -142,7 +145,8 @@ func (s *Appearance) Date() string {
 }
 
 // FinishUnmarshal is used by the cache. It may be unused depending on auto-code-gen
-func (s *Appearance) FinishUnmarshal() {
+func (s *Appearance) FinishUnmarshal(fileVersion uint64) {
+	_ = fileVersion
 	// EXISTING_CODE
 	// EXISTING_CODE
 }
@@ -156,49 +160,6 @@ func (s *Appearance) GetKey() string {
 
 func (s *Appearance) Orig() string {
 	return s.Reason // when converted from an Identifier, this is the original string
-}
-
-type MappedType interface {
-	Transaction |
-		Block |
-		LightBlock |
-		Appearance |
-		Withdrawal |
-		[]Result |
-		Token |
-		bool
-}
-
-// TODO: Do we want this to be configurable? Maybe, maybe not
-var AppMapSize int = 20
-
-func AsSliceOfMaps[T MappedType](apps []Appearance, reversed bool) ([]map[Appearance]*T, int, error) {
-	sort.Slice(apps, func(i, j int) bool {
-		if reversed {
-			i, j = j, i
-		}
-		if apps[i].BlockNumber == apps[j].BlockNumber {
-			return apps[i].TransactionIndex < apps[j].TransactionIndex
-		}
-		return apps[i].BlockNumber < apps[j].BlockNumber
-	})
-
-	arrayOfMaps := make([]map[Appearance]*T, 0, len(apps))
-	curMap := make(map[Appearance]*T)
-	for i := 0; i < len(apps); i++ {
-		// TODO: Do we want this to be configurable? Maybe, maybe not
-		if len(curMap) == AppMapSize {
-			arrayOfMaps = append(arrayOfMaps, curMap)
-			curMap = make(map[Appearance]*T)
-		}
-		curMap[apps[i]] = nil
-	}
-
-	if len(curMap) > 0 {
-		arrayOfMaps = append(arrayOfMaps, curMap)
-	}
-
-	return arrayOfMaps, len(apps), nil
 }
 
 // EXISTING_CODE

@@ -15,6 +15,7 @@ import (
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/ranges"
 )
 
 // EXISTING_CODE
@@ -36,6 +37,10 @@ func (s TraceFilter) String() string {
 }
 
 func (s *TraceFilter) Model(chain, format string, verbose bool, extraOpts map[string]any) Model {
+	_ = chain
+	_ = format
+	_ = verbose
+	_ = extraOpts
 	var model = map[string]any{}
 	var order = []string{}
 
@@ -66,7 +71,8 @@ func (s *TraceFilter) Model(chain, format string, verbose bool, extraOpts map[st
 }
 
 // FinishUnmarshal is used by the cache. It may be unused depending on auto-code-gen
-func (s *TraceFilter) FinishUnmarshal() {
+func (s *TraceFilter) FinishUnmarshal(fileVersion uint64) {
+	_ = fileVersion
 	// EXISTING_CODE
 	// EXISTING_CODE
 }
@@ -75,6 +81,8 @@ func (s *TraceFilter) FinishUnmarshal() {
 //
 
 func (s *TraceFilter) PassesBasic(trace *Trace, nTested uint64, nPassed uint64) (bool, string) {
+	_ = nTested
+	_ = nPassed
 	if s.FromBlock != 0 && trace.BlockNumber < s.FromBlock {
 		reason := fmt.Sprintf("block number (%d) less than fromBlock (%d)", trace.BlockNumber, s.FromBlock)
 		return false, reason
@@ -94,7 +102,7 @@ func (s *TraceFilter) PassesBasic(trace *Trace, nTested uint64, nPassed uint64) 
 	return true, ""
 }
 
-func (s *TraceFilter) ParseBangString(chain, filter string) (ret map[string]any, br base.BlockRange) {
+func (s *TraceFilter) ParseBangString(chain, filter string) (ret map[string]any, br ranges.BlockRange) {
 	parts := strings.Split(filter, "!")
 	for {
 		if len(parts) >= 6 {
@@ -120,7 +128,7 @@ func (s *TraceFilter) ParseBangString(chain, filter string) (ret map[string]any,
 	if s.Count == 0 {
 		s.Count = base.NOPOS
 	}
-	return s.Model(chain, "", false, nil).Data, base.BlockRange{First: s.FromBlock, Last: s.ToBlock}
+	return s.Model(chain, "", false, nil).Data, ranges.BlockRange{First: s.FromBlock, Last: s.ToBlock}
 }
 
 // EXISTING_CODE

@@ -165,7 +165,7 @@ Reconciliations are relative to an `accountedFor` address. For this reason, the 
 will probably have different reconciliations depending on the `accountedFor` address. Consider a
 simple transfer of ETH from one address to another. Obviously, the sender's and the recipient's
 reconciliations will differ (in opposite proportion to each other). The `accountedFor` address
-is always present as the `assetAddress` in the first reconciliation of the statements array.
+is always present as the `asset` in the first reconciliation of the statements array.
 
 The following commands produce and manage Statements:
 
@@ -181,18 +181,17 @@ Statements consist of the following fields:
 | transactionHash     | the hash of the transaction that triggered this reconciliation                                                                        | hash      |
 | timestamp           | the Unix timestamp of the object                                                                                                      | timestamp |
 | date                | the timestamp as a date (calculated)                                                                                                  | datetime  |
-| assetAddr           | 0xeeee...eeee for ETH reconciliations, the token address otherwise                                                                    | address   |
-| assetSymbol         | either ETH, WEI, or the symbol of the asset being reconciled as extracted from the chain                                              | string    |
+| asset               | 0xeeee...eeee for ETH reconciliations, the token address otherwise                                                                    | address   |
+| symbol              | either ETH, WEI, or the symbol of the asset being reconciled as extracted from the chain                                              | string    |
 | decimals            | the value of `decimals` from an ERC20 contract or, if ETH or WEI, then 18                                                             | value     |
 | spotPrice           | the on-chain price in USD (or if a token in ETH, or zero) at the time of the transaction                                              | float     |
 | priceSource         | the on-chain source from which the spot price was taken                                                                               | string    |
 | accountedFor        | the address being accounted for in this reconciliation                                                                                | address   |
 | sender              | the initiator of the transfer (the sender)                                                                                            | address   |
 | recipient           | the receiver of the transfer (the recipient)                                                                                          | address   |
-| begBal              | the beginning balance of the asset prior to the transaction                                                                           | int256    |
+| begBal              | the on-chain or running beginning balance prior to the transaction (see notes about intra-block reconciliations)                      | int256    |
 | amountNet           | totalIn - totalOut (calculated)                                                                                                       | int256    |
-| endBal              | the on-chain balance of the asset (see notes about intra-block reconciliations)                                                       | int256    |
-| reconciliationType  | one of `regular`, `prevDiff-same`, `same-nextDiff`, or `same-same`. Appended with `eth` or `token` (calculated)                       | string    |
+| endBal              | the on-chain or running balance after the transaction (see notes about intra-block reconciliations)                                   | int256    |
 | reconciled          | true if `endBal === endBalCalc` and `begBal === prevBal`. `false` otherwise. (calculated)                                             | bool      |
 | totalIn             | the sum of the following `In` fields (calculated)                                                                                     | int256    |
 | amountIn            | the top-level value of the incoming transfer for the accountedFor address                                                             | int256    |
@@ -202,20 +201,58 @@ Statements consist of the following fields:
 | minerNephewRewardIn | the nephew reward if the miner is the accountedFor address                                                                            | int256    |
 | minerTxFeeIn        | the transaction fee reward if the miner is the accountedFor address                                                                   | int256    |
 | minerUncleRewardIn  | the uncle reward if the miner who won the uncle block is the accountedFor address                                                     | int256    |
-| correctingIn        | for unreconciled token transfers only, the incoming amount needed to correct the transfer so it balances                              | int256    |
+| correctBegBalIn     | for unreconciled transfers, increase in beginning balance need to match previous balance                                              | int256    |
+| correctAmountIn     | for unreconciled transfers, increase in the amount of a transfer                                                                      | int256    |
+| correctEndBalIn     | for unreconciled transfers, increase in ending balance need to match running balance or block balance                                 | int256    |
 | prefundIn           | at block zero (0) only, the amount of genesis income for the accountedFor address                                                     | int256    |
 | totalOut            | the sum of the following `Out` fields (calculated)                                                                                    | int256    |
 | amountOut           | the amount (in units of the asset) of regular outflow during this transaction                                                         | int256    |
 | internalOut         | the value of any internal value transfers out of the accountedFor account                                                             | int256    |
-| correctingOut       | for unreconciled token transfers only, the outgoing amount needed to correct the transfer so it balances                              | int256    |
+| correctBegBalOut    | for unreconciled transfers, decrease in beginning balance need to match previous balance                                              | int256    |
+| correctAmountOut    | for unreconciled transfers, decrease in the amount of a transfer                                                                      | int256    |
+| correctEndBalOut    | for unreconciled transfers, decrease in ending balance need to match running balance or block balance                                 | int256    |
 | selfDestructOut     | the value of the self-destructed value out if the accountedFor address was self-destructed                                            | int256    |
 | gasOut              | if the transaction's original sender is the accountedFor address, the amount of gas expended                                          | int256    |
-| totalOutLessGas     | totalOut - gasOut (calculated)                                                                                                        | int256    |
 | prevBal             | the account balance for the given asset for the previous reconciliation                                                               | int256    |
 | begBalDiff          | difference between expected beginning balance and balance at last reconciliation, if non-zero, the reconciliation failed (calculated) | int256    |
 | endBalDiff          | endBal - endBalCalc, if non-zero, the reconciliation failed (calculated)                                                              | int256    |
 | endBalCalc          | begBal + amountNet (calculated)                                                                                                       | int256    |
-| correctingReason    | the reason for the correcting entries, if any                                                                                         | string    |
+| correctingReasons   | for unreconciled transfers, the reasons for the correcting entries, if any                                                            | string    |
+
+## Transfer
+
+
+
+The following commands produce and manage Transfers:
+
+- [chifra export](/chifra/accounts/#chifra-export)
+
+Transfers consist of the following fields:
+
+| Field               | Description                                                                            | Type                                              |
+| ------------------- | -------------------------------------------------------------------------------------- | ------------------------------------------------- |
+| blockNumber         | the number of the block                                                                | blknum                                            |
+| transactionIndex    | the zero-indexed position of the transaction in the block                              | txnum                                             |
+| logIndex            | the zero-indexed position the log in the block, if applicable                          | lognum                                            |
+| holder              | the address of the holder of the asset                                                 | address                                           |
+| asset               | 0xeeee...eeee for ETH transfers, the token address otherwise                           | address                                           |
+| decimals            | the number of decimal places in the asset units                                        | uint64                                            |
+| sender              | the initiator of the transfer (the sender)                                             | address                                           |
+| recipient           | the receiver of the transfer (the recipient)                                           | address                                           |
+| amountIn            | the top-level value of the incoming transfer for the holder address                    | int256                                            |
+| internalIn          | the internal value of the incoming transfer for the holder address                     | int256                                            |
+| minerBaseRewardIn   | the base fee reward if the miner is the holder address                                 | int256                                            |
+| minerNephewRewardIn | the nephew reward if the miner is the holder address                                   | int256                                            |
+| minerTxFeeIn        | the transaction fee reward if the miner is the holder address                          | int256                                            |
+| minerUncleRewardIn  | the uncle reward if the miner who won the uncle block is the holder address            | int256                                            |
+| prefundIn           | at block zero (0) only, the amount of genesis income for the holder address            | int256                                            |
+| selfDestructIn      | the incoming value of a self-destruct if recipient is the holder address               | int256                                            |
+| amountOut           | the amount (in units of the asset) of regular outflow during this transaction          | int256                                            |
+| internalOut         | the value of any internal value transfers out of the holder account                    | int256                                            |
+| gasOut              | if the transaction's original sender is the holder address, the amount of gas expended | int256                                            |
+| selfDestructOut     | the outgoing value of a self-destruct if sender is the holder address                  | int256                                            |
+| transaction         | the transaction that triggered the transfer (calculated)                               | [Transaction](/data-model/chaindata/#transaction) |
+| log                 | if a token transfer, the log that triggered the transfer (calculated)                  | [Log](/data-model/chaindata/#log)                 |
 
 ## AppearanceTable
 

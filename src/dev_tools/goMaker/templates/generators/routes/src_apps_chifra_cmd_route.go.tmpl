@@ -46,7 +46,7 @@ func init() {
 {{range .Options}}{{if .IsFlag}}
 {{.Route}}Cmd.Flags().{{.CobraType}}VarP({{.CobraPart}}, "{{.LongName}}", "{{.HotKey}}", {{.CmdDefault}}, `{{.DescriptionEx}}{{if .IsEnum}}
 {{.EnumChoices}}{{end}}`){{end}}{{end}}
-{{if .HasHidden}}	if os.Getenv("TEST_MODE") != "true" {
+{{if .HasHidden}}	if !base.IsTestMode() {
 {{range .Options}}{{if .IsHidden}}	_ = {{.Route}}Cmd.Flags().MarkHidden("{{.LongName}}")
 {{end}}{{end}}	}
 {{end}}{{if .HasDeprecated}}{{.Deprecated}}{{end}}	globals.InitGlobals("{{.Route}}", {{.Route}}Cmd, &{{.Route}}Pkg.GetOptions().Globals, capabilities)

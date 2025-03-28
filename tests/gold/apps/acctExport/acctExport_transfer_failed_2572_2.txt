@@ -1,0 +1,29 @@
+chifra export  0x65b0d5e1dc0dee0704f53f660aa865c72e986fc7 --accounting --transfers --ether --asset 0xc713e5e149d5d0715dcd1c156a020976e7e56b88 --fmt json --first_block 11670418 --last_block 11670420 --max_records 40 --output transfer_failed_2572_2_out.file
+TEST[DATE|TIME] Addrs:  [0x65b0d5e1dc0dee0704f53f660aa865c72e986fc7]
+TEST[DATE|TIME] Transfers:  true
+TEST[DATE|TIME] MaxRecords:  40
+TEST[DATE|TIME] Asset:  [0xc713e5e149d5d0715dcd1c156a020976e7e56b88]
+TEST[DATE|TIME] FirstBlock:  11670418
+TEST[DATE|TIME] LastBlock:  11670420
+TEST[DATE|TIME] Accounting:  true
+TEST[DATE|TIME] Ether:  true
+TEST[DATE|TIME] OutputFn:  transfer_failed_2572_2_out.file
+TEST[DATE|TIME] Caps:  cache,decache,ether
+TEST[DATE|TIME] Format:  json
+INFO[DATE|TIME] { "outputFilename": "--output_filename--" }
+----
+Results in ./transfer_failed_2572_2_out.file
+{
+  "data": [
+    {
+      "amount": "-14922878243871414864",
+      "amountEth": "-14.922878243871414864",
+      "asset": "0xc713e5e149d5d0715dcd1c156a020976e7e56b88",
+      "assetName": "Aave interest bearing MKR",
+      "blockNumber": 11670419,
+      "holder": "0x65b0d5e1dc0dee0704f53f660aa865c72e986fc7",
+      "logIndex": 195,
+      "transactionIndex": 91
+    }
+  ]
+}

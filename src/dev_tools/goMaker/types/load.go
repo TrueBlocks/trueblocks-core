@@ -21,13 +21,13 @@ func LoadCodebase() (CodeBase, error) {
 		return CodeBase{}, err
 	}
 
-	baseTypes, err := LoadCsv[Structure, any](filepath.Join(thePath, "base-types.csv"), readStructure, nil)
+	baseTypes, err := LoadCsv(filepath.Join(thePath, "base-types.csv"), readStructure, nil)
 	if err != nil {
 		return CodeBase{}, err
 	}
 
 	var cb CodeBase
-	options, err := LoadCsv[Option, any](filepath.Join(thePath, "cmd-line-options.csv"), readCmdOption, nil)
+	options, err := LoadCsv(filepath.Join(thePath, "cmd-line-options.csv"), readCmdOption, nil)
 	if err != nil {
 		return cb, err
 	}
@@ -56,6 +56,7 @@ func LoadCodebase() (CodeBase, error) {
 }
 
 func readStructure(st *Structure, data *any) (bool, error) {
+	_ = data
 	st.DocDescr = strings.ReplaceAll(st.DocDescr, "&#44;", ",")
 	st.ProducedBy = strings.Replace(st.ProducedBy, " ", "", -1)
 	st.Producers = strings.Split(st.ProducedBy, ",")
@@ -117,7 +118,7 @@ func (cb *CodeBase) LoadMembers(thePath string, structMap map[string]Structure) 
 		class := strings.TrimSuffix(filepath.Base(path), ".csv")
 		mapKey := strings.ToLower(class)
 		structure := structMap[mapKey]
-		structure.Members, err = LoadCsv[Member, any](path, readMember, nil)
+		structure.Members, err = LoadCsv(path, readMember, nil)
 		if err != nil {
 			return err
 		}
@@ -145,6 +146,7 @@ func (cb *CodeBase) LoadMembers(thePath string, structMap map[string]Structure) 
 }
 
 func (cb *CodeBase) FinishLoad(unused string, baseTypes []Structure, options []Option, structMap map[string]Structure) error {
+	_ = unused
 	cb.BaseTypes = baseTypes
 	for i := 0; i < len(cb.BaseTypes); i++ {
 		cb.BaseTypes[i].cbPtr = cb
@@ -290,7 +292,7 @@ func (cb *CodeBase) FinishLoad(unused string, baseTypes []Structure, options []O
 
 	codeBase := filepath.Join(GetGeneratedPath(), "codebase.json")
 	current := file.AsciiFileToString(codeBase)
-	file.StringToAsciiFile(codeBase, cb.String())
+	_ = file.StringToAsciiFile(codeBase, cb.String())
 	if current == cb.String() {
 		return nil
 	}

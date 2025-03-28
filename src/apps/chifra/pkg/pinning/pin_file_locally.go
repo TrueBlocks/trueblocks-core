@@ -10,6 +10,7 @@ import (
 
 // pinFileLocally pins the file locally to the local IPFS node
 func (s *Service) pinFileLocally(chain, filepath string) (base.IpfsHash, error) {
+	_ = chain
 	file, err := os.OpenFile(filepath, os.O_RDONLY, 0)
 	if err != nil {
 		return "", err

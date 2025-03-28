@@ -23,6 +23,7 @@ import (
 
 // RunSlurp handles the slurp command for the command line. Returns error only as per cobra.
 func RunSlurp(cmd *cobra.Command, args []string) error {
+	_ = cmd
 	opts := slurpFinishParse(args)
 	rCtx := output.NewRenderContext()
 	// EXISTING_CODE

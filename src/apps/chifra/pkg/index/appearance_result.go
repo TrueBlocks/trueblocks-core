@@ -5,13 +5,14 @@ import (
 	"io"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/ranges"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
 // AppearanceResult carries the appearances found in a single Index for the given address.
 type AppearanceResult struct {
 	Address    base.Address
-	Range      base.FileRange
+	Range      ranges.FileRange
 	AppRecords *[]types.AppRecord
 	Err        error
 }

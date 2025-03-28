@@ -7,5 +7,5 @@
     attributes = ""
     produced_by = "export"
     cache_type = "cacheable"
-    cache_by = "address,tx"
+    cache_by = "statement"
     cache_as = "group"

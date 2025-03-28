@@ -57,6 +57,7 @@ func addCorsHeaders(w http.ResponseWriter) {
 }
 
 var OptionsHandler = http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+	_ = r
 	addCorsHeaders(w)
 })
 

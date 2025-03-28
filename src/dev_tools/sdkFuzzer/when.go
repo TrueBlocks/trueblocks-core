@@ -14,7 +14,6 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	sdk "github.com/TrueBlocks/trueblocks-sdk/v4"
 )
 
@@ -74,7 +73,7 @@ func TestWhen(which, value, fn string, opts *sdk.WhenOptions) {
 		if when, _, err := opts.When(); err != nil {
 			ReportError(fn, opts, err)
 		} else {
-			if err := SaveToFile[types.NamedBlock](fn, when); err != nil {
+			if err := SaveToFile(fn, when); err != nil {
 				ReportError2(fn, err)
 			} else {
 				ReportOkay(fn)
@@ -84,7 +83,7 @@ func TestWhen(which, value, fn string, opts *sdk.WhenOptions) {
 		if list, _, err := opts.WhenList(); err != nil {
 			ReportError(fn, opts, err)
 		} else {
-			if err := SaveToFile[types.NamedBlock](fn, list); err != nil {
+			if err := SaveToFile(fn, list); err != nil {
 				ReportError2(fn, err)
 			} else {
 				ReportOkay(fn)
@@ -94,7 +93,7 @@ func TestWhen(which, value, fn string, opts *sdk.WhenOptions) {
 		if timestamps, _, err := opts.WhenTimestamps(); err != nil {
 			ReportError(fn, opts, err)
 		} else {
-			if err := SaveToFile[types.Timestamp](fn, timestamps); err != nil {
+			if err := SaveToFile(fn, timestamps); err != nil {
 				ReportError2(fn, err)
 			} else {
 				ReportOkay(fn)
@@ -104,7 +103,7 @@ func TestWhen(which, value, fn string, opts *sdk.WhenOptions) {
 		if count, _, err := opts.WhenCount(); err != nil {
 			ReportError(fn, opts, err)
 		} else {
-			if err := SaveToFile[types.Count](fn, count); err != nil {
+			if err := SaveToFile(fn, count); err != nil {
 				ReportError2(fn, err)
 			} else {
 				ReportOkay(fn)

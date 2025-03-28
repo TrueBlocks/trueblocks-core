@@ -9,6 +9,7 @@ import (
 	"fmt"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/ranges"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/tslib"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
@@ -36,8 +37,8 @@ func (id *Identifier) ResolveBlocks(chain string) ([]base.Blknum, error) {
 }
 
 // GetBounds returns the earliest and latest blocks for an array of identifiers
-func GetBounds(chain string, ids *[]Identifier) (ret base.BlockRange, err error) {
-	ret = base.BlockRange{
+func GetBounds(chain string, ids *[]Identifier) (ret ranges.BlockRange, err error) {
+	ret = ranges.BlockRange{
 		First: base.NOPOSN,
 		Last:  0,
 	}
@@ -55,7 +56,7 @@ func GetBounds(chain string, ids *[]Identifier) (ret base.BlockRange, err error)
 }
 
 // getBounds returns the earliest and latest blocks for the identifier
-func (id *Identifier) getBounds(chain string) (ret base.BlockRange, err error) {
+func (id *Identifier) getBounds(chain string) (ret ranges.BlockRange, err error) {
 	ret.First = id.Start.resolvePoint(chain)
 	switch id.ModifierType {
 	case Period:

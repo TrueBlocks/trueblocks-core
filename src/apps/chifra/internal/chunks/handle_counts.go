@@ -11,12 +11,15 @@ import (
 )
 
 func (opts *ChunksOptions) HandleCounts(rCtx *output.RenderCtx, blockNums []base.Blknum) error {
+	_ = blockNums
 	chain := opts.Globals.Chain
 	testMode := opts.Globals.TestMode
 
 	fetchData := func(modelChan chan types.Modeler, errorChan chan error) {
+		_ = errorChan
 		var counter types.Count
 		vFunc := func(path string, vP any) (bool, error) {
+			_ = vP
 			isBloom := path == index.ToBloomPath(path)
 			isIndex := path == index.ToIndexPath(path)
 			if isBloom || isIndex {

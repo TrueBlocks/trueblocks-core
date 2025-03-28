@@ -4,213 +4,250 @@ import (
 	"bytes"
 	"context"
 	"errors"
+	"fmt"
+	"log"
 	"os"
 	"path/filepath"
-	"sync"
+	"sort"
+	"strings"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache/locations"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/sigintTrap"
-	"github.com/ethereum/go-ethereum/log"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/walk"
 )
-
-// In verbose mode we print cache errors. It's useful for debugging.
-var verboseMode = false
-
-func init() {
-	if os.Getenv("CACHE_VERBOSE") == "true" {
-		verboseMode = true
-	}
-}
 
 var ErrReadOnly = errors.New("cache is read-only")
 var ErrCanceled = errors.New("write canceled")
 
-var defaultStore *Store
-var defaultStoreOnce sync.Once
-
-// Store holds all information neccessary to access the cache, no matter
+// Store holds all information necessary to access the cache, no matter
 // which concrete location (FS, IPFS, memory, etc.) is being used
 type Store struct {
 	resolvedPaths map[Locator]string
 	location      Storer
 	rootDir       string
-	// If readOnly is true, Store will not write to the cache, but
-	// still read (issue #3047)
-	readOnly bool
+	enabled       bool
+	enabledMap    map[walk.CacheType]bool
+	latest        base.Timestamp
+}
+
+// StoreOptions used by Store
+type StoreOptions struct {
+	Chain      string
+	Location   StoreLocation
+	RootDir    string
+	Enabled    bool
+	EnabledMap map[walk.CacheType]bool
+	Latest     base.Timestamp
 }
 
 func NewStore(options *StoreOptions) (*Store, error) {
+	if options == nil {
+		logger.Fatal("implementation error in NewStore - should never happen")
+	}
 	location, err := options.location()
 	if err != nil {
 		return nil, err
 	}
+	enabledMap := make(map[walk.CacheType]bool)
+	if options.EnabledMap != nil {
+		enabledMap = options.EnabledMap
+	}
 	return &Store{
-		location: location,
-		rootDir:  options.rootDir(),
-		readOnly: options.ReadOnly,
+		location:      location,
+		rootDir:       options.rootDir(),
+		enabled:       options.Enabled || options.Location == MemoryCache,
+		enabledMap:    enabledMap,
+		resolvedPaths: make(map[Locator]string),
 	}, nil
 }
 
-func DefaultStore() (*Store, error) {
-	var err error
-	defaultStoreOnce.Do(func() {
-		defaultStore, err = NewStore(nil)
-	})
-	return defaultStore, err
+func (s *Store) SetLatest(ts base.Timestamp) {
+	s.latest = ts
 }
 
-func (s *Store) resolvePath(value Locator) (resolved string, err error) {
+func (s *Store) IsFinal(ts base.Timestamp) bool {
+	return base.IsFinal(s.latest, ts)
+}
+
+func (s *Store) resolvePath(value Locator) (string, error) {
 	if cachedPath, ok := s.resolvedPaths[value]; ok {
 		return cachedPath, nil
 	}
-
 	directory, id, extension := value.CacheLocations()
-	if directory == "" || extension == "" {
-		err = errors.New("empty CacheLocations")
-		return
+	if directory == "" || id == "" || extension == "" {
+		return "", errors.New("empty CacheLocations")
 	}
 	if filepath.IsAbs(directory) {
-		resolved = filepath.Join(directory, (id + "." + extension))
+		return filepath.Join(directory, (id + "." + extension)), nil
 	} else {
-		resolved = filepath.Join(s.rootDir, directory, (id + "." + extension))
+		return filepath.Join(s.rootDir, directory, (id + "." + extension)), nil
 	}
-
-	return
 }
-
-// WriteOptions passes additional context to Write if needed
-type WriteOptions interface{}
 
 // Write saves value to a location defined by options.Location. If options is nil,
 // then FileSystem is used. The value has to implement Locator interface, which
 // provides information about in-cache path and ID.
-func (s *Store) Write(value Locator, options *WriteOptions) (err error) {
-	if s.readOnly {
-		err = ErrReadOnly
-		printErr("write", err)
-		return
+func (s *Store) Write(value Locator) error {
+	if !s.enabled {
+		return ErrReadOnly
 	}
+	if itemPath, err := s.resolvePath(value); err != nil {
+		return err
+	} else {
+		ctx, cancel := context.WithCancel(context.Background())
+		cleanOnQuit := func() {
+			logger.Warn(sigintTrap.TrapMessage)
+		}
+		trapChannel := sigintTrap.Enable(ctx, cancel, cleanOnQuit)
+		defer sigintTrap.Disable(trapChannel)
 
-	itemPath, err := s.resolvePath(value)
-	if err != nil {
-		printErr("write resolving path", err)
-		return
+		if writer, err := s.location.Writer(itemPath); err != nil {
+			return err
+		} else {
+			defer writer.Close()
+			buffer := new(bytes.Buffer)
+			item := NewItem(buffer)
+			if err = item.Encode(value); err != nil {
+				return err
+			}
+			_, err = buffer.WriteTo(writer)
+			return err
+		}
 	}
-
-	ctx, cancel := context.WithCancel(context.Background())
-	cleanOnQuit := func() {
-		log.Warn(sigintTrap.TrapMessage)
-	}
-	trapChannel := sigintTrap.Enable(ctx, cancel, cleanOnQuit)
-	defer sigintTrap.Disable(trapChannel)
-
-	writer, err := s.location.Writer(itemPath)
-	if err != nil {
-		printErr("getting writer", err)
-		return
-	}
-	defer writer.Close()
-
-	buffer := new(bytes.Buffer)
-	item := NewItem(buffer)
-	if err = item.Encode(value); err != nil {
-		printErr("encoding", err)
-		return
-	}
-	_, err = buffer.WriteTo(writer)
-
-	return
 }
 
-// ReadOptions are options that we might need in the future
-type ReadOptions interface{}
-
-// Read retrieves value from a location defined by options.Location. If options is nil,
+// ReadFromStore retrieves value from a location defined by options.Location. If options is nil,
 // then FileSystem is used. The value has to implement Locator interface, which
 // provides information about in-cache path
-func (s *Store) Read(value Locator, options *ReadOptions) (err error) {
-	itemPath, err := s.resolvePath(value)
-	if err != nil {
-		printErr("read resolving path", err)
-		return
+func (s *Store) ReadFromStore(value Locator) error {
+	if itemPath, err := s.resolvePath(value); err != nil {
+		return err
+	} else {
+		if reader, err := s.location.Reader(itemPath); err != nil {
+			return err
+		} else {
+			defer reader.Close()
+			buffer := new(bytes.Buffer)
+			if _, err = buffer.ReadFrom(reader); err != nil {
+				return err
+			}
+			item := NewItem(buffer)
+			err = item.Decode(value)
+			if err != nil {
+				_ = os.Remove(itemPath)
+			}
+			return err
+		}
 	}
-
-	reader, err := s.location.Reader(itemPath)
-	if err != nil {
-		printErr("getting reader", err)
-		return
-	}
-	defer reader.Close()
-
-	buffer := new(bytes.Buffer)
-	if _, err = buffer.ReadFrom(reader); err != nil {
-		printErr("reading", err)
-		return
-	}
-
-	item := NewItem(buffer)
-	err = item.Decode(value)
-	if err != nil {
-		_ = os.Remove(itemPath)
-		printErr("decoding", err)
-	}
-	return
 }
 
-func (s *Store) Stat(value Locator) (result *locations.ItemInfo, err error) {
-	itemPath, err := s.resolvePath(value)
-	if err != nil {
-		printErr("stat resolving path", err)
-		return
+func (s *Store) Stat(value Locator) (*locations.ItemInfo, error) {
+	if itemPath, err := s.resolvePath(value); err != nil {
+		return nil, err
+	} else {
+		return s.location.Stat(itemPath)
 	}
-	result, err = s.location.Stat(itemPath)
-	if err != nil {
-		printErr("stat", err)
-	}
-	return
 }
 
-func (s *Store) Remove(value Locator) (err error) {
-	itemPath, err := s.resolvePath(value)
-	if err != nil {
-		printErr("remove resolving path", err)
-		return
+func (s *Store) Remove(value Locator) error {
+	if itemPath, err := s.resolvePath(value); err != nil {
+		return err
+	} else {
+		return s.location.Remove(itemPath)
 	}
-	err = s.location.Remove(itemPath)
-	if err != nil {
-		printErr("removing", err)
-	}
-	return
 }
 
-func (s *Store) Decache(locators []Locator, procFunc, skipFunc func(*locations.ItemInfo) bool) (err error) {
+func (s *Store) Decache(locators []Locator, procFunc, skipFunc func(*locations.ItemInfo) bool) error {
+	// TODO: The statements cache is unique in that it will store multiple versions of a statement
+	// TODO: file for the same holder address. If there is no filter when the cache is created,
+	// TODO: the cache will store the statements at holder-0-bn-txid. If there is a filter, it will
+	// TODO: store at holder-asset-bn-txid. The code that calls this code will only send in the
+	// TODO: first version leaving all others in place.
 	for _, locator := range locators {
-		stats, err := s.Stat(locator)
-		if err != nil {
+		if stats, err := s.Stat(locator); err != nil {
 			// many locations will not have been cached, but we want to report
 			skipFunc(stats)
 			continue
-		}
-		// If processor returns false, we don't want to remove this item from the cache
-		if !procFunc(stats) {
-			continue
-		}
-		if err := s.Remove(locator); err != nil {
-			printErr("decache", err)
+		} else {
+			// If processor returns false, we don't want to remove this item from the cache
+			if !procFunc(stats) {
+				continue
+			}
+			if err := s.Remove(locator); err != nil {
+				return err
+			}
 		}
 	}
 
 	return nil
 }
 
-func (s *Store) ReadOnly() bool {
-	return s.readOnly
+func (s *Store) Enabled() bool {
+	return s != nil && s.enabled
 }
 
-func printErr(desc string, err error) {
-	if !verboseMode {
+// TestLog prints the enabledMap to the log. Note this routine gets called prior to full initialization, thus it takes the enabledMap
+func (s *Store) TestLog() {
+	if s.Enabled() {
+		enabled := []string{}
+		for k, v := range s.enabledMap {
+			if v {
+				enabled = append(enabled, k.String())
+			}
+		}
+		sort.Strings(enabled)
+		logger.TestLog(len(enabled) > 0, "Enabled: ", strings.Join(enabled, ", "))
+	}
+}
+
+// WriteToStore handles caching of any data type that implements the Locator interface. Precondition: Caller
+// must ensure caching is enabled and provide all conditions (e.g., isFinal, isWritable).
+func (s *Store) WriteToStore(data Locator, cacheType walk.CacheType, ts base.Timestamp, conditions ...bool) error {
+	if s == nil || !s.Enabled() || !s.enabledMap[cacheType] || !s.IsFinal(ts) {
+		return nil
+	}
+	for _, cond := range conditions {
+		if !cond {
+			return nil
+		}
+	}
+	if err := s.Write(data); err != nil {
+		return fmt.Errorf("failed to write %s to cache: %w", cacheType.String(), err)
+	}
+	return nil
+}
+
+func (s *StoreOptions) location() (loc Storer, err error) {
+	if s == nil {
+		log.Fatal("should not happen ==> implementation error in location.")
 		return
 	}
+	switch s.Location {
+	case MemoryCache:
+		loc, err = locations.Memory()
+	case FsCache:
+		fallthrough
+	default:
+		loc, err = locations.FileSystem()
+	}
 
-	log.Warn("cache error:", desc+":", err)
+	return
+}
+
+func (s *StoreOptions) rootDir() string {
+	if s == nil {
+		logger.Error("should not happen ==> implementation error in location")
+		return ""
+	} else if s.Location == MemoryCache {
+		return "memory"
+	}
+
+	dir := config.PathToCache(s.Chain)
+	if dir != "" {
+		return filepath.Join(dir, "v1")
+	}
+	return s.RootDir
 }

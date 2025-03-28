@@ -192,6 +192,7 @@ func (tx *AlchemyTx) SimpleSlurp() (s types.Slurp, err error) {
 }
 
 func (e *AlchemyProvider) fetchData(ctx context.Context, address base.Address, paginator Paginator, categoryToken string) (data []SlurpedPageItem, count int, err error) {
+	_ = ctx
 	pageKey, ok := paginator.Page().(string)
 	if !ok {
 		err = errors.New("cannot get page id")

@@ -6,7 +6,6 @@ import (
 	"fmt"
 	"io"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
 	"github.com/ethereum/go-ethereum/common"
 )
 
@@ -30,6 +29,7 @@ func (h *Hash) String() string {
 
 // Format is used by Stringer don't remove
 func (h Hash) Format(s fmt.State, c rune) {
+	_ = c
 	_, _ = s.Write([]byte(h.Hex()))
 }
 
@@ -56,9 +56,9 @@ func (h *Hash) IsZero() bool {
 	return v == "0x0000000000000000000000000000000000000000000000000000000000000000"
 }
 
-func (h *Hash) UnmarshalCache(version uint64, reader io.Reader) error {
+func (h *Hash) UnmarshalCache(fileVersion uint64, reader io.Reader) error {
 	var value [32]byte
-	if err := cache.ReadValue(reader, &value, version); err != nil {
+	if err := ReadValue(reader, &value, fileVersion); err != nil {
 		return err
 	}
 	h.SetBytes(value[:])

@@ -144,12 +144,24 @@ func (conn *Connection) GetTokenState(tokenAddress base.Address, hexBlockNo stri
 	return
 }
 
-// GetBalanceAtToken returns token balance for given block. `hexBlockNo` can be "latest" or "" for the latest block or
-// decimal number or hex number with 0x prefix.
-func (conn *Connection) GetBalanceAtToken(token, holder base.Address, hexBlockNo string) (*base.Wei, error) {
+// GetBalanceAtToken returns token balance for given block.
+func (conn *Connection) GetBalanceAtToken(token, holder base.Address, bn base.Blknum) (*base.Wei, error) {
+	if token.Equal(base.FAKE_ETH_ADDRESS) {
+		return conn.GetBalanceAt(holder, bn)
+	}
+
+	hexBlockNo := fmt.Sprintf("0x%x", bn)
 	if hexBlockNo != "" && hexBlockNo != "latest" && !strings.HasPrefix(hexBlockNo, "0x") {
 		hexBlockNo = fmt.Sprintf("0x%x", base.MustParseUint64(hexBlockNo))
 	}
+	// TODO: BOGUS - THIS IN MEMORY CACHE IS GOOD, BUT COULD BE BINARY FILE
+	key := fmt.Sprintf("%s|%s|%s", token.Hex(), holder.Hex(), hexBlockNo)
+	conn.cacheMutex.Lock()
+	if balance, ok := conn.tokenBalanceCache[key]; ok {
+		conn.cacheMutex.Unlock()
+		return balance, nil
+	}
+	conn.cacheMutex.Unlock()
 
 	payloads := []query.BatchPayload{{
 		Key: "balance",
@@ -170,9 +182,17 @@ func (conn *Connection) GetBalanceAtToken(token, holder base.Address, hexBlockNo
 		return nil, err
 	}
 
+	var balance *base.Wei
 	if output["balance"] == nil {
-		return base.NewWei(0), nil
+		balance = base.NewWei(0)
+	} else {
+		balance = base.HexToWei(*output["balance"])
 	}
 
-	return base.HexToWei(*output["balance"]), nil
+	// TODO: BOGUS - THIS IN MEMORY CACHE IS GOOD, BUT COULD BE BINARY FILE
+	conn.cacheMutex.Lock()
+	conn.tokenBalanceCache[key] = balance
+	conn.cacheMutex.Unlock()
+
+	return balance, nil
 }

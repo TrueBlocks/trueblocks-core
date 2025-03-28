@@ -14,7 +14,6 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	sdk "github.com/TrueBlocks/trueblocks-sdk/v4"
 )
 
@@ -48,7 +47,7 @@ func TestConfig(which, value, fn string, opts *sdk.ConfigOptions) {
 		if paths, _, err := opts.ConfigPaths(); err != nil {
 			ReportError(fn, opts, err)
 		} else {
-			if err := SaveToFile[types.CacheItem](fn, paths); err != nil {
+			if err := SaveToFile(fn, paths); err != nil {
 				ReportError2(fn, err)
 			} else {
 				ReportOkay(fn)
@@ -58,7 +57,7 @@ func TestConfig(which, value, fn string, opts *sdk.ConfigOptions) {
 		if dump, _, err := opts.ConfigDump(); err != nil {
 			ReportError(fn, opts, err)
 		} else {
-			if err := SaveToFile[types.Config](fn, dump); err != nil {
+			if err := SaveToFile(fn, dump); err != nil {
 				ReportError2(fn, err)
 			} else {
 				ReportOkay(fn)

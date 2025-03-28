@@ -1,0 +1,130 @@
+chifra export  0x65b0d5e1dc0dee0704f53f660aa865c72e986fc7 --accounting --statements --asset 0xc713e5e149d5d0715dcd1c156a020976e7e56b88 --fmt json --first_block 11670418 --last_block 11670420 --output statement_failed_2572_2_out.file
+TEST[DATE|TIME] Addrs:  [0x65b0d5e1dc0dee0704f53f660aa865c72e986fc7]
+TEST[DATE|TIME] Statements:  true
+TEST[DATE|TIME] Asset:  [0xc713e5e149d5d0715dcd1c156a020976e7e56b88]
+TEST[DATE|TIME] FirstBlock:  11670418
+TEST[DATE|TIME] LastBlock:  11670420
+TEST[DATE|TIME] Accounting:  true
+TEST[DATE|TIME] OutputFn:  statement_failed_2572_2_out.file
+TEST[DATE|TIME] Caps:  cache,decache,ether
+TEST[DATE|TIME] Format:  json
+INFO[DATE|TIME] { "outputFilename": "--output_filename--" }
+TEST[DATE|TIME] 0: 11670419 91
+TEST[DATE|TIME] 
+TEST[DATE|TIME] ------------------------------------
+TEST[DATE|TIME] ~~~ Entering: 11670419.91 ~~~
+TEST[DATE|TIME] First pass: Fetching unreconciled transfers
+TEST[DATE|TIME] Fetched 1 unreconciled transfers
+TEST[DATE|TIME] Second pass: Reconciling transfers
+TEST[DATE|TIME] Processing 1 log transfers
+TEST[DATE|TIME] Set BegSentinel for first log transfer
+TEST[DATE|TIME] Set EndSentinel for last log transfer
+TEST[DATE|TIME] Converted log transfer to statement for asset: 0xc713e5e149d5d0715dcd1c156a020976e7e56b88
+TEST[DATE|TIME] XXX =============[ token ]======================
+TEST[DATE|TIME] XXX Case 1: Only statement in block
+TEST[DATE|TIME] XXX Block: 11670419 Tx: 91 Asset: 0xc713e5e149d5d0715dcd1c156a020976e7e56b88
+TEST[DATE|TIME] XXX FirstInBlock: true, LastInBlock: true
+TEST[DATE|TIME] XXX ================================================
+TEST[DATE|TIME] Correcting ending balance diff: -38340920823 absDiff: 38340920823
+TEST[DATE|TIME] correctEndBalIn: 38340920823
+TEST[DATE|TIME] =========================================================
+TEST[DATE|TIME] ===> PRICING FOR 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) using Uniswap
+TEST[DATE|TIME] =========================================================
+TEST[DATE|TIME] blockNumber:         11670419
+TEST[DATE|TIME] source1 (uni/mkr):   0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f
+TEST[DATE|TIME] str0 (call):         getPair(0x6b175474e89094c44da98b954eedeac495271d0f, 0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2)
+TEST[DATE|TIME] source2 (pair):      0xa478c2975ab1ea89e8196811f51a7b7ade33eb11
+TEST[DATE|TIME] str1 (call/data):    getReserves()
+TEST[DATE|TIME] first:               0x6b175474e89094c44da98b954eedeac495271d0f
+TEST[DATE|TIME] second:              0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2
+TEST[DATE|TIME] reversed:            false
+TEST[DATE|TIME] float0:              1.08885859e+26
+TEST[DATE|TIME] float1:              8.796632908e+22
+TEST[DATE|TIME] float2:              1
+TEST[DATE|TIME] bigPrice:            1237.812924
+TEST[DATE|TIME] price:               1237.812924
+TEST[DATE|TIME] source:              uniswap
+TEST[DATE|TIME] ===================================================
+TEST[DATE|TIME] Previous:               11670418 0 ( true )
+TEST[DATE|TIME] Current:                11670419 91 ( true )
+TEST[DATE|TIME] Next:                   11670420 0 ( true )
+TEST[DATE|TIME] accountedFor:           0x65b0d5e1dc0dee0704f53f660aa865c72e986fc7
+TEST[DATE|TIME] sender:                 0x65b0d5e1dc0dee0704f53f660aa865c72e986fc7  ==>  0x0
+TEST[DATE|TIME] asset:                  0xc713e5e149d5d0715dcd1c156a020976e7e56b88 (aMKR) decimals: 18
+TEST[DATE|TIME] hash:                   0x634799410165000edaf1b1e8e5e8055b39cdd534d3c3dc9738865d39adb5d888
+TEST[DATE|TIME] timestamp:              1610856118
+TEST[DATE|TIME] blockNumber:            11670419.91.195
+TEST[DATE|TIME] priceSource:            0 (not-priced)
+TEST[DATE|TIME] --------------------------------------------------- 
+TEST[DATE|TIME] Trial balance:
+TEST[DATE|TIME]    prevBal:             14.922878205530494041
+TEST[DATE|TIME]    begBal:              14.922878205530494041 (0)
+TEST[DATE|TIME]    totalIn:             0.000000038340920823
+TEST[DATE|TIME]    totalOut:            14.922878243871414864
+TEST[DATE|TIME]    amountNet:           -14.922878205530494041
+TEST[DATE|TIME]                        ======================= 
+TEST[DATE|TIME]    endBal:              0 (0)
+TEST[DATE|TIME]    endBalCalc:          0
+TEST[DATE|TIME] --------------------------------------------------- 
+TEST[DATE|TIME]    correctEndBalIn:     0.000000038340920823
+TEST[DATE|TIME]    amountOut:           14.922878243871414864
+TEST[DATE|TIME]    correctingReasons:   endBalIn
+TEST[DATE|TIME]    material:            true
+TEST[DATE|TIME]    reconciled:          true
+TEST[DATE|TIME] ---------------------------------------------------
+TEST[DATE|TIME] Log statement is material - appending. reconciled: true
+TEST[DATE|TIME] ~~~ Leaving: 11670419.91 ~~~
+TEST[DATE|TIME] ------------------------------------ 1 statements generated.
+TEST[DATE|TIME] 
+----
+Results in ./statement_failed_2572_2_out.file
+{
+  "data": [
+    {
+      "accountedFor": "0x65b0d5e1dc0dee0704f53f660aa865c72e986fc7",
+      "amountIn": "0",
+      "amountNet": "-14922878205530494041",
+      "amountOut": "14922878243871414864",
+      "asset": "0xc713e5e149d5d0715dcd1c156a020976e7e56b88",
+      "assetName": "Aave interest bearing MKR",
+      "begBal": "14922878205530494041",
+      "begBalDiff": "0",
+      "blockNumber": 11670419,
+      "correctAmountIn": "0",
+      "correctAmountOut": "0",
+      "correctBegBalIn": "0",
+      "correctBegBalOut": "0",
+      "correctEndBalIn": "38340920823",
+      "correctEndBalOut": "0",
+      "correctingReasons": "endBalIn",
+      "date": "2021-01-17 04:01:58 UTC",
+      "decimals": 18,
+      "endBal": "0",
+      "endBalCalc": "0",
+      "endBalDiff": "0",
+      "gasOut": "0",
+      "internalIn": "0",
+      "internalOut": "0",
+      "logIndex": 195,
+      "minerBaseRewardIn": "0",
+      "minerNephewRewardIn": "0",
+      "minerTxFeeIn": "0",
+      "minerUncleRewardIn": "0",
+      "prefundIn": "0",
+      "prevBal": "14922878205530494041",
+      "priceSource": "not-priced",
+      "recipient": "0x0",
+      "reconciled": true,
+      "selfDestructIn": "0",
+      "selfDestructOut": "0",
+      "sender": "0x65b0d5e1dc0dee0704f53f660aa865c72e986fc7",
+      "spotPrice": "0",
+      "symbol": "aMKR",
+      "timestamp": 1610856118,
+      "totalIn": "38340920823",
+      "totalOut": "14922878243871414864",
+      "transactionHash": "0x634799410165000edaf1b1e8e5e8055b39cdd534d3c3dc9738865d39adb5d888",
+      "transactionIndex": 91
+    }
+  ]
+}

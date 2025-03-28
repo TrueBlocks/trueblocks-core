@@ -10,6 +10,7 @@ package types
 
 // EXISTING_CODE
 import (
+	"bytes"
 	"encoding/json"
 	"fmt"
 	"io"
@@ -18,6 +19,7 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/topics"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/version"
 )
 
@@ -44,6 +46,10 @@ func (s Log) String() string {
 }
 
 func (s *Log) Model(chain, format string, verbose bool, extraOpts map[string]any) Model {
+	_ = chain
+	_ = format
+	_ = verbose
+	_ = extraOpts
 	var model = map[string]any{}
 	var order = []string{}
 
@@ -73,6 +79,7 @@ func (s *Log) Model(chain, format string, verbose bool, extraOpts map[string]any
 		"topic2",
 		"topic3",
 		"data",
+		"isNFT",
 	}
 
 	isArticulated := extraOpts["articulate"] == true && s.ArticulatedLog != nil
@@ -86,9 +93,14 @@ func (s *Log) Model(chain, format string, verbose bool, extraOpts map[string]any
 	}
 
 	if format == "json" {
+		if s.IsNFT() {
+			model["isNFT"] = s.IsNFT()
+		}
+
 		if len(s.Data) > 2 {
 			model["data"] = s.Data
 		}
+
 		if isArticulated {
 			model["articulatedLog"] = articulatedLog
 		}
@@ -96,6 +108,8 @@ func (s *Log) Model(chain, format string, verbose bool, extraOpts map[string]any
 		model["topics"] = s.Topics
 
 	} else {
+		model["isNFT"] = s.IsNFT()
+
 		if len(s.Data) > 2 {
 			model["data"] = s.Data
 		} else {
@@ -103,7 +117,7 @@ func (s *Log) Model(chain, format string, verbose bool, extraOpts map[string]any
 		}
 
 		if isArticulated {
-			model["compressedLog"] = makeCompressed(articulatedLog)
+			model["compressedLog"] = MakeCompressed(articulatedLog)
 			order = append(order, "compressedLog")
 		}
 
@@ -163,16 +177,16 @@ type LogGroup struct {
 }
 
 func (s *LogGroup) MarshalCache(writer io.Writer) (err error) {
-	return cache.WriteValue(writer, s.Logs)
+	return base.WriteValue(writer, s.Logs)
 }
 
-func (s *LogGroup) UnmarshalCache(vers uint64, reader io.Reader) (err error) {
-	return cache.ReadValue(reader, &s.Logs, vers)
+func (s *LogGroup) UnmarshalCache(fileVersion uint64, reader io.Reader) (err error) {
+	return base.ReadValue(reader, &s.Logs, fileVersion)
 }
 
 func (s *Log) MarshalCache(writer io.Writer) (err error) {
 	// Address
-	if err = cache.WriteValue(writer, s.Address); err != nil {
+	if err = base.WriteValue(writer, s.Address); err != nil {
 		return err
 	}
 
@@ -180,60 +194,60 @@ func (s *Log) MarshalCache(writer io.Writer) (err error) {
 	optArticulatedLog := &cache.Optional[Function]{
 		Value: s.ArticulatedLog,
 	}
-	if err = cache.WriteValue(writer, optArticulatedLog); err != nil {
+	if err = base.WriteValue(writer, optArticulatedLog); err != nil {
 		return err
 	}
 
 	// BlockHash
-	if err = cache.WriteValue(writer, &s.BlockHash); err != nil {
+	if err = base.WriteValue(writer, &s.BlockHash); err != nil {
 		return err
 	}
 
 	// BlockNumber
-	if err = cache.WriteValue(writer, s.BlockNumber); err != nil {
+	if err = base.WriteValue(writer, s.BlockNumber); err != nil {
 		return err
 	}
 
 	// Data
-	if err = cache.WriteValue(writer, s.Data); err != nil {
+	if err = base.WriteValue(writer, s.Data); err != nil {
 		return err
 	}
 
 	// LogIndex
-	if err = cache.WriteValue(writer, s.LogIndex); err != nil {
+	if err = base.WriteValue(writer, s.LogIndex); err != nil {
 		return err
 	}
 
 	// Timestamp
-	if err = cache.WriteValue(writer, s.Timestamp); err != nil {
+	if err = base.WriteValue(writer, s.Timestamp); err != nil {
 		return err
 	}
 
 	// Topics
-	if err = cache.WriteValue(writer, s.Topics); err != nil {
+	if err = base.WriteValue(writer, s.Topics); err != nil {
 		return err
 	}
 
 	// TransactionHash
-	if err = cache.WriteValue(writer, &s.TransactionHash); err != nil {
+	if err = base.WriteValue(writer, &s.TransactionHash); err != nil {
 		return err
 	}
 
 	// TransactionIndex
-	if err = cache.WriteValue(writer, s.TransactionIndex); err != nil {
+	if err = base.WriteValue(writer, s.TransactionIndex); err != nil {
 		return err
 	}
 
 	return nil
 }
 
-func (s *Log) UnmarshalCache(vers uint64, reader io.Reader) (err error) {
+func (s *Log) UnmarshalCache(fileVersion uint64, reader io.Reader) (err error) {
 	// Check for compatibility and return cache.ErrIncompatibleVersion to invalidate this item (see #3638)
 	// EXISTING_CODE
 	// EXISTING_CODE
 
 	// Address
-	if err = cache.ReadValue(reader, &s.Address, vers); err != nil {
+	if err = base.ReadValue(reader, &s.Address, fileVersion); err != nil {
 		return err
 	}
 
@@ -241,71 +255,105 @@ func (s *Log) UnmarshalCache(vers uint64, reader io.Reader) (err error) {
 	optArticulatedLog := &cache.Optional[Function]{
 		Value: s.ArticulatedLog,
 	}
-	if err = cache.ReadValue(reader, optArticulatedLog, vers); err != nil {
+	if err = base.ReadValue(reader, optArticulatedLog, fileVersion); err != nil {
 		return err
 	}
 	s.ArticulatedLog = optArticulatedLog.Get()
 
 	// BlockHash
-	if err = cache.ReadValue(reader, &s.BlockHash, vers); err != nil {
+	if err = base.ReadValue(reader, &s.BlockHash, fileVersion); err != nil {
 		return err
 	}
 
 	// BlockNumber
-	if err = cache.ReadValue(reader, &s.BlockNumber, vers); err != nil {
+	if err = base.ReadValue(reader, &s.BlockNumber, fileVersion); err != nil {
 		return err
 	}
 
 	// Used to be CompressedLog, since removed
 	vCompressedLog := version.NewVersion("2.5.10")
-	if vers <= vCompressedLog.Uint64() {
+	if fileVersion <= vCompressedLog.Uint64() {
 		var val string
-		if err = cache.ReadValue(reader, &val, vers); err != nil {
+		if err = base.ReadValue(reader, &val, fileVersion); err != nil {
 			return err
 		}
 	}
 
 	// Data
-	if err = cache.ReadValue(reader, &s.Data, vers); err != nil {
+	if err = base.ReadValue(reader, &s.Data, fileVersion); err != nil {
 		return err
 	}
 
 	// LogIndex
-	if err = cache.ReadValue(reader, &s.LogIndex, vers); err != nil {
+	if err = base.ReadValue(reader, &s.LogIndex, fileVersion); err != nil {
 		return err
 	}
 
 	// Timestamp
-	if err = cache.ReadValue(reader, &s.Timestamp, vers); err != nil {
+	if err = base.ReadValue(reader, &s.Timestamp, fileVersion); err != nil {
 		return err
 	}
 
 	// Topics
 	s.Topics = make([]base.Hash, 0)
-	if err = cache.ReadValue(reader, &s.Topics, vers); err != nil {
+	if err = base.ReadValue(reader, &s.Topics, fileVersion); err != nil {
 		return err
 	}
 
 	// TransactionHash
-	if err = cache.ReadValue(reader, &s.TransactionHash, vers); err != nil {
+	if err = base.ReadValue(reader, &s.TransactionHash, fileVersion); err != nil {
 		return err
 	}
 
 	// TransactionIndex
-	if err = cache.ReadValue(reader, &s.TransactionIndex, vers); err != nil {
+	if err = base.ReadValue(reader, &s.TransactionIndex, fileVersion); err != nil {
 		return err
 	}
 
-	s.FinishUnmarshal()
+	s.FinishUnmarshal(fileVersion)
 
 	return nil
 }
 
 // FinishUnmarshal is used by the cache. It may be unused depending on auto-code-gen
-func (s *Log) FinishUnmarshal() {
+func (s *Log) FinishUnmarshal(fileVersion uint64) {
+	_ = fileVersion
 	// EXISTING_CODE
 	// EXISTING_CODE
 }
 
 // EXISTING_CODE
+func (l *Log) IsRelevant(addr base.Address, checkAddress bool) bool {
+	target := addr.Bytes()
+
+	if checkAddress {
+		if bytes.Equal(l.Address.Bytes(), target) {
+			return true
+		}
+	}
+
+	if bytes.Contains([]byte(l.Data), target) {
+		return true
+	}
+
+	for _, topic := range l.Topics {
+		if bytes.Contains(topic.Bytes(), target) {
+			return true
+		}
+	}
+
+	return false
+}
+
+func (log *Log) IsNFT() bool {
+	return len(log.Topics) == 4 && log.Topics[0] == topics.TransferTopic
+}
+
+func (log *Log) CompressedLog() string {
+	if log.ArticulatedLog == nil {
+		return ""
+	}
+	return MakeCompressed(log.ArticulatedLog)
+}
+
 // EXISTING_CODE

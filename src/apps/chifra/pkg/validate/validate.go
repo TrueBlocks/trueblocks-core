@@ -64,7 +64,7 @@ func ValidateExactlyOneAddr(args []string) error {
 	return nil
 }
 
-func ValidateAtLeastOneNonSentinal(args []string) error {
+func ValidateAtLeastOneNonSentinel(args []string) error {
 	if err := ValidateAtLeastOneAddr(args); err != nil {
 		return err
 	}

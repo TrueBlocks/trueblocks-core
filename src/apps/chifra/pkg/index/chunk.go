@@ -17,15 +17,15 @@ import (
 	"io"
 	"os"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/ranges"
 	shell "github.com/ipfs/go-ipfs-api"
 )
 
 // The Chunk data structure consists of three parts. A FileRange, a Index structure, and a Bloom that
 // carries set membership information for the Index.
 type Chunk struct {
-	Range base.FileRange
+	Range ranges.FileRange
 	Index Index
 	Bloom Bloom
 }
@@ -48,7 +48,7 @@ func versions(fileName string) (string, string, error) {
 // later if the bloom indicates that its needed). If the index file does exist, however, it will be opened for reading
 // and its header will be read into memory, but the index data itself will not be.
 func OpenChunk(path string, check bool) (chunk Chunk, err error) {
-	chunk.Range, err = base.RangeFromFilenameE(path)
+	chunk.Range, err = ranges.RangeFromFilenameE(path)
 	if err != nil {
 		return
 	}

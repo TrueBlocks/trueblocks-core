@@ -13,6 +13,7 @@ package {{.Route}}Pkg
 
 // Run{{toProper .Route}} handles the {{.Route}} command for the command line. Returns error only as per cobra.
 func Run{{toProper .Route}}(cmd *cobra.Command, args []string) error {
+	_ = cmd
 	opts := {{toLower .Route}}FinishParse(args)
 	rCtx := output.NewRenderContext()
 	// EXISTING_CODE

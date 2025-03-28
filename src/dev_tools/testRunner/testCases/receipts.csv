@@ -31,7 +31,7 @@ on      ,both ,fast  ,receipts ,tools ,getReceipts ,bad_blkhash_msg_raw    ,y   
 on      ,both ,fast  ,receipts ,tools ,getReceipts ,from_raw               ,y    ,transactions = 4000000.5 & fmt = json
 on      ,both ,medi  ,receipts ,tools ,getReceipts ,prev_bug2_2            ,y    ,transactions = 4279119.46 & fmt = json
 on      ,both ,fast  ,receipts ,tools ,getReceipts ,contract_creation      ,y    ,transactions = 1428757.0 & fmt = json
-on      ,both ,fast  ,receipts ,tools ,getReceipts ,contract_creation_art  ,y    ,transactions = 1428968.4 & fmt = json & articulate
+local   ,both ,fast  ,receipts ,tools ,getReceipts ,contract_creation_art  ,y    ,transactions = 1428968.4 & fmt = json & articulate
 on      ,both ,fast  ,receipts ,tools ,getReceipts ,cmd_file_1_alone       ,y    ,file = cmd_file.1 & transactions = 5644782.0
 on      ,both ,fast  ,receipts ,tools ,getReceipts ,cmd_file_1_with        ,n    ,file = cmd_file.1 & verbose & fmt = txt & transactions = 5644782.0
 on      ,both ,fast  ,receipts ,tools ,getReceipts ,cmd_file_2_alone       ,y    ,file = cmd_file.2 & transactions = 5644782.0

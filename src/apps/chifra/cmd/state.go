@@ -14,6 +14,7 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
 	statePkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/state"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/caps"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	outputHelpers "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output/helpers"
@@ -58,7 +59,7 @@ Notes:
   - Your use of the unaudited --send option legally absolves TrueBlocks, LLC or any associated parties from liability or loss related to such use.
   - The --send option does not validate its input before sending your transaction to the network. If you provide invalid data, you may lose your funds. Be warned.
   - As of version 4.0.0, use --call --calldata <cmd> to provide your command.
-  - --calldata may be one or more colon-seperated solidity calls, four-byte plus parameters, or encoded call data strings.`
+  - --calldata may be one or more colon-separated solidity calls, four-byte plus parameters, or encoded call data strings.`
 
 func init() {
 	var capabilities caps.Capability // capabilities for chifra state
@@ -78,7 +79,7 @@ One or more of [ balance | nonce | code | proxy | deployed | accttype | some | a
 	stateCmd.Flags().StringVarP(&statePkg.GetOptions().Calldata, "calldata", "d", "", `for commands (--call or --send), provides the call data (in various forms) for the command (may be empty for --send)`)
 	stateCmd.Flags().BoolVarP(&statePkg.GetOptions().Articulate, "articulate", "a", false, `for commands only, articulate the retrieved data if ABIs can be found`)
 	stateCmd.Flags().StringVarP(&statePkg.GetOptions().ProxyFor, "proxy_for", "r", "", `for commands only, redirects calls to this implementation`)
-	if os.Getenv("TEST_MODE") != "true" {
+	if !base.IsTestMode() {
 		_ = stateCmd.Flags().MarkHidden("send")
 	}
 	globals.InitGlobals("state", stateCmd, &statePkg.GetOptions().Globals, capabilities)

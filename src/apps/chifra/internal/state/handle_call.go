@@ -120,7 +120,7 @@ func (opts *StateOptions) HandleCall(rCtx *output.RenderCtx) error {
 func (opts *StateOptions) GetAddressOrProxy() base.Address {
 	// Note that validtor makes sure there's exactly one address for --call or --send.
 	callAddress := base.HexToAddress(opts.Addrs[0])
-	proxy := base.HexToAddress(opts.ProxyFor)
+	proxy := opts.ProxyForAddr
 	if !proxy.IsZero() {
 		callAddress = proxy
 	}

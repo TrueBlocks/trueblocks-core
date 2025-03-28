@@ -2,11 +2,8 @@ package cache
 
 import (
 	"io"
-	"log"
-	"path/filepath"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache/locations"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 )
 
 type StoreLocation uint
@@ -47,52 +44,4 @@ type Unmarshaler interface {
 // written to binary by calling MarshalCache
 type Marshaler interface {
 	MarshalCache(writer io.Writer) error
-}
-
-// StoreOptions used by Store
-type StoreOptions struct {
-	Location StoreLocation
-	Chain    string
-
-	// Optional
-
-	RootDir string
-	// If ReadOnly is true, then we will not write to the cache
-	ReadOnly bool
-}
-
-func (s *StoreOptions) location() (loc Storer, err error) {
-	if s == nil {
-		log.Fatal("should not happen ==> implementation error in location.")
-		return
-	}
-	switch s.Location {
-	case MemoryCache:
-		loc, err = locations.Memory()
-	case FsCache:
-		fallthrough
-	default:
-		loc, err = locations.FileSystem()
-	}
-
-	return
-}
-
-func (s *StoreOptions) rootDir() (dir string) {
-	if s != nil && s.Location == MemoryCache {
-		return "memory"
-	}
-
-	if s == nil {
-		log.Fatal("should not happen ==> implementation error in location.")
-	} else if s.RootDir == "" {
-		dir = config.PathToCache(s.Chain)
-	}
-
-	if dir != "" {
-		// TODO: v1 suffix
-		return filepath.Join(dir, "v1")
-	}
-
-	return s.RootDir
 }

@@ -23,6 +23,7 @@ import (
 
 // RunBlocks handles the blocks command for the command line. Returns error only as per cobra.
 func RunBlocks(cmd *cobra.Command, args []string) error {
+	_ = cmd
 	opts := blocksFinishParse(args)
 	rCtx := output.NewRenderContext()
 	// EXISTING_CODE

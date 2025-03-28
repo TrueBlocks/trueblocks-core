@@ -1,0 +1,67 @@
+chifra export  0xf503017d7baf7fbc0fff7492b751025c6a78179b --accounting --transfers --first_block 8860513 --last_block 8860531 --ether --fmt json --output transfer_unfiltered_out.file
+TEST[DATE|TIME] Addrs:  [0xf503017d7baf7fbc0fff7492b751025c6a78179b]
+TEST[DATE|TIME] Transfers:  true
+TEST[DATE|TIME] FirstBlock:  8860513
+TEST[DATE|TIME] LastBlock:  8860531
+TEST[DATE|TIME] Accounting:  true
+TEST[DATE|TIME] Ether:  true
+TEST[DATE|TIME] OutputFn:  transfer_unfiltered_out.file
+TEST[DATE|TIME] Caps:  cache,decache,ether
+TEST[DATE|TIME] Format:  json
+INFO[DATE|TIME] { "outputFilename": "--output_filename--" }
+----
+Results in ./transfer_unfiltered_out.file
+{
+  "data": [
+    {
+      "amount": "-34017000000000",
+      "amountEth": "-0.000034017",
+      "asset": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+      "assetName": "ETH",
+      "blockNumber": 8860513,
+      "holder": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
+      "logIndex": 0,
+      "transactionIndex": 85
+    },
+    {
+      "amount": "-500000000000000000000",
+      "amountEth": "-500",
+      "asset": "0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359",
+      "assetName": "Dai Stablecoin v1.0",
+      "blockNumber": 8860513,
+      "holder": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
+      "logIndex": 84,
+      "transactionIndex": 85
+    },
+    {
+      "amount": "-46049000000000",
+      "amountEth": "-0.000046049",
+      "asset": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+      "assetName": "ETH",
+      "blockNumber": 8860529,
+      "holder": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
+      "logIndex": 0,
+      "transactionIndex": 145
+    },
+    {
+      "amount": "-24541000000000",
+      "amountEth": "-0.000024541",
+      "asset": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+      "assetName": "ETH",
+      "blockNumber": 8860531,
+      "holder": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
+      "logIndex": 0,
+      "transactionIndex": 152
+    },
+    {
+      "amount": "-7000000000000000000000",
+      "amountEth": "-7000",
+      "asset": "0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359",
+      "assetName": "Dai Stablecoin v1.0",
+      "blockNumber": 8860531,
+      "holder": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
+      "logIndex": 95,
+      "transactionIndex": 152
+    }
+  ]
+}

@@ -46,7 +46,3 @@ on      ,both ,fast  ,monitors ,apps ,acctExport ,caps_allowed_m           ,y   
 on      ,both ,fast  ,monitors ,apps ,acctExport ,caps_disallowed_1_m      ,y    ,addrs = trueblocks.eth & cache
 on      ,both ,fast  ,monitors ,apps ,acctExport ,caps_disallowed_3_m      ,y    ,addrs = trueblocks.eth & ether
 on      ,both ,fast  ,monitors ,apps ,acctExport ,caps_disallowed_4_m      ,y    ,addrs = trueblocks.eth & wei
-
-# Not tested for chifra monitors...
-# chifra monitors --watch
-# chifra monitors --watch --sleep

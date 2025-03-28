@@ -19,6 +19,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/manifest"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/progress"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/ranges"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/walk"
 )
@@ -169,11 +170,11 @@ func (opts *InitOptions) updateLocalManifest(existing, remote *manifest.Manifest
 	copy := *remote
 
 	if existing != nil {
-		lastExisting := base.RangeFromRangeString(existing.Chunks[len(existing.Chunks)-1].Range)
-		lastRemote := base.RangeFromRangeString(remote.Chunks[len(remote.Chunks)-1].Range)
+		lastExisting := ranges.RangeFromRangeString(existing.Chunks[len(existing.Chunks)-1].Range)
+		lastRemote := ranges.RangeFromRangeString(remote.Chunks[len(remote.Chunks)-1].Range)
 		if !lastExisting.LaterThan(lastRemote) {
 			for _, ch := range existing.Chunks {
-				rng := base.RangeFromRangeString(ch.Range)
+				rng := ranges.RangeFromRangeString(ch.Range)
 				if rng.LaterThan(lastRemote) {
 					copy.Chunks = append(copy.Chunks, ch)
 				}

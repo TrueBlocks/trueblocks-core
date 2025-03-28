@@ -1,0 +1,53 @@
+{
+  "data": [
+    {
+      "address": "0x1f9840a85d5af5bf1d1762f925bdaddc4201f984",
+      "decimals": 18,
+      "isContract": true,
+      "isErc20": true,
+      "name": "Uniswap",
+      "source": "Giveth website",
+      "symbol": "UNI",
+      "tags": "50-Tokens:ERC20"
+    },
+    {
+      "address": "0x6b175474e89094c44da98b954eedeac495271d0f",
+      "decimals": 18,
+      "isContract": true,
+      "isErc20": true,
+      "name": "Dai Stablecoin",
+      "source": "Giveth website",
+      "symbol": "DAI",
+      "tags": "50-Tokens:ERC20"
+    },
+    {
+      "address": "0xde30da39c46104798bb5aa3fe8b9e0e1f348163f",
+      "decimals": 18,
+      "isContract": true,
+      "isErc20": true,
+      "name": "Gitcoin",
+      "source": "Giveth website",
+      "symbol": "GTC",
+      "tags": "50-Tokens:ERC20"
+    },
+    {
+      "address": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+      "decimals": 18,
+      "isErc20": true,
+      "name": "ETH",
+      "source": "defipulse.com",
+      "symbol": "ETH",
+      "tags": "50-Ethereum"
+    },
+    {
+      "address": "0xf5b2c59f6db42ffcdfc1625999c81fdf17953384",
+      "decimals": 18,
+      "isContract": true,
+      "isErc20": true,
+      "name": "mdai.io",
+      "source": "On chain",
+      "symbol": "mdai.io",
+      "tags": "50-Tokens:ERC20"
+    }
+  ]
+}

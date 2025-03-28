@@ -48,7 +48,7 @@ func (opts *TracesOptions) testLog() {
 	logger.TestLog(opts.Articulate, "Articulate: ", opts.Articulate)
 	logger.TestLog(len(opts.Filter) > 0, "Filter: ", opts.Filter)
 	logger.TestLog(opts.Count, "Count: ", opts.Count)
-	opts.Conn.TestLog(opts.getCaches())
+	opts.Conn.TestLog()
 	opts.Globals.TestLog()
 }
 

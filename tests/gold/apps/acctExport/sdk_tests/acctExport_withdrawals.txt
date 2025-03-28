@@ -1,4 +1,12 @@
-export?addrs=0x6193f68d97921f4765d72a3e6964fc990c59e0e5&withdrawals&firstBlock=17013606&lastBlock=17083530&fmt=json
+export?addrs=0x6193f68d97921f4765d72a3e6964fc990c59e0e5&withdrawals&firstBlock=17013606&lastBlock=17083530
+Args: [addrs=0x6193f68d97921f4765d72a3e6964fc990c59e0e5 withdrawals firstBlock=17013606 lastBlock=17083530]
+Opts: {"addrs":["0x6193f68d97921f4765d72a3e6964fc990c59e0e5"],"withdrawals":true,"firstBlock":17013606,"lastBlock":17083530}
+Addrs:  [0x6193f68d97921f4765d72a3e6964fc990c59e0e5]
+Withdrawals:  true
+FirstBlock:  17013606
+LastBlock:  17083530
+Caps:  cache,decache,ether
+Format:  json
 {
   "data": [
     {
@@ -12,12 +20,48 @@ export?addrs=0x6193f68d97921f4765d72a3e6964fc990c59e0e5&withdrawals&firstBlock=1
     },
     {
       "address": "0x6193f68d97921f4765d72a3e6964fc990c59e0e5",
-      "amount": "4501548927",
+      "amount": "4534335535",
       "blockNumber": 17053367,
       "date": "2023-04-15 15:44:47 UTC",
-      "index": 295867,
+      "index": 295862,
       "timestamp": 1681573487,
-      "validatorIndex": 24866
+      "validatorIndex": 24859
+    },
+    {
+      "address": "0x6193f68d97921f4765d72a3e6964fc990c59e0e5",
+      "amount": "6865860",
+      "blockNumber": 17053367,
+      "date": "2023-04-15 15:44:47 UTC",
+      "index": 295863,
+      "timestamp": 1681573487,
+      "validatorIndex": 24862
+    },
+    {
+      "address": "0x6193f68d97921f4765d72a3e6964fc990c59e0e5",
+      "amount": "4643647059",
+      "blockNumber": 17053367,
+      "date": "2023-04-15 15:44:47 UTC",
+      "index": 295864,
+      "timestamp": 1681573487,
+      "validatorIndex": 24863
+    },
+    {
+      "address": "0x6193f68d97921f4765d72a3e6964fc990c59e0e5",
+      "amount": "4307024192",
+      "blockNumber": 17053367,
+      "date": "2023-04-15 15:44:47 UTC",
+      "index": 295865,
+      "timestamp": 1681573487,
+      "validatorIndex": 24864
+    },
+    {
+      "address": "0x6193f68d97921f4765d72a3e6964fc990c59e0e5",
+      "amount": "4517987612",
+      "blockNumber": 17053367,
+      "date": "2023-04-15 15:44:47 UTC",
+      "index": 295866,
+      "timestamp": 1681573487,
+      "validatorIndex": 24865
     },
     {
       "address": "0x6193f68d97921f4765d72a3e6964fc990c59e0e5",
@@ -30,39 +74,12 @@ export?addrs=0x6193f68d97921f4765d72a3e6964fc990c59e0e5&withdrawals&firstBlock=1
     },
     {
       "address": "0x6193f68d97921f4765d72a3e6964fc990c59e0e5",
-      "amount": "4501548927",
-      "blockNumber": 17053367,
-      "date": "2023-04-15 15:44:47 UTC",
-      "index": 295867,
-      "timestamp": 1681573487,
-      "validatorIndex": 24866
-    },
-    {
-      "address": "0x6193f68d97921f4765d72a3e6964fc990c59e0e5",
-      "amount": "4501548927",
-      "blockNumber": 17053367,
-      "date": "2023-04-15 15:44:47 UTC",
-      "index": 295867,
-      "timestamp": 1681573487,
-      "validatorIndex": 24866
-    },
-    {
-      "address": "0x6193f68d97921f4765d72a3e6964fc990c59e0e5",
-      "amount": "4501548927",
-      "blockNumber": 17053367,
-      "date": "2023-04-15 15:44:47 UTC",
-      "index": 295867,
-      "timestamp": 1681573487,
-      "validatorIndex": 24866
-    },
-    {
-      "address": "0x6193f68d97921f4765d72a3e6964fc990c59e0e5",
-      "amount": "4501548927",
-      "blockNumber": 17053367,
-      "date": "2023-04-15 15:44:47 UTC",
-      "index": 295867,
-      "timestamp": 1681573487,
-      "validatorIndex": 24866
+      "amount": "4155314567",
+      "blockNumber": 17053992,
+      "date": "2023-04-15 17:52:35 UTC",
+      "index": 305863,
+      "timestamp": 1681581155,
+      "validatorIndex": 44027
     },
     {
       "address": "0x6193f68d97921f4765d72a3e6964fc990c59e0e5",
@@ -75,48 +92,39 @@ export?addrs=0x6193f68d97921f4765d72a3e6964fc990c59e0e5&withdrawals&firstBlock=1
     },
     {
       "address": "0x6193f68d97921f4765d72a3e6964fc990c59e0e5",
-      "amount": "4253292339",
-      "blockNumber": 17053992,
-      "date": "2023-04-15 17:52:35 UTC",
-      "index": 305864,
-      "timestamp": 1681581155,
-      "validatorIndex": 44028
+      "amount": "11623474",
+      "blockNumber": 17083529,
+      "date": "2023-04-19 22:14:35 UTC",
+      "index": 778456,
+      "timestamp": 1681942475,
+      "validatorIndex": 24859
     },
     {
       "address": "0x6193f68d97921f4765d72a3e6964fc990c59e0e5",
-      "amount": "11666164",
+      "amount": "11722936",
       "blockNumber": 17083529,
       "date": "2023-04-19 22:14:35 UTC",
-      "index": 778460,
+      "index": 778457,
       "timestamp": 1681942475,
-      "validatorIndex": 24865
+      "validatorIndex": 24862
     },
     {
       "address": "0x6193f68d97921f4765d72a3e6964fc990c59e0e5",
-      "amount": "11666164",
+      "amount": "11757153",
       "blockNumber": 17083529,
       "date": "2023-04-19 22:14:35 UTC",
-      "index": 778460,
+      "index": 778458,
       "timestamp": 1681942475,
-      "validatorIndex": 24865
+      "validatorIndex": 24863
     },
     {
       "address": "0x6193f68d97921f4765d72a3e6964fc990c59e0e5",
-      "amount": "11666164",
+      "amount": "11697080",
       "blockNumber": 17083529,
       "date": "2023-04-19 22:14:35 UTC",
-      "index": 778460,
+      "index": 778459,
       "timestamp": 1681942475,
-      "validatorIndex": 24865
-    },
-    {
-      "address": "0x6193f68d97921f4765d72a3e6964fc990c59e0e5",
-      "amount": "11666164",
-      "blockNumber": 17083529,
-      "date": "2023-04-19 22:14:35 UTC",
-      "index": 778460,
-      "timestamp": 1681942475,
-      "validatorIndex": 24865
+      "validatorIndex": 24864
     },
     {
       "address": "0x6193f68d97921f4765d72a3e6964fc990c59e0e5",

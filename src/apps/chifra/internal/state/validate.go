@@ -98,7 +98,7 @@ func (opts *StateOptions) validateState() error {
 				return validate.Usage("The {0} option is only available with the {1} option.", "--articulate", "--call or --send")
 			}
 
-			proxy := base.HexToAddress(opts.ProxyFor)
+			proxy := opts.ProxyForAddr
 			if !proxy.IsZero() {
 				return validate.Usage("The {0} option is only available with the {1} option.", "--proxy_for", "--call or --send")
 			}

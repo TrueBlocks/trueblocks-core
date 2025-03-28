@@ -27,6 +27,7 @@ import (
 // ReadUnchainedIndex calls UnchainedIndex smart contract to get the current manifest IPFS CID as
 // published by the given publisher
 func ReadUnchainedIndex(chain string, publisher base.Address, database string) (string, error) {
+	_ = chain
 	cid := os.Getenv("TB_OVERRIDE_CID")
 	if cid != "" {
 		return cid, nil
@@ -39,11 +40,6 @@ func ReadUnchainedIndex(chain string, publisher base.Address, database string) (
 
 	unchainedChain := "mainnet" // the unchained index is on mainnet
 	conn := rpc.TempConnection(unchainedChain)
-	// if conn.LatestBlockTimestamp < 1_705_173_443 { // block 19_000_000
-	// 	provider := config.GetChain(unchainedChain).RpcProvider
-	// 	logger.Fatal(usage.Usage(unchainedWarning, provider))
-	// }
-
 	theCall := fmt.Sprintf("manifestHashMap(%s, \"%s\")", publisher, database)
 	if contractCall, _, err := call.NewContractCallWithAbi(conn, callAddress, theCall, abiMap); err != nil {
 		wrapped := fmt.Errorf("the --calldata value provided (%s) was not found: %s", theCall, err)

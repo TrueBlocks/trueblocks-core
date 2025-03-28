@@ -14,7 +14,6 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	sdk "github.com/TrueBlocks/trueblocks-sdk/v4"
 )
 
@@ -116,7 +115,7 @@ func TestBlocks(which, value, fn string, opts *sdk.BlocksOptions) {
 		if blocks, _, err := opts.Blocks(); err != nil {
 			ReportError(fn, opts, err)
 		} else {
-			if err := SaveToFile[types.Block](fn, blocks); err != nil {
+			if err := SaveToFile(fn, blocks); err != nil {
 				ReportError2(fn, err)
 			} else {
 				ReportOkay(fn)
@@ -126,7 +125,7 @@ func TestBlocks(which, value, fn string, opts *sdk.BlocksOptions) {
 		if hashes, _, err := opts.BlocksHashes(); err != nil {
 			ReportError(fn, opts, err)
 		} else {
-			if err := SaveToFile[types.LightBlock](fn, hashes); err != nil {
+			if err := SaveToFile(fn, hashes); err != nil {
 				ReportError2(fn, err)
 			} else {
 				ReportOkay(fn)
@@ -136,7 +135,7 @@ func TestBlocks(which, value, fn string, opts *sdk.BlocksOptions) {
 		if uncles, _, err := opts.BlocksUncles(); err != nil {
 			ReportError(fn, opts, err)
 		} else {
-			if err := SaveToFile[types.LightBlock](fn, uncles); err != nil {
+			if err := SaveToFile(fn, uncles); err != nil {
 				ReportError2(fn, err)
 			} else {
 				ReportOkay(fn)
@@ -146,7 +145,7 @@ func TestBlocks(which, value, fn string, opts *sdk.BlocksOptions) {
 		if traces, _, err := opts.BlocksTraces(); err != nil {
 			ReportError(fn, opts, err)
 		} else {
-			if err := SaveToFile[types.Trace](fn, traces); err != nil {
+			if err := SaveToFile(fn, traces); err != nil {
 				ReportError2(fn, err)
 			} else {
 				ReportOkay(fn)
@@ -156,7 +155,7 @@ func TestBlocks(which, value, fn string, opts *sdk.BlocksOptions) {
 		if uniq, _, err := opts.BlocksUniq(); err != nil {
 			ReportError(fn, opts, err)
 		} else {
-			if err := SaveToFile[types.Appearance](fn, uniq); err != nil {
+			if err := SaveToFile(fn, uniq); err != nil {
 				ReportError2(fn, err)
 			} else {
 				ReportOkay(fn)
@@ -166,7 +165,7 @@ func TestBlocks(which, value, fn string, opts *sdk.BlocksOptions) {
 		if logs, _, err := opts.BlocksLogs(); err != nil {
 			ReportError(fn, opts, err)
 		} else {
-			if err := SaveToFile[types.Log](fn, logs); err != nil {
+			if err := SaveToFile(fn, logs); err != nil {
 				ReportError2(fn, err)
 			} else {
 				ReportOkay(fn)
@@ -176,7 +175,7 @@ func TestBlocks(which, value, fn string, opts *sdk.BlocksOptions) {
 		if withdrawals, _, err := opts.BlocksWithdrawals(); err != nil {
 			ReportError(fn, opts, err)
 		} else {
-			if err := SaveToFile[types.Withdrawal](fn, withdrawals); err != nil {
+			if err := SaveToFile(fn, withdrawals); err != nil {
 				ReportError2(fn, err)
 			} else {
 				ReportOkay(fn)
@@ -186,7 +185,7 @@ func TestBlocks(which, value, fn string, opts *sdk.BlocksOptions) {
 		if count, _, err := opts.BlocksCount(); err != nil {
 			ReportError(fn, opts, err)
 		} else {
-			if err := SaveToFile[types.BlockCount](fn, count); err != nil {
+			if err := SaveToFile(fn, count); err != nil {
 				ReportError2(fn, err)
 			} else {
 				ReportOkay(fn)

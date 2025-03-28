@@ -109,8 +109,8 @@ func serialize(input any, maxDeep int) string {
 
 // TODO: This could be called Flatten and it should flatten the way GoLang flattens an object when fmt.Println is called
 
-// makeCompressed produces compressedTx|Trace|Log field value
+// MakeCompressed produces compressedTx|Trace|Log field value
 // TODO: We may implement this function as an interface: https://github.com/TrueBlocks/trueblocks-core/pull/2707#discussion_r1116910420
-func makeCompressed(input any) (result string) {
+func MakeCompressed(input any) (result string) {
 	return serialize(input, 10)
 }

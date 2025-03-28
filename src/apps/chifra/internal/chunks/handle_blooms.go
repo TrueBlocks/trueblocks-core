@@ -11,6 +11,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/ranges"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/tslib"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/walk"
@@ -21,6 +22,8 @@ func (opts *ChunksOptions) HandleBlooms(rCtx *output.RenderCtx, blockNums []base
 
 	fetchData := func(modelChan chan types.Modeler, errorChan chan error) {
 		showBloom := func(walker *walk.CacheWalker, path string, first bool) (bool, error) {
+			_ = walker
+			_ = first
 			if path != index.ToBloomPath(path) {
 				return false, fmt.Errorf("should not happen in showBloom")
 			}
@@ -41,7 +44,7 @@ func (opts *ChunksOptions) HandleBlooms(rCtx *output.RenderCtx, blockNums []base
 				return false, err
 			}
 
-			rng, err := base.RangeFromFilenameE(path)
+			rng, err := ranges.RangeFromFilenameE(path)
 			if err != nil {
 				return false, err
 			}

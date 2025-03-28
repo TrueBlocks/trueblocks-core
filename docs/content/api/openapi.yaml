@@ -7,7 +7,7 @@ info:
   license:
     name: GPL 3.0
     url: http://www.gnu.org/licenses/
-  version: 4.2.0-release
+  version: 4.3.0-release
   description: >
     A REST layer over the TrueBlocks chifra command line. With `chifra daemon`, you can
     run this on your own machine, and make calls to `localhost`.
@@ -316,16 +316,24 @@ paths:
           explode: true
           schema:
             type: boolean
-        - name: accounting
-          description: attach accounting records to the exported data (applies to transactions export only)
+        - name: statements
+          description: export only statements
           required: false
           style: form
           in: query
           explode: true
           schema:
             type: boolean
-        - name: statements
-          description: for the accounting options only, export only statements
+        - name: transfers
+          description: export only eth or token transfers
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: assets
+          description: list all assets (with names) that appear in any transfer
           required: false
           style: form
           in: query
@@ -420,6 +428,14 @@ paths:
             items:
               type: string
               format: topic
+        - name: nfts
+          description: for the --logs option only, filter logs to show only nft transfers
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
         - name: reverted
           description: export only transactions that were reverted
           required: false
@@ -429,7 +445,7 @@ paths:
           schema:
             type: boolean
         - name: asset
-          description: for the accounting options only, export statements only for this asset
+          description: export transfers, balances, or statements only for this asset
           required: false
           style: form
           in: query
@@ -440,7 +456,7 @@ paths:
               type: string
               format: address
         - name: flow
-          description: for the accounting options only, export statements with incoming, outgoing, or zero value
+          description: export transfers, balances, or statements with incoming, outgoing, or zero value
           required: false
           style: form
           in: query
@@ -501,6 +517,14 @@ paths:
           schema:
             type: number
             format: blknum
+        - name: accounting
+          description: deprecated option, you may simply remove it
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
         - name: chain
           description: the chain to use
           required: false
@@ -557,7 +581,7 @@ paths:
               schema:
                 properties:
                   data:
-                    description: Produces <a href="/data-model/accounts/#appearance">Appearance</a>, <a href="/data-model/other/#function">Function</a>, <a href="/data-model/chaindata/#log">Log</a>, <a href="/data-model/other/#message">Message</a>, <a href="/data-model/accounts/#monitor">Monitor</a>, <a href="/data-model/other/#parameter">Parameter</a>, <a href="/data-model/chaindata/#receipt">Receipt</a>, <a href="/data-model/accounts/#statement">Statement</a>, <a href="/data-model/chainstate/#token">Token</a>, <a href="/data-model/chaindata/#trace">Trace</a>, <a href="/data-model/chaindata/#traceaction">TraceAction</a>, <a href="/data-model/chaindata/#traceresult">TraceResult</a>, <a href="/data-model/chaindata/#transaction">Transaction</a> or <a href="/data-model/chaindata/#withdrawal">Withdrawal</a> data. Corresponds to the <a href="/chifra/accounts/#chifra-export">chifra export</a> command line.
+                    description: Produces <a href="/data-model/accounts/#appearance">Appearance</a>, <a href="/data-model/other/#function">Function</a>, <a href="/data-model/chaindata/#log">Log</a>, <a href="/data-model/other/#message">Message</a>, <a href="/data-model/accounts/#monitor">Monitor</a>, <a href="/data-model/other/#parameter">Parameter</a>, <a href="/data-model/chaindata/#receipt">Receipt</a>, <a href="/data-model/accounts/#statement">Statement</a>, <a href="/data-model/chainstate/#token">Token</a>, <a href="/data-model/chaindata/#trace">Trace</a>, <a href="/data-model/chaindata/#traceaction">TraceAction</a>, <a href="/data-model/chaindata/#traceresult">TraceResult</a>, <a href="/data-model/chaindata/#transaction">Transaction</a>, <a href="/data-model/accounts/#transfer">Transfer</a> or <a href="/data-model/chaindata/#withdrawal">Withdrawal</a> data. Corresponds to the <a href="/chifra/accounts/#chifra-export">chifra export</a> command line.
                     type: array
                     items:
                       oneOf:
@@ -574,6 +598,7 @@ paths:
                         - $ref: "#/components/schemas/traceAction"
                         - $ref: "#/components/schemas/traceResult"
                         - $ref: "#/components/schemas/transaction"
+                        - $ref: "#/components/schemas/transfer"
                         - $ref: "#/components/schemas/withdrawal"
                 examples:
                   [
@@ -1016,7 +1041,7 @@ paths:
               type: string
               format: string
         - name: encode
-          description: generate the 32-byte encoding for a given cannonical function or event signature
+          description: generate the 32-byte encoding for a given canonical function or event signature
           required: false
           style: form
           in: query
@@ -3241,11 +3266,11 @@ components:
           type: string
           format: datetime
           description: "the timestamp as a date (calculated)"
-        assetAddr:
+        asset:
           type: string
           format: address
           description: "0xeeee...eeee for ETH reconciliations, the token address otherwise"
-        assetSymbol:
+        symbol:
           type: string
           format: string
           description: "either ETH, WEI, or the symbol of the asset being reconciled as extracted from the chain"
@@ -3276,7 +3301,7 @@ components:
         begBal:
           type: string
           format: int256
-          description: "the beginning balance of the asset prior to the transaction"
+          description: "the on-chain or running beginning balance prior to the transaction (see notes about intra-block reconciliations)"
         amountNet:
           type: string
           format: int256
@@ -3284,11 +3309,7 @@ components:
         endBal:
           type: string
           format: int256
-          description: "the on-chain balance of the asset (see notes about intra-block reconciliations)"
-        reconciliationType:
-          type: string
-          format: string
-          description: "one of `regular`, `prevDiff-same`, `same-nextDiff`, or `same-same`. Appended with `eth` or `token` (calculated)"
+          description: "the on-chain or running balance after the transaction (see notes about intra-block reconciliations)"
         reconciled:
           type: boolean
           format: boolean
@@ -3325,10 +3346,18 @@ components:
           type: string
           format: int256
           description: "the uncle reward if the miner who won the uncle block is the accountedFor address"
-        correctingIn:
+        correctBegBalIn:
           type: string
           format: int256
-          description: "for unreconciled token transfers only, the incoming amount needed to correct the transfer so it balances"
+          description: "for unreconciled transfers, increase in beginning balance need to match previous balance"
+        correctAmountIn:
+          type: string
+          format: int256
+          description: "for unreconciled transfers, increase in the amount of a transfer"
+        correctEndBalIn:
+          type: string
+          format: int256
+          description: "for unreconciled transfers, increase in ending balance need to match running balance or block balance"
         prefundIn:
           type: string
           format: int256
@@ -3345,10 +3374,18 @@ components:
           type: string
           format: int256
           description: "the value of any internal value transfers out of the accountedFor account"
-        correctingOut:
+        correctBegBalOut:
           type: string
           format: int256
-          description: "for unreconciled token transfers only, the outgoing amount needed to correct the transfer so it balances"
+          description: "for unreconciled transfers, decrease in beginning balance need to match previous balance"
+        correctAmountOut:
+          type: string
+          format: int256
+          description: "for unreconciled transfers, decrease in the amount of a transfer"
+        correctEndBalOut:
+          type: string
+          format: int256
+          description: "for unreconciled transfers, decrease in ending balance need to match running balance or block balance"
         selfDestructOut:
           type: string
           format: int256
@@ -3357,10 +3394,6 @@ components:
           type: string
           format: int256
           description: "if the transaction's original sender is the accountedFor address, the amount of gas expended"
-        totalOutLessGas:
-          type: string
-          format: int256
-          description: "totalOut - gasOut (calculated)"
         prevBal:
           type: string
           format: int256
@@ -3377,10 +3410,104 @@ components:
           type: string
           format: int256
           description: "begBal + amountNet (calculated)"
-        correctingReason:
+        correctingReasons:
           type: string
           format: string
-          description: "the reason for the correcting entries, if any"
+          description: "for unreconciled transfers, the reasons for the correcting entries, if any"
+    transfer:
+      description: "a movement of an asset from one address to another (derived from a transaction or a log)"
+      type: object
+      properties:
+        blockNumber:
+          type: number
+          format: blknum
+          description: "the number of the block"
+        transactionIndex:
+          type: number
+          format: txnum
+          description: "the zero-indexed position of the transaction in the block"
+        logIndex:
+          type: number
+          format: lognum
+          description: "the zero-indexed position the log in the block, if applicable"
+        holder:
+          type: string
+          format: address
+          description: "the address of the holder of the asset"
+        asset:
+          type: string
+          format: address
+          description: "0xeeee...eeee for ETH transfers, the token address otherwise"
+        decimals:
+          type: number
+          format: uint64
+          description: "the number of decimal places in the asset units"
+        sender:
+          type: string
+          format: address
+          description: "the initiator of the transfer (the sender)"
+        recipient:
+          type: string
+          format: address
+          description: "the receiver of the transfer (the recipient)"
+        amountIn:
+          type: string
+          format: int256
+          description: "the top-level value of the incoming transfer for the holder address"
+        internalIn:
+          type: string
+          format: int256
+          description: "the internal value of the incoming transfer for the holder address"
+        minerBaseRewardIn:
+          type: string
+          format: int256
+          description: "the base fee reward if the miner is the holder address"
+        minerNephewRewardIn:
+          type: string
+          format: int256
+          description: "the nephew reward if the miner is the holder address"
+        minerTxFeeIn:
+          type: string
+          format: int256
+          description: "the transaction fee reward if the miner is the holder address"
+        minerUncleRewardIn:
+          type: string
+          format: int256
+          description: "the uncle reward if the miner who won the uncle block is the holder address"
+        prefundIn:
+          type: string
+          format: int256
+          description: "at block zero (0) only, the amount of genesis income for the holder address"
+        selfDestructIn:
+          type: string
+          format: int256
+          description: "the incoming value of a self-destruct if recipient is the holder address"
+        amountOut:
+          type: string
+          format: int256
+          description: "the amount (in units of the asset) of regular outflow during this transaction"
+        internalOut:
+          type: string
+          format: int256
+          description: "the value of any internal value transfers out of the holder account"
+        gasOut:
+          type: string
+          format: int256
+          description: "if the transaction's original sender is the holder address, the amount of gas expended"
+        selfDestructOut:
+          type: string
+          format: int256
+          description: "the outgoing value of a self-destruct if sender is the holder address"
+        transaction:
+          type: object
+          items:
+            $ref: "#/components/schemas/transaction"
+          description: "the transaction that triggered the transfer (calculated)"
+        log:
+          type: object
+          items:
+            $ref: "#/components/schemas/log"
+          description: "if a token transfer, the log that triggered the transfer (calculated)"
     appearanceTable:
       description: "an appearance table for an address"
       type: object
@@ -3518,7 +3645,7 @@ components:
           type: array
           items:
             $ref: "#/components/schemas/statement"
-          description: "array of reconciliations (calculated)"
+          description: "array of reconciliation statements (calculated)"
         articulatedTx:
           type: object
           items:
@@ -3600,7 +3727,7 @@ components:
         status:
           type: number
           format: value
-          description: "`1` on transaction suceess, `null` if tx preceeds Byzantium, `0` otherwise"
+          description: "`1` on transaction suceess, `null` if tx precedes Byzantium, `0` otherwise"
         transactionHash:
           type: string
           format: hash
@@ -3661,6 +3788,10 @@ components:
           type: string
           format: string
           description: "a truncated, more readable version of the articulation (calculated)"
+        isNFT:
+          type: boolean
+          format: boolean
+          description: "true if the log is an NFT transfer (calculated)"
     trace:
       description: "trace data as returned from the RPC (with slight enhancements)"
       type: object
@@ -4078,7 +4209,7 @@ components:
           description: "the holder's asset balance at the given block height"
         balanceDec:
           type: number
-          format: float64
+          format: float
           description: "the holder's asset balance (in Ether) at the given block height (calculated)"
         diff:
           type: string

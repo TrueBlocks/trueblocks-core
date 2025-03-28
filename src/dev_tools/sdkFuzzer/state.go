@@ -15,7 +15,6 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	sdk "github.com/TrueBlocks/trueblocks-sdk/v4"
 )
 
@@ -130,7 +129,7 @@ func TestState(which, value, fn string, opts *sdk.StateOptions) {
 		if state, _, err := opts.State(); err != nil {
 			ReportError(fn, opts, err)
 		} else {
-			if err := SaveToFile[types.State](fn, state); err != nil {
+			if err := SaveToFile(fn, state); err != nil {
 				ReportError2(fn, err)
 			} else {
 				ReportOkay(fn)
@@ -140,7 +139,7 @@ func TestState(which, value, fn string, opts *sdk.StateOptions) {
 		if call, _, err := opts.StateCall(); err != nil {
 			ReportError(fn, opts, err)
 		} else {
-			if err := SaveToFile[types.Result](fn, call); err != nil {
+			if err := SaveToFile(fn, call); err != nil {
 				ReportError2(fn, err)
 			} else {
 				ReportOkay(fn)
@@ -150,7 +149,7 @@ func TestState(which, value, fn string, opts *sdk.StateOptions) {
 		if send, _, err := opts.StateSend(); err != nil {
 			ReportError(fn, opts, err)
 		} else {
-			if err := SaveToFile[types.Result](fn, send); err != nil {
+			if err := SaveToFile(fn, send); err != nil {
 				ReportError2(fn, err)
 			} else {
 				ReportOkay(fn)

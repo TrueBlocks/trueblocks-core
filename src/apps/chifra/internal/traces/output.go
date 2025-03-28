@@ -23,6 +23,7 @@ import (
 
 // RunTraces handles the traces command for the command line. Returns error only as per cobra.
 func RunTraces(cmd *cobra.Command, args []string) error {
+	_ = cmd
 	opts := tracesFinishParse(args)
 	rCtx := output.NewRenderContext()
 	// EXISTING_CODE

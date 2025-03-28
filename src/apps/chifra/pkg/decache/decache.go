@@ -36,6 +36,7 @@ func Decache(conn *rpc.Connection, locs []cache.Locator, showProgress bool, cT w
 	}
 
 	skipFunc := func(info *locations.ItemInfo) bool {
+		_ = info
 		itemsSeen++
 		if itemsSeen%1000 == 0 {
 			bar.Tick()

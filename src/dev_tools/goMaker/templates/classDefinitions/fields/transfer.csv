@@ -1,0 +1,23 @@
+name               , type        , strDefault, attributes    , docOrder, description
+blockNumber        , blknum      ,           ,               ,        1, the number of the block
+transactionIndex   , txnum       ,           ,               ,        2, the zero-indexed position of the transaction in the block
+logIndex           , lognum      ,           ,               ,        3, the zero-indexed position the log in the block&#44; if applicable
+holder             , address     ,           ,               ,        4, the address of the holder of the asset
+asset              , address     ,           ,               ,        5, 0xeeee...eeee for ETH transfers&#44; the token address otherwise
+decimals           , uint64      ,           ,               ,        6, the number of decimal places in the asset units
+sender             , address     ,           ,               ,        7, the initiator of the transfer (the sender)
+recipient          , address     ,           ,               ,        8, the receiver of the transfer (the recipient)
+amountIn           , int256      ,           , omitempty     ,        9, the top-level value of the incoming transfer for the holder address
+internalIn         , int256      ,           , omitempty     ,       10, the internal value of the incoming transfer for the holder address
+minerBaseRewardIn  , int256      ,           , omitempty     ,       11, the base fee reward if the miner is the holder address
+minerNephewRewardIn, int256      ,           , omitempty     ,       12, the nephew reward if the miner is the holder address
+minerTxFeeIn       , int256      ,           , omitempty     ,       13, the transaction fee reward if the miner is the holder address
+minerUncleRewardIn , int256      ,           , omitempty     ,       14, the uncle reward if the miner who won the uncle block is the holder address
+prefundIn          , int256      ,           , omitempty     ,       15, at block zero (0) only&#44; the amount of genesis income for the holder address
+selfDestructIn     , int256      ,           , omitempty     ,       16, the incoming value of a self-destruct if recipient is the holder address
+amountOut          , int256      ,           , omitempty     ,       17, the amount (in units of the asset) of regular outflow during this transaction
+internalOut        , int256      ,           , omitempty     ,       18, the value of any internal value transfers out of the holder account
+gasOut             , int256      ,           , omitempty     ,       19, if the transaction's original sender is the holder address&#44; the amount of gas expended
+selfDestructOut    , int256      ,           , omitempty     ,       20, the outgoing value of a self-destruct if sender is the holder address
+transaction        , *Transaction,           , omitempty|calc,       21, the transaction that triggered the transfer
+log                , *Log        ,           , omitempty|calc,       22, if a token transfer&#44; the log that triggered the transfer

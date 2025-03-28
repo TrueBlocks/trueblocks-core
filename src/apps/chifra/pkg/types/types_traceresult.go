@@ -14,7 +14,6 @@ import (
 	"io"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/ethereum/go-ethereum/common/hexutil"
 )
@@ -36,6 +35,10 @@ func (s TraceResult) String() string {
 }
 
 func (s *TraceResult) Model(chain, format string, verbose bool, extraOpts map[string]any) Model {
+	_ = chain
+	_ = format
+	_ = verbose
+	_ = extraOpts
 	var model = map[string]any{}
 	var order = []string{}
 
@@ -95,60 +98,61 @@ func (s *TraceResult) Model(chain, format string, verbose bool, extraOpts map[st
 
 func (s *TraceResult) MarshalCache(writer io.Writer) (err error) {
 	// Address
-	if err = cache.WriteValue(writer, s.Address); err != nil {
+	if err = base.WriteValue(writer, s.Address); err != nil {
 		return err
 	}
 
 	// Code
-	if err = cache.WriteValue(writer, s.Code); err != nil {
+	if err = base.WriteValue(writer, s.Code); err != nil {
 		return err
 	}
 
 	// GasUsed
-	if err = cache.WriteValue(writer, s.GasUsed); err != nil {
+	if err = base.WriteValue(writer, s.GasUsed); err != nil {
 		return err
 	}
 
 	// Output
-	if err = cache.WriteValue(writer, s.Output); err != nil {
+	if err = base.WriteValue(writer, s.Output); err != nil {
 		return err
 	}
 
 	return nil
 }
 
-func (s *TraceResult) UnmarshalCache(vers uint64, reader io.Reader) (err error) {
+func (s *TraceResult) UnmarshalCache(fileVersion uint64, reader io.Reader) (err error) {
 	// Check for compatibility and return cache.ErrIncompatibleVersion to invalidate this item (see #3638)
 	// EXISTING_CODE
 	// EXISTING_CODE
 
 	// Address
-	if err = cache.ReadValue(reader, &s.Address, vers); err != nil {
+	if err = base.ReadValue(reader, &s.Address, fileVersion); err != nil {
 		return err
 	}
 
 	// Code
-	if err = cache.ReadValue(reader, &s.Code, vers); err != nil {
+	if err = base.ReadValue(reader, &s.Code, fileVersion); err != nil {
 		return err
 	}
 
 	// GasUsed
-	if err = cache.ReadValue(reader, &s.GasUsed, vers); err != nil {
+	if err = base.ReadValue(reader, &s.GasUsed, fileVersion); err != nil {
 		return err
 	}
 
 	// Output
-	if err = cache.ReadValue(reader, &s.Output, vers); err != nil {
+	if err = base.ReadValue(reader, &s.Output, fileVersion); err != nil {
 		return err
 	}
 
-	s.FinishUnmarshal()
+	s.FinishUnmarshal(fileVersion)
 
 	return nil
 }
 
 // FinishUnmarshal is used by the cache. It may be unused depending on auto-code-gen
-func (s *TraceResult) FinishUnmarshal() {
+func (s *TraceResult) FinishUnmarshal(fileVersion uint64) {
+	_ = fileVersion
 	// EXISTING_CODE
 	// EXISTING_CODE
 }

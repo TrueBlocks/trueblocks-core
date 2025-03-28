@@ -44,6 +44,7 @@ func (opts *NamesOptions) HandleCrud(rCtx *output.RenderCtx) (err error) {
 	}
 
 	fetchData := func(modelChan chan types.Modeler, errorChan chan error) {
+		_ = errorChan
 		modelChan <- name
 	}
 

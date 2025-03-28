@@ -3,7 +3,7 @@
     contained_by = "monitor"
     doc_group = "01-Accounts"
     doc_descr = "an appearance table for an address"
-    doc_route = "121-appearanceTable"
+    doc_route = "124-appearanceTable"
     attributes = ""
     produced_by = "chunks"
     contains = "addrrecord, apprecord"

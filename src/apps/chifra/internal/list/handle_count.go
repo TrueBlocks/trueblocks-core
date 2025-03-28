@@ -7,11 +7,10 @@ package listPkg
 import (
 	"fmt"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/filter"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/monitor"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/ranges"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
@@ -24,12 +23,12 @@ func (opts *ListOptions) HandleCount(rCtx *output.RenderCtx, monitorArray []moni
 	}
 
 	testMode := opts.Globals.TestMode
-	filter := filter.NewFilter(
+	filter := types.NewFilter(
 		opts.Reversed,
 		false,
 		[]string{},
-		base.BlockRange{First: opts.FirstBlock, Last: opts.LastBlock},
-		base.RecordRange{First: opts.FirstRecord, Last: opts.GetMax()},
+		ranges.BlockRange{First: opts.FirstBlock, Last: opts.LastBlock},
+		ranges.RecordRange{First: opts.FirstRecord, Last: opts.GetMax()},
 	)
 
 	fetchData := func(modelChan chan types.Modeler, errorChan chan error) {

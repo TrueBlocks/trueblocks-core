@@ -14,7 +14,7 @@ import (
 	"fmt"
 	"io"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 )
 
 // EXISTING_CODE
@@ -37,6 +37,10 @@ func (s Parameter) String() string {
 }
 
 func (s *Parameter) Model(chain, format string, verbose bool, extraOpts map[string]any) Model {
+	_ = chain
+	_ = format
+	_ = verbose
+	_ = extraOpts
 	var model = map[string]any{}
 	var order = []string{}
 
@@ -75,36 +79,36 @@ func (s *Parameter) Model(chain, format string, verbose bool, extraOpts map[stri
 
 func (s *Parameter) MarshalCache(writer io.Writer) (err error) {
 	// Components
-	components := make([]cache.Marshaler, 0, len(s.Components))
+	components := make([]base.Marshaler, 0, len(s.Components))
 	for _, component := range s.Components {
 		components = append(components, &component)
 	}
-	if err = cache.WriteValue(writer, components); err != nil {
+	if err = base.WriteValue(writer, components); err != nil {
 		return err
 	}
 
 	// Indexed
-	if err = cache.WriteValue(writer, s.Indexed); err != nil {
+	if err = base.WriteValue(writer, s.Indexed); err != nil {
 		return err
 	}
 
 	// InternalType
-	if err = cache.WriteValue(writer, s.InternalType); err != nil {
+	if err = base.WriteValue(writer, s.InternalType); err != nil {
 		return err
 	}
 
 	// Name
-	if err = cache.WriteValue(writer, s.Name); err != nil {
+	if err = base.WriteValue(writer, s.Name); err != nil {
 		return err
 	}
 
 	// StrDefault
-	if err = cache.WriteValue(writer, s.StrDefault); err != nil {
+	if err = base.WriteValue(writer, s.StrDefault); err != nil {
 		return err
 	}
 
 	// ParameterType
-	if err = cache.WriteValue(writer, s.ParameterType); err != nil {
+	if err = base.WriteValue(writer, s.ParameterType); err != nil {
 		return err
 	}
 
@@ -113,65 +117,66 @@ func (s *Parameter) MarshalCache(writer io.Writer) (err error) {
 	if err != nil {
 		return fmt.Errorf("cannot marshal Value: %w", err)
 	}
-	if err = cache.WriteValue(writer, value); err != nil {
+	if err = base.WriteValue(writer, value); err != nil {
 		return err
 	}
 
 	return nil
 }
 
-func (s *Parameter) UnmarshalCache(vers uint64, reader io.Reader) (err error) {
+func (s *Parameter) UnmarshalCache(fileVersion uint64, reader io.Reader) (err error) {
 	// Check for compatibility and return cache.ErrIncompatibleVersion to invalidate this item (see #3638)
 	// EXISTING_CODE
 	// EXISTING_CODE
 
 	// Components
 	s.Components = make([]Parameter, 0)
-	if err = cache.ReadValue(reader, &s.Components, vers); err != nil {
+	if err = base.ReadValue(reader, &s.Components, fileVersion); err != nil {
 		return err
 	}
 
 	// Indexed
-	if err = cache.ReadValue(reader, &s.Indexed, vers); err != nil {
+	if err = base.ReadValue(reader, &s.Indexed, fileVersion); err != nil {
 		return err
 	}
 
 	// InternalType
-	if err = cache.ReadValue(reader, &s.InternalType, vers); err != nil {
+	if err = base.ReadValue(reader, &s.InternalType, fileVersion); err != nil {
 		return err
 	}
 
 	// Name
-	if err = cache.ReadValue(reader, &s.Name, vers); err != nil {
+	if err = base.ReadValue(reader, &s.Name, fileVersion); err != nil {
 		return err
 	}
 
 	// StrDefault
-	if err = cache.ReadValue(reader, &s.StrDefault, vers); err != nil {
+	if err = base.ReadValue(reader, &s.StrDefault, fileVersion); err != nil {
 		return err
 	}
 
 	// ParameterType
-	if err = cache.ReadValue(reader, &s.ParameterType, vers); err != nil {
+	if err = base.ReadValue(reader, &s.ParameterType, fileVersion); err != nil {
 		return err
 	}
 
 	// Value
 	var value string
-	if err = cache.ReadValue(reader, &value, vers); err != nil {
+	if err = base.ReadValue(reader, &value, fileVersion); err != nil {
 		return err
 	}
 	if err = json.Unmarshal([]byte(value), &s.Value); err != nil {
 		return fmt.Errorf("cannot unmarshal Value: %w", err)
 	}
 
-	s.FinishUnmarshal()
+	s.FinishUnmarshal(fileVersion)
 
 	return nil
 }
 
 // FinishUnmarshal is used by the cache. It may be unused depending on auto-code-gen
-func (s *Parameter) FinishUnmarshal() {
+func (s *Parameter) FinishUnmarshal(fileVersion uint64) {
+	_ = fileVersion
 	// EXISTING_CODE
 	// EXISTING_CODE
 }

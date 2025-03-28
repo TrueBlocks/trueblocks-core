@@ -27,7 +27,7 @@ func main() {
 	screen += legendRow()
 
 	outputFile := "disc_usage.html"
-	file.StringToAsciiFile(outputFile, screen)
+	_ = file.StringToAsciiFile(outputFile, screen)
 
 	now := time.Now()
 	ts := now.Format("2006-01-02 15:04:05")

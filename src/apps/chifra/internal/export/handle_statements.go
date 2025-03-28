@@ -10,41 +10,52 @@ import (
 	"sort"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/filter"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/ledger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/monitor"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/ranges"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
 func (opts *ExportOptions) HandleStatements(rCtx *output.RenderCtx, monitorArray []monitor.Monitor) error {
-	chain := opts.Globals.Chain
-	testMode := opts.Globals.TestMode
-	filter := filter.NewFilter(
+	filter := types.NewFilter(
 		opts.Reversed,
 		opts.Reverted,
 		opts.Fourbytes,
-		base.BlockRange{First: opts.FirstBlock, Last: opts.LastBlock},
-		base.RecordRange{First: opts.FirstRecord, Last: opts.GetMax()},
+		ranges.BlockRange{First: opts.FirstBlock, Last: opts.LastBlock},
+		ranges.RecordRange{First: opts.FirstRecord, Last: opts.GetMax()},
 	)
+	assetFilters := make([]base.Address, 0, len(opts.Asset))
+	for _, asset := range opts.Asset {
+		assetFilters = append(assetFilters, base.HexToAddress(asset))
+	}
 
 	fetchData := func(modelChan chan types.Modeler, errorChan chan error) {
 		for _, mon := range monitorArray {
-			if apps, cnt, err := mon.ReadAndFilterAppearances(filter, false /* withCount */); err != nil {
+			ledgerOpts := &ledger.ReconcilerOptions{
+				AccountFor:   mon.Address,
+				FirstBlock:   opts.FirstBlock,
+				LastBlock:    opts.LastBlock,
+				AsEther:      opts.Globals.Ether,
+				UseTraces:    opts.Traces,
+				Reversed:     opts.Reversed,
+				AssetFilters: assetFilters,
+				AppFilters:   filter,
+			}
+			recon := ledger.NewReconciler(opts.Conn, ledgerOpts)
+
+			if apps, cnt, err := mon.ReadAndFilterAppearances(filter, false); err != nil {
 				errorChan <- err
 				rCtx.Cancel()
-
 			} else if cnt == 0 {
 				errorChan <- fmt.Errorf("no blocks found for the query")
 				continue
-
 			} else {
 				if sliceOfMaps, _, err := types.AsSliceOfMaps[types.Transaction](apps, filter.Reversed); err != nil {
 					errorChan <- err
 					rCtx.Cancel()
-
 				} else {
 					showProgress := opts.Globals.ShowProgress()
 					bar := logger.NewBar(logger.BarOptions{
@@ -53,7 +64,6 @@ func (opts *ExportOptions) HandleStatements(rCtx *output.RenderCtx, monitorArray
 						Total:   int64(cnt),
 					})
 
-					// TODO: BOGUS - THIS IS NOT CONCURRENCY SAFE
 					finished := false
 					for _, thisMap := range sliceOfMaps {
 						if rCtx.WasCanceled() {
@@ -83,7 +93,6 @@ func (opts *ExportOptions) HandleStatements(rCtx *output.RenderCtx, monitorArray
 							}
 						}
 
-						// Set up and interate over the map calling iterFunc for each appearance
 						iterCtx, iterCancel := context.WithCancel(context.Background())
 						defer iterCancel()
 						errChan := make(chan error)
@@ -107,29 +116,23 @@ func (opts *ExportOptions) HandleStatements(rCtx *output.RenderCtx, monitorArray
 
 						apps := make([]types.Appearance, 0, len(thisMap))
 						for _, tx := range txArray {
-							apps = append(apps, types.Appearance{
+							app := types.Appearance{
 								BlockNumber:      uint32(tx.BlockNumber),
 								TransactionIndex: uint32(tx.TransactionIndex),
-							})
+							}
+							logger.TestLog(true, fmt.Sprintf("%d:", len(apps)), app.BlockNumber, app.TransactionIndex)
+							apps = append(apps, app)
 						}
 
-						ledgers := ledger.NewLedger(
-							opts.Conn,
-							mon.Address,
-							opts.FirstBlock,
-							opts.LastBlock,
-							opts.Globals.Ether,
-							testMode,
-							opts.NoZero,
-							opts.Traces,
-							opts.Reversed,
-							&opts.Asset,
-						)
-						_ = ledgers.SetContexts(chain, apps)
-
 						items := make([]types.Statement, 0, len(thisMap))
-						for _, tx := range txArray {
-							if statements, err := ledgers.GetStatements(opts.Conn, filter, tx); err != nil {
+						list, err := types.NewAppListFromApps(apps, txArray)
+						if err != nil {
+							errorChan <- err
+						}
+						i := -1
+						for node := list.Head; node != nil; node = node.Next() {
+							i++
+							if statements, err := recon.GetStatements(node); err != nil {
 								errorChan <- err
 
 							} else if len(statements) > 0 {
@@ -154,6 +157,9 @@ func (opts *ExportOptions) HandleStatements(rCtx *output.RenderCtx, monitorArray
 							var passes bool
 							passes, finished = filter.ApplyCountFilter()
 							if passes {
+								if opts.Globals.Ether {
+									item.Symbol = "ETH"
+								}
 								modelChan <- &item
 							}
 							if finished {
@@ -170,6 +176,7 @@ func (opts *ExportOptions) HandleStatements(rCtx *output.RenderCtx, monitorArray
 	extraOpts := map[string]any{
 		"articulate": opts.Articulate,
 		"export":     true,
+		"loadNames":  true,
 	}
 
 	return output.StreamMany(rCtx, fetchData, opts.Globals.OutputOptsWithExtra(extraOpts))

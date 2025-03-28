@@ -1,6 +1,11 @@
 package cache
 
-import "io"
+import (
+	"encoding/binary"
+	"io"
+
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
+)
 
 // Optional is used to read/write values that can be missing. Most of the case, it will be pointers
 // to articulated objects. Optional.MarshalCache first write a boolean indicating if the value
@@ -16,19 +21,19 @@ type Optional[T any] struct {
 
 func (o *Optional[T]) MarshalCache(writer io.Writer) (err error) {
 	present := o.Value != nil
-	if err = write(writer, present); err != nil {
+	if err = binary.Write(writer, binary.LittleEndian, present); err != nil {
 		return
 	}
 	if !present {
 		return nil
 	}
 
-	return WriteValue(writer, o.Value)
+	return base.WriteValue(writer, o.Value)
 }
 
-func (o *Optional[T]) UnmarshalCache(version uint64, reader io.Reader) (err error) {
+func (o *Optional[T]) UnmarshalCache(fileVersion uint64, reader io.Reader) (err error) {
 	var present bool
-	if err = read(reader, &present); err != nil {
+	if err = binary.Read(reader, binary.LittleEndian, &present); err != nil {
 		return
 	}
 	if !present {
@@ -36,7 +41,7 @@ func (o *Optional[T]) UnmarshalCache(version uint64, reader io.Reader) (err erro
 	}
 
 	var value T
-	if err = ReadValue(reader, &value, version); err != nil {
+	if err = base.ReadValue(reader, &value, fileVersion); err != nil {
 		return err
 	}
 	o.ptr = &value

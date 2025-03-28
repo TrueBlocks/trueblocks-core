@@ -15,6 +15,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/manifest"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/monitor"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/ranges"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/usage"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/walk"
@@ -52,6 +53,8 @@ func (opts *ChunksOptions) HandleTruncate(rCtx *output.RenderCtx, blockNums []ba
 		latestChunk := base.Blknum(0)
 		nChunksRemoved := 0
 		truncateIndex := func(walker *walk.CacheWalker, path string, first bool) (bool, error) {
+			_ = walker
+			_ = first
 			if path != index.ToBloomPath(path) {
 				logger.Fatal("should not happen ==> we're spinning through the bloom filters")
 			}
@@ -61,12 +64,12 @@ func (opts *ChunksOptions) HandleTruncate(rCtx *output.RenderCtx, blockNums []ba
 				return true, nil
 			}
 
-			rng, err := base.RangeFromFilenameE(path)
+			rng, err := ranges.RangeFromFilenameE(path)
 			if err != nil {
 				return false, err
 			}
 
-			testRange := base.FileRange{First: opts.Truncate, Last: base.NOPOSN}
+			testRange := ranges.FileRange{First: opts.Truncate, Last: base.NOPOSN}
 			if rng.Intersects(testRange) {
 				if err = manifest.RemoveChunk(chain, opts.PublisherAddr, index.ToBloomPath(path), index.ToIndexPath(path)); err != nil {
 					return false, err
@@ -110,15 +113,12 @@ func (opts *ChunksOptions) HandleTruncate(rCtx *output.RenderCtx, blockNums []ba
 					return err
 				}
 				if !info.IsDir() && strings.HasSuffix(path, ".mon.bin") {
-					addr, _ := base.AddressFromPath(path, ".mon.bin")
-					bar.Prefix = fmt.Sprintf("Truncating monitor for %s", addr.Hex())
-					if !addr.IsZero() {
+					if addr, err := base.AddressFromPath(path, ".mon.bin"); err == nil && !addr.IsZero() {
+						bar.Prefix = fmt.Sprintf("Truncating monitor for %s", addr.Hex())
 						mon, _ := monitor.NewMonitor(chain, addr, false /* create */)
-						var removed bool
-						if removed, err = mon.TruncateTo(chain, uint32(latestChunk)); err != nil {
+						if removed, err := mon.TruncateTo(chain, uint32(latestChunk)); err != nil {
 							return err
-						}
-						if removed {
+						} else if removed {
 							nMonitorsTruncated++
 						}
 					}

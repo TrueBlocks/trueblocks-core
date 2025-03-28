@@ -8,6 +8,7 @@ import (
 )
 
 func UpdateName(dbType DatabaseType, chain string, name *types.Name) (err error) {
+	_ = chain
 	switch dbType {
 	case DatabaseCustom:
 		return updateCustomName(name)

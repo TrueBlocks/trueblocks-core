@@ -18,6 +18,7 @@ func (opts *NamesOptions) HandleShow(rCtx *output.RenderCtx) error {
 	}
 
 	fetchData := func(modelChan chan types.Modeler, errorChan chan error) {
+		_ = errorChan
 		if len(namesArray) == 0 {
 			hasAddr := strings.Contains(strings.Join(opts.Terms, " "), "0x")
 			hadEths := strings.Contains(strings.Join(opts.OrigTerms, " "), ".eth")

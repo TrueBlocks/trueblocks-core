@@ -48,7 +48,7 @@ func TestTransactionCache(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	if err := store.Write(expected, nil); err != nil {
+	if err := store.Write(expected); err != nil {
 		t.Fatal(err)
 	}
 
@@ -57,7 +57,7 @@ func TestTransactionCache(t *testing.T) {
 		BlockNumber:      expected.BlockNumber,
 		TransactionIndex: 10,
 	}
-	if err := store.Read(readBack, nil); err != nil {
+	if err := store.ReadFromStore(readBack); err != nil {
 		t.Fatal(err)
 	}
 
@@ -118,7 +118,7 @@ func TestTransactionCacheArticulated(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	if err := store.Write(expected, nil); err != nil {
+	if err := store.Write(expected); err != nil {
 		t.Fatal(err)
 	}
 
@@ -127,7 +127,7 @@ func TestTransactionCacheArticulated(t *testing.T) {
 		BlockNumber:      expected.BlockNumber,
 		TransactionIndex: 44,
 	}
-	if err := store.Read(readBack, nil); err != nil {
+	if err := store.ReadFromStore(readBack); err != nil {
 		t.Fatal(err)
 	}
 

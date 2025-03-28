@@ -64,7 +64,7 @@ func unmarshallCustomNames(source io.Reader, terms []string, parts types.Parts, 
 	var reader NameReader
 	reader, err = NewNameReader(source)
 	if err != nil {
-		// Supress EOF, the file can be empty
+		// Suppress EOF, the file can be empty
 		if errors.Is(err, io.EOF) {
 			err = nil
 		}
@@ -75,7 +75,7 @@ func unmarshallCustomNames(source io.Reader, terms []string, parts types.Parts, 
 		var name types.Name
 		name, err = reader.Read()
 		if err == io.EOF {
-			// Supress EOF, the file can be empty
+			// Suppress EOF, the file can be empty
 			err = nil
 			break
 		}

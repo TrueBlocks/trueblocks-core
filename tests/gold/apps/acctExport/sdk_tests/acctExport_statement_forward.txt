@@ -1,24 +1,486 @@
-export?addrs=0x868b8fd259abfcfdf9634c343593b34ef359641d&lastBlock=8769141&accounting&statements&ether&fmt=json
+export?addrs=0x868b8fd259abfcfdf9634c343593b34ef359641d&accounting&statements&lastBlock=8769141&traces
+Args: [addrs=0x868b8fd259abfcfdf9634c343593b34ef359641d accounting statements lastBlock=8769141 traces]
+Opts: {"addrs":["0x868b8fd259abfcfdf9634c343593b34ef359641d"],"traces":true,"statements":true,"lastBlock":8769141,"accounting":true}
+Addrs:  [0x868b8fd259abfcfdf9634c343593b34ef359641d]
+Traces:  true
+Statements:  true
+LastBlock:  8769141
+Accounting:  true
+Caps:  cache,decache,ether
+Format:  json
+0: 8769019 124
+1: 8769029 80
+2: 8769052 73
+3: 8769052 74
+4: 8769064 130
+5: 8769064 131
+6: 8769130 51
+7: 8769141 27
+
+------------------------------------
+~~~ Entering: 8769019.124 ~~~
+First pass: Fetching unreconciled transfers
+Fetched 1 unreconciled transfers
+Second pass: Reconciling transfers
+Processing ETH transfer
+Converted ETH transfer to statement
+Using trace-based ETH transfer
+XXX =============[ traces ]======================
+XXX Case 1: Only statement in block
+XXX Block: 8769019 Tx: 124 Asset: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+XXX FirstInBlock: true, LastInBlock: true
+XXX ================================================
+Block 8769019 is prior to deployment (10000835) of Uniswap V2. Falling back to Maker (0x729d19f657bd0614b4985cf1d82531c67569197b)
+=========================================================
+===> PRICING FOR 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) using Maker
+=========================================================
+blockNumber:         8769019
+source1 (uni/mkr):   0x729d19f657bd0614b4985cf1d82531c67569197b
+str0 (call):         peek()
+str1 (call/data):    0x0000000000000000000000000000000000000000000000096b794ada83c08000
+int0:                17376500000000000000000000
+int1:                17376500
+bigPrice:            173.765
+price:               173.765
+source:              maker
+===================================================
+Previous:               8769018 0 ( true )
+Current:                8769019 124 ( true )
+Next:                   8769029 80 ( true )
+accountedFor:           0x868b8fd259abfcfdf9634c343593b34ef359641d
+sender:                 0x103348c47ffc3254aff761894e7c13ca0c680465  ==>  0x868b8fd259abfcfdf9634c343593b34ef359641d
+asset:                  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
+hash:                   0xf6bce3d9edd00f2e8a996505fded2e7e28a1b6af193d94e9524b9ac7fbf3e8b3
+timestamp:              1571457514
+blockNumber:            8769019.124.0
+priceSource:            173.765 (maker)
+--------------------------------------------------- 
+Trial balance:
+   prevBal:             0
+   begBal:              0 (0)
+   totalIn:             0.025
+   totalOut:            0
+   amountNet:           0.025
+                       ======================= 
+   endBal:              0.025 (0)
+   endBalCalc:          0.025
+--------------------------------------------------- 
+   amountIn:            0.025
+   material:            true
+   reconciled:          true
+---------------------------------------------------
+Trace-based statement is material - appending. reconciled: true
+No log transfers to process
+~~~ Leaving: 8769019.124 ~~~
+------------------------------------ 1 statements generated.
+
+
+------------------------------------
+~~~ Entering: 8769029.80 ~~~
+First pass: Fetching unreconciled transfers
+Fetched 1 unreconciled transfers
+Second pass: Reconciling transfers
+Processing 1 log transfers
+Set BegSentinel for first log transfer
+Set EndSentinel for last log transfer
+Converted log transfer to statement for asset: 0x0ba45a8b5d5575935b8158a88c631e9f9c95a2e5
+XXX =============[ token ]======================
+XXX Case 1: Only statement in block
+XXX Block: 8769029 Tx: 80 Asset: 0x0ba45a8b5d5575935b8158a88c631e9f9c95a2e5
+XXX FirstInBlock: true, LastInBlock: true
+XXX ================================================
+Block 8769029 is prior to deployment (10000835) of Uniswap V2. No other source for tokens prior to UniSwap
+===================================================
+Previous:               8769019 124 ( true )
+Current:                8769029 80 ( true )
+Next:                   8769052 73 ( true )
+accountedFor:           0x868b8fd259abfcfdf9634c343593b34ef359641d
+sender:                 0x103348c47ffc3254aff761894e7c13ca0c680465  ==>  0x868b8fd259abfcfdf9634c343593b34ef359641d
+asset:                  0x0ba45a8b5d5575935b8158a88c631e9f9c95a2e5 (TRB) decimals: 18
+hash:                   0x22f3135a1c2b201456a4770ef9c1ac65a759db3aebe5cb8ad36ad7373f48532f
+timestamp:              1571457649
+blockNumber:            8769029.80.61
+priceSource:            0 (token-not-priced-pre-uni)
+--------------------------------------------------- 
+Trial balance:
+   prevBal:             0
+   begBal:              0 (0)
+   totalIn:             85
+   totalOut:            0
+   amountNet:           85
+                       ======================= 
+   endBal:              85 (0)
+   endBalCalc:          85
+--------------------------------------------------- 
+   amountIn:            85
+   material:            true
+   reconciled:          true
+---------------------------------------------------
+Log statement is material - appending. reconciled: true
+~~~ Leaving: 8769029.80 ~~~
+------------------------------------ 1 statements generated.
+
+
+------------------------------------
+~~~ Entering: 8769052.73 ~~~
+First pass: Fetching unreconciled transfers
+Fetched 1 unreconciled transfers
+Second pass: Reconciling transfers
+Processing ETH transfer
+Converted ETH transfer to statement
+Using trace-based ETH transfer
+XXX =============[ traces ]======================
+XXX Case 3: First statement in block with more
+XXX Block: 8769052 Tx: 73 Asset: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+XXX FirstInBlock: true, LastInBlock: false
+XXX ================================================
+Block 8769052 is prior to deployment (10000835) of Uniswap V2. Falling back to Maker (0x729d19f657bd0614b4985cf1d82531c67569197b)
+=========================================================
+===> PRICING FOR 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) using Maker
+=========================================================
+blockNumber:         8769052
+source1 (uni/mkr):   0x729d19f657bd0614b4985cf1d82531c67569197b
+str0 (call):         peek()
+str1 (call/data):    0x0000000000000000000000000000000000000000000000096b794ada83c08000
+int0:                17376500000000000000000000
+int1:                17376500
+bigPrice:            173.765
+price:               173.765
+source:              maker
+===================================================
+Previous:               8769029 80 ( true )
+Current:                8769052 73 ( true )
+Next:                   8769052 74 ( false )
+accountedFor:           0x868b8fd259abfcfdf9634c343593b34ef359641d
+sender:                 0x868b8fd259abfcfdf9634c343593b34ef359641d  ==>  0x0ba45a8b5d5575935b8158a88c631e9f9c95a2e5
+asset:                  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
+hash:                   0x66cdceb982decd5c899ee7a608468eed3b0032b7f146bdef7a96ec0dfecfcc1d
+timestamp:              1571458005
+blockNumber:            8769052.73.0
+priceSource:            173.765 (maker)
+--------------------------------------------------- 
+Trial balance:
+   prevBal:             0.025
+   begBal:              0.025 (0)
+   totalIn:             0
+   totalOut:            0.00024718
+   amountNet:           -0.00024718
+                       ======================= 
+   endBal:              0.02475282 (0)
+   endBalCalc:          0.02475282
+--------------------------------------------------- 
+   gasOut:              0.00024718
+   material:            true
+   reconciled:          true
+---------------------------------------------------
+Trace-based statement is material - appending. reconciled: true
+No log transfers to process
+~~~ Leaving: 8769052.73 ~~~
+------------------------------------ 1 statements generated.
+
+
+------------------------------------
+~~~ Entering: 8769052.74 ~~~
+First pass: Fetching unreconciled transfers
+Fetched 2 unreconciled transfers
+Second pass: Reconciling transfers
+Processing ETH transfer
+Converted ETH transfer to statement
+Using trace-based ETH transfer
+XXX =============[ traces ]======================
+XXX Case 4: Last statement in block with prior
+XXX Block: 8769052 Tx: 74 Asset: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+XXX FirstInBlock: false, LastInBlock: true
+XXX ================================================
+Block 8769052 is prior to deployment (10000835) of Uniswap V2. Falling back to Maker (0x729d19f657bd0614b4985cf1d82531c67569197b)
+=========================================================
+===> PRICING FOR 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) using Maker
+=========================================================
+blockNumber:         8769052
+source1 (uni/mkr):   0x729d19f657bd0614b4985cf1d82531c67569197b
+str0 (call):         peek()
+str1 (call/data):    0x0000000000000000000000000000000000000000000000096b794ada83c08000
+int0:                17376500000000000000000000
+int1:                17376500
+bigPrice:            173.765
+price:               173.765
+source:              maker
+===================================================
+Previous:               8769052 73 ( false )
+Current:                8769052 74 ( true )
+Next:                   8769064 130 ( true )
+accountedFor:           0x868b8fd259abfcfdf9634c343593b34ef359641d
+sender:                 0x868b8fd259abfcfdf9634c343593b34ef359641d  ==>  0x2a0c0dbecc7e4d658f48e01e3fa353f44050c208
+asset:                  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
+hash:                   0x90feb158340931c051ccb4def6112b6d46794f739499d7255b5109481b991265
+timestamp:              1571458005
+blockNumber:            8769052.74.0
+priceSource:            173.765 (maker)
+--------------------------------------------------- 
+Trial balance:
+   prevBal:             0.02475282
+   begBal:              0.02475282 (0)
+   totalIn:             0
+   totalOut:            0.00070223
+   amountNet:           -0.00070223
+                       ======================= 
+   endBal:              0.02405059 (0)
+   endBalCalc:          0.02405059
+--------------------------------------------------- 
+   gasOut:              0.00070223
+   material:            true
+   reconciled:          true
+---------------------------------------------------
+Trace-based statement is material - appending. reconciled: true
+Processing 1 log transfers
+Set BegSentinel for first log transfer
+Set EndSentinel for last log transfer
+Converted log transfer to statement for asset: 0x0ba45a8b5d5575935b8158a88c631e9f9c95a2e5
+XXX =============[ token ]======================
+XXX Case 1: Only statement in block
+XXX Block: 8769052 Tx: 74 Asset: 0x0ba45a8b5d5575935b8158a88c631e9f9c95a2e5
+XXX FirstInBlock: true, LastInBlock: true
+XXX ================================================
+Block 8769052 is prior to deployment (10000835) of Uniswap V2. No other source for tokens prior to UniSwap
+===================================================
+Previous:               8769052 73 ( false )
+Current:                8769052 74 ( true )
+Next:                   8769064 130 ( true )
+accountedFor:           0x868b8fd259abfcfdf9634c343593b34ef359641d
+sender:                 0x868b8fd259abfcfdf9634c343593b34ef359641d  ==>  0x2a0c0dbecc7e4d658f48e01e3fa353f44050c208
+asset:                  0x0ba45a8b5d5575935b8158a88c631e9f9c95a2e5 (TRB) decimals: 18
+hash:                   0x90feb158340931c051ccb4def6112b6d46794f739499d7255b5109481b991265
+timestamp:              1571458005
+blockNumber:            8769052.74.73
+priceSource:            0 (token-not-priced-pre-uni)
+--------------------------------------------------- 
+Trial balance:
+   prevBal:             85
+   begBal:              85 (0)
+   totalIn:             0
+   totalOut:            85
+   amountNet:           -85
+                       ======================= 
+   endBal:              0 (0)
+   endBalCalc:          0
+--------------------------------------------------- 
+   amountOut:           85
+   material:            true
+   reconciled:          true
+---------------------------------------------------
+Log statement is material - appending. reconciled: true
+~~~ Leaving: 8769052.74 ~~~
+------------------------------------ 2 statements generated.
+
+
+------------------------------------
+~~~ Entering: 8769064.130 ~~~
+First pass: Fetching unreconciled transfers
+Fetched 0 unreconciled transfers
+Second pass: Reconciling transfers
+No log transfers to process
+~~~ Leaving: 8769064.130 ~~~
+------------------------------------ 0 statements generated.
+
+
+------------------------------------
+~~~ Entering: 8769064.131 ~~~
+First pass: Fetching unreconciled transfers
+Fetched 1 unreconciled transfers
+Second pass: Reconciling transfers
+Processing ETH transfer
+Converted ETH transfer to statement
+Using trace-based ETH transfer
+XXX =============[ traces ]======================
+XXX Case 1: Only statement in block
+XXX Block: 8769064 Tx: 131 Asset: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+XXX FirstInBlock: true, LastInBlock: true
+XXX ================================================
+Block 8769064 is prior to deployment (10000835) of Uniswap V2. Falling back to Maker (0x729d19f657bd0614b4985cf1d82531c67569197b)
+=========================================================
+===> PRICING FOR 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) using Maker
+=========================================================
+blockNumber:         8769064
+source1 (uni/mkr):   0x729d19f657bd0614b4985cf1d82531c67569197b
+str0 (call):         peek()
+str1 (call/data):    0x0000000000000000000000000000000000000000000000096bae95462b620000
+int0:                17378000000000000000000000
+int1:                17378000
+bigPrice:            173.78
+price:               173.78
+source:              maker
+===================================================
+Previous:               8769064 130 ( false )
+Current:                8769064 131 ( true )
+Next:                   8769130 51 ( true )
+accountedFor:           0x868b8fd259abfcfdf9634c343593b34ef359641d
+sender:                 0x2a0c0dbecc7e4d658f48e01e3fa353f44050c208  ==>  0x868b8fd259abfcfdf9634c343593b34ef359641d
+asset:                  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
+hash:                   0x0934c85fb30abe84acbc26afe3f209593dbe97aac6c205569b88b90376c65033
+timestamp:              1571458209
+blockNumber:            8769064.131.0
+priceSource:            173.78 (maker)
+--------------------------------------------------- 
+Trial balance:
+   prevBal:             0.02405059
+   begBal:              0.02405059 (0)
+   totalIn:             0.4505622
+   totalOut:            0
+   amountNet:           0.4505622
+                       ======================= 
+   endBal:              0.47461279 (0)
+   endBalCalc:          0.47461279
+--------------------------------------------------- 
+   internalIn:          0.4505622
+   material:            true
+   reconciled:          true
+---------------------------------------------------
+Trace-based statement is material - appending. reconciled: true
+No log transfers to process
+~~~ Leaving: 8769064.131 ~~~
+------------------------------------ 1 statements generated.
+
+
+------------------------------------
+~~~ Entering: 8769130.51 ~~~
+First pass: Fetching unreconciled transfers
+Fetched 1 unreconciled transfers
+Second pass: Reconciling transfers
+Processing ETH transfer
+Converted ETH transfer to statement
+Using trace-based ETH transfer
+XXX =============[ traces ]======================
+XXX Case 1: Only statement in block
+XXX Block: 8769130 Tx: 51 Asset: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+XXX FirstInBlock: true, LastInBlock: true
+XXX ================================================
+Block 8769130 is prior to deployment (10000835) of Uniswap V2. Falling back to Maker (0x729d19f657bd0614b4985cf1d82531c67569197b)
+=========================================================
+===> PRICING FOR 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) using Maker
+=========================================================
+blockNumber:         8769130
+source1 (uni/mkr):   0x729d19f657bd0614b4985cf1d82531c67569197b
+str0 (call):         peek()
+str1 (call/data):    0x0000000000000000000000000000000000000000000000096c192a1d7aa50000
+int0:                17381000000000000000000000
+int1:                17381000
+bigPrice:            173.81
+price:               173.81
+source:              maker
+===================================================
+Previous:               8769064 131 ( true )
+Current:                8769130 51 ( true )
+Next:                   8769141 27 ( true )
+accountedFor:           0x868b8fd259abfcfdf9634c343593b34ef359641d
+sender:                 0x868b8fd259abfcfdf9634c343593b34ef359641d  ==>  0x103348c47ffc3254aff761894e7c13ca0c680465
+asset:                  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
+hash:                   0xe9278cb13db118e569d98b43b5d7feb01f799ad734d255198d46c293f9455b9e
+timestamp:              1571458850
+blockNumber:            8769130.51.0
+priceSource:            173.81 (maker)
+--------------------------------------------------- 
+Trial balance:
+   prevBal:             0.47461279
+   begBal:              0.47461279 (0)
+   totalIn:             0
+   totalOut:            0.100021
+   amountNet:           -0.100021
+                       ======================= 
+   endBal:              0.37459179 (0)
+   endBalCalc:          0.37459179
+--------------------------------------------------- 
+   amountOut:           0.1
+   gasOut:              0.000021
+   material:            true
+   reconciled:          true
+---------------------------------------------------
+Trace-based statement is material - appending. reconciled: true
+No log transfers to process
+~~~ Leaving: 8769130.51 ~~~
+------------------------------------ 1 statements generated.
+
+
+------------------------------------
+~~~ Entering: 8769141.27 ~~~
+First pass: Fetching unreconciled transfers
+Fetched 1 unreconciled transfers
+Second pass: Reconciling transfers
+Processing ETH transfer
+Converted ETH transfer to statement
+Using trace-based ETH transfer
+XXX =============[ traces ]======================
+XXX Case 1: Only statement in block
+XXX Block: 8769141 Tx: 27 Asset: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+XXX FirstInBlock: true, LastInBlock: true
+XXX ================================================
+Block 8769141 is prior to deployment (10000835) of Uniswap V2. Falling back to Maker (0x729d19f657bd0614b4985cf1d82531c67569197b)
+=========================================================
+===> PRICING FOR 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) using Maker
+=========================================================
+blockNumber:         8769141
+source1 (uni/mkr):   0x729d19f657bd0614b4985cf1d82531c67569197b
+str0 (call):         peek()
+str1 (call/data):    0x0000000000000000000000000000000000000000000000096c192a1d7aa50000
+int0:                17381000000000000000000000
+int1:                17381000
+bigPrice:            173.81
+price:               173.81
+source:              maker
+===================================================
+Previous:               8769130 51 ( true )
+Current:                8769141 27 ( true )
+Next:                   8769142 0 ( true )
+accountedFor:           0x868b8fd259abfcfdf9634c343593b34ef359641d
+sender:                 0x868b8fd259abfcfdf9634c343593b34ef359641d  ==>  0xf322ccd630465c8a6fc517326ff58fe102310251
+asset:                  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
+hash:                   0xcc85517a32761d7de6b4aa07c75d54f4b54a88663505d2734f4e98e441e8e35e
+timestamp:              1571459025
+blockNumber:            8769141.27.0
+priceSource:            173.81 (maker)
+--------------------------------------------------- 
+Trial balance:
+   prevBal:             0.37459179
+   begBal:              0.37459179 (0)
+   totalIn:             0
+   totalOut:            0.37459179
+   amountNet:           -0.37459179
+                       ======================= 
+   endBal:              0 (0)
+   endBalCalc:          0
+--------------------------------------------------- 
+   amountOut:           0.37457079
+   gasOut:              0.000021
+   material:            true
+   reconciled:          true
+---------------------------------------------------
+Trace-based statement is material - appending. reconciled: true
+No log transfers to process
+~~~ Leaving: 8769141.27 ~~~
+------------------------------------ 1 statements generated.
+
 {
   "data": [
     {
       "accountedFor": "0x868b8fd259abfcfdf9634c343593b34ef359641d",
-      "amountIn": "0.025",
-      "amountNet": "0.025",
+      "amountIn": "25000000000000000",
+      "amountNet": "25000000000000000",
       "amountOut": "0",
-      "assetAddr": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
-      "assetSymbol": "ETH",
-      "assetType": "eth",
+      "asset": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+      "assetName": "ETH",
       "begBal": "0",
       "begBalDiff": "0",
       "blockNumber": 8769019,
-      "correctingIn": "0",
-      "correctingOut": "0",
-      "correctingReason": "",
+      "correctAmountIn": "0",
+      "correctAmountOut": "0",
+      "correctBegBalIn": "0",
+      "correctBegBalOut": "0",
+      "correctEndBalIn": "0",
+      "correctEndBalOut": "0",
+      "correctingReasons": "",
       "date": "2019-10-19 03:58:34 UTC",
       "decimals": 18,
-      "endBal": "0.025",
-      "endBalCalc": "0.025",
+      "endBal": "25000000000000000",
+      "endBalCalc": "25000000000000000",
       "endBalDiff": "0",
       "gasOut": "0",
       "internalIn": "0",
@@ -29,41 +491,42 @@ export?addrs=0x868b8fd259abfcfdf9634c343593b34ef359641d&lastBlock=8769141&accoun
       "minerTxFeeIn": "0",
       "minerUncleRewardIn": "0",
       "prefundIn": "0",
-      "prevAppBlk": 8769019,
-      "prevBal": "0.025",
+      "prevBal": "0",
       "priceSource": "maker",
       "recipient": "0x868b8fd259abfcfdf9634c343593b34ef359641d",
       "reconciled": true,
-      "reconciliationType": "first-diff",
       "selfDestructIn": "0",
       "selfDestructOut": "0",
       "sender": "0x103348c47ffc3254aff761894e7c13ca0c680465",
-      "spotPrice": 173.765,
+      "spotPrice": "173.765",
+      "symbol": "WEI",
       "timestamp": 1571457514,
-      "totalIn": "0.025",
+      "totalIn": "25000000000000000",
       "totalOut": "0",
-      "totalOutLessGas": "0",
       "transactionHash": "0xf6bce3d9edd00f2e8a996505fded2e7e28a1b6af193d94e9524b9ac7fbf3e8b3",
       "transactionIndex": 124
     },
     {
       "accountedFor": "0x868b8fd259abfcfdf9634c343593b34ef359641d",
-      "amountIn": "85",
-      "amountNet": "85",
+      "amountIn": "85000000000000000000",
+      "amountNet": "85000000000000000000",
       "amountOut": "0",
-      "assetAddr": "0x0ba45a8b5d5575935b8158a88c631e9f9c95a2e5",
-      "assetSymbol": "TRB",
-      "assetType": "token",
+      "asset": "0x0ba45a8b5d5575935b8158a88c631e9f9c95a2e5",
+      "assetName": "Tellor Tributes",
       "begBal": "0",
       "begBalDiff": "0",
       "blockNumber": 8769029,
-      "correctingIn": "0",
-      "correctingOut": "0",
-      "correctingReason": "",
+      "correctAmountIn": "0",
+      "correctAmountOut": "0",
+      "correctBegBalIn": "0",
+      "correctBegBalOut": "0",
+      "correctEndBalIn": "0",
+      "correctEndBalOut": "0",
+      "correctingReasons": "",
       "date": "2019-10-19 04:00:49 UTC",
       "decimals": 18,
-      "endBal": "85",
-      "endBalCalc": "85",
+      "endBal": "85000000000000000000",
+      "endBalCalc": "85000000000000000000",
       "endBalDiff": "0",
       "gasOut": "0",
       "internalIn": "0",
@@ -74,43 +537,44 @@ export?addrs=0x868b8fd259abfcfdf9634c343593b34ef359641d&lastBlock=8769141&accoun
       "minerTxFeeIn": "0",
       "minerUncleRewardIn": "0",
       "prefundIn": "0",
-      "prevAppBlk": 8769019,
       "prevBal": "0",
       "priceSource": "token-not-priced-pre-uni",
       "recipient": "0x868b8fd259abfcfdf9634c343593b34ef359641d",
       "reconciled": true,
-      "reconciliationType": "diff-diff",
       "selfDestructIn": "0",
       "selfDestructOut": "0",
       "sender": "0x103348c47ffc3254aff761894e7c13ca0c680465",
-      "spotPrice": 0,
+      "spotPrice": "0",
+      "symbol": "TRB",
       "timestamp": 1571457649,
-      "totalIn": "85",
+      "totalIn": "85000000000000000000",
       "totalOut": "0",
-      "totalOutLessGas": "0",
       "transactionHash": "0x22f3135a1c2b201456a4770ef9c1ac65a759db3aebe5cb8ad36ad7373f48532f",
       "transactionIndex": 80
     },
     {
       "accountedFor": "0x868b8fd259abfcfdf9634c343593b34ef359641d",
       "amountIn": "0",
-      "amountNet": "-0.00024718",
+      "amountNet": "-247180000000000",
       "amountOut": "0",
-      "assetAddr": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
-      "assetSymbol": "ETH",
-      "assetType": "trace-eth",
-      "begBal": "0.025",
+      "asset": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+      "assetName": "ETH",
+      "begBal": "25000000000000000",
       "begBalDiff": "0",
       "blockNumber": 8769052,
-      "correctingIn": "0",
-      "correctingOut": "0",
-      "correctingReason": "",
+      "correctAmountIn": "0",
+      "correctAmountOut": "0",
+      "correctBegBalIn": "0",
+      "correctBegBalOut": "0",
+      "correctEndBalIn": "0",
+      "correctEndBalOut": "0",
+      "correctingReasons": "",
       "date": "2019-10-19 04:06:45 UTC",
       "decimals": 18,
-      "endBal": "0.02475282",
-      "endBalCalc": "0.02475282",
+      "endBal": "24752820000000000",
+      "endBalCalc": "24752820000000000",
       "endBalDiff": "0",
-      "gasOut": "0.00024718",
+      "gasOut": "247180000000000",
       "internalIn": "0",
       "internalOut": "0",
       "logIndex": 0,
@@ -119,43 +583,45 @@ export?addrs=0x868b8fd259abfcfdf9634c343593b34ef359641d&lastBlock=8769141&accoun
       "minerTxFeeIn": "0",
       "minerUncleRewardIn": "0",
       "prefundIn": "0",
-      "prevAppBlk": 8769029,
-      "prevBal": "0.025",
+      "prevBal": "25000000000000000",
       "priceSource": "maker",
       "recipient": "0x0ba45a8b5d5575935b8158a88c631e9f9c95a2e5",
+      "recipientName": "Tellor Tributes",
       "reconciled": true,
-      "reconciliationType": "diff-same",
       "selfDestructIn": "0",
       "selfDestructOut": "0",
       "sender": "0x868b8fd259abfcfdf9634c343593b34ef359641d",
-      "spotPrice": 173.765,
+      "spotPrice": "173.765",
+      "symbol": "WEI",
       "timestamp": 1571458005,
       "totalIn": "0",
-      "totalOut": "0.00024718",
-      "totalOutLessGas": "0",
+      "totalOut": "247180000000000",
       "transactionHash": "0x66cdceb982decd5c899ee7a608468eed3b0032b7f146bdef7a96ec0dfecfcc1d",
       "transactionIndex": 73
     },
     {
       "accountedFor": "0x868b8fd259abfcfdf9634c343593b34ef359641d",
       "amountIn": "0",
-      "amountNet": "-0.00070223",
+      "amountNet": "-702230000000000",
       "amountOut": "0",
-      "assetAddr": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
-      "assetSymbol": "ETH",
-      "assetType": "trace-eth",
-      "begBal": "0.02475282",
+      "asset": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+      "assetName": "ETH",
+      "begBal": "24752820000000000",
       "begBalDiff": "0",
       "blockNumber": 8769052,
-      "correctingIn": "0",
-      "correctingOut": "0",
-      "correctingReason": "",
+      "correctAmountIn": "0",
+      "correctAmountOut": "0",
+      "correctBegBalIn": "0",
+      "correctBegBalOut": "0",
+      "correctEndBalIn": "0",
+      "correctEndBalOut": "0",
+      "correctingReasons": "",
       "date": "2019-10-19 04:06:45 UTC",
       "decimals": 18,
-      "endBal": "0.02405059",
-      "endBalCalc": "0.02405059",
+      "endBal": "24050590000000000",
+      "endBalCalc": "24050590000000000",
       "endBalDiff": "0",
-      "gasOut": "0.00070223",
+      "gasOut": "702230000000000",
       "internalIn": "0",
       "internalOut": "0",
       "logIndex": 0,
@@ -164,37 +630,39 @@ export?addrs=0x868b8fd259abfcfdf9634c343593b34ef359641d&lastBlock=8769141&accoun
       "minerTxFeeIn": "0",
       "minerUncleRewardIn": "0",
       "prefundIn": "0",
-      "prevAppBlk": 8769052,
-      "prevBal": "0.02475282",
+      "prevBal": "24752820000000000",
       "priceSource": "maker",
       "recipient": "0x2a0c0dbecc7e4d658f48e01e3fa353f44050c208",
+      "recipientName": "IDEX",
       "reconciled": true,
-      "reconciliationType": "same-diff",
       "selfDestructIn": "0",
       "selfDestructOut": "0",
       "sender": "0x868b8fd259abfcfdf9634c343593b34ef359641d",
-      "spotPrice": 173.765,
+      "spotPrice": "173.765",
+      "symbol": "WEI",
       "timestamp": 1571458005,
       "totalIn": "0",
-      "totalOut": "0.00070223",
-      "totalOutLessGas": "0",
+      "totalOut": "702230000000000",
       "transactionHash": "0x90feb158340931c051ccb4def6112b6d46794f739499d7255b5109481b991265",
       "transactionIndex": 74
     },
     {
       "accountedFor": "0x868b8fd259abfcfdf9634c343593b34ef359641d",
       "amountIn": "0",
-      "amountNet": "-85",
-      "amountOut": "85",
-      "assetAddr": "0x0ba45a8b5d5575935b8158a88c631e9f9c95a2e5",
-      "assetSymbol": "TRB",
-      "assetType": "token",
-      "begBal": "85",
+      "amountNet": "-85000000000000000000",
+      "amountOut": "85000000000000000000",
+      "asset": "0x0ba45a8b5d5575935b8158a88c631e9f9c95a2e5",
+      "assetName": "Tellor Tributes",
+      "begBal": "85000000000000000000",
       "begBalDiff": "0",
       "blockNumber": 8769052,
-      "correctingIn": "0",
-      "correctingOut": "0",
-      "correctingReason": "",
+      "correctAmountIn": "0",
+      "correctAmountOut": "0",
+      "correctBegBalIn": "0",
+      "correctBegBalOut": "0",
+      "correctEndBalIn": "0",
+      "correctEndBalOut": "0",
+      "correctingReasons": "",
       "date": "2019-10-19 04:06:45 UTC",
       "decimals": 18,
       "endBal": "0",
@@ -209,43 +677,46 @@ export?addrs=0x868b8fd259abfcfdf9634c343593b34ef359641d&lastBlock=8769141&accoun
       "minerTxFeeIn": "0",
       "minerUncleRewardIn": "0",
       "prefundIn": "0",
-      "prevBal": "0",
+      "prevBal": "85000000000000000000",
       "priceSource": "token-not-priced-pre-uni",
       "recipient": "0x2a0c0dbecc7e4d658f48e01e3fa353f44050c208",
+      "recipientName": "IDEX",
       "reconciled": true,
-      "reconciliationType": "same-diff",
       "selfDestructIn": "0",
       "selfDestructOut": "0",
       "sender": "0x868b8fd259abfcfdf9634c343593b34ef359641d",
-      "spotPrice": 0,
+      "spotPrice": "0",
+      "symbol": "TRB",
       "timestamp": 1571458005,
       "totalIn": "0",
-      "totalOut": "85",
-      "totalOutLessGas": "85",
+      "totalOut": "85000000000000000000",
       "transactionHash": "0x90feb158340931c051ccb4def6112b6d46794f739499d7255b5109481b991265",
       "transactionIndex": 74
     },
     {
       "accountedFor": "0x868b8fd259abfcfdf9634c343593b34ef359641d",
       "amountIn": "0",
-      "amountNet": "0",
+      "amountNet": "450562200000000000",
       "amountOut": "0",
-      "assetAddr": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
-      "assetSymbol": "ETH",
-      "assetType": "trace-eth",
-      "begBal": "0.02405059",
+      "asset": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+      "assetName": "ETH",
+      "begBal": "24050590000000000",
       "begBalDiff": "0",
       "blockNumber": 8769064,
-      "correctingIn": "0",
-      "correctingOut": "0",
-      "correctingReason": "",
+      "correctAmountIn": "0",
+      "correctAmountOut": "0",
+      "correctBegBalIn": "0",
+      "correctBegBalOut": "0",
+      "correctEndBalIn": "0",
+      "correctEndBalOut": "0",
+      "correctingReasons": "",
       "date": "2019-10-19 04:10:09 UTC",
       "decimals": 18,
-      "endBal": "0.02405059",
-      "endBalCalc": "0.02405059",
+      "endBal": "474612790000000000",
+      "endBalCalc": "474612790000000000",
       "endBalDiff": "0",
       "gasOut": "0",
-      "internalIn": "0",
+      "internalIn": "450562200000000000",
       "internalOut": "0",
       "logIndex": 0,
       "minerBaseRewardIn": "0",
@@ -253,88 +724,45 @@ export?addrs=0x868b8fd259abfcfdf9634c343593b34ef359641d&lastBlock=8769141&accoun
       "minerTxFeeIn": "0",
       "minerUncleRewardIn": "0",
       "prefundIn": "0",
-      "prevAppBlk": 8769052,
-      "prevBal": "0.02405059",
-      "priceSource": "not-priced",
-      "recipient": "0x2a0c0dbecc7e4d658f48e01e3fa353f44050c208",
-      "reconciled": false,
-      "reconciliationType": "diff-same",
-      "selfDestructIn": "0",
-      "selfDestructOut": "0",
-      "sender": "0xa7a7899d944fe658c4b0a1803bab2f490bd3849e",
-      "spotPrice": 0,
-      "timestamp": 1571458209,
-      "totalIn": "0",
-      "totalOut": "0",
-      "totalOutLessGas": "0",
-      "transactionHash": "0x07b939fa3dbb62bc7fc6d2c408d53f15ecca50a54d57fe7bab23f5df1f274033",
-      "transactionIndex": 130
-    },
-    {
-      "accountedFor": "0x868b8fd259abfcfdf9634c343593b34ef359641d",
-      "amountIn": "0",
-      "amountNet": "0.4505622",
-      "amountOut": "0",
-      "assetAddr": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
-      "assetSymbol": "ETH",
-      "assetType": "trace-eth",
-      "begBal": "0.02405059",
-      "begBalDiff": "0",
-      "blockNumber": 8769064,
-      "correctingIn": "0",
-      "correctingOut": "0",
-      "correctingReason": "",
-      "date": "2019-10-19 04:10:09 UTC",
-      "decimals": 18,
-      "endBal": "0.47461279",
-      "endBalCalc": "0.47461279",
-      "endBalDiff": "0",
-      "gasOut": "0",
-      "internalIn": "0.4505622",
-      "internalOut": "0",
-      "logIndex": 0,
-      "minerBaseRewardIn": "0",
-      "minerNephewRewardIn": "0",
-      "minerTxFeeIn": "0",
-      "minerUncleRewardIn": "0",
-      "prefundIn": "0",
-      "prevAppBlk": 8769064,
-      "prevBal": "0.47461279",
+      "prevBal": "24050590000000000",
       "priceSource": "maker",
       "recipient": "0x868b8fd259abfcfdf9634c343593b34ef359641d",
       "reconciled": true,
-      "reconciliationType": "same-diff",
       "selfDestructIn": "0",
       "selfDestructOut": "0",
       "sender": "0x2a0c0dbecc7e4d658f48e01e3fa353f44050c208",
-      "spotPrice": 173.78,
+      "senderName": "IDEX",
+      "spotPrice": "173.78",
+      "symbol": "WEI",
       "timestamp": 1571458209,
-      "totalIn": "0.4505622",
+      "totalIn": "450562200000000000",
       "totalOut": "0",
-      "totalOutLessGas": "0",
       "transactionHash": "0x0934c85fb30abe84acbc26afe3f209593dbe97aac6c205569b88b90376c65033",
       "transactionIndex": 131
     },
     {
       "accountedFor": "0x868b8fd259abfcfdf9634c343593b34ef359641d",
       "amountIn": "0",
-      "amountNet": "-0.100021",
-      "amountOut": "0.1",
-      "assetAddr": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
-      "assetSymbol": "ETH",
-      "assetType": "eth",
-      "begBal": "0.47461279",
+      "amountNet": "-100021000000000000",
+      "amountOut": "100000000000000000",
+      "asset": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+      "assetName": "ETH",
+      "begBal": "474612790000000000",
       "begBalDiff": "0",
       "blockNumber": 8769130,
-      "correctingIn": "0",
-      "correctingOut": "0",
-      "correctingReason": "",
+      "correctAmountIn": "0",
+      "correctAmountOut": "0",
+      "correctBegBalIn": "0",
+      "correctBegBalOut": "0",
+      "correctEndBalIn": "0",
+      "correctEndBalOut": "0",
+      "correctingReasons": "",
       "date": "2019-10-19 04:20:50 UTC",
       "decimals": 18,
-      "endBal": "0.37459179",
-      "endBalCalc": "0.37459179",
+      "endBal": "374591790000000000",
+      "endBalCalc": "374591790000000000",
       "endBalDiff": "0",
-      "gasOut": "0.000021",
+      "gasOut": "21000000000000",
       "internalIn": "0",
       "internalOut": "0",
       "logIndex": 0,
@@ -343,43 +771,44 @@ export?addrs=0x868b8fd259abfcfdf9634c343593b34ef359641d&lastBlock=8769141&accoun
       "minerTxFeeIn": "0",
       "minerUncleRewardIn": "0",
       "prefundIn": "0",
-      "prevAppBlk": 8769064,
-      "prevBal": "0.47461279",
+      "prevBal": "474612790000000000",
       "priceSource": "maker",
       "recipient": "0x103348c47ffc3254aff761894e7c13ca0c680465",
       "reconciled": true,
-      "reconciliationType": "diff-diff",
       "selfDestructIn": "0",
       "selfDestructOut": "0",
       "sender": "0x868b8fd259abfcfdf9634c343593b34ef359641d",
-      "spotPrice": 173.81,
+      "spotPrice": "173.81",
+      "symbol": "WEI",
       "timestamp": 1571458850,
       "totalIn": "0",
-      "totalOut": "0.100021",
-      "totalOutLessGas": "0.1",
+      "totalOut": "100021000000000000",
       "transactionHash": "0xe9278cb13db118e569d98b43b5d7feb01f799ad734d255198d46c293f9455b9e",
       "transactionIndex": 51
     },
     {
       "accountedFor": "0x868b8fd259abfcfdf9634c343593b34ef359641d",
       "amountIn": "0",
-      "amountNet": "-0.37459179",
-      "amountOut": "0.37457079",
-      "assetAddr": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
-      "assetSymbol": "ETH",
-      "assetType": "eth",
-      "begBal": "0.37459179",
+      "amountNet": "-374591790000000000",
+      "amountOut": "374570790000000000",
+      "asset": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+      "assetName": "ETH",
+      "begBal": "374591790000000000",
       "begBalDiff": "0",
       "blockNumber": 8769141,
-      "correctingIn": "0",
-      "correctingOut": "0",
-      "correctingReason": "",
+      "correctAmountIn": "0",
+      "correctAmountOut": "0",
+      "correctBegBalIn": "0",
+      "correctBegBalOut": "0",
+      "correctEndBalIn": "0",
+      "correctEndBalOut": "0",
+      "correctingReasons": "",
       "date": "2019-10-19 04:23:45 UTC",
       "decimals": 18,
       "endBal": "0",
       "endBalCalc": "0",
       "endBalDiff": "0",
-      "gasOut": "0.000021",
+      "gasOut": "21000000000000",
       "internalIn": "0",
       "internalOut": "0",
       "logIndex": 0,
@@ -388,20 +817,18 @@ export?addrs=0x868b8fd259abfcfdf9634c343593b34ef359641d&lastBlock=8769141&accoun
       "minerTxFeeIn": "0",
       "minerUncleRewardIn": "0",
       "prefundIn": "0",
-      "prevAppBlk": 8769130,
-      "prevBal": "0.37459179",
+      "prevBal": "374591790000000000",
       "priceSource": "maker",
       "recipient": "0xf322ccd630465c8a6fc517326ff58fe102310251",
       "reconciled": true,
-      "reconciliationType": "diff-last",
       "selfDestructIn": "0",
       "selfDestructOut": "0",
       "sender": "0x868b8fd259abfcfdf9634c343593b34ef359641d",
-      "spotPrice": 173.81,
+      "spotPrice": "173.81",
+      "symbol": "WEI",
       "timestamp": 1571459025,
       "totalIn": "0",
-      "totalOut": "0.37459179",
-      "totalOutLessGas": "0.37457079",
+      "totalOut": "374591790000000000",
       "transactionHash": "0xcc85517a32761d7de6b4aa07c75d54f4b54a88663505d2734f4e98e441e8e35e",
       "transactionIndex": 27
     }

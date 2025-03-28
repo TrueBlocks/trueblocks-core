@@ -11,7 +11,6 @@ import (
 	"testing"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/filter"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
@@ -105,7 +104,7 @@ func Test_Monitor_ReadApps(t *testing.T) {
 		t.Error(err)
 	}
 
-	if apps, _, err := mon.ReadAndFilterAppearances(filter.NewEmptyFilter(), true /* withCount */); err != nil {
+	if apps, _, err := mon.ReadAndFilterAppearances(types.NewEmptyFilter(), true /* withCount */); err != nil {
 		t.Error(err)
 	} else {
 		for i, app := range apps {

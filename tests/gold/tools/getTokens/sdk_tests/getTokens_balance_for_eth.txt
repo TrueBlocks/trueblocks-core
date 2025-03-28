@@ -1,0 +1,121 @@
+tokens?addrs=0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee%20vitalik.eth&blocks=0-4326080:quarterly
+Args: [addrs=0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee vitalik.eth blocks=0-4326080:quarterly]
+Opts: {"addrs":["0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee vitalik.eth"],"blocks":["0-4326080:quarterly"]}
+Addrs:  [0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0xd8da6bf26964af9d7eed9e03e53415d37aa96045]
+Blocks:  [0-4326080:quarterly]
+Caps:  cache,decache
+Format:  json
+{
+  "data": [
+    {
+      "address": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+      "balance": "0",
+      "balanceDec": "0",
+      "blockNumber": 0,
+      "decimals": 18,
+      "holder": "0xd8da6bf26964af9d7eed9e03e53415d37aa96045",
+      "name": "ETH",
+      "symbol": "ETH"
+    },
+    {
+      "address": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+      "balance": "250000000000000000",
+      "balanceDec": "0.25",
+      "blockNumber": 314572,
+      "decimals": 18,
+      "holder": "0xd8da6bf26964af9d7eed9e03e53415d37aa96045",
+      "name": "ETH",
+      "symbol": "ETH"
+    },
+    {
+      "address": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+      "balance": "313875640124360311",
+      "balanceDec": "0.313875640124360311",
+      "blockNumber": 778482,
+      "decimals": 18,
+      "holder": "0xd8da6bf26964af9d7eed9e03e53415d37aa96045",
+      "name": "ETH",
+      "symbol": "ETH"
+    },
+    {
+      "address": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+      "balance": "8505821942559311",
+      "balanceDec": "0.008505821942559311",
+      "blockNumber": 1253720,
+      "decimals": 18,
+      "holder": "0xd8da6bf26964af9d7eed9e03e53415d37aa96045",
+      "name": "ETH",
+      "symbol": "ETH"
+    },
+    {
+      "address": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+      "balance": "61713475515318299311",
+      "balanceDec": "61.713475515318299311",
+      "blockNumber": 1801798,
+      "decimals": 18,
+      "holder": "0xd8da6bf26964af9d7eed9e03e53415d37aa96045",
+      "name": "ETH",
+      "symbol": "ETH"
+    },
+    {
+      "address": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+      "balance": "100329427536411976510",
+      "balanceDec": "100.32942753641197651",
+      "blockNumber": 2357372,
+      "decimals": 18,
+      "holder": "0xd8da6bf26964af9d7eed9e03e53415d37aa96045",
+      "name": "ETH",
+      "symbol": "ETH"
+    },
+    {
+      "address": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+      "balance": "100074403960411976510",
+      "balanceDec": "100.07440396041197651",
+      "blockNumber": 2912406,
+      "decimals": 18,
+      "holder": "0xd8da6bf26964af9d7eed9e03e53415d37aa96045",
+      "name": "ETH",
+      "symbol": "ETH"
+    },
+    {
+      "address": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+      "balance": "100079403960411976510",
+      "balanceDec": "100.07940396041197651",
+      "blockNumber": 3454528,
+      "decimals": 18,
+      "holder": "0xd8da6bf26964af9d7eed9e03e53415d37aa96045",
+      "name": "ETH",
+      "symbol": "ETH"
+    },
+    {
+      "address": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+      "balance": "188494982502411976510",
+      "balanceDec": "188.49498250241197651",
+      "blockNumber": 3955158,
+      "decimals": 18,
+      "holder": "0xd8da6bf26964af9d7eed9e03e53415d37aa96045",
+      "name": "ETH",
+      "symbol": "ETH"
+    },
+    {
+      "address": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+      "balance": "1229428335289005290048",
+      "balanceDec": "1229.428335289005290048",
+      "blockNumber": 4326060,
+      "decimals": 18,
+      "holder": "0xd8da6bf26964af9d7eed9e03e53415d37aa96045",
+      "name": "ETH",
+      "symbol": "ETH"
+    }
+  ],
+  "meta": {
+    "client": "0xdeadbeef",
+    "finalized": "0xdeadbeef",
+    "staging": "0xdeadbeef",
+    "ripe": "0xdeadbeef",
+    "unripe": "0xdeadbeef",
+    "chainId": 1,
+    "networkId": 1,
+    "chain": "mainnet"
+  }
+}

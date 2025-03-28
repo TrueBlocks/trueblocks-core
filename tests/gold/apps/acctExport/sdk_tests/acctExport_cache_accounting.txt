@@ -1,148 +1,211 @@
 export?addrs=0x04fe1f0c597fbc65700f4fba6f87501edc20e665&firstBlock=10277780&lastBlock=10278000&accounting&cache&cacheTraces
+Args: [addrs=0x04fe1f0c597fbc65700f4fba6f87501edc20e665 firstBlock=10277780 lastBlock=10278000 accounting cache cacheTraces]
+Opts: {"addrs":["0x04fe1f0c597fbc65700f4fba6f87501edc20e665"],"cacheTraces":true,"firstBlock":10277780,"lastBlock":10278000,"accounting":true,"cache":true}
+Addrs:  [0x04fe1f0c597fbc65700f4fba6f87501edc20e665]
+CacheTraces:  true
+FirstBlock:  10277780
+LastBlock:  10278000
+Accounting:  true
+Enabled:  traces, transactions
+Cache:  true
+Caps:  cache,decache,ether
+Format:  json
+0: 10277780 88
+
+------------------------------------
+~~~ Entering: 10277780.88 ~~~
+First pass: Fetching unreconciled transfers
+Fetched 2 unreconciled transfers
+Second pass: Reconciling transfers
+Processing ETH transfer
+Converted ETH transfer to statement
+Attempting to reconcile top-level ETH transfer: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-0x04fe1f0c597fbc65700f4fba6f87501edc20e665
+XXX =============[ top-level ]======================
+XXX Case 1: Only statement in block
+XXX Block: 10277780 Tx: 88 Asset: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+XXX FirstInBlock: true, LastInBlock: true
+XXX ================================================
+=========================================================
+===> PRICING FOR 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) using Uniswap
+=========================================================
+blockNumber:         10277780
+source1 (uni/mkr):   0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f
+str0 (call):         getPair(0x6b175474e89094c44da98b954eedeac495271d0f, 0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2)
+source2 (pair):      0xa478c2975ab1ea89e8196811f51a7b7ade33eb11
+str1 (call/data):    getReserves()
+first:               0x6b175474e89094c44da98b954eedeac495271d0f
+second:              0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2
+reversed:            false
+float0:              3.85860733e+24
+float1:              1.668869764e+22
+float2:              1
+bigPrice:            231.2108118
+price:               231.2108118
+source:              uniswap
+===================================================
+Previous:               10277779 0 ( true )
+Current:                10277780 88 ( true )
+Next:                   10277781 0 ( true )
+accountedFor:           0x04fe1f0c597fbc65700f4fba6f87501edc20e665
+sender:                 0x04fe1f0c597fbc65700f4fba6f87501edc20e665  ==>  0xdac17f958d2ee523a2206206994597c13d831ec7
+asset:                  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
+hash:                   0x898b6f4a308973eea278f316dff337d4ab6b07192701bbef8593979a3061c17a
+timestamp:              1592323744
+blockNumber:            10277780.88.0
+priceSource:            231.2108118 (uniswap)
+--------------------------------------------------- 
+Trial balance:
+   prevBal:             0.006511482167631885
+   begBal:              0.006511482167631885 (0)
+   totalIn:             0
+   totalOut:            0.00104836
+   amountNet:           -0.00104836
+                       ======================= 
+   endBal:              0.005463122167631885 (0)
+   endBalCalc:          0.005463122167631885
+--------------------------------------------------- 
+   gasOut:              0.00104836
+   material:            true
+   reconciled:          true
+---------------------------------------------------
+Top-level statement is material and reconciled - appending
+Processing 1 log transfers
+Set BegSentinel for first log transfer
+Set EndSentinel for last log transfer
+Converted log transfer to statement for asset: 0xdac17f958d2ee523a2206206994597c13d831ec7
+XXX =============[ token ]======================
+XXX Case 1: Only statement in block
+XXX Block: 10277780 Tx: 88 Asset: 0xdac17f958d2ee523a2206206994597c13d831ec7
+XXX FirstInBlock: true, LastInBlock: true
+XXX ================================================
+=========================================================
+===> PRICING FOR 0xdac17f958d2ee523a2206206994597c13d831ec7 (USDT) 
+=========================================================
+stable-coin
+===================================================
+Previous:               10277779 0 ( true )
+Current:                10277780 88 ( true )
+Next:                   10277781 0 ( true )
+accountedFor:           0x04fe1f0c597fbc65700f4fba6f87501edc20e665
+sender:                 0x04fe1f0c597fbc65700f4fba6f87501edc20e665  ==>  0x7fc3be02c7f18b24a98870c543fd0ec3c25f3ff9
+asset:                  0xdac17f958d2ee523a2206206994597c13d831ec7 (USDT) decimals: 6
+hash:                   0x898b6f4a308973eea278f316dff337d4ab6b07192701bbef8593979a3061c17a
+timestamp:              1592323744
+blockNumber:            10277780.88.103
+priceSource:            1 (stable-coin)
+--------------------------------------------------- 
+Trial balance:
+   prevBal:             0.000000000381
+   begBal:              0.000000000381 (0)
+   totalIn:             0
+   totalOut:            0.000000000381
+   amountNet:           -0.000000000381
+                       ======================= 
+   endBal:              0 (0)
+   endBalCalc:          0
+--------------------------------------------------- 
+   amountOut:           0.000000000381
+   material:            true
+   reconciled:          true
+---------------------------------------------------
+Log statement is material - appending. reconciled: true
+~~~ Leaving: 10277780.88 ~~~
+------------------------------------ 2 statements generated.
+
 {
   "data": [
     {
-      "articulatedTx": {
-        "inputs": {
-          "_to": "0x7fc3be02c7f18b24a98870c543fd0ec3c25f3ff9",
-          "_value": "381000000"
-        },
-        "name": "transfer"
-      },
-      "blockHash": "0xb0eeae84197ce9710061d248b0d94b26e9e539ae0d5498be83d43bcfc8f81bfc",
+      "accountedFor": "0x04fe1f0c597fbc65700f4fba6f87501edc20e665",
+      "amountIn": "0",
+      "amountNet": "-1048360000000000",
+      "amountOut": "0",
+      "asset": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+      "assetName": "ETH",
+      "begBal": "6511482167631885",
+      "begBalDiff": "0",
       "blockNumber": 10277780,
+      "correctAmountIn": "0",
+      "correctAmountOut": "0",
+      "correctBegBalIn": "0",
+      "correctBegBalOut": "0",
+      "correctEndBalIn": "0",
+      "correctEndBalOut": "0",
+      "correctingReasons": "",
       "date": "2020-06-16 16:09:04 UTC",
-      "ether": "0",
-      "from": "0x04fe1f0c597fbc65700f4fba6f87501edc20e665",
-      "gas": 41209,
-      "gasCost": 1048360000000000,
-      "gasPrice": 40000000000,
-      "gasUsed": 26209,
-      "hasToken": true,
-      "hash": "0x898b6f4a308973eea278f316dff337d4ab6b07192701bbef8593979a3061c17a",
-      "input": "0xa9059cbb0000000000000000000000007fc3be02c7f18b24a98870c543fd0ec3c25f3ff90000000000000000000000000000000000000000000000000000000016b59940",
-      "nonce": 5,
-      "receipt": {
-        "contractAddress": "0x0",
-        "effectiveGasPrice": 40000000000,
-        "gasUsed": 26209,
-        "logs": [
-          {
-            "address": "0xdac17f958d2ee523a2206206994597c13d831ec7",
-            "articulatedLog": {
-              "inputs": {
-                "_amount": "381000000",
-                "_from": "0x04fe1f0c597fbc65700f4fba6f87501edc20e665",
-                "_to": "0x7fc3be02c7f18b24a98870c543fd0ec3c25f3ff9"
-              },
-              "name": "Transfer"
-            },
-            "data": "0x0000000000000000000000000000000000000000000000000000000016b59940",
-            "date": "2020-06-16 16:09:04 UTC",
-            "logIndex": 103,
-            "timestamp": 1592323744,
-            "topics": [
-              "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef",
-              "0x00000000000000000000000004fe1f0c597fbc65700f4fba6f87501edc20e665",
-              "0x0000000000000000000000007fc3be02c7f18b24a98870c543fd0ec3c25f3ff9"
-            ]
-          }
-        ],
-        "status": 1
-      },
-      "statements": [
-        {
-          "accountedFor": "0x04fe1f0c597fbc65700f4fba6f87501edc20e665",
-          "amountIn": "0",
-          "amountNet": "-1048360000000000",
-          "amountOut": "0",
-          "assetAddr": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
-          "assetSymbol": "WEI",
-          "assetType": "eth",
-          "begBal": "6511482167631885",
-          "begBalDiff": "0",
-          "blockNumber": 10277780,
-          "correctingIn": "0",
-          "correctingOut": "0",
-          "correctingReason": "",
-          "date": "2020-06-16 16:09:04 UTC",
-          "decimals": 18,
-          "endBal": "5463122167631885",
-          "endBalCalc": "5463122167631885",
-          "endBalDiff": "0",
-          "gasOut": "1048360000000000",
-          "internalIn": "0",
-          "internalOut": "0",
-          "logIndex": 0,
-          "minerBaseRewardIn": "0",
-          "minerNephewRewardIn": "0",
-          "minerTxFeeIn": "0",
-          "minerUncleRewardIn": "0",
-          "prefundIn": "0",
-          "priceSource": "uniswap",
-          "recipient": "0xdac17f958d2ee523a2206206994597c13d831ec7",
-          "reconciled": true,
-          "reconciliationType": "first-last",
-          "selfDestructIn": "0",
-          "selfDestructOut": "0",
-          "sender": "0x04fe1f0c597fbc65700f4fba6f87501edc20e665",
-          "spotPrice": 231.21081182360814,
-          "timestamp": 1592323744,
-          "totalIn": "0",
-          "totalOut": "1048360000000000",
-          "totalOutLessGas": "0",
-          "transactionHash": "0x898b6f4a308973eea278f316dff337d4ab6b07192701bbef8593979a3061c17a",
-          "transactionIndex": 88
-        },
-        {
-          "accountedFor": "0x04fe1f0c597fbc65700f4fba6f87501edc20e665",
-          "amountIn": "0",
-          "amountNet": "-381000000",
-          "amountOut": "381000000",
-          "assetAddr": "0xdac17f958d2ee523a2206206994597c13d831ec7",
-          "assetSymbol": "USDT",
-          "assetType": "token",
-          "begBal": "381000000",
-          "begBalDiff": "0",
-          "blockNumber": 10277780,
-          "correctingIn": "0",
-          "correctingOut": "0",
-          "correctingReason": "",
-          "date": "2020-06-16 16:09:04 UTC",
-          "decimals": 6,
-          "endBal": "0",
-          "endBalCalc": "0",
-          "endBalDiff": "0",
-          "gasOut": "0",
-          "internalIn": "0",
-          "internalOut": "0",
-          "logIndex": 103,
-          "minerBaseRewardIn": "0",
-          "minerNephewRewardIn": "0",
-          "minerTxFeeIn": "0",
-          "minerUncleRewardIn": "0",
-          "prefundIn": "0",
-          "priceSource": "stable-coin",
-          "recipient": "0x7fc3be02c7f18b24a98870c543fd0ec3c25f3ff9",
-          "reconciled": true,
-          "reconciliationType": "first-last",
-          "selfDestructIn": "0",
-          "selfDestructOut": "0",
-          "sender": "0x04fe1f0c597fbc65700f4fba6f87501edc20e665",
-          "spotPrice": 1,
-          "timestamp": 1592323744,
-          "totalIn": "0",
-          "totalOut": "381000000",
-          "totalOutLessGas": "381000000",
-          "transactionHash": "0x898b6f4a308973eea278f316dff337d4ab6b07192701bbef8593979a3061c17a",
-          "transactionIndex": 88
-        }
-      ],
+      "decimals": 18,
+      "endBal": "5463122167631885",
+      "endBalCalc": "5463122167631885",
+      "endBalDiff": "0",
+      "gasOut": "1048360000000000",
+      "internalIn": "0",
+      "internalOut": "0",
+      "logIndex": 0,
+      "minerBaseRewardIn": "0",
+      "minerNephewRewardIn": "0",
+      "minerTxFeeIn": "0",
+      "minerUncleRewardIn": "0",
+      "prefundIn": "0",
+      "prevBal": "6511482167631885",
+      "priceSource": "uniswap",
+      "recipient": "0xdac17f958d2ee523a2206206994597c13d831ec7",
+      "recipientName": "Tether USD",
+      "reconciled": true,
+      "selfDestructIn": "0",
+      "selfDestructOut": "0",
+      "sender": "0x04fe1f0c597fbc65700f4fba6f87501edc20e665",
+      "spotPrice": "231.2108118",
+      "symbol": "WEI",
       "timestamp": 1592323744,
-      "to": "0xdac17f958d2ee523a2206206994597c13d831ec7",
-      "traces": [],
-      "transactionIndex": 88,
-      "value": "0"
+      "totalIn": "0",
+      "totalOut": "1048360000000000",
+      "transactionHash": "0x898b6f4a308973eea278f316dff337d4ab6b07192701bbef8593979a3061c17a",
+      "transactionIndex": 88
+    },
+    {
+      "accountedFor": "0x04fe1f0c597fbc65700f4fba6f87501edc20e665",
+      "amountIn": "0",
+      "amountNet": "-381000000",
+      "amountOut": "381000000",
+      "asset": "0xdac17f958d2ee523a2206206994597c13d831ec7",
+      "assetName": "Tether USD",
+      "begBal": "381000000",
+      "begBalDiff": "0",
+      "blockNumber": 10277780,
+      "correctAmountIn": "0",
+      "correctAmountOut": "0",
+      "correctBegBalIn": "0",
+      "correctBegBalOut": "0",
+      "correctEndBalIn": "0",
+      "correctEndBalOut": "0",
+      "correctingReasons": "",
+      "date": "2020-06-16 16:09:04 UTC",
+      "decimals": 6,
+      "endBal": "0",
+      "endBalCalc": "0",
+      "endBalDiff": "0",
+      "gasOut": "0",
+      "internalIn": "0",
+      "internalOut": "0",
+      "logIndex": 103,
+      "minerBaseRewardIn": "0",
+      "minerNephewRewardIn": "0",
+      "minerTxFeeIn": "0",
+      "minerUncleRewardIn": "0",
+      "prefundIn": "0",
+      "prevBal": "381000000",
+      "priceSource": "stable-coin",
+      "recipient": "0x7fc3be02c7f18b24a98870c543fd0ec3c25f3ff9",
+      "reconciled": true,
+      "selfDestructIn": "0",
+      "selfDestructOut": "0",
+      "sender": "0x04fe1f0c597fbc65700f4fba6f87501edc20e665",
+      "spotPrice": "1",
+      "symbol": "USDT",
+      "timestamp": 1592323744,
+      "totalIn": "0",
+      "totalOut": "381000000",
+      "transactionHash": "0x898b6f4a308973eea278f316dff337d4ab6b07192701bbef8593979a3061c17a",
+      "transactionIndex": 88
     }
   ],
   "meta": {

@@ -1,462 +1,1669 @@
-export?addrs=0x6aED588ca2052CCFC907Db8c24dF4B7B95A29A5E&maxRecords=3&firstRecord=683&accounting&fmt=json
+export?addrs=0x6aED588ca2052CCFC907Db8c24dF4B7B95A29A5E&maxRecords=3&accounting
+Args: [addrs=0x6aED588ca2052CCFC907Db8c24dF4B7B95A29A5E maxRecords=3 accounting]
+Opts: {"addrs":["0x6aED588ca2052CCFC907Db8c24dF4B7B95A29A5E"],"maxRecords":3,"accounting":true}
+Addrs:  [0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e]
+MaxRecords:  3
+Accounting:  true
+Caps:  cache,decache,ether
+Format:  json
+0: 13960847 66
+1: 14218245 11
+2: 14231553 18
+3: 14258674 130
+4: 14271011 355
+5: 14271262 30
+6: 14271515 128
+7: 14276993 249
+8: 14296398 98
+9: 14304199 69
+10: 14304289 8
+11: 14310071 69
+12: 14310827 166
+13: 14316149 98
+14: 14316157 253
+15: 14322020 266
+16: 14322028 199
+17: 14323108 93
+18: 14341057 158
+19: 14341533 111
+
+------------------------------------
+~~~ Entering: 13960847.66 ~~~
+First pass: Fetching unreconciled transfers
+Fetched 1 unreconciled transfers
+Second pass: Reconciling transfers
+Processing ETH transfer
+Converted ETH transfer to statement
+Attempting to reconcile top-level ETH transfer: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e
+XXX =============[ top-level ]======================
+XXX Case 1: Only statement in block
+XXX Block: 13960847 Tx: 66 Asset: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+XXX FirstInBlock: true, LastInBlock: true
+XXX ================================================
+=========================================================
+===> PRICING FOR 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) using Uniswap
+=========================================================
+blockNumber:         13960847
+source1 (uni/mkr):   0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f
+str0 (call):         getPair(0x6b175474e89094c44da98b954eedeac495271d0f, 0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2)
+source2 (pair):      0xa478c2975ab1ea89e8196811f51a7b7ade33eb11
+str1 (call/data):    getReserves()
+first:               0x6b175474e89094c44da98b954eedeac495271d0f
+second:              0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2
+reversed:            false
+float0:              3.57170081e+25
+float1:              1.112811998e+22
+float2:              1
+bigPrice:            3209.617452
+price:               3209.617452
+source:              uniswap
+===================================================
+Previous:               13960846 0 ( true )
+Current:                13960847 66 ( true )
+Next:                   14218245 11 ( true )
+accountedFor:           0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e
+sender:                 0xe081abb7d9e327e89a13e65b3e2b6fcaf2eceb97  ==>  0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e
+asset:                  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
+hash:                   0x9d185a97a8825e220e2574a9cd0406c6a03b3215e91bebdcf7e159b37df91643
+timestamp:              1641592337
+blockNumber:            13960847.66.0
+priceSource:            3209.617452 (uniswap)
+--------------------------------------------------- 
+Trial balance:
+   prevBal:             0
+   begBal:              0 (0)
+   totalIn:             371.7140475
+   totalOut:            0
+   amountNet:           371.7140475
+                       ======================= 
+   endBal:              371.7140475 (0)
+   endBalCalc:          371.7140475
+--------------------------------------------------- 
+   amountIn:            371.7140475
+   material:            true
+   reconciled:          true
+---------------------------------------------------
+Top-level statement is material and reconciled - appending
+No log transfers to process
+~~~ Leaving: 13960847.66 ~~~
+------------------------------------ 1 statements generated.
+
+
+------------------------------------
+~~~ Entering: 14218245.11 ~~~
+First pass: Fetching unreconciled transfers
+Fetched 1 unreconciled transfers
+Second pass: Reconciling transfers
+Processing 1 log transfers
+Set BegSentinel for first log transfer
+Set EndSentinel for last log transfer
+Converted log transfer to statement for asset: 0x0bc529c00c6401aef6d220be8c6ea1667f6ad93e
+XXX =============[ token ]======================
+XXX Case 1: Only statement in block
+XXX Block: 14218245 Tx: 11 Asset: 0x0bc529c00c6401aef6d220be8c6ea1667f6ad93e
+XXX FirstInBlock: true, LastInBlock: true
+XXX ================================================
+=========================================================
+===> PRICING FOR 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) using Uniswap
+=========================================================
+blockNumber:         14218245
+source1 (uni/mkr):   0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f
+str0 (call):         getPair(0x6b175474e89094c44da98b954eedeac495271d0f, 0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2)
+source2 (pair):      0xa478c2975ab1ea89e8196811f51a7b7ade33eb11
+str1 (call/data):    getReserves()
+first:               0x6b175474e89094c44da98b954eedeac495271d0f
+second:              0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2
+reversed:            false
+float0:              1.57542798e+25
+float1:              5.130026024e+21
+float2:              1
+bigPrice:            3070.99413
+price:               3070.99413
+source:              uniswap
+=========================================================
+===> PRICING FOR 0x0bc529c00c6401aef6d220be8c6ea1667f6ad93e (YFI) using Uniswap
+=========================================================
+blockNumber:         14218245
+source1 (uni/mkr):   0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f
+str0 (call):         getPair(0x0bc529c00c6401aef6d220be8c6ea1667f6ad93e, 0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2)
+source2 (pair):      0x2fdbadf3c4d5a8666bc06645b8358ab803996e28
+str1 (call/data):    getReserves()
+first:               0x0bc529c00c6401aef6d220be8c6ea1667f6ad93e
+second:              0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2
+reversed:            true
+float0:              3.209627584e+19
+float1:              2.420584501e+20
+float2:              3070.99413
+bigPrice:            0.1325972129
+price:               407.2052624
+source:              uniswap
+===================================================
+Previous:               13960847 66 ( true )
+Current:                14218245 11 ( true )
+Next:                   14231553 18 ( true )
+accountedFor:           0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e
+sender:                 0xaca096d2e6492d7380c5d8e70d90e13eecc72dd4  ==>  0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e
+asset:                  0x0bc529c00c6401aef6d220be8c6ea1667f6ad93e (YFI) decimals: 18
+hash:                   0x3d630cf5a1626382924429d936d1b95d5e31be1ead3773f490b9fb0e95497ce4
+timestamp:              1645029438
+blockNumber:            14218245.11.3
+priceSource:            407.2052624 (uniswap)
+--------------------------------------------------- 
+Trial balance:
+   prevBal:             0
+   begBal:              0 (0)
+   totalIn:             0.42
+   totalOut:            0
+   amountNet:           0.42
+                       ======================= 
+   endBal:              0.42 (0)
+   endBalCalc:          0.42
+--------------------------------------------------- 
+   amountIn:            0.42
+   material:            true
+   reconciled:          true
+---------------------------------------------------
+Log statement is material - appending. reconciled: true
+~~~ Leaving: 14218245.11 ~~~
+------------------------------------ 1 statements generated.
+
+
+------------------------------------
+~~~ Entering: 14231553.18 ~~~
+First pass: Fetching unreconciled transfers
+Fetched 1 unreconciled transfers
+Second pass: Reconciling transfers
+Processing ETH transfer
+Converted ETH transfer to statement
+Attempting to reconcile top-level ETH transfer: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e
+XXX =============[ top-level ]======================
+XXX Case 1: Only statement in block
+XXX Block: 14231553 Tx: 18 Asset: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+XXX FirstInBlock: true, LastInBlock: true
+XXX ================================================
+=========================================================
+===> PRICING FOR 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) using Uniswap
+=========================================================
+blockNumber:         14231553
+source1 (uni/mkr):   0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f
+str0 (call):         getPair(0x6b175474e89094c44da98b954eedeac495271d0f, 0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2)
+source2 (pair):      0xa478c2975ab1ea89e8196811f51a7b7ade33eb11
+str1 (call/data):    getReserves()
+first:               0x6b175474e89094c44da98b954eedeac495271d0f
+second:              0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2
+reversed:            false
+float0:              1.498254465e+25
+float1:              5.360043153e+21
+float2:              1
+bigPrice:            2795.228363
+price:               2795.228363
+source:              uniswap
+===================================================
+Previous:               14218245 11 ( true )
+Current:                14231553 18 ( true )
+Next:                   14258674 130 ( true )
+accountedFor:           0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e
+sender:                 0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e  ==>  0x2e2ca259ffa7491e9222d6f7708e4a1a2b34aaef
+asset:                  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
+hash:                   0x4cdaa467819f6565f4767663be4181f00f01d4dee40423872fe67fbb1529c4b3
+timestamp:              1645207151
+blockNumber:            14231553.18.0
+priceSource:            2795.228363 (uniswap)
+--------------------------------------------------- 
+Trial balance:
+   prevBal:             371.7140475
+   begBal:              371.7140475 (0)
+   totalIn:             0
+   totalOut:            1.003516294286512
+   amountNet:           -1.003516294286512
+                       ======================= 
+   endBal:              370.710531205713488 (0)
+   endBalCalc:          370.710531205713488
+--------------------------------------------------- 
+   amountOut:           1
+   gasOut:              0.003516294286512
+   material:            true
+   reconciled:          true
+---------------------------------------------------
+Top-level statement is material and reconciled - appending
+No log transfers to process
+~~~ Leaving: 14231553.18 ~~~
+------------------------------------ 1 statements generated.
+
+
+------------------------------------
+~~~ Entering: 14258674.130 ~~~
+First pass: Fetching unreconciled transfers
+Fetched 1 unreconciled transfers
+Second pass: Reconciling transfers
+Processing ETH transfer
+Converted ETH transfer to statement
+Attempting to reconcile top-level ETH transfer: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e
+XXX =============[ top-level ]======================
+XXX Case 1: Only statement in block
+XXX Block: 14258674 Tx: 130 Asset: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+XXX FirstInBlock: true, LastInBlock: true
+XXX ================================================
+=========================================================
+===> PRICING FOR 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) using Uniswap
+=========================================================
+blockNumber:         14258674
+source1 (uni/mkr):   0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f
+str0 (call):         getPair(0x6b175474e89094c44da98b954eedeac495271d0f, 0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2)
+source2 (pair):      0xa478c2975ab1ea89e8196811f51a7b7ade33eb11
+str1 (call/data):    getReserves()
+first:               0x6b175474e89094c44da98b954eedeac495271d0f
+second:              0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2
+reversed:            false
+float0:              1.498035793e+25
+float1:              5.754334083e+21
+float2:              1
+bigPrice:            2603.317379
+price:               2603.317379
+source:              uniswap
+===================================================
+Previous:               14231553 18 ( true )
+Current:                14258674 130 ( true )
+Next:                   14271011 355 ( true )
+accountedFor:           0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e
+sender:                 0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e  ==>  0x2e2ca259ffa7491e9222d6f7708e4a1a2b34aaef
+asset:                  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
+hash:                   0x85153f1861fc5ac65ac7cc1f026895c88869bbb88e4bc86162330e15bcd691a2
+timestamp:              1645570391
+blockNumber:            14258674.130.0
+priceSource:            2603.317379 (uniswap)
+--------------------------------------------------- 
+Trial balance:
+   prevBal:             370.710531205713488
+   begBal:              370.710531205713488 (0)
+   totalIn:             0
+   totalOut:            5.002773671443592
+   amountNet:           -5.002773671443592
+                       ======================= 
+   endBal:              365.707757534269896 (0)
+   endBalCalc:          365.707757534269896
+--------------------------------------------------- 
+   amountOut:           5
+   gasOut:              0.002773671443592
+   material:            true
+   reconciled:          true
+---------------------------------------------------
+Top-level statement is material and reconciled - appending
+No log transfers to process
+~~~ Leaving: 14258674.130 ~~~
+------------------------------------ 1 statements generated.
+
+
+------------------------------------
+~~~ Entering: 14271011.355 ~~~
+First pass: Fetching unreconciled transfers
+Fetched 1 unreconciled transfers
+Second pass: Reconciling transfers
+Processing ETH transfer
+Converted ETH transfer to statement
+Attempting to reconcile top-level ETH transfer: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e
+XXX =============[ top-level ]======================
+XXX Case 1: Only statement in block
+XXX Block: 14271011 Tx: 355 Asset: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+XXX FirstInBlock: true, LastInBlock: true
+XXX ================================================
+=========================================================
+===> PRICING FOR 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) using Uniswap
+=========================================================
+blockNumber:         14271011
+source1 (uni/mkr):   0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f
+str0 (call):         getPair(0x6b175474e89094c44da98b954eedeac495271d0f, 0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2)
+source2 (pair):      0xa478c2975ab1ea89e8196811f51a7b7ade33eb11
+str1 (call/data):    getReserves()
+first:               0x6b175474e89094c44da98b954eedeac495271d0f
+second:              0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2
+reversed:            false
+float0:              1.512405675e+25
+float1:              5.713234691e+21
+float2:              1
+bigPrice:            2647.196828
+price:               2647.196828
+source:              uniswap
+===================================================
+Previous:               14258674 130 ( true )
+Current:                14271011 355 ( true )
+Next:                   14271262 30 ( true )
+accountedFor:           0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e
+sender:                 0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e  ==>  0x2e554a62b0cfb8f64f96724da2f8b8d709881b81
+asset:                  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
+hash:                   0xec6c0485289a9adc3c14f0dc3d30a524bf8ccf4a201bb0ee521779c53dc25a4f
+timestamp:              1645735140
+blockNumber:            14271011.355.0
+priceSource:            2647.196828 (uniswap)
+--------------------------------------------------- 
+Trial balance:
+   prevBal:             365.707757534269896
+   begBal:              365.707757534269896 (0)
+   totalIn:             0
+   totalOut:            0.0074064407457346
+   amountNet:           -0.0074064407457346
+                       ======================= 
+   endBal:              365.7003510935241614 (0)
+   endBalCalc:          365.7003510935241614
+--------------------------------------------------- 
+   amountOut:           0.005
+   gasOut:              0.0024064407457346
+   material:            true
+   reconciled:          true
+---------------------------------------------------
+Top-level statement is material and reconciled - appending
+No log transfers to process
+~~~ Leaving: 14271011.355 ~~~
+------------------------------------ 1 statements generated.
+
+
+------------------------------------
+~~~ Entering: 14271262.30 ~~~
+First pass: Fetching unreconciled transfers
+Fetched 1 unreconciled transfers
+Second pass: Reconciling transfers
+Processing ETH transfer
+Converted ETH transfer to statement
+Attempting to reconcile top-level ETH transfer: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e
+XXX =============[ top-level ]======================
+XXX Case 1: Only statement in block
+XXX Block: 14271262 Tx: 30 Asset: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+XXX FirstInBlock: true, LastInBlock: true
+XXX ================================================
+=========================================================
+===> PRICING FOR 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) using Uniswap
+=========================================================
+blockNumber:         14271262
+source1 (uni/mkr):   0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f
+str0 (call):         getPair(0x6b175474e89094c44da98b954eedeac495271d0f, 0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2)
+source2 (pair):      0xa478c2975ab1ea89e8196811f51a7b7ade33eb11
+str1 (call/data):    getReserves()
+first:               0x6b175474e89094c44da98b954eedeac495271d0f
+second:              0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2
+reversed:            false
+float0:              1.510762603e+25
+float1:              5.719513217e+21
+float2:              1
+bigPrice:            2641.418151
+price:               2641.418151
+source:              uniswap
+===================================================
+Previous:               14271011 355 ( true )
+Current:                14271262 30 ( true )
+Next:                   14271515 128 ( true )
+accountedFor:           0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e
+sender:                 0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e  ==>  0x2e554a62b0cfb8f64f96724da2f8b8d709881b81
+asset:                  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
+hash:                   0x08b5e486fb0a0dcede5c0f11419185359e44cdadf1507492c76757b6b7e95ecb
+timestamp:              1645738120
+blockNumber:            14271262.30.0
+priceSource:            2641.418151 (uniswap)
+--------------------------------------------------- 
+Trial balance:
+   prevBal:             365.7003510935241614
+   begBal:              365.7003510935241614 (0)
+   totalIn:             0
+   totalOut:            355.001884144472443245
+   amountNet:           -355.001884144472443245
+                       ======================= 
+   endBal:              10.698466949051718155 (0)
+   endBalCalc:          10.698466949051718155
+--------------------------------------------------- 
+   amountOut:           355
+   gasOut:              0.001884144472443245
+   material:            true
+   reconciled:          true
+---------------------------------------------------
+Top-level statement is material and reconciled - appending
+No log transfers to process
+~~~ Leaving: 14271262.30 ~~~
+------------------------------------ 1 statements generated.
+
+
+------------------------------------
+~~~ Entering: 14271515.128 ~~~
+First pass: Fetching unreconciled transfers
+Fetched 1 unreconciled transfers
+Second pass: Reconciling transfers
+Processing 1 log transfers
+Set BegSentinel for first log transfer
+Set EndSentinel for last log transfer
+Converted log transfer to statement for asset: 0x0bc529c00c6401aef6d220be8c6ea1667f6ad93e
+XXX =============[ token ]======================
+XXX Case 1: Only statement in block
+XXX Block: 14271515 Tx: 128 Asset: 0x0bc529c00c6401aef6d220be8c6ea1667f6ad93e
+XXX FirstInBlock: true, LastInBlock: true
+XXX ================================================
+=========================================================
+===> PRICING FOR 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) using Uniswap
+=========================================================
+blockNumber:         14271515
+source1 (uni/mkr):   0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f
+str0 (call):         getPair(0x6b175474e89094c44da98b954eedeac495271d0f, 0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2)
+source2 (pair):      0xa478c2975ab1ea89e8196811f51a7b7ade33eb11
+str1 (call/data):    getReserves()
+first:               0x6b175474e89094c44da98b954eedeac495271d0f
+second:              0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2
+reversed:            false
+float0:              1.50272355e+25
+float1:              5.750310939e+21
+float2:              1
+bigPrice:            2613.290944
+price:               2613.290944
+source:              uniswap
+=========================================================
+===> PRICING FOR 0x0bc529c00c6401aef6d220be8c6ea1667f6ad93e (YFI) using Uniswap
+=========================================================
+blockNumber:         14271515
+source1 (uni/mkr):   0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f
+str0 (call):         getPair(0x0bc529c00c6401aef6d220be8c6ea1667f6ad93e, 0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2)
+source2 (pair):      0x2fdbadf3c4d5a8666bc06645b8358ab803996e28
+str1 (call/data):    getReserves()
+first:               0x0bc529c00c6401aef6d220be8c6ea1667f6ad93e
+second:              0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2
+reversed:            true
+float0:              3.150265076e+19
+float1:              2.3459306e+20
+float2:              2613.290944
+bigPrice:            0.1342863713
+price:               350.9293581
+source:              uniswap
+===================================================
+Previous:               14271262 30 ( true )
+Current:                14271515 128 ( true )
+Next:                   14276993 249 ( true )
+accountedFor:           0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e
+sender:                 0xe081abb7d9e327e89a13e65b3e2b6fcaf2eceb97  ==>  0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e
+asset:                  0x0bc529c00c6401aef6d220be8c6ea1667f6ad93e (YFI) decimals: 18
+hash:                   0x0542c4f8f837a933d6dd556830a585df49553c10563325d7b97ec51b05d7ef5e
+timestamp:              1645741808
+blockNumber:            14271515.128.239
+priceSource:            350.9293581 (uniswap)
+--------------------------------------------------- 
+Trial balance:
+   prevBal:             0.42
+   begBal:              0.42 (0)
+   totalIn:             0.00136603
+   totalOut:            0
+   amountNet:           0.00136603
+                       ======================= 
+   endBal:              0.42136603 (0)
+   endBalCalc:          0.42136603
+--------------------------------------------------- 
+   amountIn:            0.00136603
+   material:            true
+   reconciled:          true
+---------------------------------------------------
+Log statement is material - appending. reconciled: true
+~~~ Leaving: 14271515.128 ~~~
+------------------------------------ 1 statements generated.
+
+
+------------------------------------
+~~~ Entering: 14276993.249 ~~~
+First pass: Fetching unreconciled transfers
+Fetched 1 unreconciled transfers
+Second pass: Reconciling transfers
+Processing 1 log transfers
+Set BegSentinel for first log transfer
+Set EndSentinel for last log transfer
+Converted log transfer to statement for asset: 0x0bc529c00c6401aef6d220be8c6ea1667f6ad93e
+XXX =============[ token ]======================
+XXX Case 1: Only statement in block
+XXX Block: 14276993 Tx: 249 Asset: 0x0bc529c00c6401aef6d220be8c6ea1667f6ad93e
+XXX FirstInBlock: true, LastInBlock: true
+XXX ================================================
+=========================================================
+===> PRICING FOR 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) using Uniswap
+=========================================================
+blockNumber:         14276993
+source1 (uni/mkr):   0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f
+str0 (call):         getPair(0x6b175474e89094c44da98b954eedeac495271d0f, 0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2)
+source2 (pair):      0xa478c2975ab1ea89e8196811f51a7b7ade33eb11
+str1 (call/data):    getReserves()
+first:               0x6b175474e89094c44da98b954eedeac495271d0f
+second:              0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2
+reversed:            false
+float0:              1.522584617e+25
+float1:              5.678387814e+21
+float2:              1
+bigPrice:            2681.367788
+price:               2681.367788
+source:              uniswap
+=========================================================
+===> PRICING FOR 0x0bc529c00c6401aef6d220be8c6ea1667f6ad93e (YFI) using Uniswap
+=========================================================
+blockNumber:         14276993
+source1 (uni/mkr):   0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f
+str0 (call):         getPair(0x0bc529c00c6401aef6d220be8c6ea1667f6ad93e, 0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2)
+source2 (pair):      0x2fdbadf3c4d5a8666bc06645b8358ab803996e28
+str1 (call/data):    getReserves()
+first:               0x0bc529c00c6401aef6d220be8c6ea1667f6ad93e
+second:              0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2
+reversed:            true
+float0:              3.179681027e+19
+float1:              2.324419164e+20
+float2:              2681.367788
+bigPrice:            0.1367946486
+price:               366.7967643
+source:              uniswap
+===================================================
+Previous:               14271515 128 ( true )
+Current:                14276993 249 ( true )
+Next:                   14296398 98 ( true )
+accountedFor:           0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e
+sender:                 0xe081abb7d9e327e89a13e65b3e2b6fcaf2eceb97  ==>  0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e
+asset:                  0x0bc529c00c6401aef6d220be8c6ea1667f6ad93e (YFI) decimals: 18
+hash:                   0xd521ef2eb459a2419ccbecf9e0c0ba0471f56997534f4a02cc95e1dc0e13b90a
+timestamp:              1645815242
+blockNumber:            14276993.249.245
+priceSource:            366.7967643 (uniswap)
+--------------------------------------------------- 
+Trial balance:
+   prevBal:             0.42136603
+   begBal:              0.42136603 (0)
+   totalIn:             0.07252565
+   totalOut:            0
+   amountNet:           0.07252565
+                       ======================= 
+   endBal:              0.49389168 (0)
+   endBalCalc:          0.49389168
+--------------------------------------------------- 
+   amountIn:            0.07252565
+   material:            true
+   reconciled:          true
+---------------------------------------------------
+Log statement is material - appending. reconciled: true
+~~~ Leaving: 14276993.249 ~~~
+------------------------------------ 1 statements generated.
+
+
+------------------------------------
+~~~ Entering: 14296398.98 ~~~
+First pass: Fetching unreconciled transfers
+Fetched 1 unreconciled transfers
+Second pass: Reconciling transfers
+Processing 1 log transfers
+Set BegSentinel for first log transfer
+Set EndSentinel for last log transfer
+Converted log transfer to statement for asset: 0x0bc529c00c6401aef6d220be8c6ea1667f6ad93e
+XXX =============[ token ]======================
+XXX Case 1: Only statement in block
+XXX Block: 14296398 Tx: 98 Asset: 0x0bc529c00c6401aef6d220be8c6ea1667f6ad93e
+XXX FirstInBlock: true, LastInBlock: true
+XXX ================================================
+=========================================================
+===> PRICING FOR 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) using Uniswap
+=========================================================
+blockNumber:         14296398
+source1 (uni/mkr):   0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f
+str0 (call):         getPair(0x6b175474e89094c44da98b954eedeac495271d0f, 0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2)
+source2 (pair):      0xa478c2975ab1ea89e8196811f51a7b7ade33eb11
+str1 (call/data):    getReserves()
+first:               0x6b175474e89094c44da98b954eedeac495271d0f
+second:              0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2
+reversed:            false
+float0:              1.318917689e+25
+float1:              4.694271999e+21
+float2:              1
+bigPrice:            2809.632013
+price:               2809.632013
+source:              uniswap
+=========================================================
+===> PRICING FOR 0x0bc529c00c6401aef6d220be8c6ea1667f6ad93e (YFI) using Uniswap
+=========================================================
+blockNumber:         14296398
+source1 (uni/mkr):   0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f
+str0 (call):         getPair(0x0bc529c00c6401aef6d220be8c6ea1667f6ad93e, 0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2)
+source2 (pair):      0x2fdbadf3c4d5a8666bc06645b8358ab803996e28
+str1 (call/data):    getReserves()
+first:               0x0bc529c00c6401aef6d220be8c6ea1667f6ad93e
+second:              0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2
+reversed:            true
+float0:              3.18244422e+19
+float1:              2.324455551e+20
+float2:              2809.632013
+bigPrice:            0.1369113821
+price:               384.670602
+source:              uniswap
+===================================================
+Previous:               14276993 249 ( true )
+Current:                14296398 98 ( true )
+Next:                   14304199 69 ( true )
+accountedFor:           0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e
+sender:                 0xe081abb7d9e327e89a13e65b3e2b6fcaf2eceb97  ==>  0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e
+asset:                  0x0bc529c00c6401aef6d220be8c6ea1667f6ad93e (YFI) decimals: 18
+hash:                   0xe0836121c525f8452c5a99dea1da4794b3872a7ef6df43c6bc0719dbe1bc9fa2
+timestamp:              1646074703
+blockNumber:            14296398.98.142
+priceSource:            384.670602 (uniswap)
+--------------------------------------------------- 
+Trial balance:
+   prevBal:             0.49389168
+   begBal:              0.49389168 (0)
+   totalIn:             0.15968197
+   totalOut:            0
+   amountNet:           0.15968197
+                       ======================= 
+   endBal:              0.65357365 (0)
+   endBalCalc:          0.65357365
+--------------------------------------------------- 
+   amountIn:            0.15968197
+   material:            true
+   reconciled:          true
+---------------------------------------------------
+Log statement is material - appending. reconciled: true
+~~~ Leaving: 14296398.98 ~~~
+------------------------------------ 1 statements generated.
+
+
+------------------------------------
+~~~ Entering: 14304199.69 ~~~
+First pass: Fetching unreconciled transfers
+Fetched 1 unreconciled transfers
+Second pass: Reconciling transfers
+Processing 1 log transfers
+Set BegSentinel for first log transfer
+Set EndSentinel for last log transfer
+Converted log transfer to statement for asset: 0xa0b73e1ff0b80914ab6fe0444e65848c4c34450b
+XXX =============[ token ]======================
+XXX Case 1: Only statement in block
+XXX Block: 14304199 Tx: 69 Asset: 0xa0b73e1ff0b80914ab6fe0444e65848c4c34450b
+XXX FirstInBlock: true, LastInBlock: true
+XXX ================================================
+=========================================================
+===> PRICING FOR 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) using Uniswap
+=========================================================
+blockNumber:         14304199
+source1 (uni/mkr):   0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f
+str0 (call):         getPair(0x6b175474e89094c44da98b954eedeac495271d0f, 0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2)
+source2 (pair):      0xa478c2975ab1ea89e8196811f51a7b7ade33eb11
+str1 (call/data):    getReserves()
+first:               0x6b175474e89094c44da98b954eedeac495271d0f
+second:              0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2
+reversed:            false
+float0:              1.355084938e+25
+float1:              4.571996443e+21
+float2:              1
+bigPrice:            2963.880122
+price:               2963.880122
+source:              uniswap
+=========================================================
+===> PRICING FOR 0xa0b73e1ff0b80914ab6fe0444e65848c4c34450b (CRO) using Uniswap
+=========================================================
+blockNumber:         14304199
+source1 (uni/mkr):   0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f
+str0 (call):         getPair(0xa0b73e1ff0b80914ab6fe0444e65848c4c34450b, 0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2)
+source2 (pair):      0x90704ac59e7e54632b0cc9d22573aecd7eb094ad
+str1 (call/data):    getReserves()
+first:               0xa0b73e1ff0b80914ab6fe0444e65848c4c34450b
+second:              0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2
+reversed:            true
+float0:              9.183871106e+12
+float1:              1.348507486e+19
+float2:              2963.880122
+bigPrice:            6.810396827e-07
+price:               0.002018519978
+source:              uniswap
+===================================================
+Previous:               14296398 98 ( true )
+Current:                14304199 69 ( true )
+Next:                   14304289 8 ( true )
+accountedFor:           0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e
+sender:                 0xe081abb7d9e327e89a13e65b3e2b6fcaf2eceb97  ==>  0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e
+asset:                  0xa0b73e1ff0b80914ab6fe0444e65848c4c34450b (CRO) decimals: 8
+hash:                   0x428bc69806d9e2b5b49ffd0154c5ca85e946fbcaa2c0da126d00f5648fada254
+timestamp:              1646178247
+blockNumber:            14304199.69.168
+priceSource:            0.002018519978 (uniswap)
+--------------------------------------------------- 
+Trial balance:
+   prevBal:             0
+   begBal:              0 (0)
+   totalIn:             0.000071560937101954
+   totalOut:            0
+   amountNet:           0.000071560937101954
+                       ======================= 
+   endBal:              0.000071560937101954 (0)
+   endBalCalc:          0.000071560937101954
+--------------------------------------------------- 
+   amountIn:            0.000071560937101954
+   material:            true
+   reconciled:          true
+---------------------------------------------------
+Log statement is material - appending. reconciled: true
+~~~ Leaving: 14304199.69 ~~~
+------------------------------------ 1 statements generated.
+
+
+------------------------------------
+~~~ Entering: 14304289.8 ~~~
+First pass: Fetching unreconciled transfers
+Fetched 1 unreconciled transfers
+Second pass: Reconciling transfers
+Processing 1 log transfers
+Set BegSentinel for first log transfer
+Set EndSentinel for last log transfer
+Converted log transfer to statement for asset: 0x0bc529c00c6401aef6d220be8c6ea1667f6ad93e
+XXX =============[ token ]======================
+XXX Case 1: Only statement in block
+XXX Block: 14304289 Tx: 8 Asset: 0x0bc529c00c6401aef6d220be8c6ea1667f6ad93e
+XXX FirstInBlock: true, LastInBlock: true
+XXX ================================================
+=========================================================
+===> PRICING FOR 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) using Uniswap
+=========================================================
+blockNumber:         14304289
+source1 (uni/mkr):   0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f
+str0 (call):         getPair(0x6b175474e89094c44da98b954eedeac495271d0f, 0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2)
+source2 (pair):      0xa478c2975ab1ea89e8196811f51a7b7ade33eb11
+str1 (call/data):    getReserves()
+first:               0x6b175474e89094c44da98b954eedeac495271d0f
+second:              0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2
+reversed:            false
+float0:              1.355328825e+25
+float1:              4.571183721e+21
+float2:              1
+bigPrice:            2964.94061
+price:               2964.94061
+source:              uniswap
+=========================================================
+===> PRICING FOR 0x0bc529c00c6401aef6d220be8c6ea1667f6ad93e (YFI) using Uniswap
+=========================================================
+blockNumber:         14304289
+source1 (uni/mkr):   0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f
+str0 (call):         getPair(0x0bc529c00c6401aef6d220be8c6ea1667f6ad93e, 0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2)
+source2 (pair):      0x2fdbadf3c4d5a8666bc06645b8358ab803996e28
+str1 (call/data):    getReserves()
+first:               0x0bc529c00c6401aef6d220be8c6ea1667f6ad93e
+second:              0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2
+reversed:            true
+float0:              3.184208541e+19
+float1:              2.323281436e+20
+float2:              2964.94061
+bigPrice:            0.1370565138
+price:               406.3644235
+source:              uniswap
+===================================================
+Previous:               14304199 69 ( true )
+Current:                14304289 8 ( true )
+Next:                   14310071 69 ( true )
+accountedFor:           0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e
+sender:                 0xe081abb7d9e327e89a13e65b3e2b6fcaf2eceb97  ==>  0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e
+asset:                  0x0bc529c00c6401aef6d220be8c6ea1667f6ad93e (YFI) decimals: 18
+hash:                   0x2a0480cba49121e1a1bf55eb1216ad3bb543d6798238b63aa4c9461510dbb5ca
+timestamp:              1646179627
+blockNumber:            14304289.8.5
+priceSource:            406.3644235 (uniswap)
+--------------------------------------------------- 
+Trial balance:
+   prevBal:             0.65357365
+   begBal:              0.65357365 (0)
+   totalIn:             0.6075824
+   totalOut:            0
+   amountNet:           0.6075824
+                       ======================= 
+   endBal:              1.26115605 (0)
+   endBalCalc:          1.26115605
+--------------------------------------------------- 
+   amountIn:            0.6075824
+   material:            true
+   reconciled:          true
+---------------------------------------------------
+Log statement is material - appending. reconciled: true
+~~~ Leaving: 14304289.8 ~~~
+------------------------------------ 1 statements generated.
+
+
+------------------------------------
+~~~ Entering: 14310071.69 ~~~
+First pass: Fetching unreconciled transfers
+Fetched 1 unreconciled transfers
+Second pass: Reconciling transfers
+Processing 1 log transfers
+Set BegSentinel for first log transfer
+Set EndSentinel for last log transfer
+Converted log transfer to statement for asset: 0x0bc529c00c6401aef6d220be8c6ea1667f6ad93e
+XXX =============[ token ]======================
+XXX Case 1: Only statement in block
+XXX Block: 14310071 Tx: 69 Asset: 0x0bc529c00c6401aef6d220be8c6ea1667f6ad93e
+XXX FirstInBlock: true, LastInBlock: true
+XXX ================================================
+=========================================================
+===> PRICING FOR 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) using Uniswap
+=========================================================
+blockNumber:         14310071
+source1 (uni/mkr):   0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f
+str0 (call):         getPair(0x6b175474e89094c44da98b954eedeac495271d0f, 0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2)
+source2 (pair):      0xa478c2975ab1ea89e8196811f51a7b7ade33eb11
+str1 (call/data):    getReserves()
+first:               0x6b175474e89094c44da98b954eedeac495271d0f
+second:              0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2
+reversed:            false
+float0:              1.348124895e+25
+float1:              4.583439818e+21
+float2:              1
+bigPrice:            2941.295072
+price:               2941.295072
+source:              uniswap
+=========================================================
+===> PRICING FOR 0x0bc529c00c6401aef6d220be8c6ea1667f6ad93e (YFI) using Uniswap
+=========================================================
+blockNumber:         14310071
+source1 (uni/mkr):   0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f
+str0 (call):         getPair(0x0bc529c00c6401aef6d220be8c6ea1667f6ad93e, 0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2)
+source2 (pair):      0x2fdbadf3c4d5a8666bc06645b8358ab803996e28
+str1 (call/data):    getReserves()
+first:               0x0bc529c00c6401aef6d220be8c6ea1667f6ad93e
+second:              0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2
+reversed:            true
+float0:              3.185404981e+19
+float1:              2.322631118e+20
+float2:              2941.295072
+bigPrice:            0.1371464008
+price:               403.3880327
+source:              uniswap
+===================================================
+Previous:               14304289 8 ( true )
+Current:                14310071 69 ( true )
+Next:                   14310827 166 ( true )
+accountedFor:           0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e
+sender:                 0xe081abb7d9e327e89a13e65b3e2b6fcaf2eceb97  ==>  0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e
+asset:                  0x0bc529c00c6401aef6d220be8c6ea1667f6ad93e (YFI) decimals: 18
+hash:                   0x73f004780c825bc01d102d4d3d21242cfe42ffd7cfd85eacc9ff521f048fb5fa
+timestamp:              1646257078
+blockNumber:            14310071.69.155
+priceSource:            403.3880327 (uniswap)
+--------------------------------------------------- 
+Trial balance:
+   prevBal:             1.26115605
+   begBal:              1.26115605 (0)
+   totalIn:             0.15937745
+   totalOut:            0
+   amountNet:           0.15937745
+                       ======================= 
+   endBal:              1.4205335 (0)
+   endBalCalc:          1.4205335
+--------------------------------------------------- 
+   amountIn:            0.15937745
+   material:            true
+   reconciled:          true
+---------------------------------------------------
+Log statement is material - appending. reconciled: true
+~~~ Leaving: 14310071.69 ~~~
+------------------------------------ 1 statements generated.
+
+
+------------------------------------
+~~~ Entering: 14310827.166 ~~~
+First pass: Fetching unreconciled transfers
+Fetched 1 unreconciled transfers
+Second pass: Reconciling transfers
+Processing 1 log transfers
+Set BegSentinel for first log transfer
+Set EndSentinel for last log transfer
+Converted log transfer to statement for asset: 0xa0b73e1ff0b80914ab6fe0444e65848c4c34450b
+XXX =============[ token ]======================
+XXX Case 1: Only statement in block
+XXX Block: 14310827 Tx: 166 Asset: 0xa0b73e1ff0b80914ab6fe0444e65848c4c34450b
+XXX FirstInBlock: true, LastInBlock: true
+XXX ================================================
+=========================================================
+===> PRICING FOR 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) using Uniswap
+=========================================================
+blockNumber:         14310827
+source1 (uni/mkr):   0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f
+str0 (call):         getPair(0x6b175474e89094c44da98b954eedeac495271d0f, 0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2)
+source2 (pair):      0xa478c2975ab1ea89e8196811f51a7b7ade33eb11
+str1 (call/data):    getReserves()
+first:               0x6b175474e89094c44da98b954eedeac495271d0f
+second:              0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2
+reversed:            false
+float0:              1.350938974e+25
+float1:              4.57461545e+21
+float2:              1
+bigPrice:            2953.120298
+price:               2953.120298
+source:              uniswap
+=========================================================
+===> PRICING FOR 0xa0b73e1ff0b80914ab6fe0444e65848c4c34450b (CRO) using Uniswap
+=========================================================
+blockNumber:         14310827
+source1 (uni/mkr):   0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f
+str0 (call):         getPair(0xa0b73e1ff0b80914ab6fe0444e65848c4c34450b, 0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2)
+source2 (pair):      0x90704ac59e7e54632b0cc9d22573aecd7eb094ad
+str1 (call/data):    getReserves()
+first:               0xa0b73e1ff0b80914ab6fe0444e65848c4c34450b
+second:              0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2
+reversed:            true
+float0:              9.135515968e+12
+float1:              1.357708061e+19
+float2:              2953.120298
+bigPrice:            6.728630575e-07
+price:               0.001987045553
+source:              uniswap
+===================================================
+Previous:               14310071 69 ( true )
+Current:                14310827 166 ( true )
+Next:                   14316149 98 ( true )
+accountedFor:           0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e
+sender:                 0xe081abb7d9e327e89a13e65b3e2b6fcaf2eceb97  ==>  0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e
+asset:                  0xa0b73e1ff0b80914ab6fe0444e65848c4c34450b (CRO) decimals: 8
+hash:                   0x6e2e8adb10316b28bb8225b1eb76e1dccdbed3505e828486e20fc141796e7359
+timestamp:              1646267700
+blockNumber:            14310827.166.239
+priceSource:            0.001987045553 (uniswap)
+--------------------------------------------------- 
+Trial balance:
+   prevBal:             0.000071560937101954
+   begBal:              0.000071560937101954 (0)
+   totalIn:             0.000012331841038995
+   totalOut:            0
+   amountNet:           0.000012331841038995
+                       ======================= 
+   endBal:              0.000083892778140949 (0)
+   endBalCalc:          0.000083892778140949
+--------------------------------------------------- 
+   amountIn:            0.000012331841038995
+   material:            true
+   reconciled:          true
+---------------------------------------------------
+Log statement is material - appending. reconciled: true
+~~~ Leaving: 14310827.166 ~~~
+------------------------------------ 1 statements generated.
+
+
+------------------------------------
+~~~ Entering: 14316149.98 ~~~
+First pass: Fetching unreconciled transfers
+Fetched 1 unreconciled transfers
+Second pass: Reconciling transfers
+Processing 1 log transfers
+Set BegSentinel for first log transfer
+Set EndSentinel for last log transfer
+Converted log transfer to statement for asset: 0x0bc529c00c6401aef6d220be8c6ea1667f6ad93e
+XXX =============[ token ]======================
+XXX Case 1: Only statement in block
+XXX Block: 14316149 Tx: 98 Asset: 0x0bc529c00c6401aef6d220be8c6ea1667f6ad93e
+XXX FirstInBlock: true, LastInBlock: true
+XXX ================================================
+=========================================================
+===> PRICING FOR 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) using Uniswap
+=========================================================
+blockNumber:         14316149
+source1 (uni/mkr):   0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f
+str0 (call):         getPair(0x6b175474e89094c44da98b954eedeac495271d0f, 0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2)
+source2 (pair):      0xa478c2975ab1ea89e8196811f51a7b7ade33eb11
+str1 (call/data):    getReserves()
+first:               0x6b175474e89094c44da98b954eedeac495271d0f
+second:              0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2
+reversed:            false
+float0:              1.317982917e+25
+float1:              4.685940967e+21
+float2:              1
+bigPrice:            2812.632353
+price:               2812.632353
+source:              uniswap
+=========================================================
+===> PRICING FOR 0x0bc529c00c6401aef6d220be8c6ea1667f6ad93e (YFI) using Uniswap
+=========================================================
+blockNumber:         14316149
+source1 (uni/mkr):   0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f
+str0 (call):         getPair(0x0bc529c00c6401aef6d220be8c6ea1667f6ad93e, 0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2)
+source2 (pair):      0x2fdbadf3c4d5a8666bc06645b8358ab803996e28
+str1 (call/data):    getReserves()
+first:               0x0bc529c00c6401aef6d220be8c6ea1667f6ad93e
+second:              0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2
+reversed:            true
+float0:              3.11695658e+19
+float1:              2.374381736e+20
+float2:              2812.632353
+bigPrice:            0.1312744506
+price:               369.2267669
+source:              uniswap
+===================================================
+Previous:               14310827 166 ( true )
+Current:                14316149 98 ( true )
+Next:                   14316157 253 ( true )
+accountedFor:           0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e
+sender:                 0xe081abb7d9e327e89a13e65b3e2b6fcaf2eceb97  ==>  0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e
+asset:                  0x0bc529c00c6401aef6d220be8c6ea1667f6ad93e (YFI) decimals: 18
+hash:                   0x1965e33b6d3d52163c31908986fa46b1ee8253ccc33836802ee6169aa0ce2799
+timestamp:              1646338749
+blockNumber:            14316149.98.115
+priceSource:            369.2267669 (uniswap)
+--------------------------------------------------- 
+Trial balance:
+   prevBal:             1.4205335
+   begBal:              1.4205335 (0)
+   totalIn:             0.07392234
+   totalOut:            0
+   amountNet:           0.07392234
+                       ======================= 
+   endBal:              1.49445584 (0)
+   endBalCalc:          1.49445584
+--------------------------------------------------- 
+   amountIn:            0.07392234
+   material:            true
+   reconciled:          true
+---------------------------------------------------
+Log statement is material - appending. reconciled: true
+~~~ Leaving: 14316149.98 ~~~
+------------------------------------ 1 statements generated.
+
+
+------------------------------------
+~~~ Entering: 14316157.253 ~~~
+First pass: Fetching unreconciled transfers
+Fetched 1 unreconciled transfers
+Second pass: Reconciling transfers
+Processing 1 log transfers
+Set BegSentinel for first log transfer
+Set EndSentinel for last log transfer
+Converted log transfer to statement for asset: 0xa0b73e1ff0b80914ab6fe0444e65848c4c34450b
+XXX =============[ token ]======================
+XXX Case 1: Only statement in block
+XXX Block: 14316157 Tx: 253 Asset: 0xa0b73e1ff0b80914ab6fe0444e65848c4c34450b
+XXX FirstInBlock: true, LastInBlock: true
+XXX ================================================
+=========================================================
+===> PRICING FOR 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) using Uniswap
+=========================================================
+blockNumber:         14316157
+source1 (uni/mkr):   0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f
+str0 (call):         getPair(0x6b175474e89094c44da98b954eedeac495271d0f, 0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2)
+source2 (pair):      0xa478c2975ab1ea89e8196811f51a7b7ade33eb11
+str1 (call/data):    getReserves()
+first:               0x6b175474e89094c44da98b954eedeac495271d0f
+second:              0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2
+reversed:            false
+float0:              1.317982917e+25
+float1:              4.685940967e+21
+float2:              1
+bigPrice:            2812.632353
+price:               2812.632353
+source:              uniswap
+=========================================================
+===> PRICING FOR 0xa0b73e1ff0b80914ab6fe0444e65848c4c34450b (CRO) using Uniswap
+=========================================================
+blockNumber:         14316157
+source1 (uni/mkr):   0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f
+str0 (call):         getPair(0xa0b73e1ff0b80914ab6fe0444e65848c4c34450b, 0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2)
+source2 (pair):      0x90704ac59e7e54632b0cc9d22573aecd7eb094ad
+str1 (call/data):    getReserves()
+first:               0xa0b73e1ff0b80914ab6fe0444e65848c4c34450b
+second:              0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2
+reversed:            true
+float0:              8.947894197e+12
+float1:              1.360637808e+19
+float2:              2812.632353
+bigPrice:            6.576249862e-07
+price:               0.001849657312
+source:              uniswap
+===================================================
+Previous:               14316149 98 ( true )
+Current:                14316157 253 ( true )
+Next:                   14322020 266 ( true )
+accountedFor:           0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e
+sender:                 0xe081abb7d9e327e89a13e65b3e2b6fcaf2eceb97  ==>  0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e
+asset:                  0xa0b73e1ff0b80914ab6fe0444e65848c4c34450b (CRO) decimals: 8
+hash:                   0xf747b87f11b03c9dbfb2fb30dc083b5199b0fee32bc4a20acbb95457c20cecae
+timestamp:              1646338826
+blockNumber:            14316157.253.420
+priceSource:            0.001849657312 (uniswap)
+--------------------------------------------------- 
+Trial balance:
+   prevBal:             0.000083892778140949
+   begBal:              0.000083892778140949 (0)
+   totalIn:             0.000004864922872613
+   totalOut:            0
+   amountNet:           0.000004864922872613
+                       ======================= 
+   endBal:              0.000088757701013562 (0)
+   endBalCalc:          0.000088757701013562
+--------------------------------------------------- 
+   amountIn:            0.000004864922872613
+   material:            true
+   reconciled:          true
+---------------------------------------------------
+Log statement is material - appending. reconciled: true
+~~~ Leaving: 14316157.253 ~~~
+------------------------------------ 1 statements generated.
+
+
+------------------------------------
+~~~ Entering: 14322020.266 ~~~
+First pass: Fetching unreconciled transfers
+Fetched 1 unreconciled transfers
+Second pass: Reconciling transfers
+Processing 1 log transfers
+Set BegSentinel for first log transfer
+Set EndSentinel for last log transfer
+Converted log transfer to statement for asset: 0x0bc529c00c6401aef6d220be8c6ea1667f6ad93e
+XXX =============[ token ]======================
+XXX Case 1: Only statement in block
+XXX Block: 14322020 Tx: 266 Asset: 0x0bc529c00c6401aef6d220be8c6ea1667f6ad93e
+XXX FirstInBlock: true, LastInBlock: true
+XXX ================================================
+=========================================================
+===> PRICING FOR 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) using Uniswap
+=========================================================
+blockNumber:         14322020
+source1 (uni/mkr):   0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f
+str0 (call):         getPair(0x6b175474e89094c44da98b954eedeac495271d0f, 0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2)
+source2 (pair):      0xa478c2975ab1ea89e8196811f51a7b7ade33eb11
+str1 (call/data):    getReserves()
+first:               0x6b175474e89094c44da98b954eedeac495271d0f
+second:              0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2
+reversed:            false
+float0:              1.289227196e+25
+float1:              4.79266066e+21
+float2:              1
+bigPrice:            2690.003085
+price:               2690.003085
+source:              uniswap
+=========================================================
+===> PRICING FOR 0x0bc529c00c6401aef6d220be8c6ea1667f6ad93e (YFI) using Uniswap
+=========================================================
+blockNumber:         14322020
+source1 (uni/mkr):   0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f
+str0 (call):         getPair(0x0bc529c00c6401aef6d220be8c6ea1667f6ad93e, 0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2)
+source2 (pair):      0x2fdbadf3c4d5a8666bc06645b8358ab803996e28
+str1 (call/data):    getReserves()
+first:               0x0bc529c00c6401aef6d220be8c6ea1667f6ad93e
+second:              0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2
+reversed:            true
+float0:              3.084160957e+19
+float1:              2.399741372e+20
+float2:              2690.003085
+bigPrice:            0.1285205561
+price:               345.7206925
+source:              uniswap
+===================================================
+Previous:               14316157 253 ( true )
+Current:                14322020 266 ( true )
+Next:                   14322028 199 ( true )
+accountedFor:           0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e
+sender:                 0xaca096d2e6492d7380c5d8e70d90e13eecc72dd4  ==>  0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e
+asset:                  0x0bc529c00c6401aef6d220be8c6ea1667f6ad93e (YFI) decimals: 18
+hash:                   0x66cfc8ce04a1b7a3f51dd3a2782f577db94060998f4bd0bcef4aadcb4d18098a
+timestamp:              1646416755
+blockNumber:            14322020.266.477
+priceSource:            345.7206925 (uniswap)
+--------------------------------------------------- 
+Trial balance:
+   prevBal:             1.49445584
+   begBal:              1.49445584 (0)
+   totalIn:             0.18186085
+   totalOut:            0
+   amountNet:           0.18186085
+                       ======================= 
+   endBal:              1.67631669 (0)
+   endBalCalc:          1.67631669
+--------------------------------------------------- 
+   amountIn:            0.18186085
+   material:            true
+   reconciled:          true
+---------------------------------------------------
+Log statement is material - appending. reconciled: true
+~~~ Leaving: 14322020.266 ~~~
+------------------------------------ 1 statements generated.
+
+
+------------------------------------
+~~~ Entering: 14322028.199 ~~~
+First pass: Fetching unreconciled transfers
+Fetched 1 unreconciled transfers
+Second pass: Reconciling transfers
+Processing 1 log transfers
+Set BegSentinel for first log transfer
+Set EndSentinel for last log transfer
+Converted log transfer to statement for asset: 0xa0b73e1ff0b80914ab6fe0444e65848c4c34450b
+XXX =============[ token ]======================
+XXX Case 1: Only statement in block
+XXX Block: 14322028 Tx: 199 Asset: 0xa0b73e1ff0b80914ab6fe0444e65848c4c34450b
+XXX FirstInBlock: true, LastInBlock: true
+XXX ================================================
+=========================================================
+===> PRICING FOR 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) using Uniswap
+=========================================================
+blockNumber:         14322028
+source1 (uni/mkr):   0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f
+str0 (call):         getPair(0x6b175474e89094c44da98b954eedeac495271d0f, 0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2)
+source2 (pair):      0xa478c2975ab1ea89e8196811f51a7b7ade33eb11
+str1 (call/data):    getReserves()
+first:               0x6b175474e89094c44da98b954eedeac495271d0f
+second:              0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2
+reversed:            false
+float0:              1.289227196e+25
+float1:              4.79266066e+21
+float2:              1
+bigPrice:            2690.003085
+price:               2690.003085
+source:              uniswap
+=========================================================
+===> PRICING FOR 0xa0b73e1ff0b80914ab6fe0444e65848c4c34450b (CRO) using Uniswap
+=========================================================
+blockNumber:         14322028
+source1 (uni/mkr):   0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f
+str0 (call):         getPair(0xa0b73e1ff0b80914ab6fe0444e65848c4c34450b, 0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2)
+source2 (pair):      0x90704ac59e7e54632b0cc9d22573aecd7eb094ad
+str1 (call/data):    getReserves()
+first:               0xa0b73e1ff0b80914ab6fe0444e65848c4c34450b
+second:              0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2
+reversed:            true
+float0:              8.894430277e+12
+float1:              1.371691503e+19
+float2:              2690.003085
+bigPrice:            6.484278907e-07
+price:               0.001744273026
+source:              uniswap
+===================================================
+Previous:               14322020 266 ( true )
+Current:                14322028 199 ( true )
+Next:                   14323108 93 ( true )
+accountedFor:           0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e
+sender:                 0xe081abb7d9e327e89a13e65b3e2b6fcaf2eceb97  ==>  0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e
+asset:                  0xa0b73e1ff0b80914ab6fe0444e65848c4c34450b (CRO) decimals: 8
+hash:                   0x2b6026c915bb606be4806cd361531957a9e591bd0304b00a60e0cdd160d2d025
+timestamp:              1646416874
+blockNumber:            14322028.199.357
+priceSource:            0.001744273026 (uniswap)
+--------------------------------------------------- 
+Trial balance:
+   prevBal:             0.000088757701013562
+   begBal:              0.000088757701013562 (0)
+   totalIn:             0.000006701343553053
+   totalOut:            0
+   amountNet:           0.000006701343553053
+                       ======================= 
+   endBal:              0.000095459044566615 (0)
+   endBalCalc:          0.000095459044566615
+--------------------------------------------------- 
+   amountIn:            0.000006701343553053
+   material:            true
+   reconciled:          true
+---------------------------------------------------
+Log statement is material - appending. reconciled: true
+~~~ Leaving: 14322028.199 ~~~
+------------------------------------ 1 statements generated.
+
+
+------------------------------------
+~~~ Entering: 14323108.93 ~~~
+First pass: Fetching unreconciled transfers
+Fetched 1 unreconciled transfers
+Second pass: Reconciling transfers
+Processing 1 log transfers
+Set BegSentinel for first log transfer
+Set EndSentinel for last log transfer
+Converted log transfer to statement for asset: 0x95ad61b0a150d79219dcf64e1e6cc01f0b64c4ce
+XXX =============[ token ]======================
+XXX Case 1: Only statement in block
+XXX Block: 14323108 Tx: 93 Asset: 0x95ad61b0a150d79219dcf64e1e6cc01f0b64c4ce
+XXX FirstInBlock: true, LastInBlock: true
+XXX ================================================
+=========================================================
+===> PRICING FOR 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) using Uniswap
+=========================================================
+blockNumber:         14323108
+source1 (uni/mkr):   0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f
+str0 (call):         getPair(0x6b175474e89094c44da98b954eedeac495271d0f, 0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2)
+source2 (pair):      0xa478c2975ab1ea89e8196811f51a7b7ade33eb11
+str1 (call/data):    getReserves()
+first:               0x6b175474e89094c44da98b954eedeac495271d0f
+second:              0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2
+reversed:            false
+float0:              1.270909577e+25
+float1:              4.86205501e+21
+float2:              1
+bigPrice:            2613.935002
+price:               2613.935002
+source:              uniswap
+=========================================================
+===> PRICING FOR 0x95ad61b0a150d79219dcf64e1e6cc01f0b64c4ce (SHIB) using Uniswap
+=========================================================
+blockNumber:         14323108
+source1 (uni/mkr):   0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f
+str0 (call):         getPair(0x95ad61b0a150d79219dcf64e1e6cc01f0b64c4ce, 0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2)
+source2 (pair):      0x811beed0119b4afce20d2583eb608c6f7af1954f
+str1 (call/data):    getReserves()
+first:               0x95ad61b0a150d79219dcf64e1e6cc01f0b64c4ce
+second:              0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2
+reversed:            true
+float0:              9.315330371e+28
+float1:              8.405277483e+20
+float2:              2613.935002
+bigPrice:            110827160.5
+price:               2.896949942e+11
+source:              uniswap
+===================================================
+Previous:               14322028 199 ( true )
+Current:                14323108 93 ( true )
+Next:                   14341057 158 ( true )
+accountedFor:           0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e
+sender:                 0xe081abb7d9e327e89a13e65b3e2b6fcaf2eceb97  ==>  0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e
+asset:                  0x95ad61b0a150d79219dcf64e1e6cc01f0b64c4ce (SHIB) decimals: 18
+hash:                   0x81866cd08eca2c7bf7bdcd370acdea8f0b57095c412704106d9ff1c25e888e6c
+timestamp:              1646431842
+blockNumber:            14323108.93.108
+priceSource:            2.896949942e+11 (uniswap)
+--------------------------------------------------- 
+Trial balance:
+   prevBal:             0
+   begBal:              0 (0)
+   totalIn:             5379613000
+   totalOut:            0
+   amountNet:           5379613000
+                       ======================= 
+   endBal:              5379613000 (0)
+   endBalCalc:          5379613000
+--------------------------------------------------- 
+   amountIn:            5379613000
+   material:            true
+   reconciled:          true
+---------------------------------------------------
+Log statement is material - appending. reconciled: true
+~~~ Leaving: 14323108.93 ~~~
+------------------------------------ 1 statements generated.
+
+
+------------------------------------
+~~~ Entering: 14341057.158 ~~~
+First pass: Fetching unreconciled transfers
+Fetched 1 unreconciled transfers
+Second pass: Reconciling transfers
+Processing 1 log transfers
+Set BegSentinel for first log transfer
+Set EndSentinel for last log transfer
+Converted log transfer to statement for asset: 0x0bc529c00c6401aef6d220be8c6ea1667f6ad93e
+XXX =============[ token ]======================
+XXX Case 1: Only statement in block
+XXX Block: 14341057 Tx: 158 Asset: 0x0bc529c00c6401aef6d220be8c6ea1667f6ad93e
+XXX FirstInBlock: true, LastInBlock: true
+XXX ================================================
+=========================================================
+===> PRICING FOR 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) using Uniswap
+=========================================================
+blockNumber:         14341057
+source1 (uni/mkr):   0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f
+str0 (call):         getPair(0x6b175474e89094c44da98b954eedeac495271d0f, 0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2)
+source2 (pair):      0xa478c2975ab1ea89e8196811f51a7b7ade33eb11
+str1 (call/data):    getReserves()
+first:               0x6b175474e89094c44da98b954eedeac495271d0f
+second:              0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2
+reversed:            false
+float0:              1.261793222e+25
+float1:              4.896301105e+21
+float2:              1
+bigPrice:            2577.03355
+price:               2577.03355
+source:              uniswap
+=========================================================
+===> PRICING FOR 0x0bc529c00c6401aef6d220be8c6ea1667f6ad93e (YFI) using Uniswap
+=========================================================
+blockNumber:         14341057
+source1 (uni/mkr):   0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f
+str0 (call):         getPair(0x0bc529c00c6401aef6d220be8c6ea1667f6ad93e, 0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2)
+source2 (pair):      0x2fdbadf3c4d5a8666bc06645b8358ab803996e28
+str1 (call/data):    getReserves()
+first:               0x0bc529c00c6401aef6d220be8c6ea1667f6ad93e
+second:              0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2
+reversed:            true
+float0:              3.29191464e+19
+float1:              2.424225326e+20
+float2:              2577.03355
+bigPrice:            0.1357924366
+price:               349.9416651
+source:              uniswap
+===================================================
+Previous:               14323108 93 ( true )
+Current:                14341057 158 ( true )
+Next:                   14341533 111 ( true )
+accountedFor:           0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e
+sender:                 0xe081abb7d9e327e89a13e65b3e2b6fcaf2eceb97  ==>  0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e
+asset:                  0x0bc529c00c6401aef6d220be8c6ea1667f6ad93e (YFI) decimals: 18
+hash:                   0x1c8353958e28d5c39336bed322ff5f0f65aab37c006393f7c18701b2eb2a3707
+timestamp:              1646673952
+blockNumber:            14341057.158.145
+priceSource:            349.9416651 (uniswap)
+--------------------------------------------------- 
+Trial balance:
+   prevBal:             1.67631669
+   begBal:              1.67631669 (0)
+   totalIn:             0.44102665
+   totalOut:            0
+   amountNet:           0.44102665
+                       ======================= 
+   endBal:              2.11734334 (0)
+   endBalCalc:          2.11734334
+--------------------------------------------------- 
+   amountIn:            0.44102665
+   material:            true
+   reconciled:          true
+---------------------------------------------------
+Log statement is material - appending. reconciled: true
+~~~ Leaving: 14341057.158 ~~~
+------------------------------------ 1 statements generated.
+
+
+------------------------------------
+~~~ Entering: 14341533.111 ~~~
+First pass: Fetching unreconciled transfers
+Fetched 1 unreconciled transfers
+Second pass: Reconciling transfers
+Processing 1 log transfers
+Set BegSentinel for first log transfer
+Set EndSentinel for last log transfer
+Converted log transfer to statement for asset: 0xa0b73e1ff0b80914ab6fe0444e65848c4c34450b
+XXX =============[ token ]======================
+XXX Case 1: Only statement in block
+XXX Block: 14341533 Tx: 111 Asset: 0xa0b73e1ff0b80914ab6fe0444e65848c4c34450b
+XXX FirstInBlock: true, LastInBlock: true
+XXX ================================================
+=========================================================
+===> PRICING FOR 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) using Uniswap
+=========================================================
+blockNumber:         14341533
+source1 (uni/mkr):   0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f
+str0 (call):         getPair(0x6b175474e89094c44da98b954eedeac495271d0f, 0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2)
+source2 (pair):      0xa478c2975ab1ea89e8196811f51a7b7ade33eb11
+str1 (call/data):    getReserves()
+first:               0x6b175474e89094c44da98b954eedeac495271d0f
+second:              0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2
+reversed:            false
+float0:              1.248770671e+25
+float1:              4.947570433e+21
+float2:              1
+bigPrice:            2524.007869
+price:               2524.007869
+source:              uniswap
+=========================================================
+===> PRICING FOR 0xa0b73e1ff0b80914ab6fe0444e65848c4c34450b (CRO) using Uniswap
+=========================================================
+blockNumber:         14341533
+source1 (uni/mkr):   0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f
+str0 (call):         getPair(0xa0b73e1ff0b80914ab6fe0444e65848c4c34450b, 0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2)
+source2 (pair):      0x90704ac59e7e54632b0cc9d22573aecd7eb094ad
+str1 (call/data):    getReserves()
+first:               0xa0b73e1ff0b80914ab6fe0444e65848c4c34450b
+second:              0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2
+reversed:            true
+float0:              9.043459908e+12
+float1:              1.357645405e+19
+float2:              2524.007869
+bigPrice:            6.661135428e-07
+price:               0.001681275824
+source:              uniswap
+===================================================
+Previous:               14341057 158 ( true )
+Current:                14341533 111 ( true )
+Next:                   14341534 0 ( true )
+accountedFor:           0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e
+sender:                 0xe081abb7d9e327e89a13e65b3e2b6fcaf2eceb97  ==>  0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e
+asset:                  0xa0b73e1ff0b80914ab6fe0444e65848c4c34450b (CRO) decimals: 8
+hash:                   0x51c5cadbd054741d9a1962c1e3a938cb193af315ebb13d7749fcb2fbd9bdb947
+timestamp:              1646680324
+blockNumber:            14341533.111.265
+priceSource:            0.001681275824 (uniswap)
+--------------------------------------------------- 
+Trial balance:
+   prevBal:             0.000095459044566615
+   begBal:              0.000095459044566615 (0)
+   totalIn:             0.000024372280012899
+   totalOut:            0
+   amountNet:           0.000024372280012899
+                       ======================= 
+   endBal:              0.000119831324579514 (0)
+   endBalCalc:          0.000119831324579514
+--------------------------------------------------- 
+   amountIn:            0.000024372280012899
+   material:            true
+   reconciled:          true
+---------------------------------------------------
+Log statement is material - appending. reconciled: true
+~~~ Leaving: 14341533.111 ~~~
+------------------------------------ 1 statements generated.
+
 {
   "data": [
     {
-      "articulatedTx": {
-        "inputs": {
-          "to": "0xaca096d2e6492d7380c5d8e70d90e13eecc72dd4",
-          "value": "73541760990000000000"
-        },
-        "name": "transfer",
-        "outputs": {
-          "val_0": null
-        }
-      },
-      "blockHash": "0xe83164313d56dd57fd718123c311cd65d58f22761899bfb1710c77e2d7f67878",
-      "blockNumber": 14933657,
-      "date": "2022-06-09 16:55:34 UTC",
-      "ether": "0",
-      "from": "0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e",
-      "gas": 105680,
-      "gasCost": 9143915636239443,
-      "gasPrice": 104634629487,
-      "gasUsed": 87389,
-      "hasToken": true,
-      "hash": "0xb00176827961c29b713960b7a91f438cea976381577b3989f0781d896d38df61",
-      "input": "0xa9059cbb000000000000000000000000aca096d2e6492d7380c5d8e70d90e13eecc72dd4000000000000000000000000000000000000000000000003fc98d1fabda12c00",
-      "maxFeePerGas": 157165958248,
-      "maxPriorityFeePerGas": 1000000000,
-      "nonce": 252,
-      "receipt": {
-        "contractAddress": "0x0",
-        "effectiveGasPrice": 104634629487,
-        "gasUsed": 87389,
-        "logs": [
-          {
-            "address": "0xc011a73ee8576fb46f5e1c5751ca3b9fe0af2a6f",
-            "articulatedLog": {
-              "inputs": {
-                "_amount": "73541760990000000000",
-                "_from": "0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e",
-                "_to": "0xaca096d2e6492d7380c5d8e70d90e13eecc72dd4"
-              },
-              "name": "Transfer"
-            },
-            "data": "0x000000000000000000000000000000000000000000000003fc98d1fabda12c00",
-            "date": "2022-06-09 16:55:34 UTC",
-            "logIndex": 493,
-            "timestamp": 1654793734,
-            "topics": [
-              "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef",
-              "0x0000000000000000000000006aed588ca2052ccfc907db8c24df4b7b95a29a5e",
-              "0x000000000000000000000000aca096d2e6492d7380c5d8e70d90e13eecc72dd4"
-            ]
-          }
-        ],
-        "status": 1
-      },
-      "statements": [
-        {
-          "accountedFor": "0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e",
-          "amountIn": "0",
-          "amountNet": "-9143915636239443",
-          "amountOut": "0",
-          "assetAddr": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
-          "assetSymbol": "WEI",
-          "assetType": "trace-eth",
-          "begBal": "568302725253886882348",
-          "begBalDiff": "0",
-          "blockNumber": 14933657,
-          "correctingIn": "0",
-          "correctingOut": "0",
-          "correctingReason": "",
-          "date": "2022-06-09 16:55:34 UTC",
-          "decimals": 18,
-          "endBal": "568293581338250642905",
-          "endBalCalc": "568293581338250642905",
-          "endBalDiff": "0",
-          "gasOut": "9143915636239443",
-          "internalIn": "0",
-          "internalOut": "0",
-          "logIndex": 0,
-          "minerBaseRewardIn": "0",
-          "minerNephewRewardIn": "0",
-          "minerTxFeeIn": "0",
-          "minerUncleRewardIn": "0",
-          "prefundIn": "0",
-          "prevAppBlk": 14933656,
-          "prevBal": "568302725253886882348",
-          "priceSource": "uniswap",
-          "recipient": "0xc011a73ee8576fb46f5e1c5751ca3b9fe0af2a6f",
-          "reconciled": true,
-          "reconciliationType": "first-same",
-          "selfDestructIn": "0",
-          "selfDestructOut": "0",
-          "sender": "0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e",
-          "spotPrice": 1801.80998660384,
-          "timestamp": 1654793734,
-          "totalIn": "0",
-          "totalOut": "9143915636239443",
-          "totalOutLessGas": "0",
-          "transactionHash": "0xb00176827961c29b713960b7a91f438cea976381577b3989f0781d896d38df61",
-          "transactionIndex": 302
-        },
-        {
-          "accountedFor": "0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e",
-          "amountIn": "0",
-          "amountNet": "-73541760990000000000",
-          "amountOut": "73541760990000000000",
-          "assetAddr": "0xc011a73ee8576fb46f5e1c5751ca3b9fe0af2a6f",
-          "assetSymbol": "SNX",
-          "assetType": "token",
-          "begBal": "11321830602990000000000",
-          "begBalDiff": "0",
-          "blockNumber": 14933657,
-          "correctingIn": "0",
-          "correctingOut": "0",
-          "correctingReason": "",
-          "date": "2022-06-09 16:55:34 UTC",
-          "decimals": 18,
-          "endBal": "11248288842000000000000",
-          "endBalCalc": "11248288842000000000000",
-          "endBalDiff": "0",
-          "gasOut": "0",
-          "internalIn": "0",
-          "internalOut": "0",
-          "logIndex": 493,
-          "minerBaseRewardIn": "0",
-          "minerNephewRewardIn": "0",
-          "minerTxFeeIn": "0",
-          "minerUncleRewardIn": "0",
-          "prefundIn": "0",
-          "priceSource": "uniswap",
-          "recipient": "0xaca096d2e6492d7380c5d8e70d90e13eecc72dd4",
-          "reconciled": true,
-          "reconciliationType": "first-same",
-          "selfDestructIn": "0",
-          "selfDestructOut": "0",
-          "sender": "0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e",
-          "spotPrice": 2.75328,
-          "timestamp": 1654793734,
-          "totalIn": "0",
-          "totalOut": "73541760990000000000",
-          "totalOutLessGas": "73541760990000000000",
-          "transactionHash": "0xb00176827961c29b713960b7a91f438cea976381577b3989f0781d896d38df61",
-          "transactionIndex": 302
-        }
-      ],
-      "timestamp": 1654793734,
-      "to": "0xc011a73ee8576fb46f5e1c5751ca3b9fe0af2a6f",
-      "traces": [],
-      "transactionIndex": 302,
-      "type": "0x2",
-      "value": "0"
+      "accountedFor": "0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e",
+      "amountIn": "371714047500000000000",
+      "amountNet": "371714047500000000000",
+      "amountOut": "0",
+      "asset": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+      "assetName": "ETH",
+      "begBal": "0",
+      "begBalDiff": "0",
+      "blockNumber": 13960847,
+      "correctAmountIn": "0",
+      "correctAmountOut": "0",
+      "correctBegBalIn": "0",
+      "correctBegBalOut": "0",
+      "correctEndBalIn": "0",
+      "correctEndBalOut": "0",
+      "correctingReasons": "",
+      "date": "2022-01-07 21:52:17 UTC",
+      "decimals": 18,
+      "endBal": "371714047500000000000",
+      "endBalCalc": "371714047500000000000",
+      "endBalDiff": "0",
+      "gasOut": "0",
+      "internalIn": "0",
+      "internalOut": "0",
+      "logIndex": 0,
+      "minerBaseRewardIn": "0",
+      "minerNephewRewardIn": "0",
+      "minerTxFeeIn": "0",
+      "minerUncleRewardIn": "0",
+      "prefundIn": "0",
+      "prevBal": "0",
+      "priceSource": "uniswap",
+      "recipient": "0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e",
+      "reconciled": true,
+      "selfDestructIn": "0",
+      "selfDestructOut": "0",
+      "sender": "0xe081abb7d9e327e89a13e65b3e2b6fcaf2eceb97",
+      "spotPrice": "3209.617452",
+      "symbol": "WEI",
+      "timestamp": 1641592337,
+      "totalIn": "371714047500000000000",
+      "totalOut": "0",
+      "transactionHash": "0x9d185a97a8825e220e2574a9cd0406c6a03b3215e91bebdcf7e159b37df91643",
+      "transactionIndex": 66
     },
     {
-      "articulatedTx": {
-        "inputs": {
-          "amount": "304442430000000000",
-          "recipient": "0xaca096d2e6492d7380c5d8e70d90e13eecc72dd4"
-        },
-        "name": "transfer",
-        "outputs": {
-          "val_0": null
-        }
-      },
-      "blockHash": "0xe83164313d56dd57fd718123c311cd65d58f22761899bfb1710c77e2d7f67878",
-      "blockNumber": 14933657,
-      "date": "2022-06-09 16:55:34 UTC",
-      "ether": "0",
-      "from": "0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e",
-      "gas": 120000,
-      "gasCost": 3630819456680952,
-      "gasPrice": 104646629487,
-      "gasUsed": 34696,
-      "hasToken": true,
-      "hash": "0x458ae31579274588f04850853ec71f67e1e21b2d4e72ada18fdc04352fc22295",
-      "input": "0xa9059cbb000000000000000000000000aca096d2e6492d7380c5d8e70d90e13eecc72dd4000000000000000000000000000000000000000000000000043998c6eeb4ec00",
-      "maxFeePerGas": 185012912936,
-      "maxPriorityFeePerGas": 1012000000,
-      "nonce": 253,
-      "receipt": {
-        "contractAddress": "0x0",
-        "effectiveGasPrice": 104646629487,
-        "gasUsed": 34696,
-        "logs": [
-          {
-            "address": "0x0bc529c00c6401aef6d220be8c6ea1667f6ad93e",
-            "articulatedLog": {
-              "inputs": {
-                "_amount": "304442430000000000",
-                "_from": "0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e",
-                "_to": "0xaca096d2e6492d7380c5d8e70d90e13eecc72dd4"
-              },
-              "name": "Transfer"
-            },
-            "data": "0x000000000000000000000000000000000000000000000000043998c6eeb4ec00",
-            "date": "2022-06-09 16:55:34 UTC",
-            "logIndex": 494,
-            "timestamp": 1654793734,
-            "topics": [
-              "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef",
-              "0x0000000000000000000000006aed588ca2052ccfc907db8c24df4b7b95a29a5e",
-              "0x000000000000000000000000aca096d2e6492d7380c5d8e70d90e13eecc72dd4"
-            ]
-          }
-        ],
-        "status": 1
-      },
-      "statements": [
-        {
-          "accountedFor": "0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e",
-          "amountIn": "0",
-          "amountNet": "-3630819456680952",
-          "amountOut": "0",
-          "assetAddr": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
-          "assetSymbol": "WEI",
-          "assetType": "trace-eth",
-          "begBal": "568293581338250642905",
-          "begBalDiff": "0",
-          "blockNumber": 14933657,
-          "correctingIn": "0",
-          "correctingOut": "0",
-          "correctingReason": "",
-          "date": "2022-06-09 16:55:34 UTC",
-          "decimals": 18,
-          "endBal": "568289950518793961953",
-          "endBalCalc": "568289950518793961953",
-          "endBalDiff": "0",
-          "gasOut": "3630819456680952",
-          "internalIn": "0",
-          "internalOut": "0",
-          "logIndex": 0,
-          "minerBaseRewardIn": "0",
-          "minerNephewRewardIn": "0",
-          "minerTxFeeIn": "0",
-          "minerUncleRewardIn": "0",
-          "prefundIn": "0",
-          "prevAppBlk": 14933657,
-          "prevBal": "568293581338250642905",
-          "priceSource": "uniswap",
-          "recipient": "0x0bc529c00c6401aef6d220be8c6ea1667f6ad93e",
-          "reconciled": true,
-          "reconciliationType": "same-same",
-          "selfDestructIn": "0",
-          "selfDestructOut": "0",
-          "sender": "0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e",
-          "spotPrice": 1801.80998660384,
-          "timestamp": 1654793734,
-          "totalIn": "0",
-          "totalOut": "3630819456680952",
-          "totalOutLessGas": "0",
-          "transactionHash": "0x458ae31579274588f04850853ec71f67e1e21b2d4e72ada18fdc04352fc22295",
-          "transactionIndex": 303
-        },
-        {
-          "accountedFor": "0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e",
-          "amountIn": "0",
-          "amountNet": "-304442430000000000",
-          "amountOut": "304442430000000000",
-          "assetAddr": "0x0bc529c00c6401aef6d220be8c6ea1667f6ad93e",
-          "assetSymbol": "YFI",
-          "assetType": "token",
-          "begBal": "18255476410000000000",
-          "begBalDiff": "0",
-          "blockNumber": 14933657,
-          "correctingIn": "961090000000000",
-          "correctingOut": "0",
-          "correctingReason": "endbal",
-          "date": "2022-06-09 16:55:34 UTC",
-          "decimals": 18,
-          "endBal": "17951033980000000000",
-          "endBalCalc": "17951033980000000000",
-          "endBalDiff": "0",
-          "gasOut": "0",
-          "internalIn": "0",
-          "internalOut": "0",
-          "logIndex": 494,
-          "minerBaseRewardIn": "0",
-          "minerNephewRewardIn": "0",
-          "minerTxFeeIn": "0",
-          "minerUncleRewardIn": "0",
-          "prefundIn": "0",
-          "prevAppBlk": 14933656,
-          "prevBal": "18255476410000000000",
-          "priceSource": "uniswap",
-          "recipient": "0xaca096d2e6492d7380c5d8e70d90e13eecc72dd4",
-          "reconciled": true,
-          "reconciliationType": "same-same",
-          "selfDestructIn": "0",
-          "selfDestructOut": "0",
-          "sender": "0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e",
-          "spotPrice": 426.2680707888668,
-          "timestamp": 1654793734,
-          "totalIn": "0",
-          "totalOut": "304442430000000000",
-          "totalOutLessGas": "304442430000000000",
-          "transactionHash": "0x458ae31579274588f04850853ec71f67e1e21b2d4e72ada18fdc04352fc22295",
-          "transactionIndex": 303
-        }
-      ],
-      "timestamp": 1654793734,
-      "to": "0x0bc529c00c6401aef6d220be8c6ea1667f6ad93e",
-      "traces": [],
-      "transactionIndex": 303,
-      "type": "0x2",
-      "value": "0"
+      "accountedFor": "0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e",
+      "amountIn": "420000000000000000",
+      "amountNet": "420000000000000000",
+      "amountOut": "0",
+      "asset": "0x0bc529c00c6401aef6d220be8c6ea1667f6ad93e",
+      "assetName": "yearn.finance",
+      "begBal": "0",
+      "begBalDiff": "0",
+      "blockNumber": 14218245,
+      "correctAmountIn": "0",
+      "correctAmountOut": "0",
+      "correctBegBalIn": "0",
+      "correctBegBalOut": "0",
+      "correctEndBalIn": "0",
+      "correctEndBalOut": "0",
+      "correctingReasons": "",
+      "date": "2022-02-16 16:37:18 UTC",
+      "decimals": 18,
+      "endBal": "420000000000000000",
+      "endBalCalc": "420000000000000000",
+      "endBalDiff": "0",
+      "gasOut": "0",
+      "internalIn": "0",
+      "internalOut": "0",
+      "logIndex": 3,
+      "minerBaseRewardIn": "0",
+      "minerNephewRewardIn": "0",
+      "minerTxFeeIn": "0",
+      "minerUncleRewardIn": "0",
+      "prefundIn": "0",
+      "prevBal": "0",
+      "priceSource": "uniswap",
+      "recipient": "0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e",
+      "reconciled": true,
+      "selfDestructIn": "0",
+      "selfDestructOut": "0",
+      "sender": "0xaca096d2e6492d7380c5d8e70d90e13eecc72dd4",
+      "spotPrice": "407.2052624",
+      "symbol": "YFI",
+      "timestamp": 1645029438,
+      "totalIn": "420000000000000000",
+      "totalOut": "0",
+      "transactionHash": "0x3d630cf5a1626382924429d936d1b95d5e31be1ead3773f490b9fb0e95497ce4",
+      "transactionIndex": 11
     },
     {
-      "articulatedTx": {
-        "inputs": {
-          "to": "0xcc34cc875d2d052f5b1c19652b5e71d6f90c7f7d",
-          "value": "312679827610000000000"
-        },
-        "name": "transfer",
-        "outputs": {
-          "val_0": null
-        }
-      },
-      "blockHash": "0xe83164313d56dd57fd718123c311cd65d58f22761899bfb1710c77e2d7f67878",
-      "blockNumber": 14933657,
-      "date": "2022-06-09 16:55:34 UTC",
-      "ether": "0",
-      "from": "0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e",
-      "gas": 65226,
-      "gasCost": 5687415285765885,
-      "gasPrice": 104634629487,
-      "gasUsed": 54355,
-      "hasToken": true,
-      "hash": "0x9c07595dec64bb699ef24c1c5e5579edba940fb9596e38bd4465f5c840393aae",
-      "input": "0xa9059cbb000000000000000000000000cc34cc875d2d052f5b1c19652b5e71d6f90c7f7d000000000000000000000000000000000000000000000010f34de690046d8400",
-      "maxFeePerGas": 197965383276,
-      "maxPriorityFeePerGas": 1000000000,
-      "nonce": 254,
-      "receipt": {
-        "contractAddress": "0x0",
-        "effectiveGasPrice": 104634629487,
-        "gasUsed": 54355,
-        "logs": [
-          {
-            "address": "0x3506424f91fd33084466f402d5d97f05f8e3b4af",
-            "articulatedLog": {
-              "inputs": {
-                "_amount": "312679827610000000000",
-                "_from": "0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e",
-                "_to": "0xcc34cc875d2d052f5b1c19652b5e71d6f90c7f7d"
-              },
-              "name": "Transfer"
-            },
-            "data": "0x000000000000000000000000000000000000000000000010f34de690046d8400",
-            "date": "2022-06-09 16:55:34 UTC",
-            "logIndex": 495,
-            "timestamp": 1654793734,
-            "topics": [
-              "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef",
-              "0x0000000000000000000000006aed588ca2052ccfc907db8c24df4b7b95a29a5e",
-              "0x000000000000000000000000cc34cc875d2d052f5b1c19652b5e71d6f90c7f7d"
-            ]
-          }
-        ],
-        "status": 1
-      },
-      "statements": [
-        {
-          "accountedFor": "0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e",
-          "amountIn": "0",
-          "amountNet": "-5687415285765885",
-          "amountOut": "0",
-          "assetAddr": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
-          "assetSymbol": "WEI",
-          "assetType": "trace-eth",
-          "begBal": "568289950518793961953",
-          "begBalDiff": "0",
-          "blockNumber": 14933657,
-          "correctingIn": "0",
-          "correctingOut": "0",
-          "correctingReason": "",
-          "date": "2022-06-09 16:55:34 UTC",
-          "decimals": 18,
-          "endBal": "568284263103508196068",
-          "endBalCalc": "568284263103508196068",
-          "endBalDiff": "0",
-          "gasOut": "5687415285765885",
-          "internalIn": "0",
-          "internalOut": "0",
-          "logIndex": 0,
-          "minerBaseRewardIn": "0",
-          "minerNephewRewardIn": "0",
-          "minerTxFeeIn": "0",
-          "minerUncleRewardIn": "0",
-          "prefundIn": "0",
-          "prevAppBlk": 14933657,
-          "prevBal": "568289950518793961953",
-          "priceSource": "uniswap",
-          "recipient": "0x3506424f91fd33084466f402d5d97f05f8e3b4af",
-          "reconciled": true,
-          "reconciliationType": "same-last",
-          "selfDestructIn": "0",
-          "selfDestructOut": "0",
-          "sender": "0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e",
-          "spotPrice": 1801.80998660384,
-          "timestamp": 1654793734,
-          "totalIn": "0",
-          "totalOut": "5687415285765885",
-          "totalOutLessGas": "0",
-          "transactionHash": "0x9c07595dec64bb699ef24c1c5e5579edba940fb9596e38bd4465f5c840393aae",
-          "transactionIndex": 304
-        },
-        {
-          "accountedFor": "0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e",
-          "amountIn": "0",
-          "amountNet": "-312679827610000000000",
-          "amountOut": "312679827610000000000",
-          "assetAddr": "0x3506424f91fd33084466f402d5d97f05f8e3b4af",
-          "assetSymbol": "0x3506",
-          "assetType": "token",
-          "begBal": "791497378854640000000000",
-          "begBalDiff": "0",
-          "blockNumber": 14933657,
-          "correctingIn": "0",
-          "correctingOut": "0",
-          "correctingReason": "",
-          "date": "2022-06-09 16:55:34 UTC",
-          "decimals": 18,
-          "endBal": "791184699027030000000000",
-          "endBalCalc": "791184699027030000000000",
-          "endBalDiff": "0",
-          "gasOut": "0",
-          "internalIn": "0",
-          "internalOut": "0",
-          "logIndex": 495,
-          "minerBaseRewardIn": "0",
-          "minerNephewRewardIn": "0",
-          "minerTxFeeIn": "0",
-          "minerUncleRewardIn": "0",
-          "prefundIn": "0",
-          "prevAppBlk": 14933656,
-          "prevBal": "791497378854640000000000",
-          "priceSource": "uniswap",
-          "recipient": "0xcc34cc875d2d052f5b1c19652b5e71d6f90c7f7d",
-          "reconciled": true,
-          "reconciliationType": "same-last",
-          "selfDestructIn": "0",
-          "selfDestructOut": "0",
-          "sender": "0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e",
-          "spotPrice": 0.11947,
-          "timestamp": 1654793734,
-          "totalIn": "0",
-          "totalOut": "312679827610000000000",
-          "totalOutLessGas": "312679827610000000000",
-          "transactionHash": "0x9c07595dec64bb699ef24c1c5e5579edba940fb9596e38bd4465f5c840393aae",
-          "transactionIndex": 304
-        }
-      ],
-      "timestamp": 1654793734,
-      "to": "0x3506424f91fd33084466f402d5d97f05f8e3b4af",
-      "traces": [],
-      "transactionIndex": 304,
-      "type": "0x2",
-      "value": "0"
+      "accountedFor": "0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e",
+      "amountIn": "0",
+      "amountNet": "-1003516294286512000",
+      "amountOut": "1000000000000000000",
+      "asset": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+      "assetName": "ETH",
+      "begBal": "371714047500000000000",
+      "begBalDiff": "0",
+      "blockNumber": 14231553,
+      "correctAmountIn": "0",
+      "correctAmountOut": "0",
+      "correctBegBalIn": "0",
+      "correctBegBalOut": "0",
+      "correctEndBalIn": "0",
+      "correctEndBalOut": "0",
+      "correctingReasons": "",
+      "date": "2022-02-18 17:59:11 UTC",
+      "decimals": 18,
+      "endBal": "370710531205713488000",
+      "endBalCalc": "370710531205713488000",
+      "endBalDiff": "0",
+      "gasOut": "3516294286512000",
+      "internalIn": "0",
+      "internalOut": "0",
+      "logIndex": 0,
+      "minerBaseRewardIn": "0",
+      "minerNephewRewardIn": "0",
+      "minerTxFeeIn": "0",
+      "minerUncleRewardIn": "0",
+      "prefundIn": "0",
+      "prevBal": "371714047500000000000",
+      "priceSource": "uniswap",
+      "recipient": "0x2e2ca259ffa7491e9222d6f7708e4a1a2b34aaef",
+      "reconciled": true,
+      "selfDestructIn": "0",
+      "selfDestructOut": "0",
+      "sender": "0x6aed588ca2052ccfc907db8c24df4b7b95a29a5e",
+      "spotPrice": "2795.228363",
+      "symbol": "WEI",
+      "timestamp": 1645207151,
+      "totalIn": "0",
+      "totalOut": "1003516294286512000",
+      "transactionHash": "0x4cdaa467819f6565f4767663be4181f00f01d4dee40423872fe67fbb1529c4b3",
+      "transactionIndex": 18
     }
   ],
   "meta": {

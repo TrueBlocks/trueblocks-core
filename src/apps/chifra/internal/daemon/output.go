@@ -27,6 +27,7 @@ import (
 
 // RunDaemon handles the daemon command for the command line. Returns error only as per cobra.
 func RunDaemon(cmd *cobra.Command, args []string) error {
+	_ = cmd
 	opts := daemonFinishParse(args)
 	rCtx := output.NewRenderContext()
 	// EXISTING_CODE
@@ -60,6 +61,7 @@ func (opts *DaemonOptions) DaemonInternal(rCtx *output.RenderCtx) error {
 	timer := logger.NewTimer()
 	msg := "chifra daemon"
 	// EXISTING_CODE
+	_ = rCtx
 	chain := opts.Globals.Chain
 	provider := config.GetChain(chain).RpcProvider
 

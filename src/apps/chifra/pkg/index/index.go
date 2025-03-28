@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/ranges"
 )
 
 const (
@@ -31,7 +31,7 @@ const (
 type Index struct {
 	File           *os.File
 	Header         indexHeader
-	Range          base.FileRange
+	Range          ranges.FileRange
 	AddrTableStart int64
 	AppTableStart  int64
 }
@@ -41,7 +41,7 @@ type Index struct {
 func OpenIndex(fileName string, check bool) (Index, error) {
 	fileName = ToIndexPath(fileName)
 
-	blkRange, err := base.RangeFromFilenameE(fileName)
+	blkRange, err := ranges.RangeFromFilenameE(fileName)
 	if err != nil {
 		return Index{}, err
 	}

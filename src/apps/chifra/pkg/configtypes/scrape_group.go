@@ -21,6 +21,8 @@ func (s *ScrapeSettings) String() string {
 }
 
 func (s *ScrapeSettings) TestLog(chain string, test bool) {
+	_ = chain
+	_ = test
 	logger.TestLog(false, "AppsPerChunk: ", s.AppsPerChunk)
 	logger.TestLog(false, "SnapToGrid: ", s.SnapToGrid)
 	logger.TestLog(false, "FirstSnap: ", s.FirstSnap)

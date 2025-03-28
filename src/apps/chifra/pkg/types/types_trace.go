@@ -50,6 +50,10 @@ func (s Trace) String() string {
 }
 
 func (s *Trace) Model(chain, format string, verbose bool, extraOpts map[string]any) Model {
+	_ = chain
+	_ = format
+	_ = verbose
+	_ = extraOpts
 	var model = map[string]any{}
 	var order = []string{}
 
@@ -145,7 +149,7 @@ func (s *Trace) Model(chain, format string, verbose bool, extraOpts map[string]a
 				model["action::from"] = hexutil.Encode(s.Action.From.Bytes())
 				model["action::to"] = hexutil.Encode(s.Action.RefundAddress.Bytes())
 				model["action::value"] = s.Action.Balance.String()
-				model["action::ether"] = s.Action.Balance.ToEtherStr(18)
+				model["action::ether"] = s.Action.Balance.ToFloatString(18)
 				model["action::input"] = "0x"
 				model["action::callType"] = "self-destruct"
 				items = append(items, namer{addr: s.Action.RefundAddress, name: "action::toName"})
@@ -153,7 +157,7 @@ func (s *Trace) Model(chain, format string, verbose bool, extraOpts map[string]a
 				model["action::from"] = hexutil.Encode(s.Action.From.Bytes())
 				model["action::to"] = to
 				model["action::value"] = s.Action.Value.String()
-				model["action::ether"] = s.Action.Value.ToEtherStr(18)
+				model["action::ether"] = s.Action.Value.ToFloatString(18)
 				items = append(items, namer{addr: s.Action.To, name: "action::toName"})
 			}
 			for _, item := range items {
@@ -174,7 +178,7 @@ func (s *Trace) Model(chain, format string, verbose bool, extraOpts map[string]a
 			model["result::output"] = ""
 		}
 		if isArticulated {
-			model["compressedTrace"] = makeCompressed(articulatedTrace)
+			model["compressedTrace"] = MakeCompressed(articulatedTrace)
 			order = append(order, "compressedTrace")
 		}
 		order = reorderOrdering(order)
@@ -209,11 +213,11 @@ type TraceGroup struct {
 }
 
 func (s *TraceGroup) MarshalCache(writer io.Writer) (err error) {
-	return cache.WriteValue(writer, s.Traces)
+	return base.WriteValue(writer, s.Traces)
 }
 
-func (s *TraceGroup) UnmarshalCache(vers uint64, reader io.Reader) (err error) {
-	return cache.ReadValue(reader, &s.Traces, vers)
+func (s *TraceGroup) UnmarshalCache(fileVersion uint64, reader io.Reader) (err error) {
+	return base.ReadValue(reader, &s.Traces, fileVersion)
 }
 
 func (s *Trace) MarshalCache(writer io.Writer) (err error) {
@@ -221,7 +225,7 @@ func (s *Trace) MarshalCache(writer io.Writer) (err error) {
 	optAction := &cache.Optional[TraceAction]{
 		Value: s.Action,
 	}
-	if err = cache.WriteValue(writer, optAction); err != nil {
+	if err = base.WriteValue(writer, optAction); err != nil {
 		return err
 	}
 
@@ -229,22 +233,22 @@ func (s *Trace) MarshalCache(writer io.Writer) (err error) {
 	optArticulatedTrace := &cache.Optional[Function]{
 		Value: s.ArticulatedTrace,
 	}
-	if err = cache.WriteValue(writer, optArticulatedTrace); err != nil {
+	if err = base.WriteValue(writer, optArticulatedTrace); err != nil {
 		return err
 	}
 
 	// BlockHash
-	if err = cache.WriteValue(writer, &s.BlockHash); err != nil {
+	if err = base.WriteValue(writer, &s.BlockHash); err != nil {
 		return err
 	}
 
 	// BlockNumber
-	if err = cache.WriteValue(writer, s.BlockNumber); err != nil {
+	if err = base.WriteValue(writer, s.BlockNumber); err != nil {
 		return err
 	}
 
 	// Error
-	if err = cache.WriteValue(writer, s.Error); err != nil {
+	if err = base.WriteValue(writer, s.Error); err != nil {
 		return err
 	}
 
@@ -252,44 +256,44 @@ func (s *Trace) MarshalCache(writer io.Writer) (err error) {
 	optResult := &cache.Optional[TraceResult]{
 		Value: s.Result,
 	}
-	if err = cache.WriteValue(writer, optResult); err != nil {
+	if err = base.WriteValue(writer, optResult); err != nil {
 		return err
 	}
 
 	// Subtraces
-	if err = cache.WriteValue(writer, s.Subtraces); err != nil {
+	if err = base.WriteValue(writer, s.Subtraces); err != nil {
 		return err
 	}
 
 	// Timestamp
-	if err = cache.WriteValue(writer, s.Timestamp); err != nil {
+	if err = base.WriteValue(writer, s.Timestamp); err != nil {
 		return err
 	}
 
 	// TraceAddress
-	if err = cache.WriteValue(writer, s.TraceAddress); err != nil {
+	if err = base.WriteValue(writer, s.TraceAddress); err != nil {
 		return err
 	}
 
 	// TransactionHash
-	if err = cache.WriteValue(writer, &s.TransactionHash); err != nil {
+	if err = base.WriteValue(writer, &s.TransactionHash); err != nil {
 		return err
 	}
 
 	// TransactionIndex
-	if err = cache.WriteValue(writer, s.TransactionIndex); err != nil {
+	if err = base.WriteValue(writer, s.TransactionIndex); err != nil {
 		return err
 	}
 
 	// TraceType
-	if err = cache.WriteValue(writer, s.TraceType); err != nil {
+	if err = base.WriteValue(writer, s.TraceType); err != nil {
 		return err
 	}
 
 	return nil
 }
 
-func (s *Trace) UnmarshalCache(vers uint64, reader io.Reader) (err error) {
+func (s *Trace) UnmarshalCache(fileVersion uint64, reader io.Reader) (err error) {
 	// Check for compatibility and return cache.ErrIncompatibleVersion to invalidate this item (see #3638)
 	// EXISTING_CODE
 	// EXISTING_CODE
@@ -298,7 +302,7 @@ func (s *Trace) UnmarshalCache(vers uint64, reader io.Reader) (err error) {
 	optAction := &cache.Optional[TraceAction]{
 		Value: s.Action,
 	}
-	if err = cache.ReadValue(reader, optAction, vers); err != nil {
+	if err = base.ReadValue(reader, optAction, fileVersion); err != nil {
 		return err
 	}
 	s.Action = optAction.Get()
@@ -307,32 +311,32 @@ func (s *Trace) UnmarshalCache(vers uint64, reader io.Reader) (err error) {
 	optArticulatedTrace := &cache.Optional[Function]{
 		Value: s.ArticulatedTrace,
 	}
-	if err = cache.ReadValue(reader, optArticulatedTrace, vers); err != nil {
+	if err = base.ReadValue(reader, optArticulatedTrace, fileVersion); err != nil {
 		return err
 	}
 	s.ArticulatedTrace = optArticulatedTrace.Get()
 
 	// BlockHash
-	if err = cache.ReadValue(reader, &s.BlockHash, vers); err != nil {
+	if err = base.ReadValue(reader, &s.BlockHash, fileVersion); err != nil {
 		return err
 	}
 
 	// BlockNumber
-	if err = cache.ReadValue(reader, &s.BlockNumber, vers); err != nil {
+	if err = base.ReadValue(reader, &s.BlockNumber, fileVersion); err != nil {
 		return err
 	}
 
 	// Used to be CompressedTrace, since removed
 	vCompressedTrace := version.NewVersion("2.5.10")
-	if vers <= vCompressedTrace.Uint64() {
+	if fileVersion <= vCompressedTrace.Uint64() {
 		var val string
-		if err = cache.ReadValue(reader, &val, vers); err != nil {
+		if err = base.ReadValue(reader, &val, fileVersion); err != nil {
 			return err
 		}
 	}
 
 	// Error
-	if err = cache.ReadValue(reader, &s.Error, vers); err != nil {
+	if err = base.ReadValue(reader, &s.Error, fileVersion); err != nil {
 		return err
 	}
 
@@ -340,49 +344,50 @@ func (s *Trace) UnmarshalCache(vers uint64, reader io.Reader) (err error) {
 	optResult := &cache.Optional[TraceResult]{
 		Value: s.Result,
 	}
-	if err = cache.ReadValue(reader, optResult, vers); err != nil {
+	if err = base.ReadValue(reader, optResult, fileVersion); err != nil {
 		return err
 	}
 	s.Result = optResult.Get()
 
 	// Subtraces
-	if err = cache.ReadValue(reader, &s.Subtraces, vers); err != nil {
+	if err = base.ReadValue(reader, &s.Subtraces, fileVersion); err != nil {
 		return err
 	}
 
 	// Timestamp
-	if err = cache.ReadValue(reader, &s.Timestamp, vers); err != nil {
+	if err = base.ReadValue(reader, &s.Timestamp, fileVersion); err != nil {
 		return err
 	}
 
 	// TraceAddress
 	s.TraceAddress = make([]uint64, 0)
-	if err = cache.ReadValue(reader, &s.TraceAddress, vers); err != nil {
+	if err = base.ReadValue(reader, &s.TraceAddress, fileVersion); err != nil {
 		return err
 	}
 
 	// TransactionHash
-	if err = cache.ReadValue(reader, &s.TransactionHash, vers); err != nil {
+	if err = base.ReadValue(reader, &s.TransactionHash, fileVersion); err != nil {
 		return err
 	}
 
 	// TransactionIndex
-	if err = cache.ReadValue(reader, &s.TransactionIndex, vers); err != nil {
+	if err = base.ReadValue(reader, &s.TransactionIndex, fileVersion); err != nil {
 		return err
 	}
 
 	// TraceType
-	if err = cache.ReadValue(reader, &s.TraceType, vers); err != nil {
+	if err = base.ReadValue(reader, &s.TraceType, fileVersion); err != nil {
 		return err
 	}
 
-	s.FinishUnmarshal()
+	s.FinishUnmarshal(fileVersion)
 
 	return nil
 }
 
 // FinishUnmarshal is used by the cache. It may be unused depending on auto-code-gen
-func (s *Trace) FinishUnmarshal() {
+func (s *Trace) FinishUnmarshal(fileVersion uint64) {
+	_ = fileVersion
 	// EXISTING_CODE
 	// EXISTING_CODE
 }

@@ -10,10 +10,10 @@ import (
 	"sort"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/filter"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/monitor"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/ranges"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
@@ -23,15 +23,12 @@ func (opts *ExportOptions) HandleWithdrawals(rCtx *output.RenderCtx, monitorArra
 	testMode := opts.Globals.TestMode
 	nErrors := 0
 	first := base.Max(base.KnownBlock(chain, "shanghai"), opts.FirstBlock)
-	filter := filter.NewFilter(
+	filter := types.NewFilter(
 		opts.Reversed,
 		false,
 		[]string{},
-		base.BlockRange{First: first, Last: opts.LastBlock},
-		// TODO: I feel (but have not investigated) that this may be a misake
-		// TODO: Shouldn't the RecordRange start with zero not block number?
-		// TODO: It means firstRecord, after all.
-		base.RecordRange{First: uint64(first), Last: opts.GetMax()},
+		ranges.BlockRange{First: first, Last: opts.LastBlock},
+		ranges.RecordRange{First: 0, Last: opts.GetMax()},
 	)
 
 	fetchData := func(modelChan chan types.Modeler, errorChan chan error) {
@@ -57,7 +54,6 @@ func (opts *ExportOptions) HandleWithdrawals(rCtx *output.RenderCtx, monitorArra
 						Total:   int64(cnt),
 					})
 
-					// TODO: BOGUS - THIS IS NOT CONCURRENCY SAFE
 					finished := false
 					for _, thisMap := range sliceOfMaps {
 						if rCtx.WasCanceled() {
@@ -115,6 +111,9 @@ func (opts *ExportOptions) HandleWithdrawals(rCtx *output.RenderCtx, monitorArra
 						sort.Slice(items, func(i, j int) bool {
 							if opts.Reversed {
 								i, j = j, i
+							}
+							if items[i].BlockNumber == items[j].BlockNumber {
+								return items[i].Index < items[j].Index
 							}
 							return items[i].BlockNumber < items[j].BlockNumber
 						})

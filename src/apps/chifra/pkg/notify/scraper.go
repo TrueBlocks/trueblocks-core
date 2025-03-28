@@ -7,6 +7,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/uniq"
 )
 
+// TODO: THIS IS PART OF THE NOTIFY CODE TO BE USED FOR MONITORING
 const (
 	MessageChunkWritten Message = "chunkWritten"
 	MessageStageUpdated Message = "stageUpdated"

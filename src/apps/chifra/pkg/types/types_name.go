@@ -43,6 +43,10 @@ func (s Name) String() string {
 }
 
 func (s *Name) Model(chain, format string, verbose bool, extraOpts map[string]any) Model {
+	_ = chain
+	_ = format
+	_ = verbose
+	_ = extraOpts
 	var model = map[string]any{}
 	var order = []string{}
 
@@ -54,6 +58,16 @@ func (s *Name) Model(chain, format string, verbose bool, extraOpts map[string]an
 			model["address"] = s.Address.Hex()
 		}
 		order = append(order, extraOpts["single"].(string))
+		return Model{
+			Data:  model,
+			Order: order,
+		}
+	} else if extraOpts["single"] == "asset" {
+		model["address"] = s.Address.Hex()
+		model["symbol"] = s.Symbol
+		model["name"] = s.Name
+		model["decimals"] = s.Decimals
+		order = append(order, []string{"address", "symbol", "name", "decimals"}...)
 		return Model{
 			Data:  model,
 			Order: order,
@@ -201,7 +215,8 @@ func (s *Name) Model(chain, format string, verbose bool, extraOpts map[string]an
 }
 
 // FinishUnmarshal is used by the cache. It may be unused depending on auto-code-gen
-func (s *Name) FinishUnmarshal() {
+func (s *Name) FinishUnmarshal(fileVersion uint64) {
+	_ = fileVersion
 	// EXISTING_CODE
 	// EXISTING_CODE
 }
@@ -230,5 +245,16 @@ const (
 	SortByAddress SortBy = iota
 	SortByTags
 )
+
+func (n *Name) IsAirdrop() bool {
+	str := strings.ToLower(n.Name + " " + n.Symbol + " " + n.Source + " " + n.Tags)
+	searches := []string{"airdrop", "claim", "visit"}
+	for _, search := range searches {
+		if strings.Contains(str, search) {
+			return true
+		}
+	}
+	return false
+}
 
 // EXISTING_CODE

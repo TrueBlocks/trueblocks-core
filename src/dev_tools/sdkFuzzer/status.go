@@ -14,7 +14,6 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	sdk "github.com/TrueBlocks/trueblocks-sdk/v4"
 )
 
@@ -64,6 +63,7 @@ func DoStatus() {
 					TestStatus("traces", "", fn, &opts)
 					TestStatus("logs", "", fn, &opts)
 					TestStatus("statements", "", fn, &opts)
+					TestStatus("transfers", "", fn, &opts)
 					TestStatus("results", "", fn, &opts)
 					TestStatus("state", "", fn, &opts)
 					TestStatus("tokens", "", fn, &opts)
@@ -94,7 +94,7 @@ func TestStatus(which, value, fn string, opts *sdk.StatusOptions) {
 		if index, _, err := opts.StatusIndex(); err != nil {
 			ReportError(fn, opts, err)
 		} else {
-			if err := SaveToFile[types.Status](fn, index); err != nil {
+			if err := SaveToFile(fn, index); err != nil {
 				ReportError2(fn, err)
 			} else {
 				ReportOkay(fn)
@@ -104,7 +104,7 @@ func TestStatus(which, value, fn string, opts *sdk.StatusOptions) {
 		if blooms, _, err := opts.StatusBlooms(); err != nil {
 			ReportError(fn, opts, err)
 		} else {
-			if err := SaveToFile[types.Status](fn, blooms); err != nil {
+			if err := SaveToFile(fn, blooms); err != nil {
 				ReportError2(fn, err)
 			} else {
 				ReportOkay(fn)
@@ -114,7 +114,7 @@ func TestStatus(which, value, fn string, opts *sdk.StatusOptions) {
 		if blocks, _, err := opts.StatusBlocks(); err != nil {
 			ReportError(fn, opts, err)
 		} else {
-			if err := SaveToFile[types.Status](fn, blocks); err != nil {
+			if err := SaveToFile(fn, blocks); err != nil {
 				ReportError2(fn, err)
 			} else {
 				ReportOkay(fn)
@@ -124,7 +124,7 @@ func TestStatus(which, value, fn string, opts *sdk.StatusOptions) {
 		if transactions, _, err := opts.StatusTransactions(); err != nil {
 			ReportError(fn, opts, err)
 		} else {
-			if err := SaveToFile[types.Status](fn, transactions); err != nil {
+			if err := SaveToFile(fn, transactions); err != nil {
 				ReportError2(fn, err)
 			} else {
 				ReportOkay(fn)
@@ -134,7 +134,7 @@ func TestStatus(which, value, fn string, opts *sdk.StatusOptions) {
 		if traces, _, err := opts.StatusTraces(); err != nil {
 			ReportError(fn, opts, err)
 		} else {
-			if err := SaveToFile[types.Status](fn, traces); err != nil {
+			if err := SaveToFile(fn, traces); err != nil {
 				ReportError2(fn, err)
 			} else {
 				ReportOkay(fn)
@@ -144,7 +144,7 @@ func TestStatus(which, value, fn string, opts *sdk.StatusOptions) {
 		if logs, _, err := opts.StatusLogs(); err != nil {
 			ReportError(fn, opts, err)
 		} else {
-			if err := SaveToFile[types.Status](fn, logs); err != nil {
+			if err := SaveToFile(fn, logs); err != nil {
 				ReportError2(fn, err)
 			} else {
 				ReportOkay(fn)
@@ -154,7 +154,7 @@ func TestStatus(which, value, fn string, opts *sdk.StatusOptions) {
 		if statements, _, err := opts.StatusStatements(); err != nil {
 			ReportError(fn, opts, err)
 		} else {
-			if err := SaveToFile[types.Status](fn, statements); err != nil {
+			if err := SaveToFile(fn, statements); err != nil {
 				ReportError2(fn, err)
 			} else {
 				ReportOkay(fn)
@@ -164,7 +164,7 @@ func TestStatus(which, value, fn string, opts *sdk.StatusOptions) {
 		if results, _, err := opts.StatusResults(); err != nil {
 			ReportError(fn, opts, err)
 		} else {
-			if err := SaveToFile[types.Status](fn, results); err != nil {
+			if err := SaveToFile(fn, results); err != nil {
 				ReportError2(fn, err)
 			} else {
 				ReportOkay(fn)
@@ -174,7 +174,7 @@ func TestStatus(which, value, fn string, opts *sdk.StatusOptions) {
 		if state, _, err := opts.StatusState(); err != nil {
 			ReportError(fn, opts, err)
 		} else {
-			if err := SaveToFile[types.Status](fn, state); err != nil {
+			if err := SaveToFile(fn, state); err != nil {
 				ReportError2(fn, err)
 			} else {
 				ReportOkay(fn)
@@ -184,7 +184,7 @@ func TestStatus(which, value, fn string, opts *sdk.StatusOptions) {
 		if tokens, _, err := opts.StatusTokens(); err != nil {
 			ReportError(fn, opts, err)
 		} else {
-			if err := SaveToFile[types.Status](fn, tokens); err != nil {
+			if err := SaveToFile(fn, tokens); err != nil {
 				ReportError2(fn, err)
 			} else {
 				ReportOkay(fn)
@@ -194,7 +194,7 @@ func TestStatus(which, value, fn string, opts *sdk.StatusOptions) {
 		if monitors, _, err := opts.StatusMonitors(); err != nil {
 			ReportError(fn, opts, err)
 		} else {
-			if err := SaveToFile[types.Status](fn, monitors); err != nil {
+			if err := SaveToFile(fn, monitors); err != nil {
 				ReportError2(fn, err)
 			} else {
 				ReportOkay(fn)
@@ -204,7 +204,7 @@ func TestStatus(which, value, fn string, opts *sdk.StatusOptions) {
 		if names, _, err := opts.StatusNames(); err != nil {
 			ReportError(fn, opts, err)
 		} else {
-			if err := SaveToFile[types.Status](fn, names); err != nil {
+			if err := SaveToFile(fn, names); err != nil {
 				ReportError2(fn, err)
 			} else {
 				ReportOkay(fn)
@@ -214,7 +214,7 @@ func TestStatus(which, value, fn string, opts *sdk.StatusOptions) {
 		if abis, _, err := opts.StatusAbis(); err != nil {
 			ReportError(fn, opts, err)
 		} else {
-			if err := SaveToFile[types.Status](fn, abis); err != nil {
+			if err := SaveToFile(fn, abis); err != nil {
 				ReportError2(fn, err)
 			} else {
 				ReportOkay(fn)
@@ -224,7 +224,7 @@ func TestStatus(which, value, fn string, opts *sdk.StatusOptions) {
 		if slurps, _, err := opts.StatusSlurps(); err != nil {
 			ReportError(fn, opts, err)
 		} else {
-			if err := SaveToFile[types.Status](fn, slurps); err != nil {
+			if err := SaveToFile(fn, slurps); err != nil {
 				ReportError2(fn, err)
 			} else {
 				ReportOkay(fn)
@@ -234,7 +234,7 @@ func TestStatus(which, value, fn string, opts *sdk.StatusOptions) {
 		if staging, _, err := opts.StatusStaging(); err != nil {
 			ReportError(fn, opts, err)
 		} else {
-			if err := SaveToFile[types.Status](fn, staging); err != nil {
+			if err := SaveToFile(fn, staging); err != nil {
 				ReportError2(fn, err)
 			} else {
 				ReportOkay(fn)
@@ -244,7 +244,7 @@ func TestStatus(which, value, fn string, opts *sdk.StatusOptions) {
 		if unripe, _, err := opts.StatusUnripe(); err != nil {
 			ReportError(fn, opts, err)
 		} else {
-			if err := SaveToFile[types.Status](fn, unripe); err != nil {
+			if err := SaveToFile(fn, unripe); err != nil {
 				ReportError2(fn, err)
 			} else {
 				ReportOkay(fn)
@@ -254,7 +254,7 @@ func TestStatus(which, value, fn string, opts *sdk.StatusOptions) {
 		if maps, _, err := opts.StatusMaps(); err != nil {
 			ReportError(fn, opts, err)
 		} else {
-			if err := SaveToFile[types.Status](fn, maps); err != nil {
+			if err := SaveToFile(fn, maps); err != nil {
 				ReportError2(fn, err)
 			} else {
 				ReportOkay(fn)
@@ -264,7 +264,7 @@ func TestStatus(which, value, fn string, opts *sdk.StatusOptions) {
 		if some, _, err := opts.StatusSome(); err != nil {
 			ReportError(fn, opts, err)
 		} else {
-			if err := SaveToFile[types.Status](fn, some); err != nil {
+			if err := SaveToFile(fn, some); err != nil {
 				ReportError2(fn, err)
 			} else {
 				ReportOkay(fn)
@@ -274,7 +274,7 @@ func TestStatus(which, value, fn string, opts *sdk.StatusOptions) {
 		if all, _, err := opts.StatusAll(); err != nil {
 			ReportError(fn, opts, err)
 		} else {
-			if err := SaveToFile[types.Status](fn, all); err != nil {
+			if err := SaveToFile(fn, all); err != nil {
 				ReportError2(fn, err)
 			} else {
 				ReportOkay(fn)
@@ -284,7 +284,7 @@ func TestStatus(which, value, fn string, opts *sdk.StatusOptions) {
 		if diagnose, _, err := opts.StatusDiagnose(); err != nil {
 			ReportError(fn, opts, err)
 		} else {
-			if err := SaveToFile[types.Status](fn, diagnose); err != nil {
+			if err := SaveToFile(fn, diagnose); err != nil {
 				ReportError2(fn, err)
 			} else {
 				ReportOkay(fn)
@@ -294,7 +294,7 @@ func TestStatus(which, value, fn string, opts *sdk.StatusOptions) {
 		if healthcheck, _, err := opts.StatusHealthcheck(); err != nil {
 			ReportError(fn, opts, err)
 		} else {
-			if err := SaveToFile[types.Status](fn, healthcheck); err != nil {
+			if err := SaveToFile(fn, healthcheck); err != nil {
 				ReportError2(fn, err)
 			} else {
 				ReportOkay(fn)

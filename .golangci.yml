@@ -1,0 +1,58 @@
+# ./.golangci.yml
+run:
+  timeout: 5m
+  modules-download-mode: readonly
+
+linters:
+  enable:
+    - gofmt # enforces formatting
+    - revive # custom rules like unused-parameter
+    - errcheck # unchecked errors
+    - staticcheck # static analysis
+    - unused # unused code
+    - misspell # catches typos
+    - ineffassign # ineffective assignments
+    - prealloc # suggests pre-allocation
+    # - goconst # finds repeated strings for consts
+    # - gosec # basic security checks
+  disable-all: true
+
+linters-settings:
+  gofmt:
+    simplify: true
+  revive:
+    rules:
+      # - name: var-naming
+      #   severity: warning
+      - name: unused-parameter
+        severity: warning
+  goconst:
+    min-len: 3 # Minimum length of repeated string
+    min-occurrences: 3 # Minimum times it must appear
+  gosec:
+    excludes:
+      - G104 # Ignore some noisy security rules (e.g., error handling)
+
+issues:
+  exclude-rules:
+    - path: src/apps/chifra/internal/scrape/handle_show.go
+      linters:
+        - ineffassign
+    - path: src/apps/chifra/internal/[^/]+/options\.go
+      linters:
+        - ineffassign
+    - path: src/apps/chifra/pkg/types/types_
+      linters:
+        - ineffassign
+    - path: _test\.go
+      linters:
+        - gofmt
+        - revive
+        - errcheck
+        - staticcheck
+        - unused
+        - misspell
+        - goconst
+        - ineffassign
+        - prealloc
+        - gosec

@@ -78,6 +78,7 @@ func (op Option) Validate() bool {
 }
 
 func readCmdOption(op *Option, data *any) (bool, error) {
+	_ = data
 	op.Group = strings.Trim(op.Group, wss)
 	op.Folder = strings.Trim(op.Folder, wss)
 	op.Route = strings.Trim(op.Route, wss)
@@ -304,7 +305,7 @@ func (op *Option) IsConfigurableAddr() bool {
 }
 
 func (op *Option) IsSpecialAddr() bool {
-	return op.IsConfigurableAddr() || op.GoName == "Autoname"
+	return op.DataType == "<address>"
 }
 
 func (op *Option) EnsConvert() string {
@@ -780,7 +781,7 @@ var fuzzerSwitch = `	case "{{.Tool}}":
 if {{.Tool}}, _, err := opts.{{firstUpper .Route}}{{.GoName}}({{.ToolParameters true}}); err != nil {
 	ReportError(fn, opts, err)
 } else {
-	if err := SaveToFile[{{.SdkCoreType}}](fn, {{.Tool}}); err != nil {
+	if err := SaveToFile(fn, {{.Tool}}); err != nil {
 		ReportError2(fn, err)
 	} else {
 		ReportOkay(fn)

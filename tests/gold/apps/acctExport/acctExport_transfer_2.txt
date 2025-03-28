@@ -1,0 +1,45 @@
+chifra export  0x08166f02313feae18bb044e7877c808b55b5bf58 --accounting --transfers --last_block 4000000 --fmt json --output transfer_2_out.file
+TEST[DATE|TIME] Addrs:  [0x08166f02313feae18bb044e7877c808b55b5bf58]
+TEST[DATE|TIME] Transfers:  true
+TEST[DATE|TIME] LastBlock:  4000000
+TEST[DATE|TIME] Accounting:  true
+TEST[DATE|TIME] OutputFn:  transfer_2_out.file
+TEST[DATE|TIME] Caps:  cache,decache,ether
+TEST[DATE|TIME] Format:  json
+INFO[DATE|TIME] { "outputFilename": "--output_filename--" }
+----
+Results in ./transfer_2_out.file
+{
+  "data": [
+    {
+      "amount": "1970000000000000000000",
+      "asset": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+      "assetName": "ETH",
+      "blockNumber": 0,
+      "holder": "0x08166f02313feae18bb044e7877c808b55b5bf58",
+      "holderName": "Prefund_0270",
+      "logIndex": 0,
+      "transactionIndex": 270
+    },
+    {
+      "amount": "-5010500000000000000",
+      "asset": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+      "assetName": "ETH",
+      "blockNumber": 46685,
+      "holder": "0x08166f02313feae18bb044e7877c808b55b5bf58",
+      "holderName": "Prefund_0270",
+      "logIndex": 0,
+      "transactionIndex": 0
+    },
+    {
+      "amount": "-1964900000000000000000",
+      "asset": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+      "assetName": "ETH",
+      "blockNumber": 46709,
+      "holder": "0x08166f02313feae18bb044e7877c808b55b5bf58",
+      "holderName": "Prefund_0270",
+      "logIndex": 0,
+      "transactionIndex": 0
+    }
+  ]
+}

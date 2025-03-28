@@ -71,31 +71,51 @@ set(CMAKE_INSTALL_PREFIX "/usr/local/" CACHE PATH "Default install directory")
 set(REPO_DIR ${CMAKE_SOURCE_DIR}/..)
 set(SCRIPTS_DIR ${REPO_DIR}/scripts)
 
-add_custom_target(lint
-    COMMAND "golangci-lint" "run"
-            "--out-format=colored-line-number"
-            "--path-prefix=../src/apps/chifra"
-            "--timeout=5m" "./..."
-    WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}/apps/chifra"
-    COMMAND "golangci-lint" "run"
-            "--out-format=colored-line-number"
-            "--path-prefix=../khedra"
-            "--timeout=5m" "./..."
-    WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}/../khedra"
-)
+# ----------------------------------------------------------------------------
+find_program(GOLANGCI_LINT golangci-lint)
+if(GOLANGCI_LINT)
+    add_custom_target(lint
+        COMMAND ${GOLANGCI_LINT} run --config ${CMAKE_SOURCE_DIR}/../.golangci.yml ${CMAKE_SOURCE_DIR}/apps/chifra/...
+        COMMAND ${GOLANGCI_LINT} run --config ${CMAKE_SOURCE_DIR}/../.golangci.yml ${CMAKE_SOURCE_DIR}/../sdk/...
+        COMMAND ${GOLANGCI_LINT} run --config ${CMAKE_SOURCE_DIR}/../.golangci.yml ${CMAKE_SOURCE_DIR}/../khedra/...
+        # COMMAND ${GOLANGCI_LINT} run --config ${CMAKE_SOURCE_DIR}/../.golangci.yml ${CMAKE_SOURCE_DIR}/../examples/accounting/...
+        # COMMAND ${GOLANGCI_LINT} run --config ${CMAKE_SOURCE_DIR}/../.golangci.yml ${CMAKE_SOURCE_DIR}/../examples/keystore/...
+        # COMMAND ${GOLANGCI_LINT} run --config ${CMAKE_SOURCE_DIR}/../.golangci.yml ${CMAKE_SOURCE_DIR}/../examples/checkNodes/...
+        # COMMAND ${GOLANGCI_LINT} run --config ${CMAKE_SOURCE_DIR}/../.golangci.yml ${CMAKE_SOURCE_DIR}/../examples/withStreaming/...
+        # COMMAND ${GOLANGCI_LINT} run --config ${CMAKE_SOURCE_DIR}/../.golangci.yml ${CMAKE_SOURCE_DIR}/../examples/four_bytes/...
+        # COMMAND ${GOLANGCI_LINT} run --config ${CMAKE_SOURCE_DIR}/../.golangci.yml ${CMAKE_SOURCE_DIR}/../examples/simple/...
+        # COMMAND ${GOLANGCI_LINT} run --config ${CMAKE_SOURCE_DIR}/../.golangci.yml ${CMAKE_SOURCE_DIR}/../examples/balanceChart/...
+        # COMMAND ${GOLANGCI_LINT} run --config ${CMAKE_SOURCE_DIR}/../.golangci.yml ${CMAKE_SOURCE_DIR}/../examples/findFirst/...
+        # COMMAND ${GOLANGCI_LINT} run --config ${CMAKE_SOURCE_DIR}/../.golangci.yml ${CMAKE_SOURCE_DIR}/../examples/comparison/...
+        # COMMAND ${GOLANGCI_LINT} run --config ${CMAKE_SOURCE_DIR}/../.golangci.yml ${CMAKE_SOURCE_DIR}/../examples/nameManager/...
+        # COMMAND ${GOLANGCI_LINT} run --config ${CMAKE_SOURCE_DIR}/../.golangci.yml ${CMAKE_SOURCE_DIR}/../examples/cancelContext/...
+        COMMAND ${GOLANGCI_LINT} run --config ${CMAKE_SOURCE_DIR}/../.golangci.yml ${CMAKE_SOURCE_DIR}/dev_tools/testRunner/...
+        COMMAND ${GOLANGCI_LINT} run --config ${CMAKE_SOURCE_DIR}/../.golangci.yml ${CMAKE_SOURCE_DIR}/dev_tools/goMaker/...
+        # COMMAND ${GOLANGCI_LINT} run --config ${CMAKE_SOURCE_DIR}/../.golangci.yml ${CMAKE_SOURCE_DIR}/dev_tools/sdkFuzzer/...
+        COMMAND ${GOLANGCI_LINT} run --config ${CMAKE_SOURCE_DIR}/../.golangci.yml ${CMAKE_SOURCE_DIR}/dev_tools/indexManager/...
+        WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}/..
+        COMMENT "Running golangci-lint across all Go modules in the repo"
+    )
+else()
+    message(WARNING "golangci-lint not found. Please install it to use 'make lint'.")
+endif()
 
+# ----------------------------------------------------------------------------
 add_custom_target(generate
     COMMAND ${BIN_DIR}/goMaker
     WORKING_DIRECTORY ${REPO_DIR})
 
+# ----------------------------------------------------------------------------
 add_custom_target(test-all
     COMMAND ${SCRIPTS_DIR}/test-all.sh
     WORKING_DIRECTORY ${REPO_DIR}/build)
 
+# ----------------------------------------------------------------------------
 add_custom_target(examples ALL
     COMMAND ${SCRIPTS_DIR}/build-examples.sh
     WORKING_DIRECTORY ${REPO_DIR})
 
+# ----------------------------------------------------------------------------
 add_custom_target(khedra ALL
     COMMAND ${SCRIPTS_DIR}/build-khedra.sh
     WORKING_DIRECTORY ${REPO_DIR})

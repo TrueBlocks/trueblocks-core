@@ -8,7 +8,7 @@ address          ,address   ,           ,               ,       6 ,the address o
 holder           ,address   ,           ,               ,       7 ,the holder address for which we are reporting
 priorBalance     ,int256    ,           ,omitempty      ,       8 ,the holder's asset balance at its prior appearance
 balance          ,int256    ,           ,               ,       9 ,the holder's asset balance at the given block height
-balanceDec       ,float64   ,           ,calc           ,      10 ,the holder's asset balance (in Ether) at the given block height
+balanceDec       ,float     ,           ,calc           ,      10 ,the holder's asset balance (in Ether) at the given block height
 diff             ,int256    ,           ,calc|omitempty ,      11 ,the difference&#44; if any&#44; between the prior and current balance
 name             ,string    ,           ,               ,      12 ,the name of the token contract&#44; if available
 symbol           ,string    ,           ,               ,      13 ,the symbol of the token contract

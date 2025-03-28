@@ -23,6 +23,7 @@ import (
 
 // RunExplore handles the explore command for the command line. Returns error only as per cobra.
 func RunExplore(cmd *cobra.Command, args []string) error {
+	_ = cmd
 	opts := exploreFinishParse(args)
 	rCtx := output.NewRenderContext()
 	// EXISTING_CODE

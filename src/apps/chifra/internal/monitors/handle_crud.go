@@ -21,6 +21,7 @@ import (
 // Deleted     | Error  | Undelete | Remove |
 // ------------|--------|-------------------|
 func (opts *MonitorsOptions) HandleCrud(rCtx *output.RenderCtx) error {
+	_ = rCtx
 	chain := opts.Globals.Chain
 	for _, addr := range opts.Addrs {
 		m, _ := monitor.NewMonitor(chain, base.HexToAddress(addr), false)

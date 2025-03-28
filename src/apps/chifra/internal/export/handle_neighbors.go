@@ -10,10 +10,10 @@ import (
 	"sort"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/filter"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/monitor"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/ranges"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
@@ -21,12 +21,12 @@ import (
 func (opts *ExportOptions) HandleNeighbors(rCtx *output.RenderCtx, monitorArray []monitor.Monitor) error {
 	testMode := opts.Globals.TestMode
 	nErrors := 0
-	filter := filter.NewFilter(
+	filter := types.NewFilter(
 		opts.Reversed,
 		opts.Reverted,
 		opts.Fourbytes,
-		base.BlockRange{First: opts.FirstBlock, Last: opts.LastBlock},
-		base.RecordRange{First: opts.FirstRecord, Last: opts.GetMax()},
+		ranges.BlockRange{First: opts.FirstBlock, Last: opts.LastBlock},
+		ranges.RecordRange{First: opts.FirstRecord, Last: opts.GetMax()},
 	)
 
 	fetchData := func(modelChan chan types.Modeler, errorChan chan error) {
@@ -52,7 +52,6 @@ func (opts *ExportOptions) HandleNeighbors(rCtx *output.RenderCtx, monitorArray 
 						Total:   int64(cnt),
 					})
 
-					// TODO: BOGUS - THIS IS NOT CONCURRENCY SAFE
 					finished := false
 					for _, thisMap := range sliceOfMaps {
 						if rCtx.WasCanceled() {
@@ -69,6 +68,7 @@ func (opts *ExportOptions) HandleNeighbors(rCtx *output.RenderCtx, monitorArray 
 
 						neighbors := make([]Reason, 0)
 						iterFunc := func(app types.Appearance, unused *bool) error {
+							_ = unused
 							if theseNeighbors, err := GetNeighbors(&app); err != nil {
 								return err
 							} else {
@@ -579,7 +579,6 @@ bool doOne(COptions* options, const CAddressUintMap& theMap, const string_q& typ
 
 //-----------------------------------------------------------------------
 bool COptions::reportNeighbors(void) {
-    // BOGUS: NEW_CO DE
     if (isTestMode()) {
         return true;
     }

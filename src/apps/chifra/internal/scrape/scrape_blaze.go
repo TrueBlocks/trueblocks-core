@@ -157,7 +157,7 @@ var writeMutex sync.Mutex
 // we write these files and if we fail, we remove them. If we don't fail, we've written them out,
 // but only to re-read them and delete them in this round. Would could have easily just kept them
 // in an in-memory cache. This would also allow us to not have to stringify the data and just store
-// pointers to structs in memory. We wouldn't have to keep a seperate timestamps database nor a
+// pointers to structs in memory. We wouldn't have to keep a separate timestamps database nor a
 // processedMap (the pointer would serve that purpose).
 
 // WriteAppearances writes the appearance for a chunk to a file
@@ -199,6 +199,7 @@ func (bm *BlazeManager) WriteAppearances(bn base.Blknum, addrMap uniq.AddressBoo
 		}
 	}
 
+	// TODO: THIS IS PART OF THE NOTIFY CODE TO BE USED FOR MONITORING
 	if bm.opts.Notify && bn <= bm.ripeBlock {
 		err = Notify(notify.Notification[[]notify.NotificationPayloadAppearance]{
 			Msg:     notify.MessageAppearance,

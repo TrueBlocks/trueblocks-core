@@ -15,6 +15,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/manifest"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/pinning"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/ranges"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/usage"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/walk"
@@ -61,7 +62,9 @@ func (opts *ChunksOptions) HandlePin(rCtx *output.RenderCtx, blockNums []base.Bl
 
 		fileList := make([]string, 0, len(man.Chunks))
 		listFiles := func(walker *walk.CacheWalker, path string, first bool) (bool, error) {
-			rng, err := base.RangeFromFilenameE(path)
+			_ = walker
+			_ = first
+			rng, err := ranges.RangeFromFilenameE(path)
 			if err != nil {
 				return false, err
 			}
@@ -91,8 +94,8 @@ func (opts *ChunksOptions) HandlePin(rCtx *output.RenderCtx, blockNums []base.Bl
 		}
 
 		sort.Slice(fileList, func(i, j int) bool {
-			rng1, _ := base.RangeFromFilenameE(fileList[i])
-			rng2, _ := base.RangeFromFilenameE(fileList[j])
+			rng1, _ := ranges.RangeFromFilenameE(fileList[i])
+			rng2, _ := ranges.RangeFromFilenameE(fileList[j])
 			return rng1.First < rng2.First
 		})
 

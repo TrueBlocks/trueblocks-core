@@ -1,0 +1,23 @@
+chifra export  0x08166f02313feae18bb044e7877c808b55b5bf58 --assets --last_block 4000000 --fmt json --output assets_3_bad_out.file
+TEST[DATE|TIME] Addrs:  [0x08166f02313feae18bb044e7877c808b55b5bf58]
+TEST[DATE|TIME] Assets:  true
+TEST[DATE|TIME] LastBlock:  4000000
+TEST[DATE|TIME] OutputFn:  assets_3_bad_out.file
+TEST[DATE|TIME] Caps:  cache,decache,ether
+TEST[DATE|TIME] Format:  json
+INFO[DATE|TIME] { "outputFilename": "--output_filename--" }
+----
+Results in ./assets_3_bad_out.file
+{
+  "data": [
+    {
+      "address": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+      "decimals": 18,
+      "isErc20": true,
+      "name": "ETH",
+      "source": "defipulse.com",
+      "symbol": "ETH",
+      "tags": "50-Ethereum"
+    }
+  ]
+}

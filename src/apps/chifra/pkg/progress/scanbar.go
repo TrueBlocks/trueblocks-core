@@ -8,6 +8,7 @@ import (
 	"fmt"
 	"io"
 	"strings"
+
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 )
 
