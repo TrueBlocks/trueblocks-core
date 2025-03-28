@@ -1,10 +1,6 @@
 [submodule "examples"]
 	path = examples
 	url = https://github.com/TrueBlocks/trueblocks-examples.git
-[submodule "sdk"]
-	path = sdk
-	url = https://github.com/TrueBlocks/trueblocks-sdk.git
-	branch = main
 [submodule "khedra"]
 	path = khedra
 	url = https://github.com/TrueBlocks/trueblocks-khedra.git
