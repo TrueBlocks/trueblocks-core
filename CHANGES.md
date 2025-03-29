@@ -268,25 +268,6 @@ gh issue list --search "created:>2025-03-27 is:open is:issue sort:created-desc" 
 - #3974 Timestamps on optimism are wrong
 - #3946 chifra when 0-latest:montly fails
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 ## v4.2.0 - Khedra - Lackawanna (2025/01/30)
 
 **Summary**
