@@ -12,7 +12,7 @@ import (
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
-	sdk "github.com/TrueBlocks/trueblocks-sdk/v4"
+	sdk "github.com/TrueBlocks/trueblocks-sdk/v5"
 )
 
 // EXISTING_CODE

@@ -6,7 +6,7 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
-	sdk "github.com/TrueBlocks/trueblocks-sdk/v4"
+	sdk "github.com/TrueBlocks/trueblocks-sdk/v5"
 )
 
 // SdkTest runs a test case through the SDK and returns the results in the provided bytes.Buffer

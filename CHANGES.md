@@ -9,7 +9,8 @@ This file details changes made to TrueBlocks over time. All version prior to ver
 - This is a major release focused almost exclusively on a single issue: fully automated ETH and ERC20 token balance reconciliation.
 - New features are added for `chifra export --assets`, `chifra export --transfers`, and a much improved `chifra export --statements` including a massive performance increase due to caching of statements and transfers.
 - Also include are various bug fixes, improvements to data models, and many new unit tests improving the overall quality of the code base.
-- The SDK is now much more robust and easier to use and more fully tested through the advent of TrueBlocks Browse use case.
+- The SDK is now v5 and much more robust and easier to use and more fully tested through the advent of TrueBlocks Browse use case.
+- You should change all references in your code to use "github.com/TrueBlocks/trueblocks-sdk/v5"
 
 ## Breaking Changes
 
@@ -311,7 +312,7 @@ gh issue list --search "created:>2025-03-27 is:open is:issue sort:created-desc" 
 - Added `Scrape` and `ScrapeOnce` endpoints to the SDK.
 - Now reflects new `chifra state --call/--send/--calldata syntax.
 - Now reflects new `chifra config --dump` option.
-- You should change all references in your code to use "github.com/TrueBlocks/trueblocks-sdk/v4"
+- You should change all references in your code to use "github.com/TrueBlocks/trueblocks-sdk/v5"
 
 ## Changes to the Unchained Index Specification
 

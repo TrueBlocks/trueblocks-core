@@ -3,22 +3,20 @@ module github.com/TrueBlocks/trueblocks-core/testRunner
 // Go Version
 go 1.23.1
 
-replace github.com/TrueBlocks/trueblocks-core/sdk => ../../../sdk
-
 require (
-	github.com/TrueBlocks/trueblocks-core/src/apps/chifra v0.0.0-20250328070134-da96eca77299
-	github.com/TrueBlocks/trueblocks-sdk/v4 v4.2.0
+	github.com/TrueBlocks/trueblocks-core/src/apps/chifra v0.0.0-20250328223800-50cd5d7a6cb7
+	github.com/TrueBlocks/trueblocks-sdk/v5 v5.0.0-20250329002009-c07cbf9fc971
 )
 
 require (
 	github.com/Microsoft/go-winio v0.6.2 // indirect
+	github.com/TrueBlocks/trueblocks-sdk/v4 v4.2.0 // indirect
 	github.com/alecthomas/participle/v2 v2.0.0 // indirect
 	github.com/benbjohnson/clock v1.3.0 // indirect
 	github.com/bits-and-blooms/bitset v1.13.0 // indirect
 	github.com/bykof/gostradamus v1.0.4 // indirect
 	github.com/consensys/bavard v0.1.13 // indirect
 	github.com/consensys/gnark-crypto v0.12.1 // indirect
-	github.com/cpuguy83/go-md2man/v2 v2.0.5 // indirect
 	github.com/crackcomm/go-gitignore v0.0.0-20170627025303-887ab5e44cc3 // indirect
 	github.com/crate-crypto/go-ipa v0.0.0-20240223125850-b1e8a79f509c // indirect
 	github.com/crate-crypto/go-kzg-4844 v1.0.0 // indirect
@@ -66,7 +64,6 @@ require (
 	github.com/tklauser/numcpus v0.6.1 // indirect
 	github.com/wealdtech/go-ens/v3 v3.5.2 // indirect
 	github.com/wealdtech/go-multicodec v1.4.0 // indirect
-	github.com/xrash/smetrics v0.0.0-20240521201337-686a1a2994c1 // indirect
 	github.com/yusufpapurcu/wmi v1.2.2 // indirect
 	golang.org/x/crypto v0.35.0 // indirect
 	golang.org/x/exp v0.0.0-20231110203233-9a3e6036ecaa // indirect

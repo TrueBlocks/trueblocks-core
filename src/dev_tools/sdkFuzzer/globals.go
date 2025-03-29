@@ -9,7 +9,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
-	sdk "github.com/TrueBlocks/trueblocks-sdk/v4"
+	sdk "github.com/TrueBlocks/trueblocks-sdk/v5"
 )
 
 var fuzzAddresses = []string{"0x054993ab0f2b1acc0fdc65405ee203b4271bebe6"}
