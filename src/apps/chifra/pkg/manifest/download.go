@@ -79,7 +79,7 @@ func downloadManifest(chain, gatewayUrl, cid string) (*Manifest, error) {
 	}
 
 	switch resp.Header.Get("Content-Type") {
-	case "application/json":
+	case "application/json", "text/plain", "text/plain; charset=UTF-8":
 		m := &Manifest{}
 		err := json.NewDecoder(resp.Body).Decode(m)
 		return m, err
