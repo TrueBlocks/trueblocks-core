@@ -1,5 +1,4 @@
 version: 2
-
 builds:
   - dir: src/apps/chifra
     env:
@@ -11,13 +10,29 @@ builds:
     goarch:
       - amd64
       - arm64
-
 archives:
-  - format: tar.gz
+  - formats: ["tar.gz"]
     name_template: "{{ .ProjectName }}_{{ .Os }}_{{ .Arch }}"
-
 checksum:
-  name_template: "checksums.txt"
-
+  name_template: checksums.txt
 release:
   prerelease: "false"
+  draft: false
+  github:
+    owner: trueblocks
+    name: trueblocks-core
+  name_template: "{{ .Tag }} - {{ .Env.RELEASE_NAME }}"
+changelog:
+  use: github
+  sort: asc
+  filters:
+    exclude:
+      - "^Merge"
+      - "^merge"
+      - "^docs:"
+      - "^test:"
+      - "^ci:"
+      - "^chore:"
+before:
+  hooks:
+    - sh -c "echo RELEASE_NAME=$(cat release-name.txt) >> $GITHUB_ENV"
