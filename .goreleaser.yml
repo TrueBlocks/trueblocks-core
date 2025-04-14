@@ -21,7 +21,7 @@ release:
   github:
     owner: trueblocks
     name: trueblocks-core
-  name_template: "{{ .Tag }} - {{ .Env.RELEASE_NAME }}"
+  name_template: "{{ .Tag }} - {{ .TagSubject }}"
 changelog:
   use: github
   sort: asc
@@ -33,6 +33,3 @@ changelog:
       - "^test:"
       - "^ci:"
       - "^chore:"
-before:
-  hooks:
-    - sh -c "echo RELEASE_NAME=$(cat release-name.txt) >> $GITHUB_ENV"
