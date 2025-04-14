@@ -130,7 +130,7 @@ Our [official docker version](https://github.com/TrueBlocks/trueblocks-docker) i
 
 ## Documentation
 
-The TrueBlocks [documentation repo](https://github.com/TrueBlocks/trueblocks-core/tree/master/docs) builds the TrueBlocks website. See our website for the [best available documentation](https://trueblocks.io/).
+The documenation is stored in the ./docs folder of this repo. See our website for the [best available documentation](https://trueblocks.io/).
 
 ## Linting
 
