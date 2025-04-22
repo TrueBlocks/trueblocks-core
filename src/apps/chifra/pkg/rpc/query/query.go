@@ -52,7 +52,7 @@ type BatchPayload struct {
 
 // Query returns a single result for given method and params.
 func Query[T any](chain string, method string, params Params) (*T, error) {
-	url := config.GetChain(chain).RpcProvider
+	url := config.GetChain(chain).GetRpcProvider()
 	return QueryUrl[T](url, method, params)
 }
 
@@ -124,7 +124,7 @@ func QueryBatchWithHeaders[T any](chain string, headers map[string]string, batch
 		payloads = append(payloads, *bpl.Payload)
 	}
 
-	url := config.GetChain(chain).RpcProvider
+	url := config.GetChain(chain).GetRpcProvider()
 	payloadToSend := make([]rpcPayload, 0, len(payloads))
 
 	for _, payload := range payloads {

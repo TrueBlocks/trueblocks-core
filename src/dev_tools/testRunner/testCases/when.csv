@@ -29,7 +29,7 @@ on      ,both ,fast  ,when  ,tools ,whenBlock ,invalid_option_2            ,y   
 on      ,both ,fast  ,when  ,tools ,whenBlock ,invalid_option_3            ,y    ,blocks = 0-0
 on      ,both ,fast  ,when  ,tools ,whenBlock ,invalid_verbose_syntax      ,y    ,verbose
 on      ,both ,slow  ,when  ,tools ,whenBlock ,list_dates                  ,n    ,list & fmt = txt
-on      ,both ,slow  ,when  ,tools ,whenBlock ,list_dates_sepolia          ,n    ,list & fmt = txt & chain = sepolia
+sepolia ,both ,slow  ,when  ,tools ,whenBlock ,list_dates_sepolia          ,n    ,list & fmt = txt & chain = sepolia
 on      ,both ,slow  ,when  ,tools ,whenBlock ,list_dates_long             ,y    ,list
 on      ,both ,fast  ,when  ,tools ,whenBlock ,long_verbose_valid_block    ,y    ,verbose & blocks = 1000
 on      ,both ,slow  ,when  ,tools ,whenBlock ,mixed_block_and_date        ,y    ,blocks = 2017-03-02 & blocks = 123123

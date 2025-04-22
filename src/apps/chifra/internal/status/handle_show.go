@@ -74,7 +74,7 @@ func (opts *StatusOptions) GetStatus(diagnose bool) (*types.Status, error) {
 	}
 
 	_, isTracing := opts.Conn.IsNodeTracing()
-	provider := config.GetChain(chain).RpcProvider
+	provider := config.GetChain(chain).GetRpcProvider()
 	s := &types.Status{
 		ClientVersion: vers,
 		Version:       version.LibraryVersion,

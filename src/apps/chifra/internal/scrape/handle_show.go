@@ -48,7 +48,7 @@ func (opts *ScrapeOptions) HandleScrape(rCtx *output.RenderCtx) error {
 	}()
 
 	path := config.PathToIndex(chain)
-	provider := config.GetChain(chain).RpcProvider
+	provider := config.GetChain(chain).GetRpcProvider()
 	if testMode {
 		path = "--unchained-path--"
 		provider = "--rpc-provider--"

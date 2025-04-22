@@ -63,7 +63,7 @@ func (opts *DaemonOptions) DaemonInternal(rCtx *output.RenderCtx) error {
 	// EXISTING_CODE
 	_ = rCtx
 	chain := opts.Globals.Chain
-	provider := config.GetChain(chain).RpcProvider
+	provider := config.GetChain(chain).GetRpcProvider()
 
 	logger.InfoTable("Server URL:        ", opts.Url)
 	logger.InfoTable("RPC Provider:      ", provider)

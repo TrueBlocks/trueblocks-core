@@ -35,7 +35,7 @@ on      ,both ,fast  ,scrape ,apps ,blockScrape ,by_file_bad                  ,n
 on      ,both ,fast  ,scrape ,apps ,blockScrape ,options_defaults             ,n    ,dry_run
 on      ,both ,fast  ,scrape ,apps ,blockScrape ,options_with_env             ,n    ,dry_run
 on      ,both ,fast  ,scrape ,apps ,blockScrape ,options_cmd_line             ,n    ,dry_run & apps_per_chunk = 10000 & snap_to_grid = 10000 & first_snap = 10000 & unripe_dist = 10000 & channel_count = 10000
-local   ,both ,fast  ,scrape ,apps ,blockScrape ,options_combo                ,n    ,dry_run & snap_to_grid = 10000 & first_snap = 10000 & chain = sepolia
+sepolia ,both ,fast  ,scrape ,apps ,blockScrape ,options_combo                ,n    ,dry_run & snap_to_grid = 10000 & first_snap = 10000 & chain = sepolia
 
 # Capabilities
 # chain & fmt & help & nocolor & noop & version & verbose & no_header & file & output & append & cache & decache & ether

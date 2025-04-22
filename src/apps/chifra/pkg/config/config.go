@@ -40,7 +40,35 @@ var configMutex sync.Mutex
 var configLoaded = false
 
 func loadFromTomlFile(filePath string, dest *configtypes.Config) error {
-	return ReadToml(filePath, dest)
+	if err := ReadToml(filePath, dest); err != nil {
+		return fmt.Errorf("error reading config file %s: %w", filePath, err)
+	} else {
+		fileVer := version.NewVersion(dest.Version.Current)
+		curVers := version.NewVersion(version.LibraryVersion)
+		if fileVer.Uint64() >= curVers.Uint64() {
+			return nil
+		}
+
+		// As of version 5.0.0, we spin through the config.Chains map and if a
+		// chain's rpcProviders array is empty but its rpcProvider string is
+		// not, append the rpcProvider string to the rpcProviders array and
+		// then empty out the rpcProvider string.
+		changed := false
+		for chain, ch := range dest.Chains {
+			if len(ch.RpcProviders) == 0 && len(ch.GetRpcProvider()) > 0 {
+				ch.RpcProviders = []string{ch.GetRpcProvider()}
+				ch.RpcProviderOld = ""
+				changed = true
+			}
+			dest.Chains[chain] = ch
+		}
+		if changed {
+			if err := dest.WriteFile(filePath, curVers); err != nil {
+				return fmt.Errorf("error writing config file %s: %w", filePath, err)
+			}
+		}
+		return nil
+	}
 }
 
 // GetRootConfig reads and the configuration located in trueBlocks.toml file. Note
@@ -121,8 +149,9 @@ func GetRootConfig() *configtypes.Config {
 		ch.IpfsGateway = strings.Replace(ch.IpfsGateway, "[{CHAIN}]", "ipfs", -1)
 		ch.LocalExplorer = clean(ch.LocalExplorer)
 		ch.RemoteExplorer = clean(ch.RemoteExplorer)
-		ch.RpcProvider = strings.Trim(clean(ch.RpcProvider), "/") // Infura, for example, doesn't like the trailing slash
-		if err := validateRpcEndpoint(ch.Chain, ch.RpcProvider); err != nil {
+		rpc := strings.Trim(clean(ch.GetRpcProvider()), "/") // Infura, for example, doesn't like the trailing slash
+		ch.RpcProviders = append(ch.RpcProviders, rpc)
+		if err := validateRpcEndpoint(ch.Chain, ch.GetRpcProvider()); err != nil {
 			logger.Fatal(err)
 		}
 		ch.IpfsGateway = clean(ch.IpfsGateway)
@@ -237,7 +266,7 @@ func checkUnchainedProvider(chain string, deployed uint64) error {
 		logger.Info("Skipping rpcProvider check")
 		return nil
 	}
-	url := trueBlocksConfig.Chains[chain].RpcProvider
+	url := trueBlocksConfig.Chains[chain].GetRpcProvider()
 	str := `{ "jsonrpc": "2.0", "method": "eth_getBlockByNumber", "params": [ "{0}", true ], "id": 1 }`
 	payLoad := []byte(strings.Replace(str, "{0}", fmt.Sprintf("0x%x", deployed), -1))
 	req, err := http.NewRequest("POST", url, bytes.NewBuffer(payLoad))

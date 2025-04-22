@@ -9,7 +9,8 @@ type ChainGroup struct {
 	KeyEndpoint    string         `json:"keyEndpoint" toml:"keyEndpoint,omitempty"`
 	LocalExplorer  string         `json:"localExplorer" toml:"localExplorer,omitempty"`
 	RemoteExplorer string         `json:"remoteExplorer" toml:"remoteExplorer,omitempty"`
-	RpcProvider    string         `json:"rpcProvider" toml:"rpcProvider"`
+	RpcProviderOld string         `json:"rpcProvider,omitempty" toml:"rpcProvider,omitempty"` // deprecated
+	RpcProviders   []string       `json:"rpcProviders" toml:"rpcProviders,omitempty"`
 	Symbol         string         `json:"symbol" toml:"symbol"`
 	Scrape         ScrapeSettings `json:"scrape" toml:"scrape"`
 }
@@ -17,4 +18,11 @@ type ChainGroup struct {
 func (s *ChainGroup) String() string {
 	bytes, _ := json.Marshal(s)
 	return string(bytes)
+}
+
+func (cg ChainGroup) GetRpcProvider() string {
+	if len(cg.RpcProviders) > 0 {
+		return cg.RpcProviders[0]
+	}
+	return cg.RpcProviderOld
 }

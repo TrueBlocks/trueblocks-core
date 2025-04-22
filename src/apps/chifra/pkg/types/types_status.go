@@ -125,7 +125,7 @@ func (s *Status) Model(chain, format string, verbose bool, extraOpts map[string]
 					ChainId:        base.MustParseUint64(chain.ChainId),
 					LocalExplorer:  chain.LocalExplorer,
 					RemoteExplorer: chain.RemoteExplorer,
-					RpcProvider:    chain.RpcProvider,
+					RpcProvider:    chain.GetRpcProvider(),
 					IpfsGateway:    chain.IpfsGateway,
 					Symbol:         chain.Symbol,
 				}

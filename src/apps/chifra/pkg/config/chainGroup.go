@@ -23,5 +23,10 @@ func GetChains() []configtypes.ChainGroup {
 
 // IsChainConfigured returns true if the chain is configured in the config file.
 func IsChainConfigured(needle string) bool {
-	return GetRootConfig().Chains != nil && GetRootConfig().Chains[needle] != configtypes.ChainGroup{}
+	chains := GetRootConfig().Chains
+	if chains == nil {
+		return false
+	}
+	_, found := chains[needle]
+	return found
 }

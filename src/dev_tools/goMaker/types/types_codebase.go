@@ -33,7 +33,7 @@ func (cb *CodeBase) Version(verbose bool) string {
 	if verbose {
 		vers = "GHC-TrueBlocks//" + vers
 	}
-	return vers + "-release"
+	return vers
 }
 
 // Description - returns the description of the codebase for the openapi.yaml file

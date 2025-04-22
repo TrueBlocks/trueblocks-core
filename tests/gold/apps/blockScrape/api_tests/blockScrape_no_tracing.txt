@@ -1,6 +1,6 @@
 scrape?chain=non-tracing
 {
   "errors": [
-    "chain non-tracing is not properly configured."
+    "chifra scrape requires tracing, try chifra init instead. Error: Post \"\": unsupported protocol scheme \"\""
   ]
 }
