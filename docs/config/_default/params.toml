@@ -36,7 +36,8 @@ quality = 85
 footer = "Powered by <a href=\"https://gohugo.io/\">Hugo</a>"
 
 # Edit Page
-docsRepo = "https://github.com/TrueBlocks/trueblocks-docs"
+docsRepo = "https://github.com/TrueBlocks/trueblocks-core"
+docsRepoSubPath = "docs"
 editPage = true
 
 [options]
