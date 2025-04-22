@@ -42,8 +42,8 @@ github.com/OneOfOne/xxhash v1.2.2/go.mod h1:HSdplMjZKSmBqAxg5vPj2TmRDmfkzw+cTzAE
 github.com/StackExchange/wmi v0.0.0-20180116203802-5d049714c4a6/go.mod h1:3eOhrUMpNV+6aFIbp5/iudMxNCF27Vw2OZgy4xEx0Fg=
 github.com/TrueBlocks/trueblocks-core/src/apps/chifra v0.0.0-20250414171638-e8a1233eb774 h1:+OVaLA5roh9VWyPSWGlO8i+Ilo48EsGdx9AvBq3jxDg=
 github.com/TrueBlocks/trueblocks-core/src/apps/chifra v0.0.0-20250414171638-e8a1233eb774/go.mod h1:eHm5w11i17E453hYlcTPI0T+UxAhiwb536yZv/8/Ehs=
-github.com/TrueBlocks/trueblocks-sdk/v5 v5.1.0 h1:A0SxFT5oMEjB3vYACiNzpiuYK8++UDnEjPPm0t++pP8=
-github.com/TrueBlocks/trueblocks-sdk/v5 v5.1.0/go.mod h1:eOy7kvED8pUbIR9++77GoXw5h166pzdR2gkinwp24sc=
+github.com/TrueBlocks/trueblocks-sdk/v5 v5.2.0 h1:ln00w0GEXaASqs5ivaFR0/SBw7KuL/OBPIlbfzuX9cw=
+github.com/TrueBlocks/trueblocks-sdk/v5 v5.2.0/go.mod h1:RPU/qGXAhTpbsNez1db2ik0IQW8SJZOig79r6cATPx8=
 github.com/VictoriaMetrics/fastcache v1.6.0/go.mod h1:0qHz5QP0GMX4pfmMA/zt5RgfNuXJrTP0zS7DqpHGGTw=
 github.com/VictoriaMetrics/fastcache v1.12.2 h1:N0y9ASrJ0F6h0QaC3o6uJb3NIZ9VKLjCM7NQbSmF7WI=
 github.com/VictoriaMetrics/fastcache v1.12.2/go.mod h1:AmC+Nzz1+3G2eCPapF6UcsnkThDcMsQicp4xDukwJYI=

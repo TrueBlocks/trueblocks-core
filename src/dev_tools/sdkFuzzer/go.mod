@@ -5,7 +5,7 @@ go 1.23.1
 
 require (
 	github.com/TrueBlocks/trueblocks-core/src/apps/chifra v0.0.0-20250414171638-e8a1233eb774
-	github.com/TrueBlocks/trueblocks-sdk/v5 v5.1.0
+	github.com/TrueBlocks/trueblocks-sdk/v5 v5.2.0
 )
 
 require (
