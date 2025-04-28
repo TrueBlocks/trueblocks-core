@@ -46,10 +46,7 @@ func (v *ScanBar) Report(writer io.Writer, action, msg string) {
 	}
 	width := int(float64(screenWidth()) * v.WidPct)
 	done := int(float64(width) * v.Pct())
-	remains := width - done
-	if remains < 0 {
-		remains = 0
-	}
+	remains := max(width-done, 0)
 	w := int(screenWidth()) - 2
 	x := fmt.Sprintf("%s [%s%s] %s", action, strings.Repeat(".", done), strings.Repeat(" ", remains), msg)
 	x = x[0:min(len(x), w)]
