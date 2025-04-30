@@ -24,21 +24,22 @@ func shouldProcess(source, subPath, tag string) (bool, error) {
 	}
 
 	isSdk := strings.Contains(source, "sdk_")
+	isExample := strings.Contains(source, "examples_")
 	isPython := strings.Contains(source, "python")
 	isTypeScript := strings.Contains(source, "typescript")
 	isFuzzer := strings.Contains(source, "sdkFuzzer")
 	switch tag {
 	case "daemon":
-		if isSdk || isFuzzer {
+		if isSdk || isFuzzer || isExample {
 			return false, nil
 		}
 	case "scrape":
-		if isFuzzer {
+		if isFuzzer || isExample {
 			return false, nil
 		}
 		fallthrough
 	case "explore":
-		if isSdk && (isPython || isTypeScript || isFuzzer) {
+		if isSdk && (isPython || isTypeScript || isFuzzer) || isExample {
 			return false, nil
 		}
 	}
@@ -217,11 +218,12 @@ func Proper(s string) string {
 }
 
 func Singular(s string) string {
-	if strings.ToLower(s) == "addresses" {
+	sLower := strings.ToLower(s)
+	if sLower == "addresses" {
 		return s[:len(s)-2]
 	}
 
-	if s != "Status" && s != "Stats" && strings.HasSuffix(s, "s") {
+	if sLower != "status" && sLower != "stats" && strings.HasSuffix(sLower, "s") {
 		return s[:len(s)-1]
 	}
 
