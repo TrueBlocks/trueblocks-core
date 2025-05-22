@@ -3,6 +3,7 @@ package namesPkg
 import (
 	"strconv"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/crud"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/names"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
@@ -19,8 +20,14 @@ func (opts *NamesOptions) HandleCrud(rCtx *output.RenderCtx) (err error) {
 	}
 
 	var name *types.Name
-	if opts.Create || opts.Update {
+	if opts.Create {
 		name, err = handleCreate(chain, opts.crudData)
+		if err != nil {
+			return
+		}
+	}
+	if opts.Update {
+		name, err = handleUpdate(chain, opts.crudData)
 		if err != nil {
 			return
 		}
@@ -64,7 +71,7 @@ func handleCreate(chain string, data *crud.NameCrud) (name *types.Name, err erro
 	}
 
 	name = &types.Name{
-		Address:  data.Address.Value,
+		Address:  base.HexToAddress(data.Address.Value),
 		Name:     data.Name.Value,
 		Tags:     data.Tags.Value,
 		Source:   data.Source.Value,
@@ -76,14 +83,36 @@ func handleCreate(chain string, data *crud.NameCrud) (name *types.Name, err erro
 	return name, names.CreateName(names.DatabaseCustom, chain, name)
 }
 
+func handleUpdate(chain string, data *crud.NameCrud) (name *types.Name, err error) {
+	var decimals uint64
+	if data.Decimals.Updated {
+		decimals, err = strconv.ParseUint(data.Decimals.Value, 10, 64)
+		if err != nil {
+			return
+		}
+	}
+
+	name = &types.Name{
+		Address:  base.HexToAddress(data.Address.Value),
+		Name:     data.Name.Value,
+		Tags:     data.Tags.Value,
+		Source:   data.Source.Value,
+		Symbol:   data.Symbol.Value,
+		Decimals: decimals,
+		Deleted:  false,
+	}
+
+	return name, names.UpdateName(names.DatabaseCustom, chain, name)
+}
+
 func handleDelete(chain string, data *crud.NameCrud) (*types.Name, error) {
-	return names.SetDeleted(names.DatabaseCustom, chain, data.Address.Value, true)
+	return names.SetDeleted(names.DatabaseCustom, chain, base.HexToAddress(data.Address.Value), true)
 }
 
 func handleUndelete(chain string, data *crud.NameCrud) (*types.Name, error) {
-	return names.SetDeleted(names.DatabaseCustom, chain, data.Address.Value, false)
+	return names.SetDeleted(names.DatabaseCustom, chain, base.HexToAddress(data.Address.Value), false)
 }
 
 func handleRemove(chain string, data *crud.NameCrud) (*types.Name, error) {
-	return names.RemoveName(names.DatabaseCustom, chain, data.Address.Value)
+	return names.RemoveName(names.DatabaseCustom, chain, base.HexToAddress(data.Address.Value))
 }
