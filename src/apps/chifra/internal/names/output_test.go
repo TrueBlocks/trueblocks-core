@@ -22,9 +22,11 @@ func TestNamesOptions_getCrudDataHttp(t *testing.T) {
 	type fields struct {
 		Autoname string
 	}
+
 	type args struct {
 		r *http.Request
 	}
+
 	tests := []struct {
 		name     string
 		fields   fields
@@ -47,19 +49,18 @@ func TestNamesOptions_getCrudDataHttp(t *testing.T) {
 				})(),
 			},
 			wantData: &crud.NameCrud{
-				Address: crud.Field[base.Address]{
-					Value:   base.HexToAddress("0x199d5ed7f45f4ee35960cf22eade2076e95b253f"),
+				Address: crud.Field{
+					Value:   "0x199d5ed7f45f4ee35960cf22eade2076e95b253f",
 					Updated: true,
 				},
-				Name: crud.Field[string]{
+				Name: crud.Field{
 					Value:   "some name 1",
 					Updated: true,
 				},
-				// Tags:         "",
-				// Source:      "",
-				// Symbol:      "",
-				// Decimals:    "",
-				// Description: "",
+				IsCustom: crud.Field{
+					Value:   "true",
+					Updated: true,
+				},
 			},
 		},
 		{
@@ -67,7 +68,6 @@ func TestNamesOptions_getCrudDataHttp(t *testing.T) {
 			args: args{
 				r: (func() (r *http.Request) {
 					data := url.Values{}
-
 					data.Set("name", "some name 2")
 					fmt.Println("encoded", data.Encode())
 					reader := strings.NewReader(data.Encode())
@@ -79,6 +79,7 @@ func TestNamesOptions_getCrudDataHttp(t *testing.T) {
 			wantErr: true,
 		},
 	}
+
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			opts := &NamesOptions{
@@ -98,8 +99,8 @@ func TestNamesOptions_getCrudDataHttp(t *testing.T) {
 
 func TestNamesOptions_getCrudDataEnv(t *testing.T) {
 	setEnvs := func(data *crud.NameCrud) {
-		if data.Address.Value.Hex() != "" {
-			os.Setenv("TB_NAME_ADDRESS", data.Address.Value.Hex())
+		if data.Address.Value != "" {
+			os.Setenv("TB_NAME_ADDRESS", data.Address.Value)
 		}
 		if data.Name.Value != "" {
 			os.Setenv("TB_NAME_NAME", data.Name.Value)
@@ -123,12 +124,16 @@ func TestNamesOptions_getCrudDataEnv(t *testing.T) {
 
 	// valid envs
 	expected = &crud.NameCrud{
-		Address: crud.Field[base.Address]{
-			Value:   base.HexToAddress("0x199d5ed7f45f4ee35960cf22eade2076e95b253f"),
+		Address: crud.Field{
+			Value:   "0x199d5ed7f45f4ee35960cf22eade2076e95b253f",
 			Updated: true,
 		},
-		Name: crud.Field[string]{
+		Name: crud.Field{
 			Value:   "some name",
+			Updated: true,
+		},
+		IsCustom: crud.Field{
+			Value:   "true",
 			Updated: true,
 		},
 	}
@@ -144,11 +149,11 @@ func TestNamesOptions_getCrudDataEnv(t *testing.T) {
 
 	// invalid envs
 	expected = &crud.NameCrud{
-		Address: crud.Field[base.Address]{
-			Value:   base.ZeroAddr,
+		Address: crud.Field{
+			Value:   base.ZeroAddr.Hex(),
 			Updated: true,
 		},
-		Name: crud.Field[string]{
+		Name: crud.Field{
 			Value:   "some name",
 			Updated: true,
 		},
