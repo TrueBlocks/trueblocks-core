@@ -21,20 +21,23 @@ func UpdateName(dbType DatabaseType, chain string, name *types.Name) (err error)
 }
 
 func updateCustomName(name *types.Name) (err error) {
-	customNamesMutex.Lock()
-	defer customNamesMutex.Unlock()
+	// customCreateName locks for us
+	// customNamesMutex.Lock()
+	// defer customNamesMutex.Unlock()
 
-	name.IsCustom = true
 	if _, ok := customNames[name.Address]; !ok {
 		err = fmt.Errorf("no custom name for address %s", name.Address.Hex())
 		return
 	}
 
-	customNames[name.Address] = *name
-	return
+	return customCreateName("mainnet", name)
 }
 
 func updateRegularName(name *types.Name) (err error) {
+	// regularCreateName locks for us
+	// regularNamesMutex.Lock()
+	// defer regularNamesMutex.Unlock()
+
 	if _, ok := regularNames[name.Address]; !ok {
 		err = fmt.Errorf("no name for address: %s", name.Address)
 		return
