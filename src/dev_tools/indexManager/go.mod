@@ -3,7 +3,7 @@ module github.com/TrueBlocks/trueblocks-core/indexManager
 // Go Version
 go 1.23.1
 
-require github.com/TrueBlocks/trueblocks-core/src/apps/chifra v0.0.0-20250422130252-4a2fc83a6800
+require github.com/TrueBlocks/trueblocks-core/src/apps/chifra v0.0.0-20250522032357-ac554973976e
 
 require (
 	github.com/bykof/gostradamus v1.1.2 // indirect

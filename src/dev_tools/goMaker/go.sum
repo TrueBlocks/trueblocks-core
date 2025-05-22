@@ -1,5 +1,5 @@
-github.com/TrueBlocks/trueblocks-core/src/apps/chifra v0.0.0-20250422130252-4a2fc83a6800 h1:m9Mnw09LYsktMBdsLbYWo/FXd4W9N1TTmu1kBIpdKw4=
-github.com/TrueBlocks/trueblocks-core/src/apps/chifra v0.0.0-20250422130252-4a2fc83a6800/go.mod h1:kmws7c1+p44+2DlGPBHUtYw4z1LeuCPu2LvX9KzmiOs=
+github.com/TrueBlocks/trueblocks-core/src/apps/chifra v0.0.0-20250522032357-ac554973976e h1:D47u0+wJjXTtfc1dyA2t/HU4nHxFmMmqV5n9+BZSa+U=
+github.com/TrueBlocks/trueblocks-core/src/apps/chifra v0.0.0-20250522032357-ac554973976e/go.mod h1:7CyEQUtzQLAvsZjUVdrA3vzQbOVyIWlr+ykbJd8ml8I=
 github.com/benbjohnson/clock v1.3.5 h1:VvXlSJBzZpA/zum6Sj74hxwYI2DIxRWuNIoXAzHZz5o=
 github.com/benbjohnson/clock v1.3.5/go.mod h1:J11/hYXuz8f4ySSvYwY0FKfm+ezbsZBKZxNJlLklBHA=
 github.com/blang/semver/v4 v4.0.0 h1:1PFHFE6yCCTv8C1TeyNNarDzntLi7wMI5i/pzqYIsAM=
