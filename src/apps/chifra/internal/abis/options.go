@@ -28,17 +28,18 @@ import (
 
 // AbisOptions provides all command options for the chifra abis command.
 type AbisOptions struct {
-	Addrs    []string              `json:"addrs,omitempty"`    // A list of one or more smart contracts whose ABIs to display
-	Known    bool                  `json:"known,omitempty"`    // Load common 'known' ABIs from cache
-	ProxyFor string                `json:"proxyFor,omitempty"` // Redirects the query to this implementation
-	List     bool                  `json:"list,omitempty"`     // A list of downloaded abi files
-	Count    bool                  `json:"count,omitempty"`    // Show the number of abis downloaded
-	Find     []string              `json:"find,omitempty"`     // Search for function or event declarations given a four- or 32-byte code(s)
-	Hint     []string              `json:"hint,omitempty"`     // For the --find option only, provide hints to speed up the search
-	Encode   string                `json:"encode,omitempty"`   // Generate the 32-byte encoding for a given canonical function or event signature
-	Globals  globals.GlobalOptions `json:"globals,omitempty"`  // The global options
-	Conn     *rpc.Connection       `json:"conn,omitempty"`     // The connection to the RPC server
-	BadFlag  error                 `json:"badFlag,omitempty"`  // An error flag if needed
+	Addrs     []string              `json:"addrs,omitempty"`     // A list of one or more smart contracts whose ABIs to display
+	Known     bool                  `json:"known,omitempty"`     // Load common 'known' ABIs from cache
+	ProxyFor  string                `json:"proxyFor,omitempty"`  // Redirects the query to this implementation
+	List      bool                  `json:"list,omitempty"`      // A list of downloaded abi files
+	ListItems bool                  `json:"listItems,omitempty"` // A list of the downloaded functions and events in all abi files
+	Count     bool                  `json:"count,omitempty"`     // Show the number of abis downloaded
+	Find      []string              `json:"find,omitempty"`      // Search for function or event declarations given a four- or 32-byte code(s)
+	Hint      []string              `json:"hint,omitempty"`      // For the --find option only, provide hints to speed up the search
+	Encode    string                `json:"encode,omitempty"`    // Generate the 32-byte encoding for a given canonical function or event signature
+	Globals   globals.GlobalOptions `json:"globals,omitempty"`   // The global options
+	Conn      *rpc.Connection       `json:"conn,omitempty"`      // The connection to the RPC server
+	BadFlag   error                 `json:"badFlag,omitempty"`   // An error flag if needed
 	// EXISTING_CODE
 	ProxyForAddr base.Address `json:"-"`
 	// EXISTING_CODE
@@ -52,6 +53,7 @@ func (opts *AbisOptions) testLog() {
 	logger.TestLog(opts.Known, "Known: ", opts.Known)
 	logger.TestLog(len(opts.ProxyFor) > 0, "ProxyFor: ", opts.ProxyFor)
 	logger.TestLog(opts.List, "List: ", opts.List)
+	logger.TestLog(opts.ListItems, "ListItems: ", opts.ListItems)
 	logger.TestLog(opts.Count, "Count: ", opts.Count)
 	logger.TestLog(len(opts.Find) > 0, "Find: ", opts.Find)
 	logger.TestLog(len(opts.Hint) > 0, "Hint: ", opts.Hint)
@@ -92,6 +94,8 @@ func AbisFinishParseInternal(w io.Writer, values url.Values) *AbisOptions {
 			opts.ProxyFor = value[0]
 		case "list":
 			opts.List = true
+		case "listItems":
+			opts.ListItems = true
 		case "count":
 			opts.Count = true
 		case "find":

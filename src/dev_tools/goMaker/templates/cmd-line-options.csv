@@ -18,13 +18,13 @@ num,folder,group,route,tool,longName,hotKey,def_val,attributes,handler,option_ty
 12150,apps,Accounts,list,acctExport,n2,,,,,note,,,,,,No other options are permitted when --silent is selected.
 #
 13000,apps,Accounts,export,acctExport,,,,visible|docs,,command,,,Export details,[flags] <address> [address...] [topics...] [fourbytes...],default|caching|ether|names|,Export full details of transactions for one or more addresses.
-13020,apps,Accounts,export,acctExport,addrs,,,required|visible|docs,13,positional,list<addr>,transaction,,,,one or more addresses (0x...) to export
+13020,apps,Accounts,export,acctExport,addrs,,,required|visible|docs,12,positional,list<addr>,transaction,,,,one or more addresses (0x...) to export
 13030,apps,Accounts,export,acctExport,topics,,,visible|docs,,positional,list<topic>,,,,,filter by one or more log topics (only for --logs option)
 13040,apps,Accounts,export,acctExport,fourbytes,,,visible|docs,,positional,list<fourbyte>,,,,,filter by one or more fourbytes (only for transactions and trace options)
 13050,apps,Accounts,export,acctExport,appearances,p,,visible|docs,5,switch,<boolean>,appearance,,,,export a list of appearances
 13060,apps,Accounts,export,acctExport,receipts,r,,visible|docs,2,switch,<boolean>,receipt,,,,export receipts instead of transactional data
 13070,apps,Accounts,export,acctExport,logs,l,,visible|docs,3,switch,<boolean>,log,,,,export logs instead of transactional data
-13080,apps,Accounts,export,acctExport,traces,t,,visible|docs,12,switch,<boolean>,trace,,,,export traces instead of transactional data
+13080,apps,Accounts,export,acctExport,traces,t,,visible|docs,11,switch,<boolean>,trace,,,,export traces instead of transactional data
 13090,apps,Accounts,export,acctExport,neighbors,n,,visible|docs,8,switch,<boolean>,message,,,,export the neighbors of the given address
 13110,apps,Accounts,export,acctExport,statements,A,,visible|docs,9,switch,<boolean>,statement,,,,export only statements
 13110,apps,Accounts,export,acctExport,transfers,X,,visible|docs,10,switch,<boolean>,transfer,,,,export only eth or token transfers
@@ -64,7 +64,7 @@ num,folder,group,route,tool,longName,hotKey,def_val,attributes,handler,option_ty
 13430,apps,Accounts,export,acctExport,n12,,,,,note,,,,,,The --traces option requires your RPC to provide trace data. See the README for more information.
 #
 14000,apps,Accounts,monitors,acctExport,,,,visible|docs,,command,,,Manage monitors,[flags] <address> [address...],default|caching|names|,Add&#44; remove&#44; clean&#44; and list address monitors.
-14020,apps,Accounts,monitors,acctExport,addrs,,,visible|docs,5,positional,list<addr>,message,,,,one or more addresses (0x...) to process
+14020,apps,Accounts,monitors,acctExport,addrs,,,visible|docs,4,positional,list<addr>,message,,,,one or more addresses (0x...) to process
 14030,apps,Accounts,monitors,acctExport,delete,,,visible|docs|crud,,switch,<boolean>,,,,,delete a monitor&#44; but do not remove it
 14040,apps,Accounts,monitors,acctExport,undelete,,,visible|docs|crud,,switch,<boolean>,,,,,undelete a previously deleted monitor
 14050,apps,Accounts,monitors,acctExport,remove,,,visible|docs|crud,,switch,<boolean>,,,,,remove a previously deleted monitor
@@ -97,14 +97,15 @@ num,folder,group,route,tool,longName,hotKey,def_val,attributes,handler,option_ty
 15200,tools,Accounts,names,ethNames,n2,,,,,note,,,,,,The `--match_case` option enables case sensitive matching.
 #
 16000,tools,Accounts,abis,grabABI,,,,visible|docs,,command,,,Manage Abi files,[flags] <address> [address...],default|caching|names|,Fetches the ABI for a smart contract.
-16020,tools,Accounts,abis,grabABI,addrs,,,required|visible|docs,5,positional,list<addr>,function,,,,a list of one or more smart contracts whose ABIs to display
+16020,tools,Accounts,abis,grabABI,addrs,,,required|visible|docs,6,positional,list<addr>,function,,,,a list of one or more smart contracts whose ABIs to display
 16030,tools,Accounts,abis,grabABI,known,k,,visible|docs,,switch,<boolean>,,,,,load common 'known' ABIs from cache
 16040,tools,Accounts,abis,grabABI,proxy_for,r,,visible|docs,,flag,<address>,,,,,redirects the query to this implementation
 16050,tools,Accounts,abis,grabABI,list,l,,visible|docs,3,switch,<boolean>,abi,,,,a list of downloaded abi files
+16055,tools,Accounts,abis,grabABI,list_items,i,,visible|docs,4,switch,<boolean>,function,,,,a list of the downloaded functions and events in all abi files
 16060,tools,Accounts,abis,grabABI,count,c,,visible|docs,2,switch,<boolean>,count,,,,show the number of abis downloaded
 16070,tools,Accounts,abis,grabABI,find,f,,visible|docs,1,flag,list<string>,function,,,,search for function or event declarations given a four- or 32-byte code(s)
 16080,tools,Accounts,abis,grabABI,hint,n,,visible|docs,,flag,list<string>,,,,,for the --find option only&#44; provide hints to speed up the search
-16090,tools,Accounts,abis,grabABI,encode,e,,visible|docs,4,flag,<string>,function,,,,generate the 32-byte encoding for a given canonical function or event signature
+16090,tools,Accounts,abis,grabABI,encode,e,,visible|docs,5,flag,<string>,function,,,,generate the 32-byte encoding for a given canonical function or event signature
 16100,tools,Accounts,abis,grabABI,n1,,,,,note,,,,,,Search for either four byte signatures or event signatures with the --find option.
 #
 21000,,Chain Data,,,,,,,,group,,,,,,Access and cache blockchain-related data
@@ -135,10 +136,10 @@ num,folder,group,route,tool,longName,hotKey,def_val,attributes,handler,option_ty
 22280,tools,Chain Data,blocks,getBlocks,n10,,,,,note,,,,,,The --traces option requires your RPC to provide trace data. See the README for more information.
 #
 23000,tools,Chain Data,transactions,getTrans,,,,visible|docs,,command,,,Get transactions,[flags] <tx_id> [tx_id...],default|caching|ether|names|,Retrieve one or more transactions from the chain or local cache.
-23020,tools,Chain Data,transactions,getTrans,transactions,,,required|visible|docs,4,positional,list<tx_id>,transaction,,,,a space-separated list of one or more transaction identifiers
+23020,tools,Chain Data,transactions,getTrans,transactions,,,required|visible|docs,3,positional,list<tx_id>,transaction,,,,a space-separated list of one or more transaction identifiers
 23030,tools,Chain Data,transactions,getTrans,articulate,a,,visible|docs,,switch,<boolean>,,,,,articulate the retrieved data if ABIs can be found
 23040,tools,Chain Data,transactions,getTrans,traces,t,,visible|docs,,switch,<boolean>,trace,,,,include the transaction's traces in the results
-23050,tools,Chain Data,transactions,getTrans,uniq,u,,visible|docs,3,switch,<boolean>,appearance,,,,display a list of uniq addresses found in the transaction
+23050,tools,Chain Data,transactions,getTrans,uniq,u,,visible|docs,2,switch,<boolean>,appearance,,,,display a list of uniq addresses found in the transaction
 23060,tools,Chain Data,transactions,getTrans,flow,f,,visible|docs,,flag,enum[from|to],,,,,for the uniq option only&#44; export only from or to (including trace from or to)
 23070,tools,Chain Data,transactions,getTrans,logs,l,,visible|docs,1,switch,<boolean>,log,,,,display only the logs found in the transaction(s)
 23080,tools,Chain Data,transactions,getTrans,emitter,m,,visible|docs,,flag,list<addr>,,,,,for the --logs option only&#44; filter logs to show only those logs emitted by the given address(es)

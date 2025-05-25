@@ -37,6 +37,7 @@ Flags:
   -k, --known              load common 'known' ABIs from cache
   -r, --proxy_for string   redirects the query to this implementation
   -l, --list               a list of downloaded abi files
+  -i, --list_items         a list of the downloaded functions and events in all abi files
   -c, --count              show the number of abis downloaded
   -f, --find strings       search for function or event declarations given a four- or 32-byte code(s)
   -n, --hint strings       for the --find option only, provide hints to speed up the search
