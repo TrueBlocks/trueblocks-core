@@ -9,7 +9,15 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
-func (opts *AbisOptions) HandleListItems(rCtx *output.RenderCtx) (err error) {
+func (opts *AbisOptions) HandleListFuncs(rCtx *output.RenderCtx) (err error) {
+	return opts.HandleListItems(rCtx, "function")
+}
+
+func (opts *AbisOptions) HandleListEvents(rCtx *output.RenderCtx) (err error) {
+	return opts.HandleListItems(rCtx, "event")
+}
+
+func (opts *AbisOptions) HandleListItems(rCtx *output.RenderCtx, filter string) (err error) {
 	fetchData := func(modelChan chan types.Modeler, errorChan chan error) {
 		for _, addr := range opts.Addrs {
 			functions, which, err := opts.LoadAbis([]string{addr}, false /* known */)
@@ -28,7 +36,9 @@ func (opts *AbisOptions) HandleListItems(rCtx *output.RenderCtx) (err error) {
 			}
 
 			for _, f := range functions {
-				modelChan <- f
+				if filter == "" || filter == f.FunctionType {
+					modelChan <- f
+				}
 			}
 		}
 	}

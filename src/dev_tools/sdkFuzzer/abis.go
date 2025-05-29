@@ -135,11 +135,21 @@ func TestAbis(which, value, fn string, opts *sdk.AbisOptions) {
 				ReportOkay(fn)
 			}
 		}
-	case "listitems":
-		if listitems, _, err := opts.AbisListItems(); err != nil {
+	case "listfuncs":
+		if listfuncs, _, err := opts.AbisListFuncs(); err != nil {
 			ReportError(fn, opts, err)
 		} else {
-			if err := SaveToFile(fn, listitems); err != nil {
+			if err := SaveToFile(fn, listfuncs); err != nil {
+				ReportError2(fn, err)
+			} else {
+				ReportOkay(fn)
+			}
+		}
+	case "listevents":
+		if listevents, _, err := opts.AbisListEvents(); err != nil {
+			ReportError(fn, opts, err)
+		} else {
+			if err := SaveToFile(fn, listevents); err != nil {
 				ReportError2(fn, err)
 			} else {
 				ReportOkay(fn)

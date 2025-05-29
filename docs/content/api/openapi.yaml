@@ -1010,8 +1010,16 @@ paths:
           explode: true
           schema:
             type: boolean
-        - name: listItems
-          description: a list of the downloaded functions and events in all abi files
+        - name: listFuncs
+          description: a list of the functions in all abi files
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: listEvents
+          description: a list of the events in all abi files
           required: false
           style: form
           in: query
