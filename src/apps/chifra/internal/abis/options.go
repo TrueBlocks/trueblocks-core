@@ -43,6 +43,7 @@ type AbisOptions struct {
 	BadFlag    error                 `json:"badFlag,omitempty"`    // An error flag if needed
 	// EXISTING_CODE
 	ProxyForAddr base.Address `json:"-"`
+	ListFilter   string       `json:"-"`
 	// EXISTING_CODE
 }
 
