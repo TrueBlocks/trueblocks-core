@@ -101,7 +101,7 @@ num,folder,group,route,tool,longName,hotKey,def_val,attributes,handler,option_ty
 16030,tools,Accounts,abis,grabABI,known,k,,visible|docs,,switch,<boolean>,,,,,load common 'known' ABIs from cache
 16040,tools,Accounts,abis,grabABI,proxy_for,r,,visible|docs,,flag,<address>,,,,,redirects the query to this implementation
 16050,tools,Accounts,abis,grabABI,list,l,,visible|docs,4,switch,<boolean>,abi,,,,a list of downloaded abi files
-16055,tools,Accounts,abis,grabABI,details,d,,visible|docs,3,switch,<boolean>,function,,,,in --list mode only&#44; show the functions and events instead of summaries
+16055,tools,Accounts,abis,grabABI,details,d,,visible|docs,3,switch,<boolean>,function,,,,show the functions and events instead of summaries for all abi files
 16060,tools,Accounts,abis,grabABI,count,c,,visible|docs,2,switch,<boolean>,count,,,,show the number of abis downloaded
 16070,tools,Accounts,abis,grabABI,find,f,,visible|docs,1,flag,list<string>,function,,,,search for function or event declarations given a four- or 32-byte code(s)
 16080,tools,Accounts,abis,grabABI,hint,n,,visible|docs,,flag,list<string>,,,,,for the --find option only&#44; provide hints to speed up the search

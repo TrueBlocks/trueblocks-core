@@ -59,7 +59,7 @@ func init() {
 	abisCmd.Flags().BoolVarP(&abisPkg.GetOptions().Known, "known", "k", false, `load common 'known' ABIs from cache`)
 	abisCmd.Flags().StringVarP(&abisPkg.GetOptions().ProxyFor, "proxy_for", "r", "", `redirects the query to this implementation`)
 	abisCmd.Flags().BoolVarP(&abisPkg.GetOptions().List, "list", "l", false, `a list of downloaded abi files`)
-	abisCmd.Flags().BoolVarP(&abisPkg.GetOptions().Details, "details", "d", false, `in --list mode only, show the functions and events instead of summaries`)
+	abisCmd.Flags().BoolVarP(&abisPkg.GetOptions().Details, "details", "d", false, `show the functions and events instead of summaries for all abi files`)
 	abisCmd.Flags().BoolVarP(&abisPkg.GetOptions().Count, "count", "c", false, `show the number of abis downloaded`)
 	abisCmd.Flags().StringSliceVarP(&abisPkg.GetOptions().Find, "find", "f", nil, `search for function or event declarations given a four- or 32-byte code(s)`)
 	abisCmd.Flags().StringSliceVarP(&abisPkg.GetOptions().Hint, "hint", "n", nil, `for the --find option only, provide hints to speed up the search`)

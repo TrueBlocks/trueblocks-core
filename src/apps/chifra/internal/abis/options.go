@@ -32,7 +32,7 @@ type AbisOptions struct {
 	Known    bool                  `json:"known,omitempty"`    // Load common 'known' ABIs from cache
 	ProxyFor string                `json:"proxyFor,omitempty"` // Redirects the query to this implementation
 	List     bool                  `json:"list,omitempty"`     // A list of downloaded abi files
-	Details  bool                  `json:"details,omitempty"`  // In --list mode only, show the functions and events instead of summaries
+	Details  bool                  `json:"details,omitempty"`  // Show the functions and events instead of summaries for all abi files
 	Count    bool                  `json:"count,omitempty"`    // Show the number of abis downloaded
 	Find     []string              `json:"find,omitempty"`     // Search for function or event declarations given a four- or 32-byte code(s)
 	Hint     []string              `json:"hint,omitempty"`     // For the --find option only, provide hints to speed up the search

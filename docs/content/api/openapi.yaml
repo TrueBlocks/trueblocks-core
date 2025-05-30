@@ -1011,7 +1011,7 @@ paths:
           schema:
             type: boolean
         - name: details
-          description: in --list mode only, show the functions and events instead of summaries
+          description: show the functions and events instead of summaries for all abi files
           required: false
           style: form
           in: query

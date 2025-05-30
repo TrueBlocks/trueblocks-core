@@ -53,12 +53,6 @@ func (opts *AbisOptions) validateAbis() error {
 		}
 	}
 
-	if opts.Details {
-		if !opts.List {
-			return validate.Usage("The {0} options requires {1}.", "--details", "--list")
-		}
-	}
-
 	other := len(opts.Encode) != 0 || len(opts.Find) != 0 || opts.Globals.Decache
 	if other && (opts.Count || opts.List) {
 		return validate.Usage("The {0} options must be used alone.", "--count and --list")
