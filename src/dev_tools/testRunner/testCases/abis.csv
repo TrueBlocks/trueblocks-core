@@ -67,8 +67,8 @@ on       ,both ,fast  ,abis  ,tools ,grabABI ,clean_alone         ,y    ,decache
 on       ,both ,fast  ,abis  ,tools ,grabABI ,list                ,y    ,list
 on       ,both ,fast  ,abis  ,tools ,grabABI ,list_known          ,y    ,list & known
 on       ,both ,fast  ,abis  ,tools ,grabABI ,list_verbose        ,y    ,list & verbose
-on       ,both ,fast  ,abis  ,tools ,grabABI ,list_funcs          ,y    ,list_funcs & addrs = 0xe94327d07fc17907b4db788e5adf2ed424addff6
-on       ,both ,fast  ,abis  ,tools ,grabABI ,list_events         ,y    ,list_events & addrs = 0xe94327d07fc17907b4db788e5adf2ed424addff6
+on       ,both ,fast  ,abis  ,tools ,grabABI ,list_funcs          ,y    ,list & details & addrs = 0xe94327d07fc17907b4db788e5adf2ed424addff6
+on       ,both ,fast  ,abis  ,tools ,grabABI ,list_events         ,y    ,list & details & addrs = 0xe94327d07fc17907b4db788e5adf2ed424addff6
 on       ,both ,fast  ,abis  ,tools ,grabABI ,count               ,y    ,count
 on       ,both ,fast  ,abis  ,tools ,grabABI ,count_v             ,y    ,count & no_header
 on       ,both ,fast  ,abis  ,tools ,grabABI ,count_list          ,y    ,count & list

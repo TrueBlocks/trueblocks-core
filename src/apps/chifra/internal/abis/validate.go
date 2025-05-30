@@ -43,8 +43,7 @@ func (opts *AbisOptions) validateAbis() error {
 		len(opts.Find) == 0 &&
 		!opts.Count &&
 		!opts.List &&
-		!opts.ListFuncs &&
-		!opts.ListEvents &&
+		!opts.Details &&
 		!opts.Known &&
 		!opts.Globals.Decache {
 		// If we're not find and not known we better have at least one address
@@ -54,15 +53,9 @@ func (opts *AbisOptions) validateAbis() error {
 		}
 	}
 
-	if opts.ListFuncs || opts.ListEvents {
-		if opts.List {
-			return validate.Usage("The {0} options cannot be used with {1}.", "--list", "--listFuncs or --listEvents")
-		}
-		opts.ListFilter = "" // assume both pass
-		if opts.ListFuncs && !opts.ListEvents {
-			opts.ListFilter = "function"
-		} else if opts.ListEvents && !opts.ListFuncs {
-			opts.ListFilter = "event"
+	if opts.Details {
+		if !opts.List {
+			return validate.Usage("The {0} options requires {1}.", "--details", "--list")
 		}
 	}
 

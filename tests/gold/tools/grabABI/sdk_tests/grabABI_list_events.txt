@@ -1,12 +1,79 @@
-abis?listEvents&addrs=0xe94327d07fc17907b4db788e5adf2ed424addff6
-Args: [listEvents addrs=0xe94327d07fc17907b4db788e5adf2ed424addff6]
-Opts: {"addrs":["0xe94327d07fc17907b4db788e5adf2ed424addff6"],"proxyFor":"0x0","listEvents":true}
+abis?list&details&addrs=0xe94327d07fc17907b4db788e5adf2ed424addff6
+Args: [list details addrs=0xe94327d07fc17907b4db788e5adf2ed424addff6]
+Opts: {"addrs":["0xe94327d07fc17907b4db788e5adf2ed424addff6"],"proxyFor":"0x0","list":true,"details":true}
 Addrs:  [0xe94327d07fc17907b4db788e5adf2ed424addff6]
-ListEvents:  true
+List:  true
+Details:  true
 Caps:  cache,decache
 Format:  json
 {
   "data": [
+    {
+      "encoding": "0x06fdde03",
+      "name": "name",
+      "signature": "name()",
+      "type": "function"
+    },
+    {
+      "encoding": "0x095ea7b3",
+      "name": "approve",
+      "signature": "approve(address,uint256)",
+      "type": "function"
+    },
+    {
+      "encoding": "0x158ef93e",
+      "name": "initialized",
+      "signature": "initialized()",
+      "type": "function"
+    },
+    {
+      "encoding": "0x18160ddd",
+      "name": "totalSupply",
+      "signature": "totalSupply()",
+      "type": "function"
+    },
+    {
+      "encoding": "0x23b872dd",
+      "name": "transferFrom",
+      "signature": "transferFrom(address,address,uint256)",
+      "type": "function"
+    },
+    {
+      "encoding": "0x2988e36b",
+      "name": "migrateBalance",
+      "signature": "migrateBalance(address)",
+      "type": "function"
+    },
+    {
+      "encoding": "0x2a1eafd9",
+      "name": "targetSupply",
+      "signature": "targetSupply()",
+      "type": "function"
+    },
+    {
+      "encoding": "0x313ce567",
+      "name": "decimals",
+      "signature": "decimals()",
+      "type": "function"
+    },
+    {
+      "encoding": "0x3f4ba83a",
+      "name": "unpause",
+      "signature": "unpause()",
+      "type": "function"
+    },
+    {
+      "encoding": "0x4b92738e",
+      "name": "migrateBalances",
+      "signature": "migrateBalances(address[])",
+      "type": "function"
+    },
+    {
+      "encoding": "0x5c975abb",
+      "name": "paused",
+      "signature": "paused()",
+      "type": "function"
+    },
     {
       "encoding": "0x6985a02210a168e66602d3235cb6db0e70f92b3ba4d376a33c0f3d9434bff625",
       "name": "Pause",
@@ -14,10 +81,22 @@ Format:  json
       "type": "event"
     },
     {
+      "encoding": "0x70a08231",
+      "name": "balanceOf",
+      "signature": "balanceOf(address)",
+      "type": "function"
+    },
+    {
       "encoding": "0x7805862f689e2f13df9f062ff482ad3ad112aca9e0847911ed832e158c525b33",
       "name": "Unpause",
       "signature": "Unpause()",
       "type": "event"
+    },
+    {
+      "encoding": "0x8456cb59",
+      "name": "pause",
+      "signature": "pause()",
+      "type": "function"
     },
     {
       "encoding": "0x8b80bd19aea7b735bc6d75db8d6adbe18b28c30d62b3555245eb67b2340caedc",
@@ -32,10 +111,46 @@ Format:  json
       "type": "event"
     },
     {
+      "encoding": "0x8da5cb5b",
+      "name": "owner",
+      "signature": "owner()",
+      "type": "function"
+    },
+    {
+      "encoding": "0x95d89b41",
+      "name": "symbol",
+      "signature": "symbol()",
+      "type": "function"
+    },
+    {
+      "encoding": "0xa9059cbb",
+      "name": "transfer",
+      "signature": "transfer(address,uint256)",
+      "type": "function"
+    },
+    {
+      "encoding": "0xb85e0aca",
+      "name": "legacyRepContract",
+      "signature": "legacyRepContract()",
+      "type": "function"
+    },
+    {
+      "encoding": "0xdd62ed3e",
+      "name": "allowance",
+      "signature": "allowance(address,address)",
+      "type": "function"
+    },
+    {
       "encoding": "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef",
       "name": "Transfer",
       "signature": "Transfer(address,address,uint256)",
       "type": "event"
+    },
+    {
+      "encoding": "0xf2fde38b",
+      "name": "transferOwnership",
+      "signature": "transferOwnership(address)",
+      "type": "function"
     }
   ],
   "meta": {

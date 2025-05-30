@@ -12,15 +12,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
-func (opts *AbisOptions) HandleListFuncs(rCtx *output.RenderCtx) (err error) {
-	return opts.HandleListItems(rCtx)
-}
-
-func (opts *AbisOptions) HandleListEvents(rCtx *output.RenderCtx) (err error) {
-	return opts.HandleListItems(rCtx)
-}
-
-func (opts *AbisOptions) HandleListItems(rCtx *output.RenderCtx) (err error) {
+func (opts *AbisOptions) HandleDetails(rCtx *output.RenderCtx) (err error) {
 	if len(opts.Addrs) == 0 {
 		vFunc := func(fn string, vP any) (bool, error) {
 			_ = vP
@@ -54,9 +46,7 @@ func (opts *AbisOptions) HandleListItems(rCtx *output.RenderCtx) (err error) {
 			}
 
 			for _, f := range functions {
-				if opts.ListFilter == "" || opts.ListFilter == f.FunctionType {
-					modelChan <- f
-				}
+				modelChan <- f
 			}
 		}
 	}

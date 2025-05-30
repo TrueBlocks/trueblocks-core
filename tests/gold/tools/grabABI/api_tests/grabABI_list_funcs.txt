@@ -1,4 +1,4 @@
-abis?listFuncs&addrs=0xe94327d07fc17907b4db788e5adf2ed424addff6
+abis?list&details&addrs=0xe94327d07fc17907b4db788e5adf2ed424addff6
 {
   "data": [
     {
@@ -68,16 +68,40 @@ abis?listFuncs&addrs=0xe94327d07fc17907b4db788e5adf2ed424addff6
       "type": "function"
     },
     {
+      "encoding": "0x6985a02210a168e66602d3235cb6db0e70f92b3ba4d376a33c0f3d9434bff625",
+      "name": "Pause",
+      "signature": "Pause()",
+      "type": "event"
+    },
+    {
       "encoding": "0x70a08231",
       "name": "balanceOf",
       "signature": "balanceOf(address)",
       "type": "function"
     },
     {
+      "encoding": "0x7805862f689e2f13df9f062ff482ad3ad112aca9e0847911ed832e158c525b33",
+      "name": "Unpause",
+      "signature": "Unpause()",
+      "type": "event"
+    },
+    {
       "encoding": "0x8456cb59",
       "name": "pause",
       "signature": "pause()",
       "type": "function"
+    },
+    {
+      "encoding": "0x8b80bd19aea7b735bc6d75db8d6adbe18b28c30d62b3555245eb67b2340caedc",
+      "name": "Migrated",
+      "signature": "Migrated(address,uint256)",
+      "type": "event"
+    },
+    {
+      "encoding": "0x8c5be1e5ebec7d5bd14f71427d1e84f3dd0314c0f7b2291e5b200ac8c7c3b925",
+      "name": "Approval",
+      "signature": "Approval(address,address,uint256)",
+      "type": "event"
     },
     {
       "encoding": "0x8da5cb5b",
@@ -108,6 +132,12 @@ abis?listFuncs&addrs=0xe94327d07fc17907b4db788e5adf2ed424addff6
       "name": "allowance",
       "signature": "allowance(address,address)",
       "type": "function"
+    },
+    {
+      "encoding": "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef",
+      "name": "Transfer",
+      "signature": "Transfer(address,address,uint256)",
+      "type": "event"
     },
     {
       "encoding": "0xf2fde38b",

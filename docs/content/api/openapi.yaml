@@ -1010,16 +1010,8 @@ paths:
           explode: true
           schema:
             type: boolean
-        - name: listFuncs
-          description: a list of the functions in all abi files
-          required: false
-          style: form
-          in: query
-          explode: true
-          schema:
-            type: boolean
-        - name: listEvents
-          description: a list of the events in all abi files
+        - name: details
+          description: in --list mode only, show the functions and events instead of summaries
           required: false
           style: form
           in: query
