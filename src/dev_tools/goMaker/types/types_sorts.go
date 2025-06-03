@@ -15,6 +15,9 @@ if len(sortSpec.Fields) != len(sortSpec.Order) {
 
 sorts := make([]func(p1, p2 types.{{.Class}}) bool, len(sortSpec.Fields))
 for i, field := range sortSpec.Fields {
+	if field == "" {
+		continue
+	}
 	if !types.IsValid{{.Class}}Field(field) {
 		return fmt.Errorf("%s is not an {{.Class}} sort field", field)
 	}
