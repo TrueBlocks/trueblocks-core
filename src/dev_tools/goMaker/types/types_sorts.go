@@ -24,7 +24,9 @@ for i, field := range sortSpec.Fields {
 	sorts[i] = types.{{.Class}}By(types.{{.Class}}Field(field), types.SortOrder(sortSpec.Order[i]))
 }
 
-sort.Slice({{toLowerPlural .Class}}, types.{{.Class}}Cmp({{toLowerPlural .Class}}, sorts...))
+if len(sorts) > 0 {
+	sort.SliceStable({{toLowerPlural .Class}}, types.{{.Class}}Cmp({{toLowerPlural .Class}}, sorts...))
+}
 return nil
 }
 `
