@@ -49,11 +49,14 @@ func articulateTrace(trace *types.Trace, abiMap *abi.SelectorSyncMap) (articulat
 	}
 
 	encoding := input[:10]
-	articulated = abiMap.GetValue(encoding)
+	found := abiMap.GetValue(encoding)
 
-	if trace.Result == nil || articulated == nil {
+	if trace.Result == nil || found == nil {
 		return
 	}
+
+	// Clone the function to avoid modifying the cached instance
+	articulated = found.Clone()
 
 	var abiMethod *goEthAbi.Method
 

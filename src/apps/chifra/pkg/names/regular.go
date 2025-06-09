@@ -15,6 +15,12 @@ var regularNamesMutex sync.Mutex
 
 // loadRegularMap loads the regular names from the cache
 func loadRegularMap(chain string, terms []string, parts types.Parts, ret *map[base.Address]types.Name) error {
+	regularNamesMutex.Lock()
+	defer func() {
+		regularNamesLoaded = true
+		regularNamesMutex.Unlock()
+	}()
+
 	if regularNamesLoaded {
 		for _, name := range regularNames {
 			if doSearch(&name, terms, parts) {
@@ -27,12 +33,6 @@ func loadRegularMap(chain string, terms []string, parts types.Parts, ret *map[ba
 		}
 		return nil
 	}
-
-	regularNamesMutex.Lock()
-	defer func() {
-		regularNamesLoaded = true
-		regularNamesMutex.Unlock()
-	}()
 
 	db, err := openDatabaseForRead(chain, DatabaseRegular)
 	if err != nil {
