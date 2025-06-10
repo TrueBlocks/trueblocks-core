@@ -13,13 +13,9 @@ const (
 	ChainSymbol         ChainField = "symbol"
 )
 
-// IsValidChainField returns true if the given field is a valid sortable Chain field.
-func IsValidChainField(field string) bool {
-	switch field {
-	case "chain", "chainId", "ipfsGateway", "localExplorer", "remoteExplorer", "rpcProvider", "symbol":
-		return true
-	}
-	return false
+// GetSortFieldsChain returns a []string of valid sort fields for the type.
+func GetSortFieldsChain() []string {
+	return []string{"chain", "chainId", "ipfsGateway", "localExplorer", "remoteExplorer", "rpcProvider", "symbol"}
 }
 
 // ChainBy returns a comparison function for sorting Chain instances by the given field.

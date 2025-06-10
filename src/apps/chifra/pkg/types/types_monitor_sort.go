@@ -13,13 +13,9 @@ const (
 	MonitorNRecords    MonitorField = "nRecords"
 )
 
-// IsValidMonitorField returns true if the given field is a valid sortable Monitor field.
-func IsValidMonitorField(field string) bool {
-	switch field {
-	case "address", "deleted", "fileSize", "isEmpty", "isStaged", "lastScanned", "nRecords":
-		return true
-	}
-	return false
+// GetSortFieldsMonitor returns a []string of valid sort fields for the type.
+func GetSortFieldsMonitor() []string {
+	return []string{"address", "deleted", "fileSize", "isEmpty", "isStaged", "lastScanned", "nRecords"}
 }
 
 // MonitorBy returns a comparison function for sorting Monitor instances by the given field.

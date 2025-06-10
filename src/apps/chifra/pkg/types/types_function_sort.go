@@ -11,13 +11,9 @@ const (
 	FunctionType            FunctionField = "type"
 )
 
-// IsValidFunctionField returns true if the given field is a valid sortable Function field.
-func IsValidFunctionField(field string) bool {
-	switch field {
-	case "encoding", "name", "signature", "stateMutability", "type":
-		return true
-	}
-	return false
+// GetSortFieldsFunction returns a []string of valid sort fields for the type.
+func GetSortFieldsFunction() []string {
+	return []string{"encoding", "name", "signature", "stateMutability", "type"}
 }
 
 // FunctionBy returns a comparison function for sorting Function instances by the given field.

@@ -18,7 +18,7 @@ for i, field := range sortSpec.Fields {
 	if field == "" {
 		continue
 	}
-	if !types.IsValid{{.Class}}Field(field) {
+	if !slices.Contains(types.GetSortFields{{.Class}}(), field) {
 		return fmt.Errorf("%s is not an {{.Class}} sort field", field)
 	}
 	sorts[i] = types.{{.Class}}By(types.{{.Class}}Field(field), types.SortOrder(sortSpec.Order[i]))

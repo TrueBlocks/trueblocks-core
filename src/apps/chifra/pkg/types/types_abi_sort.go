@@ -16,13 +16,9 @@ const (
 	AbiName           AbiField = "name"
 )
 
-// IsValidAbiField returns true if the given field is a valid sortable Abi field.
-func IsValidAbiField(field string) bool {
-	switch field {
-	case "address", "fileSize", "hasConstructor", "hasFallback", "isEmpty", "isKnown", "lastModDate", "nEvents", "nFunctions", "name":
-		return true
-	}
-	return false
+// GetSortFieldsAbi returns a []string of valid sort fields for the type.
+func GetSortFieldsAbi() []string {
+	return []string{"address", "fileSize", "hasConstructor", "hasFallback", "isEmpty", "isKnown", "lastModDate", "nEvents", "nFunctions", "name"}
 }
 
 // AbiBy returns a comparison function for sorting Abi instances by the given field.
