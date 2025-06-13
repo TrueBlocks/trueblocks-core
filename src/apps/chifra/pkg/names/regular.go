@@ -99,3 +99,9 @@ func loadKnownBadresses(unused string, terms []string, parts types.Parts, ret *m
 	}
 	return nil
 }
+
+func BaddressCount() int {
+	m := make(map[base.Address]types.Name)
+	_ = loadKnownBadresses("unused", []string{}, types.Baddress, &m)
+	return len(m)
+}

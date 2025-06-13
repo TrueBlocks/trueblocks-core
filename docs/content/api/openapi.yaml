@@ -857,6 +857,14 @@ paths:
           explode: true
           schema:
             type: boolean
+        - name: count
+          description: return the number of names matching the search terms or other options
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
         - name: dryRun
           description: only available with --clean or --autoname, outputs changes to stdout instead of updating databases
           required: false

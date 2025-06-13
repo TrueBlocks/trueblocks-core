@@ -223,7 +223,7 @@ Flags:
       --remove       remove a previously deleted monitor
   -C, --clean        clean (i.e. remove duplicate appearances) from monitors, optionally clear stage
   -l, --list         list monitors in the cache (--verbose for more detail)
-  -c, --count        show the number of active monitors (included deleted but not removed monitors)
+  -U, --count        show the number of active monitors (included deleted but not removed monitors)
   -S, --staged       for --clean, --list, and --count options only, include staged monitors
   -D, --decache      removes related items from the cache
   -x, --fmt string   export format, one of [none|json*|txt|csv]
@@ -282,6 +282,7 @@ Flags:
   -g, --tags              export the list of tags and subtags only
   -C, --clean             clean the data (addrs to lower case, sort by addr)
   -r, --regular           only available with --clean, cleans regular names database
+  -U, --count             return the number of names matching the search terms or other options
   -d, --dry_run           only available with --clean or --autoname, outputs changes to stdout instead of updating databases
   -A, --autoname string   an address assumed to be a token, added automatically to names database if true
   -x, --fmt string        export format, one of [none|json*|txt|csv]
@@ -343,7 +344,7 @@ Flags:
   -r, --proxy_for string   redirects the query to this implementation
   -l, --list               a list of downloaded abi files
   -d, --details            show the functions and events instead of summaries for all abi files
-  -c, --count              show the number of abis downloaded
+  -U, --count              show the number of abis downloaded
   -f, --find strings       search for function or event declarations given a four- or 32-byte code(s)
   -n, --hint strings       for the --find option only, provide hints to speed up the search
   -e, --encode string      generate the 32-byte encoding for a given canonical function or event signature

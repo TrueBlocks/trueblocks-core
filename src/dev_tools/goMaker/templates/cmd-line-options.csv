@@ -70,24 +70,25 @@ num,folder,group,route,tool,longName,hotKey,def_val,attributes,handler,option_ty
 14050,apps,Accounts,monitors,acctExport,remove,,,visible|docs|crud,,switch,<boolean>,,,,,remove a previously deleted monitor
 14060,apps,Accounts,monitors,acctExport,clean,C,,visible|docs,2,switch,<boolean>,monitorClean,,,,clean (i.e. remove duplicate appearances) from monitors&#44; optionally clear stage
 14070,apps,Accounts,monitors,acctExport,list,l,,visible|docs,3,switch,<boolean>,monitor,,,,list monitors in the cache (--verbose for more detail)
-14075,apps,Accounts,monitors,acctExport,count,c,,visible|docs,1,switch,<boolean>,count,,,,show the number of active monitors (included deleted but not removed monitors)
+14075,apps,Accounts,monitors,acctExport,count,U,,visible|docs,1,switch,<boolean>,count,,,,show the number of active monitors (included deleted but not removed monitors)
 14065,apps,Accounts,monitors,acctExport,staged,S,,visible|docs,,switch,<boolean>,,,,,for --clean&#44; --list&#44; and --count options only&#44; include staged monitors
 14140,apps,Accounts,monitors,acctExport,n1,,,,,note,,,,,,An `address` must be either an ENS name or start with '0x' and be forty-two characters long.
 14150,apps,Accounts,monitors,acctExport,n2,,,,,note,,,,,,If no address is presented to the --clean command&#44; all existing monitors will be cleaned.
 #
 15000,tools,Accounts,names,ethNames,,,,visible|docs,,command,,,Manage names,[flags] <term> [term...],default|,Query addresses or names of well-known accounts.
-15020,tools,Accounts,names,ethNames,terms,,,required|visible|docs,4,positional,list<string>,name,,,,a space separated list of one or more search terms
+15020,tools,Accounts,names,ethNames,terms,,,required|visible|docs,5,positional,list<string>,name,,,,a space separated list of one or more search terms
 15030,tools,Accounts,names,ethNames,expand,e,,visible|docs,,switch,<boolean>,,,,,expand search to include all fields (search name&#44; address&#44; and symbol otherwise)
 15040,tools,Accounts,names,ethNames,match_case,m,,visible|docs,,switch,<boolean>,,,,,do case-sensitive search
 15050,tools,Accounts,names,ethNames,all,a,,visible|docs,,switch,<boolean>,,,,,include all (including custom) names in the search
 15060,tools,Accounts,names,ethNames,custom,c,,visible|docs,,switch,<boolean>,,,,,include only custom named accounts in the search
 15070,tools,Accounts,names,ethNames,prefund,p,,visible|docs,,switch,<boolean>,,,,,include prefund accounts in the search
 15080,tools,Accounts,names,ethNames,addr,s,,visible|docs,,switch,<boolean>,name,,,,display only addresses in the results (useful for scripting&#44; assumes --no_header)
-15090,tools,Accounts,names,ethNames,tags,g,,visible|docs,3,switch,<boolean>,name,,,,export the list of tags and subtags only
-15100,tools,Accounts,names,ethNames,clean,C,,visible|docs,2,switch,<boolean>,message,,,,clean the data (addrs to lower case&#44; sort by addr)
+15090,tools,Accounts,names,ethNames,tags,g,,visible|docs,4,switch,<boolean>,name,,,,export the list of tags and subtags only
+15100,tools,Accounts,names,ethNames,clean,C,,visible|docs,3,switch,<boolean>,message,,,,clean the data (addrs to lower case&#44; sort by addr)
 15110,tools,Accounts,names,ethNames,regular,r,,visible|docs,,switch,<boolean>,,,,,only available with --clean&#44; cleans regular names database
+15115,tools,Accounts,names,ethNames,count,U,,visible|docs,1,switch,<boolean>,count,,,,return the number of names matching the search terms or other options
 15120,tools,Accounts,names,ethNames,dry_run,d,,visible|docs,,switch,<boolean>,,,,,only available with --clean or --autoname&#44; outputs changes to stdout instead of updating databases
-15130,tools,Accounts,names,ethNames,autoname,A,,visible|docs,1,flag,<address>,message,,,,an address assumed to be a token&#44; added automatically to names database if true
+15130,tools,Accounts,names,ethNames,autoname,A,,visible|docs,2,flag,<address>,message,,,,an address assumed to be a token&#44; added automatically to names database if true
 15140,tools,Accounts,names,ethNames,create,,,docs|crud,,switch,<boolean>,name,,,,create a new name record
 15150,tools,Accounts,names,ethNames,update,,,docs|crud,,switch,<boolean>,name,,,,edit an existing name
 15160,tools,Accounts,names,ethNames,delete,,,docs|crud,,switch,<boolean>,name,,,,delete a name&#44; but do not remove it
@@ -102,7 +103,7 @@ num,folder,group,route,tool,longName,hotKey,def_val,attributes,handler,option_ty
 16040,tools,Accounts,abis,grabABI,proxy_for,r,,visible|docs,,flag,<address>,,,,,redirects the query to this implementation
 16050,tools,Accounts,abis,grabABI,list,l,,visible|docs,4,switch,<boolean>,abi,,,,a list of downloaded abi files
 16055,tools,Accounts,abis,grabABI,details,d,,visible|docs,3,switch,<boolean>,function,,,,show the functions and events instead of summaries for all abi files
-16060,tools,Accounts,abis,grabABI,count,c,,visible|docs,2,switch,<boolean>,count,,,,show the number of abis downloaded
+16060,tools,Accounts,abis,grabABI,count,U,,visible|docs,2,switch,<boolean>,count,,,,show the number of abis downloaded
 16070,tools,Accounts,abis,grabABI,find,f,,visible|docs,1,flag,list<string>,function,,,,search for function or event declarations given a four- or 32-byte code(s)
 16080,tools,Accounts,abis,grabABI,hint,n,,visible|docs,,flag,list<string>,,,,,for the --find option only&#44; provide hints to speed up the search
 16090,tools,Accounts,abis,grabABI,encode,e,,visible|docs,5,flag,<string>,function,,,,generate the 32-byte encoding for a given canonical function or event signature
