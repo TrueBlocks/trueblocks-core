@@ -134,6 +134,16 @@ func TestNames(which, value, fn string, opts *sdk.NamesOptions) {
 				ReportOkay(fn)
 			}
 		}
+	case "count":
+		if count, _, err := opts.NamesCount(); err != nil {
+			ReportError(fn, opts, err)
+		} else {
+			if err := SaveToFile(fn, count); err != nil {
+				ReportError2(fn, err)
+			} else {
+				ReportOkay(fn)
+			}
+		}
 	case "autoname":
 		if autoname, _, err := opts.NamesAutoname(base.HexToAddress(value)); err != nil {
 			ReportError(fn, opts, err)

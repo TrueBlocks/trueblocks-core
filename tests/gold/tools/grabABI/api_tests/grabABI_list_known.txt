@@ -1,0 +1,189 @@
+abis?list&known
+{
+  "data": [
+    {
+      "fileSize": 3754,
+      "isKnown": true,
+      "lastModDate": "--date--",
+      "name": "erc_00020.json"
+    },
+    {
+      "fileSize": 8051,
+      "isKnown": true,
+      "lastModDate": "--date--",
+      "name": "erc_00721.json"
+    },
+    {
+      "fileSize": 4355,
+      "isKnown": true,
+      "lastModDate": "--date--",
+      "name": "gitcoin.json"
+    },
+    {
+      "fileSize": 137261,
+      "isKnown": true,
+      "lastModDate": "--date--",
+      "name": "openzeppelin.json"
+    },
+    {
+      "fileSize": 6972,
+      "isKnown": true,
+      "lastModDate": "--date--",
+      "name": "proxy.json"
+    },
+    {
+      "fileSize": 1748,
+      "isKnown": true,
+      "lastModDate": "--date--",
+      "name": "unchained.json"
+    },
+    {
+      "fileSize": 3368,
+      "isKnown": true,
+      "lastModDate": "--date--",
+      "name": "unchainedV2.json"
+    },
+    {
+      "fileSize": 14333,
+      "isKnown": true,
+      "lastModDate": "--date--",
+      "name": "uniswap-pair.json"
+    },
+    {
+      "fileSize": 40367,
+      "isKnown": true,
+      "lastModDate": "--date--",
+      "name": "uniswap.json"
+    },
+    {
+      "fileSize": 16133,
+      "isKnown": true,
+      "lastModDate": "--date--",
+      "name": "wallet_abis.json"
+    },
+    {
+      "fileSize": 349,
+      "isKnown": true,
+      "lastModDate": "--date--",
+      "name": "erc_00165.json"
+    },
+    {
+      "fileSize": 7076,
+      "isKnown": true,
+      "lastModDate": "--date--",
+      "name": "erc_00777.json"
+    },
+    {
+      "fileSize": 62261,
+      "isKnown": true,
+      "lastModDate": "--date--",
+      "name": "erc_00998.json"
+    },
+    {
+      "fileSize": 32557,
+      "isKnown": true,
+      "lastModDate": "--date--",
+      "name": "erc_01155.json"
+    },
+    {
+      "fileSize": 4638,
+      "isKnown": true,
+      "lastModDate": "--date--",
+      "name": "erc_01594.json"
+    },
+    {
+      "fileSize": 5342,
+      "isKnown": true,
+      "lastModDate": "--date--",
+      "name": "erc_01820.json"
+    },
+    {
+      "fileSize": 39649,
+      "isKnown": true,
+      "lastModDate": "--date--",
+      "name": "loose.json"
+    },
+    {
+      "fileSize": 215572,
+      "isKnown": true,
+      "lastModDate": "--date--",
+      "name": "aragon.json"
+    },
+    {
+      "fileSize": 19296,
+      "isKnown": true,
+      "lastModDate": "--date--",
+      "name": "cryptokitties.json"
+    },
+    {
+      "fileSize": 12869,
+      "isKnown": true,
+      "lastModDate": "--date--",
+      "name": "ens-old.json"
+    },
+    {
+      "fileSize": 92096,
+      "isKnown": true,
+      "lastModDate": "--date--",
+      "name": "ens.json"
+    },
+    {
+      "fileSize": 24220,
+      "isKnown": true,
+      "lastModDate": "--date--",
+      "name": "kickback.json"
+    },
+    {
+      "fileSize": 5305,
+      "isKnown": true,
+      "lastModDate": "--date--",
+      "name": "maker-v1.json"
+    },
+    {
+      "fileSize": 91116,
+      "isKnown": true,
+      "lastModDate": "--date--",
+      "name": "truebit.json"
+    },
+    {
+      "fileSize": 4071,
+      "isKnown": true,
+      "lastModDate": "--date--",
+      "name": "diamond.json"
+    },
+    {
+      "fileSize": 32865,
+      "isKnown": true,
+      "lastModDate": "--date--",
+      "name": "moloch.json"
+    },
+    {
+      "fileSize": 10909,
+      "isKnown": true,
+      "lastModDate": "--date--",
+      "name": "populous.json"
+    },
+    {
+      "fileSize": 115696,
+      "isKnown": true,
+      "lastModDate": "--date--",
+      "name": "sabilier.json"
+    },
+    {
+      "fileSize": 81144,
+      "isKnown": true,
+      "lastModDate": "--date--",
+      "name": "set.json"
+    }
+  ],
+  "meta": {
+    "client": "0xdeadbeef",
+    "finalized": "0xdeadbeef",
+    "staging": "0xdeadbeef",
+    "ripe": "0xdeadbeef",
+    "unripe": "0xdeadbeef",
+    "chainId": 1,
+    "networkId": 1,
+    "chain": "mainnet"
+  }
+}

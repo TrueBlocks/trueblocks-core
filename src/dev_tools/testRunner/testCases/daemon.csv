@@ -1,8 +1,8 @@
 enabled ,mode ,speed ,route  ,path ,tool   ,filename          ,post ,options
 on      ,cmd  ,fast  ,daemon ,apps ,daemon ,help              ,n    ,@h
 on      ,cmd  ,fast  ,daemon ,apps ,daemon ,help_long         ,n    ,help
-on      ,both ,fast  ,daemon ,apps ,daemon ,bad_cmd           ,n    ,not-an-option
-on      ,both ,fast  ,daemon ,apps ,daemon ,port              ,n    ,not-an-option & port = :8080
+off     ,both ,fast  ,daemon ,apps ,daemon ,bad_cmd           ,n    ,not-an-option
+off     ,both ,fast  ,daemon ,apps ,daemon ,port              ,n    ,not-an-option & port = :8080
 
 # Capabilities
 # chain & fmt & help & nocolor & noop & version & verbose & no_header & file & output & append & cache & ether

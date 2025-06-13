@@ -15,13 +15,18 @@ if len(sortSpec.Fields) != len(sortSpec.Order) {
 
 sorts := make([]func(p1, p2 types.{{.Class}}) bool, len(sortSpec.Fields))
 for i, field := range sortSpec.Fields {
-	if !types.IsValid{{.Class}}Field(field) {
+	if field == "" {
+		continue
+	}
+	if !slices.Contains(types.GetSortFields{{.Class}}(), field) {
 		return fmt.Errorf("%s is not an {{.Class}} sort field", field)
 	}
 	sorts[i] = types.{{.Class}}By(types.{{.Class}}Field(field), types.SortOrder(sortSpec.Order[i]))
 }
 
-sort.Slice({{toLowerPlural .Class}}, types.{{.Class}}Cmp({{toLowerPlural .Class}}, sorts...))
+if len(sorts) > 0 {
+	sort.SliceStable({{toLowerPlural .Class}}, types.{{.Class}}Cmp({{toLowerPlural .Class}}, sorts...))
+}
 return nil
 }
 `

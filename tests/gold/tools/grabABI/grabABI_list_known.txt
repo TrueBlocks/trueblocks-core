@@ -1,0 +1,35 @@
+chifra abis  --list --known
+TEST[DATE|TIME] Known:  true
+TEST[DATE|TIME] List:  true
+TEST[DATE|TIME] Caps:  cache,decache
+TEST[DATE|TIME] Format:  txt
+address	name	lastModDate	fileSize	isKnown
+	erc_00020.json	--date--	3754	true
+	erc_00721.json	--date--	8051	true
+	gitcoin.json	--date--	4355	true
+	openzeppelin.json	--date--	137261	true
+	proxy.json	--date--	6972	true
+	unchained.json	--date--	1748	true
+	unchainedV2.json	--date--	3368	true
+	uniswap-pair.json	--date--	14333	true
+	uniswap.json	--date--	40367	true
+	wallet_abis.json	--date--	16133	true
+	erc_00165.json	--date--	349	true
+	erc_00777.json	--date--	7076	true
+	erc_00998.json	--date--	62261	true
+	erc_01155.json	--date--	32557	true
+	erc_01594.json	--date--	4638	true
+	erc_01820.json	--date--	5342	true
+	loose.json	--date--	39649	true
+	aragon.json	--date--	215572	true
+	cryptokitties.json	--date--	19296	true
+	ens-old.json	--date--	12869	true
+	ens.json	--date--	92096	true
+	kickback.json	--date--	24220	true
+	maker-v1.json	--date--	5305	true
+	truebit.json	--date--	91116	true
+	diamond.json	--date--	4071	true
+	moloch.json	--date--	32865	true
+	populous.json	--date--	10909	true
+	sabilier.json	--date--	115696	true
+	set.json	--date--	81144	true

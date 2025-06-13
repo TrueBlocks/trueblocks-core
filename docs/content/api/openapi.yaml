@@ -857,6 +857,14 @@ paths:
           explode: true
           schema:
             type: boolean
+        - name: count
+          description: return the number of names matching the search terms or other options
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
         - name: dryRun
           description: only available with --clean or --autoname, outputs changes to stdout instead of updating databases
           required: false
@@ -1004,6 +1012,14 @@ paths:
             format: address
         - name: list
           description: a list of downloaded abi files
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: details
+          description: show the functions and events instead of summaries for all abi files
           required: false
           style: form
           in: query

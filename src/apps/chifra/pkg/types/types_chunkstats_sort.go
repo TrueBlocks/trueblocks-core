@@ -18,13 +18,9 @@ const (
 	ChunkStatsRatio         ChunkStatsField = "ratio"
 )
 
-// IsValidChunkStatsField returns true if the given field is a valid sortable ChunkStats field.
-func IsValidChunkStatsField(field string) bool {
-	switch field {
-	case "addrsPerBlock", "appsPerAddr", "appsPerBlock", "bloomSz", "chunkSz", "nAddrs", "nApps", "nBlocks", "nBlooms", "range", "rangeDates", "ratio":
-		return true
-	}
-	return false
+// GetSortFieldsChunkStats returns a []string of valid sort fields for the type.
+func GetSortFieldsChunkStats() []string {
+	return []string{"addrsPerBlock", "appsPerAddr", "appsPerBlock", "bloomSz", "chunkSz", "nAddrs", "nApps", "nBlocks", "nBlooms", "range", "rangeDates", "ratio"}
 }
 
 // ChunkStatsBy returns a comparison function for sorting ChunkStats instances by the given field.

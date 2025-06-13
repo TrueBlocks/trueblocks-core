@@ -43,6 +43,7 @@ func (opts *AbisOptions) validateAbis() error {
 		len(opts.Find) == 0 &&
 		!opts.Count &&
 		!opts.List &&
+		!opts.Details &&
 		!opts.Known &&
 		!opts.Globals.Decache {
 		// If we're not find and not known we better have at least one address

@@ -24,6 +24,21 @@ func (opts *NamesOptions) validateNames() error {
 		return validate.Usage("chain {0} is not properly configured.", chain)
 	}
 
+	if opts.Count {
+		if opts.Clean || len(opts.Autoname) > 0 || opts.anyCrud() {
+			return validate.Usage("You may not use the {0} option when editing names.", "--count")
+		}
+		if len(opts.Terms) > 0 {
+			return validate.Usage("The {0} option is not available{1}.", "--count", " with search terms")
+		}
+		/*
+			Custom    bool                  `json:"custom,omitempty"`    // Include only custom named accounts in the search
+			Prefund   bool                  `json:"prefund,omitempty"`   // Include prefund accounts in the search
+			Regular   bool                  `json:"regular,omitempty"`   // Only available with --clean, cleans regular names database
+			Tags      bool                  `json:"tags,omitempty"`      // Export the list of tags and subtags only
+		*/
+	}
+
 	if len(opts.Terms) != 1 {
 		if opts.Delete {
 			return validate.Usage("The {0} option requires exactly one address.", "--delete")

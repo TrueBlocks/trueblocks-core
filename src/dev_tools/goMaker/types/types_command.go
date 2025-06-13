@@ -6,6 +6,7 @@ import (
 	"path/filepath"
 	"sort"
 	"strings"
+	"unicode"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
@@ -164,6 +165,61 @@ func (c *Command) Clean() {
 			}
 			cleaned[index].Description = msg
 			c.Notes = append(c.Notes, "The --"+op.LongName+" option is "+msg+".")
+		}
+	}
+
+	// Validate LongName and Handler properties of each Option in cleaned
+	// Rule 1: LongName should not contain any capital letters.
+	// Rule 2: Handler (if present) must represent a sequence of integers
+	// starting from 1 without any gaps or duplicates.
+	handlerValues := make(map[int]bool)
+	maxHandler := 0
+
+	for _, op := range cleaned {
+		// Rule 1: Check for capital letters in LongName
+		if op.LongName != strings.ToLower(op.LongName) {
+			suggestion := ""
+			for i, char := range op.LongName {
+				if unicode.IsUpper(char) {
+					if i > 0 { // Only add underscore if not the first character
+						suggestion += "_"
+					}
+					suggestion += strings.ToLower(string(char))
+				} else {
+					suggestion += string(char)
+				}
+			}
+			logger.Warn(fmt.Sprintf("Option '%s' in command '%s': LongName '%s' should not contain capital letters. Suggestion: '%s'", op.LongName, c.Route, op.LongName, suggestion))
+		}
+
+		// Rule 2: Check Handler values
+		// Assuming 0.0 indicates that the handler is not set.
+		if op.Handler != 0.0 {
+			handlerVal := int(op.Handler) // Convert float64 to int
+
+			if handlerVal <= 0 { // Handlers should be positive integers
+				logger.Warn(fmt.Sprintf("Option '%s' in command '%s': Handler value '%f' must be a positive integer.", op.LongName, c.Route, op.Handler))
+				continue
+			}
+
+			if _, exists := handlerValues[handlerVal]; exists {
+				logger.Warn(fmt.Sprintf("Option '%s' in command '%s': Duplicate Handler value '%d'.", op.LongName, c.Route, handlerVal))
+			} else {
+				handlerValues[handlerVal] = true
+			}
+
+			if handlerVal > maxHandler {
+				maxHandler = handlerVal
+			}
+		}
+	}
+
+	// After collecting all handlers, check for gaps in the sequence from 1 to maxHandler
+	if maxHandler > 0 {
+		for i := 1; i <= maxHandler; i++ {
+			if _, exists := handlerValues[i]; !exists {
+				logger.Warn(fmt.Sprintf("Command '%s': Missing Handler value '%d' in the sequence.", c.Route, i))
+			}
 		}
 	}
 
