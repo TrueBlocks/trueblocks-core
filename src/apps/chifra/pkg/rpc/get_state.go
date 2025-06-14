@@ -23,6 +23,7 @@ func (conn *Connection) GetState(fieldBits types.StatePart, address base.Address
 		state := &types.State{
 			BlockNumber: blockNumber,
 			Address:     address,
+			Chain:       conn.Chain,
 		}
 		if err := conn.Store.Read(state, nil); err == nil {
 			if state.Parts&fieldBits == fieldBits {
@@ -89,6 +90,7 @@ func (conn *Connection) GetState(fieldBits types.StatePart, address base.Address
 		Deployed:    base.NOPOSN,
 		Timestamp:   blockTs,
 		Parts:       fieldBits,
+		Chain:       conn.Chain,
 	}
 
 	if (fieldBits & types.Balance) != 0 {

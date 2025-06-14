@@ -20,6 +20,7 @@ func LocationsFromState(conn *rpc.Connection, address base.Address, ids []identi
 			locations = append(locations, &types.State{
 				BlockNumber: bn,
 				Address:     address,
+				Chain:       conn.Chain,
 			})
 		}
 	}

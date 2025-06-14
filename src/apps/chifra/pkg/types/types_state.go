@@ -36,6 +36,7 @@ type State struct {
 	Proxy       base.Address   `json:"proxy"`
 	Timestamp   base.Timestamp `json:"timestamp"`
 	// EXISTING_CODE
+	Chain       string         `json:"-"` // Chain identifier for cache key generation
 	// EXISTING_CODE
 }
 
@@ -114,6 +115,10 @@ func (s *State) CacheName() string {
 }
 
 func (s *State) CacheId() string {
+	if s.Chain != "" {
+		return fmt.Sprintf("%s-%s-%09d", s.Chain, s.Address.Hex()[2:], s.BlockNumber)
+	}
+	// Fallback for backward compatibility
 	return fmt.Sprintf("%s-%09d", s.Address.Hex()[2:], s.BlockNumber)
 }
 

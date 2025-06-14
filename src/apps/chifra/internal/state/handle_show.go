@@ -61,6 +61,7 @@ func (opts *StateOptions) HandleShow() error {
 				for _, bn := range blockNums {
 					if none {
 						modelChan <- &types.State{
+							Chain:       chain,
 							Address:     address,
 							BlockNumber: bn,
 						}
