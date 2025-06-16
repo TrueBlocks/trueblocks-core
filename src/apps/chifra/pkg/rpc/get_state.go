@@ -150,7 +150,7 @@ func (conn *Connection) GetBalanceAt(addr base.Address, bn base.Blknum) (*base.W
 	var balance *base.Wei
 
 	// TODO: BOGUS - THIS IN MEMORY CACHE IS GOOD, BUT COULD BE BINARY FILE
-	key := fmt.Sprintf("%s|%d", addr.Hex(), bn)
+	key := fmt.Sprintf("%s|%s|%d", conn.Chain, addr.Hex(), bn)
 	conn.cacheMutex.Lock()
 	var ok bool
 	if balance, ok = conn.balanceCache[key]; ok {
