@@ -16,60 +16,60 @@ func TestGetBalanceAtCacheCollision(t *testing.T) {
 		Chain:        "mainnet",
 		balanceCache: make(map[string]*base.Wei),
 	}
-	
+
 	conn2 := &Connection{
 		Chain:        "gnosis",
 		balanceCache: make(map[string]*base.Wei),
 	}
-	
+
 	// Test address and block number
 	testAddr := base.HexToAddress("0x1234567890123456789012345678901234567890")
 	testBlock := base.Blknum(1000000)
-	
+
 	// Create different balance values for each chain
-	mainnetBalance := base.NewWeiFromInt(1000)
-	gnosisBalance := base.NewWeiFromInt(2000)
-	
+	mainnetBalance := base.NewWei(1000)
+	gnosisBalance := base.NewWei(2000)
+
 	// Simulate caching balances for the same address/block on different chains
 	// With the fix, these should have different cache keys:
 	// - mainnet: "mainnet|0x1234567890123456789012345678901234567890|1000000"
 	// - gnosis:  "gnosis|0x1234567890123456789012345678901234567890|1000000"
-	
+
 	// Store balance for mainnet
 	mainnetKey := fmt.Sprintf("%s|%s|%d", conn1.Chain, testAddr.Hex(), testBlock)
 	conn1.balanceCache[mainnetKey] = mainnetBalance
-	
+
 	// Store balance for gnosis
 	gnosisKey := fmt.Sprintf("%s|%s|%d", conn2.Chain, testAddr.Hex(), testBlock)
 	conn2.balanceCache[gnosisKey] = gnosisBalance
-	
+
 	// Verify that the cache keys are different
 	if mainnetKey == gnosisKey {
 		t.Errorf("Cache keys should be different for different chains, but both are: %s", mainnetKey)
 	}
-	
+
 	// Verify we can retrieve the correct balance for each chain
 	if cachedMainnet, ok := conn1.balanceCache[mainnetKey]; !ok {
 		t.Error("Failed to retrieve mainnet balance from cache")
 	} else if cachedMainnet.String() != mainnetBalance.String() {
 		t.Errorf("Mainnet balance mismatch: got %s, want %s", cachedMainnet.String(), mainnetBalance.String())
 	}
-	
+
 	if cachedGnosis, ok := conn2.balanceCache[gnosisKey]; !ok {
 		t.Error("Failed to retrieve gnosis balance from cache")
 	} else if cachedGnosis.String() != gnosisBalance.String() {
 		t.Errorf("Gnosis balance mismatch: got %s, want %s", cachedGnosis.String(), gnosisBalance.String())
 	}
-	
+
 	// Test what would happen with the old cache key format (without chain)
 	// This demonstrates the bug that was fixed
 	oldKey := fmt.Sprintf("%s|%d", testAddr.Hex(), testBlock)
-	
+
 	// If we used the old key format, one chain's balance would overwrite the other
 	oldCache := make(map[string]*base.Wei)
-	oldCache[oldKey] = mainnetBalance  // mainnet writes first
-	oldCache[oldKey] = gnosisBalance   // gnosis overwrites it!
-	
+	oldCache[oldKey] = mainnetBalance // mainnet writes first
+	oldCache[oldKey] = gnosisBalance  // gnosis overwrites it!
+
 	// With the old format, we'd get the wrong balance
 	if oldCache[oldKey].String() != gnosisBalance.String() {
 		t.Logf("Old cache format demonstration: mainnet balance was overwritten by gnosis balance")
@@ -107,7 +107,7 @@ func TestGetBalanceAtCacheKeyFormat(t *testing.T) {
 			expected: "mainnet|0x1234567890123456789012345678901234567890|2000000",
 		},
 	}
-	
+
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			addr := base.HexToAddress(tt.address)
