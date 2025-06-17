@@ -16,7 +16,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/walk"
 )
 
-// DownloadOneChunk a filename to an index portion, finds the correspoding CID (hash)
+// DownloadOneChunk a filename to an index portion, finds the corresponding CID (hash)
 // entry in the manifest, and downloads the index chunk to the local drive
 func DownloadOneChunk(chain string, man *manifest.Manifest, fileRange ranges.FileRange) error {
 	// Find bloom filter's CID
