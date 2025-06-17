@@ -251,13 +251,19 @@ func (w *Wei) MarshalCache(writer io.Writer) error {
 }
 
 func (w *Wei) ToFloatString(decimals int) string {
-	return ToFloat(w).Text('f', -1*decimals)
+	return ToFloatWithDecimals(w, decimals).Text('f', -1*decimals)
 }
 
 func ToFloat(wei *Wei) *Float {
+	return ToFloatWithDecimals(wei, 18)
+}
+
+func ToFloatWithDecimals(wei *Wei, decimals int) *Float {
 	f := NewFloat(0)
-	e := NewFloat(1e18)
-	return f.Quo(new(Float).SetRawWei(wei), e)
+	// Calculate 10^decimals as the divisor
+	divisorInt := new(big.Int).Exp(big.NewInt(10), big.NewInt(int64(decimals)), nil)
+	divisor := (*Float)(new(big.Float).SetInt(divisorInt))
+	return f.Quo(new(Float).SetRawWei(wei), divisor)
 }
 
 func BiFromBn(bn Blknum) *big.Int {
