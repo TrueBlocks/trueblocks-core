@@ -581,3 +581,95 @@ func TestWeiNil(t *testing.T) {
 		})
 	}
 }
+
+func TestToFloatStringWithDecimals(t *testing.T) {
+	tests := []struct {
+		name     string
+		value    *Wei
+		decimals int
+		expected string
+	}{
+		{
+			name:     "ETH with 18 decimals",
+			value:    NewWei(1000000000000000000), // 1 ETH
+			decimals: 18,
+			expected: "1",
+		},
+		{
+			name:     "USDC with 6 decimals - example from issue",
+			value:    NewWei(7500000000), // 7,500 USDC (raw)
+			decimals: 6,
+			expected: "7500",
+		},
+		{
+			name:     "Token with 0 decimals",
+			value:    NewWei(1000),
+			decimals: 0,
+			expected: "1000",
+		},
+		{
+			name:     "Token with 8 decimals",
+			value:    NewWei(100000000), // 1 token
+			decimals: 8,
+			expected: "1",
+		},
+		{
+			name:     "Small value with 18 decimals",
+			value:    NewWei(1), // 1 wei
+			decimals: 18,
+			expected: "0.000000000000000001",
+		},
+		{
+			name:     "Large value with 6 decimals",
+			value:    NewWei(123456789012), // 123,456.789012 USDC
+			decimals: 6,
+			expected: "123456.789012",
+		},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			result := tt.value.ToFloatString(tt.decimals)
+			if result != tt.expected {
+				t.Errorf("ToFloatString(%d) = %s, want %s", tt.decimals, result, tt.expected)
+			}
+		})
+	}
+}
+
+func TestToFloatWithDecimals(t *testing.T) {
+	tests := []struct {
+		name     string
+		value    *Wei
+		decimals int
+		expected string
+	}{
+		{
+			name:     "ETH with 18 decimals",
+			value:    NewWei(1000000000000000000), // 1 ETH
+			decimals: 18,
+			expected: "1",
+		},
+		{
+			name:     "USDC with 6 decimals",
+			value:    NewWei(1000000), // 1 USDC
+			decimals: 6,
+			expected: "1",
+		},
+		{
+			name:     "Token with different decimals",
+			value:    NewWei(100000000), // 1 token with 8 decimals
+			decimals: 8,
+			expected: "1",
+		},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			result := ToFloatWithDecimals(tt.value, tt.decimals).Text('f', -1)
+			if result != tt.expected {
+				t.Errorf("ToFloatWithDecimals(%d) = %s, want %s", tt.decimals, result, tt.expected)
+			}
+		})
+	}
+}
