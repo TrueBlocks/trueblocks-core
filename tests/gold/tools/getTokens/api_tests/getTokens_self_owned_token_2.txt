@@ -4,7 +4,7 @@ tokens?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413%200xbb9bc244d798123fde78
     {
       "address": "0xbb9bc244d798123fde783fcc1c72d3bb8c189413",
       "balance": "1000000000000000000",
-      "balanceDec": "1",
+      "balanceDec": "100000000000000000",
       "blockNumber": 1500000,
       "decimals": 1,
       "holder": "0xbb9bc244d798123fde783fcc1c72d3bb8c189413",
