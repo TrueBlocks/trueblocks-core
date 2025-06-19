@@ -29,7 +29,7 @@ num,folder,group,route,tool,longName,hotKey,def_val,attributes,handler,option_ty
 13110,apps,Accounts,export,acctExport,statements,A,,visible|docs,9,switch,<boolean>,statement,,,,export only statements
 13110,apps,Accounts,export,acctExport,transfers,X,,visible|docs,10,switch,<boolean>,transfer,,,,export only eth or token transfers
 13120,apps,Accounts,export,acctExport,assets,s,,visible|docs,6,switch,<boolean>,name,,,,list all assets (with names) that appear in any transfer
-13120,apps,Accounts,export,acctExport,balances,b,,visible|docs,7,switch,<boolean>,state,,,,traverse the transaction history and show each change in ETH balances
+13120,apps,Accounts,export,acctExport,balances,b,,visible|docs,7,switch,<boolean>,token,,,,traverse the transaction history and show each change in ETH balances
 13130,apps,Accounts,export,acctExport,withdrawals,i,,visible|docs,4,switch,<boolean>,withdrawal,,,,export withdrawals for the given address
 13140,apps,Accounts,export,acctExport,articulate,a,,visible|docs,,switch,<boolean>,,,,,articulate transactions&#44; traces&#44; logs&#44; and outputs
 13150,apps,Accounts,export,acctExport,cache_traces,R,,visible|docs,,switch,<boolean>,,,,,force the transaction's traces into the cache
