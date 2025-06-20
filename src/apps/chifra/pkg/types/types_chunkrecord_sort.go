@@ -10,13 +10,9 @@ const (
 	ChunkRecordRangeDates ChunkRecordField = "rangeDates"
 )
 
-// IsValidChunkRecordField returns true if the given field is a valid sortable ChunkRecord field.
-func IsValidChunkRecordField(field string) bool {
-	switch field {
-	case "bloomSize", "indexSize", "range", "rangeDates":
-		return true
-	}
-	return false
+// GetSortFieldsChunkRecord returns a []string of valid sort fields for the type.
+func GetSortFieldsChunkRecord() []string {
+	return []string{"bloomSize", "indexSize", "range", "rangeDates"}
 }
 
 // ChunkRecordBy returns a comparison function for sorting ChunkRecord instances by the given field.

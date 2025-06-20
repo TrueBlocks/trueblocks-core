@@ -96,14 +96,15 @@ func (op *Option) EnumDef() string {
 	for i, e := range op.Enums {
 		tag := op.EnumTag(e)
 		token := tag + FirstUpper(e)
-		if e == "some" {
+		switch e {
+		case "some":
 			if op.Route == "state" {
 				some = []string{"SPBalance", "SPProxy", "SPDeployed", "SPAccttype"}
 			}
 			token += "=" + strings.Join(some, "|")
-		} else if e == "all" {
+		case "all":
 			token += "=" + strings.Join(all, "|")
-		} else {
+		default:
 			if len(ret) < 5 {
 				some = append(some, token)
 			}

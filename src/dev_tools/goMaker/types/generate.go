@@ -19,10 +19,18 @@ type Generator struct {
 
 // Generate generates the code for the codebase using the given templates.
 func (cb *CodeBase) Generate() {
+	VerboseLog("Starting code generation process")
+
+	// Validate that the necessary files and folders exist
+	if err := cb.isValidSetup(); err != nil {
+		logger.Fatal(err)
+	}
+
 	// Before we start, we need to verify that the validators are in place
 	cb.verifyValidators()
 
 	generatedPath := GetGeneratedPath()
+	VerboseLog("Creating generated code directory at", generatedPath)
 	_ = file.EstablishFolder(generatedPath)
 
 	generators, err := getGenerators()
@@ -30,23 +38,29 @@ func (cb *CodeBase) Generate() {
 		logger.Fatal(err)
 	}
 
+	VerboseLog("Processing generators")
 	for _, generator := range generators {
+		VerboseLog("Processing", generator.Against, "templates")
 		switch generator.Against {
 		case "codebase":
 			for _, source := range generator.Templates {
+				VerboseLog("Processing codebase template:", source)
 				if err := cb.ProcessFile(source, "", ""); err != nil {
 					logger.Fatal(err)
 				}
 			}
 		case "groups":
 			for _, source := range generator.Templates {
+				VerboseLog("Processing group template:", source)
 				for _, group := range cb.GroupList("") {
+					VerboseLog("  - For group:", group.GroupName())
 					if err := cb.ProcessGroupFile(source, group.GroupName(), "readme"); err != nil {
 						logger.Fatal(err)
 					}
 				}
 			}
 			for _, source := range generator.Templates {
+				VerboseLog("Processing group model template:", source)
 				for _, group := range cb.GroupList("") {
 					if err := cb.ProcessGroupFile(source, group.GroupName(), "model"); err != nil {
 						logger.Fatal(err)
@@ -55,7 +69,9 @@ func (cb *CodeBase) Generate() {
 			}
 		case "routes":
 			for _, source := range generator.Templates {
+				VerboseLog("Processing route template:", source)
 				for _, c := range cb.Commands {
+					VerboseLog("  - For command:", c.Route)
 					if err := c.ProcessFile(source, "", ""); err != nil {
 						logger.Fatal(err)
 					}
@@ -63,11 +79,13 @@ func (cb *CodeBase) Generate() {
 			}
 		case "types":
 			for _, source := range generator.Templates {
+				VerboseLog("Processing type template:", source)
 				for _, s := range cb.Structures {
 					sort.Slice(s.Members, func(i, j int) bool {
 						return s.Members[i].SortName() < s.Members[j].SortName()
 					})
 					if !s.DisableGo {
+						VerboseLog("  - For type:", s.Name())
 						if err := s.ProcessFile(source, "", ""); err != nil {
 							logger.Fatal(err)
 						}
@@ -86,6 +104,7 @@ func getGenerators() ([]Generator, error) {
 		return []Generator{}, err
 	}
 	generatorsPath := filepath.Join(thePath, "generators/") + "/"
+	VerboseLog("Looking for templates in:", generatorsPath)
 
 	theMap := make(map[string][]string)
 	vFunc := func(file string, vP any) (bool, error) {
@@ -96,6 +115,7 @@ func getGenerators() ([]Generator, error) {
 			return true, nil
 		}
 		if isTemplate {
+			VerboseLog("  Found template:", file)
 			file = strings.ReplaceAll(file, generatorsPath, "")
 			if strings.Contains(file, string(os.PathSeparator)) {
 				parts := strings.Split(file, string(os.PathSeparator))
@@ -109,6 +129,7 @@ func getGenerators() ([]Generator, error) {
 
 	ret := []Generator{}
 	for against, templates := range theMap {
+		VerboseLog("  Creating generator for:", against, "with templates:", templates)
 		g := Generator{
 			Against: against,
 		}

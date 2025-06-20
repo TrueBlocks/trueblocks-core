@@ -6,6 +6,7 @@ import (
 	"path/filepath"
 	"sort"
 	"strings"
+	"unicode"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
@@ -134,18 +135,19 @@ func (c *Command) Clean() {
 			}
 		}
 
-		if op.OptionType == "note" {
+		switch op.OptionType {
+		case "note":
 			if !strings.HasSuffix(op.Description, ".") {
 				logger.Warn("Note does not end with a period: " + op.Description)
 			}
 			c.Notes = append(c.Notes, op.Description)
-		} else if op.OptionType == "alias" {
+		case "alias":
 			c.Aliases = append(c.Aliases, op.Description)
-		} else if op.OptionType == "command" {
+		case "command":
 			c.Description = op.Description
-		} else if op.OptionType == "group" {
+		case "group":
 			// c.Description = op.Description
-		} else {
+		default:
 			op.cmdPtr = c
 			cleaned = append(cleaned, op)
 		}
@@ -164,6 +166,61 @@ func (c *Command) Clean() {
 			}
 			cleaned[index].Description = msg
 			c.Notes = append(c.Notes, "The --"+op.LongName+" option is "+msg+".")
+		}
+	}
+
+	// Validate LongName and Handler properties of each Option in cleaned
+	// Rule 1: LongName should not contain any capital letters.
+	// Rule 2: Handler (if present) must represent a sequence of integers
+	// starting from 1 without any gaps or duplicates.
+	handlerValues := make(map[int]bool)
+	maxHandler := 0
+
+	for _, op := range cleaned {
+		// Rule 1: Check for capital letters in LongName
+		if op.LongName != strings.ToLower(op.LongName) {
+			suggestion := ""
+			for i, char := range op.LongName {
+				if unicode.IsUpper(char) {
+					if i > 0 { // Only add underscore if not the first character
+						suggestion += "_"
+					}
+					suggestion += strings.ToLower(string(char))
+				} else {
+					suggestion += string(char)
+				}
+			}
+			logger.Warn(fmt.Sprintf("Option '%s' in command '%s': LongName '%s' should not contain capital letters. Suggestion: '%s'", op.LongName, c.Route, op.LongName, suggestion))
+		}
+
+		// Rule 2: Check Handler values
+		// Assuming 0.0 indicates that the handler is not set.
+		if op.Handler != 0.0 {
+			handlerVal := int(op.Handler) // Convert float64 to int
+
+			if handlerVal <= 0 { // Handlers should be positive integers
+				logger.Warn(fmt.Sprintf("Option '%s' in command '%s': Handler value '%f' must be a positive integer.", op.LongName, c.Route, op.Handler))
+				continue
+			}
+
+			if _, exists := handlerValues[handlerVal]; exists {
+				logger.Warn(fmt.Sprintf("Option '%s' in command '%s': Duplicate Handler value '%d'.", op.LongName, c.Route, handlerVal))
+			} else {
+				handlerValues[handlerVal] = true
+			}
+
+			if handlerVal > maxHandler {
+				maxHandler = handlerVal
+			}
+		}
+	}
+
+	// After collecting all handlers, check for gaps in the sequence from 1 to maxHandler
+	if maxHandler > 0 {
+		for i := 1; i <= maxHandler; i++ {
+			if _, exists := handlerValues[i]; !exists {
+				logger.Warn(fmt.Sprintf("Command '%s': Missing Handler value '%d' in the sequence.", c.Route, i))
+			}
 		}
 	}
 
@@ -512,15 +569,16 @@ func (c *Command) executeTemplate(name, tmplCode string) string {
 }
 
 func (c *Command) GroupMenu(reason string) string {
-	if reason == "model" {
+	switch reason {
+	case "model":
 		return `
   data:
     parent: collections`
-	} else if reason == "readme" {
+	case "readme":
 		return `
   chifra:
     parent: commands`
-	} else {
+	default:
 		logger.Fatal("Unknown reason for group menu:", reason)
 		return ""
 	}
@@ -545,7 +603,8 @@ func (c *Command) GroupIntro(reason string) string {
 
 func (c *Command) GroupMarkdowns(reason, filter string) string {
 	ret := []string{}
-	if reason == "model" {
+	switch reason {
+	case "model":
 		sort.Slice(c.cbPtr.Structures, func(i, j int) bool {
 			return c.cbPtr.Structures[i].Num() < c.cbPtr.Structures[j].Num()
 		})
@@ -554,7 +613,7 @@ func (c *Command) GroupMarkdowns(reason, filter string) string {
 				ret = append(ret, getGeneratedContents("model_"+st.Name()))
 			}
 		}
-	} else if reason == "readme" {
+	case "readme":
 		sort.Slice(c.cbPtr.Commands, func(i, j int) bool {
 			return c.cbPtr.Commands[i].Num < c.cbPtr.Commands[j].Num
 		})
@@ -563,7 +622,7 @@ func (c *Command) GroupMarkdowns(reason, filter string) string {
 				ret = append(ret, getGeneratedContents("readme_"+cmd.Route))
 			}
 		}
-	} else {
+	default:
 		logger.Fatal("Error: unknown reason: " + reason)
 	}
 	return strings.Join(ret, "\n")

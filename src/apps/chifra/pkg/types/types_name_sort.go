@@ -18,13 +18,9 @@ const (
 	NameTags       NameField = "tags"
 )
 
-// IsValidNameField returns true if the given field is a valid sortable Name field.
-func IsValidNameField(field string) bool {
-	switch field {
-	case "address", "decimals", "deleted", "isContract", "isCustom", "isErc20", "isErc721", "isPrefund", "name", "source", "symbol", "tags":
-		return true
-	}
-	return false
+// GetSortFieldsName returns a []string of valid sort fields for the type.
+func GetSortFieldsName() []string {
+	return []string{"address", "decimals", "deleted", "isContract", "isCustom", "isErc20", "isErc721", "isPrefund", "name", "source", "symbol", "tags"}
 }
 
 // NameBy returns a comparison function for sorting Name instances by the given field.

@@ -11,6 +11,7 @@ package namesPkg
 import (
 	"net/http"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/crud"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
@@ -28,6 +29,10 @@ func (opts *NamesOptions) getType() types.Parts {
 
 	if (!opts.Custom && !opts.Prefund) || opts.All {
 		ret |= types.Regular
+	}
+
+	if opts.All && !base.IsTestMode() {
+		ret |= types.Baddress
 	}
 
 	if opts.MatchCase {

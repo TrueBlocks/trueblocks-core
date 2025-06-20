@@ -37,9 +37,10 @@ func (h *Handler) Test() string {
 }
 
 func (h *Handler) Handler() string {
-	if h.Option.Route == "export" || h.Option.Route == "list" {
+	switch h.Option.Route {
+	case "export", "list":
 		return "err = opts.Handle" + h.Name + "(rCtx, monitorArray)"
-	} else if h.Option.Route == "chunks" {
+	case "chunks":
 		return "err = opts.Handle" + h.Name + "(rCtx, blockNums)"
 	}
 	return "err = opts.Handle" + h.Name + "(rCtx)"

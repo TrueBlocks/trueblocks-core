@@ -135,6 +135,16 @@ func TestAbis(which, value, fn string, opts *sdk.AbisOptions) {
 				ReportOkay(fn)
 			}
 		}
+	case "details":
+		if details, _, err := opts.AbisDetails(); err != nil {
+			ReportError(fn, opts, err)
+		} else {
+			if err := SaveToFile(fn, details); err != nil {
+				ReportError2(fn, err)
+			} else {
+				ReportOkay(fn)
+			}
+		}
 	case "count":
 		if count, _, err := opts.AbisCount(); err != nil {
 			ReportError(fn, opts, err)

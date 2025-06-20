@@ -16,7 +16,10 @@ import (
 )
 
 func WriteCode(existingFn, newCode string) (bool, error) {
+	VerboseLog("Writing code to:", existingFn)
+
 	if len(strings.Trim(newCode, wss)) == 0 {
+		VerboseLog("  Skipping empty code")
 		return false, nil
 	}
 
@@ -25,10 +28,16 @@ func WriteCode(existingFn, newCode string) (bool, error) {
 			if !file.FolderExists(filepath.Dir(existingFn)) {
 				logger.Fatal("Folder does not exist for file", existingFn)
 			}
-			logger.Info(colors.Yellow+"Creating", existingFn, strings.Repeat(" ", 20)+colors.Off)
+			if !verbose {
+				logger.Info(colors.Yellow+"Creating", existingFn, strings.Repeat(" ", 20)+colors.Off)
+			} else {
+				VerboseLog("  Creating new file:", existingFn)
+			}
 		}
 		return updateFile(existingFn, newCode)
 	}
+
+	VerboseLog("  Updating existing file:", existingFn)
 
 	tempFn := existingFn + ".new"
 	defer func() {

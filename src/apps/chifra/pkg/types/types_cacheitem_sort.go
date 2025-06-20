@@ -12,13 +12,9 @@ const (
 	CacheItemType        CacheItemField = "type"
 )
 
-// IsValidCacheItemField returns true if the given field is a valid sortable CacheItem field.
-func IsValidCacheItemField(field string) bool {
-	switch field {
-	case "lastCached", "nFiles", "nFolders", "path", "sizeInBytes", "type":
-		return true
-	}
-	return false
+// GetSortFieldsCacheItem returns a []string of valid sort fields for the type.
+func GetSortFieldsCacheItem() []string {
+	return []string{"lastCached", "nFiles", "nFolders", "path", "sizeInBytes", "type"}
 }
 
 // CacheItemBy returns a comparison function for sorting CacheItem instances by the given field.

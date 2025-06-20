@@ -311,7 +311,8 @@ func (op *Option) IsSpecialAddr() bool {
 func (op *Option) EnsConvert() string {
 	ret := ""
 
-	if op.DataType == "<address>" {
+	switch op.DataType {
+	case "<address>":
 		tmplName := "ens"
 		tmpl := "	opts.{{.GoName}}, _ = opts.Conn.GetEnsAddress(opts.{{.GoName}})"
 		if op.IsConfigurableAddr() {
@@ -325,7 +326,7 @@ func (op *Option) EnsConvert() string {
 	opts.{{.GoName}}Addr = base.HexToAddress(opts.{{.GoName}})`
 			ret += op.executeTemplate(tmplName, tmpl)
 		}
-	} else if op.DataType == "list<addr>" {
+	case "list<addr>":
 		tmplName := "ensSlice"
 		tmpl := "	opts.{{.GoName}}, _ = opts.Conn.GetEnsAddresses(opts.{{.GoName}})"
 		ret = op.executeTemplate(tmplName, tmpl)
@@ -335,53 +336,54 @@ func (op *Option) EnsConvert() string {
 }
 
 func (op *Option) DocType() string {
-	if op.DataType == "bool" || op.DataType == "<boolean>" {
+	switch op.DataType {
+	case "bool", "<boolean>":
 		return "boolean"
-	} else if op.DataType == "list<addr>" {
+	case "list<addr>":
 		return `array
             items:
               type: string
               format: address`
-	} else if op.DataType == "list<topic>" {
+	case "list<topic>":
 		return `array
             items:
               type: string
               format: topic`
-	} else if op.DataType == "list<fourbyte>" {
+	case "list<fourbyte>":
 		return `array
             items:
               type: string
               format: fourbyte`
-	} else if op.DataType == "list<string>" {
+	case "list<string>":
 		return `array
             items:
               type: string
               format: string`
-	} else if op.DataType == "list<blknum>" {
+	case "list<blknum>":
 		return `array
             items:
               type: string
               format: blknum`
-	} else if op.DataType == "list<tx_id>" {
+	case "list<tx_id>":
 		return `array
             items:
               type: string
               format: tx_id`
-	} else if op.DataType == "uint64" || op.DataType == "<uint64>" {
+	case "uint64", "<uint64>":
 		return `number
             format: uint64`
-	} else if op.DataType == "<blknum>" {
+	case "<blknum>":
 		return `number
             format: blknum`
-	} else if op.DataType == "<string>" {
+	case "<string>":
 		return `string`
-	} else if op.DataType == "<address>" {
+	case "<address>":
 		return `string
             format: address`
-	} else if op.DataType == "<float64>" {
+	case "<float64>":
 		return `number
             format: float64`
-	} else if op.DataType == "enum" {
+	case "enum":
 		ret := `string
             enum:
 `
@@ -389,7 +391,7 @@ func (op *Option) DocType() string {
 			ret += "              - " + e + "\n"
 		}
 		return strings.Trim(ret, "\n")
-	} else if op.DataType == "list<enum>" {
+	case "list<enum>":
 		ret := `array
             items:
               type: string
@@ -618,13 +620,14 @@ func (op *Option) OptField() string {
 	tmpl := `	{{.GoName}} {{.GoOptionsType}} {{.JsonTag}} // {{.DescrCaps}}`
 	ret := op.executeTemplate(tmplName, tmpl)
 
-	if op.LongName == "blocks" {
+	switch op.LongName {
+	case "blocks":
 		tmplName := "optFields3"
 		tmpl := `
 	{{.GoSdkName}} []identifiers.Identifier`
 		ret += op.executeTemplate(tmplName, tmpl)
 		ret += "`json:\"blockIds,omitempty\"`   // Block identifiers"
-	} else if op.LongName == "transactions" {
+	case "transactions":
 		tmplName := "optFields4"
 		tmpl := `
 	{{.GoSdkName}} []identifiers.Identifier`

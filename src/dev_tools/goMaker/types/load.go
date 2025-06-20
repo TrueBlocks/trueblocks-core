@@ -183,7 +183,9 @@ func (cb *CodeBase) FinishLoad(unused string, baseTypes []Structure, options []O
 	// Enhance the commands with information from the endpoints data (could have been combined,
 	// but this way we can keep the data separate and still have a single command object)
 	for _, op := range options {
-		if op.OptionType == "group" {
+		switch op.OptionType {
+		case "group":
+			VerboseLog("Processing group:", op.Group)
 			c := Command{
 				Group:       op.Group,
 				Description: op.Description,
@@ -192,7 +194,8 @@ func (cb *CodeBase) FinishLoad(unused string, baseTypes []Structure, options []O
 				cbPtr:       cb,
 			}
 			routeMap[op.Group] = c
-		} else if op.OptionType == "command" {
+		case "command":
+			VerboseLog("Processing command:", op.Route, "in group:", op.Group)
 			sort.Slice(producesMap[op.Route], func(i, j int) bool {
 				return producesMap[op.Route][i].Class < producesMap[op.Route][j].Class
 			})
@@ -290,10 +293,19 @@ func (cb *CodeBase) FinishLoad(unused string, baseTypes []Structure, options []O
 		st.checkHierarchy()
 	}
 
-	codeBase := filepath.Join(GetGeneratedPath(), "codebase.json")
+	// Get the path to the generated folder and ensure it exists
+	generatedPath := GetGeneratedPath()
+	if err := file.EstablishFolder(generatedPath); err != nil {
+		return fmt.Errorf("failed to create generated directory: %w", err)
+	}
+
+	codeBase := filepath.Join(generatedPath, "codebase.json")
+
+	VerboseLog("Processing:", codeBase)
 	current := file.AsciiFileToString(codeBase)
 	_ = file.StringToAsciiFile(codeBase, cb.String())
 	if current == cb.String() {
+		VerboseLog("File unchanged:", codeBase)
 		return nil
 	}
 
@@ -301,7 +313,7 @@ func (cb *CodeBase) FinishLoad(unused string, baseTypes []Structure, options []O
 		return nil
 	}
 
-	return fmt.Errorf("quitting: codebase.json has changed. Rerun the command to ignore this warning")
+	return fmt.Errorf("quitting: %s has changed. Rerun the command to ignore this warning", codeBase)
 }
 
 func checkForDups(options []Option) error {
