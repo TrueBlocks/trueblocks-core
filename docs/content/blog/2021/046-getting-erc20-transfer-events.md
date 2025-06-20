@@ -101,7 +101,7 @@ we now only see 3,317 events (again, at the time of this writing).
 
 ## The Unix philosophy
 
-Following the Unix philosphy of stringing together a data pipeline...
+Following the Unix philosophy of stringing together a data pipeline...
 
 First, let's look at the first line of the data in order to see the names of the data fields:
 
