@@ -135,18 +135,19 @@ func (c *Command) Clean() {
 			}
 		}
 
-		if op.OptionType == "note" {
+		switch op.OptionType {
+		case "note":
 			if !strings.HasSuffix(op.Description, ".") {
 				logger.Warn("Note does not end with a period: " + op.Description)
 			}
 			c.Notes = append(c.Notes, op.Description)
-		} else if op.OptionType == "alias" {
+		case "alias":
 			c.Aliases = append(c.Aliases, op.Description)
-		} else if op.OptionType == "command" {
+		case "command":
 			c.Description = op.Description
-		} else if op.OptionType == "group" {
+		case "group":
 			// c.Description = op.Description
-		} else {
+		default:
 			op.cmdPtr = c
 			cleaned = append(cleaned, op)
 		}
@@ -568,15 +569,16 @@ func (c *Command) executeTemplate(name, tmplCode string) string {
 }
 
 func (c *Command) GroupMenu(reason string) string {
-	if reason == "model" {
+	switch reason {
+	case "model":
 		return `
   data:
     parent: collections`
-	} else if reason == "readme" {
+	case "readme":
 		return `
   chifra:
     parent: commands`
-	} else {
+	default:
 		logger.Fatal("Unknown reason for group menu:", reason)
 		return ""
 	}
@@ -601,7 +603,8 @@ func (c *Command) GroupIntro(reason string) string {
 
 func (c *Command) GroupMarkdowns(reason, filter string) string {
 	ret := []string{}
-	if reason == "model" {
+	switch reason {
+	case "model":
 		sort.Slice(c.cbPtr.Structures, func(i, j int) bool {
 			return c.cbPtr.Structures[i].Num() < c.cbPtr.Structures[j].Num()
 		})
@@ -610,7 +613,7 @@ func (c *Command) GroupMarkdowns(reason, filter string) string {
 				ret = append(ret, getGeneratedContents("model_"+st.Name()))
 			}
 		}
-	} else if reason == "readme" {
+	case "readme":
 		sort.Slice(c.cbPtr.Commands, func(i, j int) bool {
 			return c.cbPtr.Commands[i].Num < c.cbPtr.Commands[j].Num
 		})
@@ -619,7 +622,7 @@ func (c *Command) GroupMarkdowns(reason, filter string) string {
 				ret = append(ret, getGeneratedContents("readme_"+cmd.Route))
 			}
 		}
-	} else {
+	default:
 		logger.Fatal("Error: unknown reason: " + reason)
 	}
 	return strings.Join(ret, "\n")
