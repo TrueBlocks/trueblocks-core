@@ -74,7 +74,7 @@ func TestBlockTimeCalculations(t *testing.T) {
 			name:          "Ethereum 1 hour",
 			chain:         "mainnet",
 			secondsDiff:   3600,
-			expectedBlks:  277, // 3600 / 13.0 = 276.92
+			expectedBlks:  276, // 3600 / 13.0 = 276.92 (truncated to 276)
 		},
 		{
 			name:          "Optimism 1 hour",
