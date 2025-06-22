@@ -97,7 +97,8 @@ func FromTs(chain string, ts base.Timestamp) (*TimestampRecord, error) {
 	if ts > base.Timestamp(perChainTimestamps[chain].memory[cnt-1].Ts) {
 		last := perChainTimestamps[chain].memory[cnt-1]
 		secs := ts - base.Timestamp(last.Ts)
-		blks := uint32(float64(secs) / 13.3)
+		blockTime := config.GetBlockTime(chain)
+		blks := uint32(float64(secs) / blockTime)
 		last.Bn = last.Bn + blks
 		last.Ts = uint32(ts)
 		return &last, ErrInTheFuture
