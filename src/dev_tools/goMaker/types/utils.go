@@ -230,7 +230,7 @@ func Singular(s string) string {
 		return s[:len(s)-2]
 	}
 
-	if sLower != "status" && sLower != "stats" && strings.HasSuffix(sLower, "s") {
+	if sLower != "baddress" && sLower != "status" && sLower != "stats" && strings.HasSuffix(sLower, "s") {
 		return s[:len(s)-1]
 	}
 

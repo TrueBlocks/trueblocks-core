@@ -23,7 +23,8 @@ func WriteCode(existingFn, newCode string) (bool, error) {
 		return false, nil
 	}
 
-	if !file.FileExists(existingFn) {
+	// For new files or files in /generated/, just write the new code directly
+	if !file.FileExists(existingFn) || strings.Contains(existingFn, "/generated/") {
 		if !strings.Contains(existingFn, "/generated/") {
 			if !file.FolderExists(filepath.Dir(existingFn)) {
 				logger.Fatal("Folder does not exist for file", existingFn)
@@ -54,10 +55,15 @@ func WriteCode(existingFn, newCode string) (bool, error) {
 		return false, fmt.Errorf("error extracting existing code: %v", err)
 	}
 
-	// apply the EXISTING_CODE to the new code, format the new code and
-	// write it back to the original file (potentially destroying it)
+	// apply the EXISTING_CODE to the new code
 	wasModified, err := applyTemplate(tempFn, existingParts)
 	if err != nil {
+		// If there's an error applying the template and this is a generated file,
+		// fall back to just writing the new code
+		if strings.Contains(existingFn, "/generated/") {
+			VerboseLog("  Falling back to direct write for generated file")
+			return updateFile(existingFn, newCode)
+		}
 		return false, fmt.Errorf("error applying template: %v %s", err, existingFn)
 	}
 
@@ -116,12 +122,14 @@ func applyTemplate(tempFn string, existingCode map[int]string) (bool, error) {
 	if err != nil {
 		return false, err
 	}
+	defer ff.Close()
 
 	isOpen := false
 	lineCnt := 0
 	codeSection := 0
 	var buffer bytes.Buffer
 	scanner := bufio.NewScanner(ff)
+
 	for scanner.Scan() {
 		line := scanner.Text()
 		lineCnt++
@@ -130,14 +138,16 @@ func applyTemplate(tempFn string, existingCode map[int]string) (bool, error) {
 				isOpen = false
 				codeSection++
 			} else {
+				// If we have existing code for this section, use it
 				if code, ok := existingCode[codeSection]; ok {
 					buffer.WriteString(code)
-					isOpen = true
 				} else {
-					return false, fmt.Errorf("missing // EXISTING_CODE section %d line %d", codeSection, lineCnt)
+					// Otherwise just write the marker and continue
+					buffer.WriteString(line + "\n")
 				}
+				isOpen = true
 			}
-		} else {
+		} else if !isOpen {
 			buffer.WriteString(line + "\n")
 		}
 	}
@@ -146,7 +156,6 @@ func applyTemplate(tempFn string, existingCode map[int]string) (bool, error) {
 		return false, err
 	}
 
-	ff.Close()
 	return updateFile(tempFn, buffer.String())
 }
 

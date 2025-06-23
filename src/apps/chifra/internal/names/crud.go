@@ -57,7 +57,7 @@ func (opts *NamesOptions) getType() types.Parts {
 func (opts *NamesOptions) LoadCrudDataIfNeeded(request *http.Request) error {
 	if opts.Delete || opts.Undelete || opts.Remove {
 		opts.crudData = &crud.NameCrud{
-			Address: crud.Field{
+			Address: crud.CrudField{
 				Value: opts.Terms[0],
 			},
 		}

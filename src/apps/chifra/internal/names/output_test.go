@@ -49,15 +49,15 @@ func TestNamesOptions_getCrudDataHttp(t *testing.T) {
 				})(),
 			},
 			wantData: &crud.NameCrud{
-				Address: crud.Field{
+				Address: crud.CrudField{
 					Value:   "0x199d5ed7f45f4ee35960cf22eade2076e95b253f",
 					Updated: true,
 				},
-				Name: crud.Field{
+				Name: crud.CrudField{
 					Value:   "some name 1",
 					Updated: true,
 				},
-				IsCustom: crud.Field{
+				IsCustom: crud.CrudField{
 					Value:   "true",
 					Updated: true,
 				},
@@ -124,15 +124,15 @@ func TestNamesOptions_getCrudDataEnv(t *testing.T) {
 
 	// valid envs
 	expected = &crud.NameCrud{
-		Address: crud.Field{
+		Address: crud.CrudField{
 			Value:   "0x199d5ed7f45f4ee35960cf22eade2076e95b253f",
 			Updated: true,
 		},
-		Name: crud.Field{
+		Name: crud.CrudField{
 			Value:   "some name",
 			Updated: true,
 		},
-		IsCustom: crud.Field{
+		IsCustom: crud.CrudField{
 			Value:   "true",
 			Updated: true,
 		},
@@ -149,11 +149,11 @@ func TestNamesOptions_getCrudDataEnv(t *testing.T) {
 
 	// invalid envs
 	expected = &crud.NameCrud{
-		Address: crud.Field{
+		Address: crud.CrudField{
 			Value:   base.ZeroAddr.Hex(),
 			Updated: true,
 		},
-		Name: crud.Field{
+		Name: crud.CrudField{
 			Value:   "some name",
 			Updated: true,
 		},

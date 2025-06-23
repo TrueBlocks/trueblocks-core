@@ -31,6 +31,7 @@ type Structure struct {
 	Attributes  string    `json:"attributes,omitempty" toml:"attributes"`
 	Sorts       string    `json:"sorts,omitempty" toml:"sorts"`
 	Members     []Member  `json:"members,omitempty" toml:"members"`
+	Facets      FacetList `json:"facets,omitempty" toml:"facets"`
 	Route       string    `json:"-" toml:"-"`
 	Producers   []string  `json:"-" toml:"-"`
 	ChildTabs   []string  `json:"-" toml:"-"`
@@ -340,4 +341,32 @@ func (s *Structure) UiRouteName() string {
 
 func (s *Structure) UiHotKey() string {
 	return s.getUiRoutePart(2)
+}
+
+func (s *Structure) HasFacets() bool {
+	return len(s.Facets) > 0
+}
+
+func (s *Structure) FacetsStr() string {
+	if !s.HasFacets() {
+		return "NO FACETS"
+	}
+	ret := []string{}
+	for _, f := range s.Facets {
+		ret = append(ret, f.Name+" ("+f.Store+")")
+	}
+	return strings.Join(ret, ", ")
+}
+
+func (s *Structure) Stores() []string {
+	stores := make(map[string]bool)
+	for _, f := range s.Facets {
+		stores[f.Store] = true
+	}
+	ret := []string{}
+	for store := range stores {
+		ret = append(ret, store)
+	}
+	sort.Strings(ret)
+	return ret
 }
