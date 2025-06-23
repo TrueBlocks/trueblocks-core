@@ -190,6 +190,4 @@ func (t TokenType) IsErc721() bool {
 	return t == TokenErc721
 }
 
-type Balance = Token
-
 // EXISTING_CODE
