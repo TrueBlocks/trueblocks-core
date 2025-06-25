@@ -31,7 +31,7 @@ type Structure struct {
 	Attributes  string    `json:"attributes,omitempty" toml:"attributes"`
 	Sorts       string    `json:"sorts,omitempty" toml:"sorts"`
 	Members     []Member  `json:"members,omitempty" toml:"members"`
-	Facets      FacetList `json:"facets,omitempty" toml:"facets"`
+	Facets      []Facet   `json:"facets,omitempty" toml:"facets"`
 	Route       string    `json:"-" toml:"-"`
 	Producers   []string  `json:"-" toml:"-"`
 	ChildTabs   []string  `json:"-" toml:"-"`

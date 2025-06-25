@@ -86,10 +86,13 @@ func convertToDestPath(source, routeTag, typeTag, groupTag, reason string) strin
 	dest = strings.ReplaceAll(dest, ".tmpl", "")
 	dest = strings.ReplaceAll(dest, "_route_", "/"+routeTag+"/")
 	dest = strings.ReplaceAll(dest, "route+internal", routeTag+"+internal")
-	dest = strings.ReplaceAll(dest, "route.go", routeTag+".go")
-	dest = strings.ReplaceAll(dest, "route.md", routeTag+".md")
-	dest = strings.ReplaceAll(dest, "route.py", routeTag+".py")
-	dest = strings.ReplaceAll(dest, "route.ts", routeTag+".ts")
+	dest = strings.ReplaceAll(dest, "_Route_", "/"+Proper(routeTag)+"/")
+	dest = strings.ReplaceAll(dest, "Route+internal", Proper(routeTag)+"+internal")
+	reps := []string{".go", ".md", ".py", ".ts"}
+	for _, rep := range reps {
+		dest = strings.ReplaceAll(dest, "route"+rep, routeTag+rep)
+		dest = strings.ReplaceAll(dest, "Route"+rep, Proper(routeTag)+rep)
+	}
 	dest = strings.ReplaceAll(dest, "+type+", "+"+typeTag+"+")
 	dest = strings.ReplaceAll(dest, "_capType", "_"+viewName(typeTag))
 	dest = strings.ReplaceAll(dest, "type+sort", typeTag+"+sort")
@@ -239,6 +242,10 @@ func Singular(s string) string {
 
 func Lower(s string) string {
 	return strings.ToLower(s)
+}
+
+func Upper(s string) string {
+	return strings.ToUpper(s)
 }
 
 // ws white space

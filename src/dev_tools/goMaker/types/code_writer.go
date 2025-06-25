@@ -182,7 +182,7 @@ func updateFile(tempFn, newCode string) (bool, error) {
 	if fileExt == "go" {
 		formattedBytes, err := format.Source([]byte(codeToWrite))
 		if err != nil {
-			return showErroredCode(codeToWrite, err)
+			_, _ = showErroredCode(codeToWrite, err)
 		}
 		codeToWrite = string(formattedBytes)
 	} else if hasPrettier() {

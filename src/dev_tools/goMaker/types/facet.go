@@ -5,8 +5,6 @@ type Facet struct {
 	Store string `json:"store"`
 }
 
-type FacetList []Facet
-
 func (f *Facet) SingleStore() string {
 	if f == nil {
 		return ""

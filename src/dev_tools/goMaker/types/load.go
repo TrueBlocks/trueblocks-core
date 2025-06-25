@@ -81,7 +81,7 @@ func (cb *CodeBase) LoadStructures(thePath string, callBack func(*Structure, *an
 		class := strings.TrimSuffix(filepath.Base(path), ".toml")
 		type Tmp struct {
 			Settings Structure `toml:"settings"` // don't change this, it won't parse
-			Facets   FacetList `toml:"facets"`
+			Facets   []Facet   `toml:"facets"`
 		}
 
 		var f Tmp

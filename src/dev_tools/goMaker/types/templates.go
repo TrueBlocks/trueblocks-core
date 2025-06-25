@@ -39,6 +39,7 @@ func getFuncMap() template.FuncMap {
 	toPlural := func(s string) string { return Plural(s) }
 	toCamel := func(s string) string { return CamelCase(s) }
 	toLower := func(s string) string { return Lower(s) }
+	toUpper := func(s string) string { return Upper(s) }
 	firstLower := func(s string) string { return FirstLower(s) }
 	firstUpper := func(s string) string { return FirstUpper(s) }
 	toLowerPlural := func(s string) string { return Lower(Plural(s)) }
@@ -70,6 +71,7 @@ func getFuncMap() template.FuncMap {
 		"toPlural":      toPlural,
 		"toLowerPlural": toLowerPlural,
 		"toLower":       toLower,
+		"toUpper":       toUpper,
 		"firstLower":    firstLower,
 		"firstUpper":    firstUpper,
 		"or":            or,
