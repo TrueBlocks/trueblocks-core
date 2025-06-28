@@ -2,6 +2,7 @@ package namesPkg
 
 import (
 	"os"
+	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
@@ -24,13 +25,16 @@ func (opts *NamesOptions) HandleTags(rCtx *output.RenderCtx) error {
 	fetchData := func(modelChan chan types.Modeler, errorChan chan error) {
 		_ = errorChan
 		for _, name := range namesArray {
-			if len(name.Tags) > 0 && !tagsMap[name.Tags] {
-				s := types.Name{
-					Tags: name.Tags,
+			tags := strings.Split(name.Tags, ",")
+			for _, tag := range tags {
+				if len(tag) > 0 && !tagsMap[tag] {
+					s := types.Name{
+						Tags: tag,
+					}
+					modelChan <- &s
 				}
-				modelChan <- &s
+				tagsMap[tag] = true
 			}
-			tagsMap[name.Tags] = true
 		}
 	}
 

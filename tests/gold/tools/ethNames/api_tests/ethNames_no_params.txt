@@ -618,6 +618,16 @@ names?
       "tags": "50-Tokens:ERC20"
     },
     {
+      "address": "0x00a55375002f3cda400383f479e7cd57bad029a9",
+      "decimals": 18,
+      "isContract": true,
+      "isErc20": true,
+      "name": "Conjure",
+      "source": "Tally-Claude",
+      "symbol": "CNJ",
+      "tags": "76-DaoToken"
+    },
+    {
       "address": "0x00a7ec2f2b451cb0233e8adbf4c9a951027c2b02",
       "decimals": 18,
       "isContract": true,
@@ -754,6 +764,14 @@ names?
       "source": "Rotki",
       "symbol": "RAI",
       "tags": "60-Rotki"
+    },
+    {
+      "address": "0x00e83d0698faf01bd080a4dd2927e6ab7c4874c9",
+      "isContract": true,
+      "isErc20": true,
+      "name": "AnvilGovernorDelegate",
+      "source": "Tally-Claude",
+      "tags": "75-DaoGovernor"
     },
     {
       "address": "0x00e8eb340f8af587eea6200d2081e31dc87285ac",
@@ -1105,6 +1123,13 @@ names?
       "tags": "91-Early:Miners"
     },
     {
+      "address": "0x01961e8d0a2da0c6afccb95d86e84f80bd5bc338",
+      "isContract": true,
+      "name": "Mojos DAO Token",
+      "source": "Tally-Claude",
+      "tags": "76-DaoToken"
+    },
+    {
       "address": "0x0198f46f520f33cd4329bd4be380a25a90536cd5",
       "decimals": 18,
       "isContract": true,
@@ -1298,6 +1323,16 @@ names?
       "tags": "50-Tokens:ERC20"
     },
     {
+      "address": "0x01f3af11f2d93fb23ae33d336459957f3b7730ae",
+      "decimals": 18,
+      "isContract": true,
+      "isErc20": true,
+      "name": "Daocoin",
+      "source": "Tally-Claude",
+      "symbol": "DAOC",
+      "tags": "76-DaoToken"
+    },
+    {
       "address": "0x01f7919634ba8146755b617d7bf24076cecfedef",
       "decimals": 18,
       "isContract": true,
@@ -1353,6 +1388,14 @@ names?
       "source": "Rotki",
       "symbol": "UFT",
       "tags": "50-Tokens:ERC20"
+    },
+    {
+      "address": "0x0204cd037b2ec03605cfdfe482d8e257c765fa1b",
+      "isContract": true,
+      "isErc20": true,
+      "name": "INST Governor Bravo",
+      "source": "Tally-Claude",
+      "tags": "75-DaoGovernor"
     },
     {
       "address": "0x0208fb0af6652bdbc3ea010d5026ed92ff252a53",
@@ -1629,43 +1672,6 @@ names?
       "source": "On chain",
       "symbol": "SALT 🧂",
       "tags": "50-Tokens:ERC20"
-    },
-    {
-      "address": "0x02ad1b2f88d37825a311045663a0bf97d0dcd845",
-      "isContract": true,
-      "name": "YoutubeViews_id13",
-      "source": "Ether Camp",
-      "tags": "91-Early:Addresses"
-    },
-    {
-      "address": "0x02b173e5c6553b5429086edd94a37e34adbda2aa",
-      "decimals": 4,
-      "isContract": true,
-      "isErc20": true,
-      "name": "MuskMarsDog",
-      "source": "On chain",
-      "symbol": "MDOGE",
-      "tags": "50-Tokens:ERC20"
-    },
-    {
-      "address": "0x02b1cb4de1af0d10a53d0efc243e56f6baa39c1a",
-      "name": "basinDAO",
-      "source": "Tokenomics",
-      "tags": "31-Giveth:Project"
-    },
-    {
-      "address": "0x02b2101903eb6a51518e63e84b785180859fda9d",
-      "isContract": true,
-      "name": "Thewhalegame",
-      "source": "EtherScan.io",
-      "tags": "91-Early:Addresses"
-    },
-    {
-      "address": "0x02bcb9675727ade60243c3d467a3bf152142698b",
-      "isContract": true,
-      "name": "Credmark Community Treasury",
-      "source": "EtherScan.io",
-      "tags": "30-Contracts"
     }
   ],
   "meta": {

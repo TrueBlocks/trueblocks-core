@@ -791,6 +791,16 @@ Format:  json
       "tags": "50-Tokens:ERC20"
     },
     {
+      "address": "0x00a55375002f3cda400383f479e7cd57bad029a9",
+      "decimals": 18,
+      "isContract": true,
+      "isErc20": true,
+      "name": "Conjure",
+      "source": "Tally-Claude",
+      "symbol": "CNJ",
+      "tags": "76-DaoToken"
+    },
+    {
       "address": "0x00a5797f52c9d58f189f36b1d45d1bf6041f2f6b",
       "isPrefund": true,
       "name": "Prefund_0019",
@@ -1025,6 +1035,14 @@ Format:  json
       "name": "Prefund_0032",
       "source": "Genesis",
       "tags": "80-Prefund"
+    },
+    {
+      "address": "0x00e83d0698faf01bd080a4dd2927e6ab7c4874c9",
+      "isContract": true,
+      "isErc20": true,
+      "name": "AnvilGovernorDelegate",
+      "source": "Tally-Claude",
+      "tags": "75-DaoGovernor"
     },
     {
       "address": "0x00e8eb340f8af587eea6200d2081e31dc87285ac",
@@ -1530,6 +1548,13 @@ Format:  json
       "tags": "91-Early:Miners"
     },
     {
+      "address": "0x01961e8d0a2da0c6afccb95d86e84f80bd5bc338",
+      "isContract": true,
+      "name": "Mojos DAO Token",
+      "source": "Tally-Claude",
+      "tags": "76-DaoToken"
+    },
+    {
       "address": "0x0198f46f520f33cd4329bd4be380a25a90536cd5",
       "decimals": 18,
       "isContract": true,
@@ -1548,27 +1573,6 @@ Format:  json
       "source": "On chain",
       "symbol": "SatElon",
       "tags": "50-Tokens:ERC20"
-    },
-    {
-      "address": "0x019d709579ff4bc09fdcdde431dc1447d2c260bc",
-      "isPrefund": true,
-      "name": "Prefund_0055",
-      "source": "Genesis",
-      "tags": "80-Prefund"
-    },
-    {
-      "address": "0x01a25a5f5af0169b30864c3be4d7563ccd44f09e",
-      "isPrefund": true,
-      "name": "Prefund_0056",
-      "source": "Genesis",
-      "tags": "80-Prefund"
-    },
-    {
-      "address": "0x01a7d9fa7d0eb1185c67e54da83c2e75db69e39f",
-      "isPrefund": true,
-      "name": "Prefund_0057",
-      "source": "Genesis",
-      "tags": "80-Prefund"
     }
   ],
   "meta": {

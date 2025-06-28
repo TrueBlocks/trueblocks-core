@@ -191,7 +191,7 @@ tags	address	name	symbol	source	decimals	deleted	isCustom	isPrefund	isContract	i
 50-Tokens:ERC20	0x053e5ba7cb9669dcc2feb2d0e1d3d4a0ad6aae39	3X Short OKB Token	OKBBEAR	Rotki	18	false	false	false	true	true	false
 50-Tokens:ERC20	0x054af22e1519b020516d72d749221c24756385c9	Curve HUSD Pool yVault	yvCurve-HUSD	SmolAssets	18	false	false	false	true	true	false
 50-Tokens:ERC20	0x054c64741dbafdc19784505494029823d89c3b13	ETERNAL TOKEN	XET	On chain	8	false	false	false	true	true	false
-50-Tokens:ERC20	0x054d64b73d3d8a21af3d764efd76bcaa774f3bb2	Plasma	PPAY	Rotki	18	false	false	false	true	true	false
+76-DaoToken,50-Tokens:ERC20	0x054d64b73d3d8a21af3d764efd76bcaa774f3bb2	Plasma	PPAY	Tally-Claude,Rotki	18	false	false	false	true	true	false
 50-Tokens:ERC20	0x054f76beed60ab6dbeb23502178c52d6c5debe40	DeFiner	FIN	Rotki	18	false	false	false	true	true	false
 50-Tokens:ERC20	0x056354f3ff20743aa4c0da365603871c7000b081	TriumphX	TRIX	Rotki	18	false	false	false	true	true	false
 50-Tokens:ERC20	0x056f203d89360e78d9f0796e46ae070bd90def9c	Uniswap V2	UNI-V2	On chain	18	false	false	false	true	true	false

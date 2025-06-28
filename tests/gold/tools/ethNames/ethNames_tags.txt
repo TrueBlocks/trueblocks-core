@@ -41,6 +41,10 @@ tags
 60-Whales
 66-Ofac:Sanctioned
 70-Vendors
+75-DaoGovernor
+76-DaoToken
+77-DaoTimelock
+78-DaoOther
 80-Malicious
 80-Malicious:DaoDrain
 80-Malicious:Shanghai

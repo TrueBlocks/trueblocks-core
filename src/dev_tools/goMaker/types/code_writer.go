@@ -199,7 +199,7 @@ func updateFile(tempFn, newCode string) (bool, error) {
 		case "ts":
 			// parser = "typescript"
 		case "tsx":
-			parser = "typescript"
+			// parser = "typescript"
 		default:
 			// do nothing
 		}

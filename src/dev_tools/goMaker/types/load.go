@@ -169,6 +169,9 @@ func (cb *CodeBase) FinishLoad(unused string, baseTypes []Structure, options []O
 		cb.Structures = append(cb.Structures, st)
 	}
 	sort.Slice(cb.Structures, func(i, j int) bool {
+		if cb.Structures[i].DocRoute == cb.Structures[j].DocRoute {
+			return cb.Structures[i].Name() < cb.Structures[j].Name()
+		}
 		return cb.Structures[i].DocRoute < cb.Structures[j].DocRoute
 	})
 

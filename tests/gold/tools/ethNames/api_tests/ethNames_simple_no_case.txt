@@ -83,6 +83,16 @@ names?terms=network
       "tags": "50-Tokens:ERC20"
     },
     {
+      "address": "0x0b010000b7624eb9b3dfbc279673c76e9d29d5f7",
+      "decimals": 18,
+      "isContract": true,
+      "isErc20": true,
+      "name": "Obol Network",
+      "source": "Tally-Claude",
+      "symbol": "OBOL",
+      "tags": "76-DaoToken"
+    },
+    {
       "address": "0x0d35a2b85c5a63188d566d104bebf7c694334ee4",
       "decimals": 18,
       "isContract": true,
@@ -249,6 +259,16 @@ names?terms=network
       "source": "Rotki",
       "symbol": "DNT",
       "tags": "60-Rotki"
+    },
+    {
+      "address": "0x269e67d4bca85d71240355065b05d9fd1bf3217b",
+      "decimals": 18,
+      "isContract": true,
+      "isErc20": true,
+      "name": "Nollars Network",
+      "source": "Tally-Claude",
+      "symbol": "NOLA",
+      "tags": "76-DaoToken"
     },
     {
       "address": "0x26f3901ac8a79c50fb0d8289c74f0d09adc42e29",
@@ -583,6 +603,16 @@ names?terms=network
       "name": "EtherRouter: Colony Network",
       "source": "EtherScan.io",
       "tags": "30-Contracts"
+    },
+    {
+      "address": "0x534d1f5e617e0f72a6b06a04aa599839af776a5e",
+      "decimals": 18,
+      "isContract": true,
+      "isErc20": true,
+      "name": "Blockswap Network",
+      "source": "Tally-Claude",
+      "symbol": "BSN",
+      "tags": "76-DaoToken"
     },
     {
       "address": "0x538f022f50038994f7a04a58f5004c1b98ed41a4",
@@ -1040,6 +1070,13 @@ names?terms=network
       "name": "Grant 2728 - Using social networks for fun, affordable, and lucrative delivery.",
       "source": "https://gitcoin.co/grants/2728/using-social-networks-for-fun-affordable-and-lucr",
       "tags": "31-Gitcoin:Grants"
+    },
+    {
+      "address": "0x87f005317692d05baa4193ab0c961c69e175f45f",
+      "isContract": true,
+      "name": "Threshold Network Timelock",
+      "source": "Tally-Claude",
+      "tags": "77-DaoTimelock"
     },
     {
       "address": "0x881ef48211982d01e2cb7092c915e647cd40d85c",
@@ -1652,51 +1689,15 @@ names?terms=network
       "isContract": true,
       "isErc20": true,
       "name": "Threshold Network Token",
-      "source": "Rotki",
+      "source": "Tally-Claude,Rotki",
       "symbol": "T",
-      "tags": "50-Tokens:ERC20"
+      "tags": "76-DaoToken,50-Tokens:ERC20"
     },
     {
       "address": "0xcfb3c2dc81718ff0087d46e4d7b1c4692ded1586",
       "name": "Grant 1323 Resource Network",
       "source": "https://gitcoin.co/grants/1323/resource-network",
       "tags": "31-Gitcoin:Grants"
-    },
-    {
-      "address": "0xcfb98637bcae43c13323eaa1731ced2b716962fd",
-      "decimals": 18,
-      "isContract": true,
-      "isErc20": true,
-      "name": "Nimiq Network Interim Token",
-      "source": "On chain",
-      "symbol": "NET",
-      "tags": "50-Tokens:ERC20"
-    },
-    {
-      "address": "0xd29f0b5b3f50b07fe9a9511f7d86f4f4bac3f8c4",
-      "decimals": 18,
-      "isContract": true,
-      "isErc20": true,
-      "name": "Liquidity.Network Token",
-      "source": "On chain",
-      "symbol": "LQD",
-      "tags": "50-Tokens:ERC20"
-    },
-    {
-      "address": "0xd2fa8f92ea72abb35dbd6deca57173d22db2ba49",
-      "decimals": 18,
-      "isContract": true,
-      "isErc20": true,
-      "name": "Origami Network",
-      "source": "On chain",
-      "symbol": "ORI",
-      "tags": "50-Tokens:ERC20"
-    },
-    {
-      "address": "0xd3a8518a8e75a6c9317027abd29847ea1965f2b1",
-      "name": "Strengthening the Citizen Water Observatories Network",
-      "source": "Tokenomics",
-      "tags": "31-Giveth:Project"
     }
   ],
   "meta": {

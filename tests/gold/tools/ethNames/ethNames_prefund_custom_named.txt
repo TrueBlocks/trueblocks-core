@@ -103,6 +103,7 @@ tags	address	name	symbol	source	decimals
 60-SmolAssets	0x00a2faf97cc2b985b29a0a0eaa6e0d8033dc0ea1	Velodromev2tBTC-WETHFactoryyVault	yvVelo-tBTC-WETH-f	SmolAssets	18
 31-Gitcoin:Grants	0x00a33c8379b03085ad0c0b4f6fb38c63deba8475	Grant 4103 - Supplements Death Match		https://gitcoin.co/grants/4103/supplements-death-match	
 50-Tokens:ERC20	0x00a35fd824c717879bf370e70ac6868b95870dfb	IronBank	IB	SmolAssets	18
+76-DaoToken	0x00a55375002f3cda400383f479e7cd57bad029a9	Conjure	CNJ	Tally-Claude	18
 80-Prefund	0x00a5797f52c9d58f189f36b1d45d1bf6041f2f6b	Prefund_0019		Genesis	
 50-Tokens:ERC20	0x00a7ec2f2b451cb0233e8adbf4c9a951027c2b02	hiENS4	hiENS4	Rotki	18
 50-Tokens:ERC20	0x00a8b738e453ffd858a7edf03bccfe20412f0eb0	AllianceBlock Token	ALBT	Rotki	18
@@ -134,6 +135,7 @@ tags	address	name	symbol	source	decimals
 31-Gitcoin:Grants	0x00e4f5f746242e4d115bd65aac7c08fe5d38fb21	Grant 1839 the Etherchest Ecosystem		https://gitcoin.co/grants/1839/the-etherchest-ecosystem	
 60-Rotki	0x00e5646f60ac6fb446f621d146b6e1886f002905	Rai Reflex Index (PoS)	RAI	Rotki	18
 80-Prefund	0x00e681bc2d10db62de85848324492250348e90bf	Prefund_0032		Genesis	
+75-DaoGovernor	0x00e83d0698faf01bd080a4dd2927e6ab7c4874c9	AnvilGovernorDelegate		Tally-Claude	
 50-Tokens:ERC20	0x00e8eb340f8af587eea6200d2081e31dc87285ac	Curve XAI-FRAXBP Factory yVault	yvCurve-XAI-FRAXBP-f	SmolAssets	18
 80-Prefund	0x00f463e137dcf625fbf3bca39eca98d2b968cf7f	Prefund_0033		Genesis	
 50-Tokens:ERC20	0x00f93fbf00f97170b6cf295dc58888073cb5c2b8	Curve.fi Factory USD Metapool: CRV/ETH	CRV-ETH3CRV-f	Rotki	18
@@ -199,8 +201,6 @@ tags	address	name	symbol	source	decimals
 91-Early:Addresses	0x01914e9c0594a087f508aceabfca45f57e471388	Wallet_id66_cnt1_5mo		Ether Camp	
 80-Prefund	0x0191eb547e7bf6976b9b1b577546761de65622e2	Prefund_0054		Genesis	
 91-Early:Miners	0x0193d941b50d91be6567c7ee1c0fe7af498b4137	Miner_0015_427		OnChain	
+76-DaoToken	0x01961e8d0a2da0c6afccb95d86e84f80bd5bc338	Mojos DAO Token		Tally-Claude	
 50-Tokens:ERC20	0x0198f46f520f33cd4329bd4be380a25a90536cd5	PlayChip	PLA	On chain	18
 50-Tokens:ERC20	0x0199fd07389c5277c922af2736542e95e24ee689	Saturday Elon	SatElon	On chain	9
-80-Prefund	0x019d709579ff4bc09fdcdde431dc1447d2c260bc	Prefund_0055		Genesis	
-80-Prefund	0x01a25a5f5af0169b30864c3be4d7563ccd44f09e	Prefund_0056		Genesis	
-80-Prefund	0x01a7d9fa7d0eb1185c67e54da83c2e75db69e39f	Prefund_0057		Genesis	
