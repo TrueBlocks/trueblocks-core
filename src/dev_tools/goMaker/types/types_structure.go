@@ -358,15 +358,110 @@ func (s *Structure) FacetsStr() string {
 	return strings.Join(ret, ", ")
 }
 
-func (s *Structure) Stores() []string {
+func (s *Structure) Stores() []Store {
 	stores := make(map[string]bool)
 	for _, f := range s.Facets {
 		stores[f.Store] = true
 	}
-	ret := []string{}
+	sorted := []string{}
 	for store := range stores {
-		ret = append(ret, store)
+		sorted = append(sorted, store)
+	}
+	sort.Strings(sorted)
+	ret := []Store{}
+	for _, storeName := range sorted {
+		ret = append(ret, NewStore(s, storeName))
+	}
+	return ret
+}
+
+func (s *Structure) HasCruds() bool {
+	for _, f := range s.Facets {
+		if f.HasCruds() {
+			return true
+		}
+	}
+	return false
+}
+
+func (s *Structure) Cruds() string {
+	seen := make(map[string]bool)
+	ret := []string{}
+	for _, f := range s.Facets {
+		for _, crud := range f.Cruds {
+			if !seen[crud] {
+				seen[crud] = true
+				ret = append(ret, crud)
+			}
+		}
+	}
+	return strings.Join(ret, ",")
+}
+
+func (s *Structure) CrudStrs() string {
+	cruds := strings.Split(s.Cruds(), ",")
+	ret := []string{}
+	for _, crud := range cruds {
+		if crud != "" {
+			ret = append(ret, "'"+crud+"'")
+		}
+	}
+	return strings.Join(ret, ", ")
+}
+
+func (s *Structure) Handlers() string {
+	cruds := strings.Split(s.Cruds(), ",")
+	ret := []string{}
+	for _, crud := range cruds {
+		if crud == "undelete" || crud == "" {
+			continue
+		}
+		name := crud
+		if crud == "delete" {
+			name = "toggle"
+		}
+		ret = append(ret, "handle"+FirstUpper(name))
 	}
 	sort.Strings(ret)
+	return strings.Join(ret, ", ")
+}
+
+func (s *Structure) HandlerStrs() string {
+	handlers := strings.Split(s.Handlers(), ",")
+	ret := []string{}
+	for _, handler := range handlers {
+		handler = strings.TrimSpace(handler)
+		if handler == "handleUpdate" {
+			continue
+		}
+		ret = append(ret, "      "+handler+",")
+	}
+	return strings.Join(ret, "\n")
+}
+
+func (s *Structure) DocSortOrder() []Member {
+	ret := s.Members
+	sort.Slice(ret, func(i, j int) bool {
+		return ret[i].DocOrder < ret[j].DocOrder
+	})
+	return ret
+}
+
+func (s *Structure) CalcMembers() []string {
+	mm := map[string]bool{}
+	for _, st := range s.Stores() {
+		for _, m := range st.Members() {
+			if m.IsCalc() {
+				mm[m.Name] = true
+			}
+		}
+	}
+
+	ret := []string{}
+	for k := range mm {
+		ret = append(ret, k)
+	}
+	sort.Strings(ret)
+
 	return ret
 }

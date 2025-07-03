@@ -144,6 +144,10 @@ func (cb *CodeBase) LoadMembers(thePath string, structMap map[string]Structure) 
 		return err
 	}
 
+	// for key, st := range structMap {
+	// 	logger.Info("Loaded structure:", key, "with", len(st.Members), "members")
+	// }
+
 	return nil
 }
 
@@ -170,6 +174,18 @@ func (cb *CodeBase) FinishLoad(unused string, baseTypes []Structure, options []O
 	}
 	sort.Slice(cb.Structures, func(i, j int) bool {
 		if cb.Structures[i].DocRoute == cb.Structures[j].DocRoute {
+			if cb.Structures[i].Name() == cb.Structures[j].Name() {
+				si := ""
+				for ii := 0; ii < len(cb.Structures[i].Members); ii++ {
+					si += cb.Structures[i].Members[ii].Name
+				}
+				sj := ""
+				for jj := 0; jj < len(cb.Structures[j].Members); jj++ {
+					sj += cb.Structures[j].Members[jj].Name
+				}
+				logger.Info("si", si, "sj", sj)
+				return si < sj
+			}
 			return cb.Structures[i].Name() < cb.Structures[j].Name()
 		}
 		return cb.Structures[i].DocRoute < cb.Structures[j].DocRoute

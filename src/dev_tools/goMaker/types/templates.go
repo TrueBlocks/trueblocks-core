@@ -3,6 +3,7 @@ package types
 import (
 	"bytes"
 	"log"
+	"regexp"
 	"strings"
 	"text/template"
 )
@@ -43,9 +44,37 @@ func getFuncMap() template.FuncMap {
 	firstLower := func(s string) string { return FirstLower(s) }
 	firstUpper := func(s string) string { return FirstUpper(s) }
 	toLowerPlural := func(s string) string { return Lower(Plural(s)) }
+	split := func(s string, k string) []string { return strings.Split(s, k) }
+	hasPrefix := func(s, prefix string) bool { return strings.HasPrefix(s, prefix) }
+	contains := func(s, substr string) bool { return strings.Contains(s, substr) }
+	trim := func(s string) string { return strings.TrimSpace(s) }
 	or := func(a, b bool) bool { return a || b }
+	add := func(a, b int) int { return a + b }
 	sub := func(a, b int) int { return a - b }
+	append := func(existing []string, add string) []string { return append(existing, add) }
 	replace := func(str, find, rep string) string { return strings.ReplaceAll(str, find, rep) }
+	toHeader := func(s string) string {
+		var words []string
+		start := 0
+		for i, r := range s {
+			if i > 0 && r >= 'A' && r <= 'Z' {
+				words = append(words, s[start:i])
+				start = i
+			}
+		}
+		if start < len(s) {
+			words = append(words, s[start:])
+		}
+		for i, word := range words {
+			if len(word) > 0 {
+				words[i] = strings.ToUpper(word[:1]) + strings.ToLower(word[1:])
+			}
+		}
+		if len(words) > 0 && (words[0] == "N" || words[0] == "Is") {
+			words = words[1:]
+		}
+		return strings.Join(words, " ")
+	}
 	cond := func(t bool, a, b any) any {
 		if t {
 			return a
@@ -63,6 +92,17 @@ func getFuncMap() template.FuncMap {
 		}
 		return ret
 	}
+	regexCompile := func(pattern string) *regexp.Regexp {
+		re, err := regexp.Compile(pattern)
+		if err != nil {
+			panic(err)
+		}
+		return re
+	}
+
+	regexReplace := func(re *regexp.Regexp, input, replacement string) string {
+		return re.ReplaceAllString(input, replacement)
+	}
 
 	return template.FuncMap{
 		"toSingular":    toSingular,
@@ -75,9 +115,18 @@ func getFuncMap() template.FuncMap {
 		"firstLower":    firstLower,
 		"firstUpper":    firstUpper,
 		"or":            or,
+		"add":           add,
 		"sub":           sub,
 		"replace":       replace,
 		"cond":          cond,
 		"apply":         apply,
+		"split":         split,
+		"trim":          trim,
+		"hasPrefix":     hasPrefix,
+		"contains":      contains,
+		"regexCompile":  regexCompile,
+		"regexReplace":  regexReplace,
+		"toHeader":      toHeader,
+		"append":        append,
 	}
 }

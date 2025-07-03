@@ -535,3 +535,59 @@ func (m *Member) MemTsType() string {
 	}
 	return val + ";"
 }
+
+func (m *Member) UiType() string {
+	mm := map[string]string{
+		"string": "text",
+		"bool":   "checkbox",
+		"uint64": "number",
+		"uint32": "number",
+		"int64":  "number",
+		"int":    "number",
+	}
+	if ret, ok := mm[m.Type]; !ok {
+		return m.Type
+	} else {
+		return ret
+	}
+}
+
+func (m *Member) Width() int64 {
+	parts := strings.Split(m.Attributes, "|")
+	for _, part := range parts {
+		if strings.HasPrefix(part, "width=") {
+			widthStr := strings.TrimPrefix(part, "width=")
+			var width int64
+			fmt.Sscanf(widthStr, "%d", &width)
+			return width
+		}
+	}
+	mm := map[string]int64{
+		"address":  340,
+		"text":     200,
+		"number":   120,
+		"checkbox": 80,
+	}
+	if ret, ok := mm[m.UiType()]; !ok {
+		return 120
+	} else {
+		return ret
+	}
+}
+
+func (m *Member) Align() string {
+	mm := map[string]string{
+		"number":   "right",
+		"checkbox": "center",
+	}
+
+	if ret, ok := mm[m.UiType()]; !ok {
+		return "left"
+	} else {
+		return ret
+	}
+}
+
+func (m *Member) ReadOnly() bool {
+	return m.UiType() == "address"
+}
