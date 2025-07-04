@@ -48,7 +48,11 @@ const longStatus = `Purpose:
 const notesStatus = `
 Notes:
   - The some mode includes index, monitors, names, slurps, and abis.
-  - If no mode is supplied, a terse report is generated.`
+  - If no mode is supplied, a terse report is generated.
+  - The --chains option may be used alone to return only chain configuration information.
+  - The --caches option may be used alone to return only cache information.
+  - Using both --chains and --caches together returns both types of information in a single status object.
+  - Both --chains and --caches may be used with modes and --diagnose/--healthcheck for complete customization.`
 
 func init() {
 	var capabilities caps.Capability // capabilities for chifra status
@@ -60,6 +64,7 @@ func init() {
 	statusCmd.Flags().Uint64VarP(&statusPkg.GetOptions().FirstRecord, "first_record", "c", 0, `the first record to process`)
 	statusCmd.Flags().Uint64VarP(&statusPkg.GetOptions().MaxRecords, "max_records", "e", 10000, `the maximum number of records to process`)
 	statusCmd.Flags().BoolVarP(&statusPkg.GetOptions().Chains, "chains", "a", false, `include a list of chain configurations in the output`)
+	statusCmd.Flags().BoolVarP(&statusPkg.GetOptions().Caches, "caches", "s", false, `include a list of cache items in the output`)
 	statusCmd.Flags().BoolVarP(&statusPkg.GetOptions().Healthcheck, "healthcheck", "k", false, `an alias for the diagnose endpoint`)
 	globals.InitGlobals("status", statusCmd, &statusPkg.GetOptions().Globals, capabilities)
 

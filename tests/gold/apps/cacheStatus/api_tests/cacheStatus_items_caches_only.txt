@@ -1,0 +1,39 @@
+status?caches
+{
+  "data": [
+    {
+      "lastCached": "2006-01-02 15:04:05",
+      "nFiles": 100,
+      "nFolders": 1,
+      "path": "/path/to/abis",
+      "sizeInBytes": 10000,
+      "type": "abisCache"
+    },
+    {
+      "lastCached": "2006-01-02 15:04:05",
+      "nFiles": 50,
+      "nFolders": 5,
+      "path": "/path/to/monitors",
+      "sizeInBytes": 5000,
+      "type": "monitorsCache"
+    },
+    {
+      "lastCached": "2006-01-02 15:04:05",
+      "nFiles": 200,
+      "nFolders": 2,
+      "path": "/path/to/names",
+      "sizeInBytes": 20000,
+      "type": "namesCache"
+    }
+  ],
+  "meta": {
+    "client": "0xdeadbeef",
+    "finalized": "0xdeadbeef",
+    "staging": "0xdeadbeef",
+    "ripe": "0xdeadbeef",
+    "unripe": "0xdeadbeef",
+    "chainId": 1,
+    "networkId": 1,
+    "chain": "mainnet"
+  }
+}

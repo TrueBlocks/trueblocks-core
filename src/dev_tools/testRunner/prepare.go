@@ -7,6 +7,9 @@ import (
 )
 
 func downloadAbis() error {
+	logger.SetTestMode(false)
+	defer logger.SetTestMode(true)
+
 	logger.Info(colors.Yellow + "Downloading Abis..." + colors.Off)
 
 	addrs := []string{
@@ -18,22 +21,23 @@ func downloadAbis() error {
 		"0xbb9bc244d798123fde783fcc1c72d3bb8c189413",
 	}
 
-	opts := sdk.AbisOptions{
-		Addrs: addrs,
-		Globals: sdk.Globals{
-			Decache: true,
-		},
+	for _, addr := range addrs {
+		opts := sdk.AbisOptions{
+			Addrs: []string{addr},
+			Globals: sdk.Globals{
+				Decache: true,
+			},
+		}
+		if _, _, err := opts.Abis(); err != nil {
+			logger.Fatal(err)
+		}
+		opts.Globals.Decache = false
+		if abis, _, err := opts.Abis(); err != nil {
+			logger.Fatal(err)
+		} else {
+			logger.Info(colors.Green+"\tRedownloaded", addr, "found ", len(abis), " Functions"+colors.Off)
+		}
 	}
-
-	logger.SetTestMode(false)
-	if _, _, err := opts.Abis(); err != nil {
-		logger.Fatal(err)
-	}
-	opts.Globals.Decache = false
-	if _, _, err := opts.Abis(); err != nil {
-		logger.Fatal(err)
-	}
-	logger.SetTestMode(true)
 
 	return nil
 }

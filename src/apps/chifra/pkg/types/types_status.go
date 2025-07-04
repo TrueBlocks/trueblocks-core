@@ -10,11 +10,15 @@ package types
 
 // EXISTING_CODE
 import (
+	"context"
 	"encoding/json"
 	"sort"
+	"time"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/walk"
 )
 
 // EXISTING_CODE
@@ -92,52 +96,36 @@ func (s *Status) Model(chain, format string, verbose bool, extraOpts map[string]
 	}
 
 	testMode := extraOpts["testMode"] == true
-	if len(s.Caches) > 0 {
+
+	var caches []CacheItem
+	if extraOpts["caches"] == true {
+		chain, _ := extraOpts["chain"].(string)
+		var modeTypes []walk.CacheType
+		if mt, ok := extraOpts["modeTypes"].([]walk.CacheType); ok {
+			modeTypes = mt
+		}
+		caches = s.GetCaches(chain, testMode, modeTypes)
+	} else if len(s.Caches) > 0 {
+		caches = s.Caches
+	}
+
+	if len(caches) > 0 {
 		if testMode {
-			for i := 0; i < len(s.Caches); i++ {
-				s.Caches[i].Path = "--paths--"
-				s.Caches[i].LastCached = "--lastCached--"
-				s.Caches[i].NFiles = 123
-				s.Caches[i].NFolders = 456
-				s.Caches[i].SizeInBytes = 789
+			for i := 0; i < len(caches); i++ {
+				caches[i].Path = "--paths--"
+				caches[i].LastCached = "--lastCached--"
+				caches[i].NFiles = 123
+				caches[i].NFolders = 456
+				caches[i].SizeInBytes = 789
 			}
 		}
-		model["caches"] = s.Caches
+		model["caches"] = caches
 		order = append(order, "caches")
 	}
 
 	if extraOpts["chains"] == true {
-		var chains []Chain
-		if extraOpts["testMode"] == true {
-			ch := Chain{
-				Chain:         "testChain",
-				ChainId:       12345,
-				LocalExplorer: "http://localhost:8080",
-				RpcProvider:   "http://localhost:8545",
-				Symbol:        "ETH",
-			}
-			chains = append(chains, ch)
-		} else {
-			chainArray := config.GetChains()
-			for _, chain := range chainArray {
-				ch := Chain{
-					Chain:          chain.Chain,
-					ChainId:        base.MustParseUint64(chain.ChainId),
-					LocalExplorer:  chain.LocalExplorer,
-					RemoteExplorer: chain.RemoteExplorer,
-					RpcProvider:    chain.GetRpcProvider(),
-					IpfsGateway:    chain.IpfsGateway,
-					Symbol:         chain.Symbol,
-				}
-				chains = append(chains, ch)
-			}
-			sort.Slice(chains, func(i, j int) bool {
-				if chains[i].ChainId == chains[j].ChainId {
-					return chains[i].Chain < chains[j].Chain
-				}
-				return chains[i].ChainId < chains[j].ChainId
-			})
-		}
+		testMode := extraOpts["testMode"] == true
+		chains := s.GetChains(testMode)
 		model["chains"] = chains
 		order = append(order, "chains")
 	}
@@ -164,6 +152,193 @@ func (s *Status) ShallowCopy() Status {
 	s.Caches = caches
 	ret.Chain = s.Chain
 	return ret
+}
+
+// GetChains returns a slice of Chain objects for the status
+func (s *Status) GetChains(testMode bool) []Chain {
+	var chains []Chain
+	if testMode {
+		ch := Chain{
+			Chain:         "testChain",
+			ChainId:       12345,
+			LocalExplorer: "http://localhost:8080",
+			RpcProvider:   "http://localhost:8545",
+			Symbol:        "ETH",
+		}
+		chains = append(chains, ch)
+	} else {
+		chainArray := config.GetChains()
+		for _, chain := range chainArray {
+			ch := Chain{
+				Chain:          chain.Chain,
+				ChainId:        base.MustParseUint64(chain.ChainId),
+				LocalExplorer:  chain.LocalExplorer,
+				RemoteExplorer: chain.RemoteExplorer,
+				RpcProvider:    chain.GetRpcProvider(),
+				IpfsGateway:    chain.IpfsGateway,
+				Symbol:         chain.Symbol,
+			}
+			chains = append(chains, ch)
+		}
+		sort.Slice(chains, func(i, j int) bool {
+			if chains[i].ChainId == chains[j].ChainId {
+				return chains[i].Chain < chains[j].Chain
+			}
+			return chains[i].ChainId < chains[j].ChainId
+		})
+	}
+	return chains
+}
+
+// GetCaches returns a slice of CacheItem objects for the status
+func (s *Status) GetCaches(chain string, testMode bool, modeTypes []walk.CacheType) []CacheItem {
+	if testMode {
+		mockCaches := []CacheItem{
+			{
+				CacheItemType: "abisCache",
+				Path:          "/path/to/abis",
+				NFiles:        100,
+				NFolders:      1,
+				SizeInBytes:   10000,
+				LastCached:    "2006-01-02 15:04:05",
+				Items:         make([]any, 0),
+			},
+			{
+				CacheItemType: "monitorsCache",
+				Path:          "/path/to/monitors",
+				NFiles:        50,
+				NFolders:      5,
+				SizeInBytes:   5000,
+				LastCached:    "2006-01-02 15:04:05",
+				Items:         make([]any, 0),
+			},
+			{
+				CacheItemType: "namesCache",
+				Path:          "/path/to/names",
+				NFiles:        200,
+				NFolders:      2,
+				SizeInBytes:   20000,
+				LastCached:    "2006-01-02 15:04:05",
+				Items:         make([]any, 0),
+			},
+		}
+		return mockCaches
+	}
+
+	// Define all cache types to scan
+	var cacheTypesToScan []walk.CacheType
+
+	// If specific mode types are provided, use those; otherwise use all cache types
+	if len(modeTypes) > 0 {
+		cacheTypesToScan = modeTypes
+	} else {
+		cacheTypesToScan = []walk.CacheType{
+			walk.Cache_Abis,
+			walk.Cache_Monitors,
+			walk.Cache_Names,
+			walk.Cache_Tmp,
+			walk.Cache_Blocks,
+			walk.Cache_Logs,
+			walk.Cache_Receipts,
+			walk.Cache_Results,
+			walk.Cache_Slurps,
+			walk.Cache_State,
+			walk.Cache_Statements,
+			walk.Cache_Tokens,
+			walk.Cache_Traces,
+			walk.Cache_Transactions,
+			walk.Cache_Withdrawals,
+			walk.Index_Bloom,
+			walk.Index_Final,
+			walk.Index_Ripe,
+			walk.Index_Staging,
+			walk.Index_Unripe,
+			walk.Index_Maps,
+		}
+	}
+
+	now := time.Now()
+	filenameChan := make(chan walk.CacheFileInfo)
+	var nRoutines int
+
+	// Create a map to hold cache items as we process files
+	counterMap := make(map[walk.CacheType]*CacheItem)
+	nRoutines = len(cacheTypesToScan)
+
+	// Define CacheWalker type inside the function
+	type CacheWalker struct {
+		ctx    context.Context
+		cancel context.CancelFunc
+		nSeen  uint64
+	}
+
+	// Initialize a cache item for each cache type
+	for _, mT := range cacheTypesToScan {
+		counterMap[mT] = &CacheItem{
+			CacheItemType: walk.WalkCacheName(mT),
+			Items:         make([]any, 0),
+			LastCached:    now.Format("2006-01-02 15:04:05"),
+		}
+
+		// Setup a walker for each cache type
+		var t CacheWalker
+		t.ctx, t.cancel = context.WithCancel(context.Background())
+		go walk.WalkCacheFolder(t.ctx, chain, mT, &t, filenameChan)
+	}
+
+	// Process each file/folder found
+	for result := range filenameChan {
+		cT := result.Type
+
+		switch cT {
+		case walk.Cache_NotACache:
+			nRoutines--
+			if nRoutines == 0 {
+				close(filenameChan)
+			}
+
+		default:
+			isIndex := func(cT walk.CacheType) bool {
+				m := map[walk.CacheType]bool{
+					walk.Index_Bloom:   true,
+					walk.Index_Final:   true,
+					walk.Index_Ripe:    true,
+					walk.Index_Staging: true,
+					walk.Index_Unripe:  true,
+					walk.Index_Maps:    true,
+				}
+				return m[cT]
+			}
+
+			// Skip certain cache types in test mode
+			if testMode && isIndex(cT) && (cT != walk.Index_Bloom && cT != walk.Index_Final) {
+				continue
+			} else if testMode && cT == walk.Cache_Results {
+				continue
+			}
+
+			if walk.IsCacheType(result.Path, cT, !result.IsDir /* checkExt */) {
+				if result.IsDir {
+					counterMap[cT].NFolders++
+					counterMap[cT].Path = walk.GetRootPathFromCacheType(chain, cT)
+				} else {
+					result.Data.(*CacheWalker).nSeen++
+					counterMap[cT].NFiles++
+					counterMap[cT].SizeInBytes += file.FileSize(result.Path)
+				}
+			}
+		}
+	}
+
+	// Collect all cache items into a slice
+	var caches []CacheItem
+	for _, cT := range cacheTypesToScan {
+		if counter, ok := counterMap[cT]; ok {
+			caches = append(caches, *counter)
+		}
+	}
+
+	return caches
 }
 
 // EXISTING_CODE

@@ -32,12 +32,8 @@ func (opts *StatusOptions) validateStatus() error {
 		return validate.Usage("{0} must be greater than zero", "--max_records")
 	}
 
-	if len(opts.Modes) > 0 && opts.Diagnose {
-		return validate.Usage("{0} may not be used with {1}", "--diagnose", opts.Modes[0])
-	}
-
-	if len(opts.Modes) == 0 && opts.Chains {
-		return validate.Usage("The {0} option is only available{1}.", "--chains", " with a mode")
+	if len(opts.OrigModes) > 0 && opts.Diagnose {
+		return validate.Usage("{0} may not be used with {1}", "--diagnose", opts.OrigModes[0])
 	}
 
 	return opts.Globals.Validate()

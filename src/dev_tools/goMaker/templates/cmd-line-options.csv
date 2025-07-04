@@ -242,14 +242,19 @@ num,folder,group,route,tool,longName,hotKey,def_val,attributes,handler,option_ty
 42040,apps,Admin,config,config,dump,d,,visible|docs,2,switch,<boolean>,config,,,,dump the configuration to stdout
 #
 43000,apps,Admin,status,cacheStatus,,,,visible|docs,,command,,,Get status on caches,<mode> [mode...] [flags],default|,Report on the state of the internal binary caches.
-43020,apps,Admin,status,cacheStatus,modes,,,visible|docs,2,positional,list<enum[index|blooms|blocks|transactions|traces|logs|statements|results|state|tokens|monitors|names|abis|slurps|staging|unripe|maps|some*|all]>,status,,,,the (optional) name of the binary cache to report on&#44; terse otherwise
+43020,apps,Admin,status,cacheStatus,modes,,,visible|docs,4,positional,list<enum[index|blooms|blocks|transactions|traces|logs|statements|results|state|tokens|monitors|names|abis|slurps|staging|unripe|maps|some*|all]>,status,,,,the (optional) name of the binary cache to report on&#44; terse otherwise
 43030,apps,Admin,status,cacheStatus,diagnose,d,,visible|docs,1,switch,<boolean>,status,,,,same as the default but with additional diagnostics
 43040,apps,Admin,status,cacheStatus,first_record,c,,visible|docs,,flag,<uint64>,,,,,the first record to process
 43050,apps,Admin,status,cacheStatus,max_records,e,10000,visible|docs,,flag,<uint64>,,,,,the maximum number of records to process
-43060,apps,Admin,status,cacheStatus,chains,a,,visible|docs,,switch,<boolean>,,,,,include a list of chain configurations in the output
+43060,apps,Admin,status,cacheStatus,chains,a,,visible|docs,2,switch,<boolean>,chain,,,,include a list of chain configurations in the output
+43062,apps,Admin,status,cacheStatus,caches,s,,visible|docs,3,switch,<boolean>,cacheItem,,,,include a list of cache items in the output
 43065,apps,Admin,status,cacheStatus,healthcheck,k,,visible|docs|alias=diagnose,,switch,<boolean>,status,,,,an alias for the diagnose endpoint
 43070,apps,Admin,status,cacheStatus,n1,,,,,note,,,,,,The `some` mode includes index&#44; monitors&#44; names&#44; slurps&#44; and abis.
 43080,apps,Admin,status,cacheStatus,n2,,,,,note,,,,,,If no mode is supplied&#44; a terse report is generated.
+43082,apps,Admin,status,cacheStatus,n3,,,,,note,,,,,,The --chains option may be used alone to return only chain configuration information.
+43083,apps,Admin,status,cacheStatus,n4,,,,,note,,,,,,The --caches option may be used alone to return only cache information.
+43084,apps,Admin,status,cacheStatus,n5,,,,,note,,,,,,Using both --chains and --caches together returns both types of information in a single status object.
+43085,apps,Admin,status,cacheStatus,n6,,,,,note,,,,,,Both --chains and --caches may be used with modes and --diagnose/--healthcheck for complete customization.
 #
 44000,apps,Admin,daemon,flame,,,,visible|docs|notApi,,command,,,Start the Api server,[flags],verbose|version|noop|noColor|,Initialize and control long-running processes such as the API and the scrapers.
 44020,apps,Admin,daemon,flame,url,u,localhost:8080,visible|docs,,flag,<string>,,,,,specify the API server's url and optionally its port

@@ -2582,6 +2582,14 @@ paths:
           explode: true
           schema:
             type: boolean
+        - name: caches
+          description: include a list of cache items in the output
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
         - name: healthcheck
           description: an alias for the diagnose endpoint
           required: false
