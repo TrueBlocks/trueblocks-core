@@ -48,6 +48,12 @@ func (s *Structure) String() string {
 }
 
 func (s Structure) Validate() bool {
+	// Validate facets
+	for _, facet := range s.Facets {
+		if err := facet.ValidateAll(); err != nil {
+			logger.Fatal("Facet validation failed:", err)
+		}
+	}
 	return true
 }
 
@@ -464,4 +470,13 @@ func (s *Structure) CalcMembers() []string {
 	sort.Strings(ret)
 
 	return ret
+}
+
+func (s *Structure) HasForms() bool {
+	for _, f := range s.Facets {
+		if f.IsForm() || f.IsDashboard() {
+			return true
+		}
+	}
+	return false
 }
