@@ -48,7 +48,6 @@ func (s *Structure) String() string {
 }
 
 func (s Structure) Validate() bool {
-	// Validate facets
 	for _, facet := range s.Facets {
 		if err := facet.ValidateAll(); err != nil {
 			logger.Fatal("Facet validation failed:", err)

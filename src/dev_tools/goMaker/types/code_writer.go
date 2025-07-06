@@ -199,13 +199,68 @@ func updateFile(tempFn, newCode string) (bool, error) {
 		case "ts":
 			// parser = "typescript"
 		case "tsx":
-			// parser = "typescript"
+			parser = "typescript"
 		default:
 			// do nothing
 		}
 		if parser != "" {
 			_ = file.StringToAsciiFile(tmpSrcFn, codeToWrite)
-			cmd := fmt.Sprintf("prettier --parser %s %s > %s 2> %s", parser, tmpSrcFn, outFn, errFn)
+			prettierPath := getPrettierPath()
+
+			var cmd string
+
+			// If prettier is in frontend directory, cd there and run it
+			if strings.Contains(prettierPath, "frontend") {
+				// Get absolute paths for files since we're changing directory
+				absTmpSrcFn, _ := filepath.Abs(tmpSrcFn)
+				absOutFn, _ := filepath.Abs(outFn)
+				absErrFn, _ := filepath.Abs(errFn)
+
+				// Change to frontend directory and run prettier
+				cmd = fmt.Sprintf("cd frontend && %s --parser %s %s > %s 2> %s",
+					strings.Replace(prettierPath, "./frontend/", "./", 1),
+					parser, absTmpSrcFn, absOutFn, absErrFn)
+			} else {
+				// Check if there's a prettier config file that might already specify plugins
+				prettierConfigPaths := []string{
+					".prettierrc",
+					".prettierrc.json",
+					".prettierrc.js",
+					".prettierrc.yaml",
+					".prettierrc.yml",
+					"prettier.config.js",
+					"./frontend/.prettierrc",
+					"./frontend/.prettierrc.json",
+					"./frontend/.prettierrc.js",
+					"./frontend/.prettierrc.yaml",
+					"./frontend/.prettierrc.yml",
+					"./frontend/prettier.config.js",
+				}
+
+				hasConfig := false
+				configPath := ""
+				for _, path := range prettierConfigPaths {
+					if file.FileExists(path) {
+						hasConfig = true
+						configPath = path
+						break
+					}
+				}
+
+				if !hasConfig {
+					// Only add plugin explicitly if no config file is found
+					pluginPath := getPluginPath()
+					if pluginPath != "" {
+						cmd = fmt.Sprintf("%s --plugin %s --parser %s %s > %s 2> %s", prettierPath, pluginPath, parser, tmpSrcFn, outFn, errFn)
+					} else {
+						cmd = fmt.Sprintf("%s --parser %s %s > %s 2> %s", prettierPath, parser, tmpSrcFn, outFn, errFn)
+					}
+				} else {
+					// Use prettier config file and specify its path explicitly
+					cmd = fmt.Sprintf("%s --config %s --parser %s %s > %s 2> %s", prettierPath, configPath, parser, tmpSrcFn, outFn, errFn)
+				}
+			}
+
 			utils.System(cmd)
 			errors := file.AsciiFileToString(errFn)
 			if len(errors) > 0 {
@@ -214,7 +269,7 @@ func updateFile(tempFn, newCode string) (bool, error) {
 			codeToWrite = file.AsciiFileToString(outFn)
 		}
 	} else {
-		logger.Warn("Prettier not found, skipping formatting for", tempFn, ". Install Prettier with `npm install -g prettier`.")
+		logger.Warn("Prettier not found, skipping formatting for", tempFn, ". Install Prettier locally with `yarn add --dev prettier @trivago/prettier-plugin-sort-imports`.")
 	}
 
 	// Compare the new formatted code to the existing file and only write if different
@@ -253,9 +308,50 @@ func init() {
 }
 
 func hasPrettier() bool {
+	return getPrettierPath() != ""
+}
+
+func getPrettierPath() string {
+	// Search for prettier in common locations
+	searchPaths := []string{
+		"./node_modules/.bin/prettier",                // Local install in current directory
+		"./sdk/typescript/node_modules/.bin/prettier", // TrueBlocks SDK location
+		"./frontend/node_modules/.bin/prettier",       // Common frontend directory
+		"./web/node_modules/.bin/prettier",            // Common web directory
+	}
+
+	for _, path := range searchPaths {
+		if file.FileExists(path) {
+			return path
+		}
+	}
+
+	// Fall back to global prettier if available
 	utils.System("which prettier >./found 2>/dev/null")
 	defer os.Remove("./found")
-	return file.FileExists("./found")
+	if file.FileExists("./found") {
+		return "prettier"
+	}
+
+	return ""
+}
+
+func getPluginPath() string {
+	// Search for the sort-imports plugin in common locations
+	searchPaths := []string{
+		"./node_modules/@trivago/prettier-plugin-sort-imports/lib/src/index.js",                // Local install in current directory
+		"./sdk/typescript/node_modules/@trivago/prettier-plugin-sort-imports/lib/src/index.js", // TrueBlocks SDK location
+		"./frontend/node_modules/@trivago/prettier-plugin-sort-imports/lib/src/index.js",       // Common frontend directory
+		"./web/node_modules/@trivago/prettier-plugin-sort-imports/lib/src/index.js",            // Common web directory
+	}
+
+	for _, path := range searchPaths {
+		if file.FileExists(path) {
+			return path
+		}
+	}
+
+	return ""
 }
 
 func showErroredCode(newCode string, err error) (bool, error) {
