@@ -68,6 +68,9 @@ names?tags
       "tags": "31-Gitcoin:Grants"
     },
     {
+      "tags": "31-Gitcoin:Stewards"
+    },
+    {
       "tags": "31-Gitcoin:Team"
     },
     {

@@ -14,7 +14,7 @@ Format:  json
     {
       "amount": "1000000000000000000",
       "asset": "0x6b175474e89094c44da98b954eedeac495271d0f",
-      "assetName": "Dai Stablecoin",
+      "assetName": "Dai Stablecoin (L1)",
       "blockNumber": 9278039,
       "holder": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
       "logIndex": 38,
@@ -23,7 +23,7 @@ Format:  json
     {
       "amount": "-950000000000000000",
       "asset": "0x6b175474e89094c44da98b954eedeac495271d0f",
-      "assetName": "Dai Stablecoin",
+      "assetName": "Dai Stablecoin (L1)",
       "blockNumber": 9279453,
       "holder": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
       "logIndex": 43,
@@ -32,7 +32,7 @@ Format:  json
     {
       "amount": "-50000000000000000",
       "asset": "0x6b175474e89094c44da98b954eedeac495271d0f",
-      "assetName": "Dai Stablecoin",
+      "assetName": "Dai Stablecoin (L1)",
       "blockNumber": 9279453,
       "holder": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
       "logIndex": 44,

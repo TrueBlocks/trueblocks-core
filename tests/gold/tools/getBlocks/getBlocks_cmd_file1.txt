@@ -207,6 +207,7 @@ Results in ./cmd_file1_out.file
           "date": "2016-03-17 11:26:30 UTC",
           "ether": "24.355397830000001024",
           "from": "0x32be343b94f860124dc4fee278fdcbd38c102d88",
+          "fromName": "Poloniex 1",
           "gas": 50000,
           "gasCost": 630000000000000,
           "gasPrice": 30000000000,

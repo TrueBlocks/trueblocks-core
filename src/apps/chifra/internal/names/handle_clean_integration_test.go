@@ -31,22 +31,6 @@ func Test_cleanName(t *testing.T) {
 		expectedName *types.Name
 	}{
 		{
-			name: "was contract",
-			args: args{
-				chain: "mainnet",
-				name: &types.Name{
-					IsContract: true,
-					Address:    base.HexToAddress("0x139e20773accc72ef75765fdff158244845c3888"),
-				},
-			},
-			wantModified: true,
-			expectedName: &types.Name{
-				Address:    base.HexToAddress("0x139e20773accc72ef75765fdff158244845c3888"),
-				IsContract: true,
-				Tags:       "37-SelfDestructed",
-			},
-		},
-		{
 			name: "was NOT contract",
 			args: args{
 				chain: "mainnet",
@@ -106,42 +90,6 @@ func Test_cleanName_edgeCases(t *testing.T) {
 		wantErr      bool
 		expectedName *types.Name
 	}{
-		{
-			name: "was contract",
-			args: args{
-				chain: "mainnet",
-				name: &types.Name{
-					IsContract: true,
-					IsErc20:    true,
-					IsErc721:   true,
-					Decimals:   1,
-					Name:       "DAO Drain 089",
-					Source:     "GethSource Ether Camp",
-					Tags:       "80-Malicious:DaoDrain",
-					Address:    base.HexToAddress("0xbc07118b9ac290e4622f5e77a0853539789effbe"),
-				},
-			},
-			wantModified: false,
-		},
-		// 0x971a6ff4f5792f3e0288f093340fb36a826aae96
-		{
-			name: "was contract",
-			args: args{
-				chain: "mainnet",
-				name: &types.Name{
-					IsContract: true,
-					IsErc20:    true,
-					IsErc721:   true,
-					Decimals:   18,
-					Symbol:     "ALTNOUNS",
-					Name:       "AltNouns",
-					Source:     "On chain",
-					Tags:       "50-Tokens:ERC721",
-					Address:    base.HexToAddress("0x971a6ff4f5792f3e0288f093340fb36a826aae96"),
-				},
-			},
-			wantModified: false,
-		},
 		{
 			name: "name fourbyte collision",
 			args: args{

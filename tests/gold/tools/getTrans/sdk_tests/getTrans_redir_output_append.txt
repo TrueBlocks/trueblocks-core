@@ -29,6 +29,7 @@ Format:  json
         "logs": [
           {
             "address": "0x209c4784ab1e8183cf58ca33cb740efbf3fc18ef",
+            "addressName": "Poloniex 2",
             "data": "0x00000000000000000000000032be343b94f860124dc4fee278fdcbd38c102d88",
             "date": "2017-05-06 00:43:39 UTC",
             "logIndex": 2,
@@ -42,6 +43,7 @@ Format:  json
       },
       "timestamp": 1494031419,
       "to": "0x209c4784ab1e8183cf58ca33cb740efbf3fc18ef",
+      "toName": "Poloniex 2",
       "traces": [],
       "transactionIndex": 9,
       "value": "1007817120000000000"

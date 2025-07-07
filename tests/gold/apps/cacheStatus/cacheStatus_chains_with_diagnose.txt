@@ -6,30 +6,13 @@ TEST[DATE|TIME] Format:  json
 {
   "data": [
     {
-      "cachePath": "--paths--",
-      "chainConfig": "--paths--",
-      "chains": [
-        {
-          "chain": "testChain",
-          "chainId": 12345,
-          "ipfsGateway": "",
-          "localExplorer": "http://localhost:8080",
-          "remoteExplorer": "",
-          "rpcProvider": "http://localhost:8545",
-          "symbol": "ETH"
-        }
-      ],
-      "clientVersion": "Client version",
-      "hasEsKey": true,
-      "hasPinKey": false,
-      "indexPath": "--paths--",
-      "isApi": false,
-      "isArchive": true,
-      "isTesting": true,
-      "isTracing": true,
-      "rootConfig": "--paths--",
-      "rpcProvider": "--providers--",
-      "trueblocksVersion": "GHC-TrueBlocks//vers-beta--git-hash---git-ts-"
+      "chain": "testChain",
+      "chainId": 12345,
+      "ipfsGateway": "",
+      "localExplorer": "http://localhost:8080",
+      "remoteExplorer": "",
+      "rpcProvider": "http://localhost:8545",
+      "symbol": "ETH"
     }
   ]
 }

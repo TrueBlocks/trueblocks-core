@@ -14,8 +14,8 @@ Format:  json
       "blockNumber": 1500000,
       "decimals": 1,
       "holder": "0xbb9bc244d798123fde783fcc1c72d3bb8c189413",
-      "name": "The DAO Original",
-      "symbol": "0xbb9b"
+      "name": "TheDAO (L1)",
+      "symbol": "TheDAO"
     }
   ],
   "meta": {

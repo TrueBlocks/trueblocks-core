@@ -6,9 +6,15 @@ OutputFn:  output_test_file
 Append:  true
 Format:  json
 { "outputFilename": "--output_filename--" }
-No known names found for [0xf503017d7baf7fbc0fff7492b751025c6a78179b]
 {
-  "data": [],
+  "data": [
+    {
+      "address": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
+      "name": "Thomas Jay Rush (trueblocks.eth forum:tjayrush)",
+      "source": "https://gov.gitcoin.co/t/introducing-stewards-governance/41",
+      "tags": "31-Gitcoin:Stewards"
+    }
+  ],
   "meta": {
     "client": "0xdeadbeef",
     "finalized": "0xdeadbeef",

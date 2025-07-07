@@ -4,24 +4,32 @@ tags	address	name	symbol	decimals
 55-Defi	0x000000000000000000000000000000000000dead	ENS: Burn Address		
 50-Tokens:ERC721	0x0000000000001b84b1cb32787b0d64758d019317	HomeWork 🏠🛠️	HWK	18
 50-Tokens:ERC20	0x0000000000004946c0e9f43f4dee607b0ef1fa1c	Chi Gastoken by 1inch	CHI	18
-30-Contracts	0x000000000000541e251335090ac5b47176af4f7e	dex.blue		
-50-Tokens:ERC20	0x0000000000085d4780b73119b644ae5ecd22b376	TrueUSD	TUSD	18
+55-Defi	0x000000000000541e251335090ac5b47176af4f7e	dex.blue		
+55-Defi	0x0000000000007f150bd6f54c40a34d7c3d5e9f56	MEV Bot()		
+55-Defi	0x0000000000071821e8033345a7be174647be0706	Scry Protocol (L1)	SCRY	18
+55-Defi	0x0000000000085d4780b73119b644ae5ecd22b376	TrueUSD (L1)	TUSD	18
 50-Tokens:ERC20	0x0000000000095413afc295d19edeb1ad7b71c952	Tokenlon	LON	18
 34-ENS	0x00000000000c2e074ec69a0dfb2997ba6c7d2e1e	ENS: Registry with Fallback		
+55-Defi	0x00000000003b3cc22af3ae1eac0440bcee416b40	MEV Bot()		
+55-Defi	0x00000000008c4fb1c916e0c88fd4cc402d935e7d	MEV Bot()		
 50-Tokens:ERC20	0x00000000008fd4f395ec6f12920bae9cb6c722e4	Frax Ethereum	frxETH	18
 30-Contracts	0x0000000000a84fe7f5d858c8a22121c975ff0b42	Poster		
 50-Tokens:ERC20	0x0000000000b3f879cb30fe243b4dfee438691c04	Gastoken.io	GST2	2
 30-Contracts	0x0000000000c90bc353314b6911180ed7e06019a9	Arbitrage Bot		
 50-Tokens:ERC20	0x0000000000da9e0e8c2a40510f991cef596ab682	Frax Ether	frxETH	18
 30-Contracts	0x0000000006adbd7c01bc0738cdbfc3932600ad63	1inch Exchange		
+55-Defi	0x000000000dfde7deaf24138722987c9a6991e2d4	MEV Bot()		
 30-Contracts	0x00000000219ab540356cbb839cbe05303d7705fa	Eth2 Deposit Contract		
 50-Tokens:ERC20	0x00000000357646e36fe575885bb3e1a0772e64cc	Dai Backstop Syndicate v3-100	DBSv3-100	18
 50-Tokens:ERC20	0x00000000441378008ea67f4284a57932b1c000a5	TrueGBP	TGBP	18
 30-Contracts	0x0000000053d411becdb4a82d8603edc6d8b8b3bc	1inch Exchange		
+55-Defi	0x0000000099cb7fc48a935bceb9f05bbae54e8987	MEV Bot()		
 30-Contracts	0x00000000af5a61acaf76190794e3fdf1289288a1	Arbitrage Bot		
 30-Contracts	0x00000000b1786c9698c160d78232c78d6f6474fe	Arbitrage Bot		
+55-Defi	0x00000000c2cf7648c169b25ef1c217864bfa38cc	MEV Bot()		
 30-Contracts	0x0000000f8ef4be2b7aed6724e893c1b674b9682d	1inch Exchange		
 31-Gitcoin:Grants	0x0000000fcdf5ba49794f4151d6daff4505bc47d1	Grant 3596 - The Uniswap v3 Options Education Fund		
+55-Defi	0x0000006daea1723962647b7e189d311d757fb793	Wintermute 1()		
 50-Tokens:ERC20	0x00000100f2a2bd000715001920eb70d229700085	TrueCAD	TCAD	18
 30-Contracts	0x000005edbbc1f258302add96b5e20d3442e5dd89	1inch Exchange		
 50-Tokens:ERC20	0x00006100f7090010005f1bd7ae6122c3c2cf0090	TrueAUD	TAUD	18
@@ -33,15 +41,18 @@ tags	address	name	symbol	decimals
 55-Defi	0x0001fb050fe7312791bf6475b96569d83f695c9f	Ygov.finance: yearn		
 30-Contracts	0x000983ba1a675327f0940b56c2d49cd9c042dfbf	GU: Shiny Legendary Pack		
 50-Tokens:ERC20	0x0012940cf77a3cb5bade409b96a60e22506cf7d0	Curve.fi Factory Crypto Pool: STATE / WBTC	STATEWBTC-f	18
+55-Defi	0x001866ae5b3de6caa5a51543fd9fb64f524f5478	Binance 9		
 91-Early:Addresses	0x001a589dda0d6be37632925eaf1256986b2c6ad0	Oraclize_id304		
 50-Tokens:ERC20	0x001a8ffcb0f03e99141652ebcdecdb0384e3bd6c	POLKER	PKR	18
 31-Giveth:Project	0x001bae3291db1f401771a1eaa8f0078534177bcc	Sansum Diabetes Research Institute		
 50-Tokens:ERC20	0x001f0aa5da15585e5b2305dbab2bac425ea71007	IPSX	IPSX	18
 50-Tokens:ERC20	0x001f751cdfee02e2f0714831be2f8384db0f71a2	GenericLevCompFarm		18
 31-Gitcoin:Grants	0x00216505799d9e3117b40b94a24dc0fa286a57a4	Grant 1168 Flowerpatch Emojis & Artwork Fund		
+55-Defi	0x0021845f4c2604c58f9ba5b7bff58d16a2ab372c	Folgory Exchange		
 50-Tokens:ERC20	0x00281dfce4cfd72c0b6fda2aaaf077258743f9e8	NuriFootball	NRFB	
 50-Tokens:ERC20	0x00282fd551d03dc033256c4bf119532e8c735d8a	Biaocoin	BIAO	2
 50-Tokens:ERC20	0x00319f722bd546182cb2c701ca254146d3f084fc	Democracy Earth	HOUR	18
+30-Contracts	0x0034e8411d397c7377c06995565e61846d9af957	Gnosis Builder Wallet 3		
 30-Contracts:Pool Together	0x0034ea9808e620a0ef79261c51af20614b742b24	Pool Usdc MCDAwarePool v0.2.12		
 31-Gitcoin:Grants	0x0035cc37599241d007d0aba1fb931c5fa757f7a1	Grant 2388 - The Commons Swarm: An Augmented Bonding Curve model for DAOs		
 91-Early:Miners	0x0037ce3d4b7f8729c8607d8d0248252be68202c0	Miner_0027_260		
@@ -55,9 +66,11 @@ tags	address	name	symbol	decimals
 30-Contracts	0x005ca4f1493f451c1588186c570a434ec38e718d	BrightID Agent		
 80-Malicious:DaoDrain	0x005f5cee7a43331d5a3d3eec71305925a62f34b6	DAO Drain 086		
 31-Gitcoin:Grants	0x006087d6ac20840c23ba298512db454a05c19b10	Grant 0743 #fittogetherdao (like Pooltogether for Fitness and Wellbeing)		
+55-Defi	0x0068eb681ec52dbd9944517d785727310b494575	Tokocrypto		
 50-Tokens:ERC20	0x006bea43baa3f7a6f765f14f10a1a1b08334ef45	Stox	STX	18
 31-Giveth:Project	0x006cfc89e7f521ce3290b200df9530dce911b896	St. Ignatius Martyr Catholic Church		
 80-Malicious:Shanghai	0x006e61aa7e7ce25b8dad331d5181f2fbe5c23a54	Shanghai Cleaner Contract		
+55-Defi	0x007174732705604bbbf77038332dc52fd5a5000c	BlockTrades Exchange		
 31-Giveth:Project	0x0072d5887bc9979168835d8ac37ca1c2f6a4dac9	Ultimate Unicorns		
 50-Tokens:ERC20	0x0077cd5eca22e86177cc465633227652ff02f32d	BrightID_Main_DAO	BMAIN	18
 31-Gitcoin:Grants	0x007b003c4d0145b512286494d5ae123aeef29d9e	Grant 0845 Remote Developer Bootcamp		
@@ -82,24 +95,26 @@ tags	address	name	symbol	decimals
 50-Tokens:ERC20	0x00a8b738e453ffd858a7edf03bccfe20412f0eb0	AllianceBlock Token	ALBT	18
 50-Tokens:ERC20	0x00aba6fe5557de1a1d565658cbddddf7c710a1eb	EASY V2	EZ	18
 31-Gitcoin:Grants	0x00b491d250b9bcce482b6e70321b0a5339d183a6	Grant 0976 Magical Machine Money		
+55-Defi	0x00bdb5699745f5b860228c8f939abf1b9ae374ed	Bitstamp 1		
 50-Tokens:ERC20	0x00c2999c8b2adf4abc835cc63209533973718eb1	New World Order	STATE	18
 50-Tokens:ERC721	0x00c396383400a1ef2eb401052dbf5d989b2da481	Cypher City	CYPHER	18
 50-Tokens:ERC20	0x00c4b398500645eb5da00a1a379a88b11683ba01	Eximchain Token	EXC	18
 50-Tokens:ERC20	0x00c83aecc790e8a4453e5dd3b0b4b3680501a7a7	SKALE	SKL	18
 31-Giveth:Project	0x00ca33970150dff4fdd16f4992810117296768dd	Creative Development Collective		
 60-SmolAssets	0x00cb8e36a9c40491a39e8bf2864ed30c1b579860	Velodromev2tBTC-WBTCFactoryyVault	yvVelo-tBTC-WBTC-f	18
+55-Defi	0x00cdc153aa8894d08207719fe921fff964f28ba3	Bitzlato		
 31-Gitcoin:Grants	0x00cf36853aa4024fb5bf5cc377dfd85844b411a0	Grant 0143 Dappnode - Panvala League		
 50-Tokens:ERC20	0x00d0f137b51692d0ac708bde7b367a373865cffe	Zapper.Fi : Balancer Remove		
 31-Giveth:Project	0x00d7e52cb140df6ab91291e289318ad62a18f80c	ReFi In The Classroom		
 31-Gitcoin:Admin	0x00de4b13153673bcae2616b67bf822500d325fc3	Gitcoin Maintainer		
 60-SmolAssets	0x00e1724885473b63bce08a9f0a52f35b0979e35a	OathToken	OATH	18
-31-Gitcoin:Grants	0x00e4f5f746242e4d115bd65aac7c08fe5d38fb21	Grant 1839 the Etherchest Ecosystem		
 60-Rotki	0x00e5646f60ac6fb446f621d146b6e1886f002905	Rai Reflex Index (PoS)	RAI	18
 75-DaoGovernor	0x00e83d0698faf01bd080a4dd2927e6ab7c4874c9	AnvilGovernorDelegate		
 50-Tokens:ERC20	0x00e8eb340f8af587eea6200d2081e31dc87285ac	Curve XAI-FRAXBP Factory yVault	yvCurve-XAI-FRAXBP-f	18
+55-Defi	0x00f932f0fe257456b32deda4758922e56a4f4b42	Paper (L2)	PAPER	
 50-Tokens:ERC20	0x00f93fbf00f97170b6cf295dc58888073cb5c2b8	Curve.fi Factory USD Metapool: CRV/ETH	CRV-ETH3CRV-f	18
 31-Gitcoin:Grants	0x00fe460a15b49d09f39b057d0f1a7b9444f4f2be	Grant 0624 Nescience Software Portfolio Rebalancing Direct Indexing		
-50-Tokens:ERC20	0x0100546f2cd4c9d97f798ffc9755e47865ff7ee6	Alchemix ETH	alETH	18
+55-Defi	0x0100546f2cd4c9d97f798ffc9755e47865ff7ee6	Alchemix ETH (L1)	alETH	18
 50-Tokens:ERC721	0x0101f3be8ebb4bbd39a2e3b9a3639d4259832fd9	DAO Drain 075		1
 50-Tokens:ERC20	0x010496d8f3269ee9b05060bdf40c2d66e83e61dd	Digg	DIGG	18
 50-Tokens:ERC20	0x010589b7c33034b802f7dba2c88cc9cec0f46673	SoundMoneyCoin	SOV	8
@@ -123,6 +138,7 @@ tags	address	name	symbol	decimals
 50-Tokens:ERC20	0x014b50466590340d41307cc54dcee990c8d58aa8	ICOS		6
 31-Gitcoin:Grants	0x014ffcf34d8515535b99d6aef654258c237168b6	Grant 1850 Fireth		
 30-Contracts	0x015531a044bae03bf4dab1ceabfc232a969b7175	GU: Rare Pack		
+55-Defi	0x015769601d8d4879c0e193eeab31f10cf03c9ea9	Uniswap V3 (USDC-MLP)		
 50-Tokens:ERC20	0x01597e397605bf280674bf292623460b4204c375	Bent Token	BENT	18
 50-Tokens:ERC20	0x015b94ab2b0a14a96030573fbcd0f3d3d763541f	UZD Zunami Stable	UZD	18
 31-Gitcoin:Grants	0x015bf68ef11bd55e43a119b5752c4b3becae7f24	Grant 0627 Veridex		
@@ -146,9 +162,9 @@ tags	address	name	symbol	decimals
 50-Tokens:ERC20	0x01b12471f701eca76b583796cf3fd84e2ce6f8ff	Shiba Inu Bone	BONE	18
 50-Tokens:ERC20	0x01b23286ff60a543ec29366ae8d6b6274ca20541	Brother Music Platform	BMP	18
 50-Tokens:ERC20	0x01b3ec4aae1b8729529beb4965f27d008788b0eb	DA Power Play Token	DPP	18
-60-Rotki	0x01b8b6384298d4848e3be63d4c9d17830eee488a	DAOhaus Token on Optimism	HAUS	18
+55-Defi	0x01b8b6384298d4848e3be63d4c9d17830eee488a	DAOhaus Token (L2)	HAUS	
 50-Tokens:ERC20	0x01b8bcc8b75dd86025b455373f3c0814a060e6a8	DogeRocket	DGRO	18
-50-Tokens:ERC20	0x01ba67aac7f75f647d94220cc98fb30fcc5105bf	Lyra Token	LYRA	18
+55-Defi	0x01ba67aac7f75f647d94220cc98fb30fcc5105bf	Lyra Token (L1)	LYRA	18
 50-Tokens:ERC20	0x01bfbb9b1a2abe32ceb0a9f2291e5d7e36e38b20	kissBTC	kissBTC	8
 60-SmolAssets	0x01c77e8a099e97b7b0dca2f987d9bd1911cdde50	Velodromev2SNX-USDC.eFactoryyVault	yvVelo-SNX-USDC.e-f	18
 31-Giveth:Project	0x01ca185fdcf1c2001c24e7e2362d3fc1b570ead3	National Association of Free and Charitable Clinics		
@@ -171,6 +187,7 @@ tags	address	name	symbol	decimals
 50-Tokens:ERC20	0x0202be363b8a4820f3f4de7faf5224ff05943ab1	UniLend Finance Token	UFT	18
 75-DaoGovernor	0x0204cd037b2ec03605cfdfe482d8e257c765fa1b	INST Governor Bravo		
 50-Tokens:ERC20	0x0208fb0af6652bdbc3ea010d5026ed92ff252a53	Ethereum Hot	EHOT	18
+55-Defi	0x0211f3cedbef3143223d3acf0e589747933e8527	MXC 2		
 50-Tokens:ERC20	0x0223fc70574214f65813fe336d870ac47e147fae	CZR	CZR	18
 31-Giveth:Project	0x0225d43b588e69154ec98f710249d9ff2aed4527	DeHealth		
 91-Early:Addresses	0x02268047f5c77a6a533619773474d1a6e510443f	Creator		
@@ -184,20 +201,3 @@ tags	address	name	symbol	decimals
 50-Tokens:ERC20	0x0245918fa513e0641509bb519389a49258a2699f	Curve.fi Factory USD Metapool: ZUSD	ZUSD3CRV-f	18
 50-Tokens:ERC20	0x0246890c9278d0a786812dda4dd20361ed13cda0	Nashu Inu	NASHU	18
 31-Giveth:Project	0x0249317d94b3b85ac198cfd1232c351c551a8d41	Autism Alliance of Michigan (AAoM)		
-31-Giveth:Project	0x024bd890b037adbbfe1545d595490f65361c4a66	Clearway Clinic		
-50-Tokens:ERC20	0x0257ffd7ea2ebba4aaa090c7adbdd032a08c1f74	ZELIX	ZELIX	18
-50-Tokens:ERC20	0x02585e4a14da274d02df09b222d4606b10a4e940	Hero Origen Token	HERO	18
-50-Tokens:ERC20	0x0258f474786ddfd37abce6df6bbb1dd5dfc4434a	Orion Protocol	ORN	8
-50-Tokens:ERC20	0x025d34acfd5c65cfd5a73209f99608c9e13338f3	Uniswap V2	UNI-V2	18
-50-Tokens:ERC20	0x025d7dce7ad345bd55c4c972614e720ab67e1b2b	Curve.fi Factory Crypto Pool: ARTH/OHM	crvARTHOHM-f	18
-60-SmolAssets	0x025f99977db78317a4eba606998258b502bb256f	VeyronPepe	VPPE	18
-50-Tokens:ERC721	0x026224a2940bfe258d0dbe947919b62fe321f042	lobsterdao	LOBS	18
-60-Rotki	0x0266f4f08d82372cf0fcbccc0ff74309089c74d1	Rocket Pool ETH	rETH	18
-60-Rotki	0x026b623eb4aada7de37ef25256854f9235207178	spooky-v3.xyz	Visit https://spooky-v3.xyz and claim rewards	18
-50-Tokens:ERC20	0x02725836ebf3ecdb1cdf1c7b02fcbbfaa2736af8	BitAir	BTCA	8
-50-Tokens:ERC20	0x0275e1001e293c46cfe158b3702aade0b99f88a5	Oiler	OIL	18
-60-Rotki	0x027dbca046ca156de9622cd1e2d907d375e53aa7	Ampleforth secured by Meter Passport	AMPL	9
-50-Tokens:ERC20	0x028171bca77440897b824ca71d1c56cac55b68a3	Aave interest bearing DAI	aDAI	18
-50-Tokens:ERC20	0x0297083eef9c04ee22c89187b13363af2249042b	Andre KP9R	aKP9R	18
-31-Gitcoin:Grants	0x02a522d98ec2d2c3bbe91acc29ee7fd32ab880ab	Mintable: Deployer		
-50-Tokens:ERC20	0x02a7c828437aa9aea6da510758b2a9d6fb37f0bc	Salt Shaker	SALT 🧂	18

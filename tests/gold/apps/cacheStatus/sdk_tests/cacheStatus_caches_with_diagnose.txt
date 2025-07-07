@@ -8,48 +8,28 @@ Format:  json
 {
   "data": [
     {
-      "cachePath": "--paths--",
-      "caches": [
-        {
-          "items": [],
-          "lastCached": "--lastCached--",
-          "nFiles": 123,
-          "nFolders": 456,
-          "path": "--paths--",
-          "sizeInBytes": 789,
-          "type": "abisCache"
-        },
-        {
-          "items": [],
-          "lastCached": "--lastCached--",
-          "nFiles": 123,
-          "nFolders": 456,
-          "path": "--paths--",
-          "sizeInBytes": 789,
-          "type": "monitorsCache"
-        },
-        {
-          "items": [],
-          "lastCached": "--lastCached--",
-          "nFiles": 123,
-          "nFolders": 456,
-          "path": "--paths--",
-          "sizeInBytes": 789,
-          "type": "namesCache"
-        }
-      ],
-      "chainConfig": "--paths--",
-      "clientVersion": "Client version",
-      "hasEsKey": true,
-      "hasPinKey": false,
-      "indexPath": "--paths--",
-      "isApi": false,
-      "isArchive": true,
-      "isTesting": true,
-      "isTracing": true,
-      "rootConfig": "--paths--",
-      "rpcProvider": "--providers--",
-      "trueblocksVersion": "GHC-TrueBlocks//vers-beta--git-hash---git-ts-"
+      "lastCached": "2006-01-02 15:04:05",
+      "nFiles": 100,
+      "nFolders": 1,
+      "path": "/path/to/abis",
+      "sizeInBytes": 10000,
+      "type": "abisCache"
+    },
+    {
+      "lastCached": "2006-01-02 15:04:05",
+      "nFiles": 50,
+      "nFolders": 5,
+      "path": "/path/to/monitors",
+      "sizeInBytes": 5000,
+      "type": "monitorsCache"
+    },
+    {
+      "lastCached": "2006-01-02 15:04:05",
+      "nFiles": 200,
+      "nFolders": 2,
+      "path": "/path/to/names",
+      "sizeInBytes": 20000,
+      "type": "namesCache"
     }
   ],
   "meta": {

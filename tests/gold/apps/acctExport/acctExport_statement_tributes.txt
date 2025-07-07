@@ -205,7 +205,7 @@ TEST[DATE|TIME]
       "prevBal": "85000000000000000000",
       "priceSource": "token-not-priced-pre-uni",
       "recipient": "0x2a0c0dbecc7e4d658f48e01e3fa353f44050c208",
-      "recipientName": "IDEX",
+      "recipientName": "IDEX 1",
       "reconciled": true,
       "selfDestructIn": "0",
       "selfDestructOut": "0",

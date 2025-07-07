@@ -83,7 +83,7 @@
       "prevBal": "4200000000000000000000",
       "priceSource": "eth-not-priced-pre-maker",
       "recipient": "0x2910543af39aba0cd09dbb2d50200b3e800a63d2",
-      "recipientName": "Kraken Exchange",
+      "recipientName": "Kraken 1",
       "reconciled": true,
       "selfDestructIn": "0",
       "selfDestructOut": "0",

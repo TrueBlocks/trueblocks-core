@@ -1581,7 +1581,7 @@ Results in ./accounting_intra_tokens_out.file
       "amountNet": "420000000000000000",
       "amountOut": "0",
       "asset": "0x0bc529c00c6401aef6d220be8c6ea1667f6ad93e",
-      "assetName": "yearn.finance",
+      "assetName": "yearn.finance (L1)",
       "begBal": "0",
       "begBalDiff": "0",
       "blockNumber": 14218245,

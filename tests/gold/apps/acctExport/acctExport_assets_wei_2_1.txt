@@ -105,10 +105,10 @@ Results in ./assets_wei_2_1_out.file
       "decimals": 6,
       "isContract": true,
       "isErc20": true,
-      "name": "Tether USD",
-      "source": "Giveth website",
+      "name": "Tether USD (L1)",
+      "source": "https://docs.optimism.io/chain/tokenlist?utm_source=chatgpt.com",
       "symbol": "USDT",
-      "tags": "50-Tokens:ERC20"
+      "tags": "55-Defi"
     }
   ]
 }

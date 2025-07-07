@@ -12,12 +12,12 @@ Format:  json
     {
       "articulatedTx": {
         "inputs": {
-          "amount": "0",
-          "spender": "0x755cdba6ae4f479f7164792b318b2a06c759833b"
+          "_spender": "0x755cdba6ae4f479f7164792b318b2a06c759833b",
+          "_value": "0"
         },
         "name": "approve",
         "outputs": {
-          "out": null
+          "success": null
         }
       },
       "blockHash": "0xff4bdfe31eb9f91b17ceebda12daf97352c21476f4c2b7cfac56fa19d7b55c94",

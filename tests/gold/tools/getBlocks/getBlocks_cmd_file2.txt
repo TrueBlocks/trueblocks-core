@@ -556,6 +556,7 @@ Results in ./cmd_file2_out.file
           },
           "timestamp": 1455872128,
           "to": "0x32be343b94f860124dc4fee278fdcbd38c102d88",
+          "toName": "Poloniex 1",
           "traces": [],
           "transactionIndex": 0,
           "value": "2436919200000000000"
@@ -581,6 +582,7 @@ Results in ./cmd_file2_out.file
           },
           "timestamp": 1455872128,
           "to": "0x32be343b94f860124dc4fee278fdcbd38c102d88",
+          "toName": "Poloniex 1",
           "traces": [],
           "transactionIndex": 1,
           "value": "1842601080000000000"
@@ -606,6 +608,7 @@ Results in ./cmd_file2_out.file
           },
           "timestamp": 1455872128,
           "to": "0x32be343b94f860124dc4fee278fdcbd38c102d88",
+          "toName": "Poloniex 1",
           "traces": [],
           "transactionIndex": 2,
           "value": "2874941670000000000"
@@ -631,6 +634,7 @@ Results in ./cmd_file2_out.file
           },
           "timestamp": 1455872128,
           "to": "0x32be343b94f860124dc4fee278fdcbd38c102d88",
+          "toName": "Poloniex 1",
           "traces": [],
           "transactionIndex": 3,
           "value": "1265129540000000000"
@@ -656,6 +660,7 @@ Results in ./cmd_file2_out.file
           },
           "timestamp": 1455872128,
           "to": "0x32be343b94f860124dc4fee278fdcbd38c102d88",
+          "toName": "Poloniex 1",
           "traces": [],
           "transactionIndex": 4,
           "value": "2062575220000000000"
@@ -681,6 +686,7 @@ Results in ./cmd_file2_out.file
           },
           "timestamp": 1455872128,
           "to": "0x32be343b94f860124dc4fee278fdcbd38c102d88",
+          "toName": "Poloniex 1",
           "traces": [],
           "transactionIndex": 5,
           "value": "4948740000000000000"
@@ -706,6 +712,7 @@ Results in ./cmd_file2_out.file
           },
           "timestamp": 1455872128,
           "to": "0x32be343b94f860124dc4fee278fdcbd38c102d88",
+          "toName": "Poloniex 1",
           "traces": [],
           "transactionIndex": 6,
           "value": "7623633560000000000"
@@ -731,6 +738,7 @@ Results in ./cmd_file2_out.file
           },
           "timestamp": 1455872128,
           "to": "0x32be343b94f860124dc4fee278fdcbd38c102d88",
+          "toName": "Poloniex 1",
           "traces": [],
           "transactionIndex": 7,
           "value": "4700892570000000000"

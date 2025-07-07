@@ -198,12 +198,11 @@ func cleanName(chain string, name *types.Name) (bool, error) {
 	}
 
 	isContract := !errors.Is(err, rpc.ErrNotAContract)
-	wasContract := name.IsContract && !isContract
 	modified = cleanCommon(name)
 
 	if !isContract {
 		err = nil // not an error to not be a contract
-		if mod := cleanNonContract(name, wasContract); mod {
+		if mod := cleanNonContract(name); mod {
 			modified = true
 		}
 		return modified, err
@@ -253,8 +252,50 @@ func removeDoubleSpaces(str string) (string, bool) {
 	return result, true
 }
 
+// mergeParenthesizedText intelligently merges parenthetical content from oldName into tokenName
+// Returns the tokenName with properly merged parenthetical content
+func mergeParenthesizedText(tokenName, oldName string) string {
+	// Extract parenthetical content from old name
+	oldParenStart := strings.Index(oldName, "(")
+	if oldParenStart == -1 {
+		return tokenName // No parenthetical content in old name
+	}
+	oldParenEnd := strings.LastIndex(oldName, ")")
+	if oldParenEnd == -1 || oldParenEnd <= oldParenStart {
+		return tokenName // Invalid parentheses in old name
+	}
+	oldParenContent := oldName[oldParenStart+1 : oldParenEnd] // Content without parentheses
+
+	// Check if token name has parenthetical content
+	tokenParenStart := strings.Index(tokenName, "(")
+	if tokenParenStart == -1 {
+		// Token name has no parentheses, simply append the old parenthetical
+		return strings.TrimSpace(tokenName) + " (" + oldParenContent + ")"
+	}
+
+	// Token name has parentheses, extract its content
+	tokenParenEnd := strings.LastIndex(tokenName, ")")
+	if tokenParenEnd == -1 || tokenParenEnd <= tokenParenStart {
+		// Invalid parentheses in token name, append old parenthetical
+		return strings.TrimSpace(tokenName) + " (" + oldParenContent + ")"
+	}
+
+	tokenParenContent := tokenName[tokenParenStart+1 : tokenParenEnd]
+	tokenBaseName := strings.TrimSpace(tokenName[:tokenParenStart])
+
+	// Check if old parenthetical content is already in token parenthetical content
+	if strings.Contains(strings.ToLower(tokenParenContent), strings.ToLower(oldParenContent)) {
+		return tokenName // Already contains the content, no change needed
+	}
+
+	// Merge the parenthetical content with comma separation
+	mergedContent := strings.TrimSpace(tokenParenContent) + ", " + strings.TrimSpace(oldParenContent)
+	return tokenBaseName + " (" + mergedContent + ")"
+}
+
 func cleanContract(token *types.Token, name *types.Name) (modified bool, err error) {
 	if !name.IsContract {
+		// This is not a bug. We want to re-assign it here.
 		name.IsContract = true
 		modified = true
 	}
@@ -326,6 +367,12 @@ func cleanToken(name *types.Name, token *types.Token) (modified bool) {
 	}
 
 	tokenName := token.Name
+
+	// Merge any parenthesized text from the existing name with the token name
+	if tokenName != "" {
+		tokenName = mergeParenthesizedText(tokenName, name.Name)
+	}
+
 	var strModified bool
 	if tokenName != "" {
 		tokenName, strModified = removeDoubleSpaces(tokenName)
@@ -384,7 +431,7 @@ func cleanToken(name *types.Name, token *types.Token) (modified bool) {
 	return
 }
 
-func cleanNonContract(name *types.Name, wasContract bool) (modified bool) {
+func cleanNonContract(name *types.Name) (modified bool) {
 	if name.Tags == "30-Contracts:Humanity DAO" {
 		name.Tags = "90-Individuals:Humanity DAO"
 		modified = true
@@ -393,12 +440,6 @@ func cleanNonContract(name *types.Name, wasContract bool) (modified bool) {
 	tagsEmpty := len(name.Tags) == 0
 	tagContract := strings.Contains(name.Tags, "Contracts")
 	tagToken := strings.Contains(name.Tags, "Tokens")
-
-	if wasContract && name.Tags != "37-SelfDestructed" {
-		name.IsContract = true
-		name.Tags = "37-SelfDestructed"
-		return true
-	}
 
 	if (tagsEmpty || tagContract || tagToken) && name.Tags != "90-Individuals:Other" {
 		name.Tags = "90-Individuals:Other"
@@ -422,7 +463,6 @@ func cleanNonContract(name *types.Name, wasContract bool) (modified bool) {
 //		is the address a prefund for this chain?
 //
 // IsContract:
-//		'wasContract' (is there a current record, and does that current record have isContract set?)
 //		'isContract' (is the address a contract at the current block?)
 //		'isAirdrop' (does the account's name contain the word "airdrop"
 
@@ -441,11 +481,6 @@ func cleanNonContract(name *types.Name, wasContract bool) (modified bool) {
 //         bool isContract = contains(ac count.tags, "Contracts");
 //         bool isToken = contains(ac count.tags, "Tokens");
 //         ac count.tags = !isEmpty && !isContract && !isToken ? ac count.tags : "90-Individuals:Other";
-//         if (wasContract) {
-//             // This used to be a contract and now is not, so it must be a self destruct
-//             ac count.isContract = true;
-//             ac count.tags = "37-SelfDestructed";
-//         }
 
 //     } else {
 //         // This is a contract...

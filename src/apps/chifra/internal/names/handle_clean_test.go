@@ -59,18 +59,6 @@ func Test_cleanNonContract(t *testing.T) {
 			},
 		},
 		{
-			name: "was contract = true",
-			args: args{
-				name:        &types.Name{},
-				wasContract: true,
-			},
-			wantModified: true,
-			expectedName: &types.Name{
-				Tags:       "37-SelfDestructed",
-				IsContract: true,
-			},
-		},
-		{
 			name: "empty tags",
 			args: args{
 				name: &types.Name{},
@@ -83,7 +71,7 @@ func Test_cleanNonContract(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			if gotModified := cleanNonContract(tt.args.name, tt.args.wasContract); gotModified != tt.wantModified {
+			if gotModified := cleanNonContract(tt.args.name); gotModified != tt.wantModified {
 				t.Errorf("cleanNonContract() = %v, want %v", gotModified, tt.wantModified)
 			}
 			if !reflect.DeepEqual(tt.args.name, tt.expectedName) {

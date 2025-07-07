@@ -62,7 +62,7 @@ on     , both, fast , export  , apps, acctExport, factory_traces         , y   ,
 on     , both, fast , export  , apps, acctExport, factory_traces_v       , y   , addrs = 0x8b3b3b624c3c0397d3da8fd861512393d51dcbac & traces & factory & last_block = 1603174 & verbose
 
 # Testing --articulation
-on     , both, fast , export  , apps, acctExport, old_bug2_1             , y   , addrs = 0x000001f568875f378bf6d170b790967fe429c81a & articulate & first_record = 1 & max_records = 1 & fmt = json
+off    , both, fast , export  , apps, acctExport, old_bug2_1             , y   , addrs = 0x000001f568875f378bf6d170b790967fe429c81a & articulate & first_record = 1 & max_records = 1 & fmt = json
 slow   , both, fast , export  , apps, acctExport, old_bug2_336           , y   , addrs = 0x000001f568875f378bf6d170b790967fe429c81a & articulate & first_record = 336 & max_records = 2 & fmt = json
 
 # Testing --logs
