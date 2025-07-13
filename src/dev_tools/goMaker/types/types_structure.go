@@ -134,7 +134,12 @@ func (s *Structure) GroupName() string {
 
 func (s *Structure) ModelIntro() string {
 	tmplName := "modelIntro" + s.Class
-	tmpl := strings.Trim(getTemplateContents(filepath.Join("model-intros", CamelCase(s.Class))), ws)
+	introName := filepath.Join("model-intros", CamelCase(s.Class))
+	fullIntroPath := filepath.Join(GetTemplatePath(), introName+".md")
+	if !file.FileExists(fullIntroPath) {
+		logger.Fatal("missing model intro file:", fullIntroPath, "            ")
+	}
+	tmpl := strings.Trim(getTemplateContents(introName), ws)
 	return s.executeTemplate(tmplName, tmpl)
 }
 
@@ -414,7 +419,7 @@ func (s *Structure) CrudStrs() string {
 	return strings.Join(ret, ", ")
 }
 
-func (s *Structure) Handlers() string {
+func (s *Structure) Handlers_inner() string {
 	cruds := strings.Split(s.Cruds(), ",")
 	ret := []string{}
 	for _, crud := range cruds {
@@ -428,11 +433,18 @@ func (s *Structure) Handlers() string {
 		ret = append(ret, "handle"+FirstUpper(name))
 	}
 	sort.Strings(ret)
-	return strings.Join(ret, ", ")
+	return strings.Join(ret, ",")
+}
+
+func (s *Structure) Handlers() string {
+	handlers := s.Handlers_inner()
+	handlers = strings.ReplaceAll(handlers, "handleAutoname,", "handleAutoname: originalHandleAutoname,")
+	handlers = strings.ReplaceAll(handlers, ",", ",\n")
+	return handlers
 }
 
 func (s *Structure) HandlerStrs() string {
-	handlers := strings.Split(s.Handlers(), ",")
+	handlers := strings.Split(s.Handlers_inner(), ",")
 	ret := []string{}
 	for _, handler := range handlers {
 		handler = strings.TrimSpace(handler)

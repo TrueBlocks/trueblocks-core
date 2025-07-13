@@ -229,3 +229,14 @@ func (cb *CodeBase) Handlers() string {
 	}
 	return strings.Join(ret, "\n")
 }
+
+func (cb *CodeBase) Views() string {
+	ret := []string{}
+	for _, cl := range cb.Structures {
+		if cl.Class != "" && !cl.DisableGo {
+			ret = append(ret, cl.Class)
+		}
+	}
+	sort.Strings(ret)
+	return strings.Join(ret, ", ")
+}

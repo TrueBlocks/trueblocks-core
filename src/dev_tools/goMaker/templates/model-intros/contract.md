@@ -1,0 +1,1 @@
+The contract type is used mostly for application software and serves no purpose in the core chifra tools. See the applications usage for more information.

@@ -1,0 +1,8 @@
+name        , type                  , strDefault, attributes        , upgrades, docOrder, description
+address     , address               ,           , width=340|readOnly,         ,        1, the address of this smart contract
+name        , string                ,           , width=200         ,         ,        2, the name of this contract (if available)
+abi         , *Abi                  ,           , noui              ,         ,        3, the ABI for this contract
+lastUpdated , timestamp             ,           ,                   ,         ,        4, timestamp when this contract state was last updated
+date        , datetime              ,           ,                   ,         ,        5, date when this contract state was last updated
+errorCount  , int64                 ,           , width=80          ,         ,        6, number of errors encountered when calling read functions
+lastError   , string                ,           , noui              ,         ,        7, the most recent error message when calling functions

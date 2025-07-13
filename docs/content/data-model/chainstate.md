@@ -99,6 +99,26 @@ Results consist of the following fields:
 | encodedArguments | the bytes data following the encoding of the call  | string                                  |
 | articulatedOut   | the result of the call articulated as other models | [Function](/data-model/other/#function) |
 
+## Contract
+
+The contract type is used mostly for application software and serves no purpose in the core chifra tools. See the applications usage for more information.
+
+The following commands produce and manage Contracts:
+
+- [chifra ](/chifra/accounts/#chifra-)
+
+Contracts consist of the following fields:
+
+| Field       | Description                                              | Type                          |
+| ----------- | -------------------------------------------------------- | ----------------------------- |
+| address     | the address of this smart contract                       | address                       |
+| name        | the name of this contract (if available)                 | string                        |
+| abi         | the ABI for this contract                                | [Abi](/data-model/other/#abi) |
+| lastUpdated | timestamp when this contract state was last updated      | timestamp                     |
+| date        | date when this contract state was last updated           | datetime                      |
+| errorCount  | number of errors encountered when calling read functions | int64                         |
+| lastError   | the most recent error message when calling functions     | string                        |
+
 ## Base types
 
 This documentation mentions the following basic data types.
@@ -110,6 +130,7 @@ This documentation mentions the following basic data types.
 | datetime  | a JSON formatted date                  | as a string    |
 | ether     | a big number float                     | as a string    |
 | int256    | a signed big number                    | as a string    |
+| int64     | a 64-bit signed integer                |                |
 | string    | a normal character string              |                |
 | timestamp | a 64-bit unsigned integer              | Unix timestamp |
 | txnum     | an alias for a uint64                  |                |

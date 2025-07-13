@@ -2,6 +2,7 @@ package types
 
 import (
 	"bytes"
+	"fmt"
 	"log"
 	"regexp"
 	"strings"
@@ -51,8 +52,27 @@ func getFuncMap() template.FuncMap {
 	or := func(a, b bool) bool { return a || b }
 	add := func(a, b int) int { return a + b }
 	sub := func(a, b int) int { return a - b }
+	min := func(a, b int) int { return min(a, b) }
+	max := func(a, b int) int { return max(a, b) }
 	append := func(existing []string, add string) []string { return append(existing, add) }
 	replace := func(str, find, rep string) string { return strings.ReplaceAll(str, find, rep) }
+	hotkey := func(n int) string {
+		var key string
+		if n == 10 {
+			key = "0"
+		} else {
+			key = fmt.Sprintf("%d", n%10)
+		}
+		var hotkey, altHotkey string
+		if n > 10 {
+			hotkey = fmt.Sprintf("mod+shift+%s", key)
+			altHotkey = fmt.Sprintf("alt+shift+%s", key)
+		} else {
+			hotkey = fmt.Sprintf("mod+%s", key)
+			altHotkey = fmt.Sprintf("alt+%s", key)
+		}
+		return fmt.Sprintf("hotkey: '%s',\n    altHotkey: '%s',", hotkey, altHotkey)
+	}
 	toHeader := func(s string) string {
 		var words []string
 		start := 0
@@ -128,5 +148,8 @@ func getFuncMap() template.FuncMap {
 		"regexReplace":  regexReplace,
 		"toHeader":      toHeader,
 		"append":        append,
+		"min":           min,
+		"max":           max,
+		"hotkey":        hotkey,
 	}
 }

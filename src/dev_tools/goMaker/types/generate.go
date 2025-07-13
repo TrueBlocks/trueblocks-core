@@ -109,7 +109,8 @@ func getGenerators() ([]Generator, error) {
 	theMap := make(map[string][]string)
 	vFunc := func(file string, vP any) (bool, error) {
 		_ = vP
-		isTemplate := strings.HasSuffix(file, ".tmpl")
+		isPartial := strings.HasSuffix(file, ".partial.tmpl")
+		isTemplate := strings.HasSuffix(file, ".tmpl") && !isPartial
 		filter := os.Getenv("TB_GENERATOR_FILTER")
 		if len(filter) > 0 && !strings.Contains(file, filter) {
 			return true, nil

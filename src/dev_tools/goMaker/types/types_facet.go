@@ -1,12 +1,16 @@
 package types
 
-import "fmt"
+import (
+	"fmt"
+	"strings"
+)
 
 type Facet struct {
-	Name     string   `json:"name"`
-	Store    string   `json:"store"`
-	Cruds    []string `toml:"cruds" json:"cruds"`
-	ViewType string   `toml:"viewType" json:"viewType"`
+	Name       string   `json:"name"`
+	Store      string   `json:"store"`
+	Cruds      []string `toml:"cruds" json:"cruds"`
+	ViewType   string   `toml:"viewType" json:"viewType"`
+	Attributes string   `json:"attributes"`
 }
 
 var allowedCruds = map[string]bool{
@@ -90,4 +94,17 @@ func (f *Facet) IsForm() bool {
 
 func (f *Facet) IsDashboard() bool {
 	return f.ViewType == "dashboard"
+}
+
+func (f *Facet) HasDivider() bool {
+	return strings.Contains(f.Attributes, "dividerBefore") || strings.Contains(f.Attributes, "dividerAfter")
+}
+
+func (f *Facet) Divider() string {
+	if strings.Contains(f.Attributes, "dividerBefore") {
+		return "dividerBefore"
+	} else if strings.Contains(f.Attributes, "dividerAfter") {
+		return "dividerAfter"
+	}
+	return ""
 }

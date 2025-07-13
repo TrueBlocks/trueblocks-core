@@ -183,7 +183,7 @@ func (cb *CodeBase) FinishLoad(unused string, baseTypes []Structure, options []O
 				for jj := 0; jj < len(cb.Structures[j].Members); jj++ {
 					sj += cb.Structures[j].Members[jj].Name
 				}
-				logger.Info("si", si, "sj", sj)
+				// logger.Info("si", si, "sj", sj)
 				return si < sj
 			}
 			return cb.Structures[i].Name() < cb.Structures[j].Name()

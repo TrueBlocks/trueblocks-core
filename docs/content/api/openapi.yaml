@@ -4297,6 +4297,39 @@ components:
           items:
             $ref: "#/components/schemas/function"
           description: "the result of the call articulated as other models"
+    contract:
+      description: "smart contract state and interaction data including read function results, write function forms, and event history"
+      type: object
+      properties:
+        address:
+          type: string
+          format: address
+          description: "the address of this smart contract"
+        name:
+          type: string
+          format: string
+          description: "the name of this contract (if available)"
+        abi:
+          type: object
+          items:
+            $ref: "#/components/schemas/abi"
+          description: "the ABI for this contract"
+        lastUpdated:
+          type: number
+          format: timestamp
+          description: "timestamp when this contract state was last updated"
+        date:
+          type: string
+          format: datetime
+          description: "date when this contract state was last updated"
+        errorCount:
+          type: number
+          format: int64
+          description: "number of errors encountered when calling read functions"
+        lastError:
+          type: string
+          format: string
+          description: "the most recent error message when calling functions"
     status:
       description: "status-related data about the TrueBlocks system including the server and local binary caches"
       type: object
