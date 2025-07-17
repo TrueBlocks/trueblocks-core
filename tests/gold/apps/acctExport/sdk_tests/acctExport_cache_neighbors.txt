@@ -6,7 +6,6 @@ Neighbors:  true
 CacheTraces:  true
 FirstBlock:  10277780
 LastBlock:  10278000
-Enabled:  traces, transactions
 Cache:  true
 Caps:  cache,decache,ether
 Format:  json

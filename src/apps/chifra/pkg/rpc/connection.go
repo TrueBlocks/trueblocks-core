@@ -60,7 +60,7 @@ func newConnection(chain string, cacheEnabled bool, enabledMap map[walk.CacheTyp
 
 // TestLog prints the enabledMap to the log. Note this routine gets called prior to full initialization, thus it takes the enabledMap
 func (conn *Connection) TestLog() {
-	conn.Store.TestLog()
+	//--to verbose for good testing conn.Store.TestLog()
 }
 
 // ReadFromCache is syntactic sugar for the store. Cleans calling code by testing for nil store

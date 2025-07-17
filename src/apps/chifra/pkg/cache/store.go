@@ -8,8 +8,6 @@ import (
 	"log"
 	"os"
 	"path/filepath"
-	"sort"
-	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache/locations"
@@ -189,24 +187,19 @@ func (s *Store) Enabled() bool {
 	return s != nil && s.enabled
 }
 
-// TestLog prints the enabledMap to the log. Note this routine gets called prior to full initialization, thus it takes the enabledMap
-func (s *Store) TestLog() {
-	if s.Enabled() {
-		enabled := []string{}
-		for k, v := range s.enabledMap {
-			if v {
-				enabled = append(enabled, k.String())
-			}
-		}
-		sort.Strings(enabled)
-		logger.TestLog(len(enabled) > 0, "Enabled: ", strings.Join(enabled, ", "))
-	}
-}
-
 // WriteToStore handles caching of any data type that implements the Locator interface. Precondition: Caller
 // must ensure caching is enabled and provide all conditions (e.g., isFinal, isWritable).
 func (s *Store) WriteToStore(data Locator, cacheType walk.CacheType, ts base.Timestamp, conditions ...bool) error {
-	if s == nil || !s.Enabled() || !s.enabledMap[cacheType] || !s.IsFinal(ts) {
+	if s == nil {
+		return nil
+	}
+	if !s.Enabled() {
+		return nil
+	}
+	if !s.enabledMap[cacheType] {
+		return nil
+	}
+	if !s.IsFinal(ts) {
 		return nil
 	}
 	for _, cond := range conditions {

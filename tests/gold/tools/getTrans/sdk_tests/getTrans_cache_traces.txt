@@ -3,7 +3,6 @@ Args: [transactions=46147.0 cache cacheTraces]
 Opts: {"transactions":["46147.0"],"cacheTraces":true,"cache":true}
 Transactions:  [46147.0]
 CacheTraces:  true
-Enabled:  traces, transactions
 Cache:  true
 Caps:  cache,decache,ether
 Format:  json

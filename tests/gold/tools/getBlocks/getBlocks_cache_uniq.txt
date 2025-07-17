@@ -1,7 +1,6 @@
 chifra blocks  1152642 --cache --uniq
 TEST[DATE|TIME] Blocks:  [1152642]
 TEST[DATE|TIME] Uniq:  true
-TEST[DATE|TIME] Enabled:  blocks, receipts, traces, transactions
 TEST[DATE|TIME] Cache:  true
 TEST[DATE|TIME] Caps:  cache,decache,ether
 TEST[DATE|TIME] Format:  txt

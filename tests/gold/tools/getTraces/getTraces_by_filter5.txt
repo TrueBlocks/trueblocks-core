@@ -1,6 +1,5 @@
 chifra traces  --fmt json --filter 4370000!4370002 --cache
 TEST[DATE|TIME] Filter:  4370000!4370002
-TEST[DATE|TIME] Enabled:  traces, transactions
 TEST[DATE|TIME] Cache:  true
 TEST[DATE|TIME] Caps:  cache,decache,ether
 TEST[DATE|TIME] Format:  json

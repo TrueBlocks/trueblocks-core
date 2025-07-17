@@ -2,7 +2,6 @@ traces?transactions=46147.0&cache&decache
 Args: [transactions=46147.0 cache decache]
 Opts: {"transactions":["46147.0"],"cache":true,"decache":true}
 Transactions:  [46147.0]
-Enabled:  traces, transactions
 Cache:  true
 Decache:  true
 Caps:  cache,decache,ether

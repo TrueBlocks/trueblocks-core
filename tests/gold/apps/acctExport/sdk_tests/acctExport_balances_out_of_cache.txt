@@ -5,7 +5,6 @@ Addrs:  [0x054993ab0f2b1acc0fdc65405ee203b4271bebe6]
 Balances:  true
 MaxRecords:  5
 FirstBlock:  10000000
-Enabled:  transactions
 Cache:  true
 Caps:  cache,decache,ether
 Format:  json

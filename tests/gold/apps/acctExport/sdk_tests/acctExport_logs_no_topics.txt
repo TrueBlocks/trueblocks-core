@@ -4,7 +4,6 @@ Opts: {"addrs":["0xff9387a9aae1f5daab1cd8eb0e92113ea9d19ca3"],"logs":true,"maxRe
 Addrs:  [0xff9387a9aae1f5daab1cd8eb0e92113ea9d19ca3]
 Logs:  true
 MaxRecords:  3
-Enabled:  transactions
 Cache:  true
 Caps:  cache,decache,ether
 Format:  json

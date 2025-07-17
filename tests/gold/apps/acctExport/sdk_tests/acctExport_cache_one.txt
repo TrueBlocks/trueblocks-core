@@ -4,7 +4,6 @@ Opts: {"addrs":["0x04fe1f0c597fbc65700f4fba6f87501edc20e665"],"firstBlock":10277
 Addrs:  [0x04fe1f0c597fbc65700f4fba6f87501edc20e665]
 FirstBlock:  10277780
 LastBlock:  10278000
-Enabled:  transactions
 Cache:  true
 Caps:  cache,decache,ether
 Format:  json
