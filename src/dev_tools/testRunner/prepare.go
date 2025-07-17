@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"time"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
@@ -15,6 +16,7 @@ func downloadAbis() error {
 	logger.Info(colors.Yellow + "Downloading Abis..." + colors.Off)
 
 	addrs := []string{
+		"0x98ee18d7a1f7510b78b36f5a16471c7cd0c1c531",
 		"0xd9db270c1b5e3bd161e8c8503c55ceabee709552",
 		"0x7d655c57f71464b6f83811c55d84009cd9f5221c",
 		"0x45f783cce6b7ff23b2ab2d70e416cdb7d6055f51",
@@ -32,21 +34,35 @@ func downloadAbis() error {
 	for _, addr := range addrs {
 		opts := sdk.AbisOptions{
 			Addrs: []string{addr},
-			Globals: sdk.Globals{
-				Decache: true,
-			},
 		}
-		if _, _, err := opts.Abis(); err != nil {
-			logger.Fatal(err)
-		}
-		time.Sleep(200 * time.Millisecond)
-		opts.Globals.Decache = false
 		if abis, _, err := opts.Abis(); err != nil {
 			logger.Fatal(err)
+		} else if len(abis) > 1 {
+			logger.InfoG(fmt.Sprintf("ABI for %s already valid with %d functions.", addr, len(abis)))
+			continue
 		} else {
-			logger.Info(colors.Green+"\tRedownloaded", addr, "found ", len(abis), " Functions"+colors.Off)
+			logger.InfoBY(fmt.Sprintf("Decaching invalid ABI %s.", addr))
+			opts.Globals.Decache = true
+			if _, _, err := opts.Abis(); err != nil {
+				logger.Fatal(err)
+			}
+			logger.InfoBY(fmt.Sprintf("Redownloading %s...", addr))
+			opts.Globals.Decache = false
+			if abis, _, err = opts.Abis(); err != nil {
+				logger.Fatal(err)
+			} else {
+				if len(abis) < 2 {
+					logger.InfoY("Possibly rate limited. Sleeping...")
+					time.Sleep(3 * time.Second)
+					logger.InfoY("Trying again...")
+					if abis, _, err = opts.Abis(); err != nil {
+						logger.Fatal(err)
+					}
+				}
+				logger.InfoG(fmt.Sprintf("Redownloaded %s found %d functions.", addr, len(abis)))
+				time.Sleep(500 * time.Millisecond)
+			}
 		}
-		time.Sleep(200 * time.Millisecond)
 	}
 
 	return nil
