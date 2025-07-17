@@ -20,19 +20,606 @@ Format:  json
 10: 84 99999
 11: 90 99999
 12: 94 99999
-Found 1 statements in cache for 0x0000000000000000000000000000000000000000000000000000000000000000
-Found 1 statements in cache for 0x0000000000000000000000000000000000000000000000000000000000000000
-Found 1 statements in cache for 0x0000000000000000000000000000000000000000000000000000000000000000
-Found 1 statements in cache for 0x0000000000000000000000000000000000000000000000000000000000000000
-Found 1 statements in cache for 0x0000000000000000000000000000000000000000000000000000000000000000
-Found 1 statements in cache for 0x0000000000000000000000000000000000000000000000000000000000000000
-Found 1 statements in cache for 0x0000000000000000000000000000000000000000000000000000000000000000
-Found 1 statements in cache for 0x0000000000000000000000000000000000000000000000000000000000000000
-Found 1 statements in cache for 0x0000000000000000000000000000000000000000000000000000000000000000
-Found 1 statements in cache for 0x0000000000000000000000000000000000000000000000000000000000000000
-Found 1 statements in cache for 0x0000000000000000000000000000000000000000000000000000000000000000
-Found 1 statements in cache for 0x0000000000000000000000000000000000000000000000000000000000000000
-Found 1 statements in cache for 0x0000000000000000000000000000000000000000000000000000000000000000
+
+------------------------------------
+~~~ Entering: 13.99999 ~~~
+First pass: Fetching unreconciled transfers
+Fetched 1 unreconciled transfers
+Second pass: Reconciling transfers
+Processing ETH transfer
+Converted ETH transfer to statement
+Attempting to reconcile top-level ETH transfer: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c
+XXX =============[ top-level ]======================
+XXX Case 1: Only statement in block
+XXX Block: 13 Tx: 99999 Asset: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+XXX FirstInBlock: true, LastInBlock: true
+XXX ================================================
+Block 13 is prior to deployment (3684349) of Maker. No fallback pricing method
+===================================================
+Previous:               12 0 ( true )
+Current:                13 99999 ( true )
+Next:                   22 99999 ( true )
+accountedFor:           0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c
+sender:                 0x0000000000000000000000000000004d696e6572  ==>  0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c
+asset:                  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
+hash:                   0x0000000000000000000000000000000000000000000000000000000000000000
+timestamp:              1438270158
+blockNumber:            13.99999.0
+priceSource:            0 (eth-not-priced-pre-maker)
+--------------------------------------------------- 
+Trial balance:
+   prevBal:             0
+   begBal:              0 (0)
+   totalIn:             5
+   totalOut:            0
+   amountNet:           5
+                       ======================= 
+   endBal:              5 (0)
+   endBalCalc:          5
+--------------------------------------------------- 
+   minerBaseRewardIn:   5
+   material:            true
+   reconciled:          true
+---------------------------------------------------
+Top-level statement is material and reconciled - appending
+No log transfers to process
+~~~ Leaving: 13.99999 ~~~
+------------------------------------ 1 statements generated.
+
+
+------------------------------------
+~~~ Entering: 22.99999 ~~~
+First pass: Fetching unreconciled transfers
+Fetched 1 unreconciled transfers
+Second pass: Reconciling transfers
+Processing ETH transfer
+Converted ETH transfer to statement
+Attempting to reconcile top-level ETH transfer: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c
+XXX =============[ top-level ]======================
+XXX Case 1: Only statement in block
+XXX Block: 22 Tx: 99999 Asset: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+XXX FirstInBlock: true, LastInBlock: true
+XXX ================================================
+Block 22 is prior to deployment (3684349) of Maker. No fallback pricing method
+===================================================
+Previous:               13 99999 ( true )
+Current:                22 99999 ( true )
+Next:                   37 99998 ( true )
+accountedFor:           0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c
+sender:                 0x0000000000000000000000000000004d696e6572  ==>  0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c
+asset:                  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
+hash:                   0x0000000000000000000000000000000000000000000000000000000000000000
+timestamp:              1438270204
+blockNumber:            22.99999.0
+priceSource:            0 (eth-not-priced-pre-maker)
+--------------------------------------------------- 
+Trial balance:
+   prevBal:             5
+   begBal:              5 (0)
+   totalIn:             5
+   totalOut:            0
+   amountNet:           5
+                       ======================= 
+   endBal:              10 (0)
+   endBalCalc:          10
+--------------------------------------------------- 
+   minerBaseRewardIn:   5
+   material:            true
+   reconciled:          true
+---------------------------------------------------
+Top-level statement is material and reconciled - appending
+No log transfers to process
+~~~ Leaving: 22.99999 ~~~
+------------------------------------ 1 statements generated.
+
+
+------------------------------------
+~~~ Entering: 37.99998 ~~~
+First pass: Fetching unreconciled transfers
+Fetched 1 unreconciled transfers
+Second pass: Reconciling transfers
+Processing ETH transfer
+Converted ETH transfer to statement
+Attempting to reconcile top-level ETH transfer: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c
+XXX =============[ top-level ]======================
+XXX Case 1: Only statement in block
+XXX Block: 37 Tx: 99998 Asset: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+XXX FirstInBlock: true, LastInBlock: true
+XXX ================================================
+Block 37 is prior to deployment (3684349) of Maker. No fallback pricing method
+===================================================
+Previous:               22 99999 ( true )
+Current:                37 99998 ( true )
+Next:                   39 99999 ( true )
+accountedFor:           0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c
+sender:                 0x000000000000000000000000000000556e636c65  ==>  0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c
+asset:                  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
+hash:                   0x0000000000000000000000000000000000000000000000000000000000000000
+timestamp:              1438270267
+blockNumber:            37.99998.0
+priceSource:            0 (eth-not-priced-pre-maker)
+--------------------------------------------------- 
+Trial balance:
+   prevBal:             10
+   begBal:              10 (0)
+   totalIn:             3.75
+   totalOut:            0
+   amountNet:           3.75
+                       ======================= 
+   endBal:              13.75 (0)
+   endBalCalc:          13.75
+--------------------------------------------------- 
+   minerUncleRewardIn:  3.75
+   material:            true
+   reconciled:          true
+---------------------------------------------------
+Top-level statement is material and reconciled - appending
+No log transfers to process
+~~~ Leaving: 37.99998 ~~~
+------------------------------------ 1 statements generated.
+
+
+------------------------------------
+~~~ Entering: 39.99999 ~~~
+First pass: Fetching unreconciled transfers
+Fetched 1 unreconciled transfers
+Second pass: Reconciling transfers
+Processing ETH transfer
+Converted ETH transfer to statement
+Attempting to reconcile top-level ETH transfer: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c
+XXX =============[ top-level ]======================
+XXX Case 1: Only statement in block
+XXX Block: 39 Tx: 99999 Asset: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+XXX FirstInBlock: true, LastInBlock: true
+XXX ================================================
+Block 39 is prior to deployment (3684349) of Maker. No fallback pricing method
+===================================================
+Previous:               37 99998 ( true )
+Current:                39 99999 ( true )
+Next:                   43 99999 ( true )
+accountedFor:           0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c
+sender:                 0x0000000000000000000000000000004d696e6572  ==>  0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c
+asset:                  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
+hash:                   0x0000000000000000000000000000000000000000000000000000000000000000
+timestamp:              1438270272
+blockNumber:            39.99999.0
+priceSource:            0 (eth-not-priced-pre-maker)
+--------------------------------------------------- 
+Trial balance:
+   prevBal:             13.75
+   begBal:              13.75 (0)
+   totalIn:             5
+   totalOut:            0
+   amountNet:           5
+                       ======================= 
+   endBal:              18.75 (0)
+   endBalCalc:          18.75
+--------------------------------------------------- 
+   minerBaseRewardIn:   5
+   material:            true
+   reconciled:          true
+---------------------------------------------------
+Top-level statement is material and reconciled - appending
+No log transfers to process
+~~~ Leaving: 39.99999 ~~~
+------------------------------------ 1 statements generated.
+
+
+------------------------------------
+~~~ Entering: 43.99999 ~~~
+First pass: Fetching unreconciled transfers
+Fetched 1 unreconciled transfers
+Second pass: Reconciling transfers
+Processing ETH transfer
+Converted ETH transfer to statement
+Attempting to reconcile top-level ETH transfer: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c
+XXX =============[ top-level ]======================
+XXX Case 1: Only statement in block
+XXX Block: 43 Tx: 99999 Asset: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+XXX FirstInBlock: true, LastInBlock: true
+XXX ================================================
+Block 43 is prior to deployment (3684349) of Maker. No fallback pricing method
+===================================================
+Previous:               39 99999 ( true )
+Current:                43 99999 ( true )
+Next:                   53 99999 ( true )
+accountedFor:           0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c
+sender:                 0x0000000000000000000000000000004d696e6572  ==>  0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c
+asset:                  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
+hash:                   0x0000000000000000000000000000000000000000000000000000000000000000
+timestamp:              1438270279
+blockNumber:            43.99999.0
+priceSource:            0 (eth-not-priced-pre-maker)
+--------------------------------------------------- 
+Trial balance:
+   prevBal:             18.75
+   begBal:              18.75 (0)
+   totalIn:             5
+   totalOut:            0
+   amountNet:           5
+                       ======================= 
+   endBal:              23.75 (0)
+   endBalCalc:          23.75
+--------------------------------------------------- 
+   minerBaseRewardIn:   5
+   material:            true
+   reconciled:          true
+---------------------------------------------------
+Top-level statement is material and reconciled - appending
+No log transfers to process
+~~~ Leaving: 43.99999 ~~~
+------------------------------------ 1 statements generated.
+
+
+------------------------------------
+~~~ Entering: 53.99999 ~~~
+First pass: Fetching unreconciled transfers
+Fetched 1 unreconciled transfers
+Second pass: Reconciling transfers
+Processing ETH transfer
+Converted ETH transfer to statement
+Attempting to reconcile top-level ETH transfer: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c
+XXX =============[ top-level ]======================
+XXX Case 1: Only statement in block
+XXX Block: 53 Tx: 99999 Asset: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+XXX FirstInBlock: true, LastInBlock: true
+XXX ================================================
+Block 53 is prior to deployment (3684349) of Maker. No fallback pricing method
+===================================================
+Previous:               43 99999 ( true )
+Current:                53 99999 ( true )
+Next:                   55 99998 ( true )
+accountedFor:           0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c
+sender:                 0x0000000000000000000000000000004d696e6572  ==>  0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c
+asset:                  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
+hash:                   0x0000000000000000000000000000000000000000000000000000000000000000
+timestamp:              1438270312
+blockNumber:            53.99999.0
+priceSource:            0 (eth-not-priced-pre-maker)
+--------------------------------------------------- 
+Trial balance:
+   prevBal:             23.75
+   begBal:              23.75 (0)
+   totalIn:             5
+   totalOut:            0
+   amountNet:           5
+                       ======================= 
+   endBal:              28.75 (0)
+   endBalCalc:          28.75
+--------------------------------------------------- 
+   minerBaseRewardIn:   5
+   material:            true
+   reconciled:          true
+---------------------------------------------------
+Top-level statement is material and reconciled - appending
+No log transfers to process
+~~~ Leaving: 53.99999 ~~~
+------------------------------------ 1 statements generated.
+
+
+------------------------------------
+~~~ Entering: 55.99998 ~~~
+First pass: Fetching unreconciled transfers
+Fetched 1 unreconciled transfers
+Second pass: Reconciling transfers
+Processing ETH transfer
+Converted ETH transfer to statement
+Attempting to reconcile top-level ETH transfer: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c
+XXX =============[ top-level ]======================
+XXX Case 1: Only statement in block
+XXX Block: 55 Tx: 99998 Asset: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+XXX FirstInBlock: true, LastInBlock: true
+XXX ================================================
+Block 55 is prior to deployment (3684349) of Maker. No fallback pricing method
+===================================================
+Previous:               53 99999 ( true )
+Current:                55 99998 ( true )
+Next:                   64 99999 ( true )
+accountedFor:           0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c
+sender:                 0x000000000000000000000000000000556e636c65  ==>  0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c
+asset:                  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
+hash:                   0x0000000000000000000000000000000000000000000000000000000000000000
+timestamp:              1438270320
+blockNumber:            55.99998.0
+priceSource:            0 (eth-not-priced-pre-maker)
+--------------------------------------------------- 
+Trial balance:
+   prevBal:             28.75
+   begBal:              28.75 (0)
+   totalIn:             3.75
+   totalOut:            0
+   amountNet:           3.75
+                       ======================= 
+   endBal:              32.5 (0)
+   endBalCalc:          32.5
+--------------------------------------------------- 
+   minerUncleRewardIn:  3.75
+   material:            true
+   reconciled:          true
+---------------------------------------------------
+Top-level statement is material and reconciled - appending
+No log transfers to process
+~~~ Leaving: 55.99998 ~~~
+------------------------------------ 1 statements generated.
+
+
+------------------------------------
+~~~ Entering: 64.99999 ~~~
+First pass: Fetching unreconciled transfers
+Fetched 1 unreconciled transfers
+Second pass: Reconciling transfers
+Processing ETH transfer
+Converted ETH transfer to statement
+Attempting to reconcile top-level ETH transfer: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c
+XXX =============[ top-level ]======================
+XXX Case 1: Only statement in block
+XXX Block: 64 Tx: 99999 Asset: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+XXX FirstInBlock: true, LastInBlock: true
+XXX ================================================
+Block 64 is prior to deployment (3684349) of Maker. No fallback pricing method
+===================================================
+Previous:               55 99998 ( true )
+Current:                64 99999 ( true )
+Next:                   67 99999 ( true )
+accountedFor:           0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c
+sender:                 0x0000000000000000000000000000004d696e6572  ==>  0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c
+asset:                  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
+hash:                   0x0000000000000000000000000000000000000000000000000000000000000000
+timestamp:              1438270345
+blockNumber:            64.99999.0
+priceSource:            0 (eth-not-priced-pre-maker)
+--------------------------------------------------- 
+Trial balance:
+   prevBal:             32.5
+   begBal:              32.5 (0)
+   totalIn:             5
+   totalOut:            0
+   amountNet:           5
+                       ======================= 
+   endBal:              37.5 (0)
+   endBalCalc:          37.5
+--------------------------------------------------- 
+   minerBaseRewardIn:   5
+   material:            true
+   reconciled:          true
+---------------------------------------------------
+Top-level statement is material and reconciled - appending
+No log transfers to process
+~~~ Leaving: 64.99999 ~~~
+------------------------------------ 1 statements generated.
+
+
+------------------------------------
+~~~ Entering: 67.99999 ~~~
+First pass: Fetching unreconciled transfers
+Fetched 1 unreconciled transfers
+Second pass: Reconciling transfers
+Processing ETH transfer
+Converted ETH transfer to statement
+Attempting to reconcile top-level ETH transfer: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c
+XXX =============[ top-level ]======================
+XXX Case 1: Only statement in block
+XXX Block: 67 Tx: 99999 Asset: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+XXX FirstInBlock: true, LastInBlock: true
+XXX ================================================
+Block 67 is prior to deployment (3684349) of Maker. No fallback pricing method
+===================================================
+Previous:               64 99999 ( true )
+Current:                67 99999 ( true )
+Next:                   78 99999 ( true )
+accountedFor:           0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c
+sender:                 0x0000000000000000000000000000004d696e6572  ==>  0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c
+asset:                  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
+hash:                   0x0000000000000000000000000000000000000000000000000000000000000000
+timestamp:              1438270366
+blockNumber:            67.99999.0
+priceSource:            0 (eth-not-priced-pre-maker)
+--------------------------------------------------- 
+Trial balance:
+   prevBal:             37.5
+   begBal:              37.5 (0)
+   totalIn:             5
+   totalOut:            0
+   amountNet:           5
+                       ======================= 
+   endBal:              42.5 (0)
+   endBalCalc:          42.5
+--------------------------------------------------- 
+   minerBaseRewardIn:   5
+   material:            true
+   reconciled:          true
+---------------------------------------------------
+Top-level statement is material and reconciled - appending
+No log transfers to process
+~~~ Leaving: 67.99999 ~~~
+------------------------------------ 1 statements generated.
+
+
+------------------------------------
+~~~ Entering: 78.99999 ~~~
+First pass: Fetching unreconciled transfers
+Fetched 1 unreconciled transfers
+Second pass: Reconciling transfers
+Processing ETH transfer
+Converted ETH transfer to statement
+Attempting to reconcile top-level ETH transfer: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c
+XXX =============[ top-level ]======================
+XXX Case 1: Only statement in block
+XXX Block: 78 Tx: 99999 Asset: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+XXX FirstInBlock: true, LastInBlock: true
+XXX ================================================
+Block 78 is prior to deployment (3684349) of Maker. No fallback pricing method
+===================================================
+Previous:               67 99999 ( true )
+Current:                78 99999 ( true )
+Next:                   84 99999 ( true )
+accountedFor:           0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c
+sender:                 0x0000000000000000000000000000004d696e6572  ==>  0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c
+asset:                  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
+hash:                   0x0000000000000000000000000000000000000000000000000000000000000000
+timestamp:              1438270389
+blockNumber:            78.99999.0
+priceSource:            0 (eth-not-priced-pre-maker)
+--------------------------------------------------- 
+Trial balance:
+   prevBal:             42.5
+   begBal:              42.5 (0)
+   totalIn:             5.15625
+   totalOut:            0
+   amountNet:           5.15625
+                       ======================= 
+   endBal:              47.65625 (0)
+   endBalCalc:          47.65625
+--------------------------------------------------- 
+   minerBaseRewardIn:   5
+   minerNephewRewardIn: 0.15625
+   material:            true
+   reconciled:          true
+---------------------------------------------------
+Top-level statement is material and reconciled - appending
+No log transfers to process
+~~~ Leaving: 78.99999 ~~~
+------------------------------------ 1 statements generated.
+
+
+------------------------------------
+~~~ Entering: 84.99999 ~~~
+First pass: Fetching unreconciled transfers
+Fetched 1 unreconciled transfers
+Second pass: Reconciling transfers
+Processing ETH transfer
+Converted ETH transfer to statement
+Attempting to reconcile top-level ETH transfer: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c
+XXX =============[ top-level ]======================
+XXX Case 1: Only statement in block
+XXX Block: 84 Tx: 99999 Asset: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+XXX FirstInBlock: true, LastInBlock: true
+XXX ================================================
+Block 84 is prior to deployment (3684349) of Maker. No fallback pricing method
+===================================================
+Previous:               78 99999 ( true )
+Current:                84 99999 ( true )
+Next:                   90 99999 ( true )
+accountedFor:           0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c
+sender:                 0x0000000000000000000000000000004d696e6572  ==>  0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c
+asset:                  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
+hash:                   0x0000000000000000000000000000000000000000000000000000000000000000
+timestamp:              1438270408
+blockNumber:            84.99999.0
+priceSource:            0 (eth-not-priced-pre-maker)
+--------------------------------------------------- 
+Trial balance:
+   prevBal:             47.65625
+   begBal:              47.65625 (0)
+   totalIn:             5
+   totalOut:            0
+   amountNet:           5
+                       ======================= 
+   endBal:              52.65625 (0)
+   endBalCalc:          52.65625
+--------------------------------------------------- 
+   minerBaseRewardIn:   5
+   material:            true
+   reconciled:          true
+---------------------------------------------------
+Top-level statement is material and reconciled - appending
+No log transfers to process
+~~~ Leaving: 84.99999 ~~~
+------------------------------------ 1 statements generated.
+
+
+------------------------------------
+~~~ Entering: 90.99999 ~~~
+First pass: Fetching unreconciled transfers
+Fetched 1 unreconciled transfers
+Second pass: Reconciling transfers
+Processing ETH transfer
+Converted ETH transfer to statement
+Attempting to reconcile top-level ETH transfer: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c
+XXX =============[ top-level ]======================
+XXX Case 1: Only statement in block
+XXX Block: 90 Tx: 99999 Asset: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+XXX FirstInBlock: true, LastInBlock: true
+XXX ================================================
+Block 90 is prior to deployment (3684349) of Maker. No fallback pricing method
+===================================================
+Previous:               84 99999 ( true )
+Current:                90 99999 ( true )
+Next:                   94 99999 ( true )
+accountedFor:           0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c
+sender:                 0x0000000000000000000000000000004d696e6572  ==>  0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c
+asset:                  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
+hash:                   0x0000000000000000000000000000000000000000000000000000000000000000
+timestamp:              1438270422
+blockNumber:            90.99999.0
+priceSource:            0 (eth-not-priced-pre-maker)
+--------------------------------------------------- 
+Trial balance:
+   prevBal:             52.65625
+   begBal:              52.65625 (0)
+   totalIn:             5
+   totalOut:            0
+   amountNet:           5
+                       ======================= 
+   endBal:              57.65625 (0)
+   endBalCalc:          57.65625
+--------------------------------------------------- 
+   minerBaseRewardIn:   5
+   material:            true
+   reconciled:          true
+---------------------------------------------------
+Top-level statement is material and reconciled - appending
+No log transfers to process
+~~~ Leaving: 90.99999 ~~~
+------------------------------------ 1 statements generated.
+
+
+------------------------------------
+~~~ Entering: 94.99999 ~~~
+First pass: Fetching unreconciled transfers
+Fetched 1 unreconciled transfers
+Second pass: Reconciling transfers
+Processing ETH transfer
+Converted ETH transfer to statement
+Attempting to reconcile top-level ETH transfer: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c
+XXX =============[ top-level ]======================
+XXX Case 1: Only statement in block
+XXX Block: 94 Tx: 99999 Asset: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+XXX FirstInBlock: true, LastInBlock: true
+XXX ================================================
+Block 94 is prior to deployment (3684349) of Maker. No fallback pricing method
+===================================================
+Previous:               90 99999 ( true )
+Current:                94 99999 ( true )
+Next:                   95 0 ( true )
+accountedFor:           0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c
+sender:                 0x0000000000000000000000000000004d696e6572  ==>  0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c
+asset:                  0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (WEI) decimals: 18
+hash:                   0x0000000000000000000000000000000000000000000000000000000000000000
+timestamp:              1438270431
+blockNumber:            94.99999.0
+priceSource:            0 (eth-not-priced-pre-maker)
+--------------------------------------------------- 
+Trial balance:
+   prevBal:             57.65625
+   begBal:              57.65625 (0)
+   totalIn:             5.15625
+   totalOut:            0
+   amountNet:           5.15625
+                       ======================= 
+   endBal:              62.8125 (0)
+   endBalCalc:          62.8125
+--------------------------------------------------- 
+   minerBaseRewardIn:   5
+   minerNephewRewardIn: 0.15625
+   material:            true
+   reconciled:          true
+---------------------------------------------------
+Top-level statement is material and reconciled - appending
+No log transfers to process
+~~~ Leaving: 94.99999 ~~~
+------------------------------------ 1 statements generated.
+
 {
   "data": [
     {

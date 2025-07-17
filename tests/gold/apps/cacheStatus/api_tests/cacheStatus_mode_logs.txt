@@ -11,12 +11,6 @@ status?modes=logs&verbose&maxRecords=2
               "filename": "$cachePath/data-model/file.bin",
               "itemType": "logsCacheItem",
               "sizeInBytes": 123456789
-            },
-            {
-              "fileDate": "--fileDate--",
-              "filename": "$cachePath/data-model/file.bin",
-              "itemType": "logsCacheItem",
-              "sizeInBytes": 123456789
             }
           ],
           "lastCached": "--lastCached--",

@@ -43,6 +43,10 @@ func main() {
 	if testMap, casesPath, err := loadTestCases(); err != nil {
 		logger.Fatal(err)
 	} else {
+		if err := clearCache(); err != nil {
+			logger.Fatal(err)
+		}
+
 		if err := downloadAbis(); err != nil {
 			logger.Fatal(err)
 		}

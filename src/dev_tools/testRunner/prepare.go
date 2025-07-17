@@ -129,3 +129,49 @@ func redownloadAbi(addr string) (int, error) {
 	time.Sleep(500 * time.Millisecond)
 	return funcCount, nil
 }
+
+func clearCache() error {
+	logger.SetTestMode(false)
+	defer logger.SetTestMode(true)
+
+	// Addresses to decache from export
+	exportAddrs := []string{
+		"0x08166f02313feae18bb044e7877c808b55b5bf58",
+		"0x0ba45a8b5d5575935b8158a88c631e9f9c95a2e5",
+		"0x65b0d5e1dc0dee0704f53f660aa865c72e986fc7",
+		"0x868b8fd259abfcfdf9634c343593b34ef359641d",
+		"0xc713e5e149d5d0715dcd1c156a020976e7e56b88",
+		"0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c",
+		"0xec3ef464bf821c3b10a18adf9ac7177a628e87cc",
+	}
+
+	// Transaction logs to decache
+	logItems := []string{
+		"0x0b4c6fb75ded4b90218cf0346b0885e442878f104e1b60bf75d5b6860eeacd53.1",
+		"0x0b4c6fb75ded4b90218cf0346b0885e442878f104e1b60bf75d5b6860eeacd53.5",
+	}
+
+	// Part (a): Decache export data for addresses
+	logger.InfoY("Decaching export data...")
+	exportOpts := sdk.ExportOptions{
+		Addrs: exportAddrs,
+	}
+	exportOpts.Globals.Decache = true
+	if _, _, err := exportOpts.Export(); err != nil {
+		return fmt.Errorf("error decaching export data: %w", err)
+	}
+	logger.InfoG("Successfully decached export data")
+
+	// Part (b): Decache logs data
+	logger.InfoY("Decaching logs data...")
+	logsOpts := sdk.LogsOptions{
+		TransactionIds: logItems,
+	}
+	logsOpts.Globals.Decache = true
+	if _, _, err := logsOpts.Logs(); err != nil {
+		return fmt.Errorf("error decaching logs data: %w", err)
+	}
+	logger.InfoG("Successfully decached logs data")
+
+	return nil
+}
