@@ -197,6 +197,9 @@ func ResetOptions(testMode bool) {
 
 func (opts *AbisOptions) getCaches() (caches map[walk.CacheType]bool) {
 	// EXISTING_CODE
+	caches = map[walk.CacheType]bool{
+		walk.Cache_Abis: true,
+	}
 	// EXISTING_CODE
 	return
 }

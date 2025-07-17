@@ -165,6 +165,7 @@ func (opts *TracesOptions) getCaches() (caches map[walk.CacheType]bool) {
 	caches = map[walk.CacheType]bool{
 		walk.Cache_Transactions: true,
 		walk.Cache_Traces:       true,
+		walk.Cache_Abis:         opts.Articulate,
 	}
 	// EXISTING_CODE
 	return

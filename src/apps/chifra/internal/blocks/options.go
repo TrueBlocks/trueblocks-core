@@ -219,6 +219,7 @@ func (opts *BlocksOptions) getCaches() (caches map[walk.CacheType]bool) {
 		walk.Cache_Transactions: opts.CacheTxs || opts.Uniq,
 		walk.Cache_Traces:       opts.CacheTraces || (opts.Globals.Cache && (opts.Traces || opts.Uniq)),
 		walk.Cache_Logs:         opts.Logs,
+		walk.Cache_Abis:         opts.Articulate && opts.Logs,
 	}
 	// EXISTING_CODE
 	return

@@ -236,6 +236,7 @@ func (opts *SlurpOptions) getCaches() (caches map[walk.CacheType]bool) {
 	// EXISTING_CODE
 	caches = map[walk.CacheType]bool{
 		walk.Cache_Transactions: true,
+		walk.Cache_Abis:         opts.Articulate,
 	}
 	// EXISTING_CODE
 	return
