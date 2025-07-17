@@ -186,20 +186,22 @@ func (s *Structure) CacheLoc() string {
 
 func (s *Structure) CacheIdStr() string {
 	switch s.CacheBy {
+	case "address":
+		return "s.Address.Hex()[2:]"
 	case "address,block":
-		return "\"%s-%09d\", s.Address.Hex()[2:], s.BlockNumber"
+		return "fmt.Sprintf(\"%s-%09d\", s.Address.Hex()[2:], s.BlockNumber)"
 	case "address,block,fourbyte":
-		return "\"%s-%s-%09d\", s.Address.Hex()[2:], s.Encoding[2:], s.BlockNumber"
+		return "fmt.Sprintf(\"%s-%s-%09d\", s.Address.Hex()[2:], s.Encoding[2:], s.BlockNumber)"
 	case "address,tx":
-		return "\"%s-%09d-%05d\", s.Address.Hex()[2:], s.BlockNumber, s.TransactionIndex"
+		return "fmt.Sprintf(\"%s-%09d-%05d\", s.Address.Hex()[2:], s.BlockNumber, s.TransactionIndex)"
 	case "statement":
-		return "\"%s-%s-%09d-%05d\", s.Holder.Hex()[2:], s.Asset.Hex()[2:], s.BlockNumber, s.TransactionIndex"
+		return "fmt.Sprintf(\"%s-%s-%09d-%05d\", s.Holder.Hex()[2:], s.Asset.Hex()[2:], s.BlockNumber, s.TransactionIndex)"
 	case "block":
-		return "\"%09d\", s.BlockNumber"
+		return "fmt.Sprintf(\"%09d\", s.BlockNumber)"
 	case "tx":
-		return "\"%09d-%05d\", s.BlockNumber, s.TransactionIndex"
+		return "fmt.Sprintf(\"%09d-%05d\", s.BlockNumber, s.TransactionIndex)"
 	case "filename":
-		return "\"%0s\", s.Filename"
+		return "s.Filename"
 	default:
 		logger.Fatal("Unknown cache by format:", s.CacheBy)
 		return ""
