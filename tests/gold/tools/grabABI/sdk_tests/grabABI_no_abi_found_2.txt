@@ -10,6 +10,7 @@ Format:  json
       "encoding": "0x08b2745a",
       "name": "AbiNotFound",
       "signature": "AbiNotFound()",
+      "stateMutability": "nonpayable",
       "type": "function"
     }
   ],

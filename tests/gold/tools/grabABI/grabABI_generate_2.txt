@@ -9,6 +9,7 @@ TEST[DATE|TIME] Format:  json
       "encoding": "0xd8ccd0f3",
       "name": "free",
       "signature": "free(uint256)",
+      "stateMutability": "",
       "type": "function"
     }TEST[DATE|TIME] Encode:  transferFrom(address,address,uint256)
 TEST[DATE|TIME] File:  signatures.txt
@@ -19,6 +20,7 @@ TEST[DATE|TIME] Format:  json
       "encoding": "0x23b872dd",
       "name": "transferFrom",
       "signature": "transferFrom(address,address,uint256)",
+      "stateMutability": "",
       "type": "function"
     }TEST[DATE|TIME] Encode:  decimals()
 TEST[DATE|TIME] File:  signatures.txt
@@ -29,6 +31,7 @@ TEST[DATE|TIME] Format:  json
       "encoding": "0x313ce567",
       "name": "decimals",
       "signature": "decimals()",
+      "stateMutability": "",
       "type": "function"
     }TEST[DATE|TIME] Encode:  freeFromUpTo(address,uint256)
 TEST[DATE|TIME] File:  signatures.txt
@@ -39,6 +42,7 @@ TEST[DATE|TIME] Format:  json
       "encoding": "0x079d229f",
       "name": "freeFromUpTo",
       "signature": "freeFromUpTo(address,uint256)",
+      "stateMutability": "",
       "type": "function"
     }TEST[DATE|TIME] Encode:  Approval(address,address,uint256)
 TEST[DATE|TIME] File:  signatures.txt

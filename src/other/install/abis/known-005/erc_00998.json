@@ -72,6 +72,7 @@
       }
     ],
     "signature": "rootOwnerOf(uint256)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -95,6 +96,7 @@
       }
     ],
     "signature": "rootOwnerOfChild(address,uint256)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -122,6 +124,7 @@
       }
     ],
     "signature": "ownerOfChild(address,uint256)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -152,6 +155,7 @@
       }
     ],
     "signature": "onERC721Received(address,address,uint256,bytes)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -177,6 +181,7 @@
     "name": "transferChild",
     "outputs": [],
     "signature": "transferChild(uint256,address,address,uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -202,6 +207,7 @@
     "name": "safeTransferChild",
     "outputs": [],
     "signature": "safeTransferChild(uint256,address,address,uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -231,6 +237,7 @@
     "name": "safeTransferChild",
     "outputs": [],
     "signature": "safeTransferChild(uint256,address,address,uint256,bytes)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -264,6 +271,7 @@
     "name": "transferChildToParent",
     "outputs": [],
     "signature": "transferChildToParent(uint256,address,uint256,address,uint256,bytes)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -289,6 +297,7 @@
     "name": "getChild",
     "outputs": [],
     "signature": "getChild(address,uint256,address,uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -308,6 +317,7 @@
       }
     ],
     "signature": "totalChildContracts(uint256)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -331,6 +341,7 @@
       }
     ],
     "signature": "childContractByIndex(uint256,uint256)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -354,6 +365,7 @@
       }
     ],
     "signature": "totalChildTokens(uint256,address)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -381,6 +393,7 @@
       }
     ],
     "signature": "childTokenByIndex(uint256,address,uint256)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -458,6 +471,7 @@
     "name": "tokenFallback",
     "outputs": [],
     "signature": "tokenFallback(address,uint256,bytes)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -481,6 +495,7 @@
       }
     ],
     "signature": "balanceOfERC20(uint256,address)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -506,6 +521,7 @@
     "name": "transferERC20",
     "outputs": [],
     "signature": "transferERC20(uint256,address,address,uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -535,6 +551,7 @@
     "name": "transferERC223",
     "outputs": [],
     "signature": "transferERC223(uint256,address,address,uint256,bytes)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -560,6 +577,7 @@
     "name": "getERC20",
     "outputs": [],
     "signature": "getERC20(address,uint256,address,uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -579,6 +597,7 @@
       }
     ],
     "signature": "totalERC20Contracts(uint256)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -602,6 +621,7 @@
       }
     ],
     "signature": "erc20ContractByIndex(uint256,uint256)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -628,6 +648,7 @@
       }
     ],
     "signature": "transferFrom(address,address,uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -650,6 +671,7 @@
       }
     ],
     "signature": "transfer(address,uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -676,6 +698,7 @@
       }
     ],
     "signature": "transfer(address,uint256,bytes)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -699,6 +722,7 @@
       }
     ],
     "signature": "allowance(address,address)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -728,6 +752,7 @@
     "name": "transferToParent",
     "outputs": [],
     "signature": "transferToParent(address,address,uint256,uint256,bytes)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -746,6 +771,7 @@
       }
     ],
     "signature": "mint(address)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -765,6 +791,7 @@
       }
     ],
     "signature": "isContract(address)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -784,6 +811,7 @@
       }
     ],
     "signature": "rootOwnerOf(uint256)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -807,6 +835,7 @@
       }
     ],
     "signature": "rootOwnerOfChild(address,uint256)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -826,6 +855,7 @@
       }
     ],
     "signature": "ownerOf(uint256)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -845,6 +875,7 @@
       }
     ],
     "signature": "balanceOf(address)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -862,6 +893,7 @@
     "name": "approve",
     "outputs": [],
     "signature": "approve(address,uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -881,6 +913,7 @@
       }
     ],
     "signature": "getApproved(uint256)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -898,6 +931,7 @@
     "name": "setApprovalForAll",
     "outputs": [],
     "signature": "setApprovalForAll(address,bool)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -921,6 +955,7 @@
       }
     ],
     "signature": "isApprovedForAll(address,address)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -942,6 +977,7 @@
     "name": "_transferFrom",
     "outputs": [],
     "signature": "_transferFrom(address,address,uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -963,6 +999,7 @@
     "name": "transferFrom",
     "outputs": [],
     "signature": "transferFrom(address,address,uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -984,6 +1021,7 @@
     "name": "safeTransferFrom",
     "outputs": [],
     "signature": "safeTransferFrom(address,address,uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -1009,6 +1047,7 @@
     "name": "safeTransferFrom",
     "outputs": [],
     "signature": "safeTransferFrom(address,address,uint256,bytes)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -1030,6 +1069,7 @@
     "name": "removeChild",
     "outputs": [],
     "signature": "removeChild(uint256,address,uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -1055,6 +1095,7 @@
     "name": "safeTransferChild",
     "outputs": [],
     "signature": "safeTransferChild(uint256,address,address,uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -1084,6 +1125,7 @@
     "name": "safeTransferChild",
     "outputs": [],
     "signature": "safeTransferChild(uint256,address,address,uint256,bytes)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -1109,6 +1151,7 @@
     "name": "transferChild",
     "outputs": [],
     "signature": "transferChild(uint256,address,address,uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -1142,6 +1185,7 @@
     "name": "transferChildToParent",
     "outputs": [],
     "signature": "transferChildToParent(uint256,address,uint256,address,uint256,bytes)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -1167,6 +1211,7 @@
     "name": "getChild",
     "outputs": [],
     "signature": "getChild(address,uint256,address,uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -1193,6 +1238,7 @@
       }
     ],
     "signature": "onERC721Received(address,uint256,bytes)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -1223,6 +1269,7 @@
       }
     ],
     "signature": "onERC721Received(address,address,uint256,bytes)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -1248,6 +1295,7 @@
     "name": "receiveChild",
     "outputs": [],
     "signature": "receiveChild(address,uint256,address,uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -1275,6 +1323,7 @@
       }
     ],
     "signature": "_ownerOfChild(address,uint256)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -1302,6 +1351,7 @@
       }
     ],
     "signature": "ownerOfChild(address,uint256)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -1325,6 +1375,7 @@
       }
     ],
     "signature": "childExists(address,uint256)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -1344,6 +1395,7 @@
       }
     ],
     "signature": "totalChildContracts(uint256)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -1367,6 +1419,7 @@
       }
     ],
     "signature": "childContractByIndex(uint256,uint256)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -1390,6 +1443,7 @@
       }
     ],
     "signature": "totalChildTokens(uint256,address)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -1417,6 +1471,7 @@
       }
     ],
     "signature": "childTokenByIndex(uint256,address,uint256)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -1440,6 +1495,7 @@
       }
     ],
     "signature": "balanceOfERC20(uint256,address)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -1461,6 +1517,7 @@
     "name": "removeERC20",
     "outputs": [],
     "signature": "removeERC20(uint256,address,uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -1486,6 +1543,7 @@
     "name": "transferERC20",
     "outputs": [],
     "signature": "transferERC20(uint256,address,address,uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -1515,6 +1573,7 @@
     "name": "transferERC223",
     "outputs": [],
     "signature": "transferERC223(uint256,address,address,uint256,bytes)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -1540,6 +1599,7 @@
     "name": "getERC20",
     "outputs": [],
     "signature": "getERC20(address,uint256,address,uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -1565,6 +1625,7 @@
     "name": "erc20Received",
     "outputs": [],
     "signature": "erc20Received(address,uint256,address,uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -1586,6 +1647,7 @@
     "name": "tokenFallback",
     "outputs": [],
     "signature": "tokenFallback(address,uint256,bytes)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -1609,6 +1671,7 @@
       }
     ],
     "signature": "erc20ContractByIndex(uint256,uint256)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -1628,6 +1691,7 @@
       }
     ],
     "signature": "totalERC20Contracts(uint256)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -1703,6 +1767,7 @@
       }
     ],
     "signature": "rootOwnerOf(uint256)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -1726,6 +1791,7 @@
       }
     ],
     "signature": "rootOwnerOfChild(address,uint256)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -1753,6 +1819,7 @@
       }
     ],
     "signature": "ownerOfChild(address,uint256)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -1783,6 +1850,7 @@
       }
     ],
     "signature": "onERC721Received(address,address,uint256,bytes)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -1808,6 +1876,7 @@
     "name": "transferChild",
     "outputs": [],
     "signature": "transferChild(uint256,address,address,uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -1833,6 +1902,7 @@
     "name": "safeTransferChild",
     "outputs": [],
     "signature": "safeTransferChild(uint256,address,address,uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -1862,6 +1932,7 @@
     "name": "safeTransferChild",
     "outputs": [],
     "signature": "safeTransferChild(uint256,address,address,uint256,bytes)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -1895,6 +1966,7 @@
     "name": "transferChildToParent",
     "outputs": [],
     "signature": "transferChildToParent(uint256,address,uint256,address,uint256,bytes)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -1920,6 +1992,7 @@
     "name": "getChild",
     "outputs": [],
     "signature": "getChild(address,uint256,address,uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -1939,6 +2012,7 @@
       }
     ],
     "signature": "totalChildContracts(uint256)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -1962,6 +2036,7 @@
       }
     ],
     "signature": "childContractByIndex(uint256,uint256)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -1985,6 +2060,7 @@
       }
     ],
     "signature": "totalChildTokens(uint256,address)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -2012,6 +2088,7 @@
       }
     ],
     "signature": "childTokenByIndex(uint256,address,uint256)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -2089,6 +2166,7 @@
     "name": "tokenFallback",
     "outputs": [],
     "signature": "tokenFallback(address,uint256,bytes)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -2112,6 +2190,7 @@
       }
     ],
     "signature": "balanceOfERC20(uint256,address)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -2137,6 +2216,7 @@
     "name": "transferERC20",
     "outputs": [],
     "signature": "transferERC20(uint256,address,address,uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -2166,6 +2246,7 @@
     "name": "transferERC223",
     "outputs": [],
     "signature": "transferERC223(uint256,address,address,uint256,bytes)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -2191,6 +2272,7 @@
     "name": "getERC20",
     "outputs": [],
     "signature": "getERC20(address,uint256,address,uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -2210,6 +2292,7 @@
       }
     ],
     "signature": "totalERC20Contracts(uint256)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -2233,6 +2316,7 @@
       }
     ],
     "signature": "erc20ContractByIndex(uint256,uint256)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -2259,6 +2343,7 @@
       }
     ],
     "signature": "transferFrom(address,address,uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -2281,6 +2366,7 @@
       }
     ],
     "signature": "transfer(address,uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -2307,6 +2393,7 @@
       }
     ],
     "signature": "transfer(address,uint256,bytes)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -2330,6 +2417,7 @@
       }
     ],
     "signature": "allowance(address,address)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -2359,6 +2447,7 @@
     "name": "transferToParent",
     "outputs": [],
     "signature": "transferToParent(address,address,uint256,uint256,bytes)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -2377,6 +2466,7 @@
       }
     ],
     "signature": "mint(address)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -2396,6 +2486,7 @@
       }
     ],
     "signature": "isContract(address)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -2415,6 +2506,7 @@
       }
     ],
     "signature": "rootOwnerOf(uint256)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -2438,6 +2530,7 @@
       }
     ],
     "signature": "rootOwnerOfChild(address,uint256)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -2457,6 +2550,7 @@
       }
     ],
     "signature": "ownerOf(uint256)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -2476,6 +2570,7 @@
       }
     ],
     "signature": "balanceOf(address)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -2493,6 +2588,7 @@
     "name": "approve",
     "outputs": [],
     "signature": "approve(address,uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -2512,6 +2608,7 @@
       }
     ],
     "signature": "getApproved(uint256)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -2529,6 +2626,7 @@
     "name": "setApprovalForAll",
     "outputs": [],
     "signature": "setApprovalForAll(address,bool)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -2552,6 +2650,7 @@
       }
     ],
     "signature": "isApprovedForAll(address,address)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -2573,6 +2672,7 @@
     "name": "_transferFrom",
     "outputs": [],
     "signature": "_transferFrom(address,address,uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -2594,6 +2694,7 @@
     "name": "transferFrom",
     "outputs": [],
     "signature": "transferFrom(address,address,uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -2615,6 +2716,7 @@
     "name": "safeTransferFrom",
     "outputs": [],
     "signature": "safeTransferFrom(address,address,uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -2640,6 +2742,7 @@
     "name": "safeTransferFrom",
     "outputs": [],
     "signature": "safeTransferFrom(address,address,uint256,bytes)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -2661,6 +2764,7 @@
     "name": "removeChild",
     "outputs": [],
     "signature": "removeChild(uint256,address,uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -2686,6 +2790,7 @@
     "name": "safeTransferChild",
     "outputs": [],
     "signature": "safeTransferChild(uint256,address,address,uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -2715,6 +2820,7 @@
     "name": "safeTransferChild",
     "outputs": [],
     "signature": "safeTransferChild(uint256,address,address,uint256,bytes)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -2740,6 +2846,7 @@
     "name": "transferChild",
     "outputs": [],
     "signature": "transferChild(uint256,address,address,uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -2773,6 +2880,7 @@
     "name": "transferChildToParent",
     "outputs": [],
     "signature": "transferChildToParent(uint256,address,uint256,address,uint256,bytes)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -2798,6 +2906,7 @@
     "name": "getChild",
     "outputs": [],
     "signature": "getChild(address,uint256,address,uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -2824,6 +2933,7 @@
       }
     ],
     "signature": "onERC721Received(address,uint256,bytes)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -2854,6 +2964,7 @@
       }
     ],
     "signature": "onERC721Received(address,address,uint256,bytes)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -2879,6 +2990,7 @@
     "name": "receiveChild",
     "outputs": [],
     "signature": "receiveChild(address,uint256,address,uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -2906,6 +3018,7 @@
       }
     ],
     "signature": "_ownerOfChild(address,uint256)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -2933,6 +3046,7 @@
       }
     ],
     "signature": "ownerOfChild(address,uint256)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -2956,6 +3070,7 @@
       }
     ],
     "signature": "childExists(address,uint256)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -2975,6 +3090,7 @@
       }
     ],
     "signature": "totalChildContracts(uint256)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -2998,6 +3114,7 @@
       }
     ],
     "signature": "childContractByIndex(uint256,uint256)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -3021,6 +3138,7 @@
       }
     ],
     "signature": "totalChildTokens(uint256,address)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -3048,6 +3166,7 @@
       }
     ],
     "signature": "childTokenByIndex(uint256,address,uint256)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -3071,6 +3190,7 @@
       }
     ],
     "signature": "balanceOfERC20(uint256,address)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -3092,6 +3212,7 @@
     "name": "removeERC20",
     "outputs": [],
     "signature": "removeERC20(uint256,address,uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -3117,6 +3238,7 @@
     "name": "transferERC20",
     "outputs": [],
     "signature": "transferERC20(uint256,address,address,uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -3146,6 +3268,7 @@
     "name": "transferERC223",
     "outputs": [],
     "signature": "transferERC223(uint256,address,address,uint256,bytes)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -3171,6 +3294,7 @@
     "name": "getERC20",
     "outputs": [],
     "signature": "getERC20(address,uint256,address,uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -3196,6 +3320,7 @@
     "name": "erc20Received",
     "outputs": [],
     "signature": "erc20Received(address,uint256,address,uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -3217,6 +3342,7 @@
     "name": "tokenFallback",
     "outputs": [],
     "signature": "tokenFallback(address,uint256,bytes)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -3240,6 +3366,7 @@
       }
     ],
     "signature": "erc20ContractByIndex(uint256,uint256)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -3259,6 +3386,7 @@
       }
     ],
     "signature": "totalERC20Contracts(uint256)",
+    "stateMutability": "view",
     "type": "function"
   }
 ]

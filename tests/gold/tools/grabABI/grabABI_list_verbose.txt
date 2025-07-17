@@ -6,30 +6,30 @@ TEST[DATE|TIME] Format:  txt
 address	name	lastModDate	fileSize	isKnown	isEmpty	nFunctions	nEvents	hasConstructor	hasFallback	path
 	erc_00020.json	--date--	3754	true	false	9	2	false	true	./abis/known-000/
 	erc_00721.json	--date--	8051	true	false	17	3	false	false	./abis/known-000/
-	gitcoin.json	--date--	4355	true	false	9	5	false	false	./abis/known-000/
-	openzeppelin.json	--date--	137261	true	false	332	50	false	false	./abis/known-000/
-	proxy.json	--date--	6972	true	false	19	3	false	false	./abis/known-000/
+	gitcoin.json	--date--	4392	true	false	9	5	false	false	./abis/known-000/
+	openzeppelin.json	--date--	148855	true	false	332	50	false	false	./abis/known-000/
+	proxy.json	--date--	6974	true	false	19	3	false	false	./abis/known-000/
 	unchained.json	--date--	1748	true	false	4	2	true	false	./abis/known-000/
 	unchainedV2.json	--date--	3368	true	false	5	3	false	false	./abis/known-000/
 	uniswap-pair.json	--date--	14333	true	false	27	6	false	false	./abis/known-000/
-	uniswap.json	--date--	40367	true	false	67	7	true	false	./abis/known-000/
-	wallet_abis.json	--date--	16133	true	false	36	19	true	true	./abis/known-000/
-	erc_00165.json	--date--	349	true	false	1	0	false	false	./abis/known-005/
-	erc_00777.json	--date--	7076	true	false	13	5	false	false	./abis/known-005/
-	erc_00998.json	--date--	62261	true	false	128	8	false	false	./abis/known-005/
-	erc_01155.json	--date--	32557	true	false	66	7	false	false	./abis/known-005/
-	erc_01594.json	--date--	4638	true	false	8	2	false	false	./abis/known-005/
-	erc_01820.json	--date--	5342	true	false	11	2	false	false	./abis/known-005/
-	loose.json	--date--	39649	true	false	100	1	false	false	./abis/known-005/
-	aragon.json	--date--	215572	true	false	475	59	false	false	./abis/known-010/
+	uniswap.json	--date--	41572	true	false	67	7	true	false	./abis/known-000/
+	wallet_abis.json	--date--	16664	true	false	36	19	true	true	./abis/known-000/
+	erc_00165.json	--date--	380	true	false	1	0	false	false	./abis/known-005/
+	erc_00777.json	--date--	7515	true	false	13	5	false	false	./abis/known-005/
+	erc_00998.json	--date--	66661	true	false	128	8	false	false	./abis/known-005/
+	erc_01155.json	--date--	34867	true	false	66	7	false	false	./abis/known-005/
+	erc_01594.json	--date--	4850	true	false	8	2	false	false	./abis/known-005/
+	erc_01820.json	--date--	5713	true	false	11	2	false	false	./abis/known-005/
+	loose.json	--date--	43275	true	false	100	1	false	false	./abis/known-005/
+	aragon.json	--date--	232313	true	false	475	59	false	false	./abis/known-010/
 	cryptokitties.json	--date--	19296	true	false	59	5	true	true	./abis/known-010/
 	ens-old.json	--date--	12869	true	false	19	9	true	false	./abis/known-010/
-	ens.json	--date--	92096	true	false	201	63	true	true	./abis/known-010/
-	kickback.json	--date--	24220	true	false	68	13	false	false	./abis/known-010/
-	maker-v1.json	--date--	5305	true	false	20	3	false	false	./abis/known-010/
+	ens.json	--date--	93697	true	false	201	63	true	true	./abis/known-010/
+	kickback.json	--date--	26538	true	false	68	13	false	false	./abis/known-010/
+	maker-v1.json	--date--	5991	true	false	20	3	false	false	./abis/known-010/
 	truebit.json	--date--	91116	true	false	178	31	false	false	./abis/known-010/
-	diamond.json	--date--	4071	true	false	12	1	false	false	./abis/known-015/
-	moloch.json	--date--	32865	true	false	62	16	false	false	./abis/known-015/
-	populous.json	--date--	10909	true	false	33	8	true	false	./abis/known-015/
-	sabilier.json	--date--	115696	true	false	247	48	false	false	./abis/known-015/
-	set.json	--date--	81144	true	false	221	10	false	false	./abis/known-015/
+	diamond.json	--date--	4479	true	false	12	1	false	false	./abis/known-015/
+	moloch.json	--date--	35063	true	false	62	16	false	false	./abis/known-015/
+	populous.json	--date--	12016	true	false	33	8	true	false	./abis/known-015/
+	sabilier.json	--date--	124415	true	false	247	48	false	false	./abis/known-015/
+	set.json	--date--	88733	true	false	221	10	false	false	./abis/known-015/

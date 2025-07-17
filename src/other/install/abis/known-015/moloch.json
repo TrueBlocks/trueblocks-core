@@ -19,6 +19,7 @@
       }
     ],
     "signature": "transfer(address,uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -41,6 +42,7 @@
       }
     ],
     "signature": "approve(address,uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -67,6 +69,7 @@
       }
     ],
     "signature": "transferFrom(address,address,uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -81,6 +84,7 @@
       }
     ],
     "signature": "totalSupply()",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -100,6 +104,7 @@
       }
     ],
     "signature": "balanceOf(address)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -123,6 +128,7 @@
       }
     ],
     "signature": "allowance(address,address)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -183,6 +189,7 @@
       }
     ],
     "signature": "totalSupply()",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -202,6 +209,7 @@
       }
     ],
     "signature": "balanceOf(address)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -225,6 +233,7 @@
       }
     ],
     "signature": "allowance(address,address)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -247,6 +256,7 @@
       }
     ],
     "signature": "transfer(address,uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -269,6 +279,7 @@
       }
     ],
     "signature": "approve(address,uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -295,6 +306,7 @@
       }
     ],
     "signature": "transferFrom(address,address,uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -317,6 +329,7 @@
       }
     ],
     "signature": "increaseAllowance(address,uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -339,6 +352,7 @@
       }
     ],
     "signature": "decreaseAllowance(address,uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -360,6 +374,7 @@
     "name": "_transfer",
     "outputs": [],
     "signature": "_transfer(address,address,uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -377,6 +392,7 @@
     "name": "_mint",
     "outputs": [],
     "signature": "_mint(address,uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -394,6 +410,7 @@
     "name": "_burn",
     "outputs": [],
     "signature": "_burn(address,uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -415,6 +432,7 @@
     "name": "_approve",
     "outputs": [],
     "signature": "_approve(address,address,uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -432,6 +450,7 @@
     "name": "_burnFrom",
     "outputs": [],
     "signature": "_burnFrom(address,uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -454,6 +473,7 @@
       }
     ],
     "signature": "mul(uint256,uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -476,6 +496,7 @@
       }
     ],
     "signature": "div(uint256,uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -498,6 +519,7 @@
       }
     ],
     "signature": "sub(uint256,uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -520,6 +542,7 @@
       }
     ],
     "signature": "add(uint256,uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -904,6 +927,7 @@
       }
     ],
     "signature": "submitProposal(address,uint256,uint256,uint256,address,uint256,address,string)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -926,6 +950,7 @@
       }
     ],
     "signature": "submitWhitelistProposal(address,string)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -948,6 +973,7 @@
       }
     ],
     "signature": "submitGuildKickProposal(address,string)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -994,6 +1020,7 @@
     "name": "_submitProposal",
     "outputs": [],
     "signature": "_submitProposal(address,uint256,uint256,uint256,address,uint256,address,string,bool[6])",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -1007,6 +1034,7 @@
     "name": "sponsorProposal",
     "outputs": [],
     "signature": "sponsorProposal(uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -1024,6 +1052,7 @@
     "name": "submitVote",
     "outputs": [],
     "signature": "submitVote(uint256,uint8)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -1037,6 +1066,7 @@
     "name": "processProposal",
     "outputs": [],
     "signature": "processProposal(uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -1050,6 +1080,7 @@
     "name": "processWhitelistProposal",
     "outputs": [],
     "signature": "processWhitelistProposal(uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -1063,6 +1094,7 @@
     "name": "processGuildKickProposal",
     "outputs": [],
     "signature": "processGuildKickProposal(uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -1081,6 +1113,7 @@
       }
     ],
     "signature": "_didPass(uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -1095,6 +1128,7 @@
     "name": "_validateProposalForProcessing",
     "outputs": [],
     "signature": "_validateProposalForProcessing(uint256)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -1108,6 +1142,7 @@
     "name": "_returnDeposit",
     "outputs": [],
     "signature": "_returnDeposit(address)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -1125,6 +1160,7 @@
     "name": "ragequit",
     "outputs": [],
     "signature": "ragequit(uint256,uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -1146,6 +1182,7 @@
     "name": "_ragequit",
     "outputs": [],
     "signature": "_ragequit(address,uint256,uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -1159,6 +1196,7 @@
     "name": "ragekick",
     "outputs": [],
     "signature": "ragekick(address)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -1176,6 +1214,7 @@
     "name": "withdrawBalance",
     "outputs": [],
     "signature": "withdrawBalance(address,uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -1199,6 +1238,7 @@
     "name": "withdrawBalances",
     "outputs": [],
     "signature": "withdrawBalances(address[],uint256[],bool)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -1216,6 +1256,7 @@
     "name": "_withdrawBalance",
     "outputs": [],
     "signature": "_withdrawBalance(address,uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -1229,6 +1270,7 @@
     "name": "collectTokens",
     "outputs": [],
     "signature": "collectTokens(address)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -1242,6 +1284,7 @@
     "name": "cancelProposal",
     "outputs": [],
     "signature": "cancelProposal(uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -1255,6 +1298,7 @@
     "name": "updateDelegateKey",
     "outputs": [],
     "signature": "updateDelegateKey(address)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -1274,6 +1318,7 @@
       }
     ],
     "signature": "canRagequit(uint256)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -1293,6 +1338,7 @@
       }
     ],
     "signature": "hasVotingPeriodExpired(uint256)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -1315,6 +1361,7 @@
       }
     ],
     "signature": "max(uint256,uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -1329,6 +1376,7 @@
       }
     ],
     "signature": "getCurrentPeriod()",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -1343,6 +1391,7 @@
       }
     ],
     "signature": "getProposalQueueLength()",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -1363,6 +1412,7 @@
       }
     ],
     "signature": "getProposalFlags(uint256)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -1386,6 +1436,7 @@
       }
     ],
     "signature": "getUserTokenBalance(address,address)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -1409,6 +1460,7 @@
       }
     ],
     "signature": "getMemberProposalVote(address,uint256)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -1423,6 +1475,7 @@
       }
     ],
     "signature": "getTokenCount()",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -1444,6 +1497,7 @@
     "name": "unsafeAddToBalance",
     "outputs": [],
     "signature": "unsafeAddToBalance(address,address,uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -1465,6 +1519,7 @@
     "name": "unsafeSubtractFromBalance",
     "outputs": [],
     "signature": "unsafeSubtractFromBalance(address,address,uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -1490,6 +1545,7 @@
     "name": "unsafeInternalTransfer",
     "outputs": [],
     "signature": "unsafeInternalTransfer(address,address,address,uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -1516,6 +1572,7 @@
       }
     ],
     "signature": "fairShare(uint256,uint256,uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -1570,6 +1627,7 @@
     "name": "submitProposal",
     "outputs": [],
     "signature": "submitProposal(address,uint256,uint256,uint256,address,uint256,address,string)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -1587,6 +1645,7 @@
     "name": "submitWhitelistProposal",
     "outputs": [],
     "signature": "submitWhitelistProposal(address,string)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -1604,6 +1663,7 @@
     "name": "submitGuildKickProposal",
     "outputs": [],
     "signature": "submitGuildKickProposal(address,string)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -1665,6 +1725,7 @@
     "name": "summonMoloch",
     "outputs": [],
     "signature": "summonMoloch(address,address[],uint256,uint256,uint256,uint256,uint256,uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -1679,6 +1740,7 @@
       }
     ],
     "signature": "getMolochCount()",
+    "stateMutability": "view",
     "type": "function"
   }
 ]

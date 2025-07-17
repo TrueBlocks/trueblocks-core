@@ -99,9 +99,8 @@ func (s *Function) Model(chain, format string, verbose bool, extraOpts map[strin
 				model["outputs"] = outputs
 			}
 		}
-		sm := s.StateMutability
-		if sm != "" && sm != "nonpayable" && sm != "view" {
-			model["stateMutability"] = sm
+		if s.FunctionType == "function" {
+			model["stateMutability"] = s.StateMutability
 		}
 	}
 	// EXISTING_CODE
@@ -290,10 +289,16 @@ func FunctionFromAbiMethod(ethMethod *abi.Method) *Function {
 
 	inputs := argumentsToParameters(ethMethod.Inputs)
 	outputs := argumentsToParameters(ethMethod.Outputs)
-	stateMutability := "nonpayable"
-	if ethMethod.StateMutability != "" && ethMethod.StateMutability != "nonpayable" && ethMethod.StateMutability != "view" {
-		stateMutability = ethMethod.StateMutability
-	} else if ethMethod.Payable {
+	stateMutability := ethMethod.StateMutability
+	if stateMutability == "" {
+		// Legacy ABI formats
+		if ethMethod.Constant {
+			stateMutability = "view"
+		} else {
+			stateMutability = "nonpayable"
+		}
+	}
+	if ethMethod.Payable {
 		stateMutability = "payable"
 	}
 	function := &Function{

@@ -20,6 +20,7 @@
       }
     ],
     "signature": "canImplementInterfaceForAddress(bytes32,address)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -86,6 +87,7 @@
       }
     ],
     "signature": "getInterfaceImplementer(address,bytes32)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -107,6 +109,7 @@
     "name": "setInterfaceImplementer",
     "outputs": [],
     "signature": "setInterfaceImplementer(address,bytes32,address)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -124,6 +127,7 @@
     "name": "setManager",
     "outputs": [],
     "signature": "setManager(address,address)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -143,6 +147,7 @@
       }
     ],
     "signature": "getManager(address)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -161,6 +166,7 @@
       }
     ],
     "signature": "interfaceHash(string)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -178,6 +184,7 @@
     "name": "updateERC165Cache",
     "outputs": [],
     "signature": "updateERC165Cache(address,bytes4)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -201,6 +208,7 @@
       }
     ],
     "signature": "implementsERC165Interface(address,bytes4)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -224,6 +232,7 @@
       }
     ],
     "signature": "implementsERC165InterfaceNoCache(address,bytes4)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -242,6 +251,7 @@
       }
     ],
     "signature": "isERC165Interface(bytes32)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -269,6 +279,7 @@
       }
     ],
     "signature": "noThrowCall(address,bytes4)",
+    "stateMutability": "view",
     "type": "function"
   }
 ]

@@ -18,6 +18,7 @@
     "name": "transferWithData",
     "outputs": [],
     "signature": "transferWithData(address,uint256,bytes)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -43,10 +44,10 @@
     "name": "transferFromWithData",
     "outputs": [],
     "signature": "transferFromWithData(address,address,uint256,bytes)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
-    "constant": true,
     "encoding": "0x2f1cae85",
     "inputs": [],
     "name": "isIssuable",
@@ -57,6 +58,7 @@
       }
     ],
     "signature": "isIssuable()",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -78,6 +80,7 @@
     "name": "issue",
     "outputs": [],
     "signature": "issue(address,uint256,bytes)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -95,6 +98,7 @@
     "name": "redeem",
     "outputs": [],
     "signature": "redeem(uint256,bytes)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -116,10 +120,10 @@
     "name": "redeemFrom",
     "outputs": [],
     "signature": "redeemFrom(address,uint256,bytes)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
-    "constant": true,
     "encoding": "0x1badb25c",
     "inputs": [
       {
@@ -151,10 +155,10 @@
       }
     ],
     "signature": "canTransfer(address,uint256,bytes)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
-    "constant": true,
     "encoding": "0x122eb575",
     "inputs": [
       {
@@ -190,6 +194,7 @@
       }
     ],
     "signature": "canTransferFrom(address,address,uint256,bytes)",
+    "stateMutability": "view",
     "type": "function"
   },
   {

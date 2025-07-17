@@ -11,6 +11,7 @@
       }
     ],
     "signature": "name()",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -25,6 +26,7 @@
       }
     ],
     "signature": "symbol()",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -39,6 +41,7 @@
       }
     ],
     "signature": "totalSupply()",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -58,6 +61,7 @@
       }
     ],
     "signature": "balanceOf(address)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -72,6 +76,7 @@
       }
     ],
     "signature": "granularity()",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -87,6 +92,7 @@
       }
     ],
     "signature": "defaultOperators()",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -110,6 +116,7 @@
       }
     ],
     "signature": "isOperatorFor(address,address)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -123,6 +130,7 @@
     "name": "authorizeOperator",
     "outputs": [],
     "signature": "authorizeOperator(address)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -136,6 +144,7 @@
     "name": "revokeOperator",
     "outputs": [],
     "signature": "revokeOperator(address)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -157,6 +166,7 @@
     "name": "send",
     "outputs": [],
     "signature": "send(address,uint256,bytes)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -186,6 +196,7 @@
     "name": "operatorSend",
     "outputs": [],
     "signature": "operatorSend(address,address,uint256,bytes,bytes)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -203,6 +214,7 @@
     "name": "burn",
     "outputs": [],
     "signature": "burn(uint256,bytes)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -228,6 +240,7 @@
     "name": "operatorBurn",
     "outputs": [],
     "signature": "operatorBurn(address,uint256,bytes,bytes)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {

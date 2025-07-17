@@ -38,7 +38,7 @@
       },
       {
         "name": "newImplementation",
-        "type":"address"
+        "type": "address"
       }
     ],
     "name": "_upgradeToAndCall",
@@ -97,8 +97,8 @@
     "name": "getBooleanSlot",
     "outputs": [
       {
-        "name": "storage r",
         "internalType": "struct StorageSlot.BooleanSlot",
+        "name": "storage r",
         "type": "tuple"
       }
     ],
@@ -196,8 +196,8 @@
     "name": "getUint256Slot",
     "outputs": [
       {
-        "name": "storage r",
         "internalType": "struct StorageSlot.Uint256Slot",
+        "name": "storage r",
         "type": "tuple"
       }
     ],
@@ -291,8 +291,8 @@
     "name": "getBytes32Slot",
     "outputs": [
       {
-        "name": "storage r",
         "internalType": "struct StorageSlot.Bytes32Slot",
+        "name": "storage r",
         "type": "tuple"
       }
     ],
@@ -311,8 +311,8 @@
     "name": "getAddressSlot",
     "outputs": [
       {
-        "name": "storage r",
         "internalType": "struct StorageSlot.AddressSlot",
+        "name": "storage r",
         "type": "tuple"
       }
     ],

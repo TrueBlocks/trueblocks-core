@@ -143,6 +143,7 @@
     "name": "setup",
     "outputs": [],
     "payable": false,
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -170,6 +171,7 @@
       }
     ],
     "payable": true,
+    "stateMutability": "payable",
     "type": "function"
   },
   {
@@ -205,6 +207,7 @@
       }
     ],
     "payable": false,
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -213,6 +216,7 @@
     "name": "__default__",
     "outputs": [],
     "payable": true,
+    "stateMutability": "payable",
     "type": "function"
   },
   {
@@ -236,6 +240,7 @@
       }
     ],
     "payable": true,
+    "stateMutability": "payable",
     "type": "function"
   },
   {
@@ -263,6 +268,7 @@
       }
     ],
     "payable": true,
+    "stateMutability": "payable",
     "type": "function"
   },
   {
@@ -286,6 +292,7 @@
       }
     ],
     "payable": true,
+    "stateMutability": "payable",
     "type": "function"
   },
   {
@@ -313,6 +320,7 @@
       }
     ],
     "payable": true,
+    "stateMutability": "payable",
     "type": "function"
   },
   {
@@ -340,6 +348,7 @@
       }
     ],
     "payable": false,
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -371,6 +380,7 @@
       }
     ],
     "payable": false,
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -398,6 +408,7 @@
       }
     ],
     "payable": false,
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -429,6 +440,7 @@
       }
     ],
     "payable": false,
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -464,6 +476,7 @@
       }
     ],
     "payable": false,
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -503,6 +516,7 @@
       }
     ],
     "payable": false,
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -538,6 +552,7 @@
       }
     ],
     "payable": false,
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -577,6 +592,7 @@
       }
     ],
     "payable": false,
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -612,6 +628,7 @@
       }
     ],
     "payable": false,
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -651,6 +668,7 @@
       }
     ],
     "payable": false,
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -686,6 +704,7 @@
       }
     ],
     "payable": false,
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -725,6 +744,7 @@
       }
     ],
     "payable": false,
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -744,6 +764,7 @@
       }
     ],
     "payable": false,
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -763,6 +784,7 @@
       }
     ],
     "payable": false,
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -782,6 +804,7 @@
       }
     ],
     "payable": false,
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -801,6 +824,7 @@
       }
     ],
     "payable": false,
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -815,6 +839,7 @@
       }
     ],
     "payable": false,
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -829,6 +854,7 @@
       }
     ],
     "payable": false,
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -848,6 +874,7 @@
       }
     ],
     "payable": false,
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -871,6 +898,7 @@
       }
     ],
     "payable": false,
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -898,6 +926,7 @@
       }
     ],
     "payable": false,
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -921,6 +950,7 @@
       }
     ],
     "payable": false,
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -944,6 +974,7 @@
       }
     ],
     "payable": false,
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -958,6 +989,7 @@
       }
     ],
     "payable": false,
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -972,6 +1004,7 @@
       }
     ],
     "payable": false,
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -986,6 +1019,7 @@
       }
     ],
     "payable": false,
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -1000,6 +1034,7 @@
       }
     ],
     "payable": false,
+    "stateMutability": "view",
     "type": "function"
   },
   {

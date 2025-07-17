@@ -5,24 +5,28 @@ abis?addrs=0xffa93aacf49297d51e211817452839052fdfb961
       "encoding": "0x05d2035b",
       "name": "mintingFinished",
       "signature": "mintingFinished()",
+      "stateMutability": "view",
       "type": "function"
     },
     {
       "encoding": "0x05f9bb6b",
       "name": "transfersEnabledFlag",
       "signature": "transfersEnabledFlag()",
+      "stateMutability": "view",
       "type": "function"
     },
     {
       "encoding": "0x06fdde03",
       "name": "name",
       "signature": "name()",
+      "stateMutability": "view",
       "type": "function"
     },
     {
       "encoding": "0x095ea7b3",
       "name": "approve",
       "signature": "approve(address,uint256)",
+      "stateMutability": "nonpayable",
       "type": "function"
     },
     {
@@ -35,60 +39,70 @@ abis?addrs=0xffa93aacf49297d51e211817452839052fdfb961
       "encoding": "0x18160ddd",
       "name": "totalSupply",
       "signature": "totalSupply()",
+      "stateMutability": "view",
       "type": "function"
     },
     {
       "encoding": "0x23b872dd",
       "name": "transferFrom",
       "signature": "transferFrom(address,address,uint256)",
+      "stateMutability": "nonpayable",
       "type": "function"
     },
     {
       "encoding": "0x313ce567",
       "name": "decimals",
       "signature": "decimals()",
+      "stateMutability": "view",
       "type": "function"
     },
     {
       "encoding": "0x355274ea",
       "name": "cap",
       "signature": "cap()",
+      "stateMutability": "view",
       "type": "function"
     },
     {
       "encoding": "0x40c10f19",
       "name": "mint",
       "signature": "mint(address,uint256)",
+      "stateMutability": "nonpayable",
       "type": "function"
     },
     {
       "encoding": "0x54fd4d50",
       "name": "version",
       "signature": "version()",
+      "stateMutability": "view",
       "type": "function"
     },
     {
       "encoding": "0x66188463",
       "name": "decreaseApproval",
       "signature": "decreaseApproval(address,uint256)",
+      "stateMutability": "nonpayable",
       "type": "function"
     },
     {
       "encoding": "0x70a08231",
       "name": "balanceOf",
       "signature": "balanceOf(address)",
+      "stateMutability": "view",
       "type": "function"
     },
     {
       "encoding": "0x7d64bcb4",
       "name": "finishMinting",
       "signature": "finishMinting()",
+      "stateMutability": "nonpayable",
       "type": "function"
     },
     {
       "encoding": "0x88d695b2",
       "name": "batchTransfer",
       "signature": "batchTransfer(address[],uint256[])",
+      "stateMutability": "nonpayable",
       "type": "function"
     },
     {
@@ -107,24 +121,28 @@ abis?addrs=0xffa93aacf49297d51e211817452839052fdfb961
       "encoding": "0x8da5cb5b",
       "name": "owner",
       "signature": "owner()",
+      "stateMutability": "view",
       "type": "function"
     },
     {
       "encoding": "0x95d89b41",
       "name": "symbol",
       "signature": "symbol()",
+      "stateMutability": "view",
       "type": "function"
     },
     {
       "encoding": "0x983b2d56",
       "name": "addMinter",
       "signature": "addMinter(address)",
+      "stateMutability": "nonpayable",
       "type": "function"
     },
     {
       "encoding": "0xa9059cbb",
       "name": "transfer",
       "signature": "transfer(address,uint256)",
+      "stateMutability": "nonpayable",
       "type": "function"
     },
     {
@@ -137,24 +155,28 @@ abis?addrs=0xffa93aacf49297d51e211817452839052fdfb961
       "encoding": "0xaf35c6c7",
       "name": "enableTransfers",
       "signature": "enableTransfers()",
+      "stateMutability": "nonpayable",
       "type": "function"
     },
     {
       "encoding": "0xd73dd623",
       "name": "increaseApproval",
       "signature": "increaseApproval(address,uint256)",
+      "stateMutability": "nonpayable",
       "type": "function"
     },
     {
       "encoding": "0xd82f94a3",
       "name": "deleteMinter",
       "signature": "deleteMinter(address)",
+      "stateMutability": "nonpayable",
       "type": "function"
     },
     {
       "encoding": "0xdd62ed3e",
       "name": "allowance",
       "signature": "allowance(address,address)",
+      "stateMutability": "view",
       "type": "function"
     },
     {
@@ -167,12 +189,14 @@ abis?addrs=0xffa93aacf49297d51e211817452839052fdfb961
       "encoding": "0xf2fde38b",
       "name": "transferOwnership",
       "signature": "transferOwnership(address)",
+      "stateMutability": "nonpayable",
       "type": "function"
     },
     {
       "encoding": "0xf46eccc4",
       "name": "minters",
       "signature": "minters(address)",
+      "stateMutability": "view",
       "type": "function"
     }
   ],

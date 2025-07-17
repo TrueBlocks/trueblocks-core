@@ -73,7 +73,7 @@ func (opts *AbisOptions) HandleDecache(rCtx *output.RenderCtx) error {
 				if err := os.Remove(path); err != nil {
 					logger.Warn(colors.Red+"Could not remove abi for address", addr, ":", err, "."+colors.Off)
 				} else {
-					logger.Info(colors.Green+"Abi file for address", addr, "removed."+colors.Off)
+					logger.Info(colors.Green+"Abi cache for address", addr, "removed."+colors.Off)
 				}
 			}
 		}

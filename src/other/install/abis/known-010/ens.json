@@ -10,6 +10,7 @@
     "name": "releaseDeed",
     "outputs": [],
     "payable": false,
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -28,6 +29,7 @@
       }
     ],
     "payable": false,
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -41,6 +43,7 @@
     "name": "invalidateName",
     "outputs": [],
     "payable": false,
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -71,6 +74,7 @@
       }
     ],
     "payable": false,
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -88,6 +92,7 @@
     "name": "cancelBid",
     "outputs": [],
     "payable": false,
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -122,6 +127,7 @@
       }
     ],
     "payable": false,
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -135,6 +141,7 @@
       }
     ],
     "payable": false,
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -156,6 +163,7 @@
     "name": "unsealBid",
     "outputs": [],
     "payable": false,
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -169,6 +177,7 @@
     "name": "transferRegistrars",
     "outputs": [],
     "payable": false,
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -191,6 +200,7 @@
       }
     ],
     "payable": false,
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -209,6 +219,7 @@
       }
     ],
     "payable": false,
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -226,6 +237,7 @@
     "name": "transfer",
     "outputs": [],
     "payable": false,
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -248,6 +260,7 @@
       }
     ],
     "payable": false,
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -261,6 +274,7 @@
     "name": "finalizeAuction",
     "outputs": [],
     "payable": false,
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -274,6 +288,7 @@
       }
     ],
     "payable": false,
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -287,6 +302,7 @@
       }
     ],
     "payable": false,
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -300,6 +316,7 @@
     "name": "newBid",
     "outputs": [],
     "payable": true,
+    "stateMutability": "payable",
     "type": "function"
   },
   {
@@ -313,6 +330,7 @@
     "name": "eraseNode",
     "outputs": [],
     "payable": false,
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -326,6 +344,7 @@
     "name": "startAuctions",
     "outputs": [],
     "payable": false,
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -347,6 +366,7 @@
     "name": "acceptRegistrarTransfer",
     "outputs": [],
     "payable": false,
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -360,6 +380,7 @@
     "name": "startAuction",
     "outputs": [],
     "payable": false,
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -373,6 +394,7 @@
       }
     ],
     "payable": false,
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -390,6 +412,7 @@
     "name": "startAuctionsAndBid",
     "outputs": [],
     "payable": true,
+    "stateMutability": "payable",
     "type": "function"
   },
   {
@@ -1712,6 +1735,7 @@
       }
     ],
     "payable": false,
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -1730,6 +1754,7 @@
       }
     ],
     "payable": false,
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -1751,6 +1776,7 @@
     "name": "setSubnodeOwner",
     "outputs": [],
     "payable": false,
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -1768,6 +1794,7 @@
     "name": "setTTL",
     "outputs": [],
     "payable": false,
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -1786,6 +1813,7 @@
       }
     ],
     "payable": false,
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -1803,6 +1831,7 @@
     "name": "setResolver",
     "outputs": [],
     "payable": false,
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -1820,6 +1849,7 @@
     "name": "setOwner",
     "outputs": [],
     "payable": false,
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -3874,6 +3904,7 @@
       }
     ],
     "payable": false,
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -3900,6 +3931,7 @@
       }
     ],
     "payable": false,
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -3921,6 +3953,7 @@
     "name": "setPubkey",
     "outputs": [],
     "payable": false,
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -3939,6 +3972,7 @@
       }
     ],
     "payable": false,
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -3957,6 +3991,7 @@
       }
     ],
     "payable": false,
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -3978,6 +4013,7 @@
     "name": "setABI",
     "outputs": [],
     "payable": false,
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -3996,6 +4032,7 @@
       }
     ],
     "payable": false,
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -4013,6 +4050,7 @@
     "name": "setName",
     "outputs": [],
     "payable": false,
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -4030,6 +4068,7 @@
     "name": "setContent",
     "outputs": [],
     "payable": false,
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -4052,6 +4091,7 @@
       }
     ],
     "payable": false,
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -4069,6 +4109,7 @@
     "name": "setAddr",
     "outputs": [],
     "payable": false,
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -4191,6 +4232,7 @@
       }
     ],
     "payable": false,
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -4209,6 +4251,7 @@
       }
     ],
     "payable": false,
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -4222,6 +4265,7 @@
       }
     ],
     "payable": false,
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -4235,6 +4279,7 @@
       }
     ],
     "payable": false,
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -4253,6 +4298,7 @@
       }
     ],
     "payable": false,
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -4271,6 +4317,7 @@
       }
     ],
     "payable": false,
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {

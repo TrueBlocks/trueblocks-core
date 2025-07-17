@@ -16,6 +16,7 @@
       }
     ],
     "signature": "balanceOf(address)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -30,6 +31,7 @@
       }
     ],
     "signature": "isCToken()",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -52,6 +54,7 @@
       }
     ],
     "signature": "approve(address,uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -70,6 +73,7 @@
       }
     ],
     "signature": "balanceOfUnderlying(address)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -83,6 +87,7 @@
       }
     ],
     "signature": "exchangeRateCurrent()",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -101,6 +106,7 @@
       }
     ],
     "signature": "mint(uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -119,6 +125,7 @@
       }
     ],
     "signature": "redeem(uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -137,6 +144,7 @@
       }
     ],
     "signature": "redeemUnderlying(uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -159,6 +167,7 @@
       }
     ],
     "signature": "transfer(address,uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -185,6 +194,7 @@
       }
     ],
     "signature": "transferFrom(address,address,uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -199,6 +209,7 @@
       }
     ],
     "signature": "_msgSender()",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -213,6 +224,7 @@
       }
     ],
     "signature": "_msgData()",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -227,6 +239,7 @@
       }
     ],
     "signature": "isConstructor()",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -259,6 +272,7 @@
     "name": "initialize",
     "outputs": [],
     "signature": "initialize(address)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -273,6 +287,7 @@
       }
     ],
     "signature": "owner()",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -287,6 +302,7 @@
       }
     ],
     "signature": "isOwner()",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -300,6 +316,7 @@
     "name": "transferOwnership",
     "outputs": [],
     "signature": "transferOwnership(address)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -313,6 +330,7 @@
     "name": "_transferOwnership",
     "outputs": [],
     "signature": "_transferOwnership(address)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -354,6 +372,7 @@
     "name": "whitelistCToken",
     "outputs": [],
     "signature": "whitelistCToken(address)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -367,6 +386,7 @@
     "name": "discardCToken",
     "outputs": [],
     "signature": "discardCToken(address)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -386,6 +406,7 @@
       }
     ],
     "signature": "isCToken(address)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -399,6 +420,7 @@
     "name": "whitelistCToken",
     "outputs": [],
     "signature": "whitelistCToken(address)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -412,6 +434,7 @@
     "name": "discardCToken",
     "outputs": [],
     "signature": "discardCToken(address)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -431,6 +454,7 @@
       }
     ],
     "signature": "isCToken(address)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -445,6 +469,7 @@
       }
     ],
     "signature": "isConstructor()",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -459,6 +484,7 @@
       }
     ],
     "signature": "getHubAddr()",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -514,6 +540,7 @@
       }
     ],
     "signature": "acceptRelayedCall(address,address,bytes,uint256,uint256,uint256,uint256,bytes,uint256)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -532,6 +559,7 @@
       }
     ],
     "signature": "preRelayedCall(bytes)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -557,6 +585,7 @@
     "name": "postRelayedCall",
     "outputs": [],
     "signature": "postRelayedCall(bytes,bool,uint256,bytes32)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -575,6 +604,7 @@
       }
     ],
     "signature": "preRelayedCall(bytes)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -600,6 +630,7 @@
     "name": "postRelayedCall",
     "outputs": [],
     "signature": "postRelayedCall(bytes,bool,uint256,bytes32)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -617,6 +648,7 @@
       }
     ],
     "signature": "_approveRelayedCall()",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -639,6 +671,7 @@
       }
     ],
     "signature": "_approveRelayedCall(bytes)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -661,6 +694,7 @@
       }
     ],
     "signature": "_rejectRelayedCall(uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -679,6 +713,7 @@
       }
     ],
     "signature": "_preRelayedCall(bytes)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -704,6 +739,7 @@
     "name": "_postRelayedCall",
     "outputs": [],
     "signature": "_postRelayedCall(bytes,bool,uint256,bytes32)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -730,6 +766,7 @@
       }
     ],
     "signature": "_computeCharge(uint256,uint256,uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -752,6 +789,7 @@
       }
     ],
     "signature": "recover(bytes32,bytes)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -770,6 +808,7 @@
       }
     ],
     "signature": "toEthSignedMessageHash(bytes32)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -783,6 +822,7 @@
     "name": "initialize",
     "outputs": [],
     "signature": "initialize(address)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -838,6 +878,7 @@
       }
     ],
     "signature": "acceptRelayedCall(address,address,bytes,uint256,uint256,uint256,uint256,bytes,uint256)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -852,6 +893,7 @@
       }
     ],
     "signature": "_getTrustedSigner()",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -865,6 +907,7 @@
     "name": "_setTrustedSigner",
     "outputs": [],
     "signature": "_setTrustedSigner(address)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -879,6 +922,7 @@
       }
     ],
     "signature": "_msgSender()",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -893,6 +937,7 @@
       }
     ],
     "signature": "_msgData()",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -920,6 +965,7 @@
     "name": "initialize",
     "outputs": [],
     "signature": "initialize()",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -934,6 +980,7 @@
       }
     ],
     "signature": "_getRelayHub()",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -947,6 +994,7 @@
     "name": "_upgradeRelayHub",
     "outputs": [],
     "signature": "_upgradeRelayHub(address)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -961,6 +1009,7 @@
       }
     ],
     "signature": "_msgSender()",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -975,6 +1024,7 @@
       }
     ],
     "signature": "_msgData()",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -988,6 +1038,7 @@
       }
     ],
     "signature": "_getRelayedCallSender()",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -1001,6 +1052,7 @@
       }
     ],
     "signature": "_getRelayedCallData()",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -1018,6 +1070,7 @@
     "name": "stake",
     "outputs": [],
     "signature": "stake(address,uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -1057,6 +1110,7 @@
     "name": "registerRelay",
     "outputs": [],
     "signature": "registerRelay(uint256,string)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -1105,6 +1159,7 @@
     "name": "removeRelayByOwner",
     "outputs": [],
     "signature": "removeRelayByOwner(address)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -1136,6 +1191,7 @@
     "name": "unstake",
     "outputs": [],
     "signature": "unstake(address)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -1184,12 +1240,13 @@
         "type": "address"
       },
       {
-        "name": "state",
         "internalType": "enum RelayState",
+        "name": "state",
         "type": "uint8"
       }
     ],
     "signature": "getRelay(address)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -1203,6 +1260,7 @@
     "name": "depositFor",
     "outputs": [],
     "signature": "depositFor(address)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -1245,6 +1303,7 @@
       }
     ],
     "signature": "balanceOf(address)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -1262,6 +1321,7 @@
     "name": "withdraw",
     "outputs": [],
     "signature": "withdraw(uint256,address)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -1344,6 +1404,7 @@
       }
     ],
     "signature": "canRelay(address,address,address,bytes,uint256,uint256,uint256,uint256,bytes,bytes)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -1389,6 +1450,7 @@
     "name": "relayCall",
     "outputs": [],
     "signature": "relayCall(address,address,bytes,uint256,uint256,uint256,uint256,bytes,bytes)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -1446,8 +1508,8 @@
         "type": "bytes4"
       },
       {
-        "name": "status",
         "internalType": "RelayCallStatus",
+        "name": "status",
         "type": "uint8"
       },
       {
@@ -1477,6 +1539,7 @@
       }
     ],
     "signature": "requiredGas(uint256)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -1504,6 +1567,7 @@
       }
     ],
     "signature": "maxPossibleCharge(uint256,uint256,uint256)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -1529,6 +1593,7 @@
     "name": "penalizeRepeatedNonce",
     "outputs": [],
     "signature": "penalizeRepeatedNonce(bytes,bytes,bytes,bytes)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -1546,6 +1611,7 @@
     "name": "penalizeIllegalTransaction",
     "outputs": [],
     "signature": "penalizeIllegalTransaction(bytes,bytes)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -1587,6 +1653,7 @@
       }
     ],
     "signature": "getNonce(address)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -1595,6 +1662,7 @@
     "name": "initialize",
     "outputs": [],
     "signature": "initialize()",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -1609,6 +1677,7 @@
       }
     ],
     "signature": "getHubAddr()",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -1623,6 +1692,7 @@
       }
     ],
     "signature": "relayHubVersion()",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -1640,6 +1710,7 @@
     "name": "_withdrawDeposits",
     "outputs": [],
     "signature": "_withdrawDeposits(uint256,address)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -1662,6 +1733,7 @@
       }
     ],
     "signature": "transfer(address,uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -1684,6 +1756,7 @@
       }
     ],
     "signature": "approve(address,uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -1710,6 +1783,7 @@
       }
     ],
     "signature": "transferFrom(address,address,uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -1724,6 +1798,7 @@
       }
     ],
     "signature": "totalSupply()",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -1743,6 +1818,7 @@
       }
     ],
     "signature": "balanceOf(address)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -1766,6 +1842,7 @@
       }
     ],
     "signature": "allowance(address,address)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -1820,6 +1897,7 @@
     "name": "initialize",
     "outputs": [],
     "signature": "initialize()",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -1837,8 +1915,8 @@
     "name": "mulUInt",
     "outputs": [
       {
-        "name": "ret_0",
         "internalType": "enum MathError",
+        "name": "ret_0",
         "type": "uint8"
       },
       {
@@ -1847,6 +1925,7 @@
       }
     ],
     "signature": "mulUInt(uint256,uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -1864,8 +1943,8 @@
     "name": "divUInt",
     "outputs": [
       {
-        "name": "ret_0",
         "internalType": "enum MathError",
+        "name": "ret_0",
         "type": "uint8"
       },
       {
@@ -1874,6 +1953,7 @@
       }
     ],
     "signature": "divUInt(uint256,uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -1891,8 +1971,8 @@
     "name": "subUInt",
     "outputs": [
       {
-        "name": "ret_0",
         "internalType": "enum MathError",
+        "name": "ret_0",
         "type": "uint8"
       },
       {
@@ -1901,6 +1981,7 @@
       }
     ],
     "signature": "subUInt(uint256,uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -1918,8 +1999,8 @@
     "name": "addUInt",
     "outputs": [
       {
-        "name": "ret_0",
         "internalType": "enum MathError",
+        "name": "ret_0",
         "type": "uint8"
       },
       {
@@ -1928,6 +2009,7 @@
       }
     ],
     "signature": "addUInt(uint256,uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -1949,8 +2031,8 @@
     "name": "addThenSubUInt",
     "outputs": [
       {
-        "name": "ret_0",
         "internalType": "enum MathError",
+        "name": "ret_0",
         "type": "uint8"
       },
       {
@@ -1959,6 +2041,7 @@
       }
     ],
     "signature": "addThenSubUInt(uint256,uint256,uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -1976,85 +2059,88 @@
     "name": "getExp",
     "outputs": [
       {
-        "name": "ret_0",
         "internalType": "enum MathError",
+        "name": "ret_0",
         "type": "uint8"
       },
       {
-        "name": "memory",
         "internalType": "struct Exp",
+        "name": "memory",
         "type": "tuple"
       }
     ],
     "signature": "getExp(uint256,uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
     "encoding": "0xd1c254ae",
     "inputs": [
       {
-        "name": "a",
         "internalType": "struct Exp",
+        "name": "a",
         "type": "tuple"
       },
       {
-        "name": "b",
         "internalType": "struct Exp",
+        "name": "b",
         "type": "tuple"
       }
     ],
     "name": "addExp",
     "outputs": [
       {
-        "name": "ret_0",
         "internalType": "enum MathError",
+        "name": "ret_0",
         "type": "uint8"
       },
       {
-        "name": "memory",
         "internalType": "struct Exp",
+        "name": "memory",
         "type": "tuple"
       }
     ],
     "signature": "addExp(tuple,tuple)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
     "encoding": "0xd23e7096",
     "inputs": [
       {
-        "name": "a",
         "internalType": "struct Exp",
+        "name": "a",
         "type": "tuple"
       },
       {
-        "name": "b",
         "internalType": "struct Exp",
+        "name": "b",
         "type": "tuple"
       }
     ],
     "name": "subExp",
     "outputs": [
       {
-        "name": "ret_0",
         "internalType": "enum MathError",
+        "name": "ret_0",
         "type": "uint8"
       },
       {
-        "name": "memory",
         "internalType": "struct Exp",
+        "name": "memory",
         "type": "tuple"
       }
     ],
     "signature": "subExp(tuple,tuple)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
     "encoding": "0xe6247a38",
     "inputs": [
       {
-        "name": "a",
         "internalType": "struct Exp",
+        "name": "a",
         "type": "tuple"
       },
       {
@@ -2065,25 +2151,26 @@
     "name": "mulScalar",
     "outputs": [
       {
-        "name": "ret_0",
         "internalType": "enum MathError",
+        "name": "ret_0",
         "type": "uint8"
       },
       {
-        "name": "memory",
         "internalType": "struct Exp",
+        "name": "memory",
         "type": "tuple"
       }
     ],
     "signature": "mulScalar(tuple,uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
     "encoding": "0x185c070f",
     "inputs": [
       {
-        "name": "a",
         "internalType": "struct Exp",
+        "name": "a",
         "type": "tuple"
       },
       {
@@ -2094,8 +2181,8 @@
     "name": "mulScalarTruncate",
     "outputs": [
       {
-        "name": "ret_0",
         "internalType": "enum MathError",
+        "name": "ret_0",
         "type": "uint8"
       },
       {
@@ -2104,14 +2191,15 @@
       }
     ],
     "signature": "mulScalarTruncate(tuple,uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
     "encoding": "0xfe799fc9",
     "inputs": [
       {
-        "name": "a",
         "internalType": "struct Exp",
+        "name": "a",
         "type": "tuple"
       },
       {
@@ -2126,8 +2214,8 @@
     "name": "mulScalarTruncateAddUInt",
     "outputs": [
       {
-        "name": "ret_0",
         "internalType": "enum MathError",
+        "name": "ret_0",
         "type": "uint8"
       },
       {
@@ -2136,14 +2224,15 @@
       }
     ],
     "signature": "mulScalarTruncateAddUInt(tuple,uint256,uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
     "encoding": "0x69fbe45e",
     "inputs": [
       {
-        "name": "a",
         "internalType": "struct Exp",
+        "name": "a",
         "type": "tuple"
       },
       {
@@ -2154,17 +2243,18 @@
     "name": "divScalar",
     "outputs": [
       {
-        "name": "ret_0",
         "internalType": "enum MathError",
+        "name": "ret_0",
         "type": "uint8"
       },
       {
-        "name": "memory",
         "internalType": "struct Exp",
+        "name": "memory",
         "type": "tuple"
       }
     ],
     "signature": "divScalar(tuple,uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -2175,25 +2265,26 @@
         "type": "uint256"
       },
       {
-        "name": "divisor",
         "internalType": "struct Exp",
+        "name": "divisor",
         "type": "tuple"
       }
     ],
     "name": "divScalarByExp",
     "outputs": [
       {
-        "name": "ret_0",
         "internalType": "enum MathError",
+        "name": "ret_0",
         "type": "uint8"
       },
       {
-        "name": "memory",
         "internalType": "struct Exp",
+        "name": "memory",
         "type": "tuple"
       }
     ],
     "signature": "divScalarByExp(uint256,Exp)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -2204,16 +2295,16 @@
         "type": "uint256"
       },
       {
-        "name": "divisor",
         "internalType": "struct Exp",
+        "name": "divisor",
         "type": "tuple"
       }
     ],
     "name": "divScalarByExpTruncate",
     "outputs": [
       {
-        "name": "ret_0",
         "internalType": "enum MathError",
+        "name": "ret_0",
         "type": "uint8"
       },
       {
@@ -2222,36 +2313,38 @@
       }
     ],
     "signature": "divScalarByExpTruncate(uint256,Exp)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
     "encoding": "0x9ba9c354",
     "inputs": [
       {
-        "name": "a",
         "internalType": "struct Exp",
+        "name": "a",
         "type": "tuple"
       },
       {
-        "name": "b",
         "internalType": "struct Exp",
+        "name": "b",
         "type": "tuple"
       }
     ],
     "name": "mulExp",
     "outputs": [
       {
-        "name": "ret_0",
         "internalType": "enum MathError",
+        "name": "ret_0",
         "type": "uint8"
       },
       {
-        "name": "memory",
         "internalType": "struct Exp",
+        "name": "memory",
         "type": "tuple"
       }
     ],
     "signature": "mulExp(tuple,tuple)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -2269,90 +2362,93 @@
     "name": "mulExp",
     "outputs": [
       {
-        "name": "ret_0",
         "internalType": "enum MathError",
+        "name": "ret_0",
         "type": "uint8"
       },
       {
-        "name": "memory",
         "internalType": "struct Exp",
+        "name": "memory",
         "type": "tuple"
       }
     ],
     "signature": "mulExp(uint256,uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
     "encoding": "0xe19ccb27",
     "inputs": [
       {
+        "internalType": "struct Exp",
         "name": "a",
-        "internalType": "struct Exp",
         "type": "tuple"
       },
       {
+        "internalType": "struct Exp",
         "name": "b",
-        "internalType": "struct Exp",
         "type": "tuple"
       },
       {
-        "name": "c",
         "internalType": "struct Exp",
+        "name": "c",
         "type": "tuple"
       }
     ],
     "name": "mulExp3",
     "outputs": [
       {
-        "name": "ret_0",
         "internalType": "enum MathError",
+        "name": "ret_0",
         "type": "uint8"
       },
       {
-        "name": "memory",
         "internalType": "struct Exp",
+        "name": "memory",
         "type": "tuple"
       }
     ],
     "signature": "mulExp3(tuple,Exp,Exp)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
     "encoding": "0x943ab3fd",
     "inputs": [
       {
-        "name": "a",
         "internalType": "struct Exp",
+        "name": "a",
         "type": "tuple"
       },
       {
-        "name": "b",
         "internalType": "struct Exp",
+        "name": "b",
         "type": "tuple"
       }
     ],
     "name": "divExp",
     "outputs": [
       {
-        "name": "ret_0",
         "internalType": "enum MathError",
+        "name": "ret_0",
         "type": "uint8"
       },
       {
-        "name": "memory",
         "internalType": "struct Exp",
+        "name": "memory",
         "type": "tuple"
       }
     ],
     "signature": "divExp(tuple,tuple)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
     "encoding": "0xabe932d9",
     "inputs": [
       {
-        "name": "exp",
         "internalType": "struct Exp",
+        "name": "exp",
         "type": "tuple"
       }
     ],
@@ -2364,19 +2460,20 @@
       }
     ],
     "signature": "truncate(tuple)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
     "encoding": "0xd2196cd2",
     "inputs": [
       {
-        "name": "left",
         "internalType": "struct Exp",
+        "name": "left",
         "type": "tuple"
       },
       {
-        "name": "right",
         "internalType": "struct Exp",
+        "name": "right",
         "type": "tuple"
       }
     ],
@@ -2388,19 +2485,20 @@
       }
     ],
     "signature": "lessThanExp(tuple,tuple)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
     "encoding": "0xf96d822c",
     "inputs": [
       {
-        "name": "left",
         "internalType": "struct Exp",
+        "name": "left",
         "type": "tuple"
       },
       {
-        "name": "right",
         "internalType": "struct Exp",
+        "name": "right",
         "type": "tuple"
       }
     ],
@@ -2412,19 +2510,20 @@
       }
     ],
     "signature": "lessThanOrEqualExp(tuple,tuple)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
     "encoding": "0x8732ffe7",
     "inputs": [
       {
-        "name": "left",
         "internalType": "struct Exp",
+        "name": "left",
         "type": "tuple"
       },
       {
-        "name": "right",
         "internalType": "struct Exp",
+        "name": "right",
         "type": "tuple"
       }
     ],
@@ -2436,14 +2535,15 @@
       }
     ],
     "signature": "greaterThanExp(tuple,tuple)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
     "encoding": "0x6c13c023",
     "inputs": [
       {
-        "name": "value",
         "internalType": "struct Exp",
+        "name": "value",
         "type": "tuple"
       }
     ],
@@ -2455,6 +2555,7 @@
       }
     ],
     "signature": "isZeroExp(tuple)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -2474,6 +2575,7 @@
       }
     ],
     "signature": "balanceOf(address)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -2488,6 +2590,7 @@
       }
     ],
     "signature": "isCToken()",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -2510,6 +2613,7 @@
       }
     ],
     "signature": "approve(address,uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -2528,6 +2632,7 @@
       }
     ],
     "signature": "balanceOfUnderlying(address)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -2541,6 +2646,7 @@
       }
     ],
     "signature": "exchangeRateCurrent()",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -2559,6 +2665,7 @@
       }
     ],
     "signature": "mint(uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -2577,6 +2684,7 @@
       }
     ],
     "signature": "redeem(uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -2595,6 +2703,7 @@
       }
     ],
     "signature": "redeemUnderlying(uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -2617,6 +2726,7 @@
       }
     ],
     "signature": "transfer(address,uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -2643,6 +2753,7 @@
       }
     ],
     "signature": "transferFrom(address,address,uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -2675,6 +2786,7 @@
     "name": "initialize",
     "outputs": [],
     "signature": "initialize(address)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -2689,6 +2801,7 @@
       }
     ],
     "signature": "owner()",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -2703,6 +2816,7 @@
       }
     ],
     "signature": "isOwner()",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -2716,6 +2830,7 @@
     "name": "transferOwnership",
     "outputs": [],
     "signature": "transferOwnership(address)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -2729,14 +2844,15 @@
     "name": "_transferOwnership",
     "outputs": [],
     "signature": "_transferOwnership(address)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
     "encoding": "0xb782197a",
     "inputs": [
       {
-        "name": "role",
         "internalType": "struct Role",
+        "name": "role",
         "type": "tuple"
       },
       {
@@ -2747,14 +2863,15 @@
     "name": "add",
     "outputs": [],
     "signature": "add(tuple,address)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
     "encoding": "0x3e59fb33",
     "inputs": [
       {
-        "name": "role",
         "internalType": "struct Role",
+        "name": "role",
         "type": "tuple"
       },
       {
@@ -2765,6 +2882,7 @@
     "name": "remove",
     "outputs": [],
     "signature": "remove(tuple,address)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -2772,8 +2890,8 @@
     "encoding": "0xced709a2",
     "inputs": [
       {
-        "name": "role",
         "internalType": "struct Role",
+        "name": "role",
         "type": "tuple"
       },
       {
@@ -2789,6 +2907,7 @@
       }
     ],
     "signature": "has(tuple,address)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -2830,6 +2949,7 @@
     "name": "initialize",
     "outputs": [],
     "signature": "initialize(address)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -2849,6 +2969,7 @@
       }
     ],
     "signature": "isPauser(address)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -2862,6 +2983,7 @@
     "name": "addPauser",
     "outputs": [],
     "signature": "addPauser(address)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -2875,6 +2997,7 @@
     "name": "_addPauser",
     "outputs": [],
     "signature": "_addPauser(address)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -2888,6 +3011,7 @@
     "name": "_removePauser",
     "outputs": [],
     "signature": "_removePauser(address)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -2927,6 +3051,7 @@
     "name": "initialize",
     "outputs": [],
     "signature": "initialize(address)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -2941,6 +3066,7 @@
       }
     ],
     "signature": "paused()",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -2949,6 +3075,7 @@
     "name": "pause",
     "outputs": [],
     "signature": "pause()",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -2957,6 +3084,7 @@
     "name": "unpause",
     "outputs": [],
     "signature": "unpause()",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -2998,6 +3126,7 @@
     "name": "whitelistCToken",
     "outputs": [],
     "signature": "whitelistCToken(address)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -3011,6 +3140,7 @@
     "name": "discardCToken",
     "outputs": [],
     "signature": "discardCToken(address)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -3030,6 +3160,7 @@
       }
     ],
     "signature": "isCToken(address)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -3148,6 +3279,7 @@
       }
     ],
     "signature": "balanceOf(uint256,address)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -3195,6 +3327,7 @@
       }
     ],
     "signature": "getStream(uint256)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -3229,6 +3362,7 @@
       }
     ],
     "signature": "createStream(address,uint256,address,uint256,uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -3251,6 +3385,7 @@
       }
     ],
     "signature": "withdrawFromStream(uint256,uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -3269,6 +3404,7 @@
       }
     ],
     "signature": "cancelStream(uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -3367,6 +3503,7 @@
     "name": "updateFee",
     "outputs": [],
     "signature": "updateFee(uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -3384,6 +3521,7 @@
     "name": "takeEarnings",
     "outputs": [],
     "signature": "takeEarnings(address,uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -3398,6 +3536,7 @@
     "name": "getStream",
     "outputs": [],
     "signature": "getStream(uint256)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -3412,6 +3551,7 @@
     "name": "deltaOf",
     "outputs": [],
     "signature": "deltaOf(uint256)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -3430,6 +3570,7 @@
     "name": "balanceOf",
     "outputs": [],
     "signature": "balanceOf(uint256,address)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -3449,6 +3590,7 @@
       }
     ],
     "signature": "isCompoundingStream(uint256)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -3463,6 +3605,7 @@
     "name": "getCompoundingStream",
     "outputs": [],
     "signature": "getCompoundingStream(uint256)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -3480,6 +3623,7 @@
     "name": "interestOf",
     "outputs": [],
     "signature": "interestOf(uint256,uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -3499,6 +3643,7 @@
       }
     ],
     "signature": "getEarnings(address)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -3533,6 +3678,7 @@
       }
     ],
     "signature": "createStream(address,uint256,address,uint256,uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -3575,6 +3721,7 @@
       }
     ],
     "signature": "createCompoundingStream(address,uint256,address,uint256,uint256,uint256,uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -3592,6 +3739,7 @@
     "name": "withdrawFromStream",
     "outputs": [],
     "signature": "withdrawFromStream(uint256,uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -3605,6 +3753,7 @@
     "name": "cancelStream",
     "outputs": [],
     "signature": "cancelStream(uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -3622,6 +3771,7 @@
     "name": "withdrawFromStreamInternal",
     "outputs": [],
     "signature": "withdrawFromStreamInternal(uint256,uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -3639,6 +3789,7 @@
     "name": "withdrawFromCompoundingStreamInternal",
     "outputs": [],
     "signature": "withdrawFromCompoundingStreamInternal(uint256,uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -3652,6 +3803,7 @@
     "name": "cancelStreamInternal",
     "outputs": [],
     "signature": "cancelStreamInternal(uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -3665,6 +3817,7 @@
     "name": "cancelCompoundingStreamInternal",
     "outputs": [],
     "signature": "cancelCompoundingStreamInternal(uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -3758,6 +3911,7 @@
     "name": "initialize",
     "outputs": [],
     "signature": "initialize(address,address,address)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -3775,6 +3929,7 @@
     "name": "whitelistRelayer",
     "outputs": [],
     "signature": "whitelistRelayer(address,uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -3792,6 +3947,7 @@
     "name": "discardRelayer",
     "outputs": [],
     "signature": "discardRelayer(address,uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -3847,6 +4003,7 @@
       }
     ],
     "signature": "acceptRelayedCall(address,address,bytes,uint256,uint256,uint256,uint256,bytes,uint256)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -3861,6 +4018,7 @@
     "name": "getSalary",
     "outputs": [],
     "signature": "getSalary(uint256)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -3895,6 +4053,7 @@
       }
     ],
     "signature": "createSalary(address,uint256,address,uint256,uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -3937,6 +4096,7 @@
       }
     ],
     "signature": "createCompoundingSalary(address,uint256,address,uint256,uint256,uint256,uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -3954,6 +4114,7 @@
     "name": "withdrawFromSalary",
     "outputs": [],
     "signature": "withdrawFromSalary(uint256,uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -3967,6 +4128,7 @@
     "name": "cancelSalary",
     "outputs": [],
     "signature": "cancelSalary(uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -3989,6 +4151,7 @@
       }
     ],
     "signature": "transfer(address,uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -4011,6 +4174,7 @@
       }
     ],
     "signature": "approve(address,uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -4037,6 +4201,7 @@
       }
     ],
     "signature": "transferFrom(address,address,uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -4051,6 +4216,7 @@
       }
     ],
     "signature": "totalSupply()",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -4070,6 +4236,7 @@
       }
     ],
     "signature": "balanceOf(address)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -4093,6 +4260,7 @@
       }
     ],
     "signature": "allowance(address,address)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -4153,6 +4321,7 @@
       }
     ],
     "signature": "isConstructor()",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -4161,6 +4330,7 @@
     "name": "initialize",
     "outputs": [],
     "signature": "initialize()",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -4178,8 +4348,8 @@
     "name": "mulUInt",
     "outputs": [
       {
-        "name": "ret_0",
         "internalType": "enum MathError",
+        "name": "ret_0",
         "type": "uint8"
       },
       {
@@ -4188,6 +4358,7 @@
       }
     ],
     "signature": "mulUInt(uint256,uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -4205,8 +4376,8 @@
     "name": "divUInt",
     "outputs": [
       {
-        "name": "ret_0",
         "internalType": "enum MathError",
+        "name": "ret_0",
         "type": "uint8"
       },
       {
@@ -4215,6 +4386,7 @@
       }
     ],
     "signature": "divUInt(uint256,uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -4232,8 +4404,8 @@
     "name": "subUInt",
     "outputs": [
       {
-        "name": "ret_0",
         "internalType": "enum MathError",
+        "name": "ret_0",
         "type": "uint8"
       },
       {
@@ -4242,6 +4414,7 @@
       }
     ],
     "signature": "subUInt(uint256,uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -4259,8 +4432,8 @@
     "name": "addUInt",
     "outputs": [
       {
-        "name": "ret_0",
         "internalType": "enum MathError",
+        "name": "ret_0",
         "type": "uint8"
       },
       {
@@ -4269,6 +4442,7 @@
       }
     ],
     "signature": "addUInt(uint256,uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -4290,8 +4464,8 @@
     "name": "addThenSubUInt",
     "outputs": [
       {
-        "name": "ret_0",
         "internalType": "enum MathError",
+        "name": "ret_0",
         "type": "uint8"
       },
       {
@@ -4300,6 +4474,7 @@
       }
     ],
     "signature": "addThenSubUInt(uint256,uint256,uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -4317,85 +4492,88 @@
     "name": "getExp",
     "outputs": [
       {
-        "name": "ret_0",
         "internalType": "enum MathError",
+        "name": "ret_0",
         "type": "uint8"
       },
       {
-        "name": "memory",
         "internalType": "struct Exp",
+        "name": "memory",
         "type": "tuple"
       }
     ],
     "signature": "getExp(uint256,uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
     "encoding": "0xd1c254ae",
     "inputs": [
       {
-        "name": "a",
         "internalType": "struct Exp",
+        "name": "a",
         "type": "tuple"
       },
       {
-        "name": "b",
         "internalType": "struct Exp",
+        "name": "b",
         "type": "tuple"
       }
     ],
     "name": "addExp",
     "outputs": [
       {
-        "name": "ret_0",
         "internalType": "enum MathError",
+        "name": "ret_0",
         "type": "uint8"
       },
       {
-        "name": "memory",
         "internalType": "struct Exp",
+        "name": "memory",
         "type": "tuple"
       }
     ],
     "signature": "addExp(tuple,tuple)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
     "encoding": "0xd23e7096",
     "inputs": [
       {
-        "name": "a",
         "internalType": "struct Exp",
+        "name": "a",
         "type": "tuple"
       },
       {
-        "name": "b",
         "internalType": "struct Exp",
+        "name": "b",
         "type": "tuple"
       }
     ],
     "name": "subExp",
     "outputs": [
       {
-        "name": "ret_0",
         "internalType": "enum MathError",
+        "name": "ret_0",
         "type": "uint8"
       },
       {
-        "name": "memory",
         "internalType": "struct Exp",
+        "name": "memory",
         "type": "tuple"
       }
     ],
     "signature": "subExp(tuple,tuple)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
     "encoding": "0xe6247a38",
     "inputs": [
       {
-        "name": "a",
         "internalType": "struct Exp",
+        "name": "a",
         "type": "tuple"
       },
       {
@@ -4406,25 +4584,26 @@
     "name": "mulScalar",
     "outputs": [
       {
-        "name": "ret_0",
         "internalType": "enum MathError",
+        "name": "ret_0",
         "type": "uint8"
       },
       {
-        "name": "memory",
         "internalType": "struct Exp",
+        "name": "memory",
         "type": "tuple"
       }
     ],
     "signature": "mulScalar(tuple,uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
     "encoding": "0x185c070f",
     "inputs": [
       {
-        "name": "a",
         "internalType": "struct Exp",
+        "name": "a",
         "type": "tuple"
       },
       {
@@ -4435,8 +4614,8 @@
     "name": "mulScalarTruncate",
     "outputs": [
       {
-        "name": "ret_0",
         "internalType": "enum MathError",
+        "name": "ret_0",
         "type": "uint8"
       },
       {
@@ -4445,14 +4624,15 @@
       }
     ],
     "signature": "mulScalarTruncate(tuple,uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
     "encoding": "0xfe799fc9",
     "inputs": [
       {
-        "name": "a",
         "internalType": "struct Exp",
+        "name": "a",
         "type": "tuple"
       },
       {
@@ -4467,8 +4647,8 @@
     "name": "mulScalarTruncateAddUInt",
     "outputs": [
       {
-        "name": "ret_0",
         "internalType": "enum MathError",
+        "name": "ret_0",
         "type": "uint8"
       },
       {
@@ -4477,14 +4657,15 @@
       }
     ],
     "signature": "mulScalarTruncateAddUInt(tuple,uint256,uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
     "encoding": "0x69fbe45e",
     "inputs": [
       {
-        "name": "a",
         "internalType": "struct Exp",
+        "name": "a",
         "type": "tuple"
       },
       {
@@ -4495,17 +4676,18 @@
     "name": "divScalar",
     "outputs": [
       {
-        "name": "ret_0",
         "internalType": "enum MathError",
+        "name": "ret_0",
         "type": "uint8"
       },
       {
-        "name": "memory",
         "internalType": "struct Exp",
+        "name": "memory",
         "type": "tuple"
       }
     ],
     "signature": "divScalar(tuple,uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -4516,25 +4698,26 @@
         "type": "uint256"
       },
       {
-        "name": "divisor",
         "internalType": "struct Exp",
+        "name": "divisor",
         "type": "tuple"
       }
     ],
     "name": "divScalarByExp",
     "outputs": [
       {
-        "name": "ret_0",
         "internalType": "enum MathError",
+        "name": "ret_0",
         "type": "uint8"
       },
       {
-        "name": "memory",
         "internalType": "struct Exp",
+        "name": "memory",
         "type": "tuple"
       }
     ],
     "signature": "divScalarByExp(uint256,Exp)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -4545,16 +4728,16 @@
         "type": "uint256"
       },
       {
-        "name": "divisor",
         "internalType": "struct Exp",
+        "name": "divisor",
         "type": "tuple"
       }
     ],
     "name": "divScalarByExpTruncate",
     "outputs": [
       {
-        "name": "ret_0",
         "internalType": "enum MathError",
+        "name": "ret_0",
         "type": "uint8"
       },
       {
@@ -4563,36 +4746,38 @@
       }
     ],
     "signature": "divScalarByExpTruncate(uint256,Exp)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
     "encoding": "0x9ba9c354",
     "inputs": [
       {
-        "name": "a",
         "internalType": "struct Exp",
+        "name": "a",
         "type": "tuple"
       },
       {
-        "name": "b",
         "internalType": "struct Exp",
+        "name": "b",
         "type": "tuple"
       }
     ],
     "name": "mulExp",
     "outputs": [
       {
-        "name": "ret_0",
         "internalType": "enum MathError",
+        "name": "ret_0",
         "type": "uint8"
       },
       {
-        "name": "memory",
         "internalType": "struct Exp",
+        "name": "memory",
         "type": "tuple"
       }
     ],
     "signature": "mulExp(tuple,tuple)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -4610,90 +4795,93 @@
     "name": "mulExp",
     "outputs": [
       {
-        "name": "ret_0",
         "internalType": "enum MathError",
+        "name": "ret_0",
         "type": "uint8"
       },
       {
-        "name": "memory",
         "internalType": "struct Exp",
+        "name": "memory",
         "type": "tuple"
       }
     ],
     "signature": "mulExp(uint256,uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
     "encoding": "0xe19ccb27",
     "inputs": [
       {
+        "internalType": "struct Exp",
         "name": "a",
-        "internalType": "struct Exp",
         "type": "tuple"
       },
       {
+        "internalType": "struct Exp",
         "name": "b",
-        "internalType": "struct Exp",
         "type": "tuple"
       },
       {
-        "name": "c",
         "internalType": "struct Exp",
+        "name": "c",
         "type": "tuple"
       }
     ],
     "name": "mulExp3",
     "outputs": [
       {
-        "name": "ret_0",
         "internalType": "enum MathError",
+        "name": "ret_0",
         "type": "uint8"
       },
       {
-        "name": "memory",
         "internalType": "struct Exp",
+        "name": "memory",
         "type": "tuple"
       }
     ],
     "signature": "mulExp3(tuple,Exp,Exp)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
     "encoding": "0x943ab3fd",
     "inputs": [
       {
-        "name": "a",
         "internalType": "struct Exp",
+        "name": "a",
         "type": "tuple"
       },
       {
-        "name": "b",
         "internalType": "struct Exp",
+        "name": "b",
         "type": "tuple"
       }
     ],
     "name": "divExp",
     "outputs": [
       {
-        "name": "ret_0",
         "internalType": "enum MathError",
+        "name": "ret_0",
         "type": "uint8"
       },
       {
-        "name": "memory",
         "internalType": "struct Exp",
+        "name": "memory",
         "type": "tuple"
       }
     ],
     "signature": "divExp(tuple,tuple)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
     "encoding": "0xabe932d9",
     "inputs": [
       {
-        "name": "exp",
         "internalType": "struct Exp",
+        "name": "exp",
         "type": "tuple"
       }
     ],
@@ -4705,19 +4893,20 @@
       }
     ],
     "signature": "truncate(tuple)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
     "encoding": "0xd2196cd2",
     "inputs": [
       {
-        "name": "left",
         "internalType": "struct Exp",
+        "name": "left",
         "type": "tuple"
       },
       {
-        "name": "right",
         "internalType": "struct Exp",
+        "name": "right",
         "type": "tuple"
       }
     ],
@@ -4729,19 +4918,20 @@
       }
     ],
     "signature": "lessThanExp(tuple,tuple)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
     "encoding": "0xf96d822c",
     "inputs": [
       {
-        "name": "left",
         "internalType": "struct Exp",
+        "name": "left",
         "type": "tuple"
       },
       {
-        "name": "right",
         "internalType": "struct Exp",
+        "name": "right",
         "type": "tuple"
       }
     ],
@@ -4753,19 +4943,20 @@
       }
     ],
     "signature": "lessThanOrEqualExp(tuple,tuple)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
     "encoding": "0x8732ffe7",
     "inputs": [
       {
-        "name": "left",
         "internalType": "struct Exp",
+        "name": "left",
         "type": "tuple"
       },
       {
-        "name": "right",
         "internalType": "struct Exp",
+        "name": "right",
         "type": "tuple"
       }
     ],
@@ -4777,14 +4968,15 @@
       }
     ],
     "signature": "greaterThanExp(tuple,tuple)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
     "encoding": "0x6c13c023",
     "inputs": [
       {
-        "name": "value",
         "internalType": "struct Exp",
+        "name": "value",
         "type": "tuple"
       }
     ],
@@ -4796,6 +4988,7 @@
       }
     ],
     "signature": "isZeroExp(tuple)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -4815,6 +5008,7 @@
       }
     ],
     "signature": "balanceOf(address)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -4829,6 +5023,7 @@
       }
     ],
     "signature": "isCToken()",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -4851,6 +5046,7 @@
       }
     ],
     "signature": "approve(address,uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -4869,6 +5065,7 @@
       }
     ],
     "signature": "balanceOfUnderlying(address)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -4882,6 +5079,7 @@
       }
     ],
     "signature": "exchangeRateCurrent()",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -4900,6 +5098,7 @@
       }
     ],
     "signature": "mint(uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -4918,6 +5117,7 @@
       }
     ],
     "signature": "redeem(uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -4936,6 +5136,7 @@
       }
     ],
     "signature": "redeemUnderlying(uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -4958,6 +5159,7 @@
       }
     ],
     "signature": "transfer(address,uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -4984,6 +5186,7 @@
       }
     ],
     "signature": "transferFrom(address,address,uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -4998,6 +5201,7 @@
       }
     ],
     "signature": "_msgSender()",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -5012,6 +5216,7 @@
       }
     ],
     "signature": "_msgData()",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -5044,6 +5249,7 @@
     "name": "initialize",
     "outputs": [],
     "signature": "initialize(address)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -5058,6 +5264,7 @@
       }
     ],
     "signature": "owner()",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -5072,6 +5279,7 @@
       }
     ],
     "signature": "isOwner()",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -5085,6 +5293,7 @@
     "name": "transferOwnership",
     "outputs": [],
     "signature": "transferOwnership(address)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -5098,14 +5307,15 @@
     "name": "_transferOwnership",
     "outputs": [],
     "signature": "_transferOwnership(address)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
     "encoding": "0xb782197a",
     "inputs": [
       {
-        "name": "role",
         "internalType": "struct Role",
+        "name": "role",
         "type": "tuple"
       },
       {
@@ -5116,14 +5326,15 @@
     "name": "add",
     "outputs": [],
     "signature": "add(tuple,address)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
     "encoding": "0x3e59fb33",
     "inputs": [
       {
-        "name": "role",
         "internalType": "struct Role",
+        "name": "role",
         "type": "tuple"
       },
       {
@@ -5134,6 +5345,7 @@
     "name": "remove",
     "outputs": [],
     "signature": "remove(tuple,address)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -5141,8 +5353,8 @@
     "encoding": "0xced709a2",
     "inputs": [
       {
-        "name": "role",
         "internalType": "struct Role",
+        "name": "role",
         "type": "tuple"
       },
       {
@@ -5158,6 +5370,7 @@
       }
     ],
     "signature": "has(tuple,address)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -5199,6 +5412,7 @@
     "name": "initialize",
     "outputs": [],
     "signature": "initialize(address)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -5218,6 +5432,7 @@
       }
     ],
     "signature": "isPauser(address)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -5231,6 +5446,7 @@
     "name": "addPauser",
     "outputs": [],
     "signature": "addPauser(address)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -5244,6 +5460,7 @@
     "name": "_addPauser",
     "outputs": [],
     "signature": "_addPauser(address)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -5257,6 +5474,7 @@
     "name": "_removePauser",
     "outputs": [],
     "signature": "_removePauser(address)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -5296,6 +5514,7 @@
     "name": "initialize",
     "outputs": [],
     "signature": "initialize(address)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -5310,6 +5529,7 @@
       }
     ],
     "signature": "paused()",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -5318,6 +5538,7 @@
     "name": "pause",
     "outputs": [],
     "signature": "pause()",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -5326,6 +5547,7 @@
     "name": "unpause",
     "outputs": [],
     "signature": "unpause()",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -5367,6 +5589,7 @@
     "name": "whitelistCToken",
     "outputs": [],
     "signature": "whitelistCToken(address)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -5380,6 +5603,7 @@
     "name": "discardCToken",
     "outputs": [],
     "signature": "discardCToken(address)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -5399,6 +5623,7 @@
       }
     ],
     "signature": "isCToken(address)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -5517,6 +5742,7 @@
       }
     ],
     "signature": "balanceOf(uint256,address)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -5564,6 +5790,7 @@
       }
     ],
     "signature": "getStream(uint256)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -5598,6 +5825,7 @@
       }
     ],
     "signature": "createStream(address,uint256,address,uint256,uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -5620,6 +5848,7 @@
       }
     ],
     "signature": "withdrawFromStream(uint256,uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -5638,6 +5867,7 @@
       }
     ],
     "signature": "cancelStream(uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -5736,6 +5966,7 @@
     "name": "updateFee",
     "outputs": [],
     "signature": "updateFee(uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -5753,6 +5984,7 @@
     "name": "takeEarnings",
     "outputs": [],
     "signature": "takeEarnings(address,uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -5767,6 +5999,7 @@
     "name": "getStream",
     "outputs": [],
     "signature": "getStream(uint256)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -5781,6 +6014,7 @@
     "name": "deltaOf",
     "outputs": [],
     "signature": "deltaOf(uint256)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -5799,6 +6033,7 @@
     "name": "balanceOf",
     "outputs": [],
     "signature": "balanceOf(uint256,address)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -5818,6 +6053,7 @@
       }
     ],
     "signature": "isCompoundingStream(uint256)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -5832,6 +6068,7 @@
     "name": "getCompoundingStream",
     "outputs": [],
     "signature": "getCompoundingStream(uint256)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -5849,6 +6086,7 @@
     "name": "interestOf",
     "outputs": [],
     "signature": "interestOf(uint256,uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -5868,6 +6106,7 @@
       }
     ],
     "signature": "getEarnings(address)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -5902,6 +6141,7 @@
       }
     ],
     "signature": "createStream(address,uint256,address,uint256,uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -5944,6 +6184,7 @@
       }
     ],
     "signature": "createCompoundingStream(address,uint256,address,uint256,uint256,uint256,uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -5961,6 +6202,7 @@
     "name": "withdrawFromStream",
     "outputs": [],
     "signature": "withdrawFromStream(uint256,uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -5974,6 +6216,7 @@
     "name": "cancelStream",
     "outputs": [],
     "signature": "cancelStream(uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -5991,6 +6234,7 @@
     "name": "withdrawFromStreamInternal",
     "outputs": [],
     "signature": "withdrawFromStreamInternal(uint256,uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -6008,6 +6252,7 @@
     "name": "withdrawFromCompoundingStreamInternal",
     "outputs": [],
     "signature": "withdrawFromCompoundingStreamInternal(uint256,uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -6021,6 +6266,7 @@
     "name": "cancelStreamInternal",
     "outputs": [],
     "signature": "cancelStreamInternal(uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -6034,6 +6280,7 @@
     "name": "cancelCompoundingStreamInternal",
     "outputs": [],
     "signature": "cancelCompoundingStreamInternal(uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   }
 ]

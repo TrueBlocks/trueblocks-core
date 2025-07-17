@@ -13,24 +13,28 @@ Format:  json
       "encoding": "0x013cf08b",
       "name": "proposals",
       "signature": "proposals(uint256)",
+      "stateMutability": "view",
       "type": "function"
     },
     {
       "encoding": "0x237e9492",
       "name": "executeProposal",
       "signature": "executeProposal(uint256,bytes)",
+      "stateMutability": "nonpayable",
       "type": "function"
     },
     {
       "encoding": "0x39106821",
       "name": "memberId",
       "signature": "memberId(address)",
+      "stateMutability": "view",
       "type": "function"
     },
     {
       "encoding": "0x400e3949",
       "name": "numProposals",
       "signature": "numProposals()",
+      "stateMutability": "view",
       "type": "function"
     },
     {
@@ -43,18 +47,21 @@ Format:  json
       "encoding": "0x50c34878",
       "name": "priceOfAUnicornInFinney",
       "signature": "priceOfAUnicornInFinney()",
+      "stateMutability": "view",
       "type": "function"
     },
     {
       "encoding": "0x522103fa",
       "name": "changeUnicorn",
       "signature": "changeUnicorn(uint256,address)",
+      "stateMutability": "nonpayable",
       "type": "function"
     },
     {
       "encoding": "0x5daf08ca",
       "name": "members",
       "signature": "members(uint256)",
+      "stateMutability": "view",
       "type": "function"
     },
     {
@@ -67,30 +74,35 @@ Format:  json
       "encoding": "0x69bd3436",
       "name": "debatingPeriodInMinutes",
       "signature": "debatingPeriodInMinutes()",
+      "stateMutability": "view",
       "type": "function"
     },
     {
       "encoding": "0x8160f0b5",
       "name": "minimumQuorum",
       "signature": "minimumQuorum()",
+      "stateMutability": "view",
       "type": "function"
     },
     {
       "encoding": "0x824dbc9a",
       "name": "changeMembership",
       "signature": "changeMembership(address,uint256,bool,string)",
+      "stateMutability": "nonpayable",
       "type": "function"
     },
     {
       "encoding": "0x83876bc9",
       "name": "newProposalInWei",
       "signature": "newProposalInWei(address,uint256,string,bytes)",
+      "stateMutability": "nonpayable",
       "type": "function"
     },
     {
       "encoding": "0x8da5cb5b",
       "name": "owner",
       "signature": "owner()",
+      "stateMutability": "view",
       "type": "function"
     },
     {
@@ -103,24 +115,28 @@ Format:  json
       "encoding": "0xaa02a90f",
       "name": "majorityMargin",
       "signature": "majorityMargin()",
+      "stateMutability": "view",
       "type": "function"
     },
     {
       "encoding": "0xb7782455",
       "name": "unicornAddress",
       "signature": "unicornAddress()",
+      "stateMutability": "view",
       "type": "function"
     },
     {
       "encoding": "0xb9f256cd",
       "name": "newProposalInEther",
       "signature": "newProposalInEther(address,uint256,string,bytes)",
+      "stateMutability": "nonpayable",
       "type": "function"
     },
     {
       "encoding": "0xbcca1fd3",
       "name": "changeVotingRules",
       "signature": "changeVotingRules(uint256,uint256,int256)",
+      "stateMutability": "nonpayable",
       "type": "function"
     },
     {
@@ -139,18 +155,21 @@ Format:  json
       "encoding": "0xd3c0715b",
       "name": "vote",
       "signature": "vote(uint256,bool,string)",
+      "stateMutability": "nonpayable",
       "type": "function"
     },
     {
       "encoding": "0xeceb2945",
       "name": "checkProposalCode",
       "signature": "checkProposalCode(uint256,address,uint256,bytes)",
+      "stateMutability": "view",
       "type": "function"
     },
     {
       "encoding": "0xf2fde38b",
       "name": "transferOwnership",
       "signature": "transferOwnership(address)",
+      "stateMutability": "nonpayable",
       "type": "function"
     }
   ],
