@@ -137,7 +137,6 @@ func clearCache() error {
 	// Addresses to decache from export
 	exportAddrs := []string{
 		"0x08166f02313feae18bb044e7877c808b55b5bf58",
-		"0x0ba45a8b5d5575935b8158a88c631e9f9c95a2e5",
 		"0x65b0d5e1dc0dee0704f53f660aa865c72e986fc7",
 		"0x868b8fd259abfcfdf9634c343593b34ef359641d",
 		"0xc713e5e149d5d0715dcd1c156a020976e7e56b88",
