@@ -51,7 +51,8 @@ func (s *Name) Model(chain, format string, verbose bool, extraOpts map[string]an
 	var order = []string{}
 
 	// EXISTING_CODE
-	if extraOpts["single"] == "tags" || extraOpts["single"] == "address" {
+	switch extraOpts["single"] {
+	case "tags", "address":
 		if extraOpts["single"] == "tags" {
 			model["tags"] = s.Tags
 		} else {
@@ -62,7 +63,7 @@ func (s *Name) Model(chain, format string, verbose bool, extraOpts map[string]an
 			Data:  model,
 			Order: order,
 		}
-	} else if extraOpts["single"] == "asset" {
+	case "asset":
 		model["address"] = s.Address.Hex()
 		model["symbol"] = s.Symbol
 		model["name"] = s.Name

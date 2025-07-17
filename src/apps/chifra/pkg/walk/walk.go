@@ -147,8 +147,6 @@ func IsCacheType(path string, cT CacheType, checkExt bool) bool {
 
 func GetRootPathFromCacheType(chain string, cacheType CacheType) string {
 	switch cacheType {
-	case Cache_Abis:
-		fallthrough
 	case Cache_Monitors:
 		fallthrough
 	case Cache_Names:
@@ -156,6 +154,8 @@ func GetRootPathFromCacheType(chain string, cacheType CacheType) string {
 	case Cache_Tmp:
 		return filepath.Join(config.PathToCache(chain), CacheTypeToFolder[cacheType])
 
+	case Cache_Abis:
+		return filepath.Join(config.PathToCache(chain), CacheTypeToFolder[cacheType])
 	case Cache_Blocks:
 		fallthrough
 	case Cache_Logs:
@@ -258,7 +258,7 @@ func CacheTypesFromStringSlice(strs []string) []CacheType {
 			haveit[str] = true
 			switch str {
 			case "abis":
-				types = append(types, Cache_Abis)
+				types = append(types, Cache_Abis) // ABIS_CACHE_PATH
 			case "monitors":
 				types = append(types, Cache_Monitors)
 			case "names":

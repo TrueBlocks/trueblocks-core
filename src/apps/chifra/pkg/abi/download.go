@@ -13,6 +13,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/debug"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
@@ -30,7 +31,7 @@ var AbiNotFound = `[{"name":"AbiNotFound","type":"function"}]`
 // downloadAbi downloads the ABI for the given address and saves it to the cache.
 // TODO: This function should be easy to replace with "ABI providers" (different services like
 // Sourcify or custom ones configured by the user)
-func (abiMap *SelectorSyncMap) downloadAbi(chain string, address base.Address) error {
+func (abiMap *SelectorSyncMap) downloadAbi(conn *rpc.Connection, address base.Address) error {
 	if address.IsZero() {
 		return errors.New("address is 0x0 in downloadAbi")
 	}
@@ -80,7 +81,7 @@ func (abiMap *SelectorSyncMap) downloadAbi(chain string, address base.Address) e
 		if _, err = reader.Seek(0, io.SeekStart); err != nil {
 			return err
 		}
-		if err = insertAbi(chain, address, reader); err != nil {
+		if err = insertAbiNative(conn, address, reader); err != nil {
 			return err
 		}
 		return nil
@@ -92,8 +93,8 @@ func (abiMap *SelectorSyncMap) downloadAbi(chain string, address base.Address) e
 		return err
 	}
 
-	// Write the body to file
-	if err = insertAbi(chain, address, reader); err != nil {
+	// Write the body to file using native caching
+	if err = insertAbiNative(conn, address, reader); err != nil {
 		return err
 	}
 

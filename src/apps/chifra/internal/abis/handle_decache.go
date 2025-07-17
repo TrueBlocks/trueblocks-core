@@ -12,7 +12,6 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/abi"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
@@ -68,7 +67,7 @@ func (opts *AbisOptions) HandleDecache(rCtx *output.RenderCtx) error {
 		}
 	} else {
 		for _, addr := range opts.Addrs {
-			path := filepath.Join(config.PathToCache(chain), "abis", addr+".json")
+			path := abi.PathToAbisCache(chain, addr+".json")
 			if file.FileExists(path) {
 				if err := os.Remove(path); err != nil {
 					logger.Warn(colors.Red+"Could not remove abi for address", addr, ":", err, "."+colors.Off)

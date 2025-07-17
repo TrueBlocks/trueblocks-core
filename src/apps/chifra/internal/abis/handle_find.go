@@ -19,7 +19,7 @@ import (
 	"github.com/ethereum/go-ethereum/crypto"
 	ants "github.com/panjf2000/ants/v2"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/abi"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/progress"
@@ -67,7 +67,8 @@ func (opts *AbisOptions) HandleFind(rCtx *output.RenderCtx) error {
 		defer checkOne.Release()
 
 		// TODO: UnchainedIndex --> This could be part of unchained index
-		sigFile := filepath.Join(config.PathToRootConfig(), "abis", "known-000", "uniq_sigs.tab")
+		// ABIS_KNOWN_SOURCE
+		sigFile := abi.PathToKnownAbis(filepath.Join("known-000", "uniq_sigs.tab"))
 		sigsFile, err := os.OpenFile(sigFile, os.O_RDONLY, 0)
 		if err != nil {
 			errorChan <- err
@@ -82,7 +83,7 @@ func (opts *AbisOptions) HandleFind(rCtx *output.RenderCtx) error {
 		sigsScanner.Split(bufio.ScanLines)
 
 		// TODO: UnchainedIndex --> This could be part of unchained index
-		funcFile := filepath.Join(config.PathToRootConfig(), "abis", "known-000", "uniq_funcs.tab")
+		funcFile := abi.PathToKnownAbis(filepath.Join("known-000", "uniq_funcs.tab"))
 		funcsFile, _ := os.OpenFile(funcFile, os.O_RDONLY, 0)
 		defer func() {
 			funcsFile.Close()

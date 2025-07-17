@@ -42,7 +42,8 @@ func Test_GetPathTo(t *testing.T) {
 		// TODO: bad xdg paths cause panic, so we turn this off
 		test.xdg = ""
 
-		if test.group == "Config" {
+		switch test.group {
+		case "Config":
 			os.Setenv("XDG_CONFIG_HOME", test.xdg)
 			os.Setenv("TEST_OS", test.os)
 			globals := []string{"trueBlocks.toml", "makeClass.toml", "testRunner.toml", "abis/"}
@@ -56,10 +57,10 @@ func Test_GetPathTo(t *testing.T) {
 			} else {
 				testPath = filepath.Join(PathToRootConfig(), test.part)
 			}
-		} else if test.group == "Cache" {
+		case "Cache":
 			os.Setenv("XDG_CACHE_HOME", test.xdg)
 			testPath = filepath.Join(PathToCache(test.chain), test.part)
-		} else if test.group == "Index" {
+		case "Index":
 			os.Setenv("XDG_CACHE_HOME", test.xdg)
 			testPath = filepath.Join(PathToIndex(test.chain), test.part)
 		}
