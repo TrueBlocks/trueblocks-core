@@ -23,7 +23,12 @@ func (conn *Connection) GetState(fieldBits types.StatePart, address base.Address
 	}
 	if err := conn.ReadFromCache(state); err == nil {
 		if state.Parts&fieldBits == fieldBits {
-			return state, nil
+			if filters.BalanceCheck != nil {
+				if !filters.BalanceCheck(address, &state.Balance) {
+					return nil, nil
+				}
+				return state, nil
+			}
 		}
 		fieldBits |= state.Parts // preserve what's there
 	}

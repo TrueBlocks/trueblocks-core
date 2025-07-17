@@ -31,39 +31,101 @@ func downloadAbis() error {
 		"0xef638b4305b8a1620f4e0e562e127f1181ae16d2",
 	}
 
+	validCount := 0
+	invalidCount := 0
+	invalidAddrs := []string{}
+	abiCounts := make(map[string]int)
+
+	logger.InfoY("Checking all ABIs...")
 	for _, addr := range addrs {
 		opts := sdk.AbisOptions{
 			Addrs: []string{addr},
 		}
 		if abis, _, err := opts.Abis(); err != nil {
 			logger.Fatal(err)
-		} else if len(abis) > 1 {
-			logger.InfoG(fmt.Sprintf("ABI for %s already valid with %d functions.", addr, len(abis)))
-			continue
 		} else {
-			logger.InfoBY(fmt.Sprintf("Decaching invalid ABI %s.", addr))
-			opts.Globals.Decache = true
-			if _, _, err := opts.Abis(); err != nil {
-				logger.Fatal(err)
-			}
-			logger.InfoBY(fmt.Sprintf("Redownloading %s...", addr))
-			opts.Globals.Decache = false
-			if abis, _, err = opts.Abis(); err != nil {
-				logger.Fatal(err)
+			funcCount := len(abis)
+			abiCounts[addr] = funcCount
+			if funcCount > 1 {
+				validCount++
 			} else {
-				if len(abis) < 2 {
-					logger.InfoY("Possibly rate limited. Sleeping...")
-					time.Sleep(3 * time.Second)
-					logger.InfoY("Trying again...")
-					if abis, _, err = opts.Abis(); err != nil {
-						logger.Fatal(err)
-					}
-				}
-				logger.InfoG(fmt.Sprintf("Redownloaded %s found %d functions.", addr, len(abis)))
-				time.Sleep(500 * time.Millisecond)
+				invalidCount++
+				invalidAddrs = append(invalidAddrs, addr)
 			}
 		}
 	}
 
+	logger.InfoY("First pass summary:")
+	logger.InfoG(fmt.Sprintf("    valid abis:   %d", validCount))
+	logger.InfoG(fmt.Sprintf("    invalid ABIs: %d", invalidCount))
+
+	if len(invalidAddrs) > 0 {
+		for _, addr := range invalidAddrs {
+			if funcCount, err := redownloadAbi(addr); err != nil {
+				logger.Fatal(err)
+			} else {
+				abiCounts[addr] = funcCount
+			}
+		}
+	}
+
+	logger.InfoY("Report on Abis:")
+	for addr, count := range abiCounts {
+		if count > 1 {
+			logger.InfoG(fmt.Sprintf("    ABI for %s has %d functions", addr, count))
+		} else {
+			logger.InfoR(fmt.Sprintf("    ABI for %s is invalid", addr))
+		}
+	}
+
 	return nil
+}
+
+func redownloadAbi(addr string) (int, error) {
+	opts := sdk.AbisOptions{
+		Addrs: []string{addr},
+	}
+
+	logger.InfoBY(fmt.Sprintf("    Decaching invalid ABI %s", addr))
+	opts.Globals.Decache = true
+	if _, _, err := opts.Abis(); err != nil {
+		return 0, err
+	}
+
+	logger.InfoBY(fmt.Sprintf("    Redownloading %s...", addr))
+	opts.Globals.Decache = false
+	abis, _, err := opts.Abis()
+	if err != nil {
+		return 0, err
+	}
+
+	funcCount := len(abis)
+
+	// If still invalid, try again after sleeping
+	if funcCount < 2 {
+		logger.InfoC("    Possibly rate limited. Sleeping...")
+		time.Sleep(3 * time.Second)
+
+		logger.InfoC("    Trying again...")
+		opts.Globals.Decache = true
+		if _, _, err := opts.Abis(); err != nil {
+			return 0, err
+		}
+
+		opts.Globals.Decache = false
+		abis, _, err = opts.Abis()
+		if err != nil {
+			return 0, err
+		}
+
+		funcCount = len(abis)
+
+		// If still invalid after second attempt, fail
+		if funcCount < 2 {
+			return funcCount, fmt.Errorf("failed to download valid ABI for %s after multiple attempts", addr)
+		}
+	}
+	// logger.InfoG(fmt.Sprintf("Successfully downloaded ABI for %s with %d functions", addr, funcCount))
+	time.Sleep(500 * time.Millisecond)
+	return funcCount, nil
 }

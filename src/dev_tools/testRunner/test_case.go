@@ -35,22 +35,24 @@ type TestCase struct {
 }
 
 func (t *TestCase) OptionsForMode(mode string) string {
-	if mode == "api" {
+	switch mode {
+	case "api":
 		return t.ApiOptions
-	} else if mode == "cmd" {
+	case "cmd":
 		return t.CmdOptions
-	} else if mode == "sdk" {
+	case "sdk":
 		return t.SdkOptions
 	}
 	return t.OrigOptions
 }
 
 func (t *TestCase) InnerTest(mode string) (string, error) {
-	if mode == "api" {
+	switch mode {
+	case "api":
 		return t.ApiTest()
-	} else if mode == "cmd" {
+	case "cmd":
 		return t.CmdTest()
-	} else if mode == "sdk" {
+	case "sdk":
 		return t.SdkTest()
 	}
 	return "", errors.New("Invalid mode:" + mode)

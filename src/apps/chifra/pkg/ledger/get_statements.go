@@ -13,6 +13,7 @@ import (
 func (r *Reconciler) GetStatements(node *types.AppNode[types.Transaction]) ([]types.Statement, error) {
 	trans := node.Data()
 	if stmts, found := r.statementsFromCache(trans); found {
+		logger.TestLog(true, fmt.Sprintf("Found %d statements in cache for %s", len(stmts), trans.Hash.Hex()))
 		return stmts, nil
 	}
 

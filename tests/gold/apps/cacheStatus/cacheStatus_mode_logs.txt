@@ -15,6 +15,12 @@ TEST[DATE|TIME] Format:  json
               "filename": "$cachePath/data-model/file.bin",
               "itemType": "logsCacheItem",
               "sizeInBytes": 123456789
+            },
+            {
+              "fileDate": "--fileDate--",
+              "filename": "$cachePath/data-model/file.bin",
+              "itemType": "logsCacheItem",
+              "sizeInBytes": 123456789
             }
           ],
           "lastCached": "--lastCached--",
