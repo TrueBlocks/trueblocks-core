@@ -224,6 +224,8 @@ func ResetOptions(testMode bool) {
 	opts.Globals.TestMode = testMode
 	opts.Globals.Writer = w
 	opts.Globals.Caps = getCaps()
+	// EXISTING_CODE
+	// EXISTING_CODE
 	opts.Source = "etherscan"
 	opts.PerPage = 1000
 	opts.Sleep = .25

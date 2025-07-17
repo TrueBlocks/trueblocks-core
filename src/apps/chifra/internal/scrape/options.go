@@ -208,6 +208,8 @@ func ResetOptions(testMode bool) {
 	opts.Globals.TestMode = testMode
 	opts.Globals.Writer = w
 	opts.Globals.Caps = getCaps()
+	// EXISTING_CODE
+	// EXISTING_CODE
 	opts.BlockCnt = 2000
 	opts.Sleep = 14
 	opts.Settings.AppsPerChunk = 2000000

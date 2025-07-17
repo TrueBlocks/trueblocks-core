@@ -269,6 +269,8 @@ func ResetOptions(testMode bool) {
 	opts.Globals.TestMode = testMode
 	opts.Globals.Writer = w
 	opts.Globals.Caps = getCaps()
+	// EXISTING_CODE
+	// EXISTING_CODE
 	opts.Truncate = base.NOPOSN
 	opts.LastBlock = base.NOPOSN
 	opts.MaxAddrs = base.NOPOS
