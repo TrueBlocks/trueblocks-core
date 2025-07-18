@@ -558,7 +558,7 @@ func (m *Member) Width() int64 {
 		if strings.HasPrefix(part, "width=") {
 			widthStr := strings.TrimPrefix(part, "width=")
 			var width int64
-			fmt.Sscanf(widthStr, "%d", &width)
+			_, _ = fmt.Sscanf(widthStr, "%d", &width)
 			return width
 		}
 	}
