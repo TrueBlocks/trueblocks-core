@@ -36,6 +36,7 @@
     remoteExplorer = 'https://gnosisscan.io/'
     rpcProviders = ['https://gnosischain-rpc.gateway.pokt.network']
     symbol = 'XDAI'
+    blockTime = 5.0
     [chains.gnosis.scrape]
       appsPerChunk = 2000000
       snapToGrid = 250000
@@ -51,6 +52,7 @@
     remoteExplorer = 'https://etherscan.io/'
     rpcProviders = ['http://localhost:8545']
     symbol = 'ETH'
+    blockTime = 13.0
     [chains.mainnet.scrape]
       appsPerChunk = 2000000
       snapToGrid = 100000
@@ -66,6 +68,7 @@
     remoteExplorer = 'https://optimistic.etherscan.io/'
     rpcProviders = ['https://mainnet.optimism.io']
     symbol = 'OPT'
+    blockTime = 2.0
     [chains.optimism.scrape]
       appsPerChunk = 2000000
       snapToGrid = 250000
@@ -81,6 +84,7 @@
     remoteExplorer = 'https://mumbai.polygonscan.com/'
     rpcProviders = ['https://rpc-mumbai.maticvigil.com']
     symbol = 'MATIC'
+    blockTime = 2.0
     [chains.polygon.scrape]
       appsPerChunk = 2000000
       snapToGrid = 250000
@@ -96,6 +100,7 @@
     remoteExplorer = 'https://sepolia.otterscan.io/'
     rpcProviders = ['http://localhost:8548']
     symbol = 'ETH'
+    blockTime = 13.0
     [chains.sepolia.scrape]
       appsPerChunk = 2000000
       snapToGrid = 250000
