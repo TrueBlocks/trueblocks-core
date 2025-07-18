@@ -123,7 +123,7 @@ func ExampleMarshaler() {
 	// Now we point our cache item to use this "file". This is temporary, it will be
 	// handled by some higher abstraction (CacheLayout perhaps?)
 	timestampsCacheItem := NewItem(timestampsCacheFile)
-	// We encode (serialize to binary) the value. The cache header is written automaticaly
+	// We encode (serialize to binary) the value. The cache header is written automatically
 	// by Encode()
 	if err := timestampsCacheItem.Encode(uint64(1688667358)); err != nil {
 		panic(err)
@@ -131,7 +131,7 @@ func ExampleMarshaler() {
 
 	// Let's read the value
 	var timestamp uint64
-	// Decode checks cache header automaticaly
+	// Decode checks cache header automatically
 	if err := timestampsCacheItem.Decode(&timestamp); err != nil {
 		panic(err)
 	}

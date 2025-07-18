@@ -131,7 +131,7 @@ Ed and I were inspired to work on the problem of the Ethereum’s difficulty cal
 
 We wanted to see if his intuition was correct.
 
-A quick word about the bomb. It explodes in a exponential growth curve doubling every 100,000 blocks. This has the effect of creating a saw tooth curve, as the chain responds to dampen the rise in difficutly, as [we discussed in a previous post](https://medium.com/@tjayrush/ethereum-block-production-continues-to-slide-1b74a2123e3f).
+A quick word about the bomb. It explodes in a exponential growth curve doubling every 100,000 blocks. This has the effect of creating a saw tooth curve, as the chain responds to dampen the rise in difficulty, as [we discussed in a previous post](https://medium.com/@tjayrush/ethereum-block-production-continues-to-slide-1b74a2123e3f).
 
 In this next set of charts, we’ve bucketed the data into buckets of 100,000 blocks and called these buckets `periods`. (The black line below shows the current `period`.) This bucketing is evident in the following chart where we also broke the data into groupings: pre-byzantium and post-byzantium. This allows us line up and compare the two exploding bombs.
 
