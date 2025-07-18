@@ -12,6 +12,7 @@ type ChainGroup struct {
 	RpcProviderOld string         `json:"rpcProvider,omitempty" toml:"rpcProvider,omitempty"` // deprecated
 	RpcProviders   []string       `json:"rpcProviders" toml:"rpcProviders,omitempty"`
 	Symbol         string         `json:"symbol" toml:"symbol"`
+	BlockTime      float64        `json:"blockTime" toml:"blockTime,omitempty"`
 	Scrape         ScrapeSettings `json:"scrape" toml:"scrape"`
 }
 

@@ -57,3 +57,4 @@ py-ext/dist/
 
 node_modules
 sdk/typescript/dist
+.claude/

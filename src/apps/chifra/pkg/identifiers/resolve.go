@@ -9,6 +9,7 @@ import (
 	"fmt"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/ranges"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/tslib"
@@ -197,7 +198,8 @@ func (p *Point) resolvePoint(chain string) base.Blknum {
 			latest := conn.GetLatestBlockNumber()
 			tsFuture := conn.GetBlockTimestamp(latest)
 			secs := base.Blknum(tsFuture - base.Timestamp(p.Number))
-			blks := (secs / 13)
+			blockTime := config.GetBlockTime(chain)
+			blks := base.Blknum(float64(secs) / blockTime)
 			bn = latest + blks
 		}
 	} else {
