@@ -106,7 +106,7 @@ var CacheTypeToFolder = map[CacheType]string{
 
 var CacheTypeToExt = map[CacheType]string{
 	Cache_NotACache:    "unknown",
-	Cache_Abis:         "bin",
+	Cache_Abis:         "json",
 	Cache_Monitors:     "mon.bin",
 	Cache_Names:        "bin",
 	Cache_Tmp:          "",

@@ -86,7 +86,7 @@ func LoadAbi(conn *rpc.Connection, address base.Address, abiMap *SelectorSyncMap
 	return nil
 }
 
-func fromJson(reader io.Reader, abiMap *SelectorSyncMap) (err error) {
+func parseAbiIntoMap(reader io.Reader, abiMap *SelectorSyncMap) (err error) {
 	// Compute encodings, signatures and parse file
 	loadedAbi, err := abi.JSON(reader)
 	if err != nil {
@@ -115,7 +115,7 @@ func loadAbiFromKnownFile(filePath string, abiMap *SelectorSyncMap) (err error) 
 	}
 
 	// We still need abi.Method and abi.Event, so will just use fromJson
-	return fromJson(f, abiMap)
+	return parseAbiIntoMap(f, abiMap)
 }
 
 // readCString reads cString structure from reader. It has different signature than
@@ -761,7 +761,7 @@ func loadAbiFromAddress(conn *rpc.Connection, address base.Address, abiMap *Sele
 	defer localFile.Close()
 
 	// Local file found
-	if err = fromJson(localFile, abiMap); err != nil {
+	if err = parseAbiIntoMap(localFile, abiMap); err != nil {
 		return err
 	}
 	// File is correct, cache it

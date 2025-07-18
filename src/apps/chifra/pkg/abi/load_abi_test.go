@@ -199,7 +199,7 @@ func TestPathToAbisCache(t *testing.T) {
 			name:           "Address filename gets extension",
 			chain:          "mainnet",
 			fileName:       "0x1234567890abcdef1234567890abcdef12345678",
-			expectedSuffix: "0x1234567890abcdef1234567890abcdef12345678.bin",
+			expectedSuffix: "0x1234567890abcdef1234567890abcdef12345678.json",
 			hasExtension:   true,
 		},
 		{
@@ -220,7 +220,7 @@ func TestPathToAbisCache(t *testing.T) {
 			name:           "Different chain",
 			chain:          "sepolia",
 			fileName:       "0xabcdef1234567890abcdef1234567890abcdef12",
-			expectedSuffix: "0xabcdef1234567890abcdef1234567890abcdef12.bin",
+			expectedSuffix: "0xabcdef1234567890abcdef1234567890abcdef12.json",
 			hasExtension:   true,
 		},
 		{

@@ -77,7 +77,7 @@ func (abiMap *SelectorSyncMap) downloadAbi(conn *rpc.Connection, address base.Ad
 		}
 
 		reader := strings.NewReader(AbiNotFound)
-		_ = fromJson(reader, abiMap)
+		_ = parseAbiIntoMap(reader, abiMap)
 		if _, err = reader.Seek(0, io.SeekStart); err != nil {
 			return err
 		}
@@ -88,7 +88,7 @@ func (abiMap *SelectorSyncMap) downloadAbi(conn *rpc.Connection, address base.Ad
 	}
 
 	reader := strings.NewReader(data["result"])
-	_ = fromJson(reader, abiMap)
+	_ = parseAbiIntoMap(reader, abiMap)
 	if _, err = reader.Seek(0, io.SeekStart); err != nil {
 		return err
 	}
