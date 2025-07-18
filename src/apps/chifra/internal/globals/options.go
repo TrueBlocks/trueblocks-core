@@ -199,8 +199,8 @@ func (opts *GlobalOptions) FinishParseApi(w io.Writer, values url.Values, caches
 	}
 
 	if config.IsChainConfigured(opts.Chain) {
-		needsAbis := caches[walk.Cache_Abis]
 		cacheEnabled := opts.Cache
+		needsAbis := caches[walk.Cache_Abis]
 		if needsAbis {
 			if opts.Decache {
 				delete(caches, walk.Cache_Abis)
@@ -240,8 +240,8 @@ func (opts *GlobalOptions) FinishParse(args []string, caches map[walk.CacheType]
 	}
 
 	if config.IsChainConfigured(opts.Chain) {
-		needsAbis := caches[walk.Cache_Abis]
 		cacheEnabled := opts.Cache
+		needsAbis := caches[walk.Cache_Abis]
 		if needsAbis {
 			if opts.Decache {
 				delete(caches, walk.Cache_Abis)
