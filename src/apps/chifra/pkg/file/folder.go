@@ -25,6 +25,25 @@ func IsFolderEmpty(folder string) (bool, error) {
 	return false, err // Either not empty or error, suits both cases
 }
 
+func CleanFolderIfEmpty(filePath, stopAtRoot string) error {
+	dir := filepath.Dir(filePath)
+	for dir != stopAtRoot && len(dir) > len(stopAtRoot) {
+		entries, err := os.ReadDir(dir)
+		if err != nil {
+			break
+		}
+		if len(entries) == 0 {
+			if err := os.Remove(dir); err != nil {
+				break
+			}
+			dir = filepath.Dir(dir)
+		} else {
+			break
+		}
+	}
+	return nil
+}
+
 // CleanFolder removes any files that may be partial or incomplete
 func CleanFolder(chain, rootFolder string, subFolders []string) error {
 	_ = chain

@@ -25,7 +25,39 @@ import (
 	"github.com/ethereum/go-ethereum/accounts/abi"
 )
 
+func CleanAbiCache(chain, path string) error {
+	if strings.Contains(path, "v1") {
+		oldPath := path
+		oldPath = strings.Replace(oldPath, "/v1", "", 1)
+		oldPath = strings.Replace(oldPath, ".bin", ".json", 1)
+		if file.FileExists(oldPath) {
+			if err := os.Remove(oldPath); err != nil {
+				return err
+			}
+			_ = file.CleanFolderIfEmpty(filepath.Dir(oldPath), PathToAbisCache(chain, ""))
+		}
+	}
+
+	if !file.FileExists(path) {
+		return nil
+	}
+
+	if err := os.Remove(path); err != nil {
+		return err
+	}
+
+	if strings.Contains(path, "0x") {
+		addr := strings.Replace(strings.Replace(filepath.Base(path), ".bin", "", 1), ".json", "", 1)
+		logger.InfoG("Removed ABI for", addr)
+	}
+
+	return file.CleanFolderIfEmpty(filepath.Dir(path), PathToAbisCache(chain, ""))
+}
+
 func PathToAbisCache(chain, fileName string) string {
+	if strings.HasPrefix(fileName, "0x") {
+		fileName += ("." + walk.CacheTypeToExt[walk.Cache_Abis])
+	}
 	return filepath.Join(walk.GetRootPathFromCacheType(chain, walk.Cache_Abis), fileName)
 }
 
@@ -53,11 +85,6 @@ func LoadAbi(conn *rpc.Connection, address base.Address, abiMap *SelectorSyncMap
 
 	return nil
 }
-
-// Where to find know ABI files
-// var knownAbiSubdirectories = []string{
-// 	"known-000", "known-005", "known-010", "known-015",
-// }
 
 func fromJson(reader io.Reader, abiMap *SelectorSyncMap) (err error) {
 	// Compute encodings, signatures and parse file
@@ -186,12 +213,6 @@ func readFromArray[Item arrayItem](
 
 	// make target large enough
 	*target = make([]Item, 0, itemCount)
-
-	// TODO: Just noting. If we knew the records in the array were fixed with (I think we
-	// TODO: may be able to know that), we can read and write the entire chunk of memory
-	// TODO: in one write (or read). It will almost certainly be faster. I don't think we do
-	// TODO: this in C++ code, but I always wanted to.
-	// read items
 	for i := 0; uint64(i) < itemCount; i++ {
 		item, readErr := readValue(reader)
 		if readErr != nil {
@@ -290,9 +311,7 @@ func readParameter(reader *bufio.Reader) (param *types.Parameter, err error) {
 	return
 }
 
-// TODO: I don't think we want to hard code this version value here. We want to read it programmatically
-// TODO: from auto-generated code. There is a string called version.LibraryVersion that we can use
-// TODO: to calculate this value. We can add a function to the version package.
+// Not sure this is right.
 var minimumCacheVersion = uint64(41000)
 
 func validateHeader(header *cacheHeader) error {
@@ -614,6 +633,10 @@ func setAbis(chain string, abis []types.Function) (err error) {
 	}
 
 	fullPath := PathToAbisCache(chain, "known.bin")
+	if err = file.EstablishFolder(filepath.Dir(fullPath)); err != nil {
+		return
+	}
+
 	var f *os.File
 	if file.FileExists(fullPath) {
 		// If file doesn't exist, we don't need a lock
@@ -757,7 +780,7 @@ func insertAbiNative(conn *rpc.Connection, address base.Address, inputReader io.
 
 // getAbi returns single ABI per address. ABI-per-address are stored as JSON, not binary.
 func getAbi(chain string, address base.Address) (simpleAbis []types.Function, err error) {
-	fullPath := PathToAbisCache(chain, address.Hex()+".json")
+	fullPath := PathToAbisCache(chain, address.Hex())
 	f, err := os.OpenFile(fullPath, os.O_RDONLY, 0)
 	if err != nil {
 		return
@@ -785,7 +808,7 @@ func getAbi(chain string, address base.Address) (simpleAbis []types.Function, er
 
 // insertAbi copies file (e.g. opened local file) into cache - DEPRECATED: Use insertAbiNative for new code
 func insertAbi(chain string, address base.Address, inputReader io.Reader) error {
-	fullPath := PathToAbisCache(chain, address.Hex()+".json")
+	fullPath := PathToAbisCache(chain, address.Hex())
 	if file, err := os.OpenFile(fullPath, os.O_WRONLY|os.O_CREATE|os.O_TRUNC, 0666); err != nil {
 		return err
 	} else {
@@ -796,4 +819,3 @@ func insertAbi(chain string, address base.Address, inputReader io.Reader) error 
 		return nil
 	}
 }
-

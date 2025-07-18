@@ -104,7 +104,7 @@ var CacheTypeToFolder = map[CacheType]string{
 	Regular:            "regular",
 }
 
-var cacheTypeToExt = map[CacheType]string{
+var CacheTypeToExt = map[CacheType]string{
 	Cache_NotACache:    "unknown",
 	Cache_Abis:         "json",
 	Cache_Monitors:     "mon.bin",
@@ -139,7 +139,7 @@ func IsCacheType(path string, cT CacheType, checkExt bool) bool {
 	if !strings.Contains(path, CacheTypeToFolder[cT]) {
 		return false
 	}
-	if checkExt && !strings.HasSuffix(path, cacheTypeToExt[cT]) {
+	if checkExt && !strings.HasSuffix(path, CacheTypeToExt[cT]) {
 		return false
 	}
 	return true
