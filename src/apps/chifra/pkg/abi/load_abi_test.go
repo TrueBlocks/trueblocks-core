@@ -25,26 +25,26 @@ func TestCleanAbiCache(t *testing.T) {
 		{
 			name:  "Remove v1 file and corresponding old file",
 			chain: "mainnet",
-			path:  filepath.Join(tempDir, "v1", "0x1234.bin"),
+			path:  filepath.Join(tempDir, "v1", "abis", "0x1234.bin"),
 			setupFiles: []string{
-				filepath.Join(tempDir, "v1", "0x1234.bin"),
-				filepath.Join(tempDir, "0x1234.json"), // old format
+				filepath.Join(tempDir, "v1", "abis", "0x1234.bin"),
+				filepath.Join(tempDir, "abis", "0x1234.json"), // old format
 			},
 			expectRemoved: []string{
-				filepath.Join(tempDir, "v1", "0x1234.bin"),
-				filepath.Join(tempDir, "0x1234.json"),
+				filepath.Join(tempDir, "v1", "abis", "0x1234.bin"),
+				filepath.Join(tempDir, "abis", "0x1234.json"),
 			},
 			expectExists: []string{},
 		},
 		{
 			name:  "Remove v1 file when old file doesn't exist",
 			chain: "mainnet",
-			path:  filepath.Join(tempDir, "v1", "0x5678.bin"),
+			path:  filepath.Join(tempDir, "v1", "abis", "0x5678.bin"),
 			setupFiles: []string{
-				filepath.Join(tempDir, "v1", "0x5678.bin"),
+				filepath.Join(tempDir, "v1", "abis", "0x5678.bin"),
 			},
 			expectRemoved: []string{
-				filepath.Join(tempDir, "v1", "0x5678.bin"),
+				filepath.Join(tempDir, "v1", "abis", "0x5678.bin"),
 			},
 			expectExists: []string{},
 		},
@@ -71,14 +71,14 @@ func TestCleanAbiCache(t *testing.T) {
 		{
 			name:  "Remove v1 file with nested directory structure",
 			chain: "mainnet",
-			path:  filepath.Join(tempDir, "sub1", "v1", "sub2", "0xdef0.bin"),
+			path:  filepath.Join(tempDir, "sub1", "v1", "abis", "sub2", "0xdef0.bin"),
 			setupFiles: []string{
-				filepath.Join(tempDir, "sub1", "v1", "sub2", "0xdef0.bin"),
-				filepath.Join(tempDir, "sub1", "sub2", "0xdef0.json"), // corresponding old file
+				filepath.Join(tempDir, "sub1", "v1", "abis", "sub2", "0xdef0.bin"),
+				filepath.Join(tempDir, "sub1", "abis", "sub2", "0xdef0.json"), // corresponding old file
 			},
 			expectRemoved: []string{
-				filepath.Join(tempDir, "sub1", "v1", "sub2", "0xdef0.bin"),
-				filepath.Join(tempDir, "sub1", "sub2", "0xdef0.json"),
+				filepath.Join(tempDir, "sub1", "v1", "abis", "sub2", "0xdef0.bin"),
+				filepath.Join(tempDir, "sub1", "abis", "sub2", "0xdef0.json"),
 			},
 			expectExists: []string{},
 		},
@@ -135,13 +135,13 @@ func TestCleanAbiCache_PathTransformation(t *testing.T) {
 	}{
 		{
 			name:            "Transform v1 bin to old json",
-			v1Path:          filepath.Join(tempDir, "v1", "0x1234.bin"),
-			expectedOldPath: filepath.Join(tempDir, "0x1234.json"),
+			v1Path:          filepath.Join(tempDir, "v1", "abis", "0x1234.bin"),
+			expectedOldPath: filepath.Join(tempDir, "abis", "0x1234.json"),
 		},
 		{
 			name:            "Transform nested v1 path",
-			v1Path:          filepath.Join(tempDir, "some", "v1", "nested", "0x5678.bin"),
-			expectedOldPath: filepath.Join(tempDir, "some", "nested", "0x5678.json"),
+			v1Path:          filepath.Join(tempDir, "some", "v1", "abis", "nested", "0x5678.bin"),
+			expectedOldPath: filepath.Join(tempDir, "some", "abis", "nested", "0x5678.json"),
 		},
 		{
 			name:            "Transform complex nested v1 path",

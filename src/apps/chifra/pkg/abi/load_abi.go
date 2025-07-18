@@ -26,9 +26,9 @@ import (
 )
 
 func CleanAbiCache(chain, path string) error {
-	if strings.Contains(path, "v1") {
+	if strings.Contains(path, "/v1/abis/") {
 		oldPath := path
-		oldPath = strings.Replace(oldPath, "/v1", "", 1)
+		oldPath = strings.Replace(oldPath, "/v1/abis/", "/abis/", 1)
 		oldPath = strings.Replace(oldPath, ".bin", ".json", 1)
 		if file.FileExists(oldPath) {
 			if err := os.Remove(oldPath); err != nil {

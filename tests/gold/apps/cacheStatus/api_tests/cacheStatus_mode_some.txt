@@ -76,14 +76,14 @@ status?modes=some&verbose&maxRecords=2
             {
               "address": "--address--",
               "fileDate": "--fileDate--",
-              "filename": "$cachePath/abis/--address--",
+              "filename": "$cachePath/v1/abis/--address--",
               "itemType": "abisCacheItem",
               "sizeInBytes": 123456789
             },
             {
               "address": "--address--",
               "fileDate": "--fileDate--",
-              "filename": "$cachePath/abis/--address--",
+              "filename": "$cachePath/v1/abis/--address--",
               "itemType": "abisCacheItem",
               "sizeInBytes": 123456789
             }

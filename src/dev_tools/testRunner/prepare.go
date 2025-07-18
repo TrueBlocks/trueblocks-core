@@ -16,6 +16,8 @@ func downloadAbis() error {
 	logger.Info(colors.Yellow + "Downloading Abis..." + colors.Off)
 
 	addrs := []string{
+		"0x6b92d76c9d0d40e53019ffa51b6f0c9b6bc657c9",
+		"0x3d9819210A31b4961b30EF54bE2aeD79B9c9Cd3B",
 		"0x98ee18d7a1f7510b78b36f5a16471c7cd0c1c531",
 		"0xd9db270c1b5e3bd161e8c8503c55ceabee709552",
 		"0x7d655c57f71464b6f83811c55d84009cd9f5221c",

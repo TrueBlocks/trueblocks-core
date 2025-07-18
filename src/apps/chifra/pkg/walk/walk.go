@@ -155,7 +155,7 @@ func GetRootPathFromCacheType(chain string, cacheType CacheType) string {
 		return filepath.Join(config.PathToCache(chain), CacheTypeToFolder[cacheType])
 
 	case Cache_Abis:
-		return filepath.Join(config.PathToCache(chain), CacheTypeToFolder[cacheType])
+ 		return filepath.Join(config.PathToCache(chain), "v1", CacheTypeToFolder[cacheType])
 	case Cache_Blocks:
 		fallthrough
 	case Cache_Logs:
