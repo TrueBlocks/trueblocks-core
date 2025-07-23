@@ -15,26 +15,64 @@ import (
 
 // HandleTimestampsCheck handles chifra when --timestamps --check
 func (opts *WhenOptions) HandleTimestampsCheck(rCtx *output.RenderCtx) error {
-	_ = rCtx
+	// Perform the timestamp checking
+	errorCount, totalChecked, err := opts.performTimestampCheck()
+	if err != nil {
+		return err
+	}
+
+	// Create summary message
+	var message string
+	isDeep := opts.Deep > 0
+	checkType := "consistency"
+	if isDeep {
+		checkType = "chain validation"
+	}
+
+	if errorCount == 0 {
+		message = fmt.Sprintf("Timestamp %s completed successfully. %d blocks checked, no errors found.", checkType, totalChecked)
+		logger.Info(message)
+	} else {
+		message = fmt.Sprintf("Timestamp %s completed with errors. %d blocks checked, %d errors found.", checkType, totalChecked, errorCount)
+		logger.Warn(message)
+	}
+
+	// Only return structured output if in API mode
+	if opts.Globals.IsApiMode() {
+		fetchData := func(modelChan chan types.Modeler, errorChan chan error) {
+			_ = errorChan
+			modelChan <- &types.Message{
+				Msg: message,
+			}
+		}
+		_ = output.StreamMany(rCtx, fetchData, opts.Globals.OutputOpts())
+	}
+
+	return nil
+}
+
+func (opts *WhenOptions) performTimestampCheck() (int, int, error) {
 	chain := opts.Globals.Chain
 
 	cnt, err := tslib.NTimestamps(chain)
 	if err != nil {
-		return err
+		return 0, 0, err
 	}
+
+	isDeep := opts.Deep > 0
 
 	// For display only
 	skip := uint64(500)
-	if opts.Deep {
+	if isDeep {
 		m, _ := opts.Conn.GetMetaData(opts.Globals.TestMode)
 		skip = uint64(m.Latest) / 500
 	}
 	count := uint64(cnt)
-	scanBar := progress.NewScanBar(count /* wanted */, (count / skip) /* freq */, count /* max */, (2. / 3.))
+	scanBar := progress.NewScanBar(count /* wanted */, (count / skip) /* freq */, count /* max */, (1. / 2.))
 
 	blockNums, err := identifiers.GetBlockNumbers(chain, opts.BlockIds)
 	if err != nil {
-		return err
+		return 0, 0, err
 	}
 
 	prev := types.NamedBlock{
@@ -42,32 +80,52 @@ func (opts *WhenOptions) HandleTimestampsCheck(rCtx *output.RenderCtx) error {
 		Timestamp:   base.NOPOSI,
 	}
 
+	errorCount := 0
+	totalChecked := 0
+
 	if len(blockNums) > 0 {
 		for _, bn := range blockNums {
 			if bn < cnt { // ranges may include blocks after last block
-				if err = opts.checkOneBlock(scanBar, &prev, bn); err != nil {
-					return err
+				if errs, err := opts.checkOneBlock(scanBar, &prev, bn); err != nil {
+					return 0, 0, err
+				} else {
+					errorCount += errs
+					totalChecked++
 				}
 			}
 		}
 	} else {
-		for bn := base.Blknum(0); bn < cnt; bn++ {
-			if err = opts.checkOneBlock(scanBar, &prev, bn); err != nil {
-				return err
+		inc := max(1, base.Blknum(opts.Deep))
+		actualCount := uint64(cnt) / uint64(inc)
+		if uint64(cnt)%uint64(inc) != 0 {
+			actualCount++ // Account for partial last iteration
+		}
+		scanBar = progress.NewScanBar(actualCount /* wanted */, max(1, actualCount/500) /* freq */, actualCount /* max */, (1. / 2.))
+
+		for bn := base.Blknum(0); bn < cnt; bn = bn + inc {
+			if errs, err := opts.checkOneBlock(scanBar, &prev, bn); err != nil {
+				return 0, 0, err
+			} else {
+				errorCount += errs
+				totalChecked++
 			}
 		}
 	}
 
-	return nil
+	// Clear the progress bar line when done
+	logger.CleanLine()
+
+	return errorCount, totalChecked, nil
 }
 
-func (opts *WhenOptions) checkOneBlock(scanBar *progress.ScanBar, prev *types.NamedBlock, bn base.Blknum) error {
+func (opts *WhenOptions) checkOneBlock(scanBar *progress.ScanBar, prev *types.NamedBlock, bn base.Blknum) (int, error) {
 	chain := opts.Globals.Chain
+	isDeep := opts.Deep > 0
 
 	// The i'th item in the timestamp array on disc
 	itemOnDisc, err := tslib.FromBn(chain, bn)
 	if err != nil {
-		return err
+		return 0, err
 	}
 
 	// This just simplifies the code below by removing the need to type cast
@@ -77,11 +135,12 @@ func (opts *WhenOptions) checkOneBlock(scanBar *progress.ScanBar, prev *types.Na
 	}
 
 	expected := types.LightBlock{BlockNumber: bn, Timestamp: onDisc.Timestamp}
-	if opts.Deep {
+	if isDeep {
 		// If we're going deep, we need to query the node
 		expected, _ = opts.Conn.GetBlockHeaderByNumber(bn)
 	}
 
+	errorCount := 0
 	if prev.Timestamp != base.NOPOSI {
 		status := "Okay"
 
@@ -90,6 +149,7 @@ func (opts *WhenOptions) checkOneBlock(scanBar *progress.ScanBar, prev *types.Na
 			msg := fmt.Sprintf("At block %d, block number %d is not one plus %d.%s", bn, onDisc.BlockNumber, prev.BlockNumber, clear)
 			logger.Error(msg)
 			status = "Error"
+			errorCount++
 		}
 
 		tsSequential := prev.Timestamp < onDisc.Timestamp
@@ -97,23 +157,26 @@ func (opts *WhenOptions) checkOneBlock(scanBar *progress.ScanBar, prev *types.Na
 			msg := fmt.Sprintf("At block %d, timestamp %d does not increase over previous %d%s", bn, onDisc.Timestamp, prev.Timestamp, clear)
 			logger.Error(msg)
 			status = "Error"
+			errorCount++
 		}
 
-		deepTsCheck := !opts.Deep || (onDisc.Timestamp == expected.Timestamp)
+		deepTsCheck := !isDeep || (onDisc.Timestamp == expected.Timestamp)
 		if !deepTsCheck {
 			msg := fmt.Sprintf("At block %d, timestamp on disc %d does not agree with on chain %d%s", bn, onDisc.Timestamp, expected.Timestamp, clear)
 			logger.Error(msg)
 			status = "Error"
+			errorCount++
 		}
 
 		posOnDisc := bn == onDisc.BlockNumber
-		if opts.Deep {
+		if isDeep {
 			posOnDisc = (bn == onDisc.BlockNumber && onDisc.BlockNumber == expected.BlockNumber)
 		}
 		if !posOnDisc {
 			msg := fmt.Sprintf("At block %d, onDisc block number %d does not match expected %d%s", bn, onDisc.BlockNumber, expected.BlockNumber, clear)
 			logger.Error(msg)
 			status = "Error"
+			errorCount++
 		}
 
 		if status == "Okay" {
@@ -122,7 +185,7 @@ func (opts *WhenOptions) checkOneBlock(scanBar *progress.ScanBar, prev *types.Na
 	}
 
 	*prev = onDisc
-	return nil
+	return errorCount, nil
 }
 
 // TODO: There's got to be a better way

@@ -1,8 +1,8 @@
-when?blocks=1301000&deep
-Args: [blocks=1301000 deep]
-Opts: {"blocks":["1301000"],"deep":true}
+when?blocks=1301000&deep=10
+Args: [blocks=1301000 deep=10]
+Opts: {"blocks":["1301000"],"deep":10}
 Blocks:  [1301000]
-Deep:  true
+Deep:  10
 Caps:  cache,decache
 Format:  json
 {

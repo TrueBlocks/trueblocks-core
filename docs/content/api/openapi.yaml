@@ -231,7 +231,9 @@ paths:
                       "blockNumber": 4037800,
                       "transactionIndex": 77
                     },
-                    { "...": "..." }
+                    {
+                      "...": "..."
+                    }
                   ]
         "400":
           description: bad input parameter
@@ -617,20 +619,21 @@ paths:
                       "maxPriorityFeePerGas": 0,
                       "isError": 0,
                       "hasToken": 0,
-                      "receipt":
-                        {
-                          "contractAddress": "0x0",
-                          "gasUsed": 21000,
-                          "effectiveGasPrice": 20000000000,
-                          "status": null
-                        },
+                      "receipt": {
+                        "contractAddress": "0x0",
+                        "gasUsed": 21000,
+                        "effectiveGasPrice": 20000000000,
+                        "status": null
+                      },
                       "compressedTx": "0x()",
                       "gasCost": 420000000000000,
                       "gasUsed": 21000,
                       "date": "2017-07-18 04:41:28 UTC",
                       "ether": 0.08435387
                     },
-                    { "...": "..." }
+                    {
+                      "...": "..."
+                    }
                   ]
         "400":
           description: bad input parameter
@@ -970,7 +973,9 @@ paths:
                       "source": "On chain",
                       "decimals": 18
                     },
-                    { "...": "..." }
+                    {
+                      "...": "..."
+                    }
                   ]
         "400":
           description: bad input parameter
@@ -1127,33 +1132,34 @@ paths:
                       "stateMutability": "nonpayable",
                       "signature": "PairCreated(address,address,address,uint256)",
                       "encoding": "0x0d3648bd0f6ba80134a33ba9275ac585d9d315f0ad8355cddefde31afa28d0e9",
-                      "inputs":
-                        [
-                          {
-                            "type": "address",
-                            "name": "token0",
-                            "indexed": true,
-                            "internalType": "address"
-                          },
-                          {
-                            "type": "address",
-                            "name": "token1",
-                            "indexed": true,
-                            "internalType": "address"
-                          },
-                          {
-                            "type": "address",
-                            "name": "pair",
-                            "internalType": "address"
-                          },
-                          {
-                            "type": "uint256",
-                            "name": "val_0",
-                            "internalType": "uint256"
-                          }
-                        ]
+                      "inputs": [
+                        {
+                          "type": "address",
+                          "name": "token0",
+                          "indexed": true,
+                          "internalType": "address"
+                        },
+                        {
+                          "type": "address",
+                          "name": "token1",
+                          "indexed": true,
+                          "internalType": "address"
+                        },
+                        {
+                          "type": "address",
+                          "name": "pair",
+                          "internalType": "address"
+                        },
+                        {
+                          "type": "uint256",
+                          "name": "val_0",
+                          "internalType": "uint256"
+                        }
+                      ]
                     },
-                    { "...": "..." }
+                    {
+                      "...": "..."
+                    }
                   ]
         "400":
           description: bad input parameter
@@ -1368,7 +1374,9 @@ paths:
                       "...": "...",
                       "transactions": []
                     },
-                    { "...": "..." }
+                    {
+                      "...": "..."
+                    }
                   ]
         "400":
           description: bad input parameter
@@ -1545,35 +1553,34 @@ paths:
                       "hash": "0x218b632d932371478d1ae5a01620ebab1a2030f9dad6f8fba4a044ea6335a57e",
                       "input": "0x432ced044d794669727374436f696e000000000000000000000000000000000000000000",
                       "nonce": 31,
-                      "receipt":
-                        {
-                          "contractAddress": "0x0",
-                          "effectiveGasPrice": 57380137580,
-                          "gasUsed": 43853,
-                          "logs":
-                            [
-                              {
-                                "address": "0x5564886ca2c518d1964e5fcea4f423b41db9f561",
-                                "data": "0x",
-                                "date": "2015-08-08 06:22:55 UTC",
-                                "logIndex": 0,
-                                "timestamp": 1439014975,
-                                "topics":
-                                  [
-                                    "0xa6697e974e6a320f454390be03f74955e8978f1a6971ea6730542e37b66179bc",
-                                    "0x4d794669727374436f696e000000000000000000000000000000000000000000"
-                                  ]
-                              }
-                            ],
-                          "status": null
-                        },
+                      "receipt": {
+                        "contractAddress": "0x0",
+                        "effectiveGasPrice": 57380137580,
+                        "gasUsed": 43853,
+                        "logs": [
+                          {
+                            "address": "0x5564886ca2c518d1964e5fcea4f423b41db9f561",
+                            "data": "0x",
+                            "date": "2015-08-08 06:22:55 UTC",
+                            "logIndex": 0,
+                            "timestamp": 1439014975,
+                            "topics": [
+                              "0xa6697e974e6a320f454390be03f74955e8978f1a6971ea6730542e37b66179bc",
+                              "0x4d794669727374436f696e000000000000000000000000000000000000000000"
+                            ]
+                          }
+                        ],
+                        "status": null
+                      },
                       "timestamp": 1439014975,
                       "to": "0x5564886ca2c518d1964e5fcea4f423b41db9f561",
                       "traces": [],
                       "transactionIndex": 0,
                       "value": "0"
                     },
-                    { "...": "..." }
+                    {
+                      "...": "..."
+                    }
                   ]
         "400":
           description: bad input parameter
@@ -1665,30 +1672,30 @@ paths:
                       "blockNumber": 52029,
                       "from": "0x3d0768da09ce77d25e2d998e6a7b6ed4b9116c2d",
                       "gasUsed": 43853,
-                      "logs":
-                        [
-                          {
-                            "address": "0x5564886ca2c518d1964e5fcea4f423b41db9f561",
-                            "blockHash": "0x3a1fba5abd9d41457944e91ed097e039b7b12d3d7ba324a3f422db2277a48e28",
-                            "blockNumber": 52029,
-                            "date": "2015-08-08 06:22:55 UTC",
-                            "logIndex": 0,
-                            "timestamp": 1439014975,
-                            "topics":
-                              [
-                                "0xa6697e974e6a320f454390be03f74955e8978f1a6971ea6730542e37b66179bc",
-                                "0x4d794669727374436f696e000000000000000000000000000000000000000000"
-                              ],
-                            "transactionHash": "0x218b632d932371478d1ae5a01620ebab1a2030f9dad6f8fba4a044ea6335a57e",
-                            "transactionIndex": 0
-                          }
-                        ],
+                      "logs": [
+                        {
+                          "address": "0x5564886ca2c518d1964e5fcea4f423b41db9f561",
+                          "blockHash": "0x3a1fba5abd9d41457944e91ed097e039b7b12d3d7ba324a3f422db2277a48e28",
+                          "blockNumber": 52029,
+                          "date": "2015-08-08 06:22:55 UTC",
+                          "logIndex": 0,
+                          "timestamp": 1439014975,
+                          "topics": [
+                            "0xa6697e974e6a320f454390be03f74955e8978f1a6971ea6730542e37b66179bc",
+                            "0x4d794669727374436f696e000000000000000000000000000000000000000000"
+                          ],
+                          "transactionHash": "0x218b632d932371478d1ae5a01620ebab1a2030f9dad6f8fba4a044ea6335a57e",
+                          "transactionIndex": 0
+                        }
+                      ],
                       "status": 1,
                       "to": "0x5564886ca2c518d1964e5fcea4f423b41db9f561",
                       "transactionHash": "0x218b632d932371478d1ae5a01620ebab1a2030f9dad6f8fba4a044ea6335a57e",
                       "transactionIndex": 0
                     },
-                    { "...": "..." }
+                    {
+                      "...": "..."
+                    }
                   ]
         "400":
           description: bad input parameter
@@ -1806,15 +1813,16 @@ paths:
                       "date": "2015-08-08 06:22:55 UTC",
                       "logIndex": 0,
                       "timestamp": 1439014975,
-                      "topics":
-                        [
-                          "0xa6697e974e6a320f454390be03f74955e8978f1a6971ea6730542e37b66179bc",
-                          "0x4d794669727374436f696e000000000000000000000000000000000000000000"
-                        ],
+                      "topics": [
+                        "0xa6697e974e6a320f454390be03f74955e8978f1a6971ea6730542e37b66179bc",
+                        "0x4d794669727374436f696e000000000000000000000000000000000000000000"
+                      ],
                       "transactionHash": "0x218b632d932371478d1ae5a01620ebab1a2030f9dad6f8fba4a044ea6335a57e",
                       "transactionIndex": 0
                     },
-                    { "...": "..." }
+                    {
+                      "...": "..."
+                    }
                   ]
         "400":
           description: bad input parameter
@@ -1932,19 +1940,20 @@ paths:
                 examples:
                   [
                     {
-                      "action":
-                        {
-                          "callType": "call",
-                          "from": "0x3d0768da09ce77d25e2d998e6a7b6ed4b9116c2d",
-                          "gas": 67896,
-                          "input": "0x432ced044d794669727374436f696e000000000000000000000000000000000000000000",
-                          "to": "0x5564886ca2c518d1964e5fcea4f423b41db9f561",
-                          "value": "0"
-                        },
+                      "action": {
+                        "callType": "call",
+                        "from": "0x3d0768da09ce77d25e2d998e6a7b6ed4b9116c2d",
+                        "gas": 67896,
+                        "input": "0x432ced044d794669727374436f696e000000000000000000000000000000000000000000",
+                        "to": "0x5564886ca2c518d1964e5fcea4f423b41db9f561",
+                        "value": "0"
+                      },
                       "blockHash": "0x3a1fba5abd9d41457944e91ed097e039b7b12d3d7ba324a3f422db2277a48e28",
                       "blockNumber": 52029,
                       "date": "2015-08-08 06:22:55 UTC",
-                      "result": { "gasUsed": 21749 },
+                      "result": {
+                        "gasUsed": 21749
+                      },
                       "subtraces": 0,
                       "timestamp": 1439014975,
                       "traceAddress": [],
@@ -1952,7 +1961,9 @@ paths:
                       "transactionIndex": 0,
                       "type": "call"
                     },
-                    { "...": "..." }
+                    {
+                      "...": "..."
+                    }
                   ]
         "400":
           description: bad input parameter
@@ -2024,13 +2035,14 @@ paths:
           schema:
             type: boolean
         - name: deep
-          description: with --timestamps --check only, verifies timestamps from on chain (slow)
+          description: with --timestamps --check only, verifies every N timestamp directly from the chain (slow)
           required: false
           style: form
           in: query
           explode: true
           schema:
-            type: boolean
+            type: number
+            format: uint64
         - name: chain
           description: the chain to use
           required: false
@@ -2095,7 +2107,9 @@ paths:
                       "name": "firstLog",
                       "timestamp": 1439014975
                     },
-                    { "...": "..." }
+                    {
+                      "...": "..."
+                    }
                   ]
         "400":
           description: bad input parameter
@@ -2275,7 +2289,9 @@ paths:
                       "accttype": "EOA",
                       "ether": 0.2588436983603185
                     },
-                    { "...": "..." }
+                    {
+                      "...": "..."
+                    }
                   ]
         "400":
           description: bad input parameter
@@ -2415,7 +2431,9 @@ paths:
                       "isErc20": true,
                       "isErc721": true
                     },
-                    { "...": "..." }
+                    {
+                      "...": "..."
+                    }
                   ]
         "400":
           description: bad input parameter
@@ -2506,7 +2524,9 @@ paths:
                       "hasPinkey": true,
                       "date": "2021-09-03 19:38:19 UTC"
                     },
-                    { "...": "..." }
+                    {
+                      "...": "..."
+                    }
                   ]
         "400":
           description: bad input parameter
@@ -2823,7 +2843,9 @@ paths:
                       "bloomHash": "QmSGuSQHgK4S9yiZQ3dKrykQVpLTmdFettY9sAwa537gPL",
                       "indexHash": "QmSaoxc3XA9DEaA3inhLW5ZKsk5C5LWvowSXpHwVHsMjQp"
                     },
-                    { "...": "..." }
+                    {
+                      "...": "..."
+                    }
                   ]
         "400":
           description: bad input parameter
@@ -3110,7 +3132,9 @@ paths:
                       "date": "2015-08-07 03:50:51 UTC",
                       "ether": "0.000000000000000000"
                     },
-                    { "...": "..." }
+                    {
+                      "...": "..."
+                    }
                   ]
         "400":
           description: bad input parameter
