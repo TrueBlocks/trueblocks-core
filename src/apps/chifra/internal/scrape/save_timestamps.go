@@ -43,6 +43,12 @@ func (bm *BlazeManager) WriteTimestamps(ctx context.Context, blocks []base.Blknu
 		// don't get more than maxBlocks at a time
 		cnt := 0
 		maxBlocks := 2000
+		// if an environment variable called TB_BACKFILL_BLOCKS is set, use it
+		if val := os.Getenv("TB_BACKFILL_BLOCKS"); val != "" {
+			if n := base.MustParseInt64(val); int(n) > maxBlocks {
+				maxBlocks = int(n)
+			}
+		}
 		for block := nTimestamps; block < blocks[0] && cnt < maxBlocks; block++ {
 			if ctx.Err() != nil {
 				// This means the context got cancelled, i.e. we got a SIGINT.

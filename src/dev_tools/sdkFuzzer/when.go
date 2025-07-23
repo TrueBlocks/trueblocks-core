@@ -27,7 +27,6 @@ func DoWhen() {
 
 	globs := noEther(globals)
 	repair := []bool{false, true}
-	check := []bool{false, true}
 	update := []bool{false, true}
 	// deep is a <uint64> --other
 	// blocks is not fuzzed
@@ -35,7 +34,6 @@ func DoWhen() {
 	// Fuzz Loop
 	// EXISTING_CODE
 	_ = repair
-	_ = check
 	_ = update
 	types := []string{"when", "list", "timestamps", "count"}
 	// when,command,default|caching|
@@ -103,6 +101,16 @@ func TestWhen(which, value, fn string, opts *sdk.WhenOptions) {
 			ReportError(fn, opts, err)
 		} else {
 			if err := SaveToFile(fn, count); err != nil {
+				ReportError2(fn, err)
+			} else {
+				ReportOkay(fn)
+			}
+		}
+	case "check":
+		if check, _, err := opts.WhenCheck(); err != nil {
+			ReportError(fn, opts, err)
+		} else {
+			if err := SaveToFile(fn, check); err != nil {
 				ReportError2(fn, err)
 			} else {
 				ReportOkay(fn)

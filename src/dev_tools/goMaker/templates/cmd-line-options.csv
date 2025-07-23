@@ -187,7 +187,7 @@ num,folder,group,route,tool,longName,hotKey,def_val,attributes,handler,option_ty
 27050,tools,Chain Data,when,whenBlock,count,U,,visible|docs,,switch,<boolean>,count,,,,with --timestamps only&#44; returns the number of timestamps in the cache
 27060,tools,Chain Data,when,whenBlock,truncate,n,NOPOSN,,,flag,<blknum>,,,,,with --timestamps only&#44; truncates the timestamp file at this block
 27070,tools,Chain Data,when,whenBlock,repair,r,,visible|docs,,switch,<boolean>,,,,,with --timestamps only&#44; repairs block(s) in the block range by re-querying from the chain
-27080,tools,Chain Data,when,whenBlock,check,c,,visible|docs,,switch,<boolean>,message,,,,with --timestamps only&#44; checks the validity of the timestamp data
+27080,tools,Chain Data,when,whenBlock,check,c,,visible|docs,,switch,<boolean>,reportCheck,,,,with --timestamps only&#44; checks the validity of the timestamp data
 27090,tools,Chain Data,when,whenBlock,update,u,,visible|docs,,switch,<boolean>,,,,,with --timestamps only&#44; bring the timestamp database forward to the latest block
 27100,tools,Chain Data,when,whenBlock,deep,d,,visible|docs,,flag,<uint64>,,,,,with --timestamps --check only&#44; verifies every N timestamp directly from the chain (slow)
 27110,tools,Chain Data,when,whenBlock,n1,,,,,note,,,,,,The block list may contain any combination of `number`&#44; `hash`&#44; `date`&#44; special `named` blocks.

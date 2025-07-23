@@ -2,6 +2,7 @@ package whenPkg
 
 import (
 	"fmt"
+	"os"
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
@@ -22,33 +23,34 @@ func (opts *WhenOptions) HandleTimestampsCheck(rCtx *output.RenderCtx) error {
 	}
 
 	// Create summary message
-	var message string
+	var reason string
 	isDeep := opts.Deep > 0
-	checkType := "consistency"
 	if isDeep {
-		checkType = "chain validation"
-	}
-
-	if errorCount == 0 {
-		message = fmt.Sprintf("Timestamp %s completed successfully. %d blocks checked, no errors found.", checkType, totalChecked)
-		logger.Info(message)
+		reason = "deep on-chain check"
 	} else {
-		message = fmt.Sprintf("Timestamp %s completed with errors. %d blocks checked, %d errors found.", checkType, totalChecked, errorCount)
-		logger.Warn(message)
+		reason = "consistency check"
 	}
 
 	// Only return structured output if in API mode
-	if opts.Globals.IsApiMode() {
-		fetchData := func(modelChan chan types.Modeler, errorChan chan error) {
-			_ = errorChan
-			modelChan <- &types.Message{
-				Msg: message,
-			}
+	fetchData := func(modelChan chan types.Modeler, errorChan chan error) {
+		_ = errorChan
+		result := "passed"
+		if errorCount > 0 {
+			result = "failed"
 		}
-		_ = output.StreamMany(rCtx, fetchData, opts.Globals.OutputOpts())
-	}
 
-	return nil
+		reportCheck := &types.ReportCheck{
+			Result:     result,
+			Reason:     reason,
+			CheckedCnt: uint64(totalChecked),
+			PassedCnt:  uint64(totalChecked - errorCount),
+			FailedCnt:  uint64(errorCount),
+			VisitedCnt: uint64(totalChecked),
+		}
+
+		modelChan <- reportCheck
+	}
+	return output.StreamMany(rCtx, fetchData, opts.Globals.OutputOpts())
 }
 
 func (opts *WhenOptions) performTimestampCheck() (int, int, error) {
@@ -180,7 +182,7 @@ func (opts *WhenOptions) checkOneBlock(scanBar *progress.ScanBar, prev *types.Na
 		}
 
 		if status == "Okay" {
-			scanBar.Report(opts.Globals.Writer, status, fmt.Sprintf(" bn: %d ts: %d", expected.BlockNumber, expected.Timestamp))
+			scanBar.Report(os.Stderr, status, fmt.Sprintf(" bn: %d ts: %d", expected.BlockNumber, expected.Timestamp))
 		}
 	}
 
