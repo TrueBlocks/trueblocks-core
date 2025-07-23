@@ -2,6 +2,8 @@
 
 This file details changes made to TrueBlocks over time. All version prior to version 3.0.0 are now no longer supported.
 
+## v6.0.0 - Coming soon...
+
 ## v5.0.0 - All About Them Recons - Lancaster (2025/03/28)
 
 **Summary**
