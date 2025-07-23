@@ -36,7 +36,7 @@ func LoadManifest(chain string, publisher base.Address, source Source) (ret *Man
 			return nil, err
 		} else if ret.Chain != chain {
 			return ret, fmt.Errorf("the remote manifest's chain (%s) does not match the cached manifest's chain (%s)", ret.Chain, chain)
-		} else {
+			// } else {
 			// ret is now referring to the existing manifest
 		}
 	}
@@ -83,7 +83,7 @@ func LoadManifest(chain string, publisher base.Address, source Source) (ret *Man
 			if err = ret.SaveManifest(chain, manifestFn); err != nil {
 				return ret, err
 			}
-		} else {
+			// } else {
 			// We use the existing manifest without saving it
 		}
 	} else {
