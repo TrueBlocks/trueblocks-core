@@ -270,7 +270,7 @@ chunk and the Bloom filter to IPFS. In this way, TrueBlocks creates an immutable
 index of appearances that can be used not only by TrueBlocks, but any member of the community who
 needs it. (Hint: We all need it.)
 
-Users of of any of the TrueBlocks applications (or anyone else's applications) may subsequently
+Users of any of the TrueBlocks applications (or anyone else's applications) may subsequently
 download the Bloom filters, query them to determine which **index chunks** need to be downloaded,
 and thereby build a historical list of transactions for a given address. This is accomplished
 while imposing a minimum amount of resource requirement on the end user's machine.

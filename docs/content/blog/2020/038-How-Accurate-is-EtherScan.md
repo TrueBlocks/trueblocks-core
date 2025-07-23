@@ -106,7 +106,7 @@ As a quick summary, the missing transactions appear to be of at least six types:
 
 * `Input` data of both errored and completed transactions
 * Log `topics` of both errored and completed transactions
-* Log `data` of of both errored and completed transactions
+* Log `data` of both errored and completed transactions
 * Output data of deeply embedded traces
 * Uncle mining rewards
 
