@@ -28,14 +28,16 @@ func (opts *ChunksOptions) HandleBlooms(rCtx *output.RenderCtx, blockNums []base
 				return false, fmt.Errorf("should not happen in showBloom")
 			}
 
-			var bl index.Bloom
-			_ = bl.Read(path)
-			nInserted := 0
-			for _, bl := range bl.Blooms {
-				nInserted += int(bl.NInserted)
+			// Use optimized metadata reader instead of loading entire bloom filter
+			header, count, nInserted, err := index.ReadBloomMetadata(path, true, opts.Globals.Verbose)
+			if err != nil {
+				return false, err
 			}
 
 			if opts.Globals.Verbose {
+				// For verbose mode, we still need the full bloom for display
+				var bl index.Bloom
+				_ = bl.Read(path)
 				displayBloom(&bl, 1)
 			}
 
@@ -49,13 +51,13 @@ func (opts *ChunksOptions) HandleBlooms(rCtx *output.RenderCtx, blockNums []base
 				return false, err
 			}
 			s := types.ChunkBloom{
-				Magic:     fmt.Sprintf("0x%x", bl.Header.Magic),
-				Hash:      bl.Header.Hash,
+				Magic:     fmt.Sprintf("0x%x", header.Magic),
+				Hash:      header.Hash,
 				FileSize:  stats.BloomSz,
 				Range:     rng.String(),
-				NBlooms:   stats.NBlooms,
+				NBlooms:   uint64(count),
 				ByteWidth: index.BLOOM_WIDTH_IN_BYTES,
-				NInserted: uint64(nInserted),
+				NInserted: nInserted,
 			}
 			rd := tslib.RangeToBounds(chain, &rng)
 			s.RangeDates = &rd

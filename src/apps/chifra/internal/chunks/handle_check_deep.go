@@ -54,7 +54,8 @@ func (opts *ChunksOptions) CheckDeep(cacheMan *manifest.Manifest, report *types.
 
 	var sh *shell.Shell
 	var iterFunc func(rangeStr string, item *reporter) (err error)
-	if opts.Mode == "index" {
+	switch opts.Mode {
+	case "index":
 		logger.Info("Checking each address in each index against its Bloom filter...")
 		iterFunc = func(rangeStr string, item *reporter) (err error) {
 			_ = rangeStr
@@ -109,7 +110,7 @@ func (opts *ChunksOptions) CheckDeep(cacheMan *manifest.Manifest, report *types.
 			return nil
 		}
 
-	} else if opts.Mode == "manifest" {
+	case "manifest":
 		sh = shell.NewShell(config.GetPinning().LocalPinUrl)
 		iterFunc = func(rangeStr string, item *reporter) (err error) {
 			_ = rangeStr
@@ -120,7 +121,7 @@ func (opts *ChunksOptions) CheckDeep(cacheMan *manifest.Manifest, report *types.
 			}
 			return checkHashes(item.chunk, "index", sh, item)
 		}
-	} else {
+	default:
 		return fmt.Errorf("unknown mode: %s", opts.Mode)
 	}
 

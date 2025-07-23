@@ -49,10 +49,10 @@ func CountPins(chain, status string) uint64 {
 
 // ListPins pins a file remotely to the pinning service
 func ListPins(chain, status string, showProgress, countOnly bool, perPage int, dur time.Duration) ([]string, error) {
-	count, _ := getPins(chain, status, 0, 1)
-	ret := make([]string, 0, count)
+	totalCount, _ := getPins(chain, status, 0, 1)
+	ret := make([]string, 0, totalCount)
 	if countOnly {
-		logger.Info("There are", count, "pins.")
+		logger.Info("There are", totalCount, "pins.")
 
 	} else {
 		testing := false
@@ -60,19 +60,21 @@ func ListPins(chain, status string, showProgress, countOnly bool, perPage int, d
 			perPage = -1 * perPage
 			testing = true
 		}
+		perPage = max(1, perPage)
+		nPages := int64(float64(totalCount)/float64(perPage) + 1)
 
 		bar := logger.NewBar(logger.BarOptions{
 			Enabled: showProgress,
-			Total:   int64(count)/int64(perPage) + 1,
+			Total:   nPages,
 		})
 
-		for i := 0; i < count; i += perPage {
-			count, pins := getPins(chain, status, i, perPage)
-			bar.Prefix = fmt.Sprintf("Listing %d '%s' items in %d pages...", count, status, count/perPage+1)
+		for i := 0; i < totalCount; i += perPage {
+			_, pins := getPins(chain, status, i, perPage)
+			bar.Prefix = fmt.Sprintf("Listing %d '%s' items in %d pages...", len(ret), status, nPages)
 			for _, pin := range pins {
 				ret = append(ret, fmt.Sprintf("%s\t%s\t%s\t%d\t%s", pin.IpfsPinHash, pin.DatePinned, pin.Metadata.Name, pin.Size, status))
 			}
-			if testing || count < perPage {
+			if testing || len(pins) < perPage {
 				break
 			}
 			bar.Tick()

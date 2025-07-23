@@ -36,7 +36,11 @@ func (opts *ChunksOptions) HandleCounts(rCtx *output.RenderCtx, blockNums []base
 			path := walk.GetRootPathFromCacheType(chain, walk.Index_Final)
 			_ = walk.ForEveryFileInFolder(path, vFunc, nil)
 		case "manifest":
-			man, _ := manifest.LoadManifest(chain, opts.PublisherAddr, sourceMap[opts.Remote])
+			source := manifest.LocalCache
+			if opts.Remote {
+				source = manifest.TempContract // don't modify the local manifest when counting
+			}
+			man, _ := manifest.LoadManifest(chain, opts.PublisherAddr, source)
 			counter.Count = uint64(len(man.Chunks))
 		case "pins":
 			counter.Count = pinning.CountPins(chain, "pinned")

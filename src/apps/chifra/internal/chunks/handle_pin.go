@@ -23,7 +23,7 @@ import (
 
 func (opts *ChunksOptions) HandlePin(rCtx *output.RenderCtx, blockNums []base.Blknum) error {
 	chain := opts.Globals.Chain
-	if opts.Globals.TestMode {
+	if opts.Globals.TestMode && !opts.DryRun {
 		logger.Warn("Pinning option not tested.")
 		return nil
 	}
@@ -87,10 +87,14 @@ func (opts *ChunksOptions) HandlePin(rCtx *output.RenderCtx, blockNums []base.Bl
 			100, /* maxTests */
 			listFiles,
 		)
-		if err := walker.WalkBloomFilters(blockNums); err != nil {
-			errorChan <- err
-			rCtx.Cancel()
-			return
+
+		// Only walk and pin chunks/blooms if --metadata flag is not set
+		if !opts.Metadata {
+			if err := walker.WalkBloomFilters(blockNums); err != nil {
+				errorChan <- err
+				rCtx.Cancel()
+				return
+			}
 		}
 
 		sort.Slice(fileList, func(i, j int) bool {
@@ -100,12 +104,23 @@ func (opts *ChunksOptions) HandlePin(rCtx *output.RenderCtx, blockNums []base.Bl
 		})
 
 		failCnt := 1.0
+		chunksProcessed := 0
 		for i := 0; i < len(fileList); i++ {
 			sleep := opts.Sleep
 
 			path := fileList[i]
 			if opts.Globals.Verbose {
 				logger.Info("pinning path:", path)
+			}
+
+			if opts.DryRun {
+				rng := ranges.RangeFromFilename(path)
+				logger.Info("DRY RUN: Would pin chunk:", rng.String())
+				if opts.Rewrite && chunksProcessed == 0 {
+					logger.Info("DRY RUN: Manifest would have been saved after each chunk pin to:", outPath)
+				}
+				chunksProcessed++
+				continue
 			}
 
 			local, remote, err := pinning.PinOneChunk(chain, path, opts.Remote)
@@ -127,7 +142,9 @@ func (opts *ChunksOptions) HandlePin(rCtx *output.RenderCtx, blockNums []base.Bl
 				} else {
 					man.Chunks = append(man.Chunks, local)
 				}
-				_ = man.SaveManifest(chain, outPath)
+				if !opts.DryRun {
+					_ = man.SaveManifest(chain, outPath)
+				}
 
 				if opts.Globals.Verbose {
 					if opts.Remote {
@@ -147,26 +164,34 @@ func (opts *ChunksOptions) HandlePin(rCtx *output.RenderCtx, blockNums []base.Bl
 			}
 		}
 
-		if len(blockNums) == 0 && firstBlock == 0 && lastBlock == base.NOPOSN {
+		if (len(blockNums) == 0 && firstBlock == 0 && lastBlock == base.NOPOSN) || opts.Metadata {
 			tsPath := config.PathToTimestamps(chain)
-			if localHash, remoteHash, err := pinning.PinOneFile(chain, "timestamps", tsPath, opts.Remote); err != nil {
-				errorChan <- err
-				logger.Error("Pin failed:", tsPath, err)
+			if opts.DryRun {
+				logger.Info("DRY RUN: Would pin timestamps file:", tsPath)
 			} else {
-				opts.matchReport(localHash == remoteHash, localHash, remoteHash)
-				report.TimestampHash = localHash
+				if localHash, remoteHash, err := pinning.PinOneFile(chain, "timestamps", tsPath, opts.Remote); err != nil {
+					errorChan <- err
+					logger.Error("Pin failed:", tsPath, err)
+				} else {
+					opts.matchReport(localHash == remoteHash, localHash, remoteHash)
+					report.TimestampHash = localHash
+				}
 			}
 
 			manPath := config.PathToManifestFile(chain)
 			if opts.Deep {
 				manPath = outPath
 			}
-			if localHash, remoteHash, err := pinning.PinOneFile(chain, "manifest", manPath, opts.Remote); err != nil {
-				errorChan <- err
-				logger.Error("Pin failed:", manPath, err)
+			if opts.DryRun {
+				logger.Info("DRY RUN: Would pin manifest file:", manPath)
 			} else {
-				opts.matchReport(localHash == remoteHash, localHash, remoteHash)
-				report.ManifestHash = localHash
+				if localHash, remoteHash, err := pinning.PinOneFile(chain, "manifest", manPath, opts.Remote); err != nil {
+					errorChan <- err
+					logger.Error("Pin failed:", manPath, err)
+				} else {
+					opts.matchReport(localHash == remoteHash, localHash, remoteHash)
+					report.ManifestHash = localHash
+				}
 			}
 		}
 

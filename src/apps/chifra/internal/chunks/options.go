@@ -57,6 +57,8 @@ type ChunksOptions struct {
 	Unpin      bool                     `json:"unpin,omitempty"`      // For the pins mode only, if true reads local ./unpins file for valid CIDs and remotely unpins each (skips non-CIDs)
 	Count      bool                     `json:"count,omitempty"`      // For certain modes only, display the count of records
 	Tag        string                   `json:"tag,omitempty"`        // Visits each chunk and updates the headers with the supplied version string (vX.Y.Z-str)
+	DryRun     bool                     `json:"dryRun,omitempty"`     // Show what the command would do without actually making any changes
+	Metadata   bool                     `json:"metadata,omitempty"`   // For --pin only, pin only metadata files (ts.bin and manifest.json)
 	Sleep      float64                  `json:"sleep,omitempty"`      // For --remote pinning only, seconds to sleep between API calls
 	Globals    globals.GlobalOptions    `json:"globals,omitempty"`    // The global options
 	Conn       *rpc.Connection          `json:"conn,omitempty"`       // The connection to the RPC server
@@ -93,6 +95,8 @@ func (opts *ChunksOptions) testLog() {
 	logger.TestLog(opts.Unpin, "Unpin: ", opts.Unpin)
 	logger.TestLog(opts.Count, "Count: ", opts.Count)
 	logger.TestLog(len(opts.Tag) > 0, "Tag: ", opts.Tag)
+	logger.TestLog(opts.DryRun, "DryRun: ", opts.DryRun)
+	logger.TestLog(opts.Metadata, "Metadata: ", opts.Metadata)
 	logger.TestLog(opts.Sleep != float64(0.0), "Sleep: ", opts.Sleep)
 	opts.Conn.TestLog()
 	opts.Globals.TestLog()
@@ -166,6 +170,10 @@ func ChunksFinishParseInternal(w io.Writer, values url.Values) *ChunksOptions {
 			opts.Count = true
 		case "tag":
 			opts.Tag = value[0]
+		case "dryRun":
+			opts.DryRun = true
+		case "metadata":
+			opts.Metadata = true
 		case "sleep":
 			opts.Sleep = base.MustParseFloat64(value[0])
 		default:

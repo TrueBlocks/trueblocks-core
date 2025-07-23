@@ -78,6 +78,13 @@ on      ,both ,fast  ,chunks ,apps ,chunkMan ,tag_invalid             ,y    ,mod
 on      ,both ,fast  ,chunks ,apps ,chunkMan ,tag_invalid_mode        ,y    ,mode = manifest & tag = v1.0.0-release
 on      ,both ,fast  ,chunks ,apps ,chunkMan ,tag_test                ,y    ,mode = index & tag = v2.0.0-release
 
+# Dry run tests
+on      ,both ,fast  ,chunks ,apps ,chunkMan ,dry_run_tag             ,y    ,mode = index & tag = v2.0.0-release & dry_run
+on      ,both ,fast  ,chunks ,apps ,chunkMan ,dry_run_truncate        ,y    ,mode = index & truncate = 18000000 & dry_run
+on      ,both ,fast  ,chunks ,apps ,chunkMan ,dry_run_pin             ,y    ,mode = manifest & pin & dry_run
+on      ,both ,fast  ,chunks ,apps ,chunkMan ,dry_run_unpin           ,y    ,mode = pins & unpin & dry_run
+on      ,both ,fast  ,chunks ,apps ,chunkMan ,dry_run_invalid         ,y    ,mode = manifest & dry_run
+
 # Capabilities
 # chain & fmt & help & nocolor & noop & version & verbose & no_header & file & output & append & cache & decache & ether
 on      ,both ,fast  ,chunks ,apps ,chunkMan ,caps_allowed            ,y    ,mode = blooms & chain & fmt & nocolor & noop & version & verbose & no_header & file & output & append & fail_on_purpose

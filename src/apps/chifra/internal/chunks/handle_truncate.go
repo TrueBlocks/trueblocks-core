@@ -25,7 +25,7 @@ import (
 
 func (opts *ChunksOptions) HandleTruncate(rCtx *output.RenderCtx, blockNums []base.Blknum) error {
 	chain := opts.Globals.Chain
-	if opts.Globals.TestMode {
+	if opts.Globals.TestMode && !opts.DryRun {
 		logger.Warn("Truncate option not tested.")
 		return nil
 	}
@@ -35,7 +35,9 @@ func (opts *ChunksOptions) HandleTruncate(rCtx *output.RenderCtx, blockNums []ba
 		return nil
 	}
 
-	_ = file.CleanFolder(chain, config.PathToIndex(chain), []string{"ripe", "unripe", "maps", "staging"})
+	if !opts.DryRun {
+		_ = file.CleanFolder(chain, config.PathToIndex(chain), []string{"ripe", "unripe", "maps", "staging"})
+	}
 
 	showProgress := opts.Globals.ShowProgressNotTesting()
 	bar := logger.NewBar(logger.BarOptions{
@@ -60,7 +62,11 @@ func (opts *ChunksOptions) HandleTruncate(rCtx *output.RenderCtx, blockNums []ba
 			}
 
 			if strings.HasSuffix(path, ".gz") {
-				os.Remove(path)
+				if opts.DryRun {
+					logger.Info("DRY RUN: Would remove compressed chunk file:", path)
+				} else {
+					os.Remove(path)
+				}
 				return true, nil
 			}
 
@@ -71,10 +77,14 @@ func (opts *ChunksOptions) HandleTruncate(rCtx *output.RenderCtx, blockNums []ba
 
 			testRange := ranges.FileRange{First: opts.Truncate, Last: base.NOPOSN}
 			if rng.Intersects(testRange) {
-				if err = manifest.RemoveChunk(chain, opts.PublisherAddr, index.ToBloomPath(path), index.ToIndexPath(path)); err != nil {
-					return false, err
+				if opts.DryRun {
+					logger.Info("DRY RUN: Would remove chunk range:", rng.String())
+				} else {
+					if err = manifest.RemoveChunk(chain, opts.PublisherAddr, index.ToBloomPath(path), index.ToIndexPath(path)); err != nil {
+						return false, err
+					}
+					bar.Prefix = fmt.Sprintf("Removing %s     ", rng)
 				}
-				bar.Prefix = fmt.Sprintf("Removing %s     ", rng)
 				nChunksRemoved++
 			} else {
 				// We did not remove the chunk, so we need to keep track of where the truncated index ends
@@ -114,12 +124,17 @@ func (opts *ChunksOptions) HandleTruncate(rCtx *output.RenderCtx, blockNums []ba
 				}
 				if !info.IsDir() && strings.HasSuffix(path, ".mon.bin") {
 					if addr, err := base.AddressFromPath(path, ".mon.bin"); err == nil && !addr.IsZero() {
-						bar.Prefix = fmt.Sprintf("Truncating monitor for %s", addr.Hex())
-						mon, _ := monitor.NewMonitor(chain, addr, false /* create */)
-						if removed, err := mon.TruncateTo(chain, uint32(latestChunk)); err != nil {
-							return err
-						} else if removed {
+						if opts.DryRun {
+							logger.Info("DRY RUN: Would truncate monitor for", addr.Hex())
 							nMonitorsTruncated++
+						} else {
+							bar.Prefix = fmt.Sprintf("Truncating monitor for %s", addr.Hex())
+							mon, _ := monitor.NewMonitor(chain, addr, false /* create */)
+							if removed, err := mon.TruncateTo(chain, uint32(latestChunk)); err != nil {
+								return err
+							} else if removed {
+								nMonitorsTruncated++
+							}
 						}
 					}
 					bar.Tick()

@@ -1,0 +1,6 @@
+chunks?mode=manifest&pin&dryRun
+{
+  "errors": [
+    "The --pin option requires a locally running IPFS daemon."
+  ]
+}

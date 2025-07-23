@@ -35,11 +35,11 @@ func (opts *ChunksOptions) HandleList(rCtx *output.RenderCtx, blockNums []base.B
 				parts := strings.Split(line, "\t")
 				if len(parts) == 5 {
 					s := types.IpfsPin{
-						Cid:        base.IpfsHash(parts[0]),
-						DatePinned: parts[1],
-						FileName:   parts[2],
-						Size:       base.MustParseInt64(parts[3]),
-						Status:     parts[4],
+						Cid: base.IpfsHash(parts[0]),
+						// DatePinned: parts[1],
+						FileName: parts[2],
+						Size:     base.MustParseInt64(parts[3]),
+						// Status:     parts[4],
 					}
 					rng := strings.Split(s.FileName, ".")[0]
 					chunk := chunks[rng]

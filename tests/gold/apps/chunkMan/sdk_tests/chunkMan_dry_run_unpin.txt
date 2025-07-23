@@ -1,0 +1,13 @@
+chunks?mode=pins&unpin&dryRun
+Args: [mode=pins unpin dryRun]
+Opts: {"mode":16,"publisher":"0x0","unpin":true,"dryRun":true}
+Mode:  pins
+Publisher:  0x02f2b09b33fdbd406ead954a31f98bd29a2a3492
+Unpin:  true
+DryRun:  true
+Format:  json
+{
+  "errors": [
+    "The file ./unpins was not found in the local folder."
+  ]
+}

@@ -51,6 +51,52 @@ type Bloom struct {
 	Blooms     []bloomBytes
 }
 
+// ReadBloomMetadata reads only the header, count, and nInserted values without loading bloom data
+func ReadBloomMetadata(path string, check, verbose bool) (header bloomHeader, count uint32, totalInserted uint64, err error) {
+	if !file.FileExists(path) {
+		err = errors.New("required bloom file (" + path + ") missing")
+		return
+	}
+
+	var bl Bloom
+	if bl.File, err = os.OpenFile(path, os.O_RDONLY, 0644); err != nil {
+		return
+	}
+	defer func() {
+		bl.File.Close()
+	}()
+
+	// Read header
+	_, _ = bl.File.Seek(0, io.SeekStart)
+	if err = bl.readHeader(check); err != nil {
+		return
+	}
+	header = bl.Header
+
+	// Read count
+	if err = binary.Read(bl.File, binary.LittleEndian, &count); err != nil {
+		return
+	}
+
+	// Read only the nInserted values (skip the actual bloom bytes)
+	totalInserted = 0
+	if verbose {
+		for i := uint32(0); i < count; i++ {
+			var nInserted uint32
+			if err = binary.Read(bl.File, binary.LittleEndian, &nInserted); err != nil {
+				return
+			}
+			totalInserted += uint64(nInserted)
+
+			// Skip the bloom bytes (BLOOM_WIDTH_IN_BYTES = 131072)
+			if _, err = bl.File.Seek(BLOOM_WIDTH_IN_BYTES, io.SeekCurrent); err != nil {
+				return
+			}
+		}
+	}
+	return
+}
+
 // OpenBloom returns a newly initialized bloom filter. The bloom filter's file pointer is open (if there
 // have been no errors) and its header data has been read into memory. The array has been created with
 // enough space for Count blooms but has not been read from disc. The file remains open for reading (if

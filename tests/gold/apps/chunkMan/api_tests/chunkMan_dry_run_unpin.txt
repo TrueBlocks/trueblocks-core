@@ -1,0 +1,6 @@
+chunks?mode=pins&unpin&dryRun
+{
+  "errors": [
+    "The pins mode is not available in api mode."
+  ]
+}

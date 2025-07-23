@@ -1,0 +1,13 @@
+chunks?mode=index&truncate=18000000&dryRun
+Args: [mode=index truncate=18000000 dryRun]
+Opts: {"mode":4,"publisher":"0x0","truncate":18000000,"dryRun":true}
+Mode:  index
+Publisher:  0x02f2b09b33fdbd406ead954a31f98bd29a2a3492
+Truncate:  18000000
+DryRun:  true
+Format:  json
+{
+  "errors": [
+    "The --truncate option is not available in test mode."
+  ]
+}

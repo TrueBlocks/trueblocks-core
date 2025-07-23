@@ -10,6 +10,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/ranges"
 )
 
@@ -79,8 +80,17 @@ func (bl *Bloom) readHeader(check bool) error {
 
 	// Validate hash against provided tag.
 	if check {
-		if bl.Header.Hash != base.BytesToHash(config.HeaderHash(config.ExpectedVersion())) {
-			return fmt.Errorf("Bloom.readHeader: %w %x %x", ErrIncorrectHash, bl.Header.Hash, base.BytesToHash(config.HeaderHash(config.ExpectedVersion())))
+		headerHash := bl.Header.Hash
+		headerTag := config.VersionTags[headerHash.String()]
+		expectedHash := base.BytesToHash(config.HeaderHash(config.ExpectedVersion()))
+		expectedTag := config.VersionTags[expectedHash.String()]
+		if headerHash != expectedHash {
+			logger.Warn(fmt.Sprintf(
+				"Bloom header mismatch %s headerHash=0x%x (%s) expectedHash=0x%x (%s)",
+				ErrIncorrectHash,
+				headerHash, headerTag,
+				expectedHash, expectedTag,
+			))
 		}
 	}
 
