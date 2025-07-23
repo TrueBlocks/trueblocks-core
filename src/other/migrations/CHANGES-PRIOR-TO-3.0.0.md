@@ -1896,7 +1896,7 @@ There were no changes to the [Specification for the Unchained Index](https://tru
 - Removed `--tsx` option as unused.
 - Removed `--dump` option as unused.
 - Added `--sdk` option to output Python and Typescript SDKs.
-- Separation of `CParameter` class from `CMember` class making publically presented `CParamater` much simpler since most of the complications came from that class's use in makeClass.
+- Separation of `CParameter` class from `CMember` class making publicly presented `CParamater` much simpler since most of the complications came from that class's use in makeClass.
 
 **testRunner**
 
@@ -2127,7 +2127,7 @@ Changes in this release are in support of [the docker version](https://github.co
 - **chifra state:**
   - *Breaking change:* Remove `--storage` option (this option was never fully implemented anyway).
   - Add `--proxy` option which allows user to specify the address of a proxied-to address. Useful with the `--call` option.
-  - Improvements to the `chifra state --call` function to recongnize and automatically call proxied-to contracts (thanks to contributor Matt Solomon)
+  - Improvements to the `chifra state --call` function to recognize and automatically call proxied-to contracts (thanks to contributor Matt Solomon)
 
 - **chifra transactions:**
   - *Breaking change:* deprecates `--reconcile` option, replaces it with `--account_for` option which works identically.
@@ -2279,5 +2279,5 @@ Changes in this release are in support of [the docker version](https://github.co
   - This tool will eventually be deprecated.
   - Explicitly removed support for any chain other than Ethereum mainnet.
 
-- **chifra qoutes:**
+- **chifra quotes:**
   - Officially deprecated
