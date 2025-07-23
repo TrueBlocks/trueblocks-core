@@ -35,6 +35,7 @@
       }
     ],
     "signature": "supportsInterface(bytes4)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -57,6 +58,7 @@
     "name": "diamondCut",
     "outputs": [],
     "signature": "diamondCut(bytes[],address,bytes)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -71,6 +73,7 @@
     "name": "diamondCut",
     "outputs": [],
     "signature": "diamondCut(bytes[])",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -85,6 +88,7 @@
     "name": "Cut",
     "outputs": [],
     "signature": "Cut(bytes[])",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -100,6 +104,7 @@
       }
     ],
     "signature": "facets()",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -119,6 +124,7 @@
       }
     ],
     "signature": "facetFunctionSelectors(address)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -133,6 +139,7 @@
       }
     ],
     "signature": "facetAddresses()",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -152,6 +159,7 @@
       }
     ],
     "signature": "facetAddress(bytes4)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -171,6 +179,7 @@
       }
     ],
     "signature": "supportsInterface(bytes4)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -179,12 +188,13 @@
     "name": "diamondStorage",
     "outputs": [
       {
-        "name": "storage ds",
         "internalType": "struct DiamondStorage",
+        "name": "storage ds",
         "type": "tuple"
       }
     ],
     "signature": "diamondStorage()",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -198,6 +208,7 @@
     "name": "setCompleted",
     "outputs": [],
     "signature": "setCompleted(uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -211,6 +222,7 @@
     "name": "upgrade",
     "outputs": [],
     "signature": "upgrade(address)",
+    "stateMutability": "nonpayable",
     "type": "function"
   }
 ]

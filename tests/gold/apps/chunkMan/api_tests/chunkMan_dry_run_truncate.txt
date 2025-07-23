@@ -1,0 +1,6 @@
+chunks?mode=index&truncate=18000000&dryRun
+{
+  "errors": [
+    "The --truncate option is not available in api mode."
+  ]
+}

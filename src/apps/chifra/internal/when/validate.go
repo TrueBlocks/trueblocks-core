@@ -29,12 +29,13 @@ func (opts *WhenOptions) validateWhen() error {
 		opts.Timestamps = true
 	}
 
+	isDeep := opts.Deep > 0
 	if opts.Timestamps {
 		if opts.List {
 			return validate.Usage("Please choose only one of {0}.", "--timestamps or --list")
 		}
 
-		if opts.Deep && !opts.Check {
+		if isDeep && !opts.Check {
 			return validate.Usage("The {0} option is only available with the {1} option.", "--deep", "--timestamps --check")
 		}
 
@@ -48,7 +49,7 @@ func (opts *WhenOptions) validateWhen() error {
 
 		}
 
-		if opts.Deep {
+		if isDeep {
 			return validate.Usage("The {0} option is only available with the {1} option.", "--deep", "--timestamps --check")
 		}
 

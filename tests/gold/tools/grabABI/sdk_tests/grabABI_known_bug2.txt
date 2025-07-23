@@ -16,30 +16,35 @@ Format:  json
       "encoding": "0x173825d9",
       "name": "removeOwner",
       "signature": "removeOwner(address)",
+      "stateMutability": "nonpayable",
       "type": "function"
     },
     {
       "encoding": "0x2f54bf6e",
       "name": "isOwner",
       "signature": "isOwner(address)",
+      "stateMutability": "nonpayable",
       "type": "function"
     },
     {
       "encoding": "0x4123cb6b",
       "name": "m_numOwners",
       "signature": "m_numOwners()",
+      "stateMutability": "view",
       "type": "function"
     },
     {
       "encoding": "0x52375093",
       "name": "m_lastDay",
       "signature": "m_lastDay()",
+      "stateMutability": "view",
       "type": "function"
     },
     {
       "encoding": "0x54fd4d50",
       "name": "version",
       "signature": "version()",
+      "stateMutability": "view",
       "type": "function"
     },
     {
@@ -52,30 +57,35 @@ Format:  json
       "encoding": "0x5c52c2f5",
       "name": "resetSpentToday",
       "signature": "resetSpentToday()",
+      "stateMutability": "nonpayable",
       "type": "function"
     },
     {
       "encoding": "0x659010e7",
       "name": "m_spentToday",
       "signature": "m_spentToday()",
+      "stateMutability": "view",
       "type": "function"
     },
     {
       "encoding": "0x7065cb48",
       "name": "addOwner",
       "signature": "addOwner(address)",
+      "stateMutability": "nonpayable",
       "type": "function"
     },
     {
       "encoding": "0x746c9171",
       "name": "m_required",
       "signature": "m_required()",
+      "stateMutability": "view",
       "type": "function"
     },
     {
       "encoding": "0x797af627",
       "name": "confirm",
       "signature": "confirm(bytes32)",
+      "stateMutability": "nonpayable",
       "type": "function"
     },
     {
@@ -100,6 +110,7 @@ Format:  json
       "encoding": "0xb20d30a9",
       "name": "setDailyLimit",
       "signature": "setDailyLimit(uint256)",
+      "stateMutability": "nonpayable",
       "type": "function"
     },
     {
@@ -112,24 +123,28 @@ Format:  json
       "encoding": "0xb61d27f6",
       "name": "execute",
       "signature": "execute(address,uint256,bytes)",
+      "stateMutability": "nonpayable",
       "type": "function"
     },
     {
       "encoding": "0xb75c7dc6",
       "name": "revoke",
       "signature": "revoke(bytes32)",
+      "stateMutability": "nonpayable",
       "type": "function"
     },
     {
       "encoding": "0xba51a6df",
       "name": "changeRequirement",
       "signature": "changeRequirement(uint256)",
+      "stateMutability": "nonpayable",
       "type": "function"
     },
     {
       "encoding": "0xc2cf7326",
       "name": "hasConfirmed",
       "signature": "hasConfirmed(bytes32,address)",
+      "stateMutability": "view",
       "type": "function"
     },
     {
@@ -142,6 +157,7 @@ Format:  json
       "encoding": "0xcbf0b0c0",
       "name": "kill",
       "signature": "kill(address)",
+      "stateMutability": "nonpayable",
       "type": "function"
     },
     {
@@ -166,12 +182,14 @@ Format:  json
       "encoding": "0xf00d4b5d",
       "name": "changeOwner",
       "signature": "changeOwner(address,address)",
+      "stateMutability": "nonpayable",
       "type": "function"
     },
     {
       "encoding": "0xf1736d86",
       "name": "m_dailyLimit",
       "signature": "m_dailyLimit()",
+      "stateMutability": "view",
       "type": "function"
     }
   ],

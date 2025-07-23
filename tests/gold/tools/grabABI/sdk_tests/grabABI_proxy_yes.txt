@@ -11,6 +11,7 @@ Format:  json
       "encoding": "0x0d582f13",
       "name": "addOwnerWithThreshold",
       "signature": "addOwnerWithThreshold(address,uint256)",
+      "stateMutability": "nonpayable",
       "type": "function"
     },
     {
@@ -23,6 +24,7 @@ Format:  json
       "encoding": "0x12fb68e0",
       "name": "checkNSignatures",
       "signature": "checkNSignatures(bytes32,bytes,bytes,uint256)",
+      "stateMutability": "view",
       "type": "function"
     },
     {
@@ -41,18 +43,21 @@ Format:  json
       "encoding": "0x2d9ad53d",
       "name": "isModuleEnabled",
       "signature": "isModuleEnabled(address)",
+      "stateMutability": "view",
       "type": "function"
     },
     {
       "encoding": "0x2f54bf6e",
       "name": "isOwner",
       "signature": "isOwner(address)",
+      "stateMutability": "view",
       "type": "function"
     },
     {
       "encoding": "0x3408e470",
       "name": "getChainId",
       "signature": "getChainId()",
+      "stateMutability": "view",
       "type": "function"
     },
     {
@@ -71,18 +76,21 @@ Format:  json
       "encoding": "0x468721a7",
       "name": "execTransactionFromModule",
       "signature": "execTransactionFromModule(address,uint256,bytes,uint8)",
+      "stateMutability": "nonpayable",
       "type": "function"
     },
     {
       "encoding": "0x5229073f",
       "name": "execTransactionFromModuleReturnData",
       "signature": "execTransactionFromModuleReturnData(address,uint256,bytes,uint8)",
+      "stateMutability": "nonpayable",
       "type": "function"
     },
     {
       "encoding": "0x5624b25b",
       "name": "getStorageAt",
       "signature": "getStorageAt(uint256,uint256)",
+      "stateMutability": "view",
       "type": "function"
     },
     {
@@ -95,12 +103,14 @@ Format:  json
       "encoding": "0x5ae6bd37",
       "name": "signedMessages",
       "signature": "signedMessages(bytes32)",
+      "stateMutability": "view",
       "type": "function"
     },
     {
       "encoding": "0x610b5925",
       "name": "enableModule",
       "signature": "enableModule(address)",
+      "stateMutability": "nonpayable",
       "type": "function"
     },
     {
@@ -119,6 +129,7 @@ Format:  json
       "encoding": "0x694e80c3",
       "name": "changeThreshold",
       "signature": "changeThreshold(uint256)",
+      "stateMutability": "nonpayable",
       "type": "function"
     },
     {
@@ -132,12 +143,14 @@ Format:  json
       "encoding": "0x7d832974",
       "name": "approvedHashes",
       "signature": "approvedHashes(address,bytes32)",
+      "stateMutability": "view",
       "type": "function"
     },
     {
       "encoding": "0x934f3a11",
       "name": "checkSignatures",
       "signature": "checkSignatures(bytes32,bytes,bytes)",
+      "stateMutability": "view",
       "type": "function"
     },
     {
@@ -150,6 +163,7 @@ Format:  json
       "encoding": "0xa0e67e2b",
       "name": "getOwners",
       "signature": "getOwners()",
+      "stateMutability": "view",
       "type": "function"
     },
     {
@@ -168,66 +182,77 @@ Format:  json
       "encoding": "0xaffed0e0",
       "name": "nonce",
       "signature": "nonce()",
+      "stateMutability": "view",
       "type": "function"
     },
     {
       "encoding": "0xb4faba09",
       "name": "simulateAndRevert",
       "signature": "simulateAndRevert(address,bytes)",
+      "stateMutability": "nonpayable",
       "type": "function"
     },
     {
       "encoding": "0xb63e800d",
       "name": "setup",
       "signature": "setup(address[],uint256,address,bytes,address,address,uint256,address)",
+      "stateMutability": "nonpayable",
       "type": "function"
     },
     {
       "encoding": "0xc4ca3a9c",
       "name": "requiredTxGas",
       "signature": "requiredTxGas(address,uint256,bytes,uint8)",
+      "stateMutability": "nonpayable",
       "type": "function"
     },
     {
       "encoding": "0xcc2f8452",
       "name": "getModulesPaginated",
       "signature": "getModulesPaginated(address,uint256)",
+      "stateMutability": "view",
       "type": "function"
     },
     {
       "encoding": "0xd4d9bdcd",
       "name": "approveHash",
       "signature": "approveHash(bytes32)",
+      "stateMutability": "nonpayable",
       "type": "function"
     },
     {
       "encoding": "0xd8d11f78",
       "name": "getTransactionHash",
       "signature": "getTransactionHash(address,uint256,bytes,uint8,uint256,uint256,uint256,address,address,uint256)",
+      "stateMutability": "view",
       "type": "function"
     },
     {
       "encoding": "0xe009cfde",
       "name": "disableModule",
       "signature": "disableModule(address,address)",
+      "stateMutability": "nonpayable",
       "type": "function"
     },
     {
       "encoding": "0xe19a9dd9",
       "name": "setGuard",
       "signature": "setGuard(address)",
+      "stateMutability": "nonpayable",
       "type": "function"
     },
     {
       "encoding": "0xe318b52b",
       "name": "swapOwner",
       "signature": "swapOwner(address,address,address)",
+      "stateMutability": "nonpayable",
       "type": "function"
     },
     {
       "encoding": "0xe75235b8",
       "name": "getThreshold",
       "signature": "getThreshold()",
+      "stateMutability": "view",
       "type": "function"
     },
     {
@@ -240,6 +265,7 @@ Format:  json
       "encoding": "0xe86637db",
       "name": "encodeTransactionData",
       "signature": "encodeTransactionData(address,uint256,bytes,uint8,uint256,uint256,uint256,address,address,uint256)",
+      "stateMutability": "view",
       "type": "function"
     },
     {
@@ -252,6 +278,7 @@ Format:  json
       "encoding": "0xf08a0323",
       "name": "setFallbackHandler",
       "signature": "setFallbackHandler(address)",
+      "stateMutability": "nonpayable",
       "type": "function"
     },
     {
@@ -264,6 +291,7 @@ Format:  json
       "encoding": "0xf698da25",
       "name": "domainSeparator",
       "signature": "domainSeparator()",
+      "stateMutability": "view",
       "type": "function"
     },
     {
@@ -276,12 +304,14 @@ Format:  json
       "encoding": "0xf8dc5dd9",
       "name": "removeOwner",
       "signature": "removeOwner(address,address,uint256)",
+      "stateMutability": "nonpayable",
       "type": "function"
     },
     {
       "encoding": "0xffa1ad74",
       "name": "VERSION",
       "signature": "VERSION()",
+      "stateMutability": "view",
       "type": "function"
     }
   ],

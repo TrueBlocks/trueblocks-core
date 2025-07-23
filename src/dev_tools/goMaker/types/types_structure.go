@@ -31,6 +31,7 @@ type Structure struct {
 	Attributes  string    `json:"attributes,omitempty" toml:"attributes"`
 	Sorts       string    `json:"sorts,omitempty" toml:"sorts"`
 	Members     []Member  `json:"members,omitempty" toml:"members"`
+	Facets      []Facet   `json:"facets,omitempty" toml:"facets"`
 	Route       string    `json:"-" toml:"-"`
 	Producers   []string  `json:"-" toml:"-"`
 	ChildTabs   []string  `json:"-" toml:"-"`
@@ -47,6 +48,11 @@ func (s *Structure) String() string {
 }
 
 func (s Structure) Validate() bool {
+	for _, facet := range s.Facets {
+		if err := facet.ValidateAll(); err != nil {
+			logger.Fatal("Facet validation failed:", err)
+		}
+	}
 	return true
 }
 
@@ -128,7 +134,12 @@ func (s *Structure) GroupName() string {
 
 func (s *Structure) ModelIntro() string {
 	tmplName := "modelIntro" + s.Class
-	tmpl := strings.Trim(getTemplateContents(filepath.Join("model-intros", CamelCase(s.Class))), ws)
+	introName := filepath.Join("model-intros", CamelCase(s.Class))
+	fullIntroPath := filepath.Join(GetTemplatePath(), introName+".md")
+	if !file.FileExists(fullIntroPath) {
+		logger.Fatal("missing model intro file:", fullIntroPath, "            ")
+	}
+	tmpl := strings.Trim(getTemplateContents(introName), ws)
 	return s.executeTemplate(tmplName, tmpl)
 }
 
@@ -175,20 +186,22 @@ func (s *Structure) CacheLoc() string {
 
 func (s *Structure) CacheIdStr() string {
 	switch s.CacheBy {
+	case "address":
+		return "s.Address.Hex()[2:]"
 	case "address,block":
-		return "\"%s-%09d\", s.Address.Hex()[2:], s.BlockNumber"
+		return "fmt.Sprintf(\"%s-%09d\", s.Address.Hex()[2:], s.BlockNumber)"
 	case "address,block,fourbyte":
-		return "\"%s-%s-%09d\", s.Address.Hex()[2:], s.Encoding[2:], s.BlockNumber"
+		return "fmt.Sprintf(\"%s-%s-%09d\", s.Address.Hex()[2:], s.Encoding[2:], s.BlockNumber)"
 	case "address,tx":
-		return "\"%s-%09d-%05d\", s.Address.Hex()[2:], s.BlockNumber, s.TransactionIndex"
+		return "fmt.Sprintf(\"%s-%09d-%05d\", s.Address.Hex()[2:], s.BlockNumber, s.TransactionIndex)"
 	case "statement":
-		return "\"%s-%s-%09d-%05d\", s.Holder.Hex()[2:], s.Asset.Hex()[2:], s.BlockNumber, s.TransactionIndex"
+		return "fmt.Sprintf(\"%s-%s-%09d-%05d\", s.Holder.Hex()[2:], s.Asset.Hex()[2:], s.BlockNumber, s.TransactionIndex)"
 	case "block":
-		return "\"%09d\", s.BlockNumber"
+		return "fmt.Sprintf(\"%09d\", s.BlockNumber)"
 	case "tx":
-		return "\"%09d-%05d\", s.BlockNumber, s.TransactionIndex"
+		return "fmt.Sprintf(\"%09d-%05d\", s.BlockNumber, s.TransactionIndex)"
 	case "filename":
-		return "\"%0s\", s.Filename"
+		return "s.Filename"
 	default:
 		logger.Fatal("Unknown cache by format:", s.CacheBy)
 		return ""
@@ -340,4 +353,143 @@ func (s *Structure) UiRouteName() string {
 
 func (s *Structure) UiHotKey() string {
 	return s.getUiRoutePart(2)
+}
+
+func (s *Structure) HasFacets() bool {
+	return len(s.Facets) > 0
+}
+
+func (s *Structure) FacetsStr() string {
+	if !s.HasFacets() {
+		return "NO FACETS"
+	}
+	ret := []string{}
+	for _, f := range s.Facets {
+		ret = append(ret, f.Name+" ("+f.Store+")")
+	}
+	return strings.Join(ret, ", ")
+}
+
+func (s *Structure) Stores() []Store {
+	stores := make(map[string]bool)
+	for _, f := range s.Facets {
+		stores[f.Store] = true
+	}
+	sorted := []string{}
+	for store := range stores {
+		sorted = append(sorted, store)
+	}
+	sort.Strings(sorted)
+	ret := []Store{}
+	for _, storeName := range sorted {
+		ret = append(ret, NewStore(s, storeName))
+	}
+	return ret
+}
+
+func (s *Structure) HasCruds() bool {
+	for _, f := range s.Facets {
+		if f.HasCruds() {
+			return true
+		}
+	}
+	return false
+}
+
+func (s *Structure) Cruds() string {
+	seen := make(map[string]bool)
+	ret := []string{}
+	for _, f := range s.Facets {
+		for _, crud := range f.Cruds {
+			if !seen[crud] {
+				seen[crud] = true
+				ret = append(ret, crud)
+			}
+		}
+	}
+	return strings.Join(ret, ",")
+}
+
+func (s *Structure) CrudStrs() string {
+	cruds := strings.Split(s.Cruds(), ",")
+	ret := []string{}
+	for _, crud := range cruds {
+		if crud != "" {
+			ret = append(ret, "'"+crud+"'")
+		}
+	}
+	return strings.Join(ret, ", ")
+}
+
+func (s *Structure) Handlers_inner() string {
+	cruds := strings.Split(s.Cruds(), ",")
+	ret := []string{}
+	for _, crud := range cruds {
+		if crud == "undelete" || crud == "" {
+			continue
+		}
+		name := crud
+		if crud == "delete" {
+			name = "toggle"
+		}
+		ret = append(ret, "handle"+FirstUpper(name))
+	}
+	sort.Strings(ret)
+	return strings.Join(ret, ",")
+}
+
+func (s *Structure) Handlers() string {
+	handlers := s.Handlers_inner()
+	handlers = strings.ReplaceAll(handlers, "handleAutoname,", "handleAutoname: originalHandleAutoname,")
+	handlers = strings.ReplaceAll(handlers, ",", ",\n")
+	return handlers
+}
+
+func (s *Structure) HandlerStrs() string {
+	handlers := strings.Split(s.Handlers_inner(), ",")
+	ret := []string{}
+	for _, handler := range handlers {
+		handler = strings.TrimSpace(handler)
+		if handler == "handleUpdate" {
+			continue
+		}
+		ret = append(ret, "      "+handler+",")
+	}
+	return strings.Join(ret, "\n")
+}
+
+func (s *Structure) DocSortOrder() []Member {
+	ret := s.Members
+	sort.Slice(ret, func(i, j int) bool {
+		return ret[i].DocOrder < ret[j].DocOrder
+	})
+	return ret
+}
+
+func (s *Structure) CalcMembers() []string {
+	mm := map[string]bool{}
+	for _, st := range s.Stores() {
+		for _, m := range st.Members() {
+			if m.IsCalc() {
+				mm[m.Name] = true
+			}
+		}
+	}
+
+	ret := []string{}
+	for k := range mm {
+		ret = append(ret, k)
+	}
+	sort.Strings(ret)
+
+	return ret
+}
+
+func (s *Structure) HasForms() bool {
+	for _, f := range s.Facets {
+		if f.IsForm() || f.IsDashboard() {
+			return true
+		}
+	}
+	return false
 }

@@ -38,6 +38,9 @@ func FormattedDate(ts Timestamp) string {
 }
 
 func IsFinal(latestTs, blockTs Timestamp) bool {
+	if blockTs == NOPOSI {
+		return true
+	}
 	// TODO: This is not consistent with they way we determine unripe in the scraper, for example.
 	var min = Timestamp(5)
 	var s = Timestamp(60)

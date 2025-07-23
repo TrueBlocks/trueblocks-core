@@ -21,13 +21,13 @@ import (
 
 type ChunkBloom struct {
 	ByteWidth  uint64      `json:"byteWidth"`
+	FileSize   uint64      `json:"fileSize"`
 	Hash       base.Hash   `json:"hash"`
 	Magic      string      `json:"magic"`
 	NBlooms    uint64      `json:"nBlooms"`
 	NInserted  uint64      `json:"nInserted"`
 	Range      string      `json:"range"`
 	RangeDates *RangeDates `json:"rangeDates,omitempty"`
-	Size       uint64      `json:"size"`
 	// EXISTING_CODE
 	// EXISTING_CODE
 }
@@ -51,8 +51,7 @@ func (s *ChunkBloom) Model(chain, format string, verbose bool, extraOpts map[str
 		"magic":     s.Magic,
 		"hash":      FormattedTag(verbose, s.Hash),
 		"nBlooms":   s.NBlooms,
-		"nInserted": s.NInserted,
-		"size":      s.Size,
+		"fileSize":  s.FileSize,
 		"byteWidth": s.ByteWidth,
 	}
 	order = []string{
@@ -60,10 +59,15 @@ func (s *ChunkBloom) Model(chain, format string, verbose bool, extraOpts map[str
 		"magic",
 		"hash",
 		"nBlooms",
-		"nInserted",
-		"size",
+		"fileSize",
 		"byteWidth",
 	}
+
+	if verbose {
+		model["nInserted"] = s.NInserted
+		order = append(order, "nInserted")
+	}
+
 	if format == "json" {
 		model["hash"] = s.Hash.Hex()
 		model["hashValue"] = FormattedTag(verbose, s.Hash)

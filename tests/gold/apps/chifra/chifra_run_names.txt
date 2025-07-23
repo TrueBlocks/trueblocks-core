@@ -5,7 +5,6 @@ TEST[DATE|TIME] Format:  txt
 tags	address	name	symbol	source	decimals	deleted	isCustom	isPrefund	isContract	isErc20	isErc721
 50-Tokens:ERC721	0x0000000000001b84b1cb32787b0d64758d019317	HomeWork 🏠🛠️	HWK	On chain	18	false	false	false	true	true	true
 50-Tokens:ERC20	0x0000000000004946c0e9f43f4dee607b0ef1fa1c	Chi Gastoken by 1inch	CHI	On chain	18	false	false	false	true	true	false
-50-Tokens:ERC20	0x0000000000085d4780b73119b644ae5ecd22b376	TrueUSD	TUSD	On chain	18	false	false	false	true	true	false
 50-Tokens:ERC20	0x0000000000095413afc295d19edeb1ad7b71c952	Tokenlon	LON	Rotki	18	false	false	false	true	true	false
 50-Tokens:ERC20	0x00000000008fd4f395ec6f12920bae9cb6c722e4	Frax Ethereum	frxETH	Rotki	18	false	false	false	true	true	false
 50-Tokens:ERC20	0x0000000000b3f879cb30fe243b4dfee438691c04	Gastoken.io	GST2	On chain	2	false	false	false	true	true	false
@@ -47,7 +46,6 @@ tags	address	name	symbol	source	decimals	deleted	isCustom	isPrefund	isContract	i
 50-Tokens:ERC20	0x00d0f137b51692d0ac708bde7b367a373865cffe	Zapper.Fi : Balancer Remove		EtherScan.io		false	false	false	true	false	false
 50-Tokens:ERC20	0x00e8eb340f8af587eea6200d2081e31dc87285ac	Curve XAI-FRAXBP Factory yVault	yvCurve-XAI-FRAXBP-f	SmolAssets	18	false	false	false	true	true	false
 50-Tokens:ERC20	0x00f93fbf00f97170b6cf295dc58888073cb5c2b8	Curve.fi Factory USD Metapool: CRV/ETH	CRV-ETH3CRV-f	Rotki	18	false	false	false	true	true	false
-50-Tokens:ERC20	0x0100546f2cd4c9d97f798ffc9755e47865ff7ee6	Alchemix ETH	alETH	SmolAssets	18	false	false	false	true	true	false
 50-Tokens:ERC721	0x0101f3be8ebb4bbd39a2e3b9a3639d4259832fd9	DAO Drain 075		GethSource Ether Camp	1	false	false	false	true	true	true
 50-Tokens:ERC20	0x010496d8f3269ee9b05060bdf40c2d66e83e61dd	Digg	DIGG	On chain	18	false	false	false	true	true	false
 50-Tokens:ERC20	0x010589b7c33034b802f7dba2c88cc9cec0f46673	SoundMoneyCoin	SOV	On chain	8	false	false	false	true	true	false
@@ -73,7 +71,6 @@ tags	address	name	symbol	source	decimals	deleted	isCustom	isPrefund	isContract	i
 50-Tokens:ERC20	0x01b23286ff60a543ec29366ae8d6b6274ca20541	Brother Music Platform	BMP	Rotki	18	false	false	false	true	true	false
 50-Tokens:ERC20	0x01b3ec4aae1b8729529beb4965f27d008788b0eb	DA Power Play Token	DPP	Rotki	18	false	false	false	true	true	false
 50-Tokens:ERC20	0x01b8bcc8b75dd86025b455373f3c0814a060e6a8	DogeRocket	DGRO	On chain	18	false	false	false	true	true	false
-50-Tokens:ERC20	0x01ba67aac7f75f647d94220cc98fb30fcc5105bf	Lyra Token	LYRA	Rotki	18	false	false	false	true	true	false
 50-Tokens:ERC20	0x01bfbb9b1a2abe32ceb0a9f2291e5d7e36e38b20	kissBTC	kissBTC	On chain	8	false	false	false	true	true	false
 50-Tokens:ERC20	0x01cc47d73e69d00b7d8f54f2ae6ddbfa3c2e82e3	Ethereum Developers Night		https://kickback.events/event/[{ADDRESS}]	18	false	false	false	true	true	false
 50-Tokens:ERC20	0x01d04122aeccab138a47103b500f7b3d3b356a27	XYZ	XYZ	On chain	18	false	false	false	true	true	false
@@ -136,10 +133,8 @@ tags	address	name	symbol	source	decimals	deleted	isCustom	isPrefund	isContract	i
 50-Tokens:ERC20	0x0371a82e4a9d0a4312f3ee2ac9c6958512891372	Student Coin	STU	On chain	18	false	false	false	true	true	false
 50-Tokens:ERC20	0x037a54aab062628c9bbae1fdb1583c195585fe41	LCX	LCX	Rotki	18	false	false	false	true	true	false
 50-Tokens:ERC20	0x038a68ff68c393373ec894015816e33ad41bd564	Glitch	GLCH	Rotki	18	false	false	false	true	true	false
-50-Tokens:ERC20	0x0391d2021f89dc339f60fff84546ea23e337750f	BarnBridge Governance Token	BOND	Giveth website	18	false	false	false	true	true	false
 50-Tokens:ERC20	0x039b5649a59967e3e936d7471f9c3700100ee1ab	Kucoin Shares	KCS	Giveth website	6	false	false	false	true	true	false
 50-Tokens:ERC20	0x039cd22cb49084142d55fcd4b6096a4f51ffb3b4	MOVEZ.me	MOVEZ	Rotki	18	false	false	false	true	true	false
-50-Tokens:ERC20	0x03ab458634910aad20ef5f1c8ee96f1d6ac54919	Rai Reflex Index	RAI	Giveth website	18	false	false	false	true	true	false
 50-Tokens:ERC20	0x03b0ffc15a9a03d32a3a7c5839b3faf5174059cf	NZXT Protocol Governance Token (Shareholder only)	NZXT	On chain	6	false	false	false	true	true	false
 50-Tokens:ERC20	0x03be5c903c727ee2c8c4e9bc0acc860cca4715e2	Capsule Coin	CAPS	Rotki	18	false	false	false	true	true	false
 50-Tokens:ERC20	0x03c256c6717f4982e882dfa2b944d729a00118e1	Curve.fi Factory Crypto Pool: kstnd3	kstnd3-f	Rotki	18	false	false	false	true	true	false
@@ -182,7 +177,6 @@ tags	address	name	symbol	source	decimals	deleted	isCustom	isPrefund	isContract	i
 50-Tokens:ERC20	0x04f135587e379253d19f77c5e6c90d2c280aa947	FINDEX	FIND	On chain	18	false	false	false	true	true	false
 50-Tokens:ERC20	0x04f2694c8fcee23e8fd0dfea1d4f5bb8c352111f	Staked Olympus	sOHM	On chain	9	false	false	false	true	true	false
 50-Tokens:ERC20	0x04f2e7221fdb1b52a68169b25793e51478ff0329	Cappasity	CAPP	On chain	2	false	false	false	true	true	false
-50-Tokens:ERC20	0x04fa0d235c4abf4bcf4787af4cf447de572ef828	UMA Voting Token v1	UMA	Giveth website	18	false	false	false	true	true	false
 50-Tokens:ERC20	0x050cbff7bff0432b6096dd15cd9499913ddf8e23	FUTUREGOLDCOIN	FCI	On chain	18	false	false	false	true	true	false
 50-Tokens:ERC20	0x050d94685c6b0477e1fc555888af6e2bb8dfbda5	Inu.	INU	Rotki	18	false	false	false	true	true	false
 50-Tokens:ERC20	0x051d7e5609917bd9b73f04bac0ded8dd46a74301	Curve.fi wBTC/sBTC	crvWSBTC	SmolAssets	18	false	false	false	true	true	false
@@ -191,7 +185,7 @@ tags	address	name	symbol	source	decimals	deleted	isCustom	isPrefund	isContract	i
 50-Tokens:ERC20	0x053e5ba7cb9669dcc2feb2d0e1d3d4a0ad6aae39	3X Short OKB Token	OKBBEAR	Rotki	18	false	false	false	true	true	false
 50-Tokens:ERC20	0x054af22e1519b020516d72d749221c24756385c9	Curve HUSD Pool yVault	yvCurve-HUSD	SmolAssets	18	false	false	false	true	true	false
 50-Tokens:ERC20	0x054c64741dbafdc19784505494029823d89c3b13	ETERNAL TOKEN	XET	On chain	8	false	false	false	true	true	false
-50-Tokens:ERC20	0x054d64b73d3d8a21af3d764efd76bcaa774f3bb2	Plasma	PPAY	Rotki	18	false	false	false	true	true	false
+76-DaoToken,50-Tokens:ERC20	0x054d64b73d3d8a21af3d764efd76bcaa774f3bb2	Plasma	PPAY	Tally-Claude,Rotki	18	false	false	false	true	true	false
 50-Tokens:ERC20	0x054f76beed60ab6dbeb23502178c52d6c5debe40	DeFiner	FIN	Rotki	18	false	false	false	true	true	false
 50-Tokens:ERC20	0x056354f3ff20743aa4c0da365603871c7000b081	TriumphX	TRIX	Rotki	18	false	false	false	true	true	false
 50-Tokens:ERC20	0x056f203d89360e78d9f0796e46ae070bd90def9c	Uniswap V2	UNI-V2	On chain	18	false	false	false	true	true	false
@@ -203,3 +197,9 @@ tags	address	name	symbol	source	decimals	deleted	isCustom	isPrefund	isContract	i
 50-Tokens:ERC20	0x057fb10e3fec001a40e6b75d3a30b99e23e54107	3X Short Algorand Token	ALGOBEAR	Rotki	18	false	false	false	true	true	false
 50-Tokens:ERC20	0x05860d453c7974cbf46508c06cba14e211c629ce	Eden Coin	EDN	On chain	18	false	false	false	true	true	false
 50-Tokens:ERC20	0x05984006707585f66465e8a6505341f46b64fa7a	Nam Coin	NAM	On chain	18	false	false	false	true	true	false
+50-Tokens:ERC721	0x059edd72cd353df5106d2b9cc5ab83a52287ac3a	Art Blocks	BLOCKS	On chain	18	false	false	false	true	true	true
+50-Tokens:ERC20	0x05aaaa829afa407d83315cded1d45eb16025910c	SP8DE Token	SPX	On chain	18	false	false	false	true	true	false
+50-Tokens:ERC20	0x05ac103f68e05da35e78f6165b9082432fe64b58	eToro Euro	EURX	Rotki	18	false	false	false	true	true	false
+50-Tokens:ERC20	0x05c26a876ce988f0ca83f367d77d4d68e90805c6	CZ easy 100X	CZ100	On chain	18	false	false	false	true	true	false
+50-Tokens:ERC20	0x05c7065d644096a4e4c3fe24af86e36de021074b	LendConnect Token	LCT	On chain	18	false	false	false	true	true	false
+50-Tokens:ERC20	0x05d412ce18f24040bb3fa45cf2c69e506586d8e8	MFTU	MFTU	On chain	18	false	false	false	true	true	false

@@ -32,6 +32,7 @@ type AbisOptions struct {
 	Known    bool                  `json:"known,omitempty"`    // Load common 'known' ABIs from cache
 	ProxyFor string                `json:"proxyFor,omitempty"` // Redirects the query to this implementation
 	List     bool                  `json:"list,omitempty"`     // A list of downloaded abi files
+	Details  bool                  `json:"details,omitempty"`  // Show the functions and events instead of summaries for all abi files
 	Count    bool                  `json:"count,omitempty"`    // Show the number of abis downloaded
 	Find     []string              `json:"find,omitempty"`     // Search for function or event declarations given a four- or 32-byte code(s)
 	Hint     []string              `json:"hint,omitempty"`     // For the --find option only, provide hints to speed up the search
@@ -52,6 +53,7 @@ func (opts *AbisOptions) testLog() {
 	logger.TestLog(opts.Known, "Known: ", opts.Known)
 	logger.TestLog(len(opts.ProxyFor) > 0, "ProxyFor: ", opts.ProxyFor)
 	logger.TestLog(opts.List, "List: ", opts.List)
+	logger.TestLog(opts.Details, "Details: ", opts.Details)
 	logger.TestLog(opts.Count, "Count: ", opts.Count)
 	logger.TestLog(len(opts.Find) > 0, "Find: ", opts.Find)
 	logger.TestLog(len(opts.Hint) > 0, "Hint: ", opts.Hint)
@@ -92,6 +94,8 @@ func AbisFinishParseInternal(w io.Writer, values url.Values) *AbisOptions {
 			opts.ProxyFor = value[0]
 		case "list":
 			opts.List = true
+		case "details":
+			opts.Details = true
 		case "count":
 			opts.Count = true
 		case "find":
@@ -186,11 +190,16 @@ func ResetOptions(testMode bool) {
 	opts.Globals.TestMode = testMode
 	opts.Globals.Writer = w
 	opts.Globals.Caps = getCaps()
+	// EXISTING_CODE
+	// EXISTING_CODE
 	defaultAbisOptions = opts
 }
 
 func (opts *AbisOptions) getCaches() (caches map[walk.CacheType]bool) {
 	// EXISTING_CODE
+	caches = map[walk.CacheType]bool{
+		walk.Cache_Abis: true,
+	}
 	// EXISTING_CODE
 	return
 }

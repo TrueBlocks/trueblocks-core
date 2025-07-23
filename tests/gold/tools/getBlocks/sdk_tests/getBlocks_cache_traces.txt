@@ -4,7 +4,6 @@ Opts: {"blocks":["12"],"cacheTxs":true,"cacheTraces":true,"cache":true}
 Blocks:  [12]
 CacheTxs:  true
 CacheTraces:  true
-Enabled:  blocks, receipts, traces, transactions
 Cache:  true
 Caps:  cache,decache,ether
 Format:  json

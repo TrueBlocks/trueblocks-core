@@ -65,6 +65,7 @@ func init() {
 	namesCmd.Flags().BoolVarP(&namesPkg.GetOptions().Tags, "tags", "g", false, `export the list of tags and subtags only`)
 	namesCmd.Flags().BoolVarP(&namesPkg.GetOptions().Clean, "clean", "C", false, `clean the data (addrs to lower case, sort by addr)`)
 	namesCmd.Flags().BoolVarP(&namesPkg.GetOptions().Regular, "regular", "r", false, `only available with --clean, cleans regular names database`)
+	namesCmd.Flags().BoolVarP(&namesPkg.GetOptions().Count, "count", "U", false, `return the number of names matching the search terms or other options`)
 	namesCmd.Flags().BoolVarP(&namesPkg.GetOptions().DryRun, "dry_run", "d", false, `only available with --clean or --autoname, outputs changes to stdout instead of updating databases`)
 	namesCmd.Flags().StringVarP(&namesPkg.GetOptions().Autoname, "autoname", "A", "", `an address assumed to be a token, added automatically to names database if true`)
 	namesCmd.Flags().BoolVarP(&namesPkg.GetOptions().Create, "create", "", false, `create a new name record (hidden)`)

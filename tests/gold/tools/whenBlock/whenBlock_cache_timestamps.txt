@@ -1,6 +1,5 @@
 chifra when  1301000 --cache
 TEST[DATE|TIME] Blocks:  [1301000]
-TEST[DATE|TIME] Enabled:  blocks
 TEST[DATE|TIME] Cache:  true
 TEST[DATE|TIME] Caps:  cache,decache
 TEST[DATE|TIME] Format:  txt

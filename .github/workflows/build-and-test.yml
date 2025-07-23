@@ -83,6 +83,7 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           command_timeout: 40m
           script: |
+            set -e  # Exit on any error
             rm -rf testing/${{ github.sha }}
             mkdir -p testing/${{ github.sha }}
             mkdir -p test_results/${{ github.sha }}
@@ -92,6 +93,11 @@ jobs:
             git checkout ${{ github.head_ref }}
             git submodule update --init --recursive
             cd scripts
-            CONFIG_FILE=$HOME/trueBlocks.toml bash test-with-docker.sh ${{ github.repository }} ${{ github.sha }} ${{ github.head_ref }}
+            if CONFIG_FILE=$HOME/trueBlocks.toml bash test-with-docker.sh ${{ github.repository }} ${{ github.sha }} ${{ github.head_ref }}; then
+              echo "✅ Tests passed successfully"
+              echo "Results placed in /home/testuser/testing/${{ github.sha }}"
+            else
+              echo "❌ Tests failed"
+              exit 1
+            fi
             docker system prune -af --filter "until=1h"
-            echo "Results placed in /home/testuser/testing/${{ github.sha }}"

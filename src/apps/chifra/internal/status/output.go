@@ -57,6 +57,10 @@ func (opts *StatusOptions) StatusInternal(rCtx *output.RenderCtx) error {
 	// EXISTING_CODE
 	if opts.Diagnose {
 		err = opts.HandleDiagnose(rCtx)
+	} else if opts.Chains {
+		err = opts.HandleChains(rCtx)
+	} else if opts.Caches {
+		err = opts.HandleCaches(rCtx)
 	} else {
 		err = opts.HandleShow(rCtx)
 	}

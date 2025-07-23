@@ -315,6 +315,8 @@ func ResetOptions(testMode bool) {
 	opts.Globals.TestMode = testMode
 	opts.Globals.Writer = w
 	opts.Globals.Caps = getCaps()
+	// EXISTING_CODE
+	// EXISTING_CODE
 	opts.MaxRecords = 250
 	opts.LastBlock = base.NOPOSN
 	defaultExportOptions = opts
@@ -327,6 +329,7 @@ func (opts *ExportOptions) getCaches() (caches map[walk.CacheType]bool) {
 		walk.Cache_Transactions: true,
 		walk.Cache_Statements:   opts.Statements,
 		walk.Cache_Traces:       opts.CacheTraces || (opts.Globals.Cache && (opts.Traces || opts.Neighbors)),
+		walk.Cache_Abis:         opts.Articulate,
 	}
 	// EXISTING_CODE
 	return

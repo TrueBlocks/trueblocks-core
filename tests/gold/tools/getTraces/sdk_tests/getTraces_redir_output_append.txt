@@ -16,6 +16,7 @@ Format:  json
         "from": "0xb73fa05c12ffc1926a4e8c2b585f168cf4028671",
         "gas": 19000,
         "to": "0x209c4784ab1e8183cf58ca33cb740efbf3fc18ef",
+        "toName": "Poloniex 2",
         "value": "1007817120000000000"
       },
       "blockHash": "0x0f1217b92276cd17608d4212879739e6a5ec388bd7a03bef9798655234afd2b9",
@@ -35,8 +36,10 @@ Format:  json
       "action": {
         "callType": "call",
         "from": "0x209c4784ab1e8183cf58ca33cb740efbf3fc18ef",
+        "fromName": "Poloniex 2",
         "gas": 2300,
         "to": "0x32be343b94f860124dc4fee278fdcbd38c102d88",
+        "toName": "Poloniex 1",
         "value": "1007817120000000000"
       },
       "blockHash": "0x0f1217b92276cd17608d4212879739e6a5ec388bd7a03bef9798655234afd2b9",

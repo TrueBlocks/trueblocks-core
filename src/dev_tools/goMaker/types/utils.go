@@ -1,6 +1,7 @@
 package types
 
 import (
+	"errors"
 	"fmt"
 	"os"
 	"path/filepath"
@@ -11,6 +12,8 @@ import (
 	"golang.org/x/text/cases"
 	"golang.org/x/text/language"
 )
+
+var ErrNoTemplateFolder = errors.New("could not find the templates directory")
 
 func shouldProcess(source, subPath, tag string) (bool, error) {
 	single := os.Getenv("TB_MAKER_SINGLE")
@@ -83,10 +86,13 @@ func convertToDestPath(source, routeTag, typeTag, groupTag, reason string) strin
 	dest = strings.ReplaceAll(dest, ".tmpl", "")
 	dest = strings.ReplaceAll(dest, "_route_", "/"+routeTag+"/")
 	dest = strings.ReplaceAll(dest, "route+internal", routeTag+"+internal")
-	dest = strings.ReplaceAll(dest, "route.go", routeTag+".go")
-	dest = strings.ReplaceAll(dest, "route.md", routeTag+".md")
-	dest = strings.ReplaceAll(dest, "route.py", routeTag+".py")
-	dest = strings.ReplaceAll(dest, "route.ts", routeTag+".ts")
+	dest = strings.ReplaceAll(dest, "_Route_", "/"+Proper(routeTag)+"/")
+	dest = strings.ReplaceAll(dest, "Route+internal", Proper(routeTag)+"+internal")
+	reps := []string{".go", ".md", ".py", ".ts"}
+	for _, rep := range reps {
+		dest = strings.ReplaceAll(dest, "route"+rep, routeTag+rep)
+		dest = strings.ReplaceAll(dest, "Route"+rep, Proper(routeTag)+rep)
+	}
 	dest = strings.ReplaceAll(dest, "+type+", "+"+typeTag+"+")
 	dest = strings.ReplaceAll(dest, "_capType", "_"+viewName(typeTag))
 	dest = strings.ReplaceAll(dest, "type+sort", typeTag+"+sort")
@@ -94,9 +100,10 @@ func convertToDestPath(source, routeTag, typeTag, groupTag, reason string) strin
 	dest = strings.ReplaceAll(dest, "type.md", typeTag+".md")
 	dest = strings.ReplaceAll(dest, "type.ts", typeTag+".ts")
 	dest = strings.ReplaceAll(dest, "group.md", groupTag+".md")
-	if reason == "readme" {
+	switch reason {
+	case "readme":
 		dest = strings.ReplaceAll(dest, "_reason_", "_chifra_")
-	} else if reason == "model" {
+	case "model":
 		dest = strings.ReplaceAll(dest, "_reason_", "_data-model_")
 	}
 	dest = strings.ReplaceAll(dest, "_", "/")
@@ -122,15 +129,18 @@ func getTemplatesPath() (string, error) {
 		"code_gen/",
 	}
 
+	attemptedPaths := []string{}
+
 	for _, path := range paths {
 		thePath := filepath.Join(path, "templates")
 		if file.FolderExists(thePath) {
 			setRootFolder(path)
 			return thePath, nil
 		}
+		attemptedPaths = append(attemptedPaths, thePath)
 	}
 
-	return "", fmt.Errorf("could not find the templates directory")
+	return "", fmt.Errorf("%w [%s]", ErrNoTemplateFolder, strings.Join(attemptedPaths, ", "))
 }
 
 func GetTemplatePath() string {
@@ -223,7 +233,7 @@ func Singular(s string) string {
 		return s[:len(s)-2]
 	}
 
-	if sLower != "status" && sLower != "stats" && strings.HasSuffix(sLower, "s") {
+	if sLower != "baddress" && sLower != "status" && sLower != "stats" && strings.HasSuffix(sLower, "s") {
 		return s[:len(s)-1]
 	}
 
@@ -232,6 +242,10 @@ func Singular(s string) string {
 
 func Lower(s string) string {
 	return strings.ToLower(s)
+}
+
+func Upper(s string) string {
+	return strings.ToUpper(s)
 }
 
 // ws white space

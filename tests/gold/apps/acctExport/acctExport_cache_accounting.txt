@@ -4,7 +4,6 @@ TEST[DATE|TIME] CacheTraces:  true
 TEST[DATE|TIME] FirstBlock:  10277780
 TEST[DATE|TIME] LastBlock:  10278000
 TEST[DATE|TIME] Accounting:  true
-TEST[DATE|TIME] Enabled:  traces, transactions
 TEST[DATE|TIME] Cache:  true
 TEST[DATE|TIME] Caps:  cache,decache,ether
 TEST[DATE|TIME] Format:  txt
@@ -111,5 +110,5 @@ TEST[DATE|TIME] ~~~ Leaving: 10277780.88 ~~~
 TEST[DATE|TIME] ------------------------------------ 2 statements generated.
 TEST[DATE|TIME] 
 blockNumber	transactionIndex	logIndex	transactionHash	timestamp	date	asset	assetName	symbol	decimals	spotPrice	priceSource	accountedFor	accountedForName	sender	senderName	recipient	recipientName	begBal	amountNet	endBal	reconciled	totalIn	amountIn	internalIn	correctBegBalIn	correctAmountIn	correctEndBalIn	selfDestructIn	minerBaseRewardIn	minerNephewRewardIn	minerTxFeeIn	minerUncleRewardIn	prefundIn	totalOut	amountOut	internalOut	correctBegBalOut	correctAmountOut	correctEndBalOut	selfDestructOut	gasOut	prevBal	begBalDiff	endBalDiff	endBalCalc	correctingReasons
-10277780	88	0	0x898b6f4a308973eea278f316dff337d4ab6b07192701bbef8593979a3061c17a	1592323744	2020-06-16 16:09:04 UTC	0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee	ETH	WEI	18	231.2108118	uniswap	0x04fe1f0c597fbc65700f4fba6f87501edc20e665		0x04fe1f0c597fbc65700f4fba6f87501edc20e665		0xdac17f958d2ee523a2206206994597c13d831ec7	Tether USD	6511482167631885	-1048360000000000	5463122167631885	true	0	0	0	0	0	0	0	0	0	0	0	0	1048360000000000	0	0	0	0	0	0	1048360000000000	6511482167631885	0	0	5463122167631885	
-10277780	88	103	0x898b6f4a308973eea278f316dff337d4ab6b07192701bbef8593979a3061c17a	1592323744	2020-06-16 16:09:04 UTC	0xdac17f958d2ee523a2206206994597c13d831ec7	Tether USD	USDT	6	1	stable-coin	0x04fe1f0c597fbc65700f4fba6f87501edc20e665		0x04fe1f0c597fbc65700f4fba6f87501edc20e665		0x7fc3be02c7f18b24a98870c543fd0ec3c25f3ff9		381000000	-381000000	0	true	0	0	0	0	0	0	0	0	0	0	0	0	381000000	381000000	0	0	0	0	0	0	381000000	0	0	0	
+10277780	88	0	0x898b6f4a308973eea278f316dff337d4ab6b07192701bbef8593979a3061c17a	1592323744	2020-06-16 16:09:04 UTC	0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee	ETH	WEI	18	231.2108118	uniswap	0x04fe1f0c597fbc65700f4fba6f87501edc20e665		0x04fe1f0c597fbc65700f4fba6f87501edc20e665		0xdac17f958d2ee523a2206206994597c13d831ec7	Tether USD (L1)	6511482167631885	-1048360000000000	5463122167631885	true	0	0	0	0	0	0	0	0	0	0	0	0	1048360000000000	0	0	0	0	0	0	1048360000000000	6511482167631885	0	0	5463122167631885	
+10277780	88	103	0x898b6f4a308973eea278f316dff337d4ab6b07192701bbef8593979a3061c17a	1592323744	2020-06-16 16:09:04 UTC	0xdac17f958d2ee523a2206206994597c13d831ec7	Tether USD (L1)	USDT	6	1	stable-coin	0x04fe1f0c597fbc65700f4fba6f87501edc20e665		0x04fe1f0c597fbc65700f4fba6f87501edc20e665		0x7fc3be02c7f18b24a98870c543fd0ec3c25f3ff9		381000000	-381000000	0	true	0	0	0	0	0	0	0	0	0	0	0	0	381000000	381000000	0	0	0	0	0	0	381000000	0	0	0	

@@ -5,7 +5,6 @@ Addrs:  [0x04fe1f0c597fbc65700f4fba6f87501edc20e665]
 CacheTraces:  true
 FirstBlock:  10277780
 LastBlock:  10278000
-Enabled:  traces, transactions
 Cache:  true
 Caps:  cache,decache,ether
 Format:  json

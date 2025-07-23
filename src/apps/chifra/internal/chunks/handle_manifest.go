@@ -13,16 +13,15 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
-var sourceMap = map[bool]manifest.Source{
-	false: manifest.LocalCache,
-	true:  manifest.FromContract,
-}
-
 func (opts *ChunksOptions) HandleManifest(rCtx *output.RenderCtx, blockNums []base.Blknum) error {
 	_ = blockNums
 	chain := opts.Globals.Chain
 	testMode := opts.Globals.TestMode
-	man, err := manifest.LoadManifest(chain, opts.PublisherAddr, sourceMap[opts.Remote])
+	source := manifest.LocalCache
+	if opts.Remote {
+		source = manifest.FromContract
+	}
+	man, err := manifest.LoadManifest(chain, opts.PublisherAddr, source)
 	if err != nil {
 		return err
 	}

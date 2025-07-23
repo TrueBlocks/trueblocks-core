@@ -93,6 +93,17 @@ names?terms=etwork&verbose
       "tags": "50-Tokens:ERC20"
     },
     {
+      "address": "0x0b010000b7624eb9b3dfbc279673c76e9d29d5f7",
+      "decimals": 18,
+      "isContract": true,
+      "isErc20": true,
+      "name": "Obol Network",
+      "parts": 2,
+      "source": "Tally-Claude",
+      "symbol": "OBOL",
+      "tags": "76-DaoToken"
+    },
+    {
       "address": "0x0d35a2b85c5a63188d566d104bebf7c694334ee4",
       "decimals": 18,
       "isContract": true,
@@ -220,6 +231,14 @@ names?terms=etwork&verbose
       "tags": "60-Rotki"
     },
     {
+      "address": "0x1f0d1de1558582ad6f13763f477119a1455502af",
+      "isContract": true,
+      "name": "Saturn Network 1",
+      "parts": 2,
+      "source": "https://chartalist.org/eth/TaskTypePrediction.html",
+      "tags": "55-Defi"
+    },
+    {
       "address": "0x1f573d6fb3f13d689ff844b4ce37794d79a7ff1c",
       "decimals": 18,
       "isContract": true,
@@ -278,6 +297,17 @@ names?terms=etwork&verbose
       "source": "Rotki",
       "symbol": "DNT",
       "tags": "60-Rotki"
+    },
+    {
+      "address": "0x269e67d4bca85d71240355065b05d9fd1bf3217b",
+      "decimals": 18,
+      "isContract": true,
+      "isErc20": true,
+      "name": "Nollars Network",
+      "parts": 2,
+      "source": "Tally-Claude",
+      "symbol": "NOLA",
+      "tags": "76-DaoToken"
     },
     {
       "address": "0x26f3901ac8a79c50fb0d8289c74f0d09adc42e29",
@@ -386,6 +416,14 @@ names?terms=etwork&verbose
       "parts": 2,
       "source": "EtherScan.io",
       "tags": "30-Contracts"
+    },
+    {
+      "address": "0x3390108e913824b8ead638444cc52b9abdf63798",
+      "name": "Mask Network (L2)",
+      "parts": 2,
+      "source": "https://docs.optimism.io/chain/tokenlist?utm_source=chatgpt.com",
+      "symbol": "MASK",
+      "tags": "55-Defi"
     },
     {
       "address": "0x33d08d8c7a168333a85285a68c0042b39fc3741d",
@@ -514,11 +552,11 @@ names?terms=etwork&verbose
       "decimals": 18,
       "isContract": true,
       "isErc20": true,
-      "name": "Wootrade Network",
+      "name": "Wootrade Network (L1)",
       "parts": 2,
-      "source": "Rotki",
+      "source": "https://docs.optimism.io/chain/tokenlist?utm_source=chatgpt.com",
       "symbol": "WOO",
-      "tags": "50-Tokens:ERC20"
+      "tags": "55-Defi"
     },
     {
       "address": "0x4727e3265706c59dbc31e7c518960f4f843bb4da",
@@ -652,6 +690,17 @@ names?terms=etwork&verbose
       "parts": 2,
       "source": "EtherScan.io",
       "tags": "30-Contracts"
+    },
+    {
+      "address": "0x534d1f5e617e0f72a6b06a04aa599839af776a5e",
+      "decimals": 18,
+      "isContract": true,
+      "isErc20": true,
+      "name": "Blockswap Network",
+      "parts": 2,
+      "source": "Tally-Claude",
+      "symbol": "BSN",
+      "tags": "76-DaoToken"
     },
     {
       "address": "0x538f022f50038994f7a04a58f5004c1b98ed41a4",
@@ -818,6 +867,14 @@ names?terms=etwork&verbose
       "tags": "40-Exchanges"
     },
     {
+      "address": "0x650af3c15af43dcb218406d30784416d64cfb6b2",
+      "name": "Status Network Token (L2)",
+      "parts": 2,
+      "source": "https://docs.optimism.io/chain/tokenlist?utm_source=chatgpt.com",
+      "symbol": "SNT",
+      "tags": "55-Defi"
+    },
+    {
       "address": "0x653f7f8e576f25608600e862559a7e7b1bbb2512",
       "decimals": 18,
       "isContract": true,
@@ -856,13 +913,6 @@ names?terms=etwork&verbose
       "tags": "60-Rotki"
     },
     {
-      "address": "0x66aa8bee5366b6b48811ae0dac9fe5e1eefe1621",
-      "name": "Grant 0049 Blockchain Education Network (ben)",
-      "parts": 2,
-      "source": "https://gitcoin.co/grants/49/blockchain-education-network-ben",
-      "tags": "31-Gitcoin:Grants"
-    },
-    {
       "address": "0x679131f591b4f369acb8cd8c51e68596806c3916",
       "decimals": 18,
       "isContract": true,
@@ -889,11 +939,11 @@ names?terms=etwork&verbose
       "decimals": 18,
       "isContract": true,
       "isErc20": true,
-      "name": "Mask Network",
+      "name": "Mask Network (L1)",
       "parts": 2,
-      "source": "Giveth website",
+      "source": "https://docs.optimism.io/chain/tokenlist?utm_source=chatgpt.com",
       "symbol": "MASK",
-      "tags": "50-Tokens:ERC20"
+      "tags": "55-Defi"
     },
     {
       "address": "0x6a4c76874e686a7d080d173987a35a9c48905583",
@@ -982,20 +1032,19 @@ names?terms=etwork&verbose
       "decimals": 18,
       "isContract": true,
       "isErc20": true,
-      "name": "Status Network Token",
+      "name": "Status Network Token (L1)",
       "parts": 2,
-      "source": "Giveth website",
+      "source": "https://docs.optimism.io/chain/tokenlist?utm_source=chatgpt.com",
       "symbol": "SNT",
-      "tags": "50-Tokens:ERC20"
+      "tags": "55-Defi"
     },
     {
       "address": "0x747e42eb0591547a0ab429b3627816208c734ea7",
-      "decimals": 18,
-      "name": "ThresholdNetworkToken",
+      "name": "Threshold Network Token (L2)",
       "parts": 2,
-      "source": "SmolAssets",
+      "source": "https://docs.optimism.io/chain/tokenlist?utm_source=chatgpt.com",
       "symbol": "T",
-      "tags": "60-SmolAssets"
+      "tags": "55-Defi"
     },
     {
       "address": "0x75db8b92937f8f86213e523788ab9f066efde3fe",
@@ -1148,13 +1197,12 @@ names?terms=etwork&verbose
       "tags": "60-Rotki"
     },
     {
-      "address": "0x8700daec35af8ff88c16bdf0418774cb3d7599b4",
-      "decimals": 18,
-      "name": "SynthetixNetworkToken",
+      "address": "0x871f2f2ff935fd1ed867842ff2a7bfd051a5e527",
+      "name": "Wootrade Network (L2)",
       "parts": 2,
-      "source": "SmolAssets",
-      "symbol": "SNX",
-      "tags": "60-SmolAssets"
+      "source": "https://docs.optimism.io/chain/tokenlist?utm_source=chatgpt.com",
+      "symbol": "WOO",
+      "tags": "55-Defi"
     },
     {
       "address": "0x8767aacd8ae48e6a23077548c24121e46dca0696",
@@ -1162,6 +1210,14 @@ names?terms=etwork&verbose
       "parts": 2,
       "source": "https://gitcoin.co/grants/2728/using-social-networks-for-fun-affordable-and-lucr",
       "tags": "31-Gitcoin:Grants"
+    },
+    {
+      "address": "0x87f005317692d05baa4193ab0c961c69e175f45f",
+      "isContract": true,
+      "name": "Threshold Network Timelock",
+      "parts": 2,
+      "source": "Tally-Claude",
+      "tags": "77-DaoTimelock"
     },
     {
       "address": "0x881ef48211982d01e2cb7092c915e647cd40d85c",
@@ -1248,13 +1304,6 @@ names?terms=etwork&verbose
       "name": "Grant 0681 Flowstake - Activity Staking Blockchain Network",
       "parts": 2,
       "source": "https://gitcoin.co/grants/681/flowstake-activity-staking-blockchain-network",
-      "tags": "31-Gitcoin:Grants"
-    },
-    {
-      "address": "0x934b510d4c9103e6a87aef13b816fb080286d649",
-      "name": "Grant 0159 - Mask Network - The Portal to the New, Open Internet.",
-      "parts": 2,
-      "source": "https://gitcoin.co/grants/159/mask-network-the-portal-to-the-new-open-internet",
       "tags": "31-Gitcoin:Grants"
     },
     {
@@ -1390,12 +1439,11 @@ names?terms=etwork&verbose
     },
     {
       "address": "0xa00e3a3511aac35ca78530c85007afcd31753819",
-      "decimals": 18,
-      "name": "KyberNetworkCrystalv2",
+      "name": "Kyber Network Crystal v2 (L2)",
       "parts": 2,
-      "source": "SmolAssets",
+      "source": "https://docs.optimism.io/chain/tokenlist?utm_source=chatgpt.com",
       "symbol": "KNC",
-      "tags": "60-SmolAssets"
+      "tags": "55-Defi"
     },
     {
       "address": "0xa0a2ee912caf7921eaabc866c6ef6fec8f7e90a4",
@@ -1490,6 +1538,14 @@ names?terms=etwork&verbose
       "source": "Rotki",
       "symbol": "MNT",
       "tags": "50-Tokens:ERC20"
+    },
+    {
+      "address": "0xaa5bbd5a177a588b9f213505ca3740b444dbd586",
+      "isContract": true,
+      "name": "Saturn Network 2",
+      "parts": 2,
+      "source": "https://chartalist.org/eth/TaskTypePrediction.html",
+      "tags": "55-Defi"
     },
     {
       "address": "0xabc9547b534519ff73921b1fba6e672b5f58d083",
@@ -1672,11 +1728,11 @@ names?terms=etwork&verbose
       "decimals": 18,
       "isContract": true,
       "isErc20": true,
-      "name": "Synthetix Network Token",
+      "name": "Synthetix Network Token (L1)",
       "parts": 2,
-      "source": "Giveth website",
+      "source": "https://docs.optimism.io/chain/tokenlist?utm_source=chatgpt.com",
       "symbol": "SNX",
-      "tags": "50-Tokens:ERC20"
+      "tags": "55-Defi"
     },
     {
       "address": "0xc0d3e654676b117663143eac33b45b620171244b",
@@ -1839,64 +1895,6 @@ names?terms=etwork&verbose
       "source": "On chain",
       "symbol": "ANJ",
       "tags": "50-Tokens:ERC20"
-    },
-    {
-      "address": "0xcdf7028ceab81fa0c6971208e83fa7872994bee5",
-      "decimals": 18,
-      "isContract": true,
-      "isErc20": true,
-      "name": "Threshold Network Token",
-      "parts": 2,
-      "source": "Rotki",
-      "symbol": "T",
-      "tags": "50-Tokens:ERC20"
-    },
-    {
-      "address": "0xcfb3c2dc81718ff0087d46e4d7b1c4692ded1586",
-      "name": "Grant 1323 Resource Network",
-      "parts": 2,
-      "source": "https://gitcoin.co/grants/1323/resource-network",
-      "tags": "31-Gitcoin:Grants"
-    },
-    {
-      "address": "0xcfb98637bcae43c13323eaa1731ced2b716962fd",
-      "decimals": 18,
-      "isContract": true,
-      "isErc20": true,
-      "name": "Nimiq Network Interim Token",
-      "parts": 2,
-      "source": "On chain",
-      "symbol": "NET",
-      "tags": "50-Tokens:ERC20"
-    },
-    {
-      "address": "0xd29f0b5b3f50b07fe9a9511f7d86f4f4bac3f8c4",
-      "decimals": 18,
-      "isContract": true,
-      "isErc20": true,
-      "name": "Liquidity.Network Token",
-      "parts": 2,
-      "source": "On chain",
-      "symbol": "LQD",
-      "tags": "50-Tokens:ERC20"
-    },
-    {
-      "address": "0xd2fa8f92ea72abb35dbd6deca57173d22db2ba49",
-      "decimals": 18,
-      "isContract": true,
-      "isErc20": true,
-      "name": "Origami Network",
-      "parts": 2,
-      "source": "On chain",
-      "symbol": "ORI",
-      "tags": "50-Tokens:ERC20"
-    },
-    {
-      "address": "0xd3a8518a8e75a6c9317027abd29847ea1965f2b1",
-      "name": "Strengthening the Citizen Water Observatories Network",
-      "parts": 2,
-      "source": "Tokenomics",
-      "tags": "31-Giveth:Project"
     }
   ],
   "meta": {

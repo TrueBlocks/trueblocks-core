@@ -1,0 +1,1 @@
+A RangeDate is a two part date showing both the start and end of a time period. It may be timestamps, blockNumbers or date strings.

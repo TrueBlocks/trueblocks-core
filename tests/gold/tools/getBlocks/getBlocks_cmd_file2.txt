@@ -1,6 +1,5 @@
 chifra blocks  --file cmd_file2 --cache --output cmd_file2_out.file
 TEST[DATE|TIME] Blocks:  [92590]
-TEST[DATE|TIME] Enabled:  blocks, receipts
 TEST[DATE|TIME] Verbose:  true
 TEST[DATE|TIME] File:  cmd_file2
 TEST[DATE|TIME] OutputFn:  cmd_file2_out.file
@@ -9,7 +8,6 @@ TEST[DATE|TIME] Caps:  cache,decache,ether
 TEST[DATE|TIME] Format:  json
 INFO[DATE|TIME] { "outputFilename": "--output_filename--" }
 TEST[DATE|TIME] Blocks:  [141245]
-TEST[DATE|TIME] Enabled:  blocks, receipts
 TEST[DATE|TIME] Verbose:  true
 TEST[DATE|TIME] File:  cmd_file2
 TEST[DATE|TIME] OutputFn:  cmd_file2_out.file
@@ -18,7 +16,6 @@ TEST[DATE|TIME] Caps:  cache,decache,ether
 TEST[DATE|TIME] Format:  json
 INFO[DATE|TIME] { "outputFilename": "--output_filename--" }
 TEST[DATE|TIME] Blocks:  [158858]
-TEST[DATE|TIME] Enabled:  blocks, receipts
 TEST[DATE|TIME] Verbose:  true
 TEST[DATE|TIME] File:  cmd_file2
 TEST[DATE|TIME] OutputFn:  cmd_file2_out.file
@@ -27,7 +24,6 @@ TEST[DATE|TIME] Caps:  cache,decache,ether
 TEST[DATE|TIME] Format:  json
 INFO[DATE|TIME] { "outputFilename": "--output_filename--" }
 TEST[DATE|TIME] Blocks:  [289897]
-TEST[DATE|TIME] Enabled:  blocks, receipts
 TEST[DATE|TIME] Verbose:  true
 TEST[DATE|TIME] File:  cmd_file2
 TEST[DATE|TIME] OutputFn:  cmd_file2_out.file
@@ -36,7 +32,6 @@ TEST[DATE|TIME] Caps:  cache,decache,ether
 TEST[DATE|TIME] Format:  json
 INFO[DATE|TIME] { "outputFilename": "--output_filename--" }
 TEST[DATE|TIME] Blocks:  [381094]
-TEST[DATE|TIME] Enabled:  blocks, receipts
 TEST[DATE|TIME] Verbose:  true
 TEST[DATE|TIME] File:  cmd_file2
 TEST[DATE|TIME] OutputFn:  cmd_file2_out.file
@@ -46,7 +41,6 @@ TEST[DATE|TIME] Format:  json
 INFO[DATE|TIME] { "outputFilename": "--output_filename--" }
 TEST[DATE|TIME] Blocks:  [394557]
 TEST[DATE|TIME] Hashes:  true
-TEST[DATE|TIME] Enabled:  blocks, receipts
 TEST[DATE|TIME] Verbose:  true
 TEST[DATE|TIME] File:  cmd_file2
 TEST[DATE|TIME] OutputFn:  cmd_file2_out.file
@@ -55,7 +49,6 @@ TEST[DATE|TIME] Caps:  cache,decache,ether
 TEST[DATE|TIME] Format:  json
 INFO[DATE|TIME] { "outputFilename": "--output_filename--" }
 TEST[DATE|TIME] Blocks:  [442738]
-TEST[DATE|TIME] Enabled:  blocks, receipts
 TEST[DATE|TIME] Verbose:  true
 TEST[DATE|TIME] File:  cmd_file2
 TEST[DATE|TIME] OutputFn:  cmd_file2_out.file
@@ -64,7 +57,6 @@ TEST[DATE|TIME] Caps:  cache,decache,ether
 TEST[DATE|TIME] Format:  json
 INFO[DATE|TIME] { "outputFilename": "--output_filename--" }
 TEST[DATE|TIME] Blocks:  [477644]
-TEST[DATE|TIME] Enabled:  blocks, receipts
 TEST[DATE|TIME] Verbose:  true
 TEST[DATE|TIME] File:  cmd_file2
 TEST[DATE|TIME] OutputFn:  cmd_file2_out.file
@@ -74,7 +66,6 @@ TEST[DATE|TIME] Format:  json
 INFO[DATE|TIME] { "outputFilename": "--output_filename--" }
 TEST[DATE|TIME] Blocks:  [599852]
 TEST[DATE|TIME] Hashes:  true
-TEST[DATE|TIME] Enabled:  blocks, receipts
 TEST[DATE|TIME] Verbose:  true
 TEST[DATE|TIME] File:  cmd_file2
 TEST[DATE|TIME] OutputFn:  cmd_file2_out.file
@@ -83,7 +74,6 @@ TEST[DATE|TIME] Caps:  cache,decache,ether
 TEST[DATE|TIME] Format:  json
 INFO[DATE|TIME] { "outputFilename": "--output_filename--" }
 TEST[DATE|TIME] Blocks:  [635557]
-TEST[DATE|TIME] Enabled:  blocks, receipts
 TEST[DATE|TIME] File:  cmd_file2
 TEST[DATE|TIME] OutputFn:  cmd_file2_out.file
 TEST[DATE|TIME] Cache:  true
@@ -91,7 +81,6 @@ TEST[DATE|TIME] Caps:  cache,decache,ether
 TEST[DATE|TIME] Format:  json
 INFO[DATE|TIME] { "outputFilename": "--output_filename--" }
 TEST[DATE|TIME] Blocks:  [640798]
-TEST[DATE|TIME] Enabled:  blocks, receipts
 TEST[DATE|TIME] File:  cmd_file2
 TEST[DATE|TIME] OutputFn:  cmd_file2_out.file
 TEST[DATE|TIME] Cache:  true
@@ -99,7 +88,6 @@ TEST[DATE|TIME] Caps:  cache,decache,ether
 TEST[DATE|TIME] Format:  json
 INFO[DATE|TIME] { "outputFilename": "--output_filename--" }
 TEST[DATE|TIME] Blocks:  [723006]
-TEST[DATE|TIME] Enabled:  blocks, receipts
 TEST[DATE|TIME] File:  cmd_file2
 TEST[DATE|TIME] OutputFn:  cmd_file2_out.file
 TEST[DATE|TIME] Cache:  true
@@ -107,7 +95,6 @@ TEST[DATE|TIME] Caps:  cache,decache,ether
 TEST[DATE|TIME] Format:  json
 INFO[DATE|TIME] { "outputFilename": "--output_filename--" }
 TEST[DATE|TIME] Blocks:  [798397]
-TEST[DATE|TIME] Enabled:  blocks, receipts
 TEST[DATE|TIME] Verbose:  true
 TEST[DATE|TIME] File:  cmd_file2
 TEST[DATE|TIME] OutputFn:  cmd_file2_out.file
@@ -116,7 +103,6 @@ TEST[DATE|TIME] Caps:  cache,decache,ether
 TEST[DATE|TIME] Format:  json
 INFO[DATE|TIME] { "outputFilename": "--output_filename--" }
 TEST[DATE|TIME] Blocks:  [851731]
-TEST[DATE|TIME] Enabled:  blocks, receipts
 TEST[DATE|TIME] Verbose:  true
 TEST[DATE|TIME] File:  cmd_file2
 TEST[DATE|TIME] OutputFn:  cmd_file2_out.file
@@ -125,7 +111,6 @@ TEST[DATE|TIME] Caps:  cache,decache,ether
 TEST[DATE|TIME] Format:  json
 INFO[DATE|TIME] { "outputFilename": "--output_filename--" }
 TEST[DATE|TIME] Blocks:  [1025677]
-TEST[DATE|TIME] Enabled:  blocks, receipts
 TEST[DATE|TIME] File:  cmd_file2
 TEST[DATE|TIME] OutputFn:  cmd_file2_out.file
 TEST[DATE|TIME] Cache:  true
@@ -133,7 +118,6 @@ TEST[DATE|TIME] Caps:  cache,decache,ether
 TEST[DATE|TIME] Format:  json
 INFO[DATE|TIME] { "outputFilename": "--output_filename--" }
 TEST[DATE|TIME] Blocks:  [1026962]
-TEST[DATE|TIME] Enabled:  blocks, receipts
 TEST[DATE|TIME] Verbose:  true
 TEST[DATE|TIME] File:  cmd_file2
 TEST[DATE|TIME] OutputFn:  cmd_file2_out.file
@@ -143,7 +127,6 @@ TEST[DATE|TIME] Format:  json
 INFO[DATE|TIME] { "outputFilename": "--output_filename--" }
 TEST[DATE|TIME] Blocks:  [1078767]
 TEST[DATE|TIME] Hashes:  true
-TEST[DATE|TIME] Enabled:  blocks, receipts
 TEST[DATE|TIME] Verbose:  true
 TEST[DATE|TIME] File:  cmd_file2
 TEST[DATE|TIME] OutputFn:  cmd_file2_out.file
@@ -152,7 +135,6 @@ TEST[DATE|TIME] Caps:  cache,decache,ether
 TEST[DATE|TIME] Format:  json
 INFO[DATE|TIME] { "outputFilename": "--output_filename--" }
 TEST[DATE|TIME] Blocks:  [1152642]
-TEST[DATE|TIME] Enabled:  blocks, receipts
 TEST[DATE|TIME] Verbose:  true
 TEST[DATE|TIME] File:  cmd_file2
 TEST[DATE|TIME] OutputFn:  cmd_file2_out.file
@@ -161,7 +143,6 @@ TEST[DATE|TIME] Caps:  cache,decache,ether
 TEST[DATE|TIME] Format:  json
 INFO[DATE|TIME] { "outputFilename": "--output_filename--" }
 TEST[DATE|TIME] Blocks:  [1000000-1001000:100]
-TEST[DATE|TIME] Enabled:  blocks, receipts
 TEST[DATE|TIME] File:  cmd_file2
 TEST[DATE|TIME] OutputFn:  cmd_file2_out.file
 TEST[DATE|TIME] Cache:  true
@@ -556,6 +537,7 @@ Results in ./cmd_file2_out.file
           },
           "timestamp": 1455872128,
           "to": "0x32be343b94f860124dc4fee278fdcbd38c102d88",
+          "toName": "Poloniex 1",
           "traces": [],
           "transactionIndex": 0,
           "value": "2436919200000000000"
@@ -581,6 +563,7 @@ Results in ./cmd_file2_out.file
           },
           "timestamp": 1455872128,
           "to": "0x32be343b94f860124dc4fee278fdcbd38c102d88",
+          "toName": "Poloniex 1",
           "traces": [],
           "transactionIndex": 1,
           "value": "1842601080000000000"
@@ -606,6 +589,7 @@ Results in ./cmd_file2_out.file
           },
           "timestamp": 1455872128,
           "to": "0x32be343b94f860124dc4fee278fdcbd38c102d88",
+          "toName": "Poloniex 1",
           "traces": [],
           "transactionIndex": 2,
           "value": "2874941670000000000"
@@ -631,6 +615,7 @@ Results in ./cmd_file2_out.file
           },
           "timestamp": 1455872128,
           "to": "0x32be343b94f860124dc4fee278fdcbd38c102d88",
+          "toName": "Poloniex 1",
           "traces": [],
           "transactionIndex": 3,
           "value": "1265129540000000000"
@@ -656,6 +641,7 @@ Results in ./cmd_file2_out.file
           },
           "timestamp": 1455872128,
           "to": "0x32be343b94f860124dc4fee278fdcbd38c102d88",
+          "toName": "Poloniex 1",
           "traces": [],
           "transactionIndex": 4,
           "value": "2062575220000000000"
@@ -681,6 +667,7 @@ Results in ./cmd_file2_out.file
           },
           "timestamp": 1455872128,
           "to": "0x32be343b94f860124dc4fee278fdcbd38c102d88",
+          "toName": "Poloniex 1",
           "traces": [],
           "transactionIndex": 5,
           "value": "4948740000000000000"
@@ -706,6 +693,7 @@ Results in ./cmd_file2_out.file
           },
           "timestamp": 1455872128,
           "to": "0x32be343b94f860124dc4fee278fdcbd38c102d88",
+          "toName": "Poloniex 1",
           "traces": [],
           "transactionIndex": 6,
           "value": "7623633560000000000"
@@ -731,6 +719,7 @@ Results in ./cmd_file2_out.file
           },
           "timestamp": 1455872128,
           "to": "0x32be343b94f860124dc4fee278fdcbd38c102d88",
+          "toName": "Poloniex 1",
           "traces": [],
           "transactionIndex": 7,
           "value": "4700892570000000000"

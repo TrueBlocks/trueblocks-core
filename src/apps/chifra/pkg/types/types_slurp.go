@@ -80,7 +80,8 @@ func (s *Slurp) Model(chain, format string, verbose bool, extraOpts map[string]a
 		"value":       s.Value.String(),
 	}
 
-	if s.From == base.BlockRewardSender || s.From == base.UncleRewardSender {
+	switch s.From {
+	case base.BlockRewardSender, base.UncleRewardSender:
 		model["from"] = s.From.Hex()
 		s.Input = ""
 		order = []string{
@@ -92,7 +93,7 @@ func (s *Slurp) Model(chain, format string, verbose bool, extraOpts map[string]a
 			"value",
 		}
 
-	} else if s.From == base.WithdrawalSender {
+	case base.WithdrawalSender:
 		model["from"] = s.From.Hex()
 		s.Input = ""
 		model["withdrawalIndex"] = s.WithdrawalIndex
@@ -108,7 +109,7 @@ func (s *Slurp) Model(chain, format string, verbose bool, extraOpts map[string]a
 			"value",
 		}
 
-	} else {
+	default:
 		order = []string{
 			"blockNumber",
 			"transactionIndex",

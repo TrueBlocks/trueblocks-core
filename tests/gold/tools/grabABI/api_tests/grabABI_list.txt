@@ -14,19 +14,19 @@ abis?list
       "name": "erc_00721.json"
     },
     {
-      "fileSize": 4355,
+      "fileSize": 4392,
       "isKnown": true,
       "lastModDate": "--date--",
       "name": "gitcoin.json"
     },
     {
-      "fileSize": 137261,
+      "fileSize": 148855,
       "isKnown": true,
       "lastModDate": "--date--",
       "name": "openzeppelin.json"
     },
     {
-      "fileSize": 6972,
+      "fileSize": 6974,
       "isKnown": true,
       "lastModDate": "--date--",
       "name": "proxy.json"
@@ -50,61 +50,61 @@ abis?list
       "name": "uniswap-pair.json"
     },
     {
-      "fileSize": 40367,
+      "fileSize": 41572,
       "isKnown": true,
       "lastModDate": "--date--",
       "name": "uniswap.json"
     },
     {
-      "fileSize": 16133,
+      "fileSize": 16664,
       "isKnown": true,
       "lastModDate": "--date--",
       "name": "wallet_abis.json"
     },
     {
-      "fileSize": 349,
+      "fileSize": 380,
       "isKnown": true,
       "lastModDate": "--date--",
       "name": "erc_00165.json"
     },
     {
-      "fileSize": 7076,
+      "fileSize": 7515,
       "isKnown": true,
       "lastModDate": "--date--",
       "name": "erc_00777.json"
     },
     {
-      "fileSize": 62261,
+      "fileSize": 66661,
       "isKnown": true,
       "lastModDate": "--date--",
       "name": "erc_00998.json"
     },
     {
-      "fileSize": 32557,
+      "fileSize": 34867,
       "isKnown": true,
       "lastModDate": "--date--",
       "name": "erc_01155.json"
     },
     {
-      "fileSize": 4638,
+      "fileSize": 4850,
       "isKnown": true,
       "lastModDate": "--date--",
       "name": "erc_01594.json"
     },
     {
-      "fileSize": 5342,
+      "fileSize": 5713,
       "isKnown": true,
       "lastModDate": "--date--",
       "name": "erc_01820.json"
     },
     {
-      "fileSize": 39649,
+      "fileSize": 43275,
       "isKnown": true,
       "lastModDate": "--date--",
       "name": "loose.json"
     },
     {
-      "fileSize": 215572,
+      "fileSize": 232313,
       "isKnown": true,
       "lastModDate": "--date--",
       "name": "aragon.json"
@@ -122,19 +122,19 @@ abis?list
       "name": "ens-old.json"
     },
     {
-      "fileSize": 92096,
+      "fileSize": 93697,
       "isKnown": true,
       "lastModDate": "--date--",
       "name": "ens.json"
     },
     {
-      "fileSize": 24220,
+      "fileSize": 26538,
       "isKnown": true,
       "lastModDate": "--date--",
       "name": "kickback.json"
     },
     {
-      "fileSize": 5305,
+      "fileSize": 5991,
       "isKnown": true,
       "lastModDate": "--date--",
       "name": "maker-v1.json"
@@ -146,31 +146,31 @@ abis?list
       "name": "truebit.json"
     },
     {
-      "fileSize": 4071,
+      "fileSize": 4479,
       "isKnown": true,
       "lastModDate": "--date--",
       "name": "diamond.json"
     },
     {
-      "fileSize": 32865,
+      "fileSize": 35063,
       "isKnown": true,
       "lastModDate": "--date--",
       "name": "moloch.json"
     },
     {
-      "fileSize": 10909,
+      "fileSize": 12016,
       "isKnown": true,
       "lastModDate": "--date--",
       "name": "populous.json"
     },
     {
-      "fileSize": 115696,
+      "fileSize": 124415,
       "isKnown": true,
       "lastModDate": "--date--",
       "name": "sabilier.json"
     },
     {
-      "fileSize": 81144,
+      "fileSize": 88733,
       "isKnown": true,
       "lastModDate": "--date--",
       "name": "set.json"

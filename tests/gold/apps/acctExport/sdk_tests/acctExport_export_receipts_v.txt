@@ -19,7 +19,7 @@ Format:  json
       "logs": [],
       "status": 1,
       "to": "0x2910543af39aba0cd09dbb2d50200b3e800a63d2",
-      "toName": "Kraken Exchange",
+      "toName": "Kraken 1",
       "transactionHash": "0x6e443af86a84920cace198340020e4ca54321a2c515cd3ad1f274d3506b4aff8",
       "transactionIndex": 0
     },

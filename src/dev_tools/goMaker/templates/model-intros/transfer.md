@@ -1,0 +1,1 @@
+The Transfer type is used by the Reconcilation type to represent any transfer of an asset from one account to another.

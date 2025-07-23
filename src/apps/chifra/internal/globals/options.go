@@ -199,7 +199,18 @@ func (opts *GlobalOptions) FinishParseApi(w io.Writer, values url.Values, caches
 	}
 
 	if config.IsChainConfigured(opts.Chain) {
-		conn := rpc.NewConnection(opts.Chain, opts.Cache, caches)
+		cacheEnabled := opts.Cache
+		needsAbis := caches[walk.Cache_Abis]
+		if needsAbis {
+			if opts.Decache {
+				delete(caches, walk.Cache_Abis)
+				cacheEnabled = false
+			} else {
+				caches[walk.Cache_Abis] = true // redundant but okay
+				cacheEnabled = true
+			}
+		}
+		conn := rpc.NewConnection(opts.Chain, cacheEnabled, caches)
 		publisher, _ := conn.GetEnsAddress(config.GetPublisher(""))
 		publisherAddr := base.HexToAddress(publisher)
 		if err := tslib.EstablishTimestamps(opts.Chain, publisherAddr); err != nil {
@@ -229,7 +240,18 @@ func (opts *GlobalOptions) FinishParse(args []string, caches map[walk.CacheType]
 	}
 
 	if config.IsChainConfigured(opts.Chain) {
-		conn := rpc.NewConnection(opts.Chain, opts.Cache, caches)
+		cacheEnabled := opts.Cache
+		needsAbis := caches[walk.Cache_Abis]
+		if needsAbis {
+			if opts.Decache {
+				delete(caches, walk.Cache_Abis)
+				cacheEnabled = false
+			} else {
+				caches[walk.Cache_Abis] = true // redundant but okay
+				cacheEnabled = true
+			}
+		}
+		conn := rpc.NewConnection(opts.Chain, cacheEnabled, caches)
 		publisher, _ := conn.GetEnsAddress(config.GetPublisher(""))
 		publisherAddr := base.HexToAddress(publisher)
 		if err := tslib.EstablishTimestamps(opts.Chain, publisherAddr); err != nil {

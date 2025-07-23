@@ -54,7 +54,7 @@ func (opts *ChunksOptions) HandleIndex(rCtx *output.RenderCtx, blockNums []base.
 				Hash:         indexChunk.Header.Hash,
 				NAddresses:   uint64(indexChunk.Header.AddressCount),
 				NAppearances: uint64(indexChunk.Header.AppearanceCount),
-				Size:         uint64(file.FileSize(fileName)),
+				FileSize:     uint64(file.FileSize(fileName)),
 			}
 			rd := tslib.RangeToBounds(chain, &rng)
 			s.RangeDates = &rd

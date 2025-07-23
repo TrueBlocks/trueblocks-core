@@ -9,6 +9,7 @@
     ],
     "name": "removeOwner",
     "outputs": [],
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -26,6 +27,7 @@
         "type": "bool"
       }
     ],
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -38,6 +40,7 @@
         "type": "uint256"
       }
     ],
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -45,6 +48,7 @@
     "inputs": [],
     "name": "resetSpentToday",
     "outputs": [],
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -57,6 +61,7 @@
     ],
     "name": "addOwner",
     "outputs": [],
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -69,6 +74,7 @@
         "type": "uint256"
       }
     ],
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -86,6 +92,7 @@
         "type": "bool"
       }
     ],
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -98,6 +105,7 @@
     ],
     "name": "setDailyLimit",
     "outputs": [],
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -123,6 +131,7 @@
         "type": "bytes32"
       }
     ],
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -135,6 +144,7 @@
     ],
     "name": "revoke",
     "outputs": [],
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -147,6 +157,7 @@
     ],
     "name": "changeRequirement",
     "outputs": [],
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -168,6 +179,7 @@
         "type": "bool"
       }
     ],
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -180,6 +192,7 @@
     ],
     "name": "kill",
     "outputs": [],
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -196,6 +209,7 @@
     ],
     "name": "changeOwner",
     "outputs": [],
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -208,6 +222,7 @@
         "type": "uint256"
       }
     ],
+    "stateMutability": "view",
     "type": "function"
   },
   {

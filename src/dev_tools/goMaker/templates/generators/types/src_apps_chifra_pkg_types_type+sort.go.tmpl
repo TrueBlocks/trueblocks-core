@@ -5,13 +5,9 @@ type {{.Class}}Field string
 // Fields in the {{.Class}} struct available for sorting.
 {{.SortFields}}
 
-// IsValid{{.Class}}Field returns true if the given field is a valid sortable {{.Class}} field.
-func IsValid{{.Class}}Field(field string) bool {
-	switch field {
-	case {{.SortString}}:
-		return true
-	}
-	return false
+// GetSortFields{{.Class}} returns a []string of valid sort fields for the type.
+func GetSortFields{{.Class}}() []string {
+	return []string{ {{.SortString}} }
 }
 
 // {{.Class}}By returns a comparison function for sorting {{.Class}} instances by the given field.

@@ -72,6 +72,9 @@ Format:  json
       "tags": "31-Gitcoin:Grants"
     },
     {
+      "tags": "31-Gitcoin:Stewards"
+    },
+    {
       "tags": "31-Gitcoin:Team"
     },
     {
@@ -121,6 +124,18 @@ Format:  json
     },
     {
       "tags": "70-Vendors"
+    },
+    {
+      "tags": "75-DaoGovernor"
+    },
+    {
+      "tags": "76-DaoToken"
+    },
+    {
+      "tags": "77-DaoTimelock"
+    },
+    {
+      "tags": "78-DaoOther"
     },
     {
       "tags": "80-Malicious"

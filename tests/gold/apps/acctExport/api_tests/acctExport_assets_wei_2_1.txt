@@ -95,10 +95,10 @@ export?addrs=0x05a56e2d52c817161883f50c441c3228cfe54d9f&accounting&assets&fmt=js
       "decimals": 6,
       "isContract": true,
       "isErc20": true,
-      "name": "Tether USD",
-      "source": "Giveth website",
+      "name": "Tether USD (L1)",
+      "source": "https://docs.optimism.io/chain/tokenlist?utm_source=chatgpt.com",
       "symbol": "USDT",
-      "tags": "50-Tokens:ERC20"
+      "tags": "55-Defi"
     }
   ],
   "meta": {

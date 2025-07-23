@@ -8,66 +8,77 @@ TEST[DATE|TIME] Format:  json
       "encoding": "0x06fdde03",
       "name": "name",
       "signature": "name()",
+      "stateMutability": "view",
       "type": "function"
     },
     {
       "encoding": "0x095ea7b3",
       "name": "approve",
       "signature": "approve(address,uint256)",
+      "stateMutability": "nonpayable",
       "type": "function"
     },
     {
       "encoding": "0x158ef93e",
       "name": "initialized",
       "signature": "initialized()",
+      "stateMutability": "view",
       "type": "function"
     },
     {
       "encoding": "0x18160ddd",
       "name": "totalSupply",
       "signature": "totalSupply()",
+      "stateMutability": "view",
       "type": "function"
     },
     {
       "encoding": "0x23b872dd",
       "name": "transferFrom",
       "signature": "transferFrom(address,address,uint256)",
+      "stateMutability": "nonpayable",
       "type": "function"
     },
     {
       "encoding": "0x2988e36b",
       "name": "migrateBalance",
       "signature": "migrateBalance(address)",
+      "stateMutability": "nonpayable",
       "type": "function"
     },
     {
       "encoding": "0x2a1eafd9",
       "name": "targetSupply",
       "signature": "targetSupply()",
+      "stateMutability": "view",
       "type": "function"
     },
     {
       "encoding": "0x313ce567",
       "name": "decimals",
       "signature": "decimals()",
+      "stateMutability": "view",
       "type": "function"
     },
     {
       "encoding": "0x3f4ba83a",
       "name": "unpause",
       "signature": "unpause()",
+      "stateMutability": "nonpayable",
       "type": "function"
     },
     {
       "encoding": "0x4b92738e",
       "name": "migrateBalances",
       "signature": "migrateBalances(address[])",
+      "stateMutability": "nonpayable",
       "type": "function"
     },
     {
       "encoding": "0x5c975abb",
       "name": "paused",
       "signature": "paused()",
+      "stateMutability": "view",
       "type": "function"
     },
     {
@@ -80,6 +91,7 @@ TEST[DATE|TIME] Format:  json
       "encoding": "0x70a08231",
       "name": "balanceOf",
       "signature": "balanceOf(address)",
+      "stateMutability": "view",
       "type": "function"
     },
     {
@@ -92,6 +104,7 @@ TEST[DATE|TIME] Format:  json
       "encoding": "0x8456cb59",
       "name": "pause",
       "signature": "pause()",
+      "stateMutability": "nonpayable",
       "type": "function"
     },
     {
@@ -110,30 +123,35 @@ TEST[DATE|TIME] Format:  json
       "encoding": "0x8da5cb5b",
       "name": "owner",
       "signature": "owner()",
+      "stateMutability": "view",
       "type": "function"
     },
     {
       "encoding": "0x95d89b41",
       "name": "symbol",
       "signature": "symbol()",
+      "stateMutability": "view",
       "type": "function"
     },
     {
       "encoding": "0xa9059cbb",
       "name": "transfer",
       "signature": "transfer(address,uint256)",
+      "stateMutability": "nonpayable",
       "type": "function"
     },
     {
       "encoding": "0xb85e0aca",
       "name": "legacyRepContract",
       "signature": "legacyRepContract()",
+      "stateMutability": "view",
       "type": "function"
     },
     {
       "encoding": "0xdd62ed3e",
       "name": "allowance",
       "signature": "allowance(address,address)",
+      "stateMutability": "view",
       "type": "function"
     },
     {
@@ -146,6 +164,7 @@ TEST[DATE|TIME] Format:  json
       "encoding": "0xf2fde38b",
       "name": "transferOwnership",
       "signature": "transferOwnership(address)",
+      "stateMutability": "nonpayable",
       "type": "function"
     }
   ]

@@ -5,6 +5,7 @@ abis?addrs=0x713b73c3994442b533e6a083ec968e40606810ec
       "encoding": "0x08b2745a",
       "name": "AbiNotFound",
       "signature": "AbiNotFound()",
+      "stateMutability": "nonpayable",
       "type": "function"
     }
   ],

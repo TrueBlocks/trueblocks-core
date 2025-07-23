@@ -5,7 +5,7 @@ Addrs:  [0x713b73c3994442b533e6a083ec968e40606810ec]
 Decache:  true
 Caps:  cache,decache
 Format:  json
-Abi file for address 0x713b73c3994442b533e6a083ec968e40606810ec removed.
+Removed ABI for 0x713b73c3994442b533e6a083ec968e40606810ec 
 {
   "data": [],
   "meta": {

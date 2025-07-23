@@ -1,0 +1,18 @@
+chifra status  --chains --diagnose
+TEST[DATE|TIME] Modes:  [all]
+TEST[DATE|TIME] Diagnose:  true
+TEST[DATE|TIME] Chains:  true
+TEST[DATE|TIME] Format:  json
+{
+  "data": [
+    {
+      "chain": "testChain",
+      "chainId": 12345,
+      "ipfsGateway": "",
+      "localExplorer": "http://localhost:8080",
+      "remoteExplorer": "",
+      "rpcProvider": "http://localhost:8545",
+      "symbol": "ETH"
+    }
+  ]
+}

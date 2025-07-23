@@ -1,156 +1,156 @@
 [
   {
-    "name": "HashPublished",
-    "type": "event",
-    "stateMutability": "nonpayable",
-    "signature": "HashPublished(address,string,string)",
     "encoding": "0x09732eb896ea819849e5f867dd547ed8ba539c5d9b68be96055d96f1c85abaa7",
     "inputs": [
       {
-        "type": "address",
+        "internalType": "address",
         "name": "publisher",
-        "internalType": "address"
+        "type": "address"
       },
       {
-        "type": "string",
+        "internalType": "string",
         "name": "chain",
-        "internalType": "string"
+        "type": "string"
       },
       {
-        "type": "string",
+        "internalType": "string",
         "name": "hash",
-        "internalType": "string"
+        "type": "string"
       }
-    ]
+    ],
+    "name": "HashPublished",
+    "signature": "HashPublished(address,string,string)",
+    "stateMutability": "nonpayable",
+    "type": "event"
   },
   {
-    "name": "publishHash",
-    "type": "function",
-    "stateMutability": "nonpayable",
-    "signature": "publishHash(string,string)",
     "encoding": "0x1fee5cd2",
     "inputs": [
       {
-        "type": "string",
+        "internalType": "string",
         "name": "chain",
-        "internalType": "string"
+        "type": "string"
       },
       {
-        "type": "string",
+        "internalType": "string",
         "name": "hash",
-        "internalType": "string"
+        "type": "string"
       }
-    ]
+    ],
+    "name": "publishHash",
+    "signature": "publishHash(string,string)",
+    "stateMutability": "nonpayable",
+    "type": "function"
   },
   {
-    "name": "manifestHashMap",
-    "type": "function",
-    "stateMutability": "view",
-    "signature": "manifestHashMap(address,string)",
     "encoding": "0x7087e4bd",
     "inputs": [
       {
-        "type": "address",
+        "internalType": "address",
         "name": "publisher",
-        "internalType": "address"
+        "type": "address"
       },
       {
-        "type": "string",
+        "internalType": "string",
         "name": "database",
-        "internalType": "string"
+        "type": "string"
       }
     ],
+    "name": "manifestHashMap",
     "outputs": [
       {
-        "type": "string",
+        "internalType": "string",
         "name": "hash",
-        "internalType": "string"
+        "type": "string"
       }
-    ]
+    ],
+    "signature": "manifestHashMap(address,string)",
+    "stateMutability": "view",
+    "type": "function"
   },
   {
-    "name": "DonationSent",
-    "type": "event",
-    "stateMutability": "nonpayable",
-    "signature": "DonationSent(address,uint256,uint256)",
     "encoding": "0x8d68ee857f05464080096b8fbaa1603c09866dfccd25bb348209b1188e60add2",
     "inputs": [
       {
-        "type": "address",
+        "internalType": "address",
         "name": "from",
-        "internalType": "address"
+        "type": "address"
       },
       {
-        "type": "uint256",
+        "internalType": "uint256",
         "name": "amount",
-        "internalType": "uint256"
+        "type": "uint256"
       },
       {
-        "type": "uint256",
+        "internalType": "uint256",
         "name": "ts",
-        "internalType": "uint256"
+        "type": "uint256"
       }
-    ]
+    ],
+    "name": "DonationSent",
+    "signature": "DonationSent(address,uint256,uint256)",
+    "stateMutability": "nonpayable",
+    "type": "event"
   },
   {
-    "name": "owner",
-    "type": "function",
-    "stateMutability": "view",
-    "signature": "owner()",
     "encoding": "0x8da5cb5b",
+    "name": "owner",
     "outputs": [
       {
-        "type": "address",
+        "internalType": "address",
         "name": "val_0",
-        "internalType": "address"
+        "type": "address"
       }
-    ]
+    ],
+    "signature": "owner()",
+    "stateMutability": "view",
+    "type": "function"
   },
   {
-    "name": "changeOwner",
-    "type": "function",
-    "stateMutability": "nonpayable",
-    "signature": "changeOwner(address)",
     "encoding": "0xa6f9dae1",
     "inputs": [
       {
-        "type": "address",
+        "internalType": "address",
         "name": "newOwner",
-        "internalType": "address"
+        "type": "address"
       }
     ],
+    "name": "changeOwner",
     "outputs": [
       {
-        "type": "address",
+        "internalType": "address",
         "name": "oldOwner",
-        "internalType": "address"
+        "type": "address"
       }
-    ]
+    ],
+    "signature": "changeOwner(address)",
+    "stateMutability": "nonpayable",
+    "type": "function"
   },
   {
-    "name": "OwnerChanged",
-    "type": "event",
-    "stateMutability": "nonpayable",
-    "signature": "OwnerChanged(address,address)",
     "encoding": "0xb532073b38c83145e3e5135377a08bf9aab55bc0fd7c1179cd4fb995d2a5159c",
     "inputs": [
       {
-        "type": "address",
+        "internalType": "address",
         "name": "oldOwner",
-        "internalType": "address"
+        "type": "address"
       },
       {
-        "type": "address",
+        "internalType": "address",
         "name": "newOwner",
-        "internalType": "address"
+        "type": "address"
       }
-    ]
+    ],
+    "name": "OwnerChanged",
+    "signature": "OwnerChanged(address,address)",
+    "stateMutability": "nonpayable",
+    "type": "event"
   },
   {
+    "encoding": "0xed88c68e",
     "name": "donate",
-    "type": "function",
-    "stateMutability": "payable",
     "signature": "donate()",
-    "encoding": "0xed88c68e"
+    "stateMutability": "payable",
+    "type": "function"
   }
 ]

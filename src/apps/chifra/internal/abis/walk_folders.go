@@ -1,9 +1,7 @@
 package abisPkg
 
 import (
-	"path/filepath"
-
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/abi"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/walk"
 )
 
@@ -13,11 +11,11 @@ func (opts *AbisOptions) ForEveryAbi(known bool, vFunc walk.ForEveryFunc, errorC
 
 	paths := make([]string, 0, 2)
 	if known {
-		paths = append(paths, filepath.Join(config.PathToRootConfig(), "abis"))
+		paths = append(paths, abi.PathToKnownAbis(""))
 	}
 
 	if !testMode {
-		paths = append(paths, filepath.Join(config.PathToCache(chain), "abis"))
+		paths = append(paths, abi.PathToAbisCache(chain, ""))
 	}
 
 	for _, path := range paths {

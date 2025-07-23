@@ -162,6 +162,8 @@ func ResetOptions(testMode bool) {
 	opts.Globals.TestMode = testMode
 	opts.Globals.Writer = w
 	opts.Globals.Caps = getCaps()
+	// EXISTING_CODE
+	// EXISTING_CODE
 	defaultLogsOptions = opts
 }
 
@@ -169,6 +171,7 @@ func (opts *LogsOptions) getCaches() (caches map[walk.CacheType]bool) {
 	// EXISTING_CODE
 	caches = map[walk.CacheType]bool{
 		walk.Cache_Transactions: true,
+		walk.Cache_Abis:         opts.Articulate,
 	}
 	// EXISTING_CODE
 	return

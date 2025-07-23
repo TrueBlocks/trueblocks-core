@@ -26,7 +26,6 @@ func DoStatus() {
 	ShowHeader("DoStatus", opts)
 
 	globs := noCache(noEther(globals))
-	chains := []bool{false, true}
 	// firstRecord is not fuzzed
 	// maxRecords is not fuzzed
 	// Fuzz Loop
@@ -36,47 +35,41 @@ func DoStatus() {
 	firsts := []uint64{0, 10}
 	maxes := []uint64{0, 500}
 	// status,command,default|
-	for _, c := range chains {
-		for _, f := range firsts {
-			for _, m := range maxes {
-				for _, g := range globs {
-					baseName := "status/status"
-					opts.Chains = c
-					if c {
-						baseName += "-chains"
-					}
-					if f > 0 {
-						baseName += fmt.Sprintf("-first-%d", f)
-					}
-					if m > 0 {
-						baseName += fmt.Sprintf("-max-%d", m)
-					}
-					opts.FirstRecord = f
-					opts.MaxRecords = m
-					opts.Globals = g
-
-					fn := getFilename(baseName, &opts.Globals)
-					TestStatus("index", "", fn, &opts)
-					TestStatus("blooms", "", fn, &opts)
-					TestStatus("blocks", "", fn, &opts)
-					TestStatus("transactions", "", fn, &opts)
-					TestStatus("traces", "", fn, &opts)
-					TestStatus("logs", "", fn, &opts)
-					TestStatus("statements", "", fn, &opts)
-					TestStatus("transfers", "", fn, &opts)
-					TestStatus("results", "", fn, &opts)
-					TestStatus("state", "", fn, &opts)
-					TestStatus("tokens", "", fn, &opts)
-					TestStatus("monitors", "", fn, &opts)
-					TestStatus("names", "", fn, &opts)
-					TestStatus("abis", "", fn, &opts)
-					TestStatus("slurps", "", fn, &opts)
-					TestStatus("staging", "", fn, &opts)
-					TestStatus("unripe", "", fn, &opts)
-					TestStatus("maps", "", fn, &opts)
-					TestStatus("some", "", fn, &opts)
-					TestStatus("all", "", fn, &opts)
+	for _, f := range firsts {
+		for _, m := range maxes {
+			for _, g := range globs {
+				baseName := "status/status"
+				if f > 0 {
+					baseName += fmt.Sprintf("-first-%d", f)
 				}
+				if m > 0 {
+					baseName += fmt.Sprintf("-max-%d", m)
+				}
+				opts.FirstRecord = f
+				opts.MaxRecords = m
+				opts.Globals = g
+
+				fn := getFilename(baseName, &opts.Globals)
+				TestStatus("index", "", fn, &opts)
+				TestStatus("blooms", "", fn, &opts)
+				TestStatus("blocks", "", fn, &opts)
+				TestStatus("transactions", "", fn, &opts)
+				TestStatus("traces", "", fn, &opts)
+				TestStatus("logs", "", fn, &opts)
+				TestStatus("statements", "", fn, &opts)
+				TestStatus("transfers", "", fn, &opts)
+				TestStatus("results", "", fn, &opts)
+				TestStatus("state", "", fn, &opts)
+				TestStatus("tokens", "", fn, &opts)
+				TestStatus("monitors", "", fn, &opts)
+				TestStatus("names", "", fn, &opts)
+				TestStatus("abis", "", fn, &opts)
+				TestStatus("slurps", "", fn, &opts)
+				TestStatus("staging", "", fn, &opts)
+				TestStatus("unripe", "", fn, &opts)
+				TestStatus("maps", "", fn, &opts)
+				TestStatus("some", "", fn, &opts)
+				TestStatus("all", "", fn, &opts)
 			}
 		}
 	}
@@ -285,6 +278,26 @@ func TestStatus(which, value, fn string, opts *sdk.StatusOptions) {
 			ReportError(fn, opts, err)
 		} else {
 			if err := SaveToFile(fn, diagnose); err != nil {
+				ReportError2(fn, err)
+			} else {
+				ReportOkay(fn)
+			}
+		}
+	case "chains":
+		if chains, _, err := opts.StatusChains(); err != nil {
+			ReportError(fn, opts, err)
+		} else {
+			if err := SaveToFile(fn, chains); err != nil {
+				ReportError2(fn, err)
+			} else {
+				ReportOkay(fn)
+			}
+		}
+	case "caches":
+		if caches, _, err := opts.StatusCaches(); err != nil {
+			ReportError(fn, opts, err)
+		} else {
+			if err := SaveToFile(fn, caches); err != nil {
 				ReportError2(fn, err)
 			} else {
 				ReportOkay(fn)

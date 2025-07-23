@@ -2,7 +2,6 @@ traces?filter=4370000!4370002&cache
 Args: [filter=4370000!4370002 cache]
 Opts: {"filter":"4370000!4370002","cache":true}
 Filter:  4370000!4370002
-Enabled:  traces, transactions
 Cache:  true
 Caps:  cache,decache,ether
 Format:  json

@@ -124,10 +124,11 @@ func snapBnToPeriod(bn base.Blknum, chain, period string) (base.Blknum, error) {
 func (id *Identifier) nextBlock(chain string, current base.Blknum) (base.Blknum, error) {
 	bn := current
 
-	if id.ModifierType == Step {
+	switch id.ModifierType {
+	case Step:
 		bn = bn + base.Blknum(id.Modifier.Step)
 
-	} else if id.ModifierType == Period {
+	case Period:
 		dt, err := tslib.FromBnToDate(chain, bn)
 		if err != nil {
 			return bn, err
@@ -174,7 +175,7 @@ func (id *Identifier) nextBlock(chain string, current base.Blknum) (base.Blknum,
 			}
 		}
 
-	} else {
+	default:
 		bn = bn + 1
 	}
 

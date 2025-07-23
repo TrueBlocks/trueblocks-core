@@ -11,24 +11,32 @@ tags	address	name	symbol	source	decimals
 55-Defi	0x000000000000000000000000000000000000dead	ENS: Burn Address		EtherScan.io	
 50-Tokens:ERC721	0x0000000000001b84b1cb32787b0d64758d019317	HomeWork 🏠🛠️	HWK	On chain	18
 50-Tokens:ERC20	0x0000000000004946c0e9f43f4dee607b0ef1fa1c	Chi Gastoken by 1inch	CHI	On chain	18
-30-Contracts	0x000000000000541e251335090ac5b47176af4f7e	dex.blue		EtherScan.io	
-50-Tokens:ERC20	0x0000000000085d4780b73119b644ae5ecd22b376	TrueUSD	TUSD	On chain	18
+55-Defi	0x000000000000541e251335090ac5b47176af4f7e	dex.blue		https://chartalist.org/eth/TaskTypePrediction.html	
+55-Defi	0x0000000000007f150bd6f54c40a34d7c3d5e9f56	MEV Bot()		alphacore	
+55-Defi	0x0000000000071821e8033345a7be174647be0706	Scry Protocol (L1)	SCRY	https://docs.optimism.io/chain/tokenlist?utm_source=chatgpt.com	18
+55-Defi	0x0000000000085d4780b73119b644ae5ecd22b376	TrueUSD (L1)	TUSD	https://docs.optimism.io/chain/tokenlist?utm_source=chatgpt.com	18
 50-Tokens:ERC20	0x0000000000095413afc295d19edeb1ad7b71c952	Tokenlon	LON	Rotki	18
 34-ENS	0x00000000000c2e074ec69a0dfb2997ba6c7d2e1e	ENS: Registry with Fallback		EtherScan.io	
+55-Defi	0x00000000003b3cc22af3ae1eac0440bcee416b40	MEV Bot()		alphacore	
+55-Defi	0x00000000008c4fb1c916e0c88fd4cc402d935e7d	MEV Bot()		alphacore	
 50-Tokens:ERC20	0x00000000008fd4f395ec6f12920bae9cb6c722e4	Frax Ethereum	frxETH	Rotki	18
 30-Contracts	0x0000000000a84fe7f5d858c8a22121c975ff0b42	Poster			
 50-Tokens:ERC20	0x0000000000b3f879cb30fe243b4dfee438691c04	Gastoken.io	GST2	On chain	2
 30-Contracts	0x0000000000c90bc353314b6911180ed7e06019a9	Arbitrage Bot		0xTracker	
 50-Tokens:ERC20	0x0000000000da9e0e8c2a40510f991cef596ab682	Frax Ether	frxETH	Rotki	18
 30-Contracts	0x0000000006adbd7c01bc0738cdbfc3932600ad63	1inch Exchange		0xTracker	
+55-Defi	0x000000000dfde7deaf24138722987c9a6991e2d4	MEV Bot()		alphacore	
 30-Contracts	0x00000000219ab540356cbb839cbe05303d7705fa	Eth2 Deposit Contract		EtherScan.io	
 50-Tokens:ERC20	0x00000000357646e36fe575885bb3e1a0772e64cc	Dai Backstop Syndicate v3-100	DBSv3-100	On chain	18
 50-Tokens:ERC20	0x00000000441378008ea67f4284a57932b1c000a5	TrueGBP	TGBP	On chain	18
 30-Contracts	0x0000000053d411becdb4a82d8603edc6d8b8b3bc	1inch Exchange		0xTracker	
+55-Defi	0x0000000099cb7fc48a935bceb9f05bbae54e8987	MEV Bot()		alphacore	
 30-Contracts	0x00000000af5a61acaf76190794e3fdf1289288a1	Arbitrage Bot		0xTracker	
 30-Contracts	0x00000000b1786c9698c160d78232c78d6f6474fe	Arbitrage Bot		0xTracker	
+55-Defi	0x00000000c2cf7648c169b25ef1c217864bfa38cc	MEV Bot()		alphacore	
 30-Contracts	0x0000000f8ef4be2b7aed6724e893c1b674b9682d	1inch Exchange		0xTracker	
 31-Gitcoin:Grants	0x0000000fcdf5ba49794f4151d6daff4505bc47d1	Grant 3596 - The Uniswap v3 Options Education Fund		https://gitcoin.co/grants/3596/the-uniswap-v3-options-education-fund	
+55-Defi	0x0000006daea1723962647b7e189d311d757fb793	Wintermute 1()		alphacore	
 50-Tokens:ERC20	0x00000100f2a2bd000715001920eb70d229700085	TrueCAD	TCAD	On chain	18
 30-Contracts	0x000005edbbc1f258302add96b5e20d3442e5dd89	1inch Exchange		0xTracker	
 50-Tokens:ERC20	0x00006100f7090010005f1bd7ae6122c3c2cf0090	TrueAUD	TAUD	On chain	18
@@ -42,6 +50,7 @@ tags	address	name	symbol	source	decimals
 80-Prefund	0x000d836201318ec6899a67540690382780743280	Prefund_0000		Genesis	
 50-Tokens:ERC20	0x0012940cf77a3cb5bade409b96a60e22506cf7d0	Curve.fi Factory Crypto Pool: STATE / WBTC	STATEWBTC-f	Rotki	18
 80-Prefund	0x001762430ea9c3a26e5749afdb70da5f78ddbb8c	Prefund_0001		Genesis	
+55-Defi	0x001866ae5b3de6caa5a51543fd9fb64f524f5478	Binance 9		https://chartalist.org/eth/TaskTypePrediction.html	
 91-Early:Addresses	0x001a589dda0d6be37632925eaf1256986b2c6ad0	Oraclize_id304		EtherScan.io	
 50-Tokens:ERC20	0x001a8ffcb0f03e99141652ebcdecdb0384e3bd6c	POLKER	PKR	Rotki	18
 31-Giveth:Project	0x001bae3291db1f401771a1eaa8f0078534177bcc	Sansum Diabetes Research Institute		Tokenomics	
@@ -49,10 +58,12 @@ tags	address	name	symbol	source	decimals
 50-Tokens:ERC20	0x001f0aa5da15585e5b2305dbab2bac425ea71007	IPSX	IPSX	On chain	18
 50-Tokens:ERC20	0x001f751cdfee02e2f0714831be2f8384db0f71a2	GenericLevCompFarm		On chain	18
 31-Gitcoin:Grants	0x00216505799d9e3117b40b94a24dc0fa286a57a4	Grant 1168 Flowerpatch Emojis & Artwork Fund		https://gitcoin.co/grants/1168/flowerpatch-emojis-artwork-fund	
+55-Defi	0x0021845f4c2604c58f9ba5b7bff58d16a2ab372c	Folgory Exchange		https://chartalist.org/eth/TaskTypePrediction.html	
 50-Tokens:ERC20	0x00281dfce4cfd72c0b6fda2aaaf077258743f9e8	NuriFootball	NRFB	Rotki	
 50-Tokens:ERC20	0x00282fd551d03dc033256c4bf119532e8c735d8a	Biaocoin	BIAO	Rotki	2
 50-Tokens:ERC20	0x00319f722bd546182cb2c701ca254146d3f084fc	Democracy Earth	HOUR	On chain	18
 80-Prefund	0x0032403587947b9f15622a68d104d54d33dbd1cd	Prefund_0003		Genesis	
+30-Contracts	0x0034e8411d397c7377c06995565e61846d9af957	Gnosis Builder Wallet 3		https://twitter.com/gnsdomains/status/1720826922064576952	
 30-Contracts:Pool Together	0x0034ea9808e620a0ef79261c51af20614b742b24	Pool Usdc MCDAwarePool v0.2.12		EtherScan.io	
 31-Gitcoin:Grants	0x0035cc37599241d007d0aba1fb931c5fa757f7a1	Grant 2388 - The Commons Swarm: An Augmented Bonding Curve model for DAOs		https://gitcoin.co/grants/2388/the-commons-swarm-an-augmented-bonding-curve-mode	
 91-Early:Miners	0x0037ce3d4b7f8729c8607d8d0248252be68202c0	Miner_0027_260		OnChain	
@@ -70,9 +81,11 @@ tags	address	name	symbol	source	decimals
 80-Prefund	0x005d0ee8155ec0a6ff6808552ca5f16bb5be323a	Prefund_0007		Genesis	
 80-Malicious:DaoDrain	0x005f5cee7a43331d5a3d3eec71305925a62f34b6	DAO Drain 086		GethSource	
 31-Gitcoin:Grants	0x006087d6ac20840c23ba298512db454a05c19b10	Grant 0743 #fittogetherdao (like Pooltogether for Fitness and Wellbeing)		https://gitcoin.co/grants/743/fittogetherdao-like-pooltogether-for-fitness-and-	
+55-Defi	0x0068eb681ec52dbd9944517d785727310b494575	Tokocrypto		https://chartalist.org/eth/TaskTypePrediction.html	
 50-Tokens:ERC20	0x006bea43baa3f7a6f765f14f10a1a1b08334ef45	Stox	STX	On chain	18
 31-Giveth:Project	0x006cfc89e7f521ce3290b200df9530dce911b896	St. Ignatius Martyr Catholic Church		Tokenomics	
 80-Malicious:Shanghai	0x006e61aa7e7ce25b8dad331d5181f2fbe5c23a54	Shanghai Cleaner Contract		TrueBlocks.io	
+55-Defi	0x007174732705604bbbf77038332dc52fd5a5000c	BlockTrades Exchange		https://chartalist.org/eth/TaskTypePrediction.html	
 31-Giveth:Project	0x0072d5887bc9979168835d8ac37ca1c2f6a4dac9	Ultimate Unicorns		Tokenomics	
 80-Prefund	0x007622d84a234bb8b078230fcf84b67ae9a8acae	Prefund_0008		Genesis	
 50-Tokens:ERC20	0x0077cd5eca22e86177cc465633227652ff02f32d	BrightID_Main_DAO	BMAIN	On chain	18
@@ -103,6 +116,7 @@ tags	address	name	symbol	source	decimals
 60-SmolAssets	0x00a2faf97cc2b985b29a0a0eaa6e0d8033dc0ea1	Velodromev2tBTC-WETHFactoryyVault	yvVelo-tBTC-WETH-f	SmolAssets	18
 31-Gitcoin:Grants	0x00a33c8379b03085ad0c0b4f6fb38c63deba8475	Grant 4103 - Supplements Death Match		https://gitcoin.co/grants/4103/supplements-death-match	
 50-Tokens:ERC20	0x00a35fd824c717879bf370e70ac6868b95870dfb	IronBank	IB	SmolAssets	18
+76-DaoToken	0x00a55375002f3cda400383f479e7cd57bad029a9	Conjure	CNJ	Tally-Claude	18
 80-Prefund	0x00a5797f52c9d58f189f36b1d45d1bf6041f2f6b	Prefund_0019		Genesis	
 50-Tokens:ERC20	0x00a7ec2f2b451cb0233e8adbf4c9a951027c2b02	hiENS4	hiENS4	Rotki	18
 50-Tokens:ERC20	0x00a8b738e453ffd858a7edf03bccfe20412f0eb0	AllianceBlock Token	ALBT	Rotki	18
@@ -113,6 +127,7 @@ tags	address	name	symbol	source	decimals
 80-Prefund	0x00acc6f082a442828764d11f58d6894ae408f073	Prefund_0023		Genesis	
 80-Prefund	0x00b277b099a8e866ca0ec65bcb87284fd142a582	Prefund_0024		Genesis	
 31-Gitcoin:Grants	0x00b491d250b9bcce482b6e70321b0a5339d183a6	Grant 0976 Magical Machine Money		https://gitcoin.co/grants/976/magical-machine-money	
+55-Defi	0x00bdb5699745f5b860228c8f939abf1b9ae374ed	Bitstamp 1		https://chartalist.org/eth/TaskTypePrediction.html	
 80-Prefund	0x00bdd4013aa31c04616c2bc9785f2788f915679b	Prefund_0025		Genesis	
 80-Prefund	0x00c27d63fde24b92ee8a1e7ed5d26d8dc5c83b03	Prefund_0026		Genesis	
 50-Tokens:ERC20	0x00c2999c8b2adf4abc835cc63209533973718eb1	New World Order	STATE	Rotki	18
@@ -122,6 +137,7 @@ tags	address	name	symbol	source	decimals
 50-Tokens:ERC20	0x00c83aecc790e8a4453e5dd3b0b4b3680501a7a7	SKALE	SKL	Giveth website	18
 31-Giveth:Project	0x00ca33970150dff4fdd16f4992810117296768dd	Creative Development Collective		Tokenomics	
 60-SmolAssets	0x00cb8e36a9c40491a39e8bf2864ed30c1b579860	Velodromev2tBTC-WBTCFactoryyVault	yvVelo-tBTC-WBTC-f	SmolAssets	18
+55-Defi	0x00cdc153aa8894d08207719fe921fff964f28ba3	Bitzlato		https://chartalist.org/eth/TaskTypePrediction.html	
 31-Gitcoin:Grants	0x00cf36853aa4024fb5bf5cc377dfd85844b411a0	Grant 0143 Dappnode - Panvala League		https://gitcoin.co/grants/143/dappnode-panvala-league	
 50-Tokens:ERC20	0x00d0f137b51692d0ac708bde7b367a373865cffe	Zapper.Fi : Balancer Remove		EtherScan.io	
 80-Prefund	0x00d75ed60c774f8b3a5a5173fb1833ad7105a2d9	Prefund_0028		Genesis	
@@ -131,15 +147,16 @@ tags	address	name	symbol	source	decimals
 80-Prefund	0x00dc01cbf44978a42e8de8e436edf94205cfb6ec	Prefund_0031		Genesis	
 31-Gitcoin:Admin	0x00de4b13153673bcae2616b67bf822500d325fc3	Gitcoin Maintainer			
 60-SmolAssets	0x00e1724885473b63bce08a9f0a52f35b0979e35a	OathToken	OATH	SmolAssets	18
-31-Gitcoin:Grants	0x00e4f5f746242e4d115bd65aac7c08fe5d38fb21	Grant 1839 the Etherchest Ecosystem		https://gitcoin.co/grants/1839/the-etherchest-ecosystem	
 60-Rotki	0x00e5646f60ac6fb446f621d146b6e1886f002905	Rai Reflex Index (PoS)	RAI	Rotki	18
 80-Prefund	0x00e681bc2d10db62de85848324492250348e90bf	Prefund_0032		Genesis	
+75-DaoGovernor	0x00e83d0698faf01bd080a4dd2927e6ab7c4874c9	AnvilGovernorDelegate		Tally-Claude	
 50-Tokens:ERC20	0x00e8eb340f8af587eea6200d2081e31dc87285ac	Curve XAI-FRAXBP Factory yVault	yvCurve-XAI-FRAXBP-f	SmolAssets	18
 80-Prefund	0x00f463e137dcf625fbf3bca39eca98d2b968cf7f	Prefund_0033		Genesis	
+55-Defi	0x00f932f0fe257456b32deda4758922e56a4f4b42	Paper (L2)	PAPER	https://docs.optimism.io/chain/tokenlist?utm_source=chatgpt.com	
 50-Tokens:ERC20	0x00f93fbf00f97170b6cf295dc58888073cb5c2b8	Curve.fi Factory USD Metapool: CRV/ETH	CRV-ETH3CRV-f	Rotki	18
 31-Gitcoin:Grants	0x00fe460a15b49d09f39b057d0f1a7b9444f4f2be	Grant 0624 Nescience Software Portfolio Rebalancing Direct Indexing		https://gitcoin.co/grants/624/nescience-software-portfolio-rebalancing-direct-in	
 80-Prefund	0x010007394b8b7565a1658af88ce463499135d6b7	Prefund_0034		Genesis	
-50-Tokens:ERC20	0x0100546f2cd4c9d97f798ffc9755e47865ff7ee6	Alchemix ETH	alETH	SmolAssets	18
+55-Defi	0x0100546f2cd4c9d97f798ffc9755e47865ff7ee6	Alchemix ETH (L1)	alETH	https://docs.optimism.io/chain/tokenlist?utm_source=chatgpt.com	18
 50-Tokens:ERC721	0x0101f3be8ebb4bbd39a2e3b9a3639d4259832fd9	DAO Drain 075		GethSource Ether Camp	1
 50-Tokens:ERC20	0x010496d8f3269ee9b05060bdf40c2d66e83e61dd	Digg	DIGG	On chain	18
 50-Tokens:ERC20	0x010589b7c33034b802f7dba2c88cc9cec0f46673	SoundMoneyCoin	SOV	On chain	8
@@ -175,6 +192,7 @@ tags	address	name	symbol	source	decimals
 31-Gitcoin:Grants	0x014ffcf34d8515535b99d6aef654258c237168b6	Grant 1850 Fireth		https://gitcoin.co/grants/1850/fireth	
 80-Prefund	0x0151fa5d17a2dce2d7f1eb39ef7fe2ad213d5d89	Prefund_0046		Genesis	
 30-Contracts	0x015531a044bae03bf4dab1ceabfc232a969b7175	GU: Rare Pack		EtherScan.io	
+55-Defi	0x015769601d8d4879c0e193eeab31f10cf03c9ea9	Uniswap V3 (USDC-MLP)		alphacore	
 80-Prefund	0x01577afd4e50890247c9b10d44af73229aec884f	Prefund_0047		Genesis	
 50-Tokens:ERC20	0x01597e397605bf280674bf292623460b4204c375	Bent Token	BENT	Rotki	18
 50-Tokens:ERC20	0x015b94ab2b0a14a96030573fbcd0f3d3d763541f	UZD Zunami Stable	UZD	Rotki	18
@@ -186,21 +204,3 @@ tags	address	name	symbol	source	decimals
 50-Tokens:ERC20	0x016396044709eb3edc69c44f4d5fa6996917e4e8	KingXChain	KXC	On chain	18
 50-Tokens:ERC20	0x01676c571f57fcf4d99071e8e5451eece071c3e4	Curve.fi Factory Crypto Pool: liq_CRV_MATIC	CRV MATIC-f	Rotki	18
 50-Tokens:ERC20	0x0168703872fa06741ecaa9dff7803168e83f7ae0	MIRO Token	MIRO	On chain	8
-80-Prefund	0x0169c1c210eae845e56840412e1f65993ea90fb4	Prefund_0049		Genesis	
-80-Prefund	0x016b60bb6d67928c29fd0313c666da8f1698d9c5	Prefund_0050		Genesis	
-50-Tokens:ERC20	0x016bf078abcacb987f0589a6d3beadd4316922b0	Rari Stable Pool Token	RSPT	On chain	18
-80-Prefund	0x016c85e1613b900fa357b8283b120e65aefcdd08	Prefund_0051		Genesis	
-50-Tokens:ERC20	0x016ee7373248a80bde1fd6baa001311d233b3cfa	3X Short Bitcoin Token	BEAR	Rotki	18
-31-Gitcoin:Grants	0x017946fc126d57e7823e68c647c24f28e5dc9988	Grant 0190 Groundhog		https://gitcoin.co/grants/190/groundhog	
-31-Gitcoin:Grants	0x018047343e8105fed2c5000912d03815d99f3e48	Grant 1920 Kevin		https://gitcoin.co/grants/1920/kevin	
-50-Tokens:ERC20	0x0180cb7971b47d2faf3d2b52e3b5174e0cb835cc	AIRSHIB	AIRSHIB	On chain	18
-80-Prefund	0x018492488ba1a292342247b31855a55905fef269	Prefund_0052		Genesis	
-80-Prefund	0x018f20a27b27ec441af723fd9099f2cbb79d6263	Prefund_0053		Genesis	
-91-Early:Addresses	0x01914e9c0594a087f508aceabfca45f57e471388	Wallet_id66_cnt1_5mo		Ether Camp	
-80-Prefund	0x0191eb547e7bf6976b9b1b577546761de65622e2	Prefund_0054		Genesis	
-91-Early:Miners	0x0193d941b50d91be6567c7ee1c0fe7af498b4137	Miner_0015_427		OnChain	
-50-Tokens:ERC20	0x0198f46f520f33cd4329bd4be380a25a90536cd5	PlayChip	PLA	On chain	18
-50-Tokens:ERC20	0x0199fd07389c5277c922af2736542e95e24ee689	Saturday Elon	SatElon	On chain	9
-80-Prefund	0x019d709579ff4bc09fdcdde431dc1447d2c260bc	Prefund_0055		Genesis	
-80-Prefund	0x01a25a5f5af0169b30864c3be4d7563ccd44f09e	Prefund_0056		Genesis	
-80-Prefund	0x01a7d9fa7d0eb1185c67e54da83c2e75db69e39f	Prefund_0057		Genesis	

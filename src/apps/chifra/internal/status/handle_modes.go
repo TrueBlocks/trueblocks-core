@@ -141,7 +141,10 @@ func (opts *StatusOptions) HandleModes(rCtx *output.RenderCtx) error {
 	}
 
 	extraOpts := map[string]any{
-		"chains": opts.Chains,
+		"chain":    chain,
+		"testMode": testMode,
+		"chains":   opts.Chains,
+		"caches":   opts.Caches,
 	}
 
 	return output.StreamMany(rCtx, fetchData, opts.Globals.OutputOptsWithExtra(extraOpts))

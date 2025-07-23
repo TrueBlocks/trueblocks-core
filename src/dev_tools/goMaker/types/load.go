@@ -81,6 +81,7 @@ func (cb *CodeBase) LoadStructures(thePath string, callBack func(*Structure, *an
 		class := strings.TrimSuffix(filepath.Base(path), ".toml")
 		type Tmp struct {
 			Settings Structure `toml:"settings"` // don't change this, it won't parse
+			Facets   []Facet   `toml:"facets"`
 		}
 
 		var f Tmp
@@ -94,6 +95,7 @@ func (cb *CodeBase) LoadStructures(thePath string, callBack func(*Structure, *an
 		}
 		if ok {
 			mapKey := strings.ToLower(class)
+			f.Settings.Facets = f.Facets // Copy facets into the Structure
 			structMap[mapKey] = f.Settings
 		}
 		return nil
@@ -142,6 +144,10 @@ func (cb *CodeBase) LoadMembers(thePath string, structMap map[string]Structure) 
 		return err
 	}
 
+	// for key, st := range structMap {
+	// 	logger.Info("Loaded structure:", key, "with", len(st.Members), "members")
+	// }
+
 	return nil
 }
 
@@ -167,6 +173,21 @@ func (cb *CodeBase) FinishLoad(unused string, baseTypes []Structure, options []O
 		cb.Structures = append(cb.Structures, st)
 	}
 	sort.Slice(cb.Structures, func(i, j int) bool {
+		if cb.Structures[i].DocRoute == cb.Structures[j].DocRoute {
+			if cb.Structures[i].Name() == cb.Structures[j].Name() {
+				si := ""
+				for ii := 0; ii < len(cb.Structures[i].Members); ii++ {
+					si += cb.Structures[i].Members[ii].Name
+				}
+				sj := ""
+				for jj := 0; jj < len(cb.Structures[j].Members); jj++ {
+					sj += cb.Structures[j].Members[jj].Name
+				}
+				// logger.Info("si", si, "sj", sj)
+				return si < sj
+			}
+			return cb.Structures[i].Name() < cb.Structures[j].Name()
+		}
 		return cb.Structures[i].DocRoute < cb.Structures[j].DocRoute
 	})
 
@@ -183,7 +204,9 @@ func (cb *CodeBase) FinishLoad(unused string, baseTypes []Structure, options []O
 	// Enhance the commands with information from the endpoints data (could have been combined,
 	// but this way we can keep the data separate and still have a single command object)
 	for _, op := range options {
-		if op.OptionType == "group" {
+		switch op.OptionType {
+		case "group":
+			VerboseLog("Processing group:", op.Group)
 			c := Command{
 				Group:       op.Group,
 				Description: op.Description,
@@ -192,7 +215,8 @@ func (cb *CodeBase) FinishLoad(unused string, baseTypes []Structure, options []O
 				cbPtr:       cb,
 			}
 			routeMap[op.Group] = c
-		} else if op.OptionType == "command" {
+		case "command":
+			VerboseLog("Processing command:", op.Route, "in group:", op.Group)
 			sort.Slice(producesMap[op.Route], func(i, j int) bool {
 				return producesMap[op.Route][i].Class < producesMap[op.Route][j].Class
 			})
@@ -290,10 +314,19 @@ func (cb *CodeBase) FinishLoad(unused string, baseTypes []Structure, options []O
 		st.checkHierarchy()
 	}
 
-	codeBase := filepath.Join(GetGeneratedPath(), "codebase.json")
+	// Get the path to the generated folder and ensure it exists
+	generatedPath := GetGeneratedPath()
+	if err := file.EstablishFolder(generatedPath); err != nil {
+		return fmt.Errorf("failed to create generated directory: %w", err)
+	}
+
+	codeBase := filepath.Join(generatedPath, "codebase.json")
+
+	VerboseLog("Processing:", codeBase)
 	current := file.AsciiFileToString(codeBase)
 	_ = file.StringToAsciiFile(codeBase, cb.String())
 	if current == cb.String() {
+		VerboseLog("File unchanged:", codeBase)
 		return nil
 	}
 
@@ -301,7 +334,7 @@ func (cb *CodeBase) FinishLoad(unused string, baseTypes []Structure, options []O
 		return nil
 	}
 
-	return fmt.Errorf("quitting: codebase.json has changed. Rerun the command to ignore this warning")
+	return fmt.Errorf("quitting: %s has changed. Rerun the command to ignore this warning", codeBase)
 }
 
 func checkForDups(options []Option) error {

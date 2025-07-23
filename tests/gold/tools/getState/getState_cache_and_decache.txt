@@ -1,7 +1,6 @@
 chifra state  0xa1e4380a3b1f749673e270229993ee55f35663b4 12000000 --cache --decache
 TEST[DATE|TIME] Addrs:  [0xa1e4380a3b1f749673e270229993ee55f35663b4]
 TEST[DATE|TIME] Blocks:  [12000000]
-TEST[DATE|TIME] Enabled:  state
 TEST[DATE|TIME] Cache:  true
 TEST[DATE|TIME] Decache:  true
 TEST[DATE|TIME] Caps:  cache,decache,ether

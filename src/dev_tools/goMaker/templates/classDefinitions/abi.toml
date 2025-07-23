@@ -5,4 +5,6 @@
     doc_route = "503-abi"
     attributes = ""
     produced_by = "abis"
+    cache_type = "cacheable"
+    cache_by = "address"
     contains = "function"

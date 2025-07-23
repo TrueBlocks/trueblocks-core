@@ -3,7 +3,6 @@ Args: [blocks=1152642 cache uniq]
 Opts: {"blocks":["1152642"],"uniq":true,"cache":true}
 Blocks:  [1152642]
 Uniq:  true
-Enabled:  blocks, receipts, transactions
 Cache:  true
 Caps:  cache,decache,ether
 Format:  json

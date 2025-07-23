@@ -8,6 +8,7 @@ TEST[DATE|TIME] Format:  json
       "encoding": "0x57c9e989",
       "name": "why_change_caps",
       "signature": "why_change_caps(uint[],uint[],uint[])",
+      "stateMutability": "",
       "type": "function"
     }
   ]

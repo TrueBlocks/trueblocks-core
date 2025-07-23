@@ -276,23 +276,6 @@ func TestStoreDecache(t *testing.T) {
 	})
 }
 
-func TestStoreTestLog(t *testing.T) {
-	t.Run("EnabledStore", func(t *testing.T) {
-		store, err := newTestStore(true, walk.Cache_Results, true, 1000)
-		if err != nil {
-			t.Errorf("Failed to create store: %v", err)
-		}
-		store.TestLog()
-	})
-	t.Run("DisabledStore", func(t *testing.T) {
-		store, err := newTestStore(false, walk.Cache_Results, true, 1000)
-		if err != nil {
-			t.Errorf("Failed to create store: %v", err)
-		}
-		store.TestLog()
-	})
-}
-
 func TestStoreLatest(t *testing.T) {
 	t.Run("SetLatestUpdates", func(t *testing.T) {
 		store, err := newTestStore(true, walk.Cache_Results, true, 5000)

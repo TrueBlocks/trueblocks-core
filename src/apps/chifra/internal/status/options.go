@@ -33,12 +33,14 @@ type StatusOptions struct {
 	FirstRecord uint64                `json:"firstRecord,omitempty"` // The first record to process
 	MaxRecords  uint64                `json:"maxRecords,omitempty"`  // The maximum number of records to process
 	Chains      bool                  `json:"chains,omitempty"`      // Include a list of chain configurations in the output
+	Caches      bool                  `json:"caches,omitempty"`      // Include a list of cache items in the output
 	Healthcheck bool                  `json:"healthcheck,omitempty"` // An alias for the diagnose endpoint
 	Globals     globals.GlobalOptions `json:"globals,omitempty"`     // The global options
 	Conn        *rpc.Connection       `json:"conn,omitempty"`        // The connection to the RPC server
 	BadFlag     error                 `json:"badFlag,omitempty"`     // An error flag if needed
 	// EXISTING_CODE
 	ModeTypes []walk.CacheType `json:"-"`
+	OrigModes []string         `json:"-"`
 	// EXISTING_CODE
 }
 
@@ -53,6 +55,7 @@ func (opts *StatusOptions) testLog() {
 	logger.TestLog(opts.FirstRecord != 0, "FirstRecord: ", opts.FirstRecord)
 	logger.TestLog(opts.MaxRecords != 10000, "MaxRecords: ", opts.MaxRecords)
 	logger.TestLog(opts.Chains, "Chains: ", opts.Chains)
+	logger.TestLog(opts.Caches, "Caches: ", opts.Caches)
 	logger.TestLog(opts.Healthcheck, "Healthcheck: ", opts.Healthcheck)
 	opts.Conn.TestLog()
 	opts.Globals.TestLog()
@@ -93,6 +96,8 @@ func StatusFinishParseInternal(w io.Writer, values url.Values) *StatusOptions {
 			opts.MaxRecords = base.MustParseUint64(value[0])
 		case "chains":
 			opts.Chains = true
+		case "caches":
+			opts.Caches = true
 		case "healthcheck":
 			opts.Healthcheck = true
 		default:
@@ -107,8 +112,13 @@ func StatusFinishParseInternal(w io.Writer, values url.Values) *StatusOptions {
 	opts.Conn = opts.Globals.FinishParseApi(w, values, opts.getCaches())
 
 	// EXISTING_CODE
-	if len(opts.Modes) == 0 && opts.Globals.Verbose {
-		opts.Modes = append(opts.Modes, "some")
+	opts.OrigModes = opts.Modes
+	if len(opts.Modes) == 0 {
+		if opts.Caches || opts.Chains {
+			opts.Modes = append(opts.Modes, "all")
+		} else if opts.Globals.Verbose {
+			opts.Modes = append(opts.Modes, "some")
+		}
 	}
 	opts.ModeTypes = walk.CacheTypesFromStringSlice(opts.Modes)
 	// EXISTING_CODE
@@ -141,8 +151,13 @@ func statusFinishParse(args []string) *StatusOptions {
 
 	// EXISTING_CODE
 	opts.Modes = append(opts.Modes, args...)
-	if len(opts.Modes) == 0 && opts.Globals.Verbose {
-		opts.Modes = append(opts.Modes, "some")
+	opts.OrigModes = opts.Modes
+	if len(opts.Modes) == 0 {
+		if opts.Caches || opts.Chains {
+			opts.Modes = append(opts.Modes, "all")
+		} else if opts.Globals.Verbose {
+			opts.Modes = append(opts.Modes, "some")
+		}
 	}
 	opts.ModeTypes = walk.CacheTypesFromStringSlice(opts.Modes)
 	if len(opts.Modes) > 0 {
@@ -182,6 +197,8 @@ func ResetOptions(testMode bool) {
 	opts.Globals.TestMode = testMode
 	opts.Globals.Writer = w
 	opts.Globals.Caps = getCaps()
+	// EXISTING_CODE
+	// EXISTING_CODE
 	opts.MaxRecords = 10000
 	defaultStatusOptions = opts
 }

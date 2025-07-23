@@ -3,9 +3,9 @@ package monitor
 import (
 	"fmt"
 	"os"
-	"path/filepath"
 	"strings"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/abi"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/decache"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
@@ -45,7 +45,7 @@ func (mon *Monitor) Decache(conn *rpc.Connection, showProgress bool) (string, er
 			return "", err
 		}
 
-		abiPath := filepath.Join(walk.GetRootPathFromCacheType(conn.Chain, walk.Cache_Abis), mon.Address.Hex()+".json")
+		abiPath := abi.PathToAbisCache(conn.Chain, mon.Address.Hex())
 		if file.FileExists(abiPath) {
 			os.Remove(abiPath)
 			logger.Progress(showProgress, "Abi "+abiPath+" file removed.")

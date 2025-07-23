@@ -1,0 +1,1 @@
+A Destination is an enhanced url used by chifra explore it may be a URL to a block on the explorer, a transaction hash, or an address.

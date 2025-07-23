@@ -16,19 +16,29 @@ import (
 )
 
 func WriteCode(existingFn, newCode string) (bool, error) {
+	VerboseLog("Writing code to:", existingFn)
+
 	if len(strings.Trim(newCode, wss)) == 0 {
+		VerboseLog("  Skipping empty code")
 		return false, nil
 	}
 
-	if !file.FileExists(existingFn) {
+	// For new files or files in /generated/, just write the new code directly
+	if !file.FileExists(existingFn) || strings.Contains(existingFn, "/generated/") {
 		if !strings.Contains(existingFn, "/generated/") {
 			if !file.FolderExists(filepath.Dir(existingFn)) {
 				logger.Fatal("Folder does not exist for file", existingFn)
 			}
-			logger.Info(colors.Yellow+"Creating", existingFn, strings.Repeat(" ", 20)+colors.Off)
+			if !verbose {
+				logger.Info(colors.Yellow+"Creating", existingFn, strings.Repeat(" ", 20)+colors.Off)
+			} else {
+				VerboseLog("  Creating new file:", existingFn)
+			}
 		}
 		return updateFile(existingFn, newCode)
 	}
+
+	VerboseLog("  Updating existing file:", existingFn)
 
 	tempFn := existingFn + ".new"
 	defer func() {
@@ -45,10 +55,15 @@ func WriteCode(existingFn, newCode string) (bool, error) {
 		return false, fmt.Errorf("error extracting existing code: %v", err)
 	}
 
-	// apply the EXISTING_CODE to the new code, format the new code and
-	// write it back to the original file (potentially destroying it)
+	// apply the EXISTING_CODE to the new code
 	wasModified, err := applyTemplate(tempFn, existingParts)
 	if err != nil {
+		// If there's an error applying the template and this is a generated file,
+		// fall back to just writing the new code
+		if strings.Contains(existingFn, "/generated/") {
+			VerboseLog("  Falling back to direct write for generated file")
+			return updateFile(existingFn, newCode)
+		}
 		return false, fmt.Errorf("error applying template: %v %s", err, existingFn)
 	}
 
@@ -107,12 +122,14 @@ func applyTemplate(tempFn string, existingCode map[int]string) (bool, error) {
 	if err != nil {
 		return false, err
 	}
+	defer ff.Close()
 
 	isOpen := false
 	lineCnt := 0
 	codeSection := 0
 	var buffer bytes.Buffer
 	scanner := bufio.NewScanner(ff)
+
 	for scanner.Scan() {
 		line := scanner.Text()
 		lineCnt++
@@ -121,14 +138,16 @@ func applyTemplate(tempFn string, existingCode map[int]string) (bool, error) {
 				isOpen = false
 				codeSection++
 			} else {
+				// If we have existing code for this section, use it
 				if code, ok := existingCode[codeSection]; ok {
 					buffer.WriteString(code)
-					isOpen = true
 				} else {
-					return false, fmt.Errorf("missing // EXISTING_CODE section %d line %d", codeSection, lineCnt)
+					// Otherwise just write the marker and continue
+					buffer.WriteString(line + "\n")
 				}
+				isOpen = true
 			}
-		} else {
+		} else if !isOpen {
 			buffer.WriteString(line + "\n")
 		}
 	}
@@ -137,7 +156,6 @@ func applyTemplate(tempFn string, existingCode map[int]string) (bool, error) {
 		return false, err
 	}
 
-	ff.Close()
 	return updateFile(tempFn, buffer.String())
 }
 
@@ -164,10 +182,10 @@ func updateFile(tempFn, newCode string) (bool, error) {
 	if fileExt == "go" {
 		formattedBytes, err := format.Source([]byte(codeToWrite))
 		if err != nil {
-			return showErroredCode(codeToWrite, err)
+			_, _ = showErroredCode(codeToWrite, err)
 		}
 		codeToWrite = string(formattedBytes)
-	} else if hasPrettier() {
+	} else {
 		var parser string
 		switch fileExt {
 		case "md":
@@ -186,17 +204,72 @@ func updateFile(tempFn, newCode string) (bool, error) {
 			// do nothing
 		}
 		if parser != "" {
-			_ = file.StringToAsciiFile(tmpSrcFn, codeToWrite)
-			cmd := fmt.Sprintf("prettier --parser %s %s > %s 2> %s", parser, tmpSrcFn, outFn, errFn)
-			utils.System(cmd)
-			errors := file.AsciiFileToString(errFn)
-			if len(errors) > 0 {
-				return showErroredCode(codeToWrite, fmt.Errorf("prettier errors: %s", errors))
+			if hasPrettier() {
+				_ = file.StringToAsciiFile(tmpSrcFn, codeToWrite)
+				prettierPath := getPrettierPath()
+
+				var cmd string
+
+				// If prettier is in frontend directory, cd there and run it
+				if strings.Contains(prettierPath, "frontend") {
+					// Get absolute paths for files since we're changing directory
+					absTmpSrcFn, _ := filepath.Abs(tmpSrcFn)
+					absOutFn, _ := filepath.Abs(outFn)
+					absErrFn, _ := filepath.Abs(errFn)
+
+					// Change to frontend directory and run prettier
+					cmd = fmt.Sprintf("cd frontend && %s --parser %s %s > %s 2> %s",
+						strings.Replace(prettierPath, "./frontend/", "./", 1),
+						parser, absTmpSrcFn, absOutFn, absErrFn)
+				} else {
+					// Check if there's a prettier config file that might already specify plugins
+					prettierConfigPaths := []string{
+						".prettierrc",
+						".prettierrc.json",
+						".prettierrc.js",
+						".prettierrc.yaml",
+						".prettierrc.yml",
+						"prettier.config.js",
+						"./frontend/.prettierrc",
+						"./frontend/.prettierrc.json",
+						"./frontend/.prettierrc.js",
+						"./frontend/.prettierrc.yaml",
+						"./frontend/.prettierrc.yml",
+						"./frontend/prettier.config.js",
+					}
+
+					hasConfig := false
+					configPath := ""
+					for _, path := range prettierConfigPaths {
+						if file.FileExists(path) {
+							hasConfig = true
+							configPath = path
+							break
+						}
+					}
+
+					if !hasConfig {
+						// Only add plugin explicitly if no config file is found
+						pluginPath := getPluginPath()
+						if pluginPath != "" {
+							cmd = fmt.Sprintf("%s --plugin %s --parser %s %s > %s 2> %s", prettierPath, pluginPath, parser, tmpSrcFn, outFn, errFn)
+						} else {
+							cmd = fmt.Sprintf("%s --parser %s %s > %s 2> %s", prettierPath, parser, tmpSrcFn, outFn, errFn)
+						}
+					} else {
+						// Use prettier config file and specify its path explicitly
+						cmd = fmt.Sprintf("%s --config %s --parser %s %s > %s 2> %s", prettierPath, configPath, parser, tmpSrcFn, outFn, errFn)
+					}
+				}
+
+				utils.System(cmd)
+				errors := file.AsciiFileToString(errFn)
+				if len(errors) > 0 {
+					return showErroredCode(codeToWrite, fmt.Errorf("prettier errors: %s", errors))
+				}
+				codeToWrite = file.AsciiFileToString(outFn)
 			}
-			codeToWrite = file.AsciiFileToString(outFn)
 		}
-	} else {
-		logger.Warn("Prettier not found, skipping formatting for", tempFn, ". Install Prettier with `npm install -g prettier`.")
 	}
 
 	// Compare the new formatted code to the existing file and only write if different
@@ -235,9 +308,53 @@ func init() {
 }
 
 func hasPrettier() bool {
+	return getPrettierPath() != ""
+}
+
+func getPrettierPath() string {
+	// Search for prettier in common locations
+	searchPaths := []string{
+		"./node_modules/.bin/prettier",                // Local install in current directory
+		"./sdk/typescript/node_modules/.bin/prettier", // TrueBlocks SDK location
+		"./frontend/node_modules/.bin/prettier",       // Common frontend directory
+		"./web/node_modules/.bin/prettier",            // Common web directory
+	}
+
+	for _, path := range searchPaths {
+		if file.FileExists(path) {
+			return path
+		}
+	}
+
+	// Fall back to global prettier if available
 	utils.System("which prettier >./found 2>/dev/null")
 	defer os.Remove("./found")
-	return file.FileExists("./found")
+	if file.FileExists("./found") {
+		contents := file.AsciiFileToString("./found")
+		if len(contents) > 0 {
+			return "prettier"
+		}
+	}
+
+	return ""
+}
+
+func getPluginPath() string {
+	// Search for the sort-imports plugin in common locations
+	searchPaths := []string{
+		"./node_modules/@trivago/prettier-plugin-sort-imports/lib/src/index.js",                // Local install in current directory
+		"./sdk/typescript/node_modules/@trivago/prettier-plugin-sort-imports/lib/src/index.js", // TrueBlocks SDK location
+		"./frontend/node_modules/@trivago/prettier-plugin-sort-imports/lib/src/index.js",       // Common frontend directory
+		"./web/node_modules/@trivago/prettier-plugin-sort-imports/lib/src/index.js",            // Common web directory
+	}
+
+	for _, path := range searchPaths {
+		if file.FileExists(path) {
+			return path
+		}
+	}
+
+	return ""
 }
 
 func showErroredCode(newCode string, err error) (bool, error) {

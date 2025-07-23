@@ -3,7 +3,6 @@ Args: [blocks=12 cache cacheTxs]
 Opts: {"blocks":["12"],"cacheTxs":true,"cache":true}
 Blocks:  [12]
 CacheTxs:  true
-Enabled:  blocks, receipts, transactions
 Cache:  true
 Caps:  cache,decache,ether
 Format:  json

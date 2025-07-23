@@ -78,6 +78,8 @@ func downloadManifest(chain, gatewayUrl, cid string) (*Manifest, error) {
 		return nil, fmt.Errorf("fetch to pinning service (%s) failed: %s", url.String(), resp.Status)
 	}
 
+	defer resp.Body.Close()
+
 	switch resp.Header.Get("Content-Type") {
 	case "application/json", "text/plain", "text/plain; charset=UTF-8":
 		m := &Manifest{}

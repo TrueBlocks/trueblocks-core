@@ -2,7 +2,6 @@ blocks?blocks=12&cache
 Args: [blocks=12 cache]
 Opts: {"blocks":["12"],"cache":true}
 Blocks:  [12]
-Enabled:  blocks, receipts
 Cache:  true
 Caps:  cache,decache,ether
 Format:  json

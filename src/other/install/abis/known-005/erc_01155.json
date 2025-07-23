@@ -10,6 +10,7 @@
     "name": "setShouldReject",
     "outputs": [],
     "signature": "setShouldReject(bool)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -44,6 +45,7 @@
       }
     ],
     "signature": "onERC1155Received(address,address,uint256,uint256,bytes)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -80,6 +82,7 @@
       }
     ],
     "signature": "onERC1155BatchReceived(address,address,uint256[],uint256[],bytes)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -99,6 +102,7 @@
       }
     ],
     "signature": "supportsInterface(bytes4)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -118,6 +122,7 @@
       }
     ],
     "signature": "uri(uint256)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -137,6 +142,7 @@
       }
     ],
     "signature": "supportsInterface(bytes4)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -166,6 +172,7 @@
     "name": "safeTransferFrom",
     "outputs": [],
     "signature": "safeTransferFrom(address,address,uint256,uint256,bytes)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -197,6 +204,7 @@
     "name": "safeBatchTransferFrom",
     "outputs": [],
     "signature": "safeBatchTransferFrom(address,address,uint256[],uint256[],bytes)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -220,6 +228,7 @@
       }
     ],
     "signature": "balanceOf(address,uint256)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -246,6 +255,7 @@
       }
     ],
     "signature": "balanceOfBatch(address[],uint256[])",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -263,6 +273,7 @@
     "name": "setApprovalForAll",
     "outputs": [],
     "signature": "setApprovalForAll(address,bool)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -286,6 +297,7 @@
       }
     ],
     "signature": "isApprovedForAll(address,address)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -319,6 +331,7 @@
     "name": "_doSafeTransferAcceptanceCheck",
     "outputs": [],
     "signature": "_doSafeTransferAcceptanceCheck(address,address,address,uint256,uint256,bytes)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -354,6 +367,7 @@
     "name": "_doSafeBatchTransferAcceptanceCheck",
     "outputs": [],
     "signature": "_doSafeBatchTransferAcceptanceCheck(address,address,address,uint256[],uint256[],bytes)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -373,6 +387,7 @@
       }
     ],
     "signature": "supportsInterface(bytes4)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -395,6 +410,7 @@
       }
     ],
     "signature": "create(uint256,string)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -418,6 +434,7 @@
     "name": "mint",
     "outputs": [],
     "signature": "mint(uint256,address[],uint256[])",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -435,6 +452,7 @@
     "name": "setURI",
     "outputs": [],
     "signature": "setURI(string,uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -571,6 +589,7 @@
     "name": "safeTransferFrom",
     "outputs": [],
     "signature": "safeTransferFrom(address,address,uint256,uint256,bytes)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -602,6 +621,7 @@
     "name": "safeBatchTransferFrom",
     "outputs": [],
     "signature": "safeBatchTransferFrom(address,address,uint256[],uint256[],bytes)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -625,6 +645,7 @@
       }
     ],
     "signature": "balanceOf(address,uint256)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -651,6 +672,7 @@
       }
     ],
     "signature": "balanceOfBatch(address[],uint256[])",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -668,6 +690,7 @@
     "name": "setApprovalForAll",
     "outputs": [],
     "signature": "setApprovalForAll(address,bool)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -691,6 +714,7 @@
       }
     ],
     "signature": "isApprovedForAll(address,address)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -713,6 +737,7 @@
       }
     ],
     "signature": "create(string,bool)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -731,6 +756,7 @@
     "name": "mintNonFungible",
     "outputs": [],
     "signature": "mintNonFungible(uint256,address[])",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -754,6 +780,7 @@
     "name": "mintFungible",
     "outputs": [],
     "signature": "mintFungible(uint256,address[],uint256[])",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -776,6 +803,7 @@
       }
     ],
     "signature": "mul(uint256,uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -798,6 +826,7 @@
       }
     ],
     "signature": "div(uint256,uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -820,6 +849,7 @@
       }
     ],
     "signature": "sub(uint256,uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -842,6 +872,7 @@
       }
     ],
     "signature": "add(uint256,uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -861,6 +892,7 @@
       }
     ],
     "signature": "isContract(address)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -874,6 +906,7 @@
     "name": "setCompleted",
     "outputs": [],
     "signature": "setCompleted(uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -887,6 +920,7 @@
     "name": "upgrade",
     "outputs": [],
     "signature": "upgrade(address)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -921,6 +955,7 @@
       }
     ],
     "signature": "onERC1155Received(address,address,uint256,uint256,bytes)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -957,6 +992,7 @@
       }
     ],
     "signature": "onERC1155BatchReceived(address,address,uint256[],uint256[],bytes)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -978,6 +1014,7 @@
     "name": "updateContract",
     "outputs": [],
     "signature": "updateContract(address,string,string)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -991,6 +1028,7 @@
     "name": "setShouldReject",
     "outputs": [],
     "signature": "setShouldReject(bool)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -1025,6 +1063,7 @@
       }
     ],
     "signature": "onERC1155Received(address,address,uint256,uint256,bytes)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -1061,6 +1100,7 @@
       }
     ],
     "signature": "onERC1155BatchReceived(address,address,uint256[],uint256[],bytes)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -1080,6 +1120,7 @@
       }
     ],
     "signature": "supportsInterface(bytes4)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -1093,6 +1134,7 @@
     "name": "setShouldRejectClash",
     "outputs": [],
     "signature": "setShouldRejectClash(bool)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -1106,6 +1148,7 @@
     "name": "setShouldRejectXXXX",
     "outputs": [],
     "signature": "setShouldRejectXXXX(bool)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -1141,6 +1184,7 @@
       }
     ],
     "signature": "onERCXXXXReceived(address,address,uint256,uint256,bytes)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -1178,6 +1222,7 @@
       }
     ],
     "signature": "onERCXXXXBatchReceived(address,address,uint256[],uint256[],bytes)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -1240,6 +1285,7 @@
     "name": "updateContract",
     "outputs": [],
     "signature": "updateContract(address,string,string)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -1297,6 +1343,7 @@
     "name": "approve",
     "outputs": [],
     "signature": "approve(address,uint256,uint256,uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -1324,6 +1371,7 @@
       }
     ],
     "signature": "allowance(address,address,uint256)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -1343,6 +1391,7 @@
       }
     ],
     "signature": "supportsInterface(bytes4)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -1372,6 +1421,7 @@
     "name": "safeTransferFrom",
     "outputs": [],
     "signature": "safeTransferFrom(address,address,uint256,uint256,bytes)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -1403,6 +1453,7 @@
     "name": "safeBatchTransferFrom",
     "outputs": [],
     "signature": "safeBatchTransferFrom(address,address,uint256[],uint256[],bytes)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -1426,6 +1477,7 @@
       }
     ],
     "signature": "balanceOf(address,uint256)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -1443,6 +1495,7 @@
     "name": "setApprovalForAll",
     "outputs": [],
     "signature": "setApprovalForAll(address,bool)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -1466,6 +1519,7 @@
       }
     ],
     "signature": "isApprovedForAll(address,address)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -1485,6 +1539,7 @@
       }
     ],
     "signature": "supportsInterface(bytes4)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -1503,6 +1558,7 @@
       }
     ],
     "signature": "isNonFungible(uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -1521,6 +1577,7 @@
       }
     ],
     "signature": "isFungible(uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -1539,6 +1596,7 @@
       }
     ],
     "signature": "getNonFungibleIndex(uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -1557,6 +1615,7 @@
       }
     ],
     "signature": "getNonFungibleBaseType(uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -1575,6 +1634,7 @@
       }
     ],
     "signature": "isNonFungibleBaseType(uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -1593,6 +1653,7 @@
       }
     ],
     "signature": "isNonFungibleItem(uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -1612,6 +1673,7 @@
       }
     ],
     "signature": "ownerOf(uint256)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -1641,6 +1703,7 @@
     "name": "safeTransferFrom",
     "outputs": [],
     "signature": "safeTransferFrom(address,address,uint256,uint256,bytes)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -1672,6 +1735,7 @@
     "name": "safeBatchTransferFrom",
     "outputs": [],
     "signature": "safeBatchTransferFrom(address,address,uint256[],uint256[],bytes)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -1695,6 +1759,7 @@
       }
     ],
     "signature": "balanceOf(address,uint256)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -1721,6 +1786,7 @@
       }
     ],
     "signature": "balanceOfBatch(address[],uint256[])",
+    "stateMutability": "view",
     "type": "function"
   }
 ]

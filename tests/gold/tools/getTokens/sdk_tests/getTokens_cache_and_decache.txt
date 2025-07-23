@@ -4,7 +4,6 @@ Opts: {"addrs":["0xa9fe4601811213c340e850ea305481aff02f5b28"],"blocks":["1200000
 Addrs:  [0xa9fe4601811213c340e850ea305481aff02f5b28]
 Blocks:  [12000000]
 Parts:  [all]
-Enabled:  tokens
 Cache:  true
 Decache:  true
 Caps:  cache,decache

@@ -62,7 +62,7 @@ func init() {
 	monitorsCmd.Flags().BoolVarP(&monitorsPkg.GetOptions().Remove, "remove", "", false, `remove a previously deleted monitor`)
 	monitorsCmd.Flags().BoolVarP(&monitorsPkg.GetOptions().Clean, "clean", "C", false, `clean (i.e. remove duplicate appearances) from monitors, optionally clear stage`)
 	monitorsCmd.Flags().BoolVarP(&monitorsPkg.GetOptions().List, "list", "l", false, `list monitors in the cache (--verbose for more detail)`)
-	monitorsCmd.Flags().BoolVarP(&monitorsPkg.GetOptions().Count, "count", "c", false, `show the number of active monitors (included deleted but not removed monitors)`)
+	monitorsCmd.Flags().BoolVarP(&monitorsPkg.GetOptions().Count, "count", "U", false, `show the number of active monitors (included deleted but not removed monitors)`)
 	monitorsCmd.Flags().BoolVarP(&monitorsPkg.GetOptions().Staged, "staged", "S", false, `for --clean, --list, and --count options only, include staged monitors`)
 	globals.InitGlobals("monitors", monitorsCmd, &monitorsPkg.GetOptions().Globals, capabilities)
 

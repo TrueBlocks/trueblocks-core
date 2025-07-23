@@ -19,6 +19,7 @@
       }
     ],
     "signature": "mul(uint256,uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -41,6 +42,7 @@
       }
     ],
     "signature": "div(uint256,uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -63,6 +65,7 @@
       }
     ],
     "signature": "sub(uint256,uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -85,6 +88,7 @@
       }
     ],
     "signature": "add(uint256,uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -107,6 +111,7 @@
       }
     ],
     "signature": "mod(uint256,uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -129,6 +134,7 @@
       }
     ],
     "signature": "transfer(address,uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -151,6 +157,7 @@
       }
     ],
     "signature": "approve(address,uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -177,6 +184,7 @@
       }
     ],
     "signature": "transferFrom(address,address,uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -191,6 +199,7 @@
       }
     ],
     "signature": "totalSupply()",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -210,6 +219,7 @@
       }
     ],
     "signature": "balanceOf(address)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -233,6 +243,7 @@
       }
     ],
     "signature": "allowance(address,address)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -293,6 +304,7 @@
       }
     ],
     "signature": "totalSupply()",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -312,6 +324,7 @@
       }
     ],
     "signature": "balanceOf(address)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -335,6 +348,7 @@
       }
     ],
     "signature": "allowance(address,address)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -357,6 +371,7 @@
       }
     ],
     "signature": "transfer(address,uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -379,6 +394,7 @@
       }
     ],
     "signature": "approve(address,uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -405,6 +421,7 @@
       }
     ],
     "signature": "transferFrom(address,address,uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -427,6 +444,7 @@
       }
     ],
     "signature": "increaseAllowance(address,uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -449,6 +467,7 @@
       }
     ],
     "signature": "decreaseAllowance(address,uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -470,6 +489,7 @@
     "name": "_transfer",
     "outputs": [],
     "signature": "_transfer(address,address,uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -487,6 +507,7 @@
     "name": "_mint",
     "outputs": [],
     "signature": "_mint(address,uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -504,6 +525,7 @@
     "name": "_burn",
     "outputs": [],
     "signature": "_burn(address,uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -525,6 +547,7 @@
     "name": "_approve",
     "outputs": [],
     "signature": "_approve(address,address,uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -542,6 +565,7 @@
     "name": "_burnFrom",
     "outputs": [],
     "signature": "_burnFrom(address,uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -555,6 +579,7 @@
       }
     ],
     "signature": "scaleFactor()",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -568,6 +593,7 @@
       }
     ],
     "signature": "maxUInt256()",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -586,6 +612,7 @@
       }
     ],
     "signature": "scale(uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -604,6 +631,7 @@
       }
     ],
     "signature": "deScale(uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -626,6 +654,7 @@
       }
     ],
     "signature": "safePower(uint256,uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -648,6 +677,7 @@
       }
     ],
     "signature": "divCeil(uint256,uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -674,6 +704,7 @@
       }
     ],
     "signature": "getPartialAmount(uint256,uint256,uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -692,6 +723,7 @@
       }
     ],
     "signature": "ceilLog10(uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -706,6 +738,7 @@
       }
     ],
     "signature": "transferProxy()",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -720,6 +753,7 @@
       }
     ],
     "signature": "vault()",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -739,6 +773,7 @@
       }
     ],
     "signature": "exchangeIds(uint8)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -758,6 +793,7 @@
       }
     ],
     "signature": "validSets(address)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -777,6 +813,7 @@
       }
     ],
     "signature": "validModules(address)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -796,6 +833,7 @@
       }
     ],
     "signature": "validPriceLibraries(address)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -813,6 +851,7 @@
     "name": "issue",
     "outputs": [],
     "signature": "issue(address,uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -834,6 +873,7 @@
     "name": "issueTo",
     "outputs": [],
     "signature": "issueTo(address,address,uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -851,6 +891,7 @@
     "name": "issueInVault",
     "outputs": [],
     "signature": "issueInVault(address,uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -868,6 +909,7 @@
     "name": "redeem",
     "outputs": [],
     "signature": "redeem(address,uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -889,6 +931,7 @@
     "name": "redeemTo",
     "outputs": [],
     "signature": "redeemTo(address,address,uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -906,6 +949,7 @@
     "name": "redeemInVault",
     "outputs": [],
     "signature": "redeemInVault(address,uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -931,6 +975,7 @@
     "name": "redeemAndWithdrawTo",
     "outputs": [],
     "signature": "redeemAndWithdrawTo(address,address,uint256,uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -950,6 +995,7 @@
     "name": "batchDeposit",
     "outputs": [],
     "signature": "batchDeposit(address[],uint256[])",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -969,6 +1015,7 @@
     "name": "batchWithdraw",
     "outputs": [],
     "signature": "batchWithdraw(address[],uint256[])",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -986,6 +1033,7 @@
     "name": "deposit",
     "outputs": [],
     "signature": "deposit(address,uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -1003,6 +1051,7 @@
     "name": "withdraw",
     "outputs": [],
     "signature": "withdraw(address,uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -1024,6 +1073,7 @@
     "name": "internalTransfer",
     "outputs": [],
     "signature": "internalTransfer(address,address,uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -1068,6 +1118,7 @@
       }
     ],
     "signature": "createSet(address,address[],uint256[],uint256,bytes32,bytes32,bytes)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -1093,6 +1144,7 @@
     "name": "depositModule",
     "outputs": [],
     "signature": "depositModule(address,address,address,uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -1118,6 +1170,7 @@
     "name": "withdrawModule",
     "outputs": [],
     "signature": "withdrawModule(address,address,address,uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -1145,6 +1198,7 @@
     "name": "batchDepositModule",
     "outputs": [],
     "signature": "batchDepositModule(address,address,address[],uint256[])",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -1172,6 +1226,7 @@
     "name": "batchWithdrawModule",
     "outputs": [],
     "signature": "batchWithdrawModule(address,address,address[],uint256[])",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -1197,6 +1252,7 @@
     "name": "issueModule",
     "outputs": [],
     "signature": "issueModule(address,address,address,uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -1222,6 +1278,7 @@
     "name": "redeemModule",
     "outputs": [],
     "signature": "redeemModule(address,address,address,uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -1245,6 +1302,7 @@
     "name": "batchIncrementTokenOwnerModule",
     "outputs": [],
     "signature": "batchIncrementTokenOwnerModule(address[],address,uint256[])",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -1268,6 +1326,7 @@
     "name": "batchDecrementTokenOwnerModule",
     "outputs": [],
     "signature": "batchDecrementTokenOwnerModule(address[],address,uint256[])",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -1295,6 +1354,7 @@
     "name": "batchTransferBalanceModule",
     "outputs": [],
     "signature": "batchTransferBalanceModule(address[],address,address,uint256[])",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -1320,6 +1380,7 @@
     "name": "transferModule",
     "outputs": [],
     "signature": "transferModule(address,uint256,address,address)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -1347,6 +1408,7 @@
     "name": "batchTransferModule",
     "outputs": [],
     "signature": "batchTransferModule(address[],uint256[],address,address)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -1360,6 +1422,7 @@
     "name": "initialize",
     "outputs": [],
     "signature": "initialize(bytes)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -1374,6 +1437,7 @@
       }
     ],
     "signature": "getFee()",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -1387,6 +1451,7 @@
       }
     ],
     "signature": "updateAndGetFee()",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -1400,6 +1465,7 @@
     "name": "adjustFee",
     "outputs": [],
     "signature": "adjustFee(bytes)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -1414,6 +1480,7 @@
       }
     ],
     "signature": "naturalUnit()",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -1429,6 +1496,7 @@
       }
     ],
     "signature": "getComponents()",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -1444,6 +1512,7 @@
       }
     ],
     "signature": "getUnits()",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -1463,6 +1532,7 @@
       }
     ],
     "signature": "tokenIsComponent(address)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -1480,6 +1550,7 @@
     "name": "mint",
     "outputs": [],
     "signature": "mint(address,uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -1497,6 +1568,7 @@
     "name": "burn",
     "outputs": [],
     "signature": "burn(address,uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -1514,6 +1586,7 @@
     "name": "transfer",
     "outputs": [],
     "signature": "transfer(address,uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -1528,6 +1601,7 @@
       }
     ],
     "signature": "auctionLibrary()",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -1542,6 +1616,7 @@
       }
     ],
     "signature": "totalSupply()",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -1556,6 +1631,7 @@
       }
     ],
     "signature": "proposalStartTime()",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -1570,6 +1646,7 @@
       }
     ],
     "signature": "lastRebalanceTimestamp()",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -1584,6 +1661,7 @@
       }
     ],
     "signature": "rebalanceInterval()",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -1593,12 +1671,13 @@
     "name": "rebalanceState",
     "outputs": [
       {
-        "name": "ret_0",
         "internalType": "enum RebalancingLibrary.State",
+        "name": "ret_0",
         "type": "uint8"
       }
     ],
     "signature": "rebalanceState()",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -1613,6 +1692,7 @@
       }
     ],
     "signature": "startingCurrentSetAmount()",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -1632,6 +1712,7 @@
       }
     ],
     "signature": "balanceOf(address)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -1661,6 +1742,7 @@
     "name": "propose",
     "outputs": [],
     "signature": "propose(address,address,uint256,uint256,uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -1675,6 +1757,7 @@
       }
     ],
     "signature": "naturalUnit()",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -1689,6 +1772,7 @@
       }
     ],
     "signature": "currentSet()",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -1703,6 +1787,7 @@
       }
     ],
     "signature": "nextSet()",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -1717,6 +1802,7 @@
       }
     ],
     "signature": "unitShares()",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -1734,6 +1820,7 @@
     "name": "burn",
     "outputs": [],
     "signature": "burn(address,uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -1763,6 +1850,7 @@
       }
     ],
     "signature": "placeBid(uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -1777,6 +1865,7 @@
       }
     ],
     "signature": "getCombinedTokenArrayLength()",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -1792,6 +1881,7 @@
       }
     ],
     "signature": "getCombinedTokenArray()",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -1807,6 +1897,7 @@
       }
     ],
     "signature": "getFailedAuctionWithdrawComponents()",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -1822,6 +1913,7 @@
       }
     ],
     "signature": "getAuctionPriceParameters()",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -1837,6 +1929,7 @@
       }
     ],
     "signature": "getBiddingParameters()",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -1862,6 +1955,7 @@
       }
     ],
     "signature": "getBidPrice(uint256)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -1886,20 +1980,21 @@
     "name": "composeTokenFlow",
     "outputs": [
       {
-        "name": "memory",
         "internalType": "struct TokenFlow",
+        "name": "memory",
         "type": "tuple"
       }
     ],
     "signature": "composeTokenFlow(address[],uint256[],uint256[])",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
     "encoding": "0x86f41e1b",
     "inputs": [
       {
-        "name": "_tokenFlow",
         "internalType": "struct TokenFlow",
+        "name": "_tokenFlow",
         "type": "tuple"
       }
     ],
@@ -1922,14 +2017,15 @@
       }
     ],
     "signature": "decomposeTokenFlow(TokenFlow)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
     "encoding": "0x57c6626e",
     "inputs": [
       {
-        "name": "_tokenFlow",
         "internalType": "struct TokenFlow",
+        "name": "_tokenFlow",
         "type": "tuple"
       }
     ],
@@ -1947,6 +2043,7 @@
       }
     ],
     "signature": "decomposeTokenFlowToBidPrice(tuple)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -1981,6 +2078,7 @@
       }
     ],
     "signature": "getTokenFlows(address,uint256)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -2006,6 +2104,7 @@
     "name": "startRebalance",
     "outputs": [],
     "signature": "startRebalance(address,address,uint256,bytes)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -2024,12 +2123,13 @@
     "name": "getBidPrice",
     "outputs": [
       {
-        "name": "memory",
         "internalType": "struct Rebalance.TokenFlow",
+        "name": "memory",
         "type": "tuple"
       }
     ],
     "signature": "getBidPrice(address,uint256)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -2043,12 +2143,13 @@
     "name": "placeBid",
     "outputs": [
       {
-        "name": "memory",
         "internalType": "struct Rebalance.TokenFlow",
+        "name": "memory",
         "type": "tuple"
       }
     ],
     "signature": "placeBid(uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -2057,6 +2158,7 @@
     "name": "settleRebalance",
     "outputs": [],
     "signature": "settleRebalance()",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -2065,6 +2167,7 @@
     "name": "endFailedRebalance",
     "outputs": [],
     "signature": "endFailedRebalance()",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -2079,12 +2182,13 @@
     "name": "auctionPriceParameters",
     "outputs": [
       {
-        "name": "memory",
         "internalType": "struct RebalancingLibrary.AuctionPriceParameters",
+        "name": "memory",
         "type": "tuple"
       }
     ],
     "signature": "auctionPriceParameters(address)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -2104,6 +2208,7 @@
       }
     ],
     "signature": "hasRebalanceFailed(address)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -2123,6 +2228,7 @@
       }
     ],
     "signature": "minimumBid(address)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -2142,6 +2248,7 @@
       }
     ],
     "signature": "startingCurrentSets(address)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -2161,6 +2268,7 @@
       }
     ],
     "signature": "remainingCurrentSets(address)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -2181,6 +2289,7 @@
       }
     ],
     "signature": "getCombinedCurrentSetUnits(address)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -2201,6 +2310,7 @@
       }
     ],
     "signature": "getCombinedNextSetUnits(address)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -2221,6 +2331,7 @@
       }
     ],
     "signature": "getCombinedTokenArray(address)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -2234,6 +2345,7 @@
       }
     ],
     "signature": "core()",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -2274,6 +2386,7 @@
       }
     ],
     "signature": "createSet(address[],uint256[],uint256,bytes32,bytes32,bytes)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -2293,6 +2406,7 @@
       }
     ],
     "signature": "whiteList(address)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -2313,6 +2427,7 @@
       }
     ],
     "signature": "areValidAddresses(address[])",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -2326,6 +2441,7 @@
       }
     ],
     "signature": "minimumRebalanceInterval()",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -2339,6 +2455,7 @@
       }
     ],
     "signature": "minimumProposalPeriod()",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -2352,6 +2469,7 @@
       }
     ],
     "signature": "minimumTimeToPivot()",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -2365,6 +2483,7 @@
       }
     ],
     "signature": "maximumTimeToPivot()",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -2378,6 +2497,7 @@
       }
     ],
     "signature": "minimumNaturalUnit()",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -2391,6 +2511,7 @@
       }
     ],
     "signature": "maximumNaturalUnit()",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -2404,6 +2525,7 @@
       }
     ],
     "signature": "rebalanceAuctionModule()",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -2425,6 +2547,7 @@
     "name": "withdrawTo",
     "outputs": [],
     "signature": "withdrawTo(address,address,uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -2446,6 +2569,7 @@
     "name": "incrementTokenOwner",
     "outputs": [],
     "signature": "incrementTokenOwner(address,address,uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -2467,6 +2591,7 @@
     "name": "decrementTokenOwner",
     "outputs": [],
     "signature": "decrementTokenOwner(address,address,uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -2492,6 +2617,7 @@
     "name": "transferBalance",
     "outputs": [],
     "signature": "transferBalance(address,address,address,uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -2515,6 +2641,7 @@
     "name": "batchWithdrawTo",
     "outputs": [],
     "signature": "batchWithdrawTo(address[],address,uint256[])",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -2538,6 +2665,7 @@
     "name": "batchIncrementTokenOwner",
     "outputs": [],
     "signature": "batchIncrementTokenOwner(address[],address,uint256[])",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -2561,6 +2689,7 @@
     "name": "batchDecrementTokenOwner",
     "outputs": [],
     "signature": "batchDecrementTokenOwner(address[],address,uint256[])",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -2588,6 +2717,7 @@
     "name": "batchTransferBalance",
     "outputs": [],
     "signature": "batchTransferBalance(address[],address,address,uint256[])",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -2611,6 +2741,7 @@
       }
     ],
     "signature": "getOwnerBalance(address,address)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -2625,6 +2756,7 @@
     "name": "validateLessThanEqualOneHundredPercent",
     "outputs": [],
     "signature": "validateLessThanEqualOneHundredPercent(uint256)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -2639,6 +2771,7 @@
     "name": "validateMultipleOfBasisPoint",
     "outputs": [],
     "signature": "validateMultipleOfBasisPoint(uint256)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -2797,6 +2930,7 @@
     "name": "setManager",
     "outputs": [],
     "signature": "setManager(address)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -2810,6 +2944,7 @@
     "name": "setEntryFee",
     "outputs": [],
     "signature": "setEntryFee(uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -2823,6 +2958,7 @@
     "name": "setLiquidator",
     "outputs": [],
     "signature": "setLiquidator(address)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -2836,6 +2972,7 @@
     "name": "setFeeRecipient",
     "outputs": [],
     "signature": "setFeeRecipient(address)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -2850,6 +2987,7 @@
       }
     ],
     "signature": "rebalanceFee()",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -2865,6 +3003,7 @@
       }
     ],
     "signature": "getComponents()",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -2880,6 +3019,7 @@
       }
     ],
     "signature": "getUnits()",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -2899,6 +3039,7 @@
       }
     ],
     "signature": "tokenIsComponent(address)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -2908,6 +3049,7 @@
     "name": "validateManager",
     "outputs": [],
     "signature": "validateManager()",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -2917,6 +3059,7 @@
     "name": "validateCallerIsCore",
     "outputs": [],
     "signature": "validateCallerIsCore()",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -2926,6 +3069,7 @@
     "name": "validateCallerIsModule",
     "outputs": [],
     "signature": "validateCallerIsModule()",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -2933,14 +3077,15 @@
     "encoding": "0xe45d8238",
     "inputs": [
       {
-        "name": "_requiredState",
         "internalType": "enum RebalancingLibrary.State",
+        "name": "_requiredState",
         "type": "uint8"
       }
     ],
     "name": "validateRebalanceStateIs",
     "outputs": [],
     "signature": "validateRebalanceStateIs(uint8)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -2948,14 +3093,15 @@
     "encoding": "0x5c0cde52",
     "inputs": [
       {
-        "name": "_requiredState",
         "internalType": "enum RebalancingLibrary.State",
+        "name": "_requiredState",
         "type": "uint8"
       }
     ],
     "name": "validateRebalanceStateIsNot",
     "outputs": [],
     "signature": "validateRebalanceStateIsNot(uint8)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -2999,6 +3145,7 @@
       }
     ],
     "signature": "handleFees()",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -3018,6 +3165,7 @@
       }
     ],
     "signature": "calculateIncentiveFeeInflation(uint256)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -3027,6 +3175,7 @@
     "name": "validateFeeActualization",
     "outputs": [],
     "signature": "validateFeeActualization()",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -3041,6 +3190,7 @@
       }
     ],
     "signature": "calculateNewUnitShares()",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -3063,6 +3213,7 @@
       }
     ],
     "signature": "max(uint256,uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -3085,6 +3236,7 @@
       }
     ],
     "signature": "min(uint256,uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -3107,6 +3259,7 @@
       }
     ],
     "signature": "average(uint256,uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -3126,6 +3279,7 @@
     "name": "validateTokensAreComponents",
     "outputs": [],
     "signature": "validateTokensAreComponents(address,address[])",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -3144,6 +3298,7 @@
     "name": "isMultipleOfSetNaturalUnit",
     "outputs": [],
     "signature": "isMultipleOfSetNaturalUnit(address,uint256)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -3162,6 +3317,7 @@
     "name": "requireValidSet",
     "outputs": [],
     "signature": "requireValidSet(address,address)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -3176,12 +3332,13 @@
     "name": "getSetDetails",
     "outputs": [
       {
-        "name": "memory",
         "internalType": "struct SetDetails",
+        "name": "memory",
         "type": "tuple"
       }
     ],
     "signature": "getSetDetails(address)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -3191,6 +3348,7 @@
     "name": "validateRebalancingSettlement",
     "outputs": [],
     "signature": "validateRebalancingSettlement()",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -3204,6 +3362,7 @@
     "name": "issueNextSet",
     "outputs": [],
     "signature": "issueNextSet(uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -3217,6 +3376,7 @@
     "name": "transitionToDefault",
     "outputs": [],
     "signature": "transitionToDefault(uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -3236,6 +3396,7 @@
       }
     ],
     "signature": "calculateSetIssueQuantity(address)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -3253,6 +3414,7 @@
       }
     ],
     "signature": "handleFees()",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -3272,6 +3434,7 @@
       }
     ],
     "signature": "calculateRebalanceFeeInflation(uint256)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -3291,6 +3454,7 @@
       }
     ],
     "signature": "calculateNextSetNewUnitShares(uint256)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -3298,8 +3462,8 @@
     "encoding": "0x4d6d401d",
     "inputs": [
       {
-        "name": "_setToken",
         "internalType": "struct SetTokenLibrary.SetDetails",
+        "name": "_setToken",
         "type": "tuple"
       }
     ],
@@ -3311,6 +3475,7 @@
       }
     ],
     "signature": "calculateMaxIssueAmount(tuple)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -3325,6 +3490,7 @@
       }
     ],
     "signature": "name()",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -3339,6 +3505,7 @@
       }
     ],
     "signature": "symbol()",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -3353,6 +3520,7 @@
       }
     ],
     "signature": "decimals()",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -3367,6 +3535,7 @@
       }
     ],
     "signature": "isConstructor()",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -3382,6 +3551,7 @@
       }
     ],
     "signature": "getAuctionPriceParameters()",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -3397,6 +3567,7 @@
       }
     ],
     "signature": "getCombinedCurrentUnits()",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -3412,6 +3583,7 @@
       }
     ],
     "signature": "getCombinedNextSetUnits()",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -3427,6 +3599,7 @@
       }
     ],
     "signature": "getCombinedTokenArray()",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -3441,6 +3614,7 @@
       }
     ],
     "signature": "getCombinedTokenArrayLength()",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -3455,6 +3629,7 @@
       }
     ],
     "signature": "startingCurrentSetAmount()",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -3464,12 +3639,13 @@
     "name": "auctionPriceParameters",
     "outputs": [
       {
-        "name": "memory",
         "internalType": "struct RebalancingLibrary.AuctionPriceParameters",
+        "name": "memory",
         "type": "tuple"
       }
     ],
     "signature": "auctionPriceParameters()",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -3485,6 +3661,7 @@
       }
     ],
     "signature": "getBiddingParameters()",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -3503,6 +3680,7 @@
       }
     ],
     "signature": "biddingParameters()",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -3518,6 +3696,7 @@
       }
     ],
     "signature": "getFailedAuctionWithdrawComponents()",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -3545,6 +3724,7 @@
       }
     ],
     "signature": "indexOf(address[],address)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -3568,6 +3748,7 @@
       }
     ],
     "signature": "contains(address[],address)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -3593,6 +3774,7 @@
       }
     ],
     "signature": "extend(address[],address[])",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -3617,6 +3799,7 @@
       }
     ],
     "signature": "append(address[],address)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -3642,6 +3825,7 @@
       }
     ],
     "signature": "intersect(address[],address[])",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -3667,6 +3851,7 @@
       }
     ],
     "signature": "union(address[],address[])",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -3692,6 +3877,7 @@
       }
     ],
     "signature": "difference(address[],address[])",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -3720,6 +3906,7 @@
       }
     ],
     "signature": "pop(address[],uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -3744,6 +3931,7 @@
       }
     ],
     "signature": "remove(address[],address)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -3763,6 +3951,7 @@
       }
     ],
     "signature": "hasDuplicate(address[])",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -3787,6 +3976,7 @@
       }
     ],
     "signature": "isEqual(address[],address[])",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -3796,6 +3986,7 @@
     "name": "validateFailRebalance",
     "outputs": [],
     "signature": "validateFailRebalance()",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -3805,26 +3996,28 @@
     "name": "getNewRebalanceState",
     "outputs": [
       {
-        "name": "ret_0",
         "internalType": "enum RebalancingLibrary.State",
+        "name": "ret_0",
         "type": "uint8"
       }
     ],
     "signature": "getNewRebalanceState()",
+    "stateMutability": "view",
     "type": "function"
   },
   {
     "encoding": "0x5e3bff09",
     "inputs": [
       {
-        "name": "_newRebalanceState",
         "internalType": "enum RebalancingLibrary.State",
+        "name": "_newRebalanceState",
         "type": "uint8"
       }
     ],
     "name": "transitionToNewState",
     "outputs": [],
     "signature": "transitionToNewState(uint8)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -3839,6 +4032,7 @@
       }
     ],
     "signature": "liquidatorBreached()",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -3853,34 +4047,37 @@
       }
     ],
     "signature": "failPeriodBreached()",
+    "stateMutability": "view",
     "type": "function"
   },
   {
     "encoding": "0xa235287c",
     "inputs": [
       {
-        "name": "_newRebalanceState",
         "internalType": "enum RebalancingLibrary.State",
+        "name": "_newRebalanceState",
         "type": "uint8"
       }
     ],
     "name": "reissueSetIfRevertToDefault",
     "outputs": [],
     "signature": "reissueSetIfRevertToDefault(uint8)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
     "encoding": "0xc873299e",
     "inputs": [
       {
-        "name": "_newRebalanceState",
         "internalType": "enum RebalancingLibrary.State",
+        "name": "_newRebalanceState",
         "type": "uint8"
       }
     ],
     "name": "setWithdrawComponentsIfDrawdown",
     "outputs": [],
     "signature": "setWithdrawComponentsIfDrawdown(uint8)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -3890,6 +4087,7 @@
     "name": "validateMint",
     "outputs": [],
     "signature": "validateMint()",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -3899,6 +4097,7 @@
     "name": "validateBurn",
     "outputs": [],
     "signature": "validateBurn()",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -3917,6 +4116,7 @@
       }
     ],
     "signature": "handleEntryFees(uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -3931,6 +4131,7 @@
     "name": "validateGetBidPrice",
     "outputs": [],
     "signature": "validateGetBidPrice(uint256)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -3945,6 +4146,7 @@
     "name": "validatePlaceBid",
     "outputs": [],
     "signature": "validatePlaceBid(uint256)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -3953,6 +4155,7 @@
     "name": "updateHasBiddedIfNecessary",
     "outputs": [],
     "signature": "updateHasBiddedIfNecessary()",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -3967,6 +4170,7 @@
     "name": "validateStartRebalance",
     "outputs": [],
     "signature": "validateStartRebalance(address)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -3981,6 +4185,7 @@
       }
     ],
     "signature": "calculateStartingSetQuantity()",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -4002,6 +4207,7 @@
     "name": "liquidatorRebalancingStart",
     "outputs": [],
     "signature": "liquidatorRebalancingStart(address,uint256,bytes)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -4015,6 +4221,7 @@
     "name": "transitionToRebalance",
     "outputs": [],
     "signature": "transitionToRebalance(address)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -4038,6 +4245,7 @@
       }
     ],
     "signature": "naturalUnitsAreValid(address,address)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -4051,6 +4259,7 @@
     "name": "initialize",
     "outputs": [],
     "signature": "initialize(bytes)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -4068,6 +4277,7 @@
     "name": "startRebalance",
     "outputs": [],
     "signature": "startRebalance(address,bytes)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -4093,6 +4303,7 @@
       }
     ],
     "signature": "getBidPrice(uint256)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -4122,6 +4333,7 @@
       }
     ],
     "signature": "placeBid(uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -4130,6 +4342,7 @@
     "name": "settleRebalance",
     "outputs": [],
     "signature": "settleRebalance()",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -4138,6 +4351,7 @@
     "name": "endFailedRebalance",
     "outputs": [],
     "signature": "endFailedRebalance()",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -4155,6 +4369,7 @@
     "name": "mint",
     "outputs": [],
     "signature": "mint(address,uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -4172,6 +4387,7 @@
     "name": "burn",
     "outputs": [],
     "signature": "burn(address,uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -4180,6 +4396,7 @@
     "name": "endFailedAuction",
     "outputs": [],
     "signature": "endFailedAuction()",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -4188,6 +4405,7 @@
     "name": "settleRebalance",
     "outputs": [],
     "signature": "settleRebalance()",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -4196,6 +4414,7 @@
     "name": "actualizeFee",
     "outputs": [],
     "signature": "actualizeFee()",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -4209,6 +4428,7 @@
     "name": "adjustFee",
     "outputs": [],
     "signature": "adjustFee(bytes)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -4223,6 +4443,7 @@
     "name": "validateUnitShares",
     "outputs": [],
     "signature": "validateUnitShares(uint256)",
+    "stateMutability": "view",
     "type": "function"
   }
 ]

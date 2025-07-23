@@ -1354,6 +1354,13 @@ TEST[DATE|TIME] Format:  json
     },
     {
       "address": "0xbb9bc244d798123fde783fcc1c72d3bb8c189413",
+      "articulatedLog": {
+        "inputs": {
+          "amount": "49368520000000000",
+          "to": "0xe46d8ec2d4f501e3c0c67a818ada2e534056f4d9"
+        },
+        "name": "CreatedToken"
+      },
       "blockHash": "0x9f23606465c5a7cd432d3f41f02b64ff0e1f6bab5131bbdd8ef2808b7d3cd3df",
       "blockNumber": 1429375,
       "data": "0x00000000000000000000000000000000000000000000000000af646849afd000",
@@ -1369,6 +1376,13 @@ TEST[DATE|TIME] Format:  json
     },
     {
       "address": "0xbb9bc244d798123fde783fcc1c72d3bb8c189413",
+      "articulatedLog": {
+        "inputs": {
+          "amount": "120786420000000000",
+          "to": "0x81b938914f5f0f661f48bc7f644dbe3ceb1523d5"
+        },
+        "name": "CreatedToken"
+      },
       "blockHash": "0xee9de874f5079d7d57c65caa77ee794d39b114a9702924b450a98d61c9396a90",
       "blockNumber": 1429378,
       "data": "0x00000000000000000000000000000000000000000000000001ad1e9be9ca8800",
@@ -1384,6 +1398,13 @@ TEST[DATE|TIME] Format:  json
     },
     {
       "address": "0xbb9bc244d798123fde783fcc1c72d3bb8c189413",
+      "articulatedLog": {
+        "inputs": {
+          "amount": "50000000000000000",
+          "to": "0x3914bff975ef35e8d3403e1ea953bf886b0e8fea"
+        },
+        "name": "CreatedToken"
+      },
       "blockHash": "0x7e1fc00f2045ac941ca59570da73a438e97aae57914730ad8249b995dabae35d",
       "blockNumber": 1429389,
       "data": "0x00000000000000000000000000000000000000000000000000b1a2bc2ec50000",
@@ -1399,6 +1420,13 @@ TEST[DATE|TIME] Format:  json
     },
     {
       "address": "0xbb9bc244d798123fde783fcc1c72d3bb8c189413",
+      "articulatedLog": {
+        "inputs": {
+          "amount": "32223400000000000",
+          "to": "0xe46d8ec2d4f501e3c0c67a818ada2e534056f4d9"
+        },
+        "name": "CreatedToken"
+      },
       "blockHash": "0xb146a08128c6174470de9b872c0b461bc277573c3fedeedd06b3a66a4b37808b",
       "blockNumber": 1429433,
       "data": "0x00000000000000000000000000000000000000000000000000727b02f6749000",
@@ -1414,6 +1442,13 @@ TEST[DATE|TIME] Format:  json
     },
     {
       "address": "0xbb9bc244d798123fde783fcc1c72d3bb8c189413",
+      "articulatedLog": {
+        "inputs": {
+          "amount": "46381360000000000",
+          "to": "0xe46d8ec2d4f501e3c0c67a818ada2e534056f4d9"
+        },
+        "name": "CreatedToken"
+      },
       "blockHash": "0x94996d39f8b6abf7f4d18ca721e5309551447c82dc65f1b0e4086c446263c547",
       "blockNumber": 1429468,
       "data": "0x00000000000000000000000000000000000000000000000000a4c799e6ffe000",

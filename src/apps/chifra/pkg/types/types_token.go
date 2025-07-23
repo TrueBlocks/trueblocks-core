@@ -62,13 +62,14 @@ func (s *Token) Model(chain, format string, verbose bool, extraOpts map[string]a
 
 	wanted := extraOpts["parts"].([]string)
 	if len(wanted) == 1 {
-		if wanted[0] == "all" {
+		switch wanted[0] {
+		case "all":
 			if verbose {
 				wanted = []string{"address", "blockNumber", "timestamp", "date", "name", "symbol", "decimals", "totalSupply"}
 			} else {
 				wanted = []string{"address", "blockNumber", "name", "symbol", "decimals", "totalSupply"}
 			}
-		} else if wanted[0] == "all_held" {
+		case "all_held":
 			if verbose {
 				wanted = []string{
 					"blockNumber", "timestamp", "date", "holder", "address", "name", "symbol", "decimals", "balance", "balanceDec",

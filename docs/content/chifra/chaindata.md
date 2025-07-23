@@ -360,7 +360,7 @@ Flags:
   -r, --repair       with --timestamps only, repairs block(s) in the block range by re-querying from the chain
   -c, --check        with --timestamps only, checks the validity of the timestamp data
   -u, --update       with --timestamps only, bring the timestamp database forward to the latest block
-  -d, --deep         with --timestamps --check only, verifies timestamps from on chain (slow)
+  -d, --deep uint    with --timestamps --check only, verifies every N timestamp directly from the chain (slow)
   -o, --cache        force the results of the query into the cache
   -D, --decache      removes related items from the cache
   -x, --fmt string   export format, one of [none|json*|txt|csv]

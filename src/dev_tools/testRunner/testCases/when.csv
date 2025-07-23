@@ -65,8 +65,8 @@ on      ,both ,fast  ,when  ,tools ,whenBlock ,future_fail2                ,y   
 
 on      ,both ,fast  ,when  ,tools ,whenBlock ,fix_not_timestamps          ,y    ,blocks = 1301000 & fix
 on      ,both ,fast  ,when  ,tools ,whenBlock ,check_not_timestamps        ,y    ,blocks = 1301000 & check
-on      ,both ,fast  ,when  ,tools ,whenBlock ,deep_not_timestamps         ,y    ,blocks = 1301000 & deep
-on      ,both ,fast  ,when  ,tools ,whenBlock ,deep_not_check              ,y    ,blocks = 1301000 & timestamps & deep
+on      ,both ,fast  ,when  ,tools ,whenBlock ,deep_not_timestamps         ,y    ,blocks = 1301000 & deep = 10
+on      ,both ,fast  ,when  ,tools ,whenBlock ,deep_not_check              ,y    ,blocks = 1301000 & timestamps & deep = 10
 on      ,both ,fast  ,when  ,tools ,whenBlock ,drop_not_timestamps         ,y    ,blocks = 1301000 & repair
 on      ,both ,fast  ,when  ,tools ,whenBlock ,repair_fail                 ,y    ,repair
 on      ,both ,fast  ,when  ,tools ,whenBlock ,repair_fail_2               ,y    ,timestamps & repair

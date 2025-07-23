@@ -53,7 +53,7 @@ export?addrs=0x6aED588ca2052CCFC907Db8c24dF4B7B95A29A5E&maxRecords=3&accounting&
       "amountNet": "420000000000000000",
       "amountOut": "0",
       "asset": "0x0bc529c00c6401aef6d220be8c6ea1667f6ad93e",
-      "assetName": "yearn.finance",
+      "assetName": "yearn.finance (L1)",
       "begBal": "0",
       "begBalDiff": "0",
       "blockNumber": 14218245,

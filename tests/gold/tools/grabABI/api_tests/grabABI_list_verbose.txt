@@ -21,7 +21,7 @@ abis?list&verbose
       "path": "./abis/known-000/"
     },
     {
-      "fileSize": 4355,
+      "fileSize": 4392,
       "isKnown": true,
       "lastModDate": "--date--",
       "nEvents": 5,
@@ -30,7 +30,7 @@ abis?list&verbose
       "path": "./abis/known-000/"
     },
     {
-      "fileSize": 137261,
+      "fileSize": 148855,
       "isKnown": true,
       "lastModDate": "--date--",
       "nEvents": 50,
@@ -39,7 +39,7 @@ abis?list&verbose
       "path": "./abis/known-000/"
     },
     {
-      "fileSize": 6972,
+      "fileSize": 6974,
       "isKnown": true,
       "lastModDate": "--date--",
       "nEvents": 3,
@@ -76,7 +76,7 @@ abis?list&verbose
       "path": "./abis/known-000/"
     },
     {
-      "fileSize": 40367,
+      "fileSize": 41572,
       "hasConstructor": true,
       "isKnown": true,
       "lastModDate": "--date--",
@@ -86,7 +86,7 @@ abis?list&verbose
       "path": "./abis/known-000/"
     },
     {
-      "fileSize": 16133,
+      "fileSize": 16664,
       "hasConstructor": true,
       "hasFallback": true,
       "isKnown": true,
@@ -97,7 +97,7 @@ abis?list&verbose
       "path": "./abis/known-000/"
     },
     {
-      "fileSize": 349,
+      "fileSize": 380,
       "isKnown": true,
       "lastModDate": "--date--",
       "nEvents": 0,
@@ -106,7 +106,7 @@ abis?list&verbose
       "path": "./abis/known-005/"
     },
     {
-      "fileSize": 7076,
+      "fileSize": 7515,
       "isKnown": true,
       "lastModDate": "--date--",
       "nEvents": 5,
@@ -115,7 +115,7 @@ abis?list&verbose
       "path": "./abis/known-005/"
     },
     {
-      "fileSize": 62261,
+      "fileSize": 66661,
       "isKnown": true,
       "lastModDate": "--date--",
       "nEvents": 8,
@@ -124,7 +124,7 @@ abis?list&verbose
       "path": "./abis/known-005/"
     },
     {
-      "fileSize": 32557,
+      "fileSize": 34867,
       "isKnown": true,
       "lastModDate": "--date--",
       "nEvents": 7,
@@ -133,7 +133,7 @@ abis?list&verbose
       "path": "./abis/known-005/"
     },
     {
-      "fileSize": 4638,
+      "fileSize": 4850,
       "isKnown": true,
       "lastModDate": "--date--",
       "nEvents": 2,
@@ -142,7 +142,7 @@ abis?list&verbose
       "path": "./abis/known-005/"
     },
     {
-      "fileSize": 5342,
+      "fileSize": 5713,
       "isKnown": true,
       "lastModDate": "--date--",
       "nEvents": 2,
@@ -151,7 +151,7 @@ abis?list&verbose
       "path": "./abis/known-005/"
     },
     {
-      "fileSize": 39649,
+      "fileSize": 43275,
       "isKnown": true,
       "lastModDate": "--date--",
       "nEvents": 1,
@@ -160,7 +160,7 @@ abis?list&verbose
       "path": "./abis/known-005/"
     },
     {
-      "fileSize": 215572,
+      "fileSize": 232313,
       "isKnown": true,
       "lastModDate": "--date--",
       "nEvents": 59,
@@ -190,7 +190,7 @@ abis?list&verbose
       "path": "./abis/known-010/"
     },
     {
-      "fileSize": 92096,
+      "fileSize": 93697,
       "hasConstructor": true,
       "hasFallback": true,
       "isKnown": true,
@@ -201,7 +201,7 @@ abis?list&verbose
       "path": "./abis/known-010/"
     },
     {
-      "fileSize": 24220,
+      "fileSize": 26538,
       "isKnown": true,
       "lastModDate": "--date--",
       "nEvents": 13,
@@ -210,7 +210,7 @@ abis?list&verbose
       "path": "./abis/known-010/"
     },
     {
-      "fileSize": 5305,
+      "fileSize": 5991,
       "isKnown": true,
       "lastModDate": "--date--",
       "nEvents": 3,
@@ -228,7 +228,7 @@ abis?list&verbose
       "path": "./abis/known-010/"
     },
     {
-      "fileSize": 4071,
+      "fileSize": 4479,
       "isKnown": true,
       "lastModDate": "--date--",
       "nEvents": 1,
@@ -237,7 +237,7 @@ abis?list&verbose
       "path": "./abis/known-015/"
     },
     {
-      "fileSize": 32865,
+      "fileSize": 35063,
       "isKnown": true,
       "lastModDate": "--date--",
       "nEvents": 16,
@@ -246,7 +246,7 @@ abis?list&verbose
       "path": "./abis/known-015/"
     },
     {
-      "fileSize": 10909,
+      "fileSize": 12016,
       "hasConstructor": true,
       "isKnown": true,
       "lastModDate": "--date--",
@@ -256,7 +256,7 @@ abis?list&verbose
       "path": "./abis/known-015/"
     },
     {
-      "fileSize": 115696,
+      "fileSize": 124415,
       "isKnown": true,
       "lastModDate": "--date--",
       "nEvents": 48,
@@ -265,7 +265,7 @@ abis?list&verbose
       "path": "./abis/known-015/"
     },
     {
-      "fileSize": 81144,
+      "fileSize": 88733,
       "isKnown": true,
       "lastModDate": "--date--",
       "nEvents": 10,

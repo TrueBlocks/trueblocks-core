@@ -23,6 +23,7 @@ func (opts *StatusOptions) HandleShow(rCtx *output.RenderCtx) error {
 	}
 
 	testMode := opts.Globals.TestMode
+	chain := opts.Globals.Chain
 
 	fetchData := func(modelChan chan types.Modeler, errorChan chan error) {
 		s, err := opts.GetStatus(opts.Diagnose)
@@ -39,7 +40,14 @@ func (opts *StatusOptions) HandleShow(rCtx *output.RenderCtx) error {
 		modelChan <- s
 	}
 
-	return output.StreamMany(rCtx, fetchData, opts.Globals.OutputOpts())
+	extraOpts := map[string]any{
+		"chain":    chain,
+		"testMode": testMode,
+		"chains":   opts.Chains,
+		"caches":   opts.Caches,
+	}
+
+	return output.StreamMany(rCtx, fetchData, opts.Globals.OutputOptsWithExtra(extraOpts))
 }
 
 func ToProgress(chain string, diagnose bool, meta *types.MetaData) string {
@@ -111,6 +119,14 @@ func (opts *StatusOptions) GetStatus(diagnose bool) (*types.Status, error) {
 		s.IndexPath = "--paths--"
 		s.Progress = "--client--, --final--, --staging--, --unripe-- ts: --ts--"
 		s.HasPinKey = false // the test machine doesn't have a key
+	}
+
+	if opts.Chains {
+		s.Chains = s.GetChains(testMode)
+	}
+
+	if opts.Caches {
+		s.Caches = s.GetCaches(chain, testMode, nil)
 	}
 
 	return s, nil

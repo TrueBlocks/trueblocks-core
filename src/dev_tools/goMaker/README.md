@@ -72,7 +72,7 @@ The `.toml` file contains the following fields:
 | go_output    | if not empty, the destination folder for the generated code. Disabled if empty   |                                                                                              |
 | produced_by  | a list of commands that produces this data model                                 |                                                                                              |
 | cache_as     | if set to `group`, the cache for this type is a slice. A single value otherwise. |                                                                                              |
-| cache_by     | the fields by which to identify cache items                                      | (one of \[ `address,block` \| `address,block,fourbyte` \| `address,tx` \| `block` \| `tx` \] |
+| cache_by     | the fields by which to identify cache items                                      | (one of \[ `address` \| `address,block` \| `address,block,fourbyte` \| `address,tx` \| `block` \| `tx` \] |
 | cache_type   | one of \[ `cacheable` \| `marshal_only` \]                                       |                                                                                              |
 
 ### Notes on Templates

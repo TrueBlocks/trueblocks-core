@@ -19,10 +19,10 @@ Results in ./assets_token_ibt_2_out.file
       "decimals": 18,
       "isContract": true,
       "isErc20": true,
-      "name": "Dai Stablecoin",
-      "source": "Giveth website",
+      "name": "Dai Stablecoin (L1)",
+      "source": "https://docs.optimism.io/chain/tokenlist?utm_source=chatgpt.com",
       "symbol": "DAI",
-      "tags": "50-Tokens:ERC20"
+      "tags": "55-Defi"
     },
     {
       "address": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",

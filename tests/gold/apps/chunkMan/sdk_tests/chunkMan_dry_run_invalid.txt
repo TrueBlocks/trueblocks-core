@@ -1,0 +1,12 @@
+chunks?mode=manifest&dryRun
+Args: [mode=manifest dryRun]
+Opts: {"mode":2,"publisher":"0x0","dryRun":true}
+Mode:  manifest
+Publisher:  0x02f2b09b33fdbd406ead954a31f98bd29a2a3492
+DryRun:  true
+Format:  json
+{
+  "errors": [
+    "The --dry_run option is only available with destructive operations: --tag, --truncate, --pin, or --unpin in pins mode."
+  ]
+}

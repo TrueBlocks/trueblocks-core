@@ -10,27 +10,9 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
-type Field struct {
+type CrudField struct {
 	Value   string
 	Updated bool
-}
-
-type NameCrud struct {
-	Address    Field
-	Name       Field
-	Tags       Field
-	Source     Field
-	Symbol     Field
-	Decimals   Field
-	Deleted    Field
-	IsContract Field
-	IsCustom   Field
-	IsErc20    Field
-	IsErc721   Field
-	IsPrefund  Field
-	Prefund    Field
-	Parts      Field
-	// EXISTING_CODE
 }
 
 type Operation string
@@ -54,6 +36,23 @@ func OpFromString(op string) Operation {
 		"autoname": Autoname,
 	}
 	return m[op]
+}
+
+type NameCrud struct {
+	Address    CrudField
+	Name       CrudField
+	Tags       CrudField
+	Source     CrudField
+	Symbol     CrudField
+	Decimals   CrudField
+	Deleted    CrudField
+	IsContract CrudField
+	IsCustom   CrudField
+	IsErc20    CrudField
+	IsErc721   CrudField
+	IsPrefund  CrudField
+	Prefund    CrudField
+	Parts      CrudField
 }
 
 func (cd *NameCrud) Validate(requireName bool) error {
@@ -115,20 +114,6 @@ func NewNameCrud(requireName bool, r *http.Request) (*NameCrud, error) {
 	}
 
 	return cd, nil
-}
-
-func CrudFromAddress(addr base.Address) *NameCrud {
-	cd := NameCrud{
-		Address: Field{
-			Value:   addr.Hex(),
-			Updated: true,
-		},
-		IsCustom: Field{
-			Value:   "true",
-			Updated: true,
-		},
-	}
-	return &cd
 }
 
 func CrudFromName(name types.Name) *NameCrud {

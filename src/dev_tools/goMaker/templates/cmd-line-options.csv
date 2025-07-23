@@ -3,7 +3,7 @@ num,folder,group,route,tool,longName,hotKey,def_val,attributes,handler,option_ty
 #
 12000,apps,Accounts,list,acctExport,,,,visible|docs,,command,,,List transactions,[flags] <address> [address...],default|names|,List every appearance of an address anywhere on the chain.
 12020,apps,Accounts,list,acctExport,addrs,,,required|visible|docs,3,positional,list<addr>,appearance,,,,one or more addresses (0x...) to list
-12030,apps,Accounts,list,acctExport,count,U,,visible|docs,1,switch,<boolean>,monitor,,,,display only the count of records for each monitor
+12030,apps,Accounts,list,acctExport,count,U,,visible|docs,1,switch,<boolean>,count,,,,display only the count of records for each monitor
 12040,apps,Accounts,list,acctExport,no_zero,z,,visible|docs,,switch,<boolean>,,,,,for the --count option only&#44; suppress the display of zero appearance accounts
 12050,apps,Accounts,list,acctExport,bounds,b,,visible|docs,2,switch,<boolean>,bounds,,,,report first and last block this address appears
 12060,apps,Accounts,list,acctExport,unripe,u,,visible|docs,,switch,<boolean>,,,,,list transactions labeled unripe (i.e. less than 28 blocks old)
@@ -18,22 +18,22 @@ num,folder,group,route,tool,longName,hotKey,def_val,attributes,handler,option_ty
 12150,apps,Accounts,list,acctExport,n2,,,,,note,,,,,,No other options are permitted when --silent is selected.
 #
 13000,apps,Accounts,export,acctExport,,,,visible|docs,,command,,,Export details,[flags] <address> [address...] [topics...] [fourbytes...],default|caching|ether|names|,Export full details of transactions for one or more addresses.
-13020,apps,Accounts,export,acctExport,addrs,,,required|visible|docs,13,positional,list<addr>,transaction,,,,one or more addresses (0x...) to export
+13020,apps,Accounts,export,acctExport,addrs,,,required|visible|docs,12,positional,list<addr>,transaction,,,,one or more addresses (0x...) to export
 13030,apps,Accounts,export,acctExport,topics,,,visible|docs,,positional,list<topic>,,,,,filter by one or more log topics (only for --logs option)
 13040,apps,Accounts,export,acctExport,fourbytes,,,visible|docs,,positional,list<fourbyte>,,,,,filter by one or more fourbytes (only for transactions and trace options)
 13050,apps,Accounts,export,acctExport,appearances,p,,visible|docs,5,switch,<boolean>,appearance,,,,export a list of appearances
 13060,apps,Accounts,export,acctExport,receipts,r,,visible|docs,2,switch,<boolean>,receipt,,,,export receipts instead of transactional data
 13070,apps,Accounts,export,acctExport,logs,l,,visible|docs,3,switch,<boolean>,log,,,,export logs instead of transactional data
-13080,apps,Accounts,export,acctExport,traces,t,,visible|docs,12,switch,<boolean>,trace,,,,export traces instead of transactional data
+13080,apps,Accounts,export,acctExport,traces,t,,visible|docs,11,switch,<boolean>,trace,,,,export traces instead of transactional data
 13090,apps,Accounts,export,acctExport,neighbors,n,,visible|docs,8,switch,<boolean>,message,,,,export the neighbors of the given address
 13110,apps,Accounts,export,acctExport,statements,A,,visible|docs,9,switch,<boolean>,statement,,,,export only statements
 13110,apps,Accounts,export,acctExport,transfers,X,,visible|docs,10,switch,<boolean>,transfer,,,,export only eth or token transfers
 13120,apps,Accounts,export,acctExport,assets,s,,visible|docs,6,switch,<boolean>,name,,,,list all assets (with names) that appear in any transfer
-13120,apps,Accounts,export,acctExport,balances,b,,visible|docs,7,switch,<boolean>,state,,,,traverse the transaction history and show each change in ETH balances
+13120,apps,Accounts,export,acctExport,balances,b,,visible|docs,7,switch,<boolean>,token,,,,traverse the transaction history and show each change in ETH balances
 13130,apps,Accounts,export,acctExport,withdrawals,i,,visible|docs,4,switch,<boolean>,withdrawal,,,,export withdrawals for the given address
 13140,apps,Accounts,export,acctExport,articulate,a,,visible|docs,,switch,<boolean>,,,,,articulate transactions&#44; traces&#44; logs&#44; and outputs
 13150,apps,Accounts,export,acctExport,cache_traces,R,,visible|docs,,switch,<boolean>,,,,,force the transaction's traces into the cache
-13160,apps,Accounts,export,acctExport,count,U,,visible|docs,1,switch,<boolean>,monitor,,,,for --appearances mode only&#44; display only the count of records
+13160,apps,Accounts,export,acctExport,count,U,,visible|docs,1,switch,<boolean>,count,,,,for --appearances mode only&#44; display only the count of records
 13170,apps,Accounts,export,acctExport,first_record,c,,visible|docs,,flag,<uint64>,,,,,the first record to process
 13180,apps,Accounts,export,acctExport,max_records,e,250,visible|docs,,flag,<uint64>,,,,,the maximum number of records to process
 13190,apps,Accounts,export,acctExport,relevant,N,,visible|docs,,switch,<boolean>,,,,,for log and accounting export only&#44; export only logs relevant to one of the given export addresses
@@ -64,30 +64,31 @@ num,folder,group,route,tool,longName,hotKey,def_val,attributes,handler,option_ty
 13430,apps,Accounts,export,acctExport,n12,,,,,note,,,,,,The --traces option requires your RPC to provide trace data. See the README for more information.
 #
 14000,apps,Accounts,monitors,acctExport,,,,visible|docs,,command,,,Manage monitors,[flags] <address> [address...],default|caching|names|,Add&#44; remove&#44; clean&#44; and list address monitors.
-14020,apps,Accounts,monitors,acctExport,addrs,,,visible|docs,5,positional,list<addr>,message,,,,one or more addresses (0x...) to process
+14020,apps,Accounts,monitors,acctExport,addrs,,,visible|docs,4,positional,list<addr>,message,,,,one or more addresses (0x...) to process
 14030,apps,Accounts,monitors,acctExport,delete,,,visible|docs|crud,,switch,<boolean>,,,,,delete a monitor&#44; but do not remove it
 14040,apps,Accounts,monitors,acctExport,undelete,,,visible|docs|crud,,switch,<boolean>,,,,,undelete a previously deleted monitor
 14050,apps,Accounts,monitors,acctExport,remove,,,visible|docs|crud,,switch,<boolean>,,,,,remove a previously deleted monitor
 14060,apps,Accounts,monitors,acctExport,clean,C,,visible|docs,2,switch,<boolean>,monitorClean,,,,clean (i.e. remove duplicate appearances) from monitors&#44; optionally clear stage
 14070,apps,Accounts,monitors,acctExport,list,l,,visible|docs,3,switch,<boolean>,monitor,,,,list monitors in the cache (--verbose for more detail)
-14075,apps,Accounts,monitors,acctExport,count,c,,visible|docs,1,switch,<boolean>,count,,,,show the number of active monitors (included deleted but not removed monitors)
+14075,apps,Accounts,monitors,acctExport,count,U,,visible|docs,1,switch,<boolean>,count,,,,show the number of active monitors (included deleted but not removed monitors)
 14065,apps,Accounts,monitors,acctExport,staged,S,,visible|docs,,switch,<boolean>,,,,,for --clean&#44; --list&#44; and --count options only&#44; include staged monitors
 14140,apps,Accounts,monitors,acctExport,n1,,,,,note,,,,,,An `address` must be either an ENS name or start with '0x' and be forty-two characters long.
 14150,apps,Accounts,monitors,acctExport,n2,,,,,note,,,,,,If no address is presented to the --clean command&#44; all existing monitors will be cleaned.
 #
 15000,tools,Accounts,names,ethNames,,,,visible|docs,,command,,,Manage names,[flags] <term> [term...],default|,Query addresses or names of well-known accounts.
-15020,tools,Accounts,names,ethNames,terms,,,required|visible|docs,4,positional,list<string>,name,,,,a space separated list of one or more search terms
+15020,tools,Accounts,names,ethNames,terms,,,required|visible|docs,5,positional,list<string>,name,,,,a space separated list of one or more search terms
 15030,tools,Accounts,names,ethNames,expand,e,,visible|docs,,switch,<boolean>,,,,,expand search to include all fields (search name&#44; address&#44; and symbol otherwise)
 15040,tools,Accounts,names,ethNames,match_case,m,,visible|docs,,switch,<boolean>,,,,,do case-sensitive search
 15050,tools,Accounts,names,ethNames,all,a,,visible|docs,,switch,<boolean>,,,,,include all (including custom) names in the search
 15060,tools,Accounts,names,ethNames,custom,c,,visible|docs,,switch,<boolean>,,,,,include only custom named accounts in the search
 15070,tools,Accounts,names,ethNames,prefund,p,,visible|docs,,switch,<boolean>,,,,,include prefund accounts in the search
 15080,tools,Accounts,names,ethNames,addr,s,,visible|docs,,switch,<boolean>,name,,,,display only addresses in the results (useful for scripting&#44; assumes --no_header)
-15090,tools,Accounts,names,ethNames,tags,g,,visible|docs,3,switch,<boolean>,name,,,,export the list of tags and subtags only
-15100,tools,Accounts,names,ethNames,clean,C,,visible|docs,2,switch,<boolean>,message,,,,clean the data (addrs to lower case&#44; sort by addr)
+15090,tools,Accounts,names,ethNames,tags,g,,visible|docs,4,switch,<boolean>,name,,,,export the list of tags and subtags only
+15100,tools,Accounts,names,ethNames,clean,C,,visible|docs,3,switch,<boolean>,message,,,,clean the data (addrs to lower case&#44; sort by addr)
 15110,tools,Accounts,names,ethNames,regular,r,,visible|docs,,switch,<boolean>,,,,,only available with --clean&#44; cleans regular names database
+15115,tools,Accounts,names,ethNames,count,U,,visible|docs,1,switch,<boolean>,count,,,,return the number of names matching the search terms or other options
 15120,tools,Accounts,names,ethNames,dry_run,d,,visible|docs,,switch,<boolean>,,,,,only available with --clean or --autoname&#44; outputs changes to stdout instead of updating databases
-15130,tools,Accounts,names,ethNames,autoname,A,,visible|docs,1,flag,<address>,message,,,,an address assumed to be a token&#44; added automatically to names database if true
+15130,tools,Accounts,names,ethNames,autoname,A,,visible|docs,2,flag,<address>,message,,,,an address assumed to be a token&#44; added automatically to names database if true
 15140,tools,Accounts,names,ethNames,create,,,docs|crud,,switch,<boolean>,name,,,,create a new name record
 15150,tools,Accounts,names,ethNames,update,,,docs|crud,,switch,<boolean>,name,,,,edit an existing name
 15160,tools,Accounts,names,ethNames,delete,,,docs|crud,,switch,<boolean>,name,,,,delete a name&#44; but do not remove it
@@ -97,14 +98,15 @@ num,folder,group,route,tool,longName,hotKey,def_val,attributes,handler,option_ty
 15200,tools,Accounts,names,ethNames,n2,,,,,note,,,,,,The `--match_case` option enables case sensitive matching.
 #
 16000,tools,Accounts,abis,grabABI,,,,visible|docs,,command,,,Manage Abi files,[flags] <address> [address...],default|caching|names|,Fetches the ABI for a smart contract.
-16020,tools,Accounts,abis,grabABI,addrs,,,required|visible|docs,5,positional,list<addr>,function,,,,a list of one or more smart contracts whose ABIs to display
+16020,tools,Accounts,abis,grabABI,addrs,,,required|visible|docs,6,positional,list<addr>,function,,,,a list of one or more smart contracts whose ABIs to display
 16030,tools,Accounts,abis,grabABI,known,k,,visible|docs,,switch,<boolean>,,,,,load common 'known' ABIs from cache
 16040,tools,Accounts,abis,grabABI,proxy_for,r,,visible|docs,,flag,<address>,,,,,redirects the query to this implementation
-16050,tools,Accounts,abis,grabABI,list,l,,visible|docs,3,switch,<boolean>,abi,,,,a list of downloaded abi files
-16060,tools,Accounts,abis,grabABI,count,c,,visible|docs,2,switch,<boolean>,count,,,,show the number of abis downloaded
+16050,tools,Accounts,abis,grabABI,list,l,,visible|docs,4,switch,<boolean>,abi,,,,a list of downloaded abi files
+16055,tools,Accounts,abis,grabABI,details,d,,visible|docs,3,switch,<boolean>,function,,,,show the functions and events instead of summaries for all abi files
+16060,tools,Accounts,abis,grabABI,count,U,,visible|docs,2,switch,<boolean>,count,,,,show the number of abis downloaded
 16070,tools,Accounts,abis,grabABI,find,f,,visible|docs,1,flag,list<string>,function,,,,search for function or event declarations given a four- or 32-byte code(s)
 16080,tools,Accounts,abis,grabABI,hint,n,,visible|docs,,flag,list<string>,,,,,for the --find option only&#44; provide hints to speed up the search
-16090,tools,Accounts,abis,grabABI,encode,e,,visible|docs,4,flag,<string>,function,,,,generate the 32-byte encoding for a given canonical function or event signature
+16090,tools,Accounts,abis,grabABI,encode,e,,visible|docs,5,flag,<string>,function,,,,generate the 32-byte encoding for a given canonical function or event signature
 16100,tools,Accounts,abis,grabABI,n1,,,,,note,,,,,,Search for either four byte signatures or event signatures with the --find option.
 #
 21000,,Chain Data,,,,,,,,group,,,,,,Access and cache blockchain-related data
@@ -135,10 +137,10 @@ num,folder,group,route,tool,longName,hotKey,def_val,attributes,handler,option_ty
 22280,tools,Chain Data,blocks,getBlocks,n10,,,,,note,,,,,,The --traces option requires your RPC to provide trace data. See the README for more information.
 #
 23000,tools,Chain Data,transactions,getTrans,,,,visible|docs,,command,,,Get transactions,[flags] <tx_id> [tx_id...],default|caching|ether|names|,Retrieve one or more transactions from the chain or local cache.
-23020,tools,Chain Data,transactions,getTrans,transactions,,,required|visible|docs,4,positional,list<tx_id>,transaction,,,,a space-separated list of one or more transaction identifiers
+23020,tools,Chain Data,transactions,getTrans,transactions,,,required|visible|docs,3,positional,list<tx_id>,transaction,,,,a space-separated list of one or more transaction identifiers
 23030,tools,Chain Data,transactions,getTrans,articulate,a,,visible|docs,,switch,<boolean>,,,,,articulate the retrieved data if ABIs can be found
 23040,tools,Chain Data,transactions,getTrans,traces,t,,visible|docs,,switch,<boolean>,trace,,,,include the transaction's traces in the results
-23050,tools,Chain Data,transactions,getTrans,uniq,u,,visible|docs,3,switch,<boolean>,appearance,,,,display a list of uniq addresses found in the transaction
+23050,tools,Chain Data,transactions,getTrans,uniq,u,,visible|docs,2,switch,<boolean>,appearance,,,,display a list of uniq addresses found in the transaction
 23060,tools,Chain Data,transactions,getTrans,flow,f,,visible|docs,,flag,enum[from|to],,,,,for the uniq option only&#44; export only from or to (including trace from or to)
 23070,tools,Chain Data,transactions,getTrans,logs,l,,visible|docs,1,switch,<boolean>,log,,,,display only the logs found in the transaction(s)
 23080,tools,Chain Data,transactions,getTrans,emitter,m,,visible|docs,,flag,list<addr>,,,,,for the --logs option only&#44; filter logs to show only those logs emitted by the given address(es)
@@ -185,9 +187,9 @@ num,folder,group,route,tool,longName,hotKey,def_val,attributes,handler,option_ty
 27050,tools,Chain Data,when,whenBlock,count,U,,visible|docs,,switch,<boolean>,count,,,,with --timestamps only&#44; returns the number of timestamps in the cache
 27060,tools,Chain Data,when,whenBlock,truncate,n,NOPOSN,,,flag,<blknum>,,,,,with --timestamps only&#44; truncates the timestamp file at this block
 27070,tools,Chain Data,when,whenBlock,repair,r,,visible|docs,,switch,<boolean>,,,,,with --timestamps only&#44; repairs block(s) in the block range by re-querying from the chain
-27080,tools,Chain Data,when,whenBlock,check,c,,visible|docs,,switch,<boolean>,,,,,with --timestamps only&#44; checks the validity of the timestamp data
+27080,tools,Chain Data,when,whenBlock,check,c,,visible|docs,,switch,<boolean>,message,,,,with --timestamps only&#44; checks the validity of the timestamp data
 27090,tools,Chain Data,when,whenBlock,update,u,,visible|docs,,switch,<boolean>,,,,,with --timestamps only&#44; bring the timestamp database forward to the latest block
-27100,tools,Chain Data,when,whenBlock,deep,d,,visible|docs,,switch,<boolean>,,,,,with --timestamps --check only&#44; verifies timestamps from on chain (slow)
+27100,tools,Chain Data,when,whenBlock,deep,d,,visible|docs,,flag,<uint64>,,,,,with --timestamps --check only&#44; verifies every N timestamp directly from the chain (slow)
 27110,tools,Chain Data,when,whenBlock,n1,,,,,note,,,,,,The block list may contain any combination of `number`&#44; `hash`&#44; `date`&#44; special `named` blocks.
 27120,tools,Chain Data,when,whenBlock,n2,,,,,note,,,,,,Block numbers&#44; timestamps&#44; or dates in the future are estimated with 13 second blocks.
 27130,tools,Chain Data,when,whenBlock,n3,,,,,note,,,,,,Dates must be formatted in JSON format: YYYY-MM-DD[THH[:MM[:SS]]].
@@ -240,14 +242,19 @@ num,folder,group,route,tool,longName,hotKey,def_val,attributes,handler,option_ty
 42040,apps,Admin,config,config,dump,d,,visible|docs,2,switch,<boolean>,config,,,,dump the configuration to stdout
 #
 43000,apps,Admin,status,cacheStatus,,,,visible|docs,,command,,,Get status on caches,<mode> [mode...] [flags],default|,Report on the state of the internal binary caches.
-43020,apps,Admin,status,cacheStatus,modes,,,visible|docs,2,positional,list<enum[index|blooms|blocks|transactions|traces|logs|statements|results|state|tokens|monitors|names|abis|slurps|staging|unripe|maps|some*|all]>,status,,,,the (optional) name of the binary cache to report on&#44; terse otherwise
+43020,apps,Admin,status,cacheStatus,modes,,,visible|docs,4,positional,list<enum[index|blooms|blocks|transactions|traces|logs|statements|results|state|tokens|monitors|names|abis|slurps|staging|unripe|maps|some*|all]>,status,,,,the (optional) name of the binary cache to report on&#44; terse otherwise
 43030,apps,Admin,status,cacheStatus,diagnose,d,,visible|docs,1,switch,<boolean>,status,,,,same as the default but with additional diagnostics
 43040,apps,Admin,status,cacheStatus,first_record,c,,visible|docs,,flag,<uint64>,,,,,the first record to process
 43050,apps,Admin,status,cacheStatus,max_records,e,10000,visible|docs,,flag,<uint64>,,,,,the maximum number of records to process
-43060,apps,Admin,status,cacheStatus,chains,a,,visible|docs,,switch,<boolean>,,,,,include a list of chain configurations in the output
+43060,apps,Admin,status,cacheStatus,chains,a,,visible|docs,2,switch,<boolean>,chain,,,,include a list of chain configurations in the output
+43062,apps,Admin,status,cacheStatus,caches,s,,visible|docs,3,switch,<boolean>,cacheItem,,,,include a list of cache items in the output
 43065,apps,Admin,status,cacheStatus,healthcheck,k,,visible|docs|alias=diagnose,,switch,<boolean>,status,,,,an alias for the diagnose endpoint
 43070,apps,Admin,status,cacheStatus,n1,,,,,note,,,,,,The `some` mode includes index&#44; monitors&#44; names&#44; slurps&#44; and abis.
 43080,apps,Admin,status,cacheStatus,n2,,,,,note,,,,,,If no mode is supplied&#44; a terse report is generated.
+43082,apps,Admin,status,cacheStatus,n3,,,,,note,,,,,,The --chains option may be used alone to return only chain configuration information.
+43083,apps,Admin,status,cacheStatus,n4,,,,,note,,,,,,The --caches option may be used alone to return only cache information.
+43084,apps,Admin,status,cacheStatus,n5,,,,,note,,,,,,Using both --chains and --caches together returns both types of information in a single status object.
+43085,apps,Admin,status,cacheStatus,n6,,,,,note,,,,,,Both --chains and --caches may be used with modes and --diagnose/--healthcheck for complete customization.
 #
 44000,apps,Admin,daemon,flame,,,,visible|docs|notApi,,command,,,Start the Api server,[flags],verbose|version|noop|noColor|,Initialize and control long-running processes such as the API and the scrapers.
 44020,apps,Admin,daemon,flame,url,u,localhost:8080,visible|docs,,flag,<string>,,,,,specify the API server's url and optionally its port
@@ -288,23 +295,25 @@ num,folder,group,route,tool,longName,hotKey,def_val,attributes,handler,option_ty
 46120,apps,Admin,chunks,chunkMan,first_block,F,,visible|docs,,flag,<blknum>,,,,,first block to process (inclusive)
 46130,apps,Admin,chunks,chunkMan,last_block,L,NOPOSN,visible|docs,,flag,<blknum>,,,,,last block to process (inclusive)
 46140,apps,Admin,chunks,chunkMan,max_addrs,m,NOPOS,visible|docs,,flag,<uint64>,,,,,the max number of addresses to process in a given chunk
-46150,apps,Admin,chunks,chunkMan,deep,d,,visible|docs,,switch,<boolean>,,,,,if true&#44; dig more deeply during checking (manifest only)
+46150,apps,Admin,chunks,chunkMan,deep,D,,visible|docs,,switch,<boolean>,,,,,if true&#44; dig more deeply during checking (manifest only)
 46160,apps,Admin,chunks,chunkMan,rewrite,e,,visible|docs,,switch,<boolean>,,,,,for the --pin --deep mode only&#44; writes the manifest back to the index folder (see notes)
-46170,apps,Admin,chunks,chunkMan,list,l,,,2,switch,<boolean>,,,,,for the pins mode only&#44; list the remote pins
+46170,apps,Admin,chunks,chunkMan,list,l,,,2,switch,<boolean>,chunkRecord,,,,for the pins mode only&#44; list the remote pins
 46180,apps,Admin,chunks,chunkMan,unpin,u,,,3,switch,<boolean>,,,,,for the pins mode only&#44; if true reads local ./unpins file for valid CIDs and remotely unpins each (skips non-CIDs)
 46190,apps,Admin,chunks,chunkMan,count,U,,visible|docs,,switch,<boolean>,count,,,,for certain modes only&#44; display the count of records
 46200,apps,Admin,chunks,chunkMan,tag,t,,,4,flag,<string>,message,,,,visits each chunk and updates the headers with the supplied version string (vX.Y.Z-str)
+46205,apps,Admin,chunks,chunkMan,dry_run,d,,,,switch,<boolean>,,,,,show what the command would do without actually making any changes
+46207,apps,Admin,chunks,chunkMan,metadata,M,,visible|docs,,switch,<boolean>,,,,,for --pin only&#44; pin only metadata files (ts.bin and manifest.json)
 46210,apps,Admin,chunks,chunkMan,sleep,s,,visible|docs,,flag,<float64>,,,,,for --remote pinning only&#44; seconds to sleep between API calls
-46220,apps,Admin,chunks,chunkMan,n1,,,,,note,,,,,,Mode determines which type of data to display or process.
-46230,apps,Admin,chunks,chunkMan,n2,,,,,note,,,,,,Certain options are only available in certain modes.
-46240,apps,Admin,chunks,chunkMan,n3,,,,,note,,,,,,If blocks are provided&#44; only chunks intersecting with those blocks are displayed.
-46250,apps,Admin,chunks,chunkMan,n5,,,,,note,,,,,,The --truncate option updates the manifest and removes local data&#44; but does not alter remote pins.
-46260,apps,Admin,chunks,chunkMan,n6,,,,,note,,,,,,The --belongs option is only available in the index mode.
-46270,apps,Admin,chunks,chunkMan,n7,,,,,note,,,,,,The --first_block and --last_block options apply only to addresses&#44; appearances&#44; and index --belongs mode.
-46280,apps,Admin,chunks,chunkMan,n8,,,,,note,,,,,,The --pin option requires a locally running IPFS node or a pinning service API key.
-46290,apps,Admin,chunks,chunkMan,n9,,,,,note,,,,,,The --publish option requires a private key.
-46300,apps,Admin,chunks,chunkMan,n10,,,,,note,,,,,,The --publisher option is ignored with the --publish option since the sender of the transaction is recorded as the publisher.
-46310,apps,Admin,chunks,chunkMan,n11,,,,,note,,,,,,Without --rewrite&#44; the manifest is written to the temporary cache. With it&#44; the manifest is rewritten to the index folder.
+46220,apps,Admin,chunks,chunkMan,n1,,,,,note,,,,,,Available modes: stats&#44; index&#44; blooms&#44; manifest&#44; pins&#44; addresses&#44; appearances.
+46230,apps,Admin,chunks,chunkMan,n2,,,,,note,,,,,,Some options are mode-specific (e.g.&#44; --belongs only works in index mode).
+46240,apps,Admin,chunks,chunkMan,n3,,,,,note,,,,,,Block filters limit results to intersecting chunks only.
+46250,apps,Admin,chunks,chunkMan,n4,,,,,note,,,,,,To pin only metadata (ts.bin and manifest.json)&#44; use --pin --metadata.
+46255,apps,Admin,chunks,chunkMan,n5,,,,,note,,,,,,The --truncate option updates the manifest and removes local data&#44; but does not alter remote pins.
+46260,apps,Admin,chunks,chunkMan,n6,,,,,note,,,,,,The --belongs option is only available in index mode.
+46270,apps,Admin,chunks,chunkMan,n7,,,,,note,,,,,,Block range options (--first_block&#44; --last_block) apply to addresses&#44; appearances&#44; and index modes.
+46280,apps,Admin,chunks,chunkMan,n8,,,,,note,,,,,,Pinning requires a locally-running IPFS node or pinning service API key.
+46290,apps,Admin,chunks,chunkMan,n9,,,,,note,,,,,,With --publish&#44; transaction sender becomes publisher (that is&#44; the --publisher ignored).
+46300,apps,Admin,chunks,chunkMan,n10,,,,,note,,,,,,Without --rewrite&#44; manifest is written to a temp folder; with --rewrite&#44; to the index folder.
 #
 47000,apps,Admin,init,init,,,,visible|docs,,command,,,Initialize index,[flags],verbose|version|noop|noColor|chain|,Initialize the TrueBlocks system by downloading the Unchained Index from IPFS.
 47020,apps,Admin,init,init,all,a,,visible|docs,3,switch,<boolean>,message,,,,in addition to Bloom filters&#44; download full index chunks (recommended)
@@ -333,7 +342,7 @@ num,folder,group,route,tool,longName,hotKey,def_val,attributes,handler,option_ty
 53050,tools,Other,slurp,ethslurp,appearances,p,,visible|docs,2,switch,<boolean>,appearance,,,,show only the blocknumber.tx_id appearances of the exported transactions
 53060,tools,Other,slurp,ethslurp,articulate,a,,visible|docs,,switch,<boolean>,,,,,articulate the retrieved data if ABIs can be found
 53070,tools,Other,slurp,ethslurp,source,S,etherscan,visible|docs,,flag,enum[etherscan*|covalent|alchemy],,,,,the source of the slurped data
-53080,tools,Other,slurp,ethslurp,count,U,,visible|docs,1,switch,<boolean>,monitor,,,,for --appearances mode only&#44; display only the count of records
+53080,tools,Other,slurp,ethslurp,count,U,,visible|docs,1,switch,<boolean>,count,,,,for --appearances mode only&#44; display only the count of records
 53090,tools,Other,slurp,ethslurp,page,g,,visible|docs,,flag,<uint64>,,,,,the page to retrieve (page number)
 53090,tools,Other,slurp,ethslurp,page_id,,,visible|docs,,flag,<string>,,,,,the page to retrieve (page ID)
 53100,tools,Other,slurp,ethslurp,per_page,P,1000,visible|docs,,flag,<uint64>,,,,,the number of records to request on each page

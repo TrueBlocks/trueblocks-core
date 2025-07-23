@@ -14,7 +14,7 @@ Format:  json
       "blockNumber": 12506399,
       "decimals": 18,
       "holder": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
-      "name": "Gitcoin",
+      "name": "Gitcoin (L1)",
       "symbol": "GTC"
     },
     {
@@ -24,7 +24,7 @@ Format:  json
       "blockNumber": 12506499,
       "decimals": 18,
       "holder": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
-      "name": "Gitcoin",
+      "name": "Gitcoin (L1)",
       "symbol": "GTC"
     },
     {
@@ -34,7 +34,7 @@ Format:  json
       "blockNumber": 12506599,
       "decimals": 18,
       "holder": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
-      "name": "Gitcoin",
+      "name": "Gitcoin (L1)",
       "symbol": "GTC"
     },
     {
@@ -44,7 +44,7 @@ Format:  json
       "blockNumber": 12506699,
       "decimals": 18,
       "holder": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
-      "name": "Gitcoin",
+      "name": "Gitcoin (L1)",
       "symbol": "GTC"
     },
     {
@@ -54,7 +54,7 @@ Format:  json
       "blockNumber": 12506799,
       "decimals": 18,
       "holder": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
-      "name": "Gitcoin",
+      "name": "Gitcoin (L1)",
       "symbol": "GTC"
     },
     {
@@ -64,7 +64,7 @@ Format:  json
       "blockNumber": 12506899,
       "decimals": 18,
       "holder": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
-      "name": "Gitcoin",
+      "name": "Gitcoin (L1)",
       "symbol": "GTC"
     },
     {
@@ -74,7 +74,7 @@ Format:  json
       "blockNumber": 12506999,
       "decimals": 18,
       "holder": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
-      "name": "Gitcoin",
+      "name": "Gitcoin (L1)",
       "symbol": "GTC"
     },
     {
@@ -84,7 +84,7 @@ Format:  json
       "blockNumber": 12507099,
       "decimals": 18,
       "holder": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
-      "name": "Gitcoin",
+      "name": "Gitcoin (L1)",
       "symbol": "GTC"
     }
   ],

@@ -8,6 +8,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 )
 
 // indexHeader is the first 44 bytes of an Index. This structure carries a magic number (4 bytes),
@@ -34,8 +35,17 @@ func (chunk *Index) readHeader(check bool) (indexHeader, error) {
 	}
 
 	if check { // check if told to do so
-		if header.Hash != base.BytesToHash(config.HeaderHash(config.ExpectedVersion())) {
-			return header, fmt.Errorf("Index.readHeader: %w %x %x", ErrIncorrectHash, header.Hash, base.BytesToHash(config.HeaderHash(config.ExpectedVersion())))
+		headerHash := header.Hash
+		headerTag := config.VersionTags[headerHash.String()]
+		expectedHash := base.BytesToHash(config.HeaderHash(config.ExpectedVersion()))
+		expectedTag := config.VersionTags[expectedHash.String()]
+		if headerHash != expectedHash {
+			logger.Warn(fmt.Sprintf(
+				"Index header mismatch %s headerHash=0x%x (%s) expectedHash=0x%x (%s)",
+				ErrIncorrectHash,
+				headerHash, headerTag,
+				expectedHash, expectedTag,
+			))
 		}
 	}
 

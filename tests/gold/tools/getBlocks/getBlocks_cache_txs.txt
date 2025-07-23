@@ -1,7 +1,6 @@
 chifra blocks  12 --cache --cache_txs
 TEST[DATE|TIME] Blocks:  [12]
 TEST[DATE|TIME] CacheTxs:  true
-TEST[DATE|TIME] Enabled:  blocks, receipts, transactions
 TEST[DATE|TIME] Cache:  true
 TEST[DATE|TIME] Caps:  cache,decache,ether
 TEST[DATE|TIME] Format:  json

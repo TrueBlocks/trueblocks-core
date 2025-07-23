@@ -33,18 +33,35 @@ TEST[DATE|TIME] Format:  json
       "address": "0x000000000000541e251335090ac5b47176af4f7e",
       "isContract": true,
       "name": "dex.blue",
-      "source": "EtherScan.io",
-      "tags": "30-Contracts"
+      "source": "https://chartalist.org/eth/TaskTypePrediction.html",
+      "tags": "55-Defi"
+    },
+    {
+      "address": "0x0000000000007f150bd6f54c40a34d7c3d5e9f56",
+      "isContract": true,
+      "name": "MEV Bot()",
+      "source": "alphacore",
+      "tags": "55-Defi"
+    },
+    {
+      "address": "0x0000000000071821e8033345a7be174647be0706",
+      "decimals": 18,
+      "isContract": true,
+      "isErc20": true,
+      "name": "Scry Protocol (L1)",
+      "source": "https://docs.optimism.io/chain/tokenlist?utm_source=chatgpt.com",
+      "symbol": "SCRY",
+      "tags": "55-Defi"
     },
     {
       "address": "0x0000000000085d4780b73119b644ae5ecd22b376",
       "decimals": 18,
       "isContract": true,
       "isErc20": true,
-      "name": "TrueUSD",
-      "source": "On chain",
+      "name": "TrueUSD (L1)",
+      "source": "https://docs.optimism.io/chain/tokenlist?utm_source=chatgpt.com",
       "symbol": "TUSD",
-      "tags": "50-Tokens:ERC20"
+      "tags": "55-Defi"
     },
     {
       "address": "0x0000000000095413afc295d19edeb1ad7b71c952",
@@ -62,6 +79,20 @@ TEST[DATE|TIME] Format:  json
       "name": "ENS: Registry with Fallback",
       "source": "EtherScan.io",
       "tags": "34-ENS"
+    },
+    {
+      "address": "0x00000000003b3cc22af3ae1eac0440bcee416b40",
+      "isContract": true,
+      "name": "MEV Bot()",
+      "source": "alphacore",
+      "tags": "55-Defi"
+    },
+    {
+      "address": "0x00000000008c4fb1c916e0c88fd4cc402d935e7d",
+      "isContract": true,
+      "name": "MEV Bot()",
+      "source": "alphacore",
+      "tags": "55-Defi"
     },
     {
       "address": "0x00000000008fd4f395ec6f12920bae9cb6c722e4",
@@ -114,6 +145,13 @@ TEST[DATE|TIME] Format:  json
       "tags": "30-Contracts"
     },
     {
+      "address": "0x000000000dfde7deaf24138722987c9a6991e2d4",
+      "isContract": true,
+      "name": "MEV Bot()",
+      "source": "alphacore",
+      "tags": "55-Defi"
+    },
+    {
       "address": "0x00000000219ab540356cbb839cbe05303d7705fa",
       "isContract": true,
       "name": "Eth2 Deposit Contract",
@@ -148,6 +186,13 @@ TEST[DATE|TIME] Format:  json
       "tags": "30-Contracts"
     },
     {
+      "address": "0x0000000099cb7fc48a935bceb9f05bbae54e8987",
+      "isContract": true,
+      "name": "MEV Bot()",
+      "source": "alphacore",
+      "tags": "55-Defi"
+    },
+    {
       "address": "0x00000000af5a61acaf76190794e3fdf1289288a1",
       "isContract": true,
       "name": "Arbitrage Bot",
@@ -162,6 +207,13 @@ TEST[DATE|TIME] Format:  json
       "tags": "30-Contracts"
     },
     {
+      "address": "0x00000000c2cf7648c169b25ef1c217864bfa38cc",
+      "isContract": true,
+      "name": "MEV Bot()",
+      "source": "alphacore",
+      "tags": "55-Defi"
+    },
+    {
       "address": "0x0000000f8ef4be2b7aed6724e893c1b674b9682d",
       "isContract": true,
       "name": "1inch Exchange",
@@ -173,6 +225,13 @@ TEST[DATE|TIME] Format:  json
       "name": "Grant 3596 - The Uniswap v3 Options Education Fund",
       "source": "https://gitcoin.co/grants/3596/the-uniswap-v3-options-education-fund",
       "tags": "31-Gitcoin:Grants"
+    },
+    {
+      "address": "0x0000006daea1723962647b7e189d311d757fb793",
+      "isContract": true,
+      "name": "Wintermute 1()",
+      "source": "alphacore",
+      "tags": "55-Defi"
     },
     {
       "address": "0x00000100f2a2bd000715001920eb70d229700085",
@@ -267,6 +326,12 @@ TEST[DATE|TIME] Format:  json
       "tags": "50-Tokens:ERC20"
     },
     {
+      "address": "0x001866ae5b3de6caa5a51543fd9fb64f524f5478",
+      "name": "Binance 9",
+      "source": "https://chartalist.org/eth/TaskTypePrediction.html",
+      "tags": "55-Defi"
+    },
+    {
       "address": "0x001a589dda0d6be37632925eaf1256986b2c6ad0",
       "isContract": true,
       "name": "Oraclize_id304",
@@ -315,6 +380,12 @@ TEST[DATE|TIME] Format:  json
       "tags": "31-Gitcoin:Grants"
     },
     {
+      "address": "0x0021845f4c2604c58f9ba5b7bff58d16a2ab372c",
+      "name": "Folgory Exchange",
+      "source": "https://chartalist.org/eth/TaskTypePrediction.html",
+      "tags": "55-Defi"
+    },
+    {
       "address": "0x00281dfce4cfd72c0b6fda2aaaf077258743f9e8",
       "isContract": true,
       "isErc20": true,
@@ -342,6 +413,13 @@ TEST[DATE|TIME] Format:  json
       "source": "On chain",
       "symbol": "HOUR",
       "tags": "50-Tokens:ERC20"
+    },
+    {
+      "address": "0x0034e8411d397c7377c06995565e61846d9af957",
+      "isContract": true,
+      "name": "Gnosis Builder Wallet 3",
+      "source": "https://twitter.com/gnsdomains/status/1720826922064576952",
+      "tags": "30-Contracts"
     },
     {
       "address": "0x0034ea9808e620a0ef79261c51af20614b742b24",
@@ -445,6 +523,12 @@ TEST[DATE|TIME] Format:  json
       "tags": "31-Gitcoin:Grants"
     },
     {
+      "address": "0x0068eb681ec52dbd9944517d785727310b494575",
+      "name": "Tokocrypto",
+      "source": "https://chartalist.org/eth/TaskTypePrediction.html",
+      "tags": "55-Defi"
+    },
+    {
       "address": "0x006bea43baa3f7a6f765f14f10a1a1b08334ef45",
       "decimals": 18,
       "isContract": true,
@@ -466,6 +550,12 @@ TEST[DATE|TIME] Format:  json
       "name": "Shanghai Cleaner Contract",
       "source": "TrueBlocks.io",
       "tags": "80-Malicious:Shanghai"
+    },
+    {
+      "address": "0x007174732705604bbbf77038332dc52fd5a5000c",
+      "name": "BlockTrades Exchange",
+      "source": "https://chartalist.org/eth/TaskTypePrediction.html",
+      "tags": "55-Defi"
     },
     {
       "address": "0x0072d5887bc9979168835d8ac37ca1c2f6a4dac9",
@@ -619,6 +709,16 @@ TEST[DATE|TIME] Format:  json
       "tags": "50-Tokens:ERC20"
     },
     {
+      "address": "0x00a55375002f3cda400383f479e7cd57bad029a9",
+      "decimals": 18,
+      "isContract": true,
+      "isErc20": true,
+      "name": "Conjure",
+      "source": "Tally-Claude",
+      "symbol": "CNJ",
+      "tags": "76-DaoToken"
+    },
+    {
       "address": "0x00a7ec2f2b451cb0233e8adbf4c9a951027c2b02",
       "decimals": 18,
       "isContract": true,
@@ -653,6 +753,12 @@ TEST[DATE|TIME] Format:  json
       "name": "Grant 0976 Magical Machine Money",
       "source": "https://gitcoin.co/grants/976/magical-machine-money",
       "tags": "31-Gitcoin:Grants"
+    },
+    {
+      "address": "0x00bdb5699745f5b860228c8f939abf1b9ae374ed",
+      "name": "Bitstamp 1",
+      "source": "https://chartalist.org/eth/TaskTypePrediction.html",
+      "tags": "55-Defi"
     },
     {
       "address": "0x00c2999c8b2adf4abc835cc63209533973718eb1",
@@ -710,6 +816,12 @@ TEST[DATE|TIME] Format:  json
       "tags": "60-SmolAssets"
     },
     {
+      "address": "0x00cdc153aa8894d08207719fe921fff964f28ba3",
+      "name": "Bitzlato",
+      "source": "https://chartalist.org/eth/TaskTypePrediction.html",
+      "tags": "55-Defi"
+    },
+    {
       "address": "0x00cf36853aa4024fb5bf5cc377dfd85844b411a0",
       "isContract": true,
       "name": "Grant 0143 Dappnode - Panvala League",
@@ -743,18 +855,20 @@ TEST[DATE|TIME] Format:  json
       "tags": "60-SmolAssets"
     },
     {
-      "address": "0x00e4f5f746242e4d115bd65aac7c08fe5d38fb21",
-      "name": "Grant 1839 the Etherchest Ecosystem",
-      "source": "https://gitcoin.co/grants/1839/the-etherchest-ecosystem",
-      "tags": "31-Gitcoin:Grants"
-    },
-    {
       "address": "0x00e5646f60ac6fb446f621d146b6e1886f002905",
       "decimals": 18,
       "name": "Rai Reflex Index (PoS)",
       "source": "Rotki",
       "symbol": "RAI",
       "tags": "60-Rotki"
+    },
+    {
+      "address": "0x00e83d0698faf01bd080a4dd2927e6ab7c4874c9",
+      "isContract": true,
+      "isErc20": true,
+      "name": "AnvilGovernorDelegate",
+      "source": "Tally-Claude",
+      "tags": "75-DaoGovernor"
     },
     {
       "address": "0x00e8eb340f8af587eea6200d2081e31dc87285ac",
@@ -765,6 +879,13 @@ TEST[DATE|TIME] Format:  json
       "source": "SmolAssets",
       "symbol": "yvCurve-XAI-FRAXBP-f",
       "tags": "50-Tokens:ERC20"
+    },
+    {
+      "address": "0x00f932f0fe257456b32deda4758922e56a4f4b42",
+      "name": "Paper (L2)",
+      "source": "https://docs.optimism.io/chain/tokenlist?utm_source=chatgpt.com",
+      "symbol": "PAPER",
+      "tags": "55-Defi"
     },
     {
       "address": "0x00f93fbf00f97170b6cf295dc58888073cb5c2b8",
@@ -787,10 +908,10 @@ TEST[DATE|TIME] Format:  json
       "decimals": 18,
       "isContract": true,
       "isErc20": true,
-      "name": "Alchemix ETH",
-      "source": "SmolAssets",
+      "name": "Alchemix ETH (L1)",
+      "source": "https://docs.optimism.io/chain/tokenlist?utm_source=chatgpt.com",
       "symbol": "alETH",
-      "tags": "50-Tokens:ERC20"
+      "tags": "55-Defi"
     },
     {
       "address": "0x0101f3be8ebb4bbd39a2e3b9a3639d4259832fd9",
@@ -972,6 +1093,13 @@ TEST[DATE|TIME] Format:  json
       "tags": "30-Contracts"
     },
     {
+      "address": "0x015769601d8d4879c0e193eeab31f10cf03c9ea9",
+      "isContract": true,
+      "name": "Uniswap V3 (USDC-MLP)",
+      "source": "alphacore",
+      "tags": "55-Defi"
+    },
+    {
       "address": "0x01597e397605bf280674bf292623460b4204c375",
       "decimals": 18,
       "isContract": true,
@@ -1106,6 +1234,13 @@ TEST[DATE|TIME] Format:  json
       "tags": "91-Early:Miners"
     },
     {
+      "address": "0x01961e8d0a2da0c6afccb95d86e84f80bd5bc338",
+      "isContract": true,
+      "name": "Mojos DAO Token",
+      "source": "Tally-Claude",
+      "tags": "76-DaoToken"
+    },
+    {
       "address": "0x0198f46f520f33cd4329bd4be380a25a90536cd5",
       "decimals": 18,
       "isContract": true,
@@ -1164,11 +1299,10 @@ TEST[DATE|TIME] Format:  json
     },
     {
       "address": "0x01b8b6384298d4848e3be63d4c9d17830eee488a",
-      "decimals": 18,
-      "name": "DAOhaus Token on Optimism",
-      "source": "Rotki",
+      "name": "DAOhaus Token (L2)",
+      "source": "https://docs.optimism.io/chain/tokenlist?utm_source=chatgpt.com",
       "symbol": "HAUS",
-      "tags": "60-Rotki"
+      "tags": "55-Defi"
     },
     {
       "address": "0x01b8bcc8b75dd86025b455373f3c0814a060e6a8",
@@ -1185,10 +1319,10 @@ TEST[DATE|TIME] Format:  json
       "decimals": 18,
       "isContract": true,
       "isErc20": true,
-      "name": "Lyra Token",
-      "source": "Rotki",
+      "name": "Lyra Token (L1)",
+      "source": "https://docs.optimism.io/chain/tokenlist?utm_source=chatgpt.com",
       "symbol": "LYRA",
-      "tags": "50-Tokens:ERC20"
+      "tags": "55-Defi"
     },
     {
       "address": "0x01bfbb9b1a2abe32ceb0a9f2291e5d7e36e38b20",
@@ -1299,6 +1433,16 @@ TEST[DATE|TIME] Format:  json
       "tags": "50-Tokens:ERC20"
     },
     {
+      "address": "0x01f3af11f2d93fb23ae33d336459957f3b7730ae",
+      "decimals": 18,
+      "isContract": true,
+      "isErc20": true,
+      "name": "Daocoin",
+      "source": "Tally-Claude",
+      "symbol": "DAOC",
+      "tags": "76-DaoToken"
+    },
+    {
       "address": "0x01f7919634ba8146755b617d7bf24076cecfedef",
       "decimals": 18,
       "isContract": true,
@@ -1356,6 +1500,14 @@ TEST[DATE|TIME] Format:  json
       "tags": "50-Tokens:ERC20"
     },
     {
+      "address": "0x0204cd037b2ec03605cfdfe482d8e257c765fa1b",
+      "isContract": true,
+      "isErc20": true,
+      "name": "INST Governor Bravo",
+      "source": "Tally-Claude",
+      "tags": "75-DaoGovernor"
+    },
+    {
       "address": "0x0208fb0af6652bdbc3ea010d5026ed92ff252a53",
       "decimals": 18,
       "isContract": true,
@@ -1364,6 +1516,12 @@ TEST[DATE|TIME] Format:  json
       "source": "On chain",
       "symbol": "EHOT",
       "tags": "50-Tokens:ERC20"
+    },
+    {
+      "address": "0x0211f3cedbef3143223d3acf0e589747933e8527",
+      "name": "MXC 2",
+      "source": "https://chartalist.org/eth/TaskTypePrediction.html",
+      "tags": "55-Defi"
     },
     {
       "address": "0x0223fc70574214f65813fe336d870ac47e147fae",
@@ -1474,199 +1632,6 @@ TEST[DATE|TIME] Format:  json
       "name": "Autism Alliance of Michigan (AAoM)",
       "source": "Tokenomics",
       "tags": "31-Giveth:Project"
-    },
-    {
-      "address": "0x024bd890b037adbbfe1545d595490f65361c4a66",
-      "name": "Clearway Clinic",
-      "source": "Tokenomics",
-      "tags": "31-Giveth:Project"
-    },
-    {
-      "address": "0x0257ffd7ea2ebba4aaa090c7adbdd032a08c1f74",
-      "decimals": 18,
-      "isContract": true,
-      "isErc20": true,
-      "name": "ZELIX",
-      "source": "Rotki",
-      "symbol": "ZELIX",
-      "tags": "50-Tokens:ERC20"
-    },
-    {
-      "address": "0x02585e4a14da274d02df09b222d4606b10a4e940",
-      "decimals": 18,
-      "isContract": true,
-      "isErc20": true,
-      "name": "Hero Origen Token",
-      "source": "On chain",
-      "symbol": "HERO",
-      "tags": "50-Tokens:ERC20"
-    },
-    {
-      "address": "0x0258f474786ddfd37abce6df6bbb1dd5dfc4434a",
-      "decimals": 8,
-      "isContract": true,
-      "isErc20": true,
-      "name": "Orion Protocol",
-      "source": "Rotki",
-      "symbol": "ORN",
-      "tags": "50-Tokens:ERC20"
-    },
-    {
-      "address": "0x025d34acfd5c65cfd5a73209f99608c9e13338f3",
-      "decimals": 18,
-      "isContract": true,
-      "isErc20": true,
-      "name": "Uniswap V2",
-      "source": "On chain",
-      "symbol": "UNI-V2",
-      "tags": "50-Tokens:ERC20"
-    },
-    {
-      "address": "0x025d7dce7ad345bd55c4c972614e720ab67e1b2b",
-      "decimals": 18,
-      "isContract": true,
-      "isErc20": true,
-      "name": "Curve.fi Factory Crypto Pool: ARTH/OHM",
-      "source": "Rotki",
-      "symbol": "crvARTHOHM-f",
-      "tags": "50-Tokens:ERC20"
-    },
-    {
-      "address": "0x025f99977db78317a4eba606998258b502bb256f",
-      "decimals": 18,
-      "name": "VeyronPepe",
-      "source": "SmolAssets",
-      "symbol": "VPPE",
-      "tags": "60-SmolAssets"
-    },
-    {
-      "address": "0x026224a2940bfe258d0dbe947919b62fe321f042",
-      "decimals": 18,
-      "isContract": true,
-      "isErc20": true,
-      "isErc721": true,
-      "name": "lobsterdao",
-      "source": "On chain",
-      "symbol": "LOBS",
-      "tags": "50-Tokens:ERC721"
-    },
-    {
-      "address": "0x0266f4f08d82372cf0fcbccc0ff74309089c74d1",
-      "decimals": 18,
-      "name": "Rocket Pool ETH",
-      "source": "Rotki",
-      "symbol": "rETH",
-      "tags": "60-Rotki"
-    },
-    {
-      "address": "0x026b623eb4aada7de37ef25256854f9235207178",
-      "decimals": 18,
-      "isContract": true,
-      "name": "spooky-v3.xyz",
-      "source": "Rotki",
-      "symbol": "Visit https://spooky-v3.xyz and claim rewards",
-      "tags": "60-Rotki"
-    },
-    {
-      "address": "0x02725836ebf3ecdb1cdf1c7b02fcbbfaa2736af8",
-      "decimals": 8,
-      "isContract": true,
-      "isErc20": true,
-      "name": "BitAir",
-      "source": "On chain",
-      "symbol": "BTCA",
-      "tags": "50-Tokens:ERC20"
-    },
-    {
-      "address": "0x0275e1001e293c46cfe158b3702aade0b99f88a5",
-      "decimals": 18,
-      "isContract": true,
-      "isErc20": true,
-      "name": "Oiler",
-      "source": "On chain",
-      "symbol": "OIL",
-      "tags": "50-Tokens:ERC20"
-    },
-    {
-      "address": "0x027dbca046ca156de9622cd1e2d907d375e53aa7",
-      "decimals": 9,
-      "isContract": true,
-      "name": "Ampleforth secured by Meter Passport",
-      "source": "Rotki",
-      "symbol": "AMPL",
-      "tags": "60-Rotki"
-    },
-    {
-      "address": "0x028171bca77440897b824ca71d1c56cac55b68a3",
-      "decimals": 18,
-      "isContract": true,
-      "isErc20": true,
-      "name": "Aave interest bearing DAI",
-      "source": "On chain",
-      "symbol": "aDAI",
-      "tags": "50-Tokens:ERC20"
-    },
-    {
-      "address": "0x0297083eef9c04ee22c89187b13363af2249042b",
-      "decimals": 18,
-      "isContract": true,
-      "isErc20": true,
-      "name": "Andre KP9R",
-      "source": "On chain",
-      "symbol": "aKP9R",
-      "tags": "50-Tokens:ERC20"
-    },
-    {
-      "address": "0x02a522d98ec2d2c3bbe91acc29ee7fd32ab880ab",
-      "name": "Mintable: Deployer",
-      "tags": "31-Gitcoin:Grants"
-    },
-    {
-      "address": "0x02a7c828437aa9aea6da510758b2a9d6fb37f0bc",
-      "decimals": 18,
-      "isContract": true,
-      "isErc20": true,
-      "name": "Salt Shaker",
-      "source": "On chain",
-      "symbol": "SALT 🧂",
-      "tags": "50-Tokens:ERC20"
-    },
-    {
-      "address": "0x02ad1b2f88d37825a311045663a0bf97d0dcd845",
-      "isContract": true,
-      "name": "YoutubeViews_id13",
-      "source": "Ether Camp",
-      "tags": "91-Early:Addresses"
-    },
-    {
-      "address": "0x02b173e5c6553b5429086edd94a37e34adbda2aa",
-      "decimals": 4,
-      "isContract": true,
-      "isErc20": true,
-      "name": "MuskMarsDog",
-      "source": "On chain",
-      "symbol": "MDOGE",
-      "tags": "50-Tokens:ERC20"
-    },
-    {
-      "address": "0x02b1cb4de1af0d10a53d0efc243e56f6baa39c1a",
-      "name": "basinDAO",
-      "source": "Tokenomics",
-      "tags": "31-Giveth:Project"
-    },
-    {
-      "address": "0x02b2101903eb6a51518e63e84b785180859fda9d",
-      "isContract": true,
-      "name": "Thewhalegame",
-      "source": "EtherScan.io",
-      "tags": "91-Early:Addresses"
-    },
-    {
-      "address": "0x02bcb9675727ade60243c3d467a3bf152142698b",
-      "isContract": true,
-      "name": "Credmark Community Treasury",
-      "source": "EtherScan.io",
-      "tags": "30-Contracts"
     }
   ]
 }

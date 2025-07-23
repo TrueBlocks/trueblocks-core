@@ -9,7 +9,9 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
 )
 
-func QueryUser(prompt, noResponse string) bool {
+// queryUserHelper is a private helper function that handles user input
+// defaultToYes determines what happens when the user hits enter with no input
+func queryUserHelper(prompt, noResponse string, defaultToYes bool) bool {
 	if os.Getenv("TB_NO_USERQUERY") == "true" {
 		return true
 	} else if len(os.Getenv("TB_NO_USERQUERY")) > 0 {
@@ -20,16 +22,37 @@ func QueryUser(prompt, noResponse string) bool {
 	fmt.Fprintf(os.Stderr, colors.Yellow+"%s"+colors.Off, prompt)
 	text, _ := reader.ReadString('\n')
 	text = strings.Replace(text, "\n", "", -1)
-	if text != "" && text != "y" && text != "Y" {
-		text = strings.ToLower(text)
-		if text == "q" || text == "quit" {
-			fmt.Fprintf(os.Stderr, "Quitting...\n")
-			os.Exit(0)
-		}
-		fmt.Fprintf(os.Stderr, "%s [%s]\n", noResponse, text)
-		return false
+
+	// Handle empty input (user just hit enter)
+	if text == "" {
+		return defaultToYes
 	}
-	return true
+
+	// Handle explicit yes
+	if text == "y" || text == "Y" {
+		return true
+	}
+
+	// Handle quit
+	text = strings.ToLower(text)
+	if text == "q" || text == "quit" {
+		fmt.Fprintf(os.Stderr, "Quitting...\n")
+		os.Exit(0)
+	}
+
+	// Everything else is treated as no
+	fmt.Fprintf(os.Stderr, "%s [%s]\n", noResponse, text)
+	return false
+}
+
+// QueryUser prompts the user and defaults to "yes" when enter is pressed
+func QueryUser(prompt, noResponse string) bool {
+	return queryUserHelper(prompt, noResponse, true)
+}
+
+// QueryUserNo prompts the user and defaults to "no" when enter is pressed
+func QueryUserNo(prompt, noResponse string) bool {
+	return queryUserHelper(prompt, noResponse, false)
 }
 
 func Wait() {

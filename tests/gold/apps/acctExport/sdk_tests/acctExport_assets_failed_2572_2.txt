@@ -17,10 +17,10 @@ Format:  json
       "decimals": 18,
       "isContract": true,
       "isErc20": true,
-      "name": "Maker",
-      "source": "Giveth website",
+      "name": "Maker (L1)",
+      "source": "https://docs.optimism.io/chain/tokenlist?utm_source=chatgpt.com",
       "symbol": "MKR",
-      "tags": "50-Tokens:ERC20"
+      "tags": "55-Defi"
     },
     {
       "address": "0xc713e5e149d5d0715dcd1c156a020976e7e56b88",

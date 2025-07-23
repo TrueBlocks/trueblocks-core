@@ -129,6 +129,7 @@
     "name": "donate",
     "outputs": [],
     "signature": "donate((address,uint256,address)[])",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {

@@ -197,7 +197,7 @@ Counts consist of the following fields:
 
 ## Destination
 
-
+A Destination is an enhanced url used by chifra explore it may be a URL to a block on the explorer, a transaction hash, or an address.
 
 The following commands produce and manage Destinations:
 

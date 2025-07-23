@@ -2,7 +2,6 @@ when?blocks=12&cache
 Args: [blocks=12 cache]
 Opts: {"blocks":["12"],"cache":true}
 Blocks:  [12]
-Enabled:  blocks
 Cache:  true
 Caps:  cache,decache
 Format:  json

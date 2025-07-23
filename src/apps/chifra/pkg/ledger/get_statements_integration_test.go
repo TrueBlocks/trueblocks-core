@@ -232,7 +232,8 @@ func TestStatementsToCache(t *testing.T) {
 				TransactionIndex: trans.TransactionIndex,
 			}
 			err := r.Connection.ReadFromCache(sg)
-			if asset == base.FAKE_ETH_ADDRESS {
+			switch asset {
+			case base.FAKE_ETH_ADDRESS:
 				if err != nil {
 					t.Fatalf("failed to read from cache for asset %s: %v", asset, err)
 				}
@@ -240,7 +241,7 @@ func TestStatementsToCache(t *testing.T) {
 				if !reflect.DeepEqual(sg.Statements, expected) {
 					t.Errorf("statements for asset %s mismatch:\n got: %v\n want: %v", asset, sg.Statements, expected)
 				}
-			} else if asset == testAsset {
+			case testAsset:
 				if err == nil {
 					t.Errorf("expected cache miss for asset %s, but found statements: %v", asset, sg.Statements)
 				}

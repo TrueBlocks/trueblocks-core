@@ -93,6 +93,7 @@ Flags:
   -c, --first_record uint   the first record to process
   -e, --max_records uint    the maximum number of records to process (default 10000)
   -a, --chains              include a list of chain configurations in the output
+  -s, --caches              include a list of cache items in the output
   -k, --healthcheck         an alias for the diagnose endpoint
   -x, --fmt string          export format, one of [none|json*|txt|csv]
   -v, --verbose             enable verbose output
@@ -101,6 +102,10 @@ Flags:
 Notes:
   - The some mode includes index, monitors, names, slurps, and abis.
   - If no mode is supplied, a terse report is generated.
+  - The --chains option may be used alone to return only chain configuration information.
+  - The --caches option may be used alone to return only cache information.
+  - Using both --chains and --caches together returns both types of information in a single status object.
+  - Both --chains and --caches may be used with modes and --diagnose/--healthcheck for complete customization.
 ```
 
 Data models produced by this tool:
@@ -337,25 +342,26 @@ Flags:
   -F, --first_block uint   first block to process (inclusive)
   -L, --last_block uint    last block to process (inclusive)
   -m, --max_addrs uint     the max number of addresses to process in a given chunk
-  -d, --deep               if true, dig more deeply during checking (manifest only)
+  -D, --deep               if true, dig more deeply during checking (manifest only)
   -e, --rewrite            for the --pin --deep mode only, writes the manifest back to the index folder (see notes)
   -U, --count              for certain modes only, display the count of records
+  -M, --metadata           for --pin only, pin only metadata files (ts.bin and manifest.json)
   -s, --sleep float        for --remote pinning only, seconds to sleep between API calls
   -x, --fmt string         export format, one of [none|json*|txt|csv]
   -v, --verbose            enable verbose output
   -h, --help               display this help screen
 
 Notes:
-  - Mode determines which type of data to display or process.
-  - Certain options are only available in certain modes.
-  - If blocks are provided, only chunks intersecting with those blocks are displayed.
+  - Available modes: stats, index, blooms, manifest, pins, addresses, appearances.
+  - Some options are mode-specific (e.g., --belongs only works in index mode).
+  - Block filters limit results to intersecting chunks only.
+  - To pin only metadata (ts.bin and manifest.json), use --pin --metadata.
   - The --truncate option updates the manifest and removes local data, but does not alter remote pins.
-  - The --belongs option is only available in the index mode.
-  - The --first_block and --last_block options apply only to addresses, appearances, and index --belongs mode.
-  - The --pin option requires a locally running IPFS node or a pinning service API key.
-  - The --publish option requires a private key.
-  - The --publisher option is ignored with the --publish option since the sender of the transaction is recorded as the publisher.
-  - Without --rewrite, the manifest is written to the temporary cache. With it, the manifest is rewritten to the index folder.
+  - The --belongs option is only available in index mode.
+  - Block range options (--first_block, --last_block) apply to addresses, appearances, and index modes.
+  - Pinning requires a locally-running IPFS node or pinning service API key.
+  - With --publish, transaction sender becomes publisher (that is, the --publisher ignored).
+  - Without --rewrite, manifest is written to a temp folder; with --rewrite, to the index folder.
 ```
 
 Data models produced by this tool:

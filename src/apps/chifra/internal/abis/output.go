@@ -61,6 +61,8 @@ func (opts *AbisOptions) AbisInternal(rCtx *output.RenderCtx) error {
 		err = opts.HandleFind(rCtx)
 	} else if opts.Count {
 		err = opts.HandleCount(rCtx)
+	} else if opts.Details {
+		err = opts.HandleDetails(rCtx)
 	} else if opts.List {
 		err = opts.HandleList(rCtx)
 	} else if len(opts.Encode) > 0 {

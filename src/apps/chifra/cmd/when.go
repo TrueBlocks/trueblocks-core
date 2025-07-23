@@ -65,7 +65,7 @@ func init() {
 	whenCmd.Flags().BoolVarP(&whenPkg.GetOptions().Repair, "repair", "r", false, `with --timestamps only, repairs block(s) in the block range by re-querying from the chain`)
 	whenCmd.Flags().BoolVarP(&whenPkg.GetOptions().Check, "check", "c", false, `with --timestamps only, checks the validity of the timestamp data`)
 	whenCmd.Flags().BoolVarP(&whenPkg.GetOptions().Update, "update", "u", false, `with --timestamps only, bring the timestamp database forward to the latest block`)
-	whenCmd.Flags().BoolVarP(&whenPkg.GetOptions().Deep, "deep", "d", false, `with --timestamps --check only, verifies timestamps from on chain (slow)`)
+	whenCmd.Flags().Uint64VarP(&whenPkg.GetOptions().Deep, "deep", "d", 0, `with --timestamps --check only, verifies every N timestamp directly from the chain (slow)`)
 	if !base.IsTestMode() {
 		_ = whenCmd.Flags().MarkHidden("truncate")
 	}

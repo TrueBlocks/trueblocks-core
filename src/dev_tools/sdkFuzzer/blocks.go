@@ -61,7 +61,8 @@ func DoBlocks() {
 						opts.Cache = false
 						opts.Decache = false
 					}
-					if t == "uniq" {
+					switch t {
+					case "uniq":
 						flows := []sdk.BlocksFlow{sdk.NoBF, sdk.BFFrom, sdk.BFTo, sdk.BFReward}
 						for _, f := range flows {
 							fn += "-" + f.String()
@@ -69,7 +70,7 @@ func DoBlocks() {
 							fn3 := fn2 + "-" + f.String()
 							TestBlocks(t, "", fn3, &opts)
 						}
-					} else if t == "logs" {
+					case "logs":
 						for _, art := range articulate {
 							opts.Articulate = art
 							if art {
@@ -77,7 +78,7 @@ func DoBlocks() {
 							}
 							TestBlocks(t, "", fn2, &opts)
 						}
-					} else {
+					default:
 						TestBlocks(t, "", fn2, &opts)
 					}
 				}

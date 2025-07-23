@@ -5,15 +5,27 @@ TEST[DATE|TIME] Format:  json
 {
   "data": [
     {
+      "lastCached": "",
+      "nFiles": 0,
+      "nFolders": 0,
       "path": "--path--",
+      "sizeInBytes": 0,
       "type": "configPath"
     },
     {
+      "lastCached": "",
+      "nFiles": 0,
+      "nFolders": 0,
       "path": "--path--",
+      "sizeInBytes": 0,
       "type": "cachePath"
     },
     {
+      "lastCached": "",
+      "nFiles": 0,
+      "nFolders": 0,
       "path": "--path--",
+      "sizeInBytes": 0,
       "type": "indexPath"
     }
   ]

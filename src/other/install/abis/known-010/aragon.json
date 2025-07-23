@@ -15,6 +15,7 @@
       }
     ],
     "signature": "proxyPayment(address)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -41,6 +42,7 @@
       }
     ],
     "signature": "onTransfer(address,address,uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -67,6 +69,7 @@
       }
     ],
     "signature": "onApprove(address,address,uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -75,6 +78,7 @@
     "name": "Controlled",
     "outputs": [],
     "signature": "Controlled()",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -100,19 +104,20 @@
     "name": "receiveApproval",
     "outputs": [],
     "signature": "receiveApproval(address,uint256,address,bytes)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
     "encoding": "0x66efe346",
     "inputs": [
       {
-        "name": "_tokenFactory",
         "internalType": "contract MiniMeTokenFactory",
+        "name": "_tokenFactory",
         "type": "address"
       },
       {
-        "name": "_parentToken",
         "internalType": "contract MiniMeToken",
+        "name": "_parentToken",
         "type": "address"
       },
       {
@@ -139,6 +144,7 @@
     "name": "MiniMeToken",
     "outputs": [],
     "signature": "MiniMeToken(address,address,uint256,string,uint8,string,bool)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -161,6 +167,7 @@
       }
     ],
     "signature": "transfer(address,uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -187,6 +194,7 @@
       }
     ],
     "signature": "transferFrom(address,address,uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -213,6 +221,7 @@
       }
     ],
     "signature": "doTransfer(address,address,uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -232,6 +241,7 @@
       }
     ],
     "signature": "balanceOf(address)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -254,6 +264,7 @@
       }
     ],
     "signature": "approve(address,uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -277,14 +288,15 @@
       }
     ],
     "signature": "allowance(address,address)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
     "encoding": "0xae9e4c5e",
     "inputs": [
       {
-        "name": "_spender",
         "internalType": "contract ApproveAndCallFallBack",
+        "name": "_spender",
         "type": "address"
       },
       {
@@ -304,6 +316,7 @@
       }
     ],
     "signature": "approveAndCall(address,uint256,bytes)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -318,6 +331,7 @@
       }
     ],
     "signature": "totalSupply()",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -341,6 +355,7 @@
       }
     ],
     "signature": "balanceOfAt(address,uint256)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -360,6 +375,7 @@
       }
     ],
     "signature": "totalSupplyAt(uint256)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -389,12 +405,13 @@
     "name": "createCloneToken",
     "outputs": [
       {
-        "name": "ret_0",
         "internalType": "contract MiniMeToken",
+        "name": "ret_0",
         "type": "address"
       }
     ],
     "signature": "createCloneToken(string,uint8,string,uint256,bool)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -417,6 +434,7 @@
       }
     ],
     "signature": "generateTokens(address,uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -439,6 +457,7 @@
       }
     ],
     "signature": "destroyTokens(address,uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -452,6 +471,7 @@
     "name": "enableTransfers",
     "outputs": [],
     "signature": "enableTransfers(bool)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -459,9 +479,9 @@
     "encoding": "0xdf44f06e",
     "inputs": [
       {
+        "internalType": "struct Checkpoint[]",
         "is_array": true,
         "name": "checkpoints",
-        "internalType": "struct Checkpoint[]",
         "type": "tuple[]"
       },
       {
@@ -477,15 +497,16 @@
       }
     ],
     "signature": "getValueAt(tuple[],uint256)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
     "encoding": "0x80996609",
     "inputs": [
       {
+        "internalType": "struct Checkpoint[]",
         "is_array": true,
         "name": "checkpoints",
-        "internalType": "struct Checkpoint[]",
         "type": "tuple[]"
       },
       {
@@ -496,6 +517,7 @@
     "name": "updateValueAtNow",
     "outputs": [],
     "signature": "updateValueAtNow(tuple[],uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -515,6 +537,7 @@
       }
     ],
     "signature": "isContract(address)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -537,6 +560,7 @@
       }
     ],
     "signature": "min(uint256,uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -550,6 +574,7 @@
     "name": "claimTokens",
     "outputs": [],
     "signature": "claimTokens(address)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -643,8 +668,8 @@
     "encoding": "0x0c626450",
     "inputs": [
       {
-        "name": "_parentToken",
         "internalType": "contract MiniMeToken",
+        "name": "_parentToken",
         "type": "address"
       },
       {
@@ -671,20 +696,21 @@
     "name": "createCloneToken",
     "outputs": [
       {
-        "name": "ret_0",
         "internalType": "contract MiniMeToken",
+        "name": "ret_0",
         "type": "address"
       }
     ],
     "signature": "createCloneToken(address,uint256,string,uint8,string,bool)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
     "encoding": "0xec68db18",
     "inputs": [
       {
-        "name": "_token",
         "internalType": "contract MiniMeToken",
+        "name": "_token",
         "type": "address"
       },
       {
@@ -695,6 +721,7 @@
     "name": "_cacheToken",
     "outputs": [],
     "signature": "_cacheToken(address,address)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -708,12 +735,13 @@
     "name": "_popTokenCache",
     "outputs": [
       {
-        "name": "ret_0",
         "internalType": "contract MiniMeToken",
+        "name": "ret_0",
         "type": "address"
       }
     ],
     "signature": "_popTokenCache(address)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -737,6 +765,7 @@
       }
     ],
     "signature": "isValidSignature(bytes32,bytes)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -755,6 +784,7 @@
       }
     ],
     "signature": "returnIsValidSignatureMagicNumber(bool)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -778,6 +808,7 @@
       }
     ],
     "signature": "isValidSignature(bytes,bytes)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -805,6 +836,7 @@
       }
     ],
     "signature": "isValidSignature(bytes32,address,bytes)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -831,6 +863,7 @@
       }
     ],
     "signature": "ecVerify(bytes32,address,bytes)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -861,6 +894,7 @@
       }
     ],
     "signature": "unpackEcSig(bytes)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -879,6 +913,7 @@
       }
     ],
     "signature": "popFirstByte(bytes)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -906,6 +941,7 @@
       }
     ],
     "signature": "safeIsValidSignature(address,bytes32,bytes)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -933,6 +969,7 @@
       }
     ],
     "signature": "safeBytes4StaticCall(address,bytes,uint256)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -954,6 +991,7 @@
     "name": "memcpy",
     "outputs": [],
     "signature": "memcpy(uint256,uint256,uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -972,6 +1010,7 @@
       }
     ],
     "signature": "supportsInterface(bytes4)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -991,6 +1030,7 @@
       }
     ],
     "signature": "getStorageBool(bytes32)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -1010,6 +1050,7 @@
       }
     ],
     "signature": "getStorageAddress(bytes32)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -1029,6 +1070,7 @@
       }
     ],
     "signature": "getStorageBytes32(bytes32)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -1048,6 +1090,7 @@
       }
     ],
     "signature": "getStorageUint256(bytes32)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -1065,6 +1108,7 @@
     "name": "setStorageBool",
     "outputs": [],
     "signature": "setStorageBool(bytes32,bool)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -1082,6 +1126,7 @@
     "name": "setStorageAddress",
     "outputs": [],
     "signature": "setStorageAddress(bytes32,address)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -1099,6 +1144,7 @@
     "name": "setStorageBytes32",
     "outputs": [],
     "signature": "setStorageBytes32(bytes32,bytes32)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -1116,6 +1162,7 @@
     "name": "setStorageUint256",
     "outputs": [],
     "signature": "setStorageUint256(bytes32,uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -1129,6 +1176,7 @@
     "name": "initialize",
     "outputs": [],
     "signature": "initialize(address)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -1160,6 +1208,7 @@
       }
     ],
     "signature": "hasPermission(address,address,bytes32,bytes)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -1196,6 +1245,7 @@
     "name": "transferToVault",
     "outputs": [],
     "signature": "transferToVault(address)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -1215,6 +1265,7 @@
       }
     ],
     "signature": "allowRecoverability(address)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -1229,6 +1280,7 @@
       }
     ],
     "signature": "getRecoveryVault()",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -1266,6 +1318,7 @@
       }
     ],
     "signature": "acl()",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -1297,6 +1350,7 @@
       }
     ],
     "signature": "hasPermission(address,address,bytes32,bytes)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -1318,6 +1372,7 @@
     "name": "setApp",
     "outputs": [],
     "signature": "setApp(bytes32,bytes32,address)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -1341,6 +1396,7 @@
       }
     ],
     "signature": "getApp(bytes32,bytes32)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -1355,6 +1411,7 @@
       }
     ],
     "signature": "kernel()",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -1369,20 +1426,22 @@
       }
     ],
     "signature": "appId()",
+    "stateMutability": "view",
     "type": "function"
   },
   {
     "encoding": "0x25651003",
     "inputs": [
       {
-        "name": "_kernel",
         "internalType": "contract IKernel",
+        "name": "_kernel",
         "type": "address"
       }
     ],
     "name": "setKernel",
     "outputs": [],
     "signature": "setKernel(address)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -1396,6 +1455,7 @@
     "name": "setAppId",
     "outputs": [],
     "signature": "setAppId(bytes32)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -1410,6 +1470,7 @@
       }
     ],
     "signature": "arr()",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -1429,6 +1490,7 @@
       }
     ],
     "signature": "arr(bytes32)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -1452,6 +1514,7 @@
       }
     ],
     "signature": "arr(bytes32,bytes32)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -1471,6 +1534,7 @@
       }
     ],
     "signature": "arr(address)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -1494,6 +1558,7 @@
       }
     ],
     "signature": "arr(address,address)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -1521,6 +1586,7 @@
       }
     ],
     "signature": "arr(address,uint256,uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -1552,6 +1618,7 @@
       }
     ],
     "signature": "arr(address,uint256,uint256,uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -1575,6 +1642,7 @@
       }
     ],
     "signature": "arr(address,uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -1610,6 +1678,7 @@
       }
     ],
     "signature": "arr(address,address,uint256,uint256,uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -1637,6 +1706,7 @@
       }
     ],
     "signature": "arr(address,address,address)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -1664,6 +1734,7 @@
       }
     ],
     "signature": "arr(address,address,uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -1683,6 +1754,7 @@
       }
     ],
     "signature": "arr(uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -1706,6 +1778,7 @@
       }
     ],
     "signature": "arr(uint256,uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -1733,6 +1806,7 @@
       }
     ],
     "signature": "arr(uint256,uint256,uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -1764,6 +1838,7 @@
       }
     ],
     "signature": "arr(uint256,uint256,uint256,uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -1799,6 +1874,7 @@
       }
     ],
     "signature": "arr(uint256,uint256,uint256,uint256,uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -1817,6 +1893,7 @@
       }
     ],
     "signature": "decodeParamOp(uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -1835,6 +1912,7 @@
       }
     ],
     "signature": "decodeParamId(uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -1861,6 +1939,7 @@
       }
     ],
     "signature": "decodeParamsList(uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -1879,6 +1958,7 @@
       }
     ],
     "signature": "toUint64(uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -1893,6 +1973,7 @@
       }
     ],
     "signature": "getBlockNumber()",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -1907,6 +1988,7 @@
       }
     ],
     "signature": "getBlockNumber64()",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -1921,6 +2003,7 @@
       }
     ],
     "signature": "getTimestamp()",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -1935,6 +2018,7 @@
       }
     ],
     "signature": "getTimestamp64()",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -1949,6 +2033,7 @@
       }
     ],
     "signature": "getInitializationBlock()",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -1963,6 +2048,7 @@
       }
     ],
     "signature": "hasInitialized()",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -1971,6 +2057,7 @@
     "name": "initialized",
     "outputs": [],
     "signature": "initialized()",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -1984,6 +2071,7 @@
     "name": "initializedAt",
     "outputs": [],
     "signature": "initializedAt(uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -1998,6 +2086,7 @@
       }
     ],
     "signature": "isPetrified()",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -2006,6 +2095,7 @@
     "name": "petrify",
     "outputs": [],
     "signature": "petrify()",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -2025,6 +2115,7 @@
       }
     ],
     "signature": "dangerouslyCastUintArrayToBytes(uint256[])",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -2044,6 +2135,7 @@
       }
     ],
     "signature": "dangerouslyCastBytesToUintArray(bytes)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -2058,6 +2150,7 @@
       }
     ],
     "signature": "totalSupply()",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -2077,6 +2170,7 @@
       }
     ],
     "signature": "balanceOf(address)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -2100,6 +2194,7 @@
       }
     ],
     "signature": "allowance(address,address)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -2122,6 +2217,7 @@
       }
     ],
     "signature": "transfer(address,uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -2144,6 +2240,7 @@
       }
     ],
     "signature": "approve(address,uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -2170,6 +2267,7 @@
       }
     ],
     "signature": "transferFrom(address,address,uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -2235,6 +2333,7 @@
       }
     ],
     "signature": "isContract(address)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -2257,6 +2356,7 @@
       }
     ],
     "signature": "invokeAndCheckSuccess(address,bytes)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -2283,14 +2383,15 @@
       }
     ],
     "signature": "staticInvoke(address,bytes)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
     "encoding": "0x2d466f20",
     "inputs": [
       {
-        "name": "_token",
         "internalType": "contract ERC20",
+        "name": "_token",
         "type": "address"
       },
       {
@@ -2310,14 +2411,15 @@
       }
     ],
     "signature": "safeTransfer(address,address,uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
     "encoding": "0x9729bb1e",
     "inputs": [
       {
-        "name": "_token",
         "internalType": "contract ERC20",
+        "name": "_token",
         "type": "address"
       },
       {
@@ -2341,14 +2443,15 @@
       }
     ],
     "signature": "safeTransferFrom(address,address,address,uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
     "encoding": "0x9971737b",
     "inputs": [
       {
-        "name": "_token",
         "internalType": "contract ERC20",
+        "name": "_token",
         "type": "address"
       },
       {
@@ -2368,6 +2471,7 @@
       }
     ],
     "signature": "safeApprove(address,address,uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -2375,8 +2479,8 @@
     "encoding": "0x07e0ffbe",
     "inputs": [
       {
-        "name": "_token",
         "internalType": "contract ERC20",
+        "name": "_token",
         "type": "address"
       },
       {
@@ -2392,6 +2496,7 @@
       }
     ],
     "signature": "staticBalanceOf(address,address)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -2399,8 +2504,8 @@
     "encoding": "0x2aee04f4",
     "inputs": [
       {
-        "name": "_token",
         "internalType": "contract ERC20",
+        "name": "_token",
         "type": "address"
       },
       {
@@ -2420,6 +2525,7 @@
       }
     ],
     "signature": "staticAllowance(address,address,address)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -2427,8 +2533,8 @@
     "encoding": "0x9707a378",
     "inputs": [
       {
-        "name": "_token",
         "internalType": "contract ERC20",
+        "name": "_token",
         "type": "address"
       }
     ],
@@ -2440,6 +2546,7 @@
       }
     ],
     "signature": "staticTotalSupply(address)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -2453,6 +2560,7 @@
     "name": "transferToVault",
     "outputs": [],
     "signature": "transferToVault(address)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -2472,6 +2580,7 @@
       }
     ],
     "signature": "allowRecoverability(address)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -2486,6 +2595,7 @@
       }
     ],
     "signature": "getRecoveryVault()",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -2513,6 +2623,7 @@
       }
     ],
     "signature": "execScript(bytes,bytes,address[])",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -2526,6 +2637,7 @@
       }
     ],
     "signature": "executorType()",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -2544,6 +2656,7 @@
       }
     ],
     "signature": "addScriptExecutor(address)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -2557,6 +2670,7 @@
     "name": "disableScriptExecutor",
     "outputs": [],
     "signature": "disableScriptExecutor(uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -2576,6 +2690,7 @@
       }
     ],
     "signature": "getScriptExecutor(bytes)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -2621,6 +2736,7 @@
       }
     ],
     "signature": "getEVMScriptExecutor(bytes)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -2635,6 +2751,7 @@
       }
     ],
     "signature": "getEVMScriptRegistry()",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -2657,6 +2774,7 @@
     "name": "runScript",
     "outputs": [],
     "signature": "runScript(bytes,bytes,address[])",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -2685,6 +2803,7 @@
       }
     ],
     "signature": "canPerform(address,bytes32,uint256[])",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -2699,6 +2818,7 @@
       }
     ],
     "signature": "getRecoveryVault()",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -2713,6 +2833,7 @@
       }
     ],
     "signature": "isDepositable()",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -2726,6 +2847,7 @@
     "name": "setDepositable",
     "outputs": [],
     "signature": "setDepositable(bool)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -2779,6 +2901,7 @@
     "inputs": [],
     "outputs": [],
     "signature": "()",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -2787,6 +2910,7 @@
     "name": "initialize",
     "outputs": [],
     "signature": "initialize()",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -2804,6 +2928,7 @@
     "name": "deposit",
     "outputs": [],
     "signature": "deposit(address,uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -2825,6 +2950,7 @@
     "name": "transfer",
     "outputs": [],
     "signature": "transfer(address,address,uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -2844,6 +2970,7 @@
       }
     ],
     "signature": "balance(address)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -2863,6 +2990,7 @@
       }
     ],
     "signature": "allowRecoverability(address)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -2880,6 +3008,7 @@
     "name": "_deposit",
     "outputs": [],
     "signature": "_deposit(address,uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -2893,6 +3022,7 @@
       }
     ],
     "signature": "isForwarder()",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -2916,6 +3046,7 @@
       }
     ],
     "signature": "canForward(address,bytes)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -2929,6 +3060,7 @@
     "name": "forward",
     "outputs": [],
     "signature": "forward(bytes)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -3071,6 +3203,7 @@
     "name": "execute",
     "outputs": [],
     "signature": "execute(address,uint256,bytes)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -3088,6 +3221,7 @@
     "name": "safeExecute",
     "outputs": [],
     "signature": "safeExecute(address,bytes)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -3101,6 +3235,7 @@
     "name": "addProtectedToken",
     "outputs": [],
     "signature": "addProtectedToken(address)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -3114,6 +3249,7 @@
     "name": "removeProtectedToken",
     "outputs": [],
     "signature": "removeProtectedToken(address)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -3127,6 +3263,7 @@
     "name": "presignHash",
     "outputs": [],
     "signature": "presignHash(bytes32)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -3140,6 +3277,7 @@
     "name": "setDesignatedSigner",
     "outputs": [],
     "signature": "setDesignatedSigner(address)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -3153,6 +3291,7 @@
       }
     ],
     "signature": "isForwarder()",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -3166,6 +3305,7 @@
     "name": "forward",
     "outputs": [],
     "signature": "forward(bytes)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -3189,6 +3329,7 @@
       }
     ],
     "signature": "canForward(address,bytes)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -3207,6 +3348,7 @@
       }
     ],
     "signature": "supportsInterface(bytes4)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -3230,6 +3372,7 @@
       }
     ],
     "signature": "isValidSignature(bytes32,bytes)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -3244,6 +3387,7 @@
       }
     ],
     "signature": "getProtectedTokensLength()",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -3257,6 +3401,7 @@
     "name": "_addProtectedToken",
     "outputs": [],
     "signature": "_addProtectedToken(address)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -3270,6 +3415,7 @@
     "name": "_removeProtectedToken",
     "outputs": [],
     "signature": "_removeProtectedToken(address)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -3289,6 +3435,7 @@
       }
     ],
     "signature": "_isERC20(address)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -3308,6 +3455,7 @@
       }
     ],
     "signature": "_protectedTokenIndex(address)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -3327,6 +3475,7 @@
       }
     ],
     "signature": "_tokenIsProtected(address)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -3345,6 +3494,7 @@
       }
     ],
     "signature": "_getScriptACLParam(bytes)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -3363,6 +3513,7 @@
       }
     ],
     "signature": "_getSig(bytes)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -3385,6 +3536,7 @@
       }
     ],
     "signature": "mul(uint256,uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -3407,6 +3559,7 @@
       }
     ],
     "signature": "div(uint256,uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -3429,6 +3582,7 @@
       }
     ],
     "signature": "sub(uint256,uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -3451,6 +3605,7 @@
       }
     ],
     "signature": "add(uint256,uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -3473,6 +3628,7 @@
       }
     ],
     "signature": "mod(uint256,uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -3495,6 +3651,7 @@
       }
     ],
     "signature": "mul(uint64,uint64)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -3517,6 +3674,7 @@
       }
     ],
     "signature": "div(uint64,uint64)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -3539,6 +3697,7 @@
       }
     ],
     "signature": "sub(uint64,uint64)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -3561,6 +3720,7 @@
       }
     ],
     "signature": "add(uint64,uint64)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -3583,6 +3743,7 @@
       }
     ],
     "signature": "mod(uint64,uint64)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -3679,8 +3840,8 @@
     "encoding": "0x7531c7a6",
     "inputs": [
       {
-        "name": "_token",
         "internalType": "contract MiniMeToken",
+        "name": "_token",
         "type": "address"
       },
       {
@@ -3699,6 +3860,7 @@
     "name": "initialize",
     "outputs": [],
     "signature": "initialize(address,uint64,uint64,uint64)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -3712,6 +3874,7 @@
     "name": "changeSupportRequiredPct",
     "outputs": [],
     "signature": "changeSupportRequiredPct(uint64)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -3725,6 +3888,7 @@
     "name": "changeMinAcceptQuorumPct",
     "outputs": [],
     "signature": "changeMinAcceptQuorumPct(uint64)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -3742,6 +3906,7 @@
     "name": "newVote",
     "outputs": [],
     "signature": "newVote(bytes,string)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -3772,6 +3937,7 @@
       }
     ],
     "signature": "newVote(bytes,string,bool,bool)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -3793,6 +3959,7 @@
     "name": "vote",
     "outputs": [],
     "signature": "vote(uint256,bool,bool)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -3806,6 +3973,7 @@
     "name": "executeVote",
     "outputs": [],
     "signature": "executeVote(uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -3819,6 +3987,7 @@
       }
     ],
     "signature": "isForwarder()",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -3832,6 +4001,7 @@
     "name": "forward",
     "outputs": [],
     "signature": "forward(bytes)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -3855,6 +4025,7 @@
       }
     ],
     "signature": "canForward(address,bytes)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -3869,6 +4040,7 @@
     "name": "canExecute",
     "outputs": [],
     "signature": "canExecute(uint256)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -3887,6 +4059,7 @@
     "name": "canVote",
     "outputs": [],
     "signature": "canVote(uint256,address)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -3941,6 +4114,7 @@
       }
     ],
     "signature": "getVote(uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -3959,6 +4133,7 @@
     "name": "getVoterState",
     "outputs": [],
     "signature": "getVoterState(uint256,address)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -3989,6 +4164,7 @@
       }
     ],
     "signature": "_newVote(bytes,string,bool,bool)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -4014,6 +4190,7 @@
     "name": "_vote",
     "outputs": [],
     "signature": "_vote(uint256,bool,address,bool)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -4027,6 +4204,7 @@
     "name": "_executeVote",
     "outputs": [],
     "signature": "_executeVote(uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -4040,6 +4218,7 @@
     "name": "_unsafeExecuteVote",
     "outputs": [],
     "signature": "_unsafeExecuteVote(uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -4059,6 +4238,7 @@
       }
     ],
     "signature": "_canExecute(uint256)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -4082,6 +4262,7 @@
       }
     ],
     "signature": "_canVote(uint256,address)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -4089,8 +4270,8 @@
     "encoding": "0x890ee95f",
     "inputs": [
       {
-        "name": "vote_",
         "internalType": "struct Vote",
+        "name": "vote_",
         "type": "tuple"
       }
     ],
@@ -4102,6 +4283,7 @@
       }
     ],
     "signature": "_isVoteOpen(tuple)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -4128,6 +4310,7 @@
       }
     ],
     "signature": "_isValuePct(uint256,uint256,uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -4141,6 +4324,7 @@
       }
     ],
     "signature": "ratePrecision()",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -4168,6 +4352,7 @@
       }
     ],
     "signature": "get(address,address)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -4321,14 +4506,15 @@
     "inputs": [],
     "outputs": [],
     "signature": "()",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
     "encoding": "0x5c7392be",
     "inputs": [
       {
-        "name": "_vault",
         "internalType": "contract Vault",
+        "name": "_vault",
         "type": "address"
       },
       {
@@ -4339,6 +4525,7 @@
     "name": "initialize",
     "outputs": [],
     "signature": "initialize(address,uint64)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -4360,6 +4547,7 @@
     "name": "deposit",
     "outputs": [],
     "signature": "deposit(address,uint256,string)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -4385,6 +4573,7 @@
     "name": "newImmediatePayment",
     "outputs": [],
     "signature": "newImmediatePayment(address,address,uint256,string)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -4427,6 +4616,7 @@
       }
     ],
     "signature": "newScheduledPayment(address,address,uint256,uint64,uint64,uint64,string)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -4440,6 +4630,7 @@
     "name": "setPeriodDuration",
     "outputs": [],
     "signature": "setPeriodDuration(uint64)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -4457,6 +4648,7 @@
     "name": "setBudget",
     "outputs": [],
     "signature": "setBudget(address,uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -4470,6 +4662,7 @@
     "name": "removeBudget",
     "outputs": [],
     "signature": "removeBudget(address)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -4483,6 +4676,7 @@
     "name": "executePayment",
     "outputs": [],
     "signature": "executePayment(uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -4496,6 +4690,7 @@
     "name": "receiverExecutePayment",
     "outputs": [],
     "signature": "receiverExecutePayment(uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -4513,6 +4708,7 @@
     "name": "setPaymentStatus",
     "outputs": [],
     "signature": "setPaymentStatus(uint256,bool)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -4526,6 +4722,7 @@
     "name": "recoverToVault",
     "outputs": [],
     "signature": "recoverToVault(address)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -4544,6 +4741,7 @@
       }
     ],
     "signature": "tryTransitionAccountingPeriod(uint64)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -4563,6 +4761,7 @@
       }
     ],
     "signature": "allowRecoverability(address)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -4613,6 +4812,7 @@
       }
     ],
     "signature": "getPayment(uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -4659,6 +4859,7 @@
       }
     ],
     "signature": "getTransaction(uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -4693,6 +4894,7 @@
       }
     ],
     "signature": "getPeriod(uint64)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -4719,6 +4921,7 @@
       }
     ],
     "signature": "getPeriodTokenStatement(uint64,address)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -4733,6 +4936,7 @@
       }
     ],
     "signature": "currentPeriodId()",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -4747,6 +4951,7 @@
       }
     ],
     "signature": "getPeriodDuration()",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -4770,6 +4975,7 @@
       }
     ],
     "signature": "getBudget(address)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -4789,6 +4995,7 @@
       }
     ],
     "signature": "getRemainingBudget(address)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -4812,6 +5019,7 @@
       }
     ],
     "signature": "canMakePayment(address,uint256)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -4826,6 +5034,7 @@
     "name": "nextPaymentTime",
     "outputs": [],
     "signature": "nextPaymentTime(uint256)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -4855,6 +5064,7 @@
     "name": "_deposit",
     "outputs": [],
     "signature": "_deposit(address,uint256,string,address,bool)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -4873,6 +5083,7 @@
       }
     ],
     "signature": "_executePayment(uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -4886,6 +5097,7 @@
     "name": "_executePaymentAtLeastOnce",
     "outputs": [],
     "signature": "_executePaymentAtLeastOnce(uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -4919,6 +5131,7 @@
     "name": "_makePaymentTransaction",
     "outputs": [],
     "signature": "_makePaymentTransaction(address,address,uint256,uint256,uint64,string)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -4952,6 +5165,7 @@
     "name": "_unsafeMakePaymentTransaction",
     "outputs": [],
     "signature": "_unsafeMakePaymentTransaction(address,address,uint256,uint256,uint64,string)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -4965,12 +5179,13 @@
     "name": "_newPeriod",
     "outputs": [
       {
-        "name": "storage",
         "internalType": "struct Period",
+        "name": "storage",
         "type": "tuple"
       }
     ],
     "signature": "_newPeriod(uint64)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -4996,6 +5211,7 @@
     "name": "_recordIncomingTransaction",
     "outputs": [],
     "signature": "_recordIncomingTransaction(address,address,uint256,string)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -5033,6 +5249,7 @@
     "name": "_recordTransaction",
     "outputs": [],
     "signature": "_recordTransaction(bool,address,address,uint256,uint256,uint64,string)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -5051,6 +5268,7 @@
       }
     ],
     "signature": "_tryTransitionAccountingPeriod(uint64)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -5074,6 +5292,7 @@
       }
     ],
     "signature": "_canMakePayment(address,uint256)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -5088,6 +5307,7 @@
       }
     ],
     "signature": "_currentPeriodId()",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -5107,6 +5327,7 @@
       }
     ],
     "signature": "_getRemainingBudget(address)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -5126,6 +5347,7 @@
       }
     ],
     "signature": "_nextPaymentTime(uint256)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -5165,6 +5387,7 @@
       }
     ],
     "signature": "_arr(address,address,uint256,uint256,uint256,uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -5179,6 +5402,7 @@
       }
     ],
     "signature": "getMaxPeriodTransitions()",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -5425,8 +5649,8 @@
     "encoding": "0x069f3eec",
     "inputs": [
       {
-        "name": "_finance",
         "internalType": "contract Finance",
+        "name": "_finance",
         "type": "address"
       },
       {
@@ -5434,8 +5658,8 @@
         "type": "address"
       },
       {
-        "name": "_priceFeed",
         "internalType": "contract IFeed",
+        "name": "_priceFeed",
         "type": "address"
       },
       {
@@ -5446,6 +5670,7 @@
     "name": "initialize",
     "outputs": [],
     "signature": "initialize(address,address,address,uint64)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -5463,20 +5688,22 @@
     "name": "setAllowedToken",
     "outputs": [],
     "signature": "setAllowedToken(address,bool)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
     "encoding": "0x1f352014",
     "inputs": [
       {
-        "name": "_feed",
         "internalType": "contract Finance",
+        "name": "_feed",
         "type": "address"
       }
     ],
     "name": "setPriceFeed",
     "outputs": [],
     "signature": "setPriceFeed(address)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -5490,6 +5717,7 @@
     "name": "setRateExpiryTime",
     "outputs": [],
     "signature": "setRateExpiryTime(uint64)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -5515,6 +5743,7 @@
     "name": "addEmployee",
     "outputs": [],
     "signature": "addEmployee(address,uint256,uint64,string)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -5532,6 +5761,7 @@
     "name": "addBonus",
     "outputs": [],
     "signature": "addBonus(uint256,uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -5549,6 +5779,7 @@
     "name": "addReimbursement",
     "outputs": [],
     "signature": "addReimbursement(uint256,uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -5566,6 +5797,7 @@
     "name": "setEmployeeSalary",
     "outputs": [],
     "signature": "setEmployeeSalary(uint256,uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -5583,6 +5815,7 @@
     "name": "terminateEmployee",
     "outputs": [],
     "signature": "terminateEmployee(uint256,uint64)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -5596,6 +5829,7 @@
     "name": "changeAddressByEmployee",
     "outputs": [],
     "signature": "changeAddressByEmployee(address)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -5615,14 +5849,15 @@
     "name": "determineAllocation",
     "outputs": [],
     "signature": "determineAllocation(address[],uint256[])",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
     "encoding": "0x02ea6495",
     "inputs": [
       {
-        "name": "_type",
         "internalType": "enum PaymentType",
+        "name": "_type",
         "type": "uint8"
       },
       {
@@ -5638,6 +5873,7 @@
     "name": "payday",
     "outputs": [],
     "signature": "payday(uint8,uint256,uint256[])",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -5651,6 +5887,7 @@
       }
     ],
     "signature": "isForwarder()",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -5664,6 +5901,7 @@
     "name": "forward",
     "outputs": [],
     "signature": "forward(bytes)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -5687,6 +5925,7 @@
       }
     ],
     "signature": "canForward(address,bytes)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -5706,6 +5945,7 @@
       }
     ],
     "signature": "getEmployeeIdByAddress(address)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -5753,6 +5993,7 @@
       }
     ],
     "signature": "getEmployee(uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -5767,6 +6008,7 @@
     "name": "getTotalOwedSalary",
     "outputs": [],
     "signature": "getTotalOwedSalary(uint256)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -5785,6 +6027,7 @@
     "name": "getAllocation",
     "outputs": [],
     "signature": "getAllocation(uint256,address)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -5804,20 +6047,22 @@
       }
     ],
     "signature": "isTokenAllowed(address)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
     "encoding": "0x980cd285",
     "inputs": [
       {
-        "name": "_feed",
         "internalType": "contract Finance",
+        "name": "_feed",
         "type": "address"
       }
     ],
     "name": "_setPriceFeed",
     "outputs": [],
     "signature": "_setPriceFeed(address)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -5831,6 +6076,7 @@
     "name": "_setRateExpiryTime",
     "outputs": [],
     "signature": "_setRateExpiryTime(uint64)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -5856,6 +6102,7 @@
     "name": "_addEmployee",
     "outputs": [],
     "signature": "_addEmployee(address,uint256,uint64,string)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -5873,6 +6120,7 @@
     "name": "_addBonus",
     "outputs": [],
     "signature": "_addBonus(uint256,uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -5890,6 +6138,7 @@
     "name": "_addReimbursement",
     "outputs": [],
     "signature": "_addReimbursement(uint256,uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -5907,6 +6156,7 @@
     "name": "_addAccruedSalary",
     "outputs": [],
     "signature": "_addAccruedSalary(uint256,uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -5924,6 +6174,7 @@
     "name": "_setEmployeeAddress",
     "outputs": [],
     "signature": "_setEmployeeAddress(uint256,address)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -5941,6 +6192,7 @@
     "name": "_terminateEmployee",
     "outputs": [],
     "signature": "_terminateEmployee(uint256,uint64)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -5951,8 +6203,8 @@
         "type": "uint256"
       },
       {
-        "name": "_type",
         "internalType": "enum PaymentType",
+        "name": "_type",
         "type": "uint8"
       },
       {
@@ -5973,6 +6225,7 @@
       }
     ],
     "signature": "_transferTokensAmount(uint256,uint8,uint256,uint256[])",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -5986,14 +6239,15 @@
     "name": "_removeEmployeeIfTerminatedAndPaidOut",
     "outputs": [],
     "signature": "_removeEmployeeIfTerminatedAndPaidOut(uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
     "encoding": "0x00611cc7",
     "inputs": [
       {
-        "name": "_employee",
         "internalType": "struct Employee",
+        "name": "_employee",
         "type": "tuple"
       },
       {
@@ -6004,6 +6258,7 @@
     "name": "_updateEmployeeAccountingBasedOnPaidSalary",
     "outputs": [],
     "signature": "_updateEmployeeAccountingBasedOnPaidSalary(tuple,uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -6023,6 +6278,7 @@
       }
     ],
     "signature": "_employeeExists(uint256)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -6030,14 +6286,15 @@
     "encoding": "0x21110acf",
     "inputs": [
       {
-        "name": "_employee",
         "internalType": "struct Employee",
+        "name": "_employee",
         "type": "tuple"
       }
     ],
     "name": "_ensureEmployeeTokenAllocationsIsValid",
     "outputs": [],
     "signature": "_ensureEmployeeTokenAllocationsIsValid(tuple)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -6045,8 +6302,8 @@
     "encoding": "0x652866f9",
     "inputs": [
       {
-        "name": "_employee",
         "internalType": "struct Employee",
+        "name": "_employee",
         "type": "tuple"
       }
     ],
@@ -6058,6 +6315,7 @@
       }
     ],
     "signature": "_isEmployeeActive(tuple)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -6077,6 +6335,7 @@
       }
     ],
     "signature": "_isEmployeeIdActive(uint256)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -6096,6 +6355,7 @@
       }
     ],
     "signature": "_getExchangeRateInDenominationToken(address)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -6103,8 +6363,8 @@
     "encoding": "0xe8967806",
     "inputs": [
       {
-        "name": "_employee",
         "internalType": "struct Employee",
+        "name": "_employee",
         "type": "tuple"
       },
       {
@@ -6120,6 +6380,7 @@
       }
     ],
     "signature": "_getOwedSalarySinceLastPayroll(tuple,bool)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -6127,8 +6388,8 @@
     "encoding": "0x034a6367",
     "inputs": [
       {
-        "name": "_employee",
         "internalType": "struct Employee",
+        "name": "_employee",
         "type": "tuple"
       }
     ],
@@ -6140,6 +6401,7 @@
       }
     ],
     "signature": "_getOwedPayrollPeriod(tuple)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -6147,8 +6409,8 @@
     "encoding": "0x9608aeb5",
     "inputs": [
       {
-        "name": "_employee",
         "internalType": "struct Employee",
+        "name": "_employee",
         "type": "tuple"
       }
     ],
@@ -6160,14 +6422,15 @@
       }
     ],
     "signature": "_getTotalOwedCappedSalary(tuple)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
     "encoding": "0x1b42d69e",
     "inputs": [
       {
-        "name": "_type",
         "internalType": "enum PaymentType",
+        "name": "_type",
         "type": "uint8"
       }
     ],
@@ -6179,6 +6442,7 @@
       }
     ],
     "signature": "_paymentReferenceFor(uint8)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -6201,6 +6465,7 @@
       }
     ],
     "signature": "_ensurePaymentAmount(uint256,uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -6251,8 +6516,8 @@
     "encoding": "0xa406ff13",
     "inputs": [
       {
-        "name": "_token",
         "internalType": "contract MiniMeToken",
+        "name": "_token",
         "type": "address"
       },
       {
@@ -6267,6 +6532,7 @@
     "name": "initialize",
     "outputs": [],
     "signature": "initialize(address,bool,uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -6284,6 +6550,7 @@
     "name": "mint",
     "outputs": [],
     "signature": "mint(address,uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -6297,6 +6564,7 @@
     "name": "issue",
     "outputs": [],
     "signature": "issue(uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -6314,6 +6582,7 @@
     "name": "assign",
     "outputs": [],
     "signature": "assign(address,uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -6331,6 +6600,7 @@
     "name": "burn",
     "outputs": [],
     "signature": "burn(address,uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -6364,6 +6634,7 @@
     "name": "assignVested",
     "outputs": [],
     "signature": "assignVested(address,uint256,uint64,uint64,uint64,bool)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -6381,6 +6652,7 @@
     "name": "revokeVesting",
     "outputs": [],
     "signature": "revokeVesting(address,uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -6407,6 +6679,7 @@
       }
     ],
     "signature": "onTransfer(address,address,uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -6433,6 +6706,7 @@
       }
     ],
     "signature": "onApprove(address,address,uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -6451,6 +6725,7 @@
       }
     ],
     "signature": "proxyPayment(address)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -6464,6 +6739,7 @@
       }
     ],
     "signature": "isForwarder()",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -6477,6 +6753,7 @@
     "name": "forward",
     "outputs": [],
     "signature": "forward(bytes)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -6500,6 +6777,7 @@
       }
     ],
     "signature": "canForward(address,bytes)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -6538,6 +6816,7 @@
       }
     ],
     "signature": "getVesting(address,uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -6557,6 +6836,7 @@
       }
     ],
     "signature": "spendableBalanceOf(address)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -6580,6 +6860,7 @@
       }
     ],
     "signature": "transferableBalance(address,uint256)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -6599,6 +6880,7 @@
       }
     ],
     "signature": "allowRecoverability(address)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -6616,6 +6898,7 @@
     "name": "_assign",
     "outputs": [],
     "signature": "_assign(address,uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -6633,6 +6916,7 @@
     "name": "_mint",
     "outputs": [],
     "signature": "_mint(address,uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -6656,6 +6940,7 @@
       }
     ],
     "signature": "_isBalanceIncreaseAllowed(address,uint256)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -6690,6 +6975,7 @@
       }
     ],
     "signature": "_calculateNonVestedTokens(uint256,uint256,uint256,uint256,uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -6713,6 +6999,7 @@
       }
     ],
     "signature": "_transferableBalance(address,uint256)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -6817,8 +7104,8 @@
     "encoding": "0xb7c7281c",
     "inputs": [
       {
-        "name": "_token",
         "internalType": "contract MiniMeToken",
+        "name": "_token",
         "type": "address"
       },
       {
@@ -6833,6 +7120,7 @@
     "name": "initialize",
     "outputs": [],
     "signature": "initialize(address,uint64,uint64)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -6846,6 +7134,7 @@
     "name": "changeMinAcceptParticipationPct",
     "outputs": [],
     "signature": "changeMinAcceptParticipationPct(uint64)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -6863,6 +7152,7 @@
     "name": "newSurvey",
     "outputs": [],
     "signature": "newSurvey(string,uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -6876,6 +7166,7 @@
     "name": "resetVote",
     "outputs": [],
     "signature": "resetVote(uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -6899,6 +7190,7 @@
     "name": "voteOptions",
     "outputs": [],
     "signature": "voteOptions(uint256,uint256[],uint256[])",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -6916,6 +7208,7 @@
     "name": "voteOption",
     "outputs": [],
     "signature": "voteOption(uint256,uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -6934,6 +7227,7 @@
     "name": "canVote",
     "outputs": [],
     "signature": "canVote(uint256,address)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -6976,6 +7270,7 @@
       }
     ],
     "signature": "getSurvey(uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -7004,6 +7299,7 @@
       }
     ],
     "signature": "getVoterState(uint256,address)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -7022,6 +7318,7 @@
     "name": "getOptionPower",
     "outputs": [],
     "signature": "getOptionPower(uint256,uint256)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -7036,6 +7333,7 @@
     "name": "isParticipationAchieved",
     "outputs": [],
     "signature": "isParticipationAchieved(uint256)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -7049,6 +7347,7 @@
     "name": "_resetVote",
     "outputs": [],
     "signature": "_resetVote(uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -7072,6 +7371,7 @@
     "name": "_voteOptions",
     "outputs": [],
     "signature": "_voteOptions(uint256,uint256[],uint256[])",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -7079,8 +7379,8 @@
     "encoding": "0xda500478",
     "inputs": [
       {
-        "name": "_survey",
         "internalType": "struct SurveyStruct",
+        "name": "_survey",
         "type": "tuple"
       }
     ],
@@ -7092,6 +7392,7 @@
       }
     ],
     "signature": "_isSurveyOpen(tuple)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -7124,6 +7425,7 @@
       }
     ],
     "signature": "canPerform(address,address,bytes32,uint256[])",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -7217,6 +7519,7 @@
     "name": "initialize",
     "outputs": [],
     "signature": "initialize(address)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -7242,6 +7545,7 @@
     "name": "createPermission",
     "outputs": [],
     "signature": "createPermission(address,address,bytes32,address)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -7263,6 +7567,7 @@
     "name": "grantPermission",
     "outputs": [],
     "signature": "grantPermission(address,address,bytes32)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -7289,6 +7594,7 @@
     "name": "grantPermissionP",
     "outputs": [],
     "signature": "grantPermissionP(address,address,bytes32,uint256[])",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -7310,6 +7616,7 @@
     "name": "revokePermission",
     "outputs": [],
     "signature": "revokePermission(address,address,bytes32)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -7331,6 +7638,7 @@
     "name": "setPermissionManager",
     "outputs": [],
     "signature": "setPermissionManager(address,address,bytes32)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -7348,6 +7656,7 @@
     "name": "removePermissionManager",
     "outputs": [],
     "signature": "removePermissionManager(address,bytes32)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -7365,6 +7674,7 @@
     "name": "createBurnedPermission",
     "outputs": [],
     "signature": "createBurnedPermission(address,bytes32)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -7382,6 +7692,7 @@
     "name": "burnPermissionManager",
     "outputs": [],
     "signature": "burnPermissionManager(address,bytes32)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -7409,6 +7720,7 @@
       }
     ],
     "signature": "getPermissionParamsLength(address,address,bytes32)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -7447,6 +7759,7 @@
       }
     ],
     "signature": "getPermissionParam(address,address,bytes32,uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -7470,6 +7783,7 @@
       }
     ],
     "signature": "getPermissionManager(address,bytes32)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -7501,6 +7815,7 @@
       }
     ],
     "signature": "hasPermission(address,address,bytes32,bytes)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -7533,6 +7848,7 @@
       }
     ],
     "signature": "hasPermission(address,address,bytes32,uint256[])",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -7560,6 +7876,7 @@
       }
     ],
     "signature": "hasPermission(address,address,bytes32)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -7596,6 +7913,7 @@
       }
     ],
     "signature": "evalParams(bytes32,address,address,bytes32,uint256[])",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -7621,6 +7939,7 @@
     "name": "_createPermission",
     "outputs": [],
     "signature": "_createPermission(address,address,bytes32,address)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -7646,6 +7965,7 @@
     "name": "_setPermission",
     "outputs": [],
     "signature": "_setPermission(address,address,bytes32,bytes32)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -7665,6 +7985,7 @@
       }
     ],
     "signature": "_saveParams(uint256[])",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -7705,14 +8026,15 @@
       }
     ],
     "signature": "_evalParam(bytes32,uint32,address,address,bytes32,uint256[])",
+    "stateMutability": "view",
     "type": "function"
   },
   {
     "encoding": "0xc408d039",
     "inputs": [
       {
-        "name": "_param",
         "internalType": "struct Param",
+        "name": "_param",
         "type": "tuple"
       },
       {
@@ -7745,6 +8067,7 @@
       }
     ],
     "signature": "_evalLogic(tuple,bytes32,address,address,bytes32,uint256[])",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -7755,8 +8078,8 @@
         "type": "uint256"
       },
       {
-        "name": "_op",
         "internalType": "enum Op",
+        "name": "_op",
         "type": "uint8"
       },
       {
@@ -7772,6 +8095,7 @@
       }
     ],
     "signature": "compare(uint256,uint8,uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -7779,8 +8103,8 @@
     "encoding": "0x5ac60076",
     "inputs": [
       {
-        "name": "_oracleAddr",
         "internalType": "contract IACLOracle",
+        "name": "_oracleAddr",
         "type": "address"
       },
       {
@@ -7809,6 +8133,7 @@
       }
     ],
     "signature": "checkOracle(address,address,address,bytes32,uint256[])",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -7830,6 +8155,7 @@
     "name": "_setPermissionManager",
     "outputs": [],
     "signature": "_setPermissionManager(address,address,bytes32)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -7852,6 +8178,7 @@
       }
     ],
     "signature": "roleHash(address,bytes32)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -7878,6 +8205,7 @@
       }
     ],
     "signature": "permissionHash(address,address,bytes32)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -7904,6 +8232,7 @@
     "name": "initialize",
     "outputs": [],
     "signature": "initialize()",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -7926,6 +8255,7 @@
     "name": "newVersion",
     "outputs": [],
     "signature": "newVersion(uint16[3],address,bytes)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -7949,6 +8279,7 @@
       }
     ],
     "signature": "getLatest()",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -7976,6 +8307,7 @@
       }
     ],
     "signature": "getLatestForContractAddress(address)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -8004,6 +8336,7 @@
       }
     ],
     "signature": "getBySemanticVersion(uint16[3])",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -8032,6 +8365,7 @@
       }
     ],
     "signature": "getByVersionId(uint256)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -8046,6 +8380,7 @@
       }
     ],
     "signature": "getVersionsCount()",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -8070,6 +8405,7 @@
       }
     ],
     "signature": "isValidBump(uint16[3],uint16[3])",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -8089,6 +8425,7 @@
       }
     ],
     "signature": "semanticVersionHash(uint16[3])",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -8107,6 +8444,7 @@
       }
     ],
     "signature": "apmNamehash(string)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -8120,6 +8458,7 @@
       }
     ],
     "signature": "proxyType()",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -8134,6 +8473,7 @@
       }
     ],
     "signature": "implementation()",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -8151,6 +8491,7 @@
     "name": "delegatedFwd",
     "outputs": [],
     "signature": "delegatedFwd(address,bytes)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -8187,6 +8528,7 @@
       }
     ],
     "signature": "getAppBase(bytes32)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -8201,6 +8543,7 @@
       }
     ],
     "signature": "implementation()",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -8214,6 +8557,7 @@
       }
     ],
     "signature": "proxyType()",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -8228,6 +8572,7 @@
       }
     ],
     "signature": "implementation()",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -8241,6 +8586,7 @@
       }
     ],
     "signature": "proxyType()",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -8254,6 +8600,7 @@
     "name": "setPinnedCode",
     "outputs": [],
     "signature": "setPinnedCode(address)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -8268,14 +8615,15 @@
       }
     ],
     "signature": "pinnedCode()",
+    "stateMutability": "view",
     "type": "function"
   },
   {
     "encoding": "0xd9cc98a5",
     "inputs": [
       {
-        "name": "_kernel",
         "internalType": "contract IKernel",
+        "name": "_kernel",
         "type": "address"
       },
       {
@@ -8286,20 +8634,21 @@
     "name": "newAppProxy",
     "outputs": [
       {
-        "name": "ret_0",
         "internalType": "contract AppProxyUpgradeable",
+        "name": "ret_0",
         "type": "address"
       }
     ],
     "signature": "newAppProxy(address,bytes32)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
     "encoding": "0x57f7e1aa",
     "inputs": [
       {
-        "name": "_kernel",
         "internalType": "contract IKernel",
+        "name": "_kernel",
         "type": "address"
       },
       {
@@ -8314,20 +8663,21 @@
     "name": "newAppProxy",
     "outputs": [
       {
-        "name": "ret_0",
         "internalType": "contract AppProxyUpgradeable",
+        "name": "ret_0",
         "type": "address"
       }
     ],
     "signature": "newAppProxy(address,bytes32,bytes)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
     "encoding": "0xaee7806d",
     "inputs": [
       {
-        "name": "_kernel",
         "internalType": "contract IKernel",
+        "name": "_kernel",
         "type": "address"
       },
       {
@@ -8338,20 +8688,21 @@
     "name": "newAppProxyPinned",
     "outputs": [
       {
-        "name": "ret_0",
         "internalType": "contract AppProxyPinned",
+        "name": "ret_0",
         "type": "address"
       }
     ],
     "signature": "newAppProxyPinned(address,bytes32)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
     "encoding": "0x559e1c06",
     "inputs": [
       {
-        "name": "_kernel",
         "internalType": "contract IKernel",
+        "name": "_kernel",
         "type": "address"
       },
       {
@@ -8366,12 +8717,13 @@
     "name": "newAppProxyPinned",
     "outputs": [
       {
-        "name": "ret_0",
         "internalType": "contract AppProxyPinned",
+        "name": "ret_0",
         "type": "address"
       }
     ],
     "signature": "newAppProxyPinned(address,bytes32,bytes)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -8389,6 +8741,7 @@
     "name": "initialize",
     "outputs": [],
     "signature": "initialize(address,address)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -8406,12 +8759,13 @@
     "name": "newAppInstance",
     "outputs": [
       {
-        "name": "appProxy",
         "internalType": "contract ERCProxy",
+        "name": "appProxy",
         "type": "address"
       }
     ],
     "signature": "newAppInstance(bytes32,address)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -8437,12 +8791,13 @@
     "name": "newAppInstance",
     "outputs": [
       {
-        "name": "appProxy",
         "internalType": "contract ERCProxy",
+        "name": "appProxy",
         "type": "address"
       }
     ],
     "signature": "newAppInstance(bytes32,address,bytes,bool)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -8460,12 +8815,13 @@
     "name": "newPinnedAppInstance",
     "outputs": [
       {
-        "name": "appProxy",
         "internalType": "contract ERCProxy",
+        "name": "appProxy",
         "type": "address"
       }
     ],
     "signature": "newPinnedAppInstance(bytes32,address)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -8491,12 +8847,13 @@
     "name": "newPinnedAppInstance",
     "outputs": [
       {
-        "name": "appProxy",
         "internalType": "contract ERCProxy",
+        "name": "appProxy",
         "type": "address"
       }
     ],
     "signature": "newPinnedAppInstance(bytes32,address,bytes,bool)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -8518,6 +8875,7 @@
     "name": "setApp",
     "outputs": [],
     "signature": "setApp(bytes32,bytes32,address)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -8531,6 +8889,7 @@
     "name": "setRecoveryVaultAppId",
     "outputs": [],
     "signature": "setRecoveryVaultAppId(bytes32)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -8544,6 +8903,7 @@
       }
     ],
     "signature": "CORE_NAMESPACE()",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -8557,6 +8917,7 @@
       }
     ],
     "signature": "APP_BASES_NAMESPACE()",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -8570,6 +8931,7 @@
       }
     ],
     "signature": "APP_ADDR_NAMESPACE()",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -8583,6 +8945,7 @@
       }
     ],
     "signature": "KERNEL_APP_ID()",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -8596,6 +8959,7 @@
       }
     ],
     "signature": "DEFAULT_ACL_APP_ID()",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -8619,6 +8983,7 @@
       }
     ],
     "signature": "getApp(bytes32,bytes32)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -8633,6 +8998,7 @@
       }
     ],
     "signature": "getRecoveryVault()",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -8647,6 +9013,7 @@
       }
     ],
     "signature": "acl()",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -8678,6 +9045,7 @@
       }
     ],
     "signature": "hasPermission(address,address,bytes32,bytes)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -8699,6 +9067,7 @@
     "name": "_setApp",
     "outputs": [],
     "signature": "_setApp(bytes32,bytes32,address)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -8720,6 +9089,7 @@
     "name": "_setAppIfNew",
     "outputs": [],
     "signature": "_setAppIfNew(bytes32,bytes32,address)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -8739,6 +9109,7 @@
       }
     ],
     "signature": "owner(bytes32)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -8758,6 +9129,7 @@
       }
     ],
     "signature": "resolver(bytes32)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -8777,6 +9149,7 @@
       }
     ],
     "signature": "ttl(bytes32)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -8794,6 +9167,7 @@
     "name": "setOwner",
     "outputs": [],
     "signature": "setOwner(bytes32,address)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -8815,6 +9189,7 @@
     "name": "setSubnodeOwner",
     "outputs": [],
     "signature": "setSubnodeOwner(bytes32,bytes32,address)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -8832,6 +9207,7 @@
     "name": "setResolver",
     "outputs": [],
     "signature": "setResolver(bytes32,address)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -8849,6 +9225,7 @@
     "name": "setTTL",
     "outputs": [],
     "signature": "setTTL(bytes32,uint64)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -8934,6 +9311,7 @@
     "name": "ENS",
     "outputs": [],
     "signature": "ENS()",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -8953,6 +9331,7 @@
       }
     ],
     "signature": "owner(bytes32)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -8972,6 +9351,7 @@
       }
     ],
     "signature": "resolver(bytes32)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -8991,6 +9371,7 @@
       }
     ],
     "signature": "ttl(bytes32)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -9008,6 +9389,7 @@
     "name": "setOwner",
     "outputs": [],
     "signature": "setOwner(bytes32,address)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -9029,6 +9411,7 @@
     "name": "setSubnodeOwner",
     "outputs": [],
     "signature": "setSubnodeOwner(bytes32,bytes32,address)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -9046,6 +9429,7 @@
     "name": "setResolver",
     "outputs": [],
     "signature": "setResolver(bytes32,address)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -9063,20 +9447,22 @@
     "name": "setTTL",
     "outputs": [],
     "signature": "setTTL(bytes32,uint64)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
     "encoding": "0x7eef1c4a",
     "inputs": [
       {
-        "name": "ensAddr",
         "internalType": "contract AbstractENS",
+        "name": "ensAddr",
         "type": "address"
       }
     ],
     "name": "PublicResolver",
     "outputs": [],
     "signature": "PublicResolver(address)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -9095,6 +9481,7 @@
       }
     ],
     "signature": "supportsInterface(bytes4)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -9114,6 +9501,7 @@
       }
     ],
     "signature": "addr(bytes32)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -9131,6 +9519,7 @@
     "name": "setAddr",
     "outputs": [],
     "signature": "setAddr(bytes32,address)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -9150,6 +9539,7 @@
       }
     ],
     "signature": "content(bytes32)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -9167,6 +9557,7 @@
     "name": "setContent",
     "outputs": [],
     "signature": "setContent(bytes32,bytes32)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -9186,6 +9577,7 @@
       }
     ],
     "signature": "name(bytes32)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -9203,6 +9595,7 @@
     "name": "setName",
     "outputs": [],
     "signature": "setName(bytes32,string)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -9230,6 +9623,7 @@
       }
     ],
     "signature": "ABI(bytes32,uint256)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -9251,6 +9645,7 @@
     "name": "setABI",
     "outputs": [],
     "signature": "setABI(bytes32,uint256,bytes)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -9274,6 +9669,7 @@
       }
     ],
     "signature": "pubkey(bytes32)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -9295,6 +9691,7 @@
     "name": "setPubkey",
     "outputs": [],
     "signature": "setPubkey(bytes32,bytes32,bytes32)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -9318,6 +9715,7 @@
       }
     ],
     "signature": "text(bytes32,string)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -9339,6 +9737,7 @@
     "name": "setText",
     "outputs": [],
     "signature": "setText(bytes32,string,string)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -9352,6 +9751,7 @@
       }
     ],
     "signature": "proxyType()",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -9366,6 +9766,7 @@
       }
     ],
     "signature": "implementation()",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -9384,6 +9785,7 @@
       }
     ],
     "signature": "getSpecId(bytes)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -9406,6 +9808,7 @@
       }
     ],
     "signature": "uint256At(bytes,uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -9428,6 +9831,7 @@
       }
     ],
     "signature": "addressAt(bytes,uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -9450,6 +9854,7 @@
       }
     ],
     "signature": "uint32At(bytes,uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -9472,6 +9877,7 @@
       }
     ],
     "signature": "locationOf(bytes,uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -9490,6 +9896,7 @@
       }
     ],
     "signature": "toBytes(bytes4)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -9536,6 +9943,7 @@
     "name": "initialize",
     "outputs": [],
     "signature": "initialize()",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -9549,6 +9957,7 @@
     "name": "addScriptExecutor",
     "outputs": [],
     "signature": "addScriptExecutor(address)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -9562,6 +9971,7 @@
     "name": "disableScriptExecutor",
     "outputs": [],
     "signature": "disableScriptExecutor(uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -9575,6 +9985,7 @@
     "name": "enableScriptExecutor",
     "outputs": [],
     "signature": "enableScriptExecutor(uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -9594,6 +10005,7 @@
       }
     ],
     "signature": "getScriptExecutor(bytes)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -9645,6 +10057,7 @@
       }
     ],
     "signature": "execScript(bytes,bytes,address[])",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -9658,26 +10071,28 @@
       }
     ],
     "signature": "executorType()",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
     "encoding": "0xb0988bfe",
     "inputs": [
       {
-        "name": "_dao",
         "internalType": "contract Kernel",
+        "name": "_dao",
         "type": "address"
       }
     ],
     "name": "newEVMScriptRegistry",
     "outputs": [
       {
-        "name": "reg",
         "internalType": "contract EVMScriptRegistry",
+        "name": "reg",
         "type": "address"
       }
     ],
     "signature": "newEVMScriptRegistry(address)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -9691,12 +10106,13 @@
     "name": "newDAO",
     "outputs": [
       {
-        "name": "ret_0",
         "internalType": "contract Kernel",
+        "name": "ret_0",
         "type": "address"
       }
     ],
     "signature": "newDAO(address)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -9716,6 +10132,7 @@
       }
     ],
     "signature": "supportsInterface(bytes4)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -9735,6 +10152,7 @@
       }
     ],
     "signature": "addr(bytes32)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -9752,6 +10170,7 @@
     "name": "setAddr",
     "outputs": [],
     "signature": "setAddr(bytes32,address)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -9771,6 +10190,7 @@
       }
     ],
     "signature": "hash(bytes32)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -9788,6 +10208,7 @@
     "name": "setHash",
     "outputs": [],
     "signature": "setHash(bytes32,bytes32)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -9805,6 +10226,7 @@
     "name": "register",
     "outputs": [],
     "signature": "register(bytes32,address)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -9819,14 +10241,15 @@
         "type": "address"
       },
       {
-        "name": "_resolver",
         "internalType": "contract IPublicResolver",
+        "name": "_resolver",
         "type": "address"
       }
     ],
     "name": "registerWithResolver",
     "outputs": [],
     "signature": "registerWithResolver(bytes32,address,address)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -9835,25 +10258,26 @@
     "name": "_createDAO",
     "outputs": [
       {
-        "name": "dao",
         "internalType": "contract Kernel",
+        "name": "dao",
         "type": "address"
       },
       {
-        "name": "acl",
         "internalType": "contract ACL",
+        "name": "acl",
         "type": "address"
       }
     ],
     "signature": "_createDAO()",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
     "encoding": "0x045fe631",
     "inputs": [
       {
-        "name": "_acl",
         "internalType": "contract ACL",
+        "name": "_acl",
         "type": "address"
       },
       {
@@ -9877,14 +10301,15 @@
     "name": "_createPermissions",
     "outputs": [],
     "signature": "_createPermissions(address,address[],address,bytes32,address)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
     "encoding": "0xb87ba1d5",
     "inputs": [
       {
-        "name": "_acl",
         "internalType": "contract ACL",
+        "name": "_acl",
         "type": "address"
       },
       {
@@ -9899,14 +10324,15 @@
     "name": "_createPermissionForTemplate",
     "outputs": [],
     "signature": "_createPermissionForTemplate(address,address,bytes32)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
     "encoding": "0xe94f21fe",
     "inputs": [
       {
-        "name": "_acl",
         "internalType": "contract ACL",
+        "name": "_acl",
         "type": "address"
       },
       {
@@ -9921,14 +10347,15 @@
     "name": "_removePermissionFromTemplate",
     "outputs": [],
     "signature": "_removePermissionFromTemplate(address,address,bytes32)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
     "encoding": "0x7b1aac8f",
     "inputs": [
       {
-        "name": "_dao",
         "internalType": "contract Kernel",
+        "name": "_dao",
         "type": "address"
       },
       {
@@ -9939,14 +10366,15 @@
     "name": "_transferRootPermissionsFromTemplateAndFinalizeDAO",
     "outputs": [],
     "signature": "_transferRootPermissionsFromTemplateAndFinalizeDAO(address,address)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
     "encoding": "0xf3b5fbb2",
     "inputs": [
       {
-        "name": "_dao",
         "internalType": "contract Kernel",
+        "name": "_dao",
         "type": "address"
       },
       {
@@ -9961,14 +10389,15 @@
     "name": "_transferRootPermissionsFromTemplateAndFinalizeDAO",
     "outputs": [],
     "signature": "_transferRootPermissionsFromTemplateAndFinalizeDAO(address,address,address)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
     "encoding": "0x25df1746",
     "inputs": [
       {
-        "name": "_acl",
         "internalType": "contract ACL",
+        "name": "_acl",
         "type": "address"
       },
       {
@@ -9991,59 +10420,62 @@
     "name": "_transferPermissionFromTemplate",
     "outputs": [],
     "signature": "_transferPermissionFromTemplate(address,address,address,bytes32,address)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
     "encoding": "0xfe00680c",
     "inputs": [
       {
-        "name": "_dao",
         "internalType": "contract Kernel",
+        "name": "_dao",
         "type": "address"
       }
     ],
     "name": "_installDefaultAgentApp",
     "outputs": [
       {
-        "name": "ret_0",
         "internalType": "contract Agent",
+        "name": "ret_0",
         "type": "address"
       }
     ],
     "signature": "_installDefaultAgentApp(address)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
     "encoding": "0x68fc804e",
     "inputs": [
       {
-        "name": "_dao",
         "internalType": "contract Kernel",
+        "name": "_dao",
         "type": "address"
       }
     ],
     "name": "_installNonDefaultAgentApp",
     "outputs": [
       {
-        "name": "ret_0",
         "internalType": "contract Agent",
+        "name": "ret_0",
         "type": "address"
       }
     ],
     "signature": "_installNonDefaultAgentApp(address)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
     "encoding": "0x5d6ff789",
     "inputs": [
       {
-        "name": "_acl",
         "internalType": "contract ACL",
+        "name": "_acl",
         "type": "address"
       },
       {
-        "name": "_agent",
         "internalType": "contract Agent",
+        "name": "_agent",
         "type": "address"
       },
       {
@@ -10058,39 +10490,41 @@
     "name": "_createAgentPermissions",
     "outputs": [],
     "signature": "_createAgentPermissions(address,address,address,address)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
     "encoding": "0xe55d2c34",
     "inputs": [
       {
-        "name": "_dao",
         "internalType": "contract Kernel",
+        "name": "_dao",
         "type": "address"
       }
     ],
     "name": "_installVaultApp",
     "outputs": [
       {
-        "name": "ret_0",
         "internalType": "contract Vault",
+        "name": "ret_0",
         "type": "address"
       }
     ],
     "signature": "_installVaultApp(address)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
     "encoding": "0x3b899263",
     "inputs": [
       {
-        "name": "_acl",
         "internalType": "contract ACL",
+        "name": "_acl",
         "type": "address"
       },
       {
-        "name": "_vault",
         "internalType": "contract Vault",
+        "name": "_vault",
         "type": "address"
       },
       {
@@ -10105,19 +10539,20 @@
     "name": "_createVaultPermissions",
     "outputs": [],
     "signature": "_createVaultPermissions(address,address,address,address)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
     "encoding": "0x27ad717d",
     "inputs": [
       {
-        "name": "_dao",
         "internalType": "contract Kernel",
+        "name": "_dao",
         "type": "address"
       },
       {
-        "name": "_token",
         "internalType": "contract MiniMeToken",
+        "name": "_token",
         "type": "address"
       },
       {
@@ -10129,25 +10564,26 @@
     "name": "_installVotingApp",
     "outputs": [
       {
-        "name": "ret_0",
         "internalType": "contract Voting",
+        "name": "ret_0",
         "type": "address"
       }
     ],
     "signature": "_installVotingApp(address,address,uint64[3])",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
     "encoding": "0x165f849b",
     "inputs": [
       {
-        "name": "_dao",
         "internalType": "contract Kernel",
+        "name": "_dao",
         "type": "address"
       },
       {
-        "name": "_token",
         "internalType": "contract MiniMeToken",
+        "name": "_token",
         "type": "address"
       },
       {
@@ -10166,25 +10602,26 @@
     "name": "_installVotingApp",
     "outputs": [
       {
-        "name": "ret_0",
         "internalType": "contract Voting",
+        "name": "ret_0",
         "type": "address"
       }
     ],
     "signature": "_installVotingApp(address,address,uint64,uint64,uint64)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
     "encoding": "0x1bd89eb4",
     "inputs": [
       {
-        "name": "_acl",
         "internalType": "contract ACL",
+        "name": "_acl",
         "type": "address"
       },
       {
-        "name": "_voting",
         "internalType": "contract Voting",
+        "name": "_voting",
         "type": "address"
       },
       {
@@ -10203,19 +10640,20 @@
     "name": "_createVotingPermissions",
     "outputs": [],
     "signature": "_createVotingPermissions(address,address,address,address,address)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
     "encoding": "0x182fec63",
     "inputs": [
       {
-        "name": "_dao",
         "internalType": "contract Kernel",
+        "name": "_dao",
         "type": "address"
       },
       {
-        "name": "_token",
         "internalType": "contract MiniMeToken",
+        "name": "_token",
         "type": "address"
       },
       {
@@ -10230,25 +10668,26 @@
     "name": "_installSurveyApp",
     "outputs": [
       {
-        "name": "ret_0",
         "internalType": "contract Survey",
+        "name": "ret_0",
         "type": "address"
       }
     ],
     "signature": "_installSurveyApp(address,address,uint64,uint64)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
     "encoding": "0x35c9c02e",
     "inputs": [
       {
-        "name": "_acl",
         "internalType": "contract ACL",
+        "name": "_acl",
         "type": "address"
       },
       {
-        "name": "_survey",
         "internalType": "contract Survey",
+        "name": "_survey",
         "type": "address"
       },
       {
@@ -10263,19 +10702,20 @@
     "name": "_createSurveyPermissions",
     "outputs": [],
     "signature": "_createSurveyPermissions(address,address,address,address)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
     "encoding": "0x2c4c28f2",
     "inputs": [
       {
-        "name": "_dao",
         "internalType": "contract Kernel",
+        "name": "_dao",
         "type": "address"
       },
       {
-        "name": "_finance",
         "internalType": "contract Finance",
+        "name": "_finance",
         "type": "address"
       },
       {
@@ -10283,8 +10723,8 @@
         "type": "address"
       },
       {
-        "name": "_priceFeed",
         "internalType": "contract Finance",
+        "name": "_priceFeed",
         "type": "address"
       },
       {
@@ -10295,25 +10735,26 @@
     "name": "_installPayrollApp",
     "outputs": [
       {
-        "name": "ret_0",
         "internalType": "contract Payroll",
+        "name": "ret_0",
         "type": "address"
       }
     ],
     "signature": "_installPayrollApp(address,address,address,address,uint64)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
     "encoding": "0xb987ec39",
     "inputs": [
       {
-        "name": "_acl",
         "internalType": "contract ACL",
+        "name": "_acl",
         "type": "address"
       },
       {
-        "name": "_payroll",
         "internalType": "contract Payroll",
+        "name": "_payroll",
         "type": "address"
       },
       {
@@ -10332,6 +10773,7 @@
     "name": "_createPayrollPermissions",
     "outputs": [],
     "signature": "_createPayrollPermissions(address,address,address,address,address)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -10350,8 +10792,8 @@
         "type": "address"
       },
       {
-        "name": "priceFeed",
         "internalType": "contract Finance",
+        "name": "priceFeed",
         "type": "address"
       },
       {
@@ -10364,19 +10806,20 @@
       }
     ],
     "signature": "_unwrapPayrollSettings(uint256[4])",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
     "encoding": "0xe90bfa7b",
     "inputs": [
       {
-        "name": "_dao",
         "internalType": "contract Kernel",
+        "name": "_dao",
         "type": "address"
       },
       {
-        "name": "_vault",
         "internalType": "contract Vault",
+        "name": "_vault",
         "type": "address"
       },
       {
@@ -10387,25 +10830,26 @@
     "name": "_installFinanceApp",
     "outputs": [
       {
-        "name": "ret_0",
         "internalType": "contract Finance",
+        "name": "ret_0",
         "type": "address"
       }
     ],
     "signature": "_installFinanceApp(address,address,uint64)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
     "encoding": "0x9e47c084",
     "inputs": [
       {
-        "name": "_acl",
         "internalType": "contract ACL",
+        "name": "_acl",
         "type": "address"
       },
       {
-        "name": "_finance",
         "internalType": "contract Finance",
+        "name": "_finance",
         "type": "address"
       },
       {
@@ -10420,19 +10864,20 @@
     "name": "_createFinancePermissions",
     "outputs": [],
     "signature": "_createFinancePermissions(address,address,address,address)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
     "encoding": "0x1bb550e4",
     "inputs": [
       {
-        "name": "_acl",
         "internalType": "contract ACL",
+        "name": "_acl",
         "type": "address"
       },
       {
-        "name": "_finance",
         "internalType": "contract Finance",
+        "name": "_finance",
         "type": "address"
       },
       {
@@ -10447,19 +10892,20 @@
     "name": "_createFinanceCreatePaymentsPermission",
     "outputs": [],
     "signature": "_createFinanceCreatePaymentsPermission(address,address,address,address)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
     "encoding": "0xded55849",
     "inputs": [
       {
-        "name": "_acl",
         "internalType": "contract ACL",
+        "name": "_acl",
         "type": "address"
       },
       {
-        "name": "_finance",
         "internalType": "contract Finance",
+        "name": "_finance",
         "type": "address"
       },
       {
@@ -10470,19 +10916,20 @@
     "name": "_grantCreatePaymentPermission",
     "outputs": [],
     "signature": "_grantCreatePaymentPermission(address,address,address)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
     "encoding": "0xf64bf7ed",
     "inputs": [
       {
-        "name": "_acl",
         "internalType": "contract ACL",
+        "name": "_acl",
         "type": "address"
       },
       {
-        "name": "_finance",
         "internalType": "contract Finance",
+        "name": "_finance",
         "type": "address"
       },
       {
@@ -10493,19 +10940,20 @@
     "name": "_transferCreatePaymentManagerFromTemplate",
     "outputs": [],
     "signature": "_transferCreatePaymentManagerFromTemplate(address,address,address)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
     "encoding": "0xbb359a21",
     "inputs": [
       {
-        "name": "_dao",
         "internalType": "contract Kernel",
+        "name": "_dao",
         "type": "address"
       },
       {
-        "name": "_token",
         "internalType": "contract MiniMeToken",
+        "name": "_token",
         "type": "address"
       },
       {
@@ -10520,25 +10968,26 @@
     "name": "_installTokenManagerApp",
     "outputs": [
       {
-        "name": "ret_0",
         "internalType": "contract TokenManager",
+        "name": "ret_0",
         "type": "address"
       }
     ],
     "signature": "_installTokenManagerApp(address,address,bool,uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
     "encoding": "0x25d68b02",
     "inputs": [
       {
-        "name": "_acl",
         "internalType": "contract ACL",
+        "name": "_acl",
         "type": "address"
       },
       {
-        "name": "_tokenManager",
         "internalType": "contract TokenManager",
+        "name": "_tokenManager",
         "type": "address"
       },
       {
@@ -10553,19 +11002,20 @@
     "name": "_createTokenManagerPermissions",
     "outputs": [],
     "signature": "_createTokenManagerPermissions(address,address,address,address)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
     "encoding": "0x24029249",
     "inputs": [
       {
-        "name": "_acl",
         "internalType": "contract ACL",
+        "name": "_acl",
         "type": "address"
       },
       {
-        "name": "_tokenManager",
         "internalType": "contract TokenManager",
+        "name": "_tokenManager",
         "type": "address"
       },
       {
@@ -10582,19 +11032,20 @@
     "name": "_mintTokens",
     "outputs": [],
     "signature": "_mintTokens(address,address,address[],uint256[])",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
     "encoding": "0xa9f457e7",
     "inputs": [
       {
-        "name": "_acl",
         "internalType": "contract ACL",
+        "name": "_acl",
         "type": "address"
       },
       {
-        "name": "_tokenManager",
         "internalType": "contract TokenManager",
+        "name": "_tokenManager",
         "type": "address"
       },
       {
@@ -10610,19 +11061,20 @@
     "name": "_mintTokens",
     "outputs": [],
     "signature": "_mintTokens(address,address,address[],uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
     "encoding": "0xec3de96c",
     "inputs": [
       {
-        "name": "_acl",
         "internalType": "contract ACL",
+        "name": "_acl",
         "type": "address"
       },
       {
-        "name": "_tokenManager",
         "internalType": "contract TokenManager",
+        "name": "_tokenManager",
         "type": "address"
       },
       {
@@ -10637,14 +11089,15 @@
     "name": "_mintTokens",
     "outputs": [],
     "signature": "_mintTokens(address,address,address,uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
     "encoding": "0x1922867e",
     "inputs": [
       {
-        "name": "_acl",
         "internalType": "contract ACL",
+        "name": "_acl",
         "type": "address"
       },
       {
@@ -10659,14 +11112,15 @@
     "name": "_createEvmScriptsRegistryPermissions",
     "outputs": [],
     "signature": "_createEvmScriptsRegistryPermissions(address,address,address)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
     "encoding": "0x8b22d327",
     "inputs": [
       {
-        "name": "_dao",
         "internalType": "contract Kernel",
+        "name": "_dao",
         "type": "address"
       },
       {
@@ -10682,14 +11136,15 @@
       }
     ],
     "signature": "_installNonDefaultApp(address,bytes32)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
     "encoding": "0x587cff5b",
     "inputs": [
       {
-        "name": "_dao",
         "internalType": "contract Kernel",
+        "name": "_dao",
         "type": "address"
       },
       {
@@ -10709,14 +11164,15 @@
       }
     ],
     "signature": "_installNonDefaultApp(address,bytes32,bytes)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
     "encoding": "0x4166bb07",
     "inputs": [
       {
-        "name": "_dao",
         "internalType": "contract Kernel",
+        "name": "_dao",
         "type": "address"
       },
       {
@@ -10732,14 +11188,15 @@
       }
     ],
     "signature": "_installDefaultApp(address,bytes32)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
     "encoding": "0x47c0b0a1",
     "inputs": [
       {
-        "name": "_dao",
         "internalType": "contract Kernel",
+        "name": "_dao",
         "type": "address"
       },
       {
@@ -10759,14 +11216,15 @@
       }
     ],
     "signature": "_installDefaultApp(address,bytes32,bytes)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
     "encoding": "0xaeb3be77",
     "inputs": [
       {
-        "name": "_dao",
         "internalType": "contract Kernel",
+        "name": "_dao",
         "type": "address"
       },
       {
@@ -10790,6 +11248,7 @@
       }
     ],
     "signature": "_installApp(address,bytes32,bytes,bool)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -10809,6 +11268,7 @@
       }
     ],
     "signature": "_latestVersionAppBase(bytes32)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -10830,12 +11290,13 @@
     "name": "_createToken",
     "outputs": [
       {
-        "name": "ret_0",
         "internalType": "contract MiniMeToken",
+        "name": "ret_0",
         "type": "address"
       }
     ],
     "signature": "_createToken(string,string,uint8)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -10850,6 +11311,7 @@
     "name": "_ensureMiniMeFactoryIsValid",
     "outputs": [],
     "signature": "_ensureMiniMeFactoryIsValid(address)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -10863,6 +11325,7 @@
     "name": "_validateId",
     "outputs": [],
     "signature": "_validateId(string)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -10880,6 +11343,7 @@
     "name": "_registerID",
     "outputs": [],
     "signature": "_registerID(string,address)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -10894,6 +11358,7 @@
     "name": "_ensureAragonIdIsValid",
     "outputs": [],
     "signature": "_ensureAragonIdIsValid(address)",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -10912,6 +11377,7 @@
       }
     ],
     "signature": "_toAddress(uint256)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -10951,6 +11417,7 @@
     "name": "newTokenAndInstance",
     "outputs": [],
     "signature": "newTokenAndInstance(string,string,string,address[],uint64[3],uint64,bool)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -10968,12 +11435,13 @@
     "name": "newToken",
     "outputs": [
       {
-        "name": "ret_0",
         "internalType": "contract MiniMeToken",
+        "name": "ret_0",
         "type": "address"
       }
     ],
     "signature": "newToken(string,string)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -11005,6 +11473,7 @@
     "name": "newInstance",
     "outputs": [],
     "signature": "newInstance(string,address[],uint64[3],uint64,bool)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -11041,19 +11510,20 @@
     "name": "newInstance",
     "outputs": [],
     "signature": "newInstance(string,address[],uint64[3],uint64,bool,uint256[4])",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
     "encoding": "0x3b498334",
     "inputs": [
       {
-        "name": "_dao",
         "internalType": "contract Kernel",
+        "name": "_dao",
         "type": "address"
       },
       {
-        "name": "_acl",
         "internalType": "contract ACL",
+        "name": "_acl",
         "type": "address"
       },
       {
@@ -11078,40 +11548,41 @@
     "name": "_setupApps",
     "outputs": [
       {
-        "name": "ret_0",
         "internalType": "contract Finance",
+        "name": "ret_0",
         "type": "address"
       },
       {
-        "name": "ret_1",
         "internalType": "contract Voting",
+        "name": "ret_1",
         "type": "address"
       }
     ],
     "signature": "_setupApps(address,address,address[],uint64[3],uint64,bool)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
     "encoding": "0x77793d3e",
     "inputs": [
       {
-        "name": "_dao",
         "internalType": "contract Kernel",
+        "name": "_dao",
         "type": "address"
       },
       {
-        "name": "_acl",
         "internalType": "contract ACL",
+        "name": "_acl",
         "type": "address"
       },
       {
-        "name": "_finance",
         "internalType": "contract Finance",
+        "name": "_finance",
         "type": "address"
       },
       {
-        "name": "_voting",
         "internalType": "contract Voting",
+        "name": "_voting",
         "type": "address"
       },
       {
@@ -11123,34 +11594,35 @@
     "name": "_setupPayrollApp",
     "outputs": [],
     "signature": "_setupPayrollApp(address,address,address,address,uint256[4])",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
     "encoding": "0x4ad89e7d",
     "inputs": [
       {
-        "name": "_acl",
         "internalType": "contract ACL",
+        "name": "_acl",
         "type": "address"
       },
       {
-        "name": "_agentOrVault",
         "internalType": "contract Vault",
+        "name": "_agentOrVault",
         "type": "address"
       },
       {
-        "name": "_voting",
         "internalType": "contract Voting",
+        "name": "_voting",
         "type": "address"
       },
       {
-        "name": "_finance",
         "internalType": "contract Finance",
+        "name": "_finance",
         "type": "address"
       },
       {
-        "name": "_tokenManager",
         "internalType": "contract TokenManager",
+        "name": "_tokenManager",
         "type": "address"
       },
       {
@@ -11161,6 +11633,7 @@
     "name": "_setupPermissions",
     "outputs": [],
     "signature": "_setupPermissions(address,address,address,address,address,bool)",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -11185,6 +11658,7 @@
     "name": "_ensureMembershipSettings",
     "outputs": [],
     "signature": "_ensureMembershipSettings(address[],uint64[3],uint256[4])",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -11204,6 +11678,7 @@
     "name": "_ensureMembershipSettings",
     "outputs": [],
     "signature": "_ensureMembershipSettings(address[],uint64[3])",
+    "stateMutability": "nonpayable",
     "type": "function"
   }
 ]

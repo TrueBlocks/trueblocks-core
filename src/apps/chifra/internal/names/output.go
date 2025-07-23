@@ -63,7 +63,9 @@ func (opts *NamesOptions) NamesInternal(rCtx *output.RenderCtx) error {
 	msg := "chifra names"
 	// EXISTING_CODE
 	// EXISTING_CODE
-	if len(opts.Autoname) > 0 {
+	if opts.Count {
+		err = opts.HandleCount(rCtx)
+	} else if len(opts.Autoname) > 0 {
 		err = opts.HandleAutoname(rCtx)
 	} else if opts.Clean {
 		err = opts.HandleClean(rCtx)

@@ -2,7 +2,6 @@ chifra tokens  0xa9fe4601811213c340e850ea305481aff02f5b28 12000000 --cache --dec
 TEST[DATE|TIME] Addrs:  [0xa9fe4601811213c340e850ea305481aff02f5b28]
 TEST[DATE|TIME] Blocks:  [12000000]
 TEST[DATE|TIME] Parts:  [all]
-TEST[DATE|TIME] Enabled:  tokens
 TEST[DATE|TIME] Cache:  true
 TEST[DATE|TIME] Decache:  true
 TEST[DATE|TIME] Caps:  cache,decache

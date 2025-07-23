@@ -39,6 +39,7 @@ type NamesOptions struct {
 	Tags      bool                  `json:"tags,omitempty"`      // Export the list of tags and subtags only
 	Clean     bool                  `json:"clean,omitempty"`     // Clean the data (addrs to lower case, sort by addr)
 	Regular   bool                  `json:"regular,omitempty"`   // Only available with --clean, cleans regular names database
+	Count     bool                  `json:"count,omitempty"`     // Return the number of names matching the search terms or other options
 	DryRun    bool                  `json:"dryRun,omitempty"`    // Only available with --clean or --autoname, outputs changes to stdout instead of updating databases
 	Autoname  string                `json:"autoname,omitempty"`  // An address assumed to be a token, added automatically to names database if true
 	Create    bool                  `json:"create,omitempty"`    // Create a new name record
@@ -70,6 +71,7 @@ func (opts *NamesOptions) testLog() {
 	logger.TestLog(opts.Tags, "Tags: ", opts.Tags)
 	logger.TestLog(opts.Clean, "Clean: ", opts.Clean)
 	logger.TestLog(opts.Regular, "Regular: ", opts.Regular)
+	logger.TestLog(opts.Count, "Count: ", opts.Count)
 	logger.TestLog(opts.DryRun, "DryRun: ", opts.DryRun)
 	logger.TestLog(len(opts.Autoname) > 0, "Autoname: ", opts.Autoname)
 	logger.TestLog(opts.Create, "Create: ", opts.Create)
@@ -125,6 +127,8 @@ func NamesFinishParseInternal(w io.Writer, values url.Values) *NamesOptions {
 			opts.Clean = true
 		case "regular":
 			opts.Regular = true
+		case "count":
+			opts.Count = true
 		case "dryRun":
 			opts.DryRun = true
 		case "autoname":
@@ -215,6 +219,8 @@ func ResetOptions(testMode bool) {
 	opts.Globals.TestMode = testMode
 	opts.Globals.Writer = w
 	opts.Globals.Caps = getCaps()
+	// EXISTING_CODE
+	// EXISTING_CODE
 	defaultNamesOptions = opts
 }
 

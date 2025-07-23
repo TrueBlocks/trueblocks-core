@@ -38,7 +38,7 @@ type WhenOptions struct {
 	Repair     bool                     `json:"repair,omitempty"`     // With --timestamps only, repairs block(s) in the block range by re-querying from the chain
 	Check      bool                     `json:"check,omitempty"`      // With --timestamps only, checks the validity of the timestamp data
 	Update     bool                     `json:"update,omitempty"`     // With --timestamps only, bring the timestamp database forward to the latest block
-	Deep       bool                     `json:"deep,omitempty"`       // With --timestamps --check only, verifies timestamps from on chain (slow)
+	Deep       uint64                   `json:"deep,omitempty"`       // With --timestamps --check only, verifies every N timestamp directly from the chain (slow)
 	Globals    globals.GlobalOptions    `json:"globals,omitempty"`    // The global options
 	Conn       *rpc.Connection          `json:"conn,omitempty"`       // The connection to the RPC server
 	BadFlag    error                    `json:"badFlag,omitempty"`    // An error flag if needed
@@ -60,7 +60,7 @@ func (opts *WhenOptions) testLog() {
 	logger.TestLog(opts.Repair, "Repair: ", opts.Repair)
 	logger.TestLog(opts.Check, "Check: ", opts.Check)
 	logger.TestLog(opts.Update, "Update: ", opts.Update)
-	logger.TestLog(opts.Deep, "Deep: ", opts.Deep)
+	logger.TestLog(opts.Deep != 0, "Deep: ", opts.Deep)
 	opts.Conn.TestLog()
 	opts.Globals.TestLog()
 }
@@ -107,7 +107,7 @@ func WhenFinishParseInternal(w io.Writer, values url.Values) *WhenOptions {
 		case "update":
 			opts.Update = true
 		case "deep":
-			opts.Deep = true
+			opts.Deep = base.MustParseUint64(value[0])
 		default:
 			if !copy.Globals.Caps.HasKey(key) {
 				err := validate.Usage("Invalid key ({0}) in {1} route.", key, "when")
@@ -180,6 +180,8 @@ func ResetOptions(testMode bool) {
 	opts.Globals.TestMode = testMode
 	opts.Globals.Writer = w
 	opts.Globals.Caps = getCaps()
+	// EXISTING_CODE
+	// EXISTING_CODE
 	opts.Truncate = base.NOPOSN
 	defaultWhenOptions = opts
 }

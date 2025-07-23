@@ -49,6 +49,19 @@ func (opts *ChunksOptions) validateChunks() error {
 		}
 	}
 
+	// Validate that --dry_run is only used with destructive commands
+	if opts.DryRun {
+		destructiveMode := len(opts.Tag) > 0 || opts.Truncate != base.NOPOSN || opts.Pin || (opts.Mode == "pins" && opts.Unpin)
+		if !destructiveMode {
+			return validate.Usage("The {0} option is only available with destructive operations: --tag, --truncate, --pin, or --unpin in pins mode.", "--dry_run")
+		}
+	}
+
+	// Validate that --metadata is only used with --pin
+	if opts.Metadata && !opts.Pin {
+		return validate.Usage("The {0} option requires {1}.", "--metadata", "--pin")
+	}
+
 	if opts.Mode == "pins" {
 		if !opts.List && !opts.Unpin && !opts.Count {
 			return validate.Usage("{0} mode requires {1}.", "pins", "either --list, --count, or --unpin")

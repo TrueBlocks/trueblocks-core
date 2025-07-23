@@ -21,7 +21,7 @@ Results in ./by_file_v_out.file
   "data": [
     {
       "address": "0xbb9bc244d798123fde783fcc1c72d3bb8c189413",
-      "addressName": "The DAO Original",
+      "addressName": "TheDAO (L1)",
       "articulatedLog": {
         "inputs": {
           "_amount": "666666666600000000",
@@ -46,7 +46,7 @@ Results in ./by_file_v_out.file
     },
     {
       "address": "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
-      "addressName": "Wrapped Ether",
+      "addressName": "Wrapped Ether (L1)",
       "blockHash": "0x01a8f98ce9865e410e86b381c7704e753cc0264128bb079f007b843e6cd21a10",
       "blockNumber": 13327455,
       "data": "0x00000000000000000000000000000000000000000000000057f041d751534708",

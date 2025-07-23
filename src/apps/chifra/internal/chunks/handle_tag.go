@@ -21,16 +21,22 @@ import (
 
 func (opts *ChunksOptions) HandleTag(rCtx *output.RenderCtx, blockNums []base.Blknum) error {
 	chain := opts.Globals.Chain
-	if opts.Globals.TestMode {
+	if opts.Globals.TestMode && !opts.DryRun {
 		logger.Warn("Tag option not tested.")
 		return nil
 	}
 
-	if !opts.Globals.IsApiMode() && !usage.QueryUser(usage.Replace(tagWarning, opts.Tag), "Not taagged") {
+	msg := usage.Replace(tagWarning, opts.Tag)
+	if opts.DryRun {
+		msg = fmt.Sprintf("DRY RUN: %s", strings.Replace(msg, "This is a non-recoverable operation.", "", 1))
+	}
+	if !opts.Globals.IsApiMode() && !usage.QueryUser(msg, "Not taagged") {
 		return nil
 	}
 
-	_ = file.CleanFolder(chain, config.PathToIndex(chain), []string{"ripe", "unripe", "maps", "staging"})
+	if !opts.DryRun {
+		_ = file.CleanFolder(chain, config.PathToIndex(chain), []string{"ripe", "unripe", "maps", "staging"})
+	}
 
 	userHitCtrlC := false
 
@@ -54,16 +60,22 @@ func (opts *ChunksOptions) HandleTag(rCtx *output.RenderCtx, blockNums []base.Bl
 				logger.Fatal("should not happen ==> we're spinning through the bloom filters")
 			}
 
-			var chunk index.Chunk
-			if err := chunk.Tag(opts.Tag, path); err != nil {
-				return false, err
+			if opts.DryRun {
+				rng := ranges.RangeFromFilename(path)
+				logger.Info(colors.Green+"DRY RUN: Would tag chunk at "+rng.String()+" with "+opts.Tag+strings.Repeat(" ", 20), colors.Off)
+			} else {
+				var chunk index.Chunk
+				if err := chunk.Tag(opts.Tag, path); err != nil {
+					return false, err
+				}
+
+				if opts.Globals.Verbose {
+					rng := ranges.RangeFromFilename(path)
+					logger.Info(colors.Green+"Tagging chunk at "+rng.String()+" with "+opts.Tag+strings.Repeat(" ", 20), colors.Off)
+				}
 			}
 
 			nChunksTagged++
-			if opts.Globals.Verbose {
-				rng := ranges.RangeFromFilename(path)
-				logger.Info(colors.Green+"Tagging chunk at "+rng.String()+" with "+opts.Tag+strings.Repeat(" ", 20), colors.Off)
-			}
 			bar.Tick()
 
 			return true, nil
@@ -83,12 +95,18 @@ func (opts *ChunksOptions) HandleTag(rCtx *output.RenderCtx, blockNums []base.Bl
 		} else {
 			bar.Finish(true /* newLine */)
 
-			man.Version = opts.Tag
-			man.Specification = base.IpfsHash(config.SpecTags[opts.Tag])
-			_ = man.SaveManifest(chain, config.PathToManifestFile(chain))
+			if !opts.DryRun {
+				man.Version = opts.Tag
+				man.Specification = base.IpfsHash(config.SpecTags[opts.Tag])
+				_ = man.SaveManifest(chain, config.PathToManifestFile(chain))
+			}
 
 			// All that's left to do is report on what happened.
-			msg := fmt.Sprintf("%d chunks were retagged with %s.", nChunksTagged, opts.Tag)
+			verb := "were retagged"
+			if opts.DryRun {
+				verb = "would be retagged"
+			}
+			msg := fmt.Sprintf("%d chunks %s with %s.", nChunksTagged, verb, opts.Tag)
 			if userHitCtrlC {
 				msg += colors.Yellow + "Finishing work. please wait..." + colors.Off
 			}

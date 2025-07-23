@@ -41,12 +41,18 @@ func (s *CacheItem) Model(chain, format string, verbose bool, extraOpts map[stri
 	var order = []string{}
 
 	// EXISTING_CODE
-	if extraOpts["configPaths"] == true {
-		model["type"] = s.CacheItemType
-		order = append(order, "type")
-		model["path"] = s.Path
-		order = append(order, "path")
-	}
+	model["type"] = s.CacheItemType
+	order = append(order, "type")
+	model["path"] = s.Path
+	order = append(order, "path")
+	model["nFiles"] = s.NFiles
+	order = append(order, "nFiles")
+	model["nFolders"] = s.NFolders
+	order = append(order, "nFolders")
+	model["sizeInBytes"] = s.SizeInBytes
+	order = append(order, "sizeInBytes")
+	model["lastCached"] = s.LastCached
+	order = append(order, "lastCached")
 	// EXISTING_CODE
 
 	return Model{

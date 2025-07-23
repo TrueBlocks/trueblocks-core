@@ -25,12 +25,17 @@ func (opts *AbisOptions) HandleList(rCtx *output.RenderCtx) error {
 		abiArray := make([]types.Abi, 0, 100)
 		vFunc := func(fn string, vP any) (bool, error) {
 			_ = vP
+			isKnown := strings.Contains(fn, "known")
+			if opts.Known && !isKnown {
+				return true, nil
+			}
+
 			if strings.HasSuffix(fn, ".json") {
 				info, _ := os.Stat(fn)
 				abi := types.Abi{
 					FileSize:    file.FileSize(fn),
 					LastModDate: info.ModTime().Format("2006-01-02 15:04:05"),
-					IsKnown:     strings.Contains(fn, "known"),
+					IsKnown:     isKnown,
 				}
 				abi.Path, abi.Name = filepath.Split(fn)
 				if len(abi.Name) > 0 {

@@ -34,8 +34,9 @@ func DoChunks() {
 	belongs := fuzzBelongs
 	deep := []bool{false, true}
 	rewrite := []bool{false, true}
-	list := []bool{false, true}
 	unpin := []bool{false, true}
+	dryRun := []bool{false, true}
+	metadata := []bool{false, true}
 	// firstBlock is a <blknum> --other
 	// lastBlock is a <blknum> --other
 	// maxAddrs is a <uint64> --other
@@ -45,6 +46,7 @@ func DoChunks() {
 	// sleep is not fuzzed
 	// Fuzz Loop
 	// EXISTING_CODE
+	_ = dryRun
 	_ = belongs
 	_ = globs
 	_ = check
@@ -53,8 +55,8 @@ func DoChunks() {
 	_ = remote
 	_ = deep
 	_ = rewrite
-	_ = list
 	_ = unpin
+	_ = metadata
 	opts = sdk.ChunksOptions{
 		FirstBlock: 0,
 		LastBlock:  base.NOPOSN,
@@ -183,6 +185,16 @@ func TestChunks(which, value, fn string, opts *sdk.ChunksOptions) {
 			ReportError(fn, opts, err)
 		} else {
 			if err := SaveToFile(fn, diff); err != nil {
+				ReportError2(fn, err)
+			} else {
+				ReportOkay(fn)
+			}
+		}
+	case "list":
+		if list, _, err := opts.ChunksList(); err != nil {
+			ReportError(fn, opts, err)
+		} else {
+			if err := SaveToFile(fn, list); err != nil {
 				ReportError2(fn, err)
 			} else {
 				ReportOkay(fn)

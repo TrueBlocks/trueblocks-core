@@ -2,7 +2,6 @@ receipts?transactions=46147.0&cache
 Args: [transactions=46147.0 cache]
 Opts: {"transactions":["46147.0"],"cache":true}
 Transactions:  [46147.0]
-Enabled:  transactions
 Cache:  true
 Caps:  cache,decache
 Format:  json
