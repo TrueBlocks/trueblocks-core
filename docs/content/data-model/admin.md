@@ -121,7 +121,7 @@ ChunkIndexes consist of the following fields:
 | hash         | the hash of the specification under which this chunk was generated    | hash                                        |
 | nAddresses   | the number of addresses in this chunk                                 | uint64                                      |
 | nAppearances | the number of appearances in this chunk                               | uint64                                      |
-| size         | the size of the chunk in bytes                                        | uint64                                      |
+| fileSize     | the file size on disc in bytes of this bloom file                     | uint64                                      |
 | rangeDates   | if verbose, the block and timestamp bounds of the chunk (may be null) | [RangeDates](/data-model/admin/#rangedates) |
 
 ## ChunkBloom
@@ -144,7 +144,7 @@ ChunkBlooms consist of the following fields:
 | hash       | the hash of the specification under which this chunk was generated    | hash                                        |
 | nBlooms    | the number of individual bloom filters in this bloom file             | uint64                                      |
 | nInserted  | the number of addresses inserted into the bloom file                  | uint64                                      |
-| size       | the size on disc in bytes of this bloom file                          | uint64                                      |
+| fileSize   | the file size on disc in bytes of this bloom file                     | uint64                                      |
 | byteWidth  | the width of the bloom filter                                         | uint64                                      |
 | rangeDates | if verbose, the block and timestamp bounds of the chunk (may be null) | [RangeDates](/data-model/admin/#rangedates) |
 

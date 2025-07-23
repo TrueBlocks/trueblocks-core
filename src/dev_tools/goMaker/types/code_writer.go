@@ -185,7 +185,7 @@ func updateFile(tempFn, newCode string) (bool, error) {
 			_, _ = showErroredCode(codeToWrite, err)
 		}
 		codeToWrite = string(formattedBytes)
-	} else if hasPrettier() {
+	} else {
 		var parser string
 		switch fileExt {
 		case "md":
@@ -204,72 +204,72 @@ func updateFile(tempFn, newCode string) (bool, error) {
 			// do nothing
 		}
 		if parser != "" {
-			_ = file.StringToAsciiFile(tmpSrcFn, codeToWrite)
-			prettierPath := getPrettierPath()
+			if hasPrettier() {
+				_ = file.StringToAsciiFile(tmpSrcFn, codeToWrite)
+				prettierPath := getPrettierPath()
 
-			var cmd string
+				var cmd string
 
-			// If prettier is in frontend directory, cd there and run it
-			if strings.Contains(prettierPath, "frontend") {
-				// Get absolute paths for files since we're changing directory
-				absTmpSrcFn, _ := filepath.Abs(tmpSrcFn)
-				absOutFn, _ := filepath.Abs(outFn)
-				absErrFn, _ := filepath.Abs(errFn)
+				// If prettier is in frontend directory, cd there and run it
+				if strings.Contains(prettierPath, "frontend") {
+					// Get absolute paths for files since we're changing directory
+					absTmpSrcFn, _ := filepath.Abs(tmpSrcFn)
+					absOutFn, _ := filepath.Abs(outFn)
+					absErrFn, _ := filepath.Abs(errFn)
 
-				// Change to frontend directory and run prettier
-				cmd = fmt.Sprintf("cd frontend && %s --parser %s %s > %s 2> %s",
-					strings.Replace(prettierPath, "./frontend/", "./", 1),
-					parser, absTmpSrcFn, absOutFn, absErrFn)
-			} else {
-				// Check if there's a prettier config file that might already specify plugins
-				prettierConfigPaths := []string{
-					".prettierrc",
-					".prettierrc.json",
-					".prettierrc.js",
-					".prettierrc.yaml",
-					".prettierrc.yml",
-					"prettier.config.js",
-					"./frontend/.prettierrc",
-					"./frontend/.prettierrc.json",
-					"./frontend/.prettierrc.js",
-					"./frontend/.prettierrc.yaml",
-					"./frontend/.prettierrc.yml",
-					"./frontend/prettier.config.js",
-				}
-
-				hasConfig := false
-				configPath := ""
-				for _, path := range prettierConfigPaths {
-					if file.FileExists(path) {
-						hasConfig = true
-						configPath = path
-						break
-					}
-				}
-
-				if !hasConfig {
-					// Only add plugin explicitly if no config file is found
-					pluginPath := getPluginPath()
-					if pluginPath != "" {
-						cmd = fmt.Sprintf("%s --plugin %s --parser %s %s > %s 2> %s", prettierPath, pluginPath, parser, tmpSrcFn, outFn, errFn)
-					} else {
-						cmd = fmt.Sprintf("%s --parser %s %s > %s 2> %s", prettierPath, parser, tmpSrcFn, outFn, errFn)
-					}
+					// Change to frontend directory and run prettier
+					cmd = fmt.Sprintf("cd frontend && %s --parser %s %s > %s 2> %s",
+						strings.Replace(prettierPath, "./frontend/", "./", 1),
+						parser, absTmpSrcFn, absOutFn, absErrFn)
 				} else {
-					// Use prettier config file and specify its path explicitly
-					cmd = fmt.Sprintf("%s --config %s --parser %s %s > %s 2> %s", prettierPath, configPath, parser, tmpSrcFn, outFn, errFn)
-				}
-			}
+					// Check if there's a prettier config file that might already specify plugins
+					prettierConfigPaths := []string{
+						".prettierrc",
+						".prettierrc.json",
+						".prettierrc.js",
+						".prettierrc.yaml",
+						".prettierrc.yml",
+						"prettier.config.js",
+						"./frontend/.prettierrc",
+						"./frontend/.prettierrc.json",
+						"./frontend/.prettierrc.js",
+						"./frontend/.prettierrc.yaml",
+						"./frontend/.prettierrc.yml",
+						"./frontend/prettier.config.js",
+					}
 
-			utils.System(cmd)
-			errors := file.AsciiFileToString(errFn)
-			if len(errors) > 0 {
-				return showErroredCode(codeToWrite, fmt.Errorf("prettier errors: %s", errors))
+					hasConfig := false
+					configPath := ""
+					for _, path := range prettierConfigPaths {
+						if file.FileExists(path) {
+							hasConfig = true
+							configPath = path
+							break
+						}
+					}
+
+					if !hasConfig {
+						// Only add plugin explicitly if no config file is found
+						pluginPath := getPluginPath()
+						if pluginPath != "" {
+							cmd = fmt.Sprintf("%s --plugin %s --parser %s %s > %s 2> %s", prettierPath, pluginPath, parser, tmpSrcFn, outFn, errFn)
+						} else {
+							cmd = fmt.Sprintf("%s --parser %s %s > %s 2> %s", prettierPath, parser, tmpSrcFn, outFn, errFn)
+						}
+					} else {
+						// Use prettier config file and specify its path explicitly
+						cmd = fmt.Sprintf("%s --config %s --parser %s %s > %s 2> %s", prettierPath, configPath, parser, tmpSrcFn, outFn, errFn)
+					}
+				}
+
+				utils.System(cmd)
+				errors := file.AsciiFileToString(errFn)
+				if len(errors) > 0 {
+					return showErroredCode(codeToWrite, fmt.Errorf("prettier errors: %s", errors))
+				}
+				codeToWrite = file.AsciiFileToString(outFn)
 			}
-			codeToWrite = file.AsciiFileToString(outFn)
 		}
-	} else {
-		logger.Warn("Prettier not found, skipping formatting for", tempFn, ". Install Prettier locally with `yarn add --dev prettier @trivago/prettier-plugin-sort-imports`.")
 	}
 
 	// Compare the new formatted code to the existing file and only write if different
@@ -330,7 +330,10 @@ func getPrettierPath() string {
 	utils.System("which prettier >./found 2>/dev/null")
 	defer os.Remove("./found")
 	if file.FileExists("./found") {
-		return "prettier"
+		contents := file.AsciiFileToString("./found")
+		if len(contents) > 0 {
+			return "prettier"
+		}
 	}
 
 	return ""

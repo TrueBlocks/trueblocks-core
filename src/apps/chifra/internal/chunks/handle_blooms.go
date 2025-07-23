@@ -51,7 +51,7 @@ func (opts *ChunksOptions) HandleBlooms(rCtx *output.RenderCtx, blockNums []base
 			s := types.ChunkBloom{
 				Magic:     fmt.Sprintf("0x%x", bl.Header.Magic),
 				Hash:      bl.Header.Hash,
-				Size:      stats.BloomSz,
+				FileSize:  stats.BloomSz,
 				Range:     rng.String(),
 				NBlooms:   stats.NBlooms,
 				ByteWidth: index.BLOOM_WIDTH_IN_BYTES,

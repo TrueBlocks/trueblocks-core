@@ -18,13 +18,13 @@ import (
 // EXISTING_CODE
 
 type ChunkIndex struct {
+	FileSize     uint64      `json:"fileSize"`
 	Hash         base.Hash   `json:"hash"`
 	Magic        string      `json:"magic"`
 	NAddresses   uint64      `json:"nAddresses"`
 	NAppearances uint64      `json:"nAppearances"`
 	Range        string      `json:"range"`
 	RangeDates   *RangeDates `json:"rangeDates,omitempty"`
-	Size         uint64      `json:"size"`
 	// EXISTING_CODE
 	// EXISTING_CODE
 }
@@ -49,7 +49,7 @@ func (s *ChunkIndex) Model(chain, format string, verbose bool, extraOpts map[str
 		"hash":         FormattedTag(verbose, s.Hash),
 		"nAddresses":   s.NAddresses,
 		"nAppearances": s.NAppearances,
-		"fileSize":     s.Size,
+		"fileSize":     s.FileSize,
 	}
 	order = []string{
 		"range",

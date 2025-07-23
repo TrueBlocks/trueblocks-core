@@ -161,11 +161,11 @@ func (s *Parameter) UnmarshalCache(fileVersion uint64, reader io.Reader) (err er
 	}
 
 	// Value
-	var valueBytes []byte
-	if err = base.ReadValue(reader, &valueBytes, fileVersion); err != nil {
+	var value string
+	if err = base.ReadValue(reader, &value, fileVersion); err != nil {
 		return err
 	}
-	if err = json.Unmarshal(valueBytes, &s.Value); err != nil {
+	if err = json.Unmarshal([]byte(value), &s.Value); err != nil {
 		return fmt.Errorf("cannot unmarshal Value: %w", err)
 	}
 
