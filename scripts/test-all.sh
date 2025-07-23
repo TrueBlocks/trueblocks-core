@@ -38,15 +38,19 @@ if [ -z "${TB_TEST_ENABLED}" ] && [ -z "${TB_TEST_FILTER}" ]; then
     fi
 
     #------------------------------------------------
-    echo "Running Go integration tests..."
-    KHEDRA="${REPO_ROOT}/khedra"
-    cd "${KHEDRA}" || exit 1  # Ensure we actually enter the directory
-    TB_NO_PROVIDER_CHECK=true go test ./...
-    STATUS=$?
-    cd - > /dev/null  # Return to the previous directory (optional)
-    if [ ${STATUS} -ne 0 ]; then
-      echo "Khedra tests failed."
-      exit ${STATUS}
+    if [ "${TB_NO_KHEDRA_TEST}" != "true" ]; then
+      echo "Running Go integration tests..."
+      KHEDRA="${REPO_ROOT}/khedra"
+      cd "${KHEDRA}" || exit 1  # Ensure we actually enter the directory
+      TB_NO_PROVIDER_CHECK=true go test ./...
+      STATUS=$?
+      cd - > /dev/null  # Return to the previous directory (optional)
+      if [ ${STATUS} -ne 0 ]; then
+        echo "Khedra tests failed."
+        exit ${STATUS}
+      fi
+    else
+      echo "Skipping Khedra tests because TB_NO_KHEDRA_TEST is true."
     fi
 fi
 
