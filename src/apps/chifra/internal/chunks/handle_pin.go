@@ -123,7 +123,7 @@ func (opts *ChunksOptions) HandlePin(rCtx *output.RenderCtx, blockNums []base.Bl
 				continue
 			}
 
-			local, remote, err := pinning.PinOneChunk(chain, path, opts.Remote)
+			local, remote, err := pinning.PinOneChunk(chain, path, opts.Remote, fmt.Sprintf("%d-%d", chunksProcessed+1, len(fileList)))
 			if err != nil {
 				errorChan <- err
 				logger.Error("Pin failed:", path, err)
@@ -133,9 +133,11 @@ func (opts *ChunksOptions) HandlePin(rCtx *output.RenderCtx, blockNums []base.Bl
 				logger.Info(colors.Yellow, "Sleeping for", sleep, "seconds then trying again.", colors.Off)
 
 			} else {
+				chunksProcessed++
+				progressInfo := fmt.Sprintf("%d-%d", chunksProcessed, len(fileList))
 				blMatches, idxMatches := matches(&local, &remote)
-				opts.matchReport(blMatches, local.BloomHash, remote.BloomHash)
-				opts.matchReport(idxMatches, local.IndexHash, remote.IndexHash)
+				opts.matchReport(blMatches, local.BloomHash, remote.BloomHash, progressInfo)
+				opts.matchReport(idxMatches, local.IndexHash, remote.IndexHash, progressInfo)
 
 				if opts.Remote {
 					man.Chunks = append(man.Chunks, remote)
@@ -173,7 +175,7 @@ func (opts *ChunksOptions) HandlePin(rCtx *output.RenderCtx, blockNums []base.Bl
 					errorChan <- err
 					logger.Error("Pin failed:", tsPath, err)
 				} else {
-					opts.matchReport(localHash == remoteHash, localHash, remoteHash)
+					opts.matchReport(localHash == remoteHash, localHash, remoteHash, "timestamps")
 					report.TimestampHash = localHash
 				}
 			}
@@ -189,7 +191,7 @@ func (opts *ChunksOptions) HandlePin(rCtx *output.RenderCtx, blockNums []base.Bl
 					errorChan <- err
 					logger.Error("Pin failed:", manPath, err)
 				} else {
-					opts.matchReport(localHash == remoteHash, localHash, remoteHash)
+					opts.matchReport(localHash == remoteHash, localHash, remoteHash, "manifest")
 					report.ManifestHash = localHash
 				}
 			}
@@ -208,16 +210,16 @@ func matches(local, remote *types.ChunkRecord) (bool, bool) {
 	return local.BloomHash == remote.BloomHash, local.IndexHash == remote.IndexHash
 }
 
-func (opts *ChunksOptions) matchReport(matches bool, localHash, remoteHash base.IpfsHash) {
+func (opts *ChunksOptions) matchReport(matches bool, localHash, remoteHash base.IpfsHash, progressInfo string) {
 	_ = remoteHash // linter
 	if !opts.Remote || !config.IpfsRunning() {
 		return // if we're not pinning in two places, don't report on matches
 	}
 
 	if matches {
-		logger.Info(colors.BrightGreen+"Matches: "+localHash.String(), " ", localHash, colors.Off)
+		logger.Info(colors.BrightGreen+"["+progressInfo+"] Matches "+localHash.String(), " ", localHash, colors.Off)
 	} else {
-		logger.Warn("Pins mismatch:", localHash.String(), " ", localHash)
+		logger.Warn("["+progressInfo+"] Pins mismatch", localHash.String(), " ", localHash)
 	}
 }
 

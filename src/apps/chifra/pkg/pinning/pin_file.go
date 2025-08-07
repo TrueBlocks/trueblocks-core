@@ -52,12 +52,12 @@ func PinOneFile(chain, dbName, fileName string, remote bool) (base.IpfsHash, bas
 		}
 	}
 
-	logger.Info(colors.Magenta+"Pinned", dbName, "file", toShow, "to", localHash, colors.Off)
+	logger.Info(colors.Magenta+"["+dbName+"] Pinned", dbName, "file", toShow, "to", localHash, colors.Off)
 	return localHash, remoteHash, nil
 }
 
 // PinOneChunk pins the named chunk given a path to the local and/or remote pinning service
-func PinOneChunk(chain, path string, remote bool) (types.ChunkRecord, types.ChunkRecord, error) {
+func PinOneChunk(chain, path string, remote bool, progressInfo string) (types.ChunkRecord, types.ChunkRecord, error) {
 	bloomFile := index.ToBloomPath(path)
 	indexFile := index.ToIndexPath(path)
 	local := config.IpfsRunning()
@@ -81,7 +81,7 @@ func PinOneChunk(chain, path string, remote bool) (types.ChunkRecord, types.Chun
 			return localPin, remotePin, err
 		}
 		localPin.IndexSize = file.FileSize(indexFile)
-		logger.Info(colors.Magenta+"Pinned", rng, "local to ", localPin.BloomHash, localPin.IndexHash, colors.Off)
+		logger.Info(colors.Magenta+"["+progressInfo+"] Pinned", rng, "local to ", localPin.BloomHash, localPin.IndexHash, colors.Off)
 	}
 
 	if remote {
@@ -95,7 +95,7 @@ func PinOneChunk(chain, path string, remote bool) (types.ChunkRecord, types.Chun
 			return localPin, remotePin, err
 		}
 		remotePin.IndexSize = file.FileSize(indexFile)
-		logger.Info(colors.Magenta+"Pinned", rng, "remote to", remotePin.BloomHash, remotePin.IndexHash, colors.Off)
+		logger.Info(colors.Magenta+"["+progressInfo+"] Pinned", rng, "remote to", remotePin.BloomHash, remotePin.IndexHash, colors.Off)
 	}
 
 	return localPin, remotePin, err

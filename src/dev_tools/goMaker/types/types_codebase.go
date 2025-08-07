@@ -234,9 +234,9 @@ func (cb *CodeBase) Views() string {
 	ret := []string{}
 	for _, cl := range cb.Structures {
 		if cl.Class != "" && !cl.DisableGo {
-			ret = append(ret, cl.Class)
+			ret = append(ret, "  "+cl.Class+",")
 		}
 	}
 	sort.Strings(ret)
-	return strings.Join(ret, ", ")
+	return strings.Trim(strings.Join(ret, "\n"), " ")
 }
