@@ -158,18 +158,20 @@ func (s *Receipt) ToTranfers(holder base.Address, assetFilters []base.Address, a
 	xfrs := make([]*Transfer, 0, 20)
 
 	for _, log := range s.Logs {
-		isTransfer := log.Topics[0] == topics.TransferTopic
-		isOfIterest := IsAssetOfInterest(log.Address, assetFilters)
-		passesFilter := appFilter.ApplyLogFilter(&log, []base.Address{holder})
-		if isTransfer && isOfIterest && passesFilter {
-			if xfr, err := log.toTransfer(holder); err != nil {
-				return nil, err
+		if len(log.Topics) > 0 {
+			isTransfer := log.Topics[0] == topics.TransferTopic
+			isOfIterest := IsAssetOfInterest(log.Address, assetFilters)
+			passesFilter := appFilter.ApplyLogFilter(&log, []base.Address{holder})
+			if isTransfer && isOfIterest && passesFilter {
+				if xfr, err := log.toTransfer(holder); err != nil {
+					return nil, err
 
-			} else if xfr == nil {
-				continue
+				} else if xfr == nil {
+					continue
 
-			} else {
-				xfrs = append(xfrs, xfr)
+				} else {
+					xfrs = append(xfrs, xfr)
+				}
 			}
 		}
 	}
