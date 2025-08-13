@@ -8,12 +8,12 @@ import (
 type Facet struct {
 	Name       string   `json:"name"`
 	Store      string   `json:"store"`
-	Cruds      []string `toml:"cruds" json:"cruds"`
+	Actions    []string `toml:"actions" json:"actions"`
 	ViewType   string   `toml:"viewType" json:"viewType"`
 	Attributes string   `json:"attributes"`
 }
 
-var allowedCruds = map[string]bool{
+var allowedActions = map[string]bool{
 	"delete":   true,
 	"undelete": true,
 	"remove":   true,
@@ -36,10 +36,10 @@ func (f *Facet) SingleStore() string {
 	return Singular(f.Store)
 }
 
-func (f *Facet) ValidateCruds() error {
-	for _, crud := range f.Cruds {
-		if !allowedCruds[crud] {
-			return fmt.Errorf("invalid crud value: %s", crud)
+func (f *Facet) ValidateActions() error {
+	for _, action := range f.Actions {
+		if !allowedActions[action] {
+			return fmt.Errorf("invalid action value: %s", action)
 		}
 	}
 	return nil
@@ -61,7 +61,7 @@ func (f *Facet) ValidateViewType() error {
 }
 
 func (f *Facet) ValidateAll() error {
-	if err := f.ValidateCruds(); err != nil {
+	if err := f.ValidateActions(); err != nil {
 		return err
 	}
 	if err := f.ValidateViewType(); err != nil {
@@ -70,11 +70,11 @@ func (f *Facet) ValidateAll() error {
 	return nil
 }
 
-func (f *Facet) HasCruds() bool {
+func (f *Facet) HasActions() bool {
 	if f == nil {
 		return false
 	}
-	return len(f.Cruds) > 0
+	return len(f.Actions) > 0
 }
 
 func (f *Facet) HasViewType() bool {

@@ -387,49 +387,60 @@ func (s *Structure) Stores() []Store {
 	return ret
 }
 
-func (s *Structure) HasCruds() bool {
+func (s *Structure) HasActions() bool {
 	for _, f := range s.Facets {
-		if f.HasCruds() {
+		if f.HasActions() {
 			return true
 		}
 	}
 	return false
 }
 
-func (s *Structure) Cruds() string {
+func (s *Structure) Actions() string {
 	seen := make(map[string]bool)
 	ret := []string{}
 	for _, f := range s.Facets {
-		for _, crud := range f.Cruds {
-			if !seen[crud] {
-				seen[crud] = true
-				ret = append(ret, crud)
+		for _, action := range f.Actions {
+			if !seen[action] {
+				seen[action] = true
+				ret = append(ret, action)
 			}
 		}
 	}
 	return strings.Join(ret, ",")
 }
 
-func (s *Structure) CrudStrs() string {
-	cruds := strings.Split(s.Cruds(), ",")
+func (s *Structure) ActionStrs() string {
+	actions := strings.Split(s.Actions(), ",")
 	ret := []string{}
-	for _, crud := range cruds {
-		if crud != "" {
-			ret = append(ret, "'"+crud+"'")
+	for _, action := range actions {
+		if action != "" {
+			ret = append(ret, "'"+action+"'")
+		}
+	}
+	return strings.Join(ret, ", ")
+}
+
+func (s *Structure) ActionCfgs() string {
+	actions := strings.Split(s.Actions(), ",")
+	ret := []string{}
+	for _, action := range actions {
+		if action != "" {
+			ret = append(ret, "'"+action+"'")
 		}
 	}
 	return strings.Join(ret, ", ")
 }
 
 func (s *Structure) Handlers_inner() string {
-	cruds := strings.Split(s.Cruds(), ",")
+	actions := strings.Split(s.Actions(), ",")
 	ret := []string{}
-	for _, crud := range cruds {
-		if crud == "undelete" || crud == "" {
+	for _, action := range actions {
+		if action == "undelete" || action == "" {
 			continue
 		}
-		name := crud
-		if crud == "delete" {
+		name := action
+		if action == "delete" {
 			name = "toggle"
 		}
 		ret = append(ret, "handle"+FirstUpper(name))

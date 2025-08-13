@@ -9,29 +9,29 @@ func TestFacetValidation(t *testing.T) {
 	validFacet := Facet{
 		Name:     "TestFacet",
 		Store:    "TestStore",
-		Cruds:    []string{"delete", "update"},
+		Actions:  []string{"delete", "update"},
 		ViewType: "table",
 	}
 	if err := validFacet.ValidateAll(); err != nil {
 		t.Errorf("Expected no error, got %v", err)
 	}
 
-	// Invalid CRUD
-	invalidCrudFacet := Facet{
-		Name:     "InvalidCrudFacet",
+	// Invalid Action
+	invalidActionFacet := Facet{
+		Name:     "InvalidActionFacet",
 		Store:    "TestStore",
-		Cruds:    []string{"invalid"},
+		Actions:  []string{"invalid"},
 		ViewType: "form",
 	}
-	if err := invalidCrudFacet.ValidateAll(); err == nil {
-		t.Error("Expected error for invalid CRUD, got none")
+	if err := invalidActionFacet.ValidateAll(); err == nil {
+		t.Error("Expected error for invalid Action, got none")
 	}
 
 	// Invalid viewType
 	invalidViewTypeFacet := Facet{
 		Name:     "InvalidViewTypeFacet",
 		Store:    "TestStore",
-		Cruds:    []string{"delete"},
+		Actions:  []string{"delete"},
 		ViewType: "invalid",
 	}
 	if err := invalidViewTypeFacet.ValidateAll(); err == nil {
@@ -42,7 +42,7 @@ func TestFacetValidation(t *testing.T) {
 	emptyViewTypeFacet := Facet{
 		Name:     "EmptyViewTypeFacet",
 		Store:    "TestStore",
-		Cruds:    []string{"delete"},
+		Actions:  []string{"delete"},
 		ViewType: "",
 	}
 	if err := emptyViewTypeFacet.ValidateAll(); err != nil {
