@@ -95,6 +95,10 @@ func (cb *CodeBase) LoadStructures(thePath string, callBack func(*Structure, *an
 		}
 		if ok {
 			mapKey := strings.ToLower(class)
+			// Normalize actions (strip -confirm suffix) while capturing confirmation flags
+			for i := range f.Facets {
+				f.Facets[i].NormalizeActions()
+			}
 			f.Settings.Facets = f.Facets // Copy facets into the Structure
 			structMap[mapKey] = f.Settings
 		}

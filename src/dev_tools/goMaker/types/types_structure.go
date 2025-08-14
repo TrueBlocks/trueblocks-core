@@ -387,88 +387,6 @@ func (s *Structure) Stores() []Store {
 	return ret
 }
 
-func (s *Structure) HasActions() bool {
-	for _, f := range s.Facets {
-		if f.HasActions() {
-			return true
-		}
-	}
-	return false
-}
-
-func (s *Structure) Actions() string {
-	seen := make(map[string]bool)
-	ret := []string{}
-	for _, f := range s.Facets {
-		for _, action := range f.Actions {
-			if !seen[action] {
-				seen[action] = true
-				ret = append(ret, action)
-			}
-		}
-	}
-	return strings.Join(ret, ",")
-}
-
-func (s *Structure) ActionStrs() string {
-	actions := strings.Split(s.Actions(), ",")
-	ret := []string{}
-	for _, action := range actions {
-		if action != "" {
-			ret = append(ret, "'"+action+"'")
-		}
-	}
-	return strings.Join(ret, ", ")
-}
-
-func (s *Structure) ActionCfgs() string {
-	actions := strings.Split(s.Actions(), ",")
-	ret := []string{}
-	for _, action := range actions {
-		if action != "" {
-			ret = append(ret, "'"+action+"'")
-		}
-	}
-	return strings.Join(ret, ", ")
-}
-
-func (s *Structure) Handlers_inner() string {
-	actions := strings.Split(s.Actions(), ",")
-	ret := []string{}
-	for _, action := range actions {
-		if action == "undelete" || action == "" {
-			continue
-		}
-		name := action
-		if action == "delete" {
-			name = "toggle"
-		}
-		ret = append(ret, "handle"+FirstUpper(name))
-	}
-	sort.Strings(ret)
-	return strings.Join(ret, ",")
-}
-
-func (s *Structure) Handlers() string {
-	handlers := s.Handlers_inner()
-	handlers = strings.ReplaceAll(handlers, "handleAutoname,", "handleAutoname: originalHandleAutoname,")
-	handlers = strings.ReplaceAll(handlers, ",", ",\n")
-	return handlers
-}
-
-func (s *Structure) HandlerStrs() string {
-	handlers := strings.Split(s.Handlers_inner(), ",")
-	ret := []string{}
-	for _, handler := range handlers {
-		handler = strings.TrimSpace(handler)
-		if handler == "handleUpdate" {
-			continue
-		}
-		ret = append(ret, "      "+handler+",")
-	}
-	return strings.Join(ret, "\n")
-}
-
 func (s *Structure) DocSortOrder() []Member {
 	ret := s.Members
 	sort.Slice(ret, func(i, j int) bool {
@@ -498,7 +416,7 @@ func (s *Structure) CalcMembers() []string {
 
 func (s *Structure) HasForms() bool {
 	for _, f := range s.Facets {
-		if f.IsForm() || f.IsDashboard() {
+		if f.IsForm() {
 			return true
 		}
 	}
