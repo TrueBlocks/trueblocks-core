@@ -80,5 +80,5 @@ func (ref *Version) Uint64() uint64 {
 
 // String prints the version to a string
 func (ref *Version) String() string {
-	return fmt.Sprintf("v%d.%d.%d-%s", ref.Major, ref.Minor, ref.Build, ref.Aspect)
+	return strings.Trim(strings.Trim(fmt.Sprintf("v%d.%d.%d-%s", ref.Major, ref.Minor, ref.Build, ref.Aspect), "-"), " ")
 }
