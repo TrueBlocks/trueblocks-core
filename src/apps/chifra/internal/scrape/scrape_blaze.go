@@ -9,6 +9,7 @@ import (
 	"strings"
 	"sync"
 	"sync/atomic"
+	"time"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
@@ -227,36 +228,37 @@ func (bm *BlazeManager) WriteAppearances(bn base.Blknum, addrMap uniq.AddressBoo
 }
 
 var (
-	locker uint32
+	locker     uint32
+	lastUpdate time.Time
 )
 
 func (bm *BlazeManager) syncedReporting(bn base.Blknum, force bool) {
 	if !atomic.CompareAndSwapUint32(&locker, 0, 1) {
-		// Simply skip the update if someone else is already reporting
 		return
 	}
-	// Make sure to clear the lock on exit
 	defer atomic.StoreUint32(&locker, 0)
 
-	// Only report once in a while (17 blocks)
-	if bm.nProcessed()%17 == 0 || force {
-		dist := base.Blknum(0)
-		if bm.ripeBlock > bn {
-			dist = (bm.ripeBlock - bn)
-		}
-		if bm.isHeadless && dist < 100 {
-			return
-		}
-		msg := fmt.Sprintf("Scraping %-04d of %-04d at block %d of %d (%d blocks from %s head)",
-			bm.nProcessed(),
-			bm.BlockCount(),
-			bn,
-			bm.ripeBlock,
-			dist,
-			bm.chain,
-		)
-		logger.Progress(true, msg)
+	if !force && time.Since(lastUpdate) < 750*time.Millisecond {
+		return
 	}
+
+	dist := base.Blknum(0)
+	if bm.ripeBlock > bn {
+		dist = (bm.ripeBlock - bn)
+	}
+	if bm.isHeadless && dist < 100 {
+		return
+	}
+	msg := fmt.Sprintf("Scraping %-04d of %-04d at block %d of %d (%d blocks from %s head)",
+		bm.nProcessed(),
+		bm.BlockCount(),
+		bn,
+		bm.ripeBlock,
+		dist,
+		bm.chain,
+	)
+	logger.Progress(true, msg)
+	lastUpdate = time.Now()
 }
 
 // scrapedData combines the extracted block data, trace data, and log data into a
