@@ -233,7 +233,8 @@ func Singular(s string) string {
 		return s[:len(s)-2]
 	}
 
-	if sLower != "baddress" && sLower != "status" && sLower != "stats" && strings.HasSuffix(sLower, "s") {
+	exclusions := []string{"baddress", "status", "stats", "series", "dalledress"}
+	if !contains(exclusions, sLower) && strings.HasSuffix(sLower, "s") {
 		return s[:len(s)-1]
 	}
 
