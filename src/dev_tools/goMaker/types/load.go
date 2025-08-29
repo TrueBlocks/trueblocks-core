@@ -174,6 +174,9 @@ func (cb *CodeBase) FinishLoad(unused string, baseTypes []Structure, options []O
 		for i := 0; i < len(st.Members); i++ {
 			st.Members[i].stPtr = &st
 		}
+		for i := 0; i < len(st.Facets); i++ {
+			st.Facets[i].stPtr = &st
+		}
 		cb.Structures = append(cb.Structures, st)
 	}
 	sort.Slice(cb.Structures, func(i, j int) bool {

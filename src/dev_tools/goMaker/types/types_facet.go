@@ -11,7 +11,9 @@ type Facet struct {
 	Actions    []string        `toml:"actions" json:"actions"`
 	Confirms   map[string]bool `json:"-" toml:"-"` // actions requiring confirmation (parsed from -confirm suffix)
 	ViewType   string          `toml:"viewType" json:"viewType"`
+	Renderer   string          `toml:"renderer" json:"renderer"`
 	Attributes string          `json:"attributes"`
+	stPtr      *Structure      `json:"-"`
 }
 
 var allowedViewTypes = map[string]bool{

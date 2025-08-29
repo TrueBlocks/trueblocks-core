@@ -370,23 +370,6 @@ func (s *Structure) FacetsStr() string {
 	return strings.Join(ret, ", ")
 }
 
-func (s *Structure) Stores() []Store {
-	stores := make(map[string]bool)
-	for _, f := range s.Facets {
-		stores[f.Store] = true
-	}
-	sorted := []string{}
-	for store := range stores {
-		sorted = append(sorted, store)
-	}
-	sort.Strings(sorted)
-	ret := []Store{}
-	for _, storeName := range sorted {
-		ret = append(ret, NewStore(s, storeName))
-	}
-	return ret
-}
-
 func (s *Structure) DocSortOrder() []Member {
 	ret := s.Members
 	sort.Slice(ret, func(i, j int) bool {
@@ -421,4 +404,19 @@ func (s *Structure) HasForms() bool {
 		}
 	}
 	return false
+}
+
+func (s *Structure) RendererTypes() string {
+	rendererSet := make(map[string]struct{})
+	for _, f := range s.Facets {
+		if f.Renderer != "" {
+			rendererSet[f.Renderer] = struct{}{}
+		}
+	}
+	var ret []string
+	for renderer := range rendererSet {
+		ret = append(ret, renderer)
+	}
+	sort.Strings(ret)
+	return strings.Join(ret, ",")
 }
