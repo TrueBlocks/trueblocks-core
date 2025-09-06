@@ -51,15 +51,6 @@ func (s *Store) NMembers() int {
 	return len(members)
 }
 
-func (s *Structure) FindStore(store string) *Store {
-	for _, st := range s.Stores() {
-		if st.Name == store {
-			return &st
-		}
-	}
-	return nil
-}
-
 func (s *Structure) Stores() []Store {
 	stores := make(map[string]bool)
 	for _, f := range s.Facets {
@@ -86,7 +77,32 @@ func (f *Facet) StoreName() string {
 		return ""
 	}
 	if store := f.stPtr.FindStore(f.Store); store != nil {
-		return store.Name + " // " + store.Source
+		return store.Name
+	}
+	return ""
+}
+
+func (s *Structure) FindStore(store string) *Store {
+	if strings.Contains(store, ".") {
+		parts := strings.Split(store, ".")
+		if len(parts) > 0 {
+			store = parts[1]
+		}
+	}
+	for _, st := range s.Stores() {
+		if st.Name == store {
+			return &st
+		}
+	}
+	return nil
+}
+
+func (f *Facet) StoreSource() string {
+	if f == nil || f.stPtr == nil {
+		return ""
+	}
+	if store := f.stPtr.FindStore(f.Store); store != nil {
+		return store.Source
 	}
 	return ""
 }

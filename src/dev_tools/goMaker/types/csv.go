@@ -1,6 +1,7 @@
 package types
 
 import (
+	"fmt"
 	"os"
 	"strings"
 
@@ -17,6 +18,18 @@ type Validater interface {
 // the record is skipped. If the callBack function returns an error, the function quits and returns the error.
 func LoadCsv[T Validater, D any](thePath string, callBack func(*T, *D) (bool, error), data *D) ([]T, error) {
 	lines := file.AsciiFileToLines(thePath)
+
+	isCommandFile := strings.Contains(thePath, "cmd-line-options.csv")
+	if !isCommandFile {
+		requiredColumns := []string{"name", "type", "docOrder", "description"}
+		joinedLines := strings.Join(lines, "\n")
+		for _, col := range requiredColumns {
+			if !strings.Contains(joinedLines, col) {
+				return nil, fmt.Errorf("no %s column found in %s", col, thePath)
+			}
+		}
+	}
+
 	noComments := make([]string, 0, len(lines))
 	for i := 0; i < len(lines); i++ {
 		if !strings.HasPrefix(lines[i], "#") && len(strings.Trim(lines[i], wss)) > 0 {

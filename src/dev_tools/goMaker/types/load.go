@@ -148,10 +148,6 @@ func (cb *CodeBase) LoadMembers(thePath string, structMap map[string]Structure) 
 		return err
 	}
 
-	// for key, st := range structMap {
-	// 	logger.Info("Loaded structure:", key, "with", len(st.Members), "members")
-	// }
-
 	return nil
 }
 

@@ -148,7 +148,9 @@ var knownTypes = map[string]bool{
 }
 
 func (cb *CodeBase) Validate() error {
+	structureNames := make(map[string]bool, len(cb.Structures))
 	for _, st := range cb.Structures {
+		structureNames[st.Class] = true
 		order := make(map[int]bool, 50)
 		for _, m := range st.Members {
 			if m.DocOrder > 0 {
@@ -203,6 +205,33 @@ func (cb *CodeBase) Validate() error {
 
 			msg := fmt.Sprintf("unknown types %s.%s in command: %s", stripped, ot, op.LongName)
 			logger.Fatal(msg)
+		}
+	}
+
+	for _, st := range cb.Structures {
+		for _, f := range st.Facets {
+			test := strings.Replace(f.Store, "dalle.", "", 1)
+			if !structureNames[test] {
+				msg := fmt.Sprintf("facet store %s in structure %s not found. Missing .toml file?", f.Store, st.Class)
+				pwd, _ := os.Getwd()
+				tomlFile := filepath.Join(pwd, "code_gen/templates/classDefinitions", strings.ToLower(f.Store)+".toml")
+				if !file.FileExists(tomlFile) {
+					logger.InfoBR("TOML file missing:", tomlFile)
+				} else {
+					logger.InfoBR("TOML file found:", tomlFile)
+				}
+				csvFile := filepath.Join(pwd, "code_gen/templates/classDefinitions/fields", strings.ToLower(f.Store)+".csv")
+				if !file.FileExists(csvFile) {
+					logger.InfoBR("CSV file missing:", csvFile)
+				} else {
+					logger.InfoBR("CSV file found:", csvFile)
+				}
+				logger.Fatal(msg)
+			}
+			if len(st.Members) == 0 {
+				msg := fmt.Sprintf("No members found in structure: %s", st.Class)
+				logger.Fatal(msg)
+			}
 		}
 	}
 
