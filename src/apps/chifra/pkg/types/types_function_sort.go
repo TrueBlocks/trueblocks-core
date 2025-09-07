@@ -57,7 +57,8 @@ func FunctionBy(field FunctionField, order SortOrder) func(p1, p2 Function) bool
 		}
 
 	}
-	panic("Should not happen in FunctionBy")
+	logger.ShouldNotHappen("in FunctionBy")
+	return nil
 }
 
 // FunctionCmp accepts a slice and variadic comparison functions and returns a functions

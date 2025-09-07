@@ -50,7 +50,8 @@ func ContractBy(field ContractField, order SortOrder) func(p1, p2 Contract) bool
 		}
 
 	}
-	panic("Should not happen in ContractBy")
+	logger.ShouldNotHappen("in ContractBy")
+	return nil
 }
 
 // ContractCmp accepts a slice and variadic comparison functions and returns a functions

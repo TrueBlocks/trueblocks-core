@@ -65,7 +65,8 @@ func CacheItemBy(field CacheItemField, order SortOrder) func(p1, p2 CacheItem) b
 		}
 
 	}
-	panic("Should not happen in CacheItemBy")
+	logger.ShouldNotHappen("in CacheItemBy")
+	return nil
 }
 
 // CacheItemCmp accepts a slice and variadic comparison functions and returns a functions

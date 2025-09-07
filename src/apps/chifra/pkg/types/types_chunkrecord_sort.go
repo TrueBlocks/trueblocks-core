@@ -59,7 +59,8 @@ func ChunkRecordBy(field ChunkRecordField, order SortOrder) func(p1, p2 ChunkRec
 		}
 
 	}
-	panic("Should not happen in ChunkRecordBy")
+	logger.ShouldNotHappen("in ChunkRecordBy")
+	return nil
 }
 
 // ChunkRecordCmp accepts a slice and variadic comparison functions and returns a functions

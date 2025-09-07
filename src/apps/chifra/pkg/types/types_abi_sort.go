@@ -98,7 +98,8 @@ func AbiBy(field AbiField, order SortOrder) func(p1, p2 Abi) bool {
 		}
 
 	}
-	panic("Should not happen in AbiBy")
+	logger.ShouldNotHappen("in AbiBy")
+	return nil
 }
 
 // AbiCmp accepts a slice and variadic comparison functions and returns a functions

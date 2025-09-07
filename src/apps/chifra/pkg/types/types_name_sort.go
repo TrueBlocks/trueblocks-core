@@ -114,7 +114,8 @@ func NameBy(field NameField, order SortOrder) func(p1, p2 Name) bool {
 		}
 
 	}
-	panic("Should not happen in NameBy")
+	logger.ShouldNotHappen("in NameBy")
+	return nil
 }
 
 // NameCmp accepts a slice and variadic comparison functions and returns a functions

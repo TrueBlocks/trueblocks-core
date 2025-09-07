@@ -73,7 +73,8 @@ func ChainBy(field ChainField, order SortOrder) func(p1, p2 Chain) bool {
 		}
 
 	}
-	panic("Should not happen in ChainBy")
+	logger.ShouldNotHappen("in ChainBy")
+	return nil
 }
 
 // ChainCmp accepts a slice and variadic comparison functions and returns a functions

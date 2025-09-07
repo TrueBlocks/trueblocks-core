@@ -74,7 +74,8 @@ func MonitorBy(field MonitorField, order SortOrder) func(p1, p2 Monitor) bool {
 		}
 
 	}
-	panic("Should not happen in MonitorBy")
+	logger.ShouldNotHappen("in MonitorBy")
+	return nil
 }
 
 // MonitorCmp accepts a slice and variadic comparison functions and returns a functions

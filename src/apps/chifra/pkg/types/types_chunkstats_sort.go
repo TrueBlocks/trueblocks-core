@@ -123,7 +123,8 @@ func ChunkStatsBy(field ChunkStatsField, order SortOrder) func(p1, p2 ChunkStats
 		}
 
 	}
-	panic("Should not happen in ChunkStatsBy")
+	logger.ShouldNotHappen("in ChunkStatsBy")
+	return nil
 }
 
 // ChunkStatsCmp accepts a slice and variadic comparison functions and returns a functions
