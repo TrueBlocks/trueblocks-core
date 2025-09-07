@@ -262,7 +262,7 @@ func (opts *ChunksOptions) validateChunks() error {
 		if !isTag && !isRemoteMan {
 			if (errors.Is(err, index.ErrNotInitialized) || errors.Is(err, index.ErrIncorrectHash)) &&
 				!opts.Globals.IsApiMode() {
-				logger.Fatal(err)
+				logger.Panic(err)
 			} else {
 				return err
 			}

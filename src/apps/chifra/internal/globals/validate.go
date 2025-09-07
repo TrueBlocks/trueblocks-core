@@ -32,7 +32,7 @@ func (opts *GlobalOptions) Validate() error {
 	// tmpPath := filepath.Join(config.PathToCache(opts.Chain), "tmp", "checkProvider.txt")
 	// if !file.FileExists(tmpPath) {
 	// 	if version, err := conn.GetClientVersion(opts.Chain); err != nil {
-	// 		logger.Fatal("Cannot connect with the node software.", version, err)
+	// 		logger.Panic("Cannot connect with the node software.", version, err)
 	// 	} else {
 	// 		file.StringToAsciiFile(tmpPath, version)
 	// 	}

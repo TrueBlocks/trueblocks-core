@@ -61,7 +61,7 @@ func (opts *ScrapeOptions) Prepare() (ok bool, err error) {
 	if report, err := chunk.Write(chain, opts.PublisherAddr, indexPath, appMap, len(prefunds)); err != nil {
 		return false, err
 	} else if report == nil {
-		logger.Fatal("should not happen ==> write chunk returned empty report")
+		logger.ShouldNotHappen("write chunk returned empty report")
 	} else {
 		logger.Info(report.Report(true /* isSnapped */, file.FileSize(indexPath)))
 	}

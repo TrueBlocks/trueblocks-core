@@ -64,7 +64,7 @@ func (opts *InitOptions) prepareDownloadList(chain string, man *manifest.Manifes
 		_ = first
 		// sanity...
 		if path != index.ToBloomPath(path) {
-			logger.Fatal("should not happen ==> we're spinning through the bloom filters")
+			logger.ShouldNotHappen("we're spinning through the bloom filters")
 		}
 
 		// Is the on-disc chunk in the manifest?
@@ -76,7 +76,7 @@ func (opts *InitOptions) prepareDownloadList(chain string, man *manifest.Manifes
 			bloomStatus, indexStatus, err := isValidChunk(path, chunk.BloomSize, chunk.IndexSize, opts.All)
 			if err != nil {
 				if bloomStatus != FILE_ERROR && indexStatus != FILE_ERROR {
-					logger.Fatal("should not happen ==> implementation error in cleanIndex")
+					logger.ShouldNotHappen("in cleanIndex")
 				}
 				return false, err // bubble the error up
 			}
@@ -224,7 +224,7 @@ func (opts *InitOptions) reportReason(prefix string, status InitReason, path str
 // isValidChunk validates the bloom file's header and the index if told to do so. Note that in all cases, it resolves both.
 func isValidChunk(path string, bloomSize, indexSize int64, indexRequired bool) (InitReason, InitReason, error) {
 	if path != index.ToBloomPath(path) {
-		logger.Fatal("should not happen ==> only process bloom folder paths in isValidChunk")
+		logger.ShouldNotHappen("only process bloom folder paths in isValidChunk")
 	}
 
 	var err error
@@ -258,7 +258,7 @@ func isValidChunk(path string, bloomSize, indexSize int64, indexRequired bool) (
 
 func checkSize(path string, expected int64) InitReason {
 	if !file.FileExists(path) {
-		logger.Fatal("should not happen ==> file existence already checked")
+		logger.ShouldNotHappen("file existence already checked")
 	}
 
 	if file.FileSize(path) != expected {
@@ -270,7 +270,7 @@ func checkSize(path string, expected int64) InitReason {
 
 func checkHeader(path string) (InitReason, error) {
 	if !file.FileExists(path) {
-		logger.Fatal("should not happen ==> file existence already checked")
+		logger.ShouldNotHappen("file existence already checked")
 	}
 
 	ff, err := os.OpenFile(path, os.O_RDONLY, 0644)
@@ -322,7 +322,7 @@ func checkHeader(path string) (InitReason, error) {
 		return OKAY, nil
 
 	} else {
-		logger.Fatal("should not happen ==> unknown type in hasValidHeader")
+		logger.ShouldNotHappen("unknown type in hasValidHeader")
 		return OKAY, nil
 	}
 }

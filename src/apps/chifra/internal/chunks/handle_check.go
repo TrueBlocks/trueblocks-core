@@ -63,7 +63,7 @@ func (opts *ChunksOptions) check(rCtx *output.RenderCtx, blockNums []base.Blknum
 				close(filenameChan)
 			}
 		default:
-			logger.Fatal("should not happen ==> only traverse the bloom folder")
+			logger.ShouldNotHappen("only traverse the bloom folder")
 		}
 	}
 

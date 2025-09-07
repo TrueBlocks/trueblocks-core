@@ -42,7 +42,7 @@ func (opts *ChunksOptions) HandleDiff(rCtx *output.RenderCtx, blockNums []base.B
 
 		logger.Info("Walking the bloom files at...", config.PathToIndex(chain))
 		if !file.FolderExists(config.PathToIndex(chain)) {
-			logger.Fatal(fmt.Sprintf("The index folder does not exist: [%s]", config.PathToIndex(chain)))
+			logger.Panic(fmt.Sprintf("The index folder does not exist: [%s]", config.PathToIndex(chain)))
 		}
 
 		if err := walker.WalkBloomFilters(blockNums); err != nil {
@@ -230,7 +230,7 @@ func toDiffPath(chain string, middleMark base.Blknum) string {
 	diffPath, _ = filepath.Abs(diffPath)
 	diffPath, _ = findFileByBlockNumber(chain, diffPath, middleMark)
 	if !file.FileExists(diffPath) {
-		logger.Fatal(fmt.Sprintf("The diff path does not exist: [%s]", diffPath))
+		logger.Panic(fmt.Sprintf("The diff path does not exist: [%s]", diffPath))
 	}
 	return diffPath
 }

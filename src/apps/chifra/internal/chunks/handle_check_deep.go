@@ -131,7 +131,7 @@ func (opts *ChunksOptions) CheckDeep(cacheMan *manifest.Manifest, report *types.
 	go utils.IterateOverMap(iterCtx, iterErrorChan, appMap, iterFunc)
 	for err := range iterErrorChan {
 		if !testMode || nErrors == 0 {
-			logger.Fatal(err)
+			logger.Panic(err)
 			nErrors++
 		}
 	}

@@ -87,7 +87,7 @@ func (opts *ScrapeOptions) backfillTimestamps() (string, error) {
 	} else {
 		logger.Info("nTimestamps:", nTimestamps)
 		if nTimestamps > opts.Touch {
-			return "", fmt.Errorf("nTimestamps > opts.Touch - should not happen")
+			return "", fmt.Errorf("should not happen nTimestamps > opts.Touch")
 		}
 
 		firstTs := uint32(0)

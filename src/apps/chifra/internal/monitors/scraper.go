@@ -35,7 +35,7 @@ func (scraper *Scraper) ChangeState(onOff bool, tmpPath string) bool {
 	fileName := filepath.Join(tmpPath, scraper.Name+".txt")
 	err := os.WriteFile(fileName, []byte(str), 0644) // Uses os.O_WRONLY|os.O_CREATE|os.O_TRUNC
 	if err != nil {
-		logger.Fatal(err)
+		logger.Panic(err)
 	}
 	return prev
 }

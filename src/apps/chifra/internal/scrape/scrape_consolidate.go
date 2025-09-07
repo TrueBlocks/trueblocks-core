@@ -103,7 +103,7 @@ func (bm *BlazeManager) Consolidate(ctx context.Context, blocks []base.Blknum) e
 				_ = os.Remove(index.ToIndexPath(chunkPath))
 				return NewCriticalError(err)
 			} else if report == nil {
-				logger.Fatal("should not happen ==> write chunk returned empty report")
+				logger.ShouldNotHappen("write chunk returned empty report")
 			} else {
 				logger.Info(report.Report(isSnap, file.FileSize(chunkPath)))
 			}

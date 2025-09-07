@@ -55,9 +55,9 @@ func (opts *ChunksOptions) HandleTag(rCtx *output.RenderCtx, blockNums []base.Bl
 			_ = walker
 			_ = first
 			if !strings.HasSuffix(path, ".bloom") {
-				logger.Fatal("should not happen ==> walked to a non-bloom file")
+				logger.ShouldNotHappen("walked to a non-bloom file")
 			} else if path != index.ToBloomPath(path) {
-				logger.Fatal("should not happen ==> we're spinning through the bloom filters")
+				logger.ShouldNotHappen("we're spinning through the bloom filters")
 			}
 
 			if opts.DryRun {

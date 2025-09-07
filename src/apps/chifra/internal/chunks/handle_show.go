@@ -32,7 +32,7 @@ func (opts *ChunksOptions) HandleShow(rCtx *output.RenderCtx, blockNums []base.B
 		err = opts.HandleStats(rCtx, blockNums)
 
 	default:
-		logger.Fatal("should not happen ==> in NamesInternal")
+		logger.ShouldNotHappen("in NamesInternal")
 	}
 	return err
 }

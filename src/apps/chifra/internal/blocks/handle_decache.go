@@ -58,7 +58,7 @@ func (opts *BlocksOptions) getItemsToRemove() ([]cache.Locator, error) {
 		itemsToRemove, err := decache.LocationsFromBlocks(opts.Conn, opts.BlockIds)
 		return itemsToRemove, err
 	default:
-		logger.Fatal("Unknown cache type. Should not happen.")
+		logger.ShouldNotHappen("Unknown cache type")
 		return []cache.Locator{}, nil
 	}
 }

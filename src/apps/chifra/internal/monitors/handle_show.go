@@ -11,6 +11,6 @@ import (
 
 func (opts *MonitorsOptions) HandleShow(rCtx *output.RenderCtx) error {
 	_ = rCtx
-	logger.Fatal("Should not happen for chifra monitors.")
+	logger.ShouldNotHappen("chifra monitors")
 	return nil
 }

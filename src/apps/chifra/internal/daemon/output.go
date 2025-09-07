@@ -42,7 +42,7 @@ func ServeDaemon(w http.ResponseWriter, r *http.Request) error {
 	rCtx := output.NewRenderContext()
 	// EXISTING_CODE
 	if true { // defeats linter
-		logger.Fatal("should not happen ==> Daemon is an invalid route for server")
+		logger.ShouldNotHappen("daemon is an invalid route for server")
 	}
 	// EXISTING_CODE
 	outputHelpers.InitJsonWriterApi("daemon", w, &opts.Globals)
@@ -76,7 +76,7 @@ func (opts *DaemonOptions) DaemonInternal(rCtx *output.RenderCtx) error {
 	if err != nil {
 		msg := fmt.Sprintf("%sCould not load RPC provider: %s%s", colors.Red, err, colors.Off)
 		logger.InfoTable("Progress:", msg)
-		logger.Fatal("")
+		logger.Panic()
 	} else {
 		nTs, _ := tslib.NTimestamps(chain) // when the file has one record, the block is zero, etc.
 		if nTs > 0 {
@@ -86,7 +86,6 @@ func (opts *DaemonOptions) DaemonInternal(rCtx *output.RenderCtx) error {
 		logger.InfoTable("Progress:          ", msg)
 	}
 
-	// do not remove, this fixes a lint warning that happens in the boilerplate because of the Fatal just below
 	timer.Report(msg)
 
 	// Start listening to the web sockets

@@ -10,6 +10,7 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 	"github.com/ethereum/go-ethereum"
@@ -122,7 +123,7 @@ func (opts *ExploreOptions) idToTxHash(arg string, isBlockHash func(arg string) 
 
 	parts := strings.Split(arg, ".")
 	if len(parts) != 2 {
-		panic("Programmer error - valid transaction identifiers with a `.` must have two and only two parts")
+		logger.ShouldNeverHappen("valid transaction identifiers with a `.` must have two and only two parts")
 	}
 
 	if isBlockHash(parts[0]) {

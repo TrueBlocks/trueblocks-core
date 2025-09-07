@@ -158,7 +158,7 @@ func toTemplate(s *types.Status, w io.Writer, testMode, diagnose, logTimerOn boo
 
 	t, err := template.New("status").Parse(table)
 	if err != nil {
-		logger.Fatal("should not happen ==> bad template.", err)
+		logger.ShouldNotHappen("bad template.", err)
 		return false
 	}
 

@@ -58,7 +58,7 @@ func (opts *ChunksOptions) HandleTruncate(rCtx *output.RenderCtx, blockNums []ba
 			_ = walker
 			_ = first
 			if path != index.ToBloomPath(path) {
-				logger.Fatal("should not happen ==> we're spinning through the bloom filters")
+				logger.ShouldNotHappen("we're spinning through the bloom filters")
 			}
 
 			if strings.HasSuffix(path, ".gz") {
