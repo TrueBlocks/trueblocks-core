@@ -3,36 +3,96 @@ package rpc
 import (
 	"bytes"
 	"context"
+	"encoding/json"
 	"fmt"
+	"io"
 	"net/http"
+	"strings"
 	"time"
 )
 
-// PingRpc sends a ping request to the RPC provider, returns an error or nil on success.
-func PingRpc(providerUrl string) error {
-	// Set a timeout of, for example, 2 seconds for the request
-	ctx, cancel := context.WithTimeout(context.Background(), 2000*time.Millisecond)
+// PingRpc sends a ping request to the RPC provider using eth_chainId,
+// returns detailed probe result and simple error for backward compatibility.
+func PingRpc(providerUrl string) (*PingResult, error) {
+	// Set a timeout of 6 seconds (consistent with Khedra)
+	ctx, cancel := context.WithTimeout(context.Background(), 6*time.Second)
 	defer cancel()
 
-	jsonData := []byte(`{ "jsonrpc": "2.0", "method": "web3_clientVersion", "id": 6 }`)
+	startTime := time.Now()
+	result := &PingResult{
+		URL:       providerUrl,
+		Mode:      "json",
+		CheckedAt: startTime.Unix(),
+	}
+
+	if providerUrl == "" {
+		result.Error = "empty url"
+		return result, fmt.Errorf(result.Error)
+	}
+
+	payload := RpcRequest{
+		JSONRPC: "2.0",
+		ID:      1,
+		Method:  "eth_chainId",
+		Params:  []interface{}{},
+	}
+
+	jsonData, err := json.Marshal(payload)
+	if err != nil {
+		result.Error = fmt.Sprintf("marshal request: %v", err)
+		return result, fmt.Errorf(result.Error)
+	}
+
 	req, err := http.NewRequestWithContext(ctx, "POST", providerUrl, bytes.NewBuffer(jsonData))
 	if err != nil {
-		return err
+		result.Error = fmt.Sprintf("create request: %v", err)
+		return result, fmt.Errorf(result.Error)
 	}
 
 	req.Header.Set("Content-Type", "application/json")
 
-	clientHTTP := &http.Client{}
-	resp, err := clientHTTP.Do(req)
+	client := &http.Client{}
+	resp, err := client.Do(req)
 	if err != nil {
 		// If the context timeout triggers, this error will reflect it
-		return err
+		result.Error = fmt.Sprintf("request failed: %v", err)
+		return result, fmt.Errorf(result.Error)
 	}
 	defer resp.Body.Close()
 
+	result.StatusCode = resp.StatusCode
+	result.LatencyMS = time.Since(startTime).Milliseconds()
+
 	if resp.StatusCode != http.StatusOK {
-		return fmt.Errorf("unexpected status code: %d", resp.StatusCode)
+		result.Error = fmt.Sprintf("unexpected status code: %d", resp.StatusCode)
+		return result, fmt.Errorf(result.Error)
 	}
 
-	return nil
+	body, err := io.ReadAll(resp.Body)
+	if err != nil {
+		result.Error = fmt.Sprintf("read response: %v", err)
+		return result, fmt.Errorf(result.Error)
+	}
+
+	var jsonResp RpcResponse
+	if err := json.Unmarshal(body, &jsonResp); err != nil {
+		result.Error = fmt.Sprintf("parse response: %v", err)
+		return result, fmt.Errorf(result.Error)
+	}
+
+	if jsonResp.Error != nil {
+		result.Error = fmt.Sprintf("rpc error %d: %s", jsonResp.Error.Code, jsonResp.Error.Message)
+		return result, fmt.Errorf(result.Error)
+	}
+
+	if jsonResp.Result == nil {
+		result.Error = "empty result"
+		return result, fmt.Errorf(result.Error)
+	}
+
+	chainIdStr := strings.Trim(string(jsonResp.Result), "\"")
+	result.ChainID = chainIdStr
+	result.OK = true
+
+	return result, nil
 }

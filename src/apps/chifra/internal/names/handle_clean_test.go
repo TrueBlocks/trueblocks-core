@@ -38,7 +38,6 @@ func Test_cleanCommon(t *testing.T) {
 func Test_cleanNonContract(t *testing.T) {
 	type args struct {
 		name *types.Name
-		// wasContract bool
 	}
 	tests := []struct {
 		name         string
