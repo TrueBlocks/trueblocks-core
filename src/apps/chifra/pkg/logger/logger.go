@@ -121,7 +121,8 @@ func toLog(sev severity, a ...interface{}) {
 	if !decorationOff {
 		fmt.Fprintf(loggerWriter, "%s[%s] ", severityToLabel[sev], timeDatePart)
 	}
-	if sev == progress {
+	switch sev {
+	case progress:
 		for index, aa := range a {
 			if index > 0 {
 				fmt.Fprint(loggerWriter, " ")
@@ -130,24 +131,24 @@ func toLog(sev severity, a ...interface{}) {
 		}
 		fmt.Fprint(loggerWriter, "\r")
 
-	} else if sev == infoC {
+	case infoC:
 		fmt.Fprintf(loggerWriter, "%s%s%s ", colors.Green, a[0], colors.Off)
 		for _, aa := range a[1:] {
 			fmt.Fprintf(loggerWriter, "%s", aa)
 		}
 		fmt.Fprintln(loggerWriter, "")
 
-	} else if sev == warning {
+	case warning:
 		defer fmt.Fprint(loggerWriter, colors.Off)
 		fmt.Fprint(loggerWriter, colors.Yellow)
 		fmt.Fprintln(loggerWriter, a...)
 
-	} else if sev == err {
+	case err:
 		defer fmt.Fprint(loggerWriter, colors.Off)
 		fmt.Fprint(loggerWriter, colors.Red)
 		fmt.Fprintln(loggerWriter, a...)
 
-	} else {
+	default:
 		fmt.Fprintln(loggerWriter, a...)
 	}
 }
@@ -168,15 +169,33 @@ func Error(v ...any) {
 	toLog(err, v...)
 }
 
-func Fatal(v ...any) {
-	toLog(err, v...)
-	os.Exit(1)
+func ShouldNotHappen(v ...any) {
+	args := append([]interface{}{"SHOULD NOT HAPPEN ==> IMPLEMENTATION ERROR:"}, v...)
+	Panic(args...)
+}
+
+func Panicf(format string, v ...any) {
+	s := fmt.Sprintf(format, v...)
+	toLog(err, s)
+	panic(s)
 }
 
 func Panic(v ...any) {
 	s := fmt.Sprint(v...)
 	toLog(err, s)
 	panic(s)
+}
+
+func Fatalf(format string, v ...any) {
+	s := fmt.Sprintf(format, v...)
+	toLog(err, s)
+	os.Exit(1)
+}
+
+func Fatal(v ...any) {
+	s := fmt.Sprint(v...)
+	toLog(err, s)
+	os.Exit(1)
 }
 
 func CleanLine() {
