@@ -62,7 +62,7 @@ func ValidateIdentifiers(chain string, ids []string, validTypes ValidArgumentTyp
 	}
 
 	if isBitmaskSet(ValidTransId) && isBitmaskSet(ValidBlockId) {
-		logger.Fatal("should not happen ==> both block ids and transaction ids appear in the same command.")
+		logger.ShouldNotHappen("both block ids and transaction ids appear in the same command")
 	}
 
 	rangesFound := 0

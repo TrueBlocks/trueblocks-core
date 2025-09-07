@@ -1,5 +1,7 @@
 package types
 
+import "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
+
 type MonitorField string
 
 // Fields in the Monitor struct available for sorting.

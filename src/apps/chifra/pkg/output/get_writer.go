@@ -10,7 +10,7 @@ import (
 
 // GetOutputFileWriter returns a writer which either the default one (same as passed
 // to this function) or, if filePath is non-empty, one that writes to that file.
-// If there is an error, logger.Fatal is called, because there really is no good way
+// If there is an error, logger.Panic is called, because there really is no good way
 // to recover. Plus, output file is disabled in server, so it is safe to exit.
 func (opts *OutputOptions) GetOutputFileWriter() io.Writer {
 	if opts.OutputFn == "" {
@@ -26,9 +26,7 @@ func (opts *OutputOptions) GetOutputFileWriter() io.Writer {
 		file, err = os.OpenFile(opts.OutputFn, os.O_WRONLY|os.O_CREATE|os.O_TRUNC, 0644)
 	}
 	if err != nil {
-		// TODO: - what happens in the server case?
-		// TODO: In API mode, --output is disallowed, but we should check
-		logger.Fatal(err)
+		logger.Panic(err)
 	}
 	return file
 }

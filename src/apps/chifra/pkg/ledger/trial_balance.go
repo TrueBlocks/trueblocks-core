@@ -38,8 +38,9 @@ func (r *Reconciler) trialBalance(reason string, stmt *types.Statement, node *ty
 		return r.case4MidLast(key, reason, stmt, node, correct, balances)
 
 	default:
-		panic("unhandled case")
+		logger.ShouldNotHappen("unhandled case")
 	}
+	return false, nil
 }
 
 // -----------------------------------------------------------------

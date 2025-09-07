@@ -5,6 +5,7 @@ import (
 	"strings"
 	"time"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/bykof/gostradamus"
 )
 
@@ -14,7 +15,7 @@ type DateTime struct {
 
 func NewDateTime(fields ...int) DateTime {
 	if len(fields) > 6 {
-		panic("NewDateTime accepts at most 6 arguments")
+		logger.ShouldNotHappen("NewDateTime accepts at most 6 arguments")
 	}
 
 	now := time.Now()

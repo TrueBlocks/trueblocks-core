@@ -5,7 +5,6 @@ import (
 	"encoding/json"
 	"fmt"
 	"io"
-	"log"
 	"net/http"
 	"os"
 	"os/user"
@@ -88,12 +87,12 @@ func GetRootConfig() *configtypes.Config {
 	// Load TOML file
 	tomlConfigFn := filepath.Join(configPath, "trueBlocks.toml")
 	if err := loadFromTomlFile(tomlConfigFn, &trueBlocksConfig); err != nil {
-		log.Fatal("loading config from .toml file:", err)
+		logger.Panic("loading config from .toml file:", err)
 	}
 
 	// Load ENV variables
 	if err := loadFromEnv(envPrefix, &trueBlocksConfig); err != nil {
-		log.Fatal("loading config from environment variables:", err)
+		logger.Panic("loading config from environment variables:", err)
 	}
 
 	user, _ := user.Current()
@@ -152,7 +151,7 @@ func GetRootConfig() *configtypes.Config {
 		rpc := strings.Trim(clean(ch.GetRpcProvider()), "/") // Infura, for example, doesn't like the trailing slash
 		ch.RpcProviders = append(ch.RpcProviders, rpc)
 		if err := validateRpcEndpoint(ch.Chain, ch.GetRpcProvider()); err != nil {
-			logger.Fatal(err)
+			logger.Panic(err)
 		}
 		ch.IpfsGateway = clean(ch.IpfsGateway)
 		if ch.Scrape.AppsPerChunk == 0 {
@@ -192,7 +191,7 @@ func PathToConfigFile() string {
 func PathToRootConfig() string {
 	configPath, err := pathFromXDG("XDG_CONFIG_HOME")
 	if err != nil {
-		logger.Fatal(err)
+		logger.Panic(err)
 	} else if len(configPath) > 0 {
 		return configPath
 	}
@@ -205,9 +204,10 @@ func PathToRootConfig() string {
 
 	user, _ := user.Current()
 	osPath := ".local/share/trueblocks"
-	if userOs == "darwin" {
+	switch userOs {
+	case "darwin":
 		osPath = "Library/Application Support/TrueBlocks"
-	} else if userOs == "windows" {
+	case "windows":
 		osPath = "AppData/Local/trueblocks"
 	}
 

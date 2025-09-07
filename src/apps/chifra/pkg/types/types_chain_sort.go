@@ -1,5 +1,7 @@
 package types
 
+import "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
+
 type ChainField string
 
 // Fields in the Chain struct available for sorting.

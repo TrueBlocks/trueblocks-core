@@ -30,7 +30,7 @@ func shouldDebugCurl(method string) bool {
 
 	} else {
 		if len(devDebugMethod) == 0 {
-			logger.Fatal("Implementation error. Should not happen.")
+			logger.ShouldNotHappen("devDeb is true but devDebugMethod is empty")
 		}
 		switch devDebugMethod {
 		case "file":

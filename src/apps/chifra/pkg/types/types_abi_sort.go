@@ -1,5 +1,7 @@
 package types
 
+import "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
+
 type AbiField string
 
 // Fields in the Abi struct available for sorting.

@@ -5,7 +5,6 @@ import (
 	"sync"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 )
 
@@ -51,7 +50,7 @@ func loadRegularMap(chain string, terms []string, parts types.Parts, ret *map[ba
 			break
 		}
 		if err != nil {
-			logger.Fatal(err)
+			return err
 		}
 		regularNames[name.Address] = name
 		if doSearch(&name, terms, parts) {

@@ -1,5 +1,7 @@
 package types
 
+import "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
+
 type ChunkStatsField string
 
 // Fields in the ChunkStats struct available for sorting.

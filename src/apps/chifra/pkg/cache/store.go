@@ -5,7 +5,6 @@ import (
 	"context"
 	"errors"
 	"fmt"
-	"log"
 	"os"
 	"path/filepath"
 
@@ -43,7 +42,7 @@ type StoreOptions struct {
 
 func NewStore(options *StoreOptions) (*Store, error) {
 	if options == nil {
-		logger.Fatal("implementation error in NewStore - should never happen")
+		logger.ShouldNotHappen("in NewStore")
 	}
 	location, err := options.location()
 	if err != nil {
@@ -215,7 +214,7 @@ func (s *Store) WriteToStore(data Locator, cacheType walk.CacheType, ts base.Tim
 
 func (s *StoreOptions) location() (loc Storer, err error) {
 	if s == nil {
-		log.Fatal("should not happen ==> implementation error in location.")
+		logger.ShouldNotHappen("in StoreOptions::location")
 		return
 	}
 	switch s.Location {
@@ -232,7 +231,7 @@ func (s *StoreOptions) location() (loc Storer, err error) {
 
 func (s *StoreOptions) rootDir() string {
 	if s == nil {
-		logger.Error("should not happen ==> implementation error in location")
+		logger.ShouldNotHappen("in StoreOptions::rootDir")
 		return ""
 	} else if s.Location == MemoryCache {
 		return "memory"

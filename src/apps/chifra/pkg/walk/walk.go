@@ -196,10 +196,10 @@ func GetRootPathFromCacheType(chain string, cacheType CacheType) string {
 	case Cache_NotACache:
 		fallthrough
 	default:
-		logger.Fatal("should not happen ==> in paths.go")
+		logger.ShouldNotHappen("in paths.go")
 	}
 
-	logger.Fatal("should not happen ==> in paths.go")
+	logger.ShouldNotHappen("in paths.go 2")
 	return ""
 }
 

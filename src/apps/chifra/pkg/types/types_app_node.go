@@ -4,6 +4,7 @@ import (
 	"fmt"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 )
 
 type NodeAppearance struct {
@@ -87,14 +88,16 @@ func (a *AppNode[T]) CurBlock() base.Blknum {
 	if a.current != nil {
 		return base.Blknum(a.current.BlockNumber)
 	}
-	panic("should never happen: AppNode.current is nil")
+	logger.Panic("should never happen: AppNode.current is nil")
+	return 0
 }
 
 func (a *AppNode[T]) CurTxId() base.Txnum {
 	if a.current != nil {
 		return base.Txnum(a.current.TransactionIndex)
 	}
-	panic("should never happen: AppNode.current is nil")
+	logger.Panic("should never happen: AppNode.current is nil")
+	return 0
 }
 
 func (a *AppNode[T]) Next() *AppNode[T] {

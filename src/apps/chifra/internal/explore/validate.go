@@ -123,7 +123,7 @@ func (opts *ExploreOptions) idToTxHash(arg string, isBlockHash func(arg string) 
 
 	parts := strings.Split(arg, ".")
 	if len(parts) != 2 {
-		logger.ShouldNeverHappen("valid transaction identifiers with a `.` must have two and only two parts")
+		logger.ShouldNotHappen("valid transaction identifiers with a `.` must have two and only two parts")
 	}
 
 	if isBlockHash(parts[0]) {

@@ -95,8 +95,7 @@ func (conn *Connection) getClient() (*ethclient.Client, error) {
 	if perProviderClientMap[provider] == nil {
 		ec, err := ethclient.Dial(provider)
 		if err != nil || ec == nil {
-			logger.Error("Missdial("+provider+"):", err)
-			logger.Fatal("")
+			logger.Panic("Missdial("+provider+"):", err)
 		}
 		perProviderClientMap[provider] = ec
 	}

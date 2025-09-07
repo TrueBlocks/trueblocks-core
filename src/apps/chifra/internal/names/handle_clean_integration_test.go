@@ -217,7 +217,7 @@ func BenchmarkCleanConcurrent(b *testing.B) {
 		iterFunc := func(key base.Address, name types.Name) error {
 			modified, err := cleanName("mainnet", &name)
 			if err != nil {
-				panic(err)
+				b.Error(err)
 			}
 			if isPrefund := prefundMap[name.Address]; isPrefund != name.IsPrefund {
 				name.IsPrefund = isPrefund
@@ -230,7 +230,7 @@ func BenchmarkCleanConcurrent(b *testing.B) {
 
 			// Update modified (no disk writes yet)
 			if err = names.UpdateName(names.DatabaseRegular, chain, &name); err != nil {
-				panic(err)
+				b.Error(err)
 			}
 			return nil
 		}

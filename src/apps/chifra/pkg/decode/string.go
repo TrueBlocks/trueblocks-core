@@ -4,6 +4,7 @@ import (
 	"fmt"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	goAbi "github.com/ethereum/go-ethereum/accounts/abi"
 )
 
@@ -15,7 +16,7 @@ func init() {
 	var err error
 	AbiStringType, err = goAbi.NewType("string", "", nil)
 	if err != nil {
-		panic(err)
+		logger.Panic(err)
 	}
 	abiStringArguments = goAbi.Arguments{
 		{Type: AbiStringType},

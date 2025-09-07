@@ -10,6 +10,7 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/ranges"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/tslib"
@@ -161,7 +162,7 @@ func (id *Identifier) nextBlock(chain string, current base.Blknum) (base.Blknum,
 				dt = dt.ShiftYears(1)
 				dt = dt.FloorYear()
 			default:
-				// should not happen
+				logger.ShouldNotHappen("invalid modifier period:", id.Modifier.Period)
 			}
 
 			ts := dt.UnixTimestamp()

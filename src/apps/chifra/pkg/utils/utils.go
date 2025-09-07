@@ -8,13 +8,14 @@ import (
 	"bytes"
 	"fmt"
 	"io"
-	"log"
 	"net/http"
 	"os/exec"
 	"reflect"
 	"runtime"
 	"strconv"
 	"strings"
+
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 )
 
 // IsServerWriter tries to cast `w` into `http.ResponseWriter`
@@ -37,7 +38,7 @@ func OpenBrowser(url string) {
 		err = fmt.Errorf("unsupported platform")
 	}
 	if err != nil {
-		log.Fatal(err)
+		logger.Error(err)
 	}
 }
 
@@ -124,7 +125,7 @@ func GetFields(t *reflect.Type, format string, header bool) (fields []string, se
 		}
 
 		if realType.Kind() != reflect.Struct {
-			log.Fatal(realType.Name() + " is not a structure")
+			logger.Panic(realType.Name() + " is not a structure")
 		}
 		for i := 0; i < realType.NumField(); i++ {
 			field := realType.Field(i)

@@ -251,7 +251,7 @@ func DownloadChunks(chain string, chunksToDownload []types.ChunkRecord, chunkTyp
 	downloadPool, err := ants.NewPoolWithFunc(poolSize, getDownloadWorker(chain, downloadWorkerArgs, chunkType))
 	defer downloadPool.Release()
 	if err != nil {
-		panic(err)
+		logger.Panic(err)
 	}
 
 	var writeWg sync.WaitGroup
@@ -264,7 +264,7 @@ func DownloadChunks(chain string, chunksToDownload []types.ChunkRecord, chunkTyp
 	writePool, err := ants.NewPoolWithFunc(poolSize, getWriteWorker(chain, writeWorkerArgs, chunkType))
 	defer writePool.Release()
 	if err != nil {
-		panic(err)
+		logger.Panic(err)
 	}
 
 	// Closed in the go routine after we're finished writing or the user cancels

@@ -47,7 +47,7 @@ func PathToIndex(chain string) string {
 	// We need the index path from either XDG which dominates or the config file
 	indexPath, err := pathFromXDG("XDG_CACHE_HOME")
 	if err != nil {
-		logger.Fatal(err)
+		logger.Panic(err)
 	} else if len(indexPath) == 0 {
 		indexPath = trueBlocksConfig.Settings.IndexPath
 	}
@@ -73,7 +73,7 @@ func PathToCache(chain string) string {
 	// We need the index path from either XDG which dominates or the config file
 	cachePath, err := pathFromXDG("XDG_CACHE_HOME")
 	if err != nil {
-		logger.Fatal(err)
+		logger.Panic(err)
 	} else if len(cachePath) == 0 {
 		cachePath = GetSettings().CachePath
 	}
@@ -107,7 +107,7 @@ func EstablishCachePaths(cachePath string) {
 	}
 
 	if err := file.EstablishFolders(cachePath, folders); err != nil {
-		logger.Fatal(err)
+		logger.Panic(err)
 	}
 }
 
@@ -116,6 +116,7 @@ func EstablishIndexPaths(indexPath string) {
 	folders := []string{
 		"blooms", "finalized", "maps", "ripe", "staging", "unripe",
 	}
+
 	_, err := os.Stat(filepath.Join(indexPath, folders[len(folders)-1]))
 	if err == nil {
 		// If the last path already exists, assume we've been here before
@@ -123,6 +124,6 @@ func EstablishIndexPaths(indexPath string) {
 	}
 
 	if err := file.EstablishFolders(indexPath, folders); err != nil {
-		logger.Fatal(err)
+		logger.Panic(err)
 	}
 }

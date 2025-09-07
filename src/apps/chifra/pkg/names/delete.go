@@ -18,9 +18,9 @@ func SetDeleted(dbType DatabaseType, chain string, address base.Address, deleted
 		return customSetDeleted(chain, address, deleted)
 	case DatabaseRegular:
 		// return regularSetDeleted(chain, address, deleted)
-		logger.Fatal("should not happen ==> SetDeleted is not supported for regular database")
+		logger.ShouldNotHappen("SetDeleted is not supported for regular database")
 	default:
-		logger.Fatal("should not happen ==> unknown database type")
+		logger.ShouldNotHappen("unknown database type")
 	}
 	return
 }

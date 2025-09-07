@@ -87,7 +87,7 @@ func migrate(currentVer version.Version) error {
 	_ = cfg.WriteFile(configFile, minVersion) // updates the version
 
 	msg := "Your configuration files were upgraded to {%s}. Rerun your command."
-	logger.Fatal(colors.Colored(fmt.Sprintf(msg, minVersion.String())))
+	logger.Panic(colors.Colored(fmt.Sprintf(msg, minVersion.String())))
 
 	return nil
 }

@@ -198,7 +198,7 @@ func (call *ContractCall) Call(artFunc func(string, *types.Function) error) (res
 
 	blockTs := call.Conn.GetBlockTimestamp(call.BlockNumber)
 	if artFunc == nil {
-		logger.Fatal("should not happen ==> implementation error: artFunc is nil")
+		logger.ShouldNotHappen("artFunc is nil")
 	}
 
 	var packed []byte

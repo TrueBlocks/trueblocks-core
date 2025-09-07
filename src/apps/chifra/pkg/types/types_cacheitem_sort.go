@@ -1,5 +1,7 @@
 package types
 
+import "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
+
 type CacheItemField string
 
 // Fields in the CacheItem struct available for sorting.

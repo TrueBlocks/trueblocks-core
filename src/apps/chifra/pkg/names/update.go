@@ -15,7 +15,7 @@ func UpdateName(dbType DatabaseType, chain string, name *types.Name) (err error)
 	case DatabaseRegular:
 		return updateRegularName(name)
 	default:
-		logger.Fatal("should not happen ==> unknown database type")
+		logger.ShouldNotHappen("unknown database type")
 	}
 	return
 }

@@ -9,6 +9,7 @@ import (
 	"strings"
 	"testing"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/ethereum/go-ethereum/accounts/abi"
 	"github.com/ethereum/go-ethereum/common"
 )
@@ -18,11 +19,11 @@ func Test_Abi_Decode(t *testing.T) {
 
 	abi, err := abi.JSON(strings.NewReader(definition))
 	if err != nil {
-		panic(err)
+		logger.Panic(err)
 	}
 	out, err := abi.Pack("isBar", common.HexToAddress("01"))
 	if err != nil {
-		t.Error(err) // panic(err)
+		t.Error(err)
 	}
 	fmt.Printf("%x\n", out)
 

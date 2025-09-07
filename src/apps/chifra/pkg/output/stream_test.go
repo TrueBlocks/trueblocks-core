@@ -9,7 +9,6 @@ import (
 	"text/template"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
@@ -181,7 +180,7 @@ func TestStreamMany(t *testing.T) {
 	var result R
 	err := json.Unmarshal(buffer.Bytes(), &result)
 	if err != nil {
-		logger.Error(buffer.String())
+		t.Error(buffer.String())
 		t.Fatal(err)
 	}
 

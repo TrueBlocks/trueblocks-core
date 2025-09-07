@@ -162,9 +162,6 @@ func TestAddressFromPath(t *testing.T) {
 	if addr.Hex() != "0x0" {
 		t.Fatalf("expected zero address for error case, got %s", addr.Hex())
 	}
-
-	// Note: Testing the branches that call log.Fatal (for fileType without a leading dot)
-	// is problematic since log.Fatal exits the process. Consider refactoring for testability.
 }
 
 // TestValidHexAndAddressValidation tests the functions ValidHex, IsValidAddress, and IsValidAddressE.

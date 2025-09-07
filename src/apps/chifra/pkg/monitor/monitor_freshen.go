@@ -77,7 +77,7 @@ func lockForAddress(address string) {
 func unlockForAddress(address string) {
 	mutex, ok := mutexesPerAddress[address]
 	if !ok {
-		panic("unlockForAddress called for address that has never been locked: " + address)
+		logger.Panic("unlockForAddress called for address that has never been locked: " + address)
 	}
 	mutex.Unlock()
 }

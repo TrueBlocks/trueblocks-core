@@ -16,7 +16,7 @@ func CreateName(dbType DatabaseType, chain string, name *types.Name) (err error)
 	case DatabaseRegular:
 		return regularCreateName(name)
 	default:
-		logger.Fatal("should not happen ==> unknown database type")
+		logger.ShouldNotHappen("unknown database type")
 	}
 	return
 }

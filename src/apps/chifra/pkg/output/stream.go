@@ -54,7 +54,7 @@ func StreamModel(w io.Writer, model types.Model, options OutputOptions) error {
 		jw, ok := w.(*JsonWriter)
 		if !ok {
 			// This should never happen
-			panic("streaming JSON requires JsonWriter")
+			logger.ShouldNotHappen("streaming JSON requires JsonWriter")
 		}
 		_, err := jw.WriteCompoundItem("", model.Data)
 		if err != nil {
