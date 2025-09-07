@@ -3,10 +3,11 @@ package types
 import (
 	"bytes"
 	"fmt"
-	"log"
 	"regexp"
 	"strings"
 	"text/template"
+
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 )
 
 var (
@@ -23,14 +24,14 @@ func executeTemplate(receiver any, tmplPrefix, name, tmplCode string) string {
 	if codebaseCache[tmplName] == nil {
 		tmpl, err := template.New(tmplName).Funcs(getFuncMap()).Parse(tmplCode)
 		if err != nil {
-			log.Fatalf("parsing template failed: %v", err)
+			logger.Fatalf("parsing template failed: %v", err)
 		}
 		codebaseCache[tmplName] = template.Must(tmpl, nil)
 	}
 
 	var tplBuffer bytes.Buffer
 	if err := codebaseCache[tmplName].Execute(&tplBuffer, receiver); err != nil {
-		log.Fatalf("executing template failed: %v", err)
+		logger.Fatalf("executing template failed: %v", err)
 	}
 	return tplBuffer.String()
 }
@@ -115,7 +116,7 @@ func getFuncMap() template.FuncMap {
 	regexCompile := func(pattern string) *regexp.Regexp {
 		re, err := regexp.Compile(pattern)
 		if err != nil {
-			panic(err)
+			logger.Fatal(err)
 		}
 		return re
 	}

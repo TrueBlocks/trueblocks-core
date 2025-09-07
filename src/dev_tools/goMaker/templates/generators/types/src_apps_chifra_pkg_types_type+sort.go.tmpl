@@ -16,7 +16,8 @@ func {{.Class}}By(field {{.Class}}Field, order SortOrder) func(p1, p2 {{.Class}}
 	switch field {
 {{.SortSwitches}}
 	}
-	panic("Should not happen in {{.Class}}By")
+	logger.ShouldNotHappen("in {{.Class}}By")
+	return nil
 }
 
 // {{.Class}}Cmp accepts a slice and variadic comparison functions and returns a functions

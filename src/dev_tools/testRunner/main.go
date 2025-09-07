@@ -6,7 +6,6 @@ import (
 	"encoding/json"
 	"fmt"
 	"io"
-	"log"
 	"net/url"
 	"os"
 	"os/signal"
@@ -170,11 +169,11 @@ func executeTemplate(color, tmplName, tmplCode string, data interface{}) string 
 	}
 	parsed, err := template.New(tmplName).Funcs(funcMap).Parse(tmplCode)
 	if err != nil {
-		log.Fatalf("parsing template failed: %v", err)
+		logger.Fatalf("parsing template failed: %v", err)
 	}
 	var tplBuffer bytes.Buffer
 	if err := parsed.Execute(&tplBuffer, &data); err != nil {
-		log.Fatalf("executing template failed: %v", err)
+		logger.Fatalf("executing template failed: %v", err)
 	}
 
 	// defer func() {
