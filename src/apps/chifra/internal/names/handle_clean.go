@@ -226,10 +226,11 @@ func cleanCommon(name *types.Name) (modified bool) {
 	}
 
 	lowerCaseSource := strings.ToLower(name.Source)
-	if lowerCaseSource == "etherscan" {
+	switch lowerCaseSource {
+	case "etherscan":
 		name.Source = "EtherScan.io"
 		modified = true
-	} else if lowerCaseSource == "trueblocks" {
+	case "trueblocks":
 		name.Source = "TrueBlocks.io"
 		modified = true
 	}
