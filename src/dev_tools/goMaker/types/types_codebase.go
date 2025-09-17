@@ -269,3 +269,16 @@ func (cb *CodeBase) Views() string {
 	sort.Strings(ret)
 	return strings.Trim(strings.Join(ret, "\n"), " ")
 }
+
+func (cb *CodeBase) SortedStructs() []Structure {
+	ret := []Structure{}
+	for _, cl := range cb.Structures {
+		if cl.Class != "" && !cl.DisableGo {
+			ret = append(ret, cl)
+		}
+	}
+	sort.Slice(ret, func(i, j int) bool {
+		return ret[i].Class < ret[j].Class
+	})
+	return ret
+}

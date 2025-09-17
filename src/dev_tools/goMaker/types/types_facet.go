@@ -14,6 +14,7 @@ type Facet struct {
 	Renderer   string          `toml:"renderer" json:"renderer"`
 	Attributes string          `json:"attributes"`
 	stPtr      *Structure      `json:"-"`
+	Disabled   bool            `json:"disabled" toml:"disabled"`
 }
 
 var allowedViewTypes = map[string]bool{
