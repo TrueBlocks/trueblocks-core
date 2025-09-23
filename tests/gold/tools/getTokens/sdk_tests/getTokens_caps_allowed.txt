@@ -3,6 +3,6 @@ Args: [addrs=trueblocks.eth chain verbose output append cache decache failOnPurp
 Opts: null
 {
   "errors": [
-    "Invalid key (failOnPurpose) in route."
+    "invalid key (failOnPurpose) in route"
   ]
 }

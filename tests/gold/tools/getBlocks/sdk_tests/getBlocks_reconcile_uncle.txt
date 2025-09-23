@@ -3,6 +3,6 @@ Args: [blocks=3 accountFor=0xc8ebccc5f5689fa8659d83713341e5ad19349448]
 Opts: null
 {
   "errors": [
-    "Invalid key (accountFor) in route."
+    "invalid key (accountFor) in route"
   ]
 }

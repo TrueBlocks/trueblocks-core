@@ -4,7 +4,7 @@ TEST[DATE|TIME] Pin:  true
 TEST[DATE|TIME] Publisher:  0x02f2b09b33fdbd406ead954a31f98bd29a2a3492
 TEST[DATE|TIME] DryRun:  true
 TEST[DATE|TIME] Format:  json
-Error: The --pin option requires a locally running IPFS daemon.
+Error: The --pin option is not available in test mode.
 Usage:
   chifra chunks <mode> [flags] [blocks...] [address...]
 

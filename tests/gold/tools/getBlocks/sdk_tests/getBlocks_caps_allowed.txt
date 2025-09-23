@@ -3,6 +3,6 @@ Args: [blocks=3000000 chain verbose output append cache decache ether failOnPurp
 Opts: null
 {
   "errors": [
-    "Invalid key (failOnPurpose) in route."
+    "invalid key (failOnPurpose) in route"
   ]
 }

@@ -3,6 +3,6 @@ Args: [mode=blooms chain verbose output append failOnPurpose]
 Opts: null
 {
   "errors": [
-    "Invalid key (failOnPurpose) in route."
+    "invalid key (failOnPurpose) in route"
   ]
 }

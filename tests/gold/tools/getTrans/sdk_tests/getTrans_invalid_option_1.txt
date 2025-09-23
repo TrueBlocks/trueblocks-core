@@ -3,6 +3,6 @@ Args: [prot]
 Opts: null
 {
   "errors": [
-    "Invalid key (prot) in route."
+    "invalid key (prot) in route"
   ]
 }

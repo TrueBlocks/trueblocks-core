@@ -3,6 +3,6 @@ Args: [transactions=12.0 chain verbose output append cache decache ether failOnP
 Opts: null
 {
   "errors": [
-    "Invalid key (failOnPurpose) in route."
+    "invalid key (failOnPurpose) in route"
   ]
 }

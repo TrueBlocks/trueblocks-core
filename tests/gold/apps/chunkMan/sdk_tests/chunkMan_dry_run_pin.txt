@@ -8,6 +8,6 @@ DryRun:  true
 Format:  json
 {
   "errors": [
-    "The --pin option requires a locally running IPFS daemon."
+    "The --pin option is not available in test mode."
   ]
 }

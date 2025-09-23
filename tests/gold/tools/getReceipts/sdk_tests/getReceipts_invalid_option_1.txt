@@ -3,6 +3,6 @@ Args: [pink]
 Opts: null
 {
   "errors": [
-    "Invalid key (pink) in route."
+    "invalid key (pink) in route"
   ]
 }

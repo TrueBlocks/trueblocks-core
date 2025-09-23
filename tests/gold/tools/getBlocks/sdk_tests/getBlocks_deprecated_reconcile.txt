@@ -3,6 +3,6 @@ Args: [blocks=2222222 reconcile]
 Opts: null
 {
   "errors": [
-    "Invalid key (reconcile) in route."
+    "invalid key (reconcile) in route"
   ]
 }

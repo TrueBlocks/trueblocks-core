@@ -3,6 +3,6 @@ Args: [blocks=2222222 trace]
 Opts: null
 {
   "errors": [
-    "Invalid key (trace) in route."
+    "invalid key (trace) in route"
   ]
 }

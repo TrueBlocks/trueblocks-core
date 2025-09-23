@@ -3,6 +3,6 @@ Args: [mode=addresses clean]
 Opts: null
 {
   "errors": [
-    "Invalid key (clean) in route."
+    "invalid key (clean) in route"
   ]
 }

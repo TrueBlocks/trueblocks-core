@@ -3,6 +3,6 @@ Args: [blocks=0 invalid]
 Opts: null
 {
   "errors": [
-    "Invalid key (invalid) in route."
+    "invalid key (invalid) in route"
   ]
 }

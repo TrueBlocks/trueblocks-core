@@ -3,6 +3,6 @@ Args: [transactions=0xeec4ccd13fe05907f9d732a8ad245bcb7f918217157b89baaa23895c12
 Opts: null
 {
   "errors": [
-    "Invalid key (seed) in route."
+    "invalid key (seed) in route"
   ]
 }

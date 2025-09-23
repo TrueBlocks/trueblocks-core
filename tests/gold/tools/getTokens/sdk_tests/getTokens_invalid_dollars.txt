@@ -3,6 +3,6 @@ Args: [addrs=0xb9e7f8568e08d5659f5d29c4997173d84cdf2607 0xfbb1b73c4f0bda4f67dca2
 Opts: null
 {
   "errors": [
-    "Invalid key (dollars) in route."
+    "invalid key (dollars) in route"
   ]
 }

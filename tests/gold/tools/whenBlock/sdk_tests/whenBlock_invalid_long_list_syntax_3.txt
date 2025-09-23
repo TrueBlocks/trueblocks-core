@@ -3,6 +3,6 @@ Args: [blocks=2016-03-02 list k]
 Opts: null
 {
   "errors": [
-    "Invalid key (k) in route."
+    "invalid key (k) in route"
   ]
 }

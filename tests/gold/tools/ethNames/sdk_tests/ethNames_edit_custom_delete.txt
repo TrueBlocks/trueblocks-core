@@ -3,6 +3,6 @@ Args: [delete terms=0x054993ab0f2b1acc0fdc65405ee203b4271bebe6 toCustom all]
 Opts: null
 {
   "errors": [
-    "Invalid key (toCustom) in route."
+    "invalid key (toCustom) in route"
   ]
 }

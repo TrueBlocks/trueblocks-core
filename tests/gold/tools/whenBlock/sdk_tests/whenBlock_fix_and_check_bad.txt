@@ -3,6 +3,6 @@ Args: [timestamps fix check]
 Opts: null
 {
   "errors": [
-    "Invalid key (fix) in route."
+    "invalid key (fix) in route"
   ]
 }

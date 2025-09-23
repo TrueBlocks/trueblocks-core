@@ -3,6 +3,6 @@ Args: [addrs=truebit classes]
 Opts: null
 {
   "errors": [
-    "Invalid key (classes) in route."
+    "invalid key (classes) in route"
   ]
 }

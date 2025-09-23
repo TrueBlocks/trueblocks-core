@@ -3,6 +3,6 @@ Args: [oink]
 Opts: null
 {
   "errors": [
-    "Invalid key (oink) in route."
+    "invalid key (oink) in route"
   ]
 }

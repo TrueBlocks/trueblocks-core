@@ -3,6 +3,6 @@ Args: [blocks=1301000 fix]
 Opts: null
 {
   "errors": [
-    "Invalid key (fix) in route."
+    "invalid key (fix) in route"
   ]
 }
