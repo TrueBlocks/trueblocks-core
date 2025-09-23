@@ -1,7 +1,7 @@
 module github.com/TrueBlocks/trueblocks-core/testRunner
 
 // Go Version
-go 1.23.1
+go 1.25.1
 
 require (
 	github.com/TrueBlocks/trueblocks-core/src/apps/chifra v0.0.0-20250609000835-e567c05604cb

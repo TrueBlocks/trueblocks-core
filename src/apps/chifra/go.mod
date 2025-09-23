@@ -1,7 +1,7 @@
 module github.com/TrueBlocks/trueblocks-core/src/apps/chifra
 
 // Go Version
-go 1.23.1
+go 1.25.1
 
 require (
 	github.com/alecthomas/participle/v2 v2.1.4

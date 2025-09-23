@@ -54,9 +54,9 @@ on      ,both ,fast  ,names ,tools ,ethNames ,ens_multi              ,y    ,term
 # logger cause import cycles in config package. Trouble is, these two tests report timestamps
 # during testing when we use `log`. Upshot tests pass by timing breaks them.
 local   ,cmd  ,fast  ,names ,tools ,ethNames ,xdg_fail1              ,y    ,terms = test
-on      ,cmd  ,fast  ,names ,tools ,ethNames ,xdg_fail2              ,y    ,terms = test
+local   ,cmd  ,fast  ,names ,tools ,ethNames ,xdg_fail2              ,y    ,terms = test
 local   ,cmd  ,fast  ,names ,tools ,ethNames ,xdg_fail3              ,y    ,terms = test
-on      ,cmd  ,fast  ,names ,tools ,ethNames ,xdg_fail4              ,y    ,terms = test
+local   ,cmd  ,fast  ,names ,tools ,ethNames ,xdg_fail4              ,y    ,terms = test
 
 on      ,cmd  ,slow  ,names ,tools ,ethNames ,fromFile               ,n    ,file = names.txt
 on      ,both ,fast  ,names ,tools ,ethNames ,redir_output           ,y    ,prefund & output = output_test_file

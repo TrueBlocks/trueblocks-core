@@ -39,7 +39,7 @@ string(REGEX MATCH "go([0-9]+)\\.([0-9]+)\\.[0-9]+"
     GO_VERSION_MATCH "${GO_VERSION_OUTPUT}")
 
 if(NOT GO_VERSION_MATCH)
-    message(STATUS "${CColor}Could not determine GoLang version from output: \
+    message(STATUS "${CColor}Could not determine Go version from output: \
         ${GO_VERSION_OUTPUT}.${COff}")
     message(STATUS "${CColor}Please install Go from \
         https://golang.org/doc/install.${COff}")
