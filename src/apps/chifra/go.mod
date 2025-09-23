@@ -6,7 +6,7 @@ go 1.25.1
 require (
 	github.com/alecthomas/participle/v2 v2.1.4
 	github.com/bykof/gostradamus v1.1.2
-	github.com/ethereum/go-ethereum v1.15.9
+	github.com/ethereum/go-ethereum v1.15.10
 	github.com/go-test/deep v1.1.1
 	github.com/gocarina/gocsv v0.0.0-20240520201108-78e41c74b4b1
 	github.com/gorilla/mux v1.8.1
@@ -51,11 +51,12 @@ require (
 	github.com/holiman/uint256 v1.3.2 // indirect
 	github.com/inconshreveable/mousetrap v1.1.0 // indirect
 	github.com/influxdata/line-protocol v0.0.0-20210311194329-9aa0e372d097 // indirect
-	github.com/ipfs/boxo v0.29.1 // indirect
+	github.com/ipfs/boxo v0.30.0 // indirect
 	github.com/klauspost/cpuid/v2 v2.2.10 // indirect
 	github.com/libp2p/go-buffer-pool v0.1.0 // indirect
 	github.com/libp2p/go-flow-metrics v0.2.0 // indirect
 	github.com/libp2p/go-libp2p v0.41.1 // indirect
+	github.com/mattn/go-colorable v0.1.14 // indirect
 	github.com/mattn/go-runewidth v0.0.16 // indirect
 	github.com/minio/sha256-simd v1.0.1 // indirect
 	github.com/mitchellh/go-homedir v1.1.0 // indirect

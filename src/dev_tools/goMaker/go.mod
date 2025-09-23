@@ -4,7 +4,7 @@ module github.com/TrueBlocks/trueblocks-core/goMaker
 go 1.25.1
 
 require (
-	github.com/TrueBlocks/trueblocks-core/src/apps/chifra v0.0.0-20250609000835-e567c05604cb
+	github.com/TrueBlocks/trueblocks-core/src/apps/chifra v0.0.0-20250923030321-c450c61709e2
 	github.com/gocarina/gocsv v0.0.0-20240520201108-78e41c74b4b1
 	golang.org/x/text v0.24.0
 )
@@ -16,10 +16,10 @@ require (
 	github.com/crackcomm/go-gitignore v0.0.0-20241020182519-7843d2ba8fdf // indirect
 	github.com/decred/dcrd/dcrec/secp256k1/v4 v4.4.0 // indirect
 	github.com/dustin/go-humanize v1.0.1 // indirect
-	github.com/ethereum/go-ethereum v1.15.9 // indirect
+	github.com/ethereum/go-ethereum v1.15.10 // indirect
 	github.com/holiman/uint256 v1.3.2 // indirect
 	github.com/inconshreveable/mousetrap v1.1.0 // indirect
-	github.com/ipfs/boxo v0.29.1 // indirect
+	github.com/ipfs/boxo v0.30.0 // indirect
 	github.com/ipfs/go-cid v0.5.0 // indirect
 	github.com/ipfs/go-ipfs-api v0.7.0 // indirect
 	github.com/klauspost/cpuid/v2 v2.2.10 // indirect

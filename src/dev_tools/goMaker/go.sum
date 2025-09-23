@@ -1,5 +1,5 @@
-github.com/TrueBlocks/trueblocks-core/src/apps/chifra v0.0.0-20250609000835-e567c05604cb h1:j2Z44KISp1x2rCDlAD3B6DDm49wvKFirTQWSDOREAvs=
-github.com/TrueBlocks/trueblocks-core/src/apps/chifra v0.0.0-20250609000835-e567c05604cb/go.mod h1:7CyEQUtzQLAvsZjUVdrA3vzQbOVyIWlr+ykbJd8ml8I=
+github.com/TrueBlocks/trueblocks-core/src/apps/chifra v0.0.0-20250923030321-c450c61709e2 h1:EI7InV6Zigd5ByorVy0A0gRsapFvknE6o8mQLrO18Nw=
+github.com/TrueBlocks/trueblocks-core/src/apps/chifra v0.0.0-20250923030321-c450c61709e2/go.mod h1:ln58BYBd4Ah6Ybhcc44+v8fJiQKGrzLBE9pkZAxxDQM=
 github.com/benbjohnson/clock v1.3.5 h1:VvXlSJBzZpA/zum6Sj74hxwYI2DIxRWuNIoXAzHZz5o=
 github.com/benbjohnson/clock v1.3.5/go.mod h1:J11/hYXuz8f4ySSvYwY0FKfm+ezbsZBKZxNJlLklBHA=
 github.com/blang/semver/v4 v4.0.0 h1:1PFHFE6yCCTv8C1TeyNNarDzntLi7wMI5i/pzqYIsAM=
@@ -19,8 +19,8 @@ github.com/decred/dcrd/dcrec/secp256k1/v4 v4.4.0 h1:NMZiJj8QnKe1LgsbDayM4UoHwbvw
 github.com/decred/dcrd/dcrec/secp256k1/v4 v4.4.0/go.mod h1:ZXNYxsqcloTdSy/rNShjYzMhyjf0LaoftYK0p+A3h40=
 github.com/dustin/go-humanize v1.0.1 h1:GzkhY7T5VNhEkwH0PVJgjz+fX1rhBrR7pRT3mDkpeCY=
 github.com/dustin/go-humanize v1.0.1/go.mod h1:Mu1zIs6XwVuF/gI1OepvI0qD18qycQx+mFykh5fBlto=
-github.com/ethereum/go-ethereum v1.15.9 h1:bRra1zi+/q+qyXZ6fylZOrlaF8kDdnlTtzNTmNHfX+g=
-github.com/ethereum/go-ethereum v1.15.9/go.mod h1:+S9k+jFzlyVTNcYGvqFhzN/SFhI6vA+aOY4T5tLSPL0=
+github.com/ethereum/go-ethereum v1.15.10 h1:UxqBhpsF2TNF1f7Z/k3RUUHEuLvDGAlHuh/lQ99ZA0w=
+github.com/ethereum/go-ethereum v1.15.10/go.mod h1:+S9k+jFzlyVTNcYGvqFhzN/SFhI6vA+aOY4T5tLSPL0=
 github.com/gocarina/gocsv v0.0.0-20240520201108-78e41c74b4b1 h1:FWNFq4fM1wPfcK40yHE5UO3RUdSNPaBC+j3PokzA6OQ=
 github.com/gocarina/gocsv v0.0.0-20240520201108-78e41c74b4b1/go.mod h1:5YoVOkjYAQumqlV356Hj3xeYh4BdZuLE0/nRkf2NKkI=
 github.com/google/go-cmp v0.7.0 h1:wk8382ETsv4JYUZwIsn6YpYiWiBsYLSJiTsyBybVuN8=
@@ -29,8 +29,8 @@ github.com/holiman/uint256 v1.3.2 h1:a9EgMPSC1AAaj1SZL5zIQD3WbwTuHrMGOerLjGmM/TA
 github.com/holiman/uint256 v1.3.2/go.mod h1:EOMSn4q6Nyt9P6efbI3bueV4e1b3dGlUCXeiRV4ng7E=
 github.com/inconshreveable/mousetrap v1.1.0 h1:wN+x4NVGpMsO7ErUn/mUI3vEoE6Jt13X2s0bqwp9tc8=
 github.com/inconshreveable/mousetrap v1.1.0/go.mod h1:vpF70FUmC8bwa3OWnCshd2FqLfsEA9PFc4w1p2J65bw=
-github.com/ipfs/boxo v0.29.1 h1:z61ZT4YDfTHLjXTsu/+3wvJ8aJlExthDSOCpx6Nh8xc=
-github.com/ipfs/boxo v0.29.1/go.mod h1:MkDJStXiJS9U99cbAijHdcmwNfVn5DKYBmQCOgjY2NU=
+github.com/ipfs/boxo v0.30.0 h1:7afsoxPGGqfoH7Dum/wOTGUB9M5fb8HyKPMlLfBvIEQ=
+github.com/ipfs/boxo v0.30.0/go.mod h1:BPqgGGyHB9rZZcPSzah2Dc9C+5Or3U1aQe7EH1H7370=
 github.com/ipfs/go-cid v0.5.0 h1:goEKKhaGm0ul11IHA7I6p1GmKz8kEYniqFopaB5Otwg=
 github.com/ipfs/go-cid v0.5.0/go.mod h1:0L7vmeNXpQpUS9vt+yEARkJ8rOg43DF3iPgn4GIN0mk=
 github.com/ipfs/go-ipfs-api v0.7.0 h1:CMBNCUl0b45coC+lQCXEVpMhwoqjiaCwUIrM+coYW2Q=
