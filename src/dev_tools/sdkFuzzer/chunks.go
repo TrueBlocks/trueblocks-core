@@ -27,6 +27,7 @@ func DoChunks() {
 	ShowHeader("DoChunks", opts)
 
 	globs := noCache(noEther(globals))
+	// check := []bool{false, true}
 	pin := []bool{false, true}
 	publish := []bool{false, true}
 	remote := []bool{false, true}

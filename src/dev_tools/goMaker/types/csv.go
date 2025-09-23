@@ -20,7 +20,8 @@ func LoadCsv[T Validater, D any](thePath string, callBack func(*T, *D) (bool, er
 	lines := file.AsciiFileToLines(thePath)
 
 	isCommandFile := strings.Contains(thePath, "cmd-line-options.csv")
-	if !isCommandFile {
+	isBaseTypes := strings.Contains(thePath, "base-types.csv")
+	if !isCommandFile && !isBaseTypes {
 		requiredColumns := []string{"name", "type", "docOrder", "description"}
 		joinedLines := strings.Join(lines, "\n")
 		for _, col := range requiredColumns {

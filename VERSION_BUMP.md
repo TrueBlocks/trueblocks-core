@@ -8,6 +8,7 @@ In `develop` branch:
 | git pull                             | # make sure you have the latest code             |
 | git checkout -b feature/version-bump | # create a new branch for the version bump       |
 | edit ../VERSION                      | # bump the version number (for goMaker)          |
+| make generate                        | # updates version in code and rebuild            |
 | make test-all                        | # resolve all tests                              |
 | git commit -am "Bumps version to..." | # mark the commit as final commit before merging |
 | git push                             | # push the develop branch to remote              |
