@@ -98,24 +98,24 @@ func GetRootConfig() *configtypes.Config {
 	user, _ := user.Current()
 
 	cachePath := trueBlocksConfig.Settings.CachePath
-	cachePath = strings.Replace(cachePath, "/", string(os.PathSeparator), -1)
+	cachePath = strings.ReplaceAll(cachePath, "/", string(os.PathSeparator))
 	if len(cachePath) == 0 || cachePath == "<not_set>" {
 		cachePath = filepath.Join(configPath, "cache")
 	}
-	cachePath = strings.Replace(cachePath, "$HOME", user.HomeDir, -1)
-	cachePath = strings.Replace(cachePath, "~", user.HomeDir, -1)
+	cachePath = strings.ReplaceAll(cachePath, "$HOME", user.HomeDir)
+	cachePath = strings.ReplaceAll(cachePath, "~", user.HomeDir)
 	if filepath.Base(cachePath) != "cache" {
 		cachePath = filepath.Join(cachePath, "cache")
 	}
 	trueBlocksConfig.Settings.CachePath = cachePath
 
 	indexPath := trueBlocksConfig.Settings.IndexPath
-	indexPath = strings.Replace(indexPath, "/", string(os.PathSeparator), -1)
+	indexPath = strings.ReplaceAll(indexPath, "/", string(os.PathSeparator))
 	if len(indexPath) == 0 || indexPath == "<not_set>" {
 		indexPath = filepath.Join(configPath, "unchained")
 	}
-	indexPath = strings.Replace(indexPath, "$HOME", user.HomeDir, -1)
-	indexPath = strings.Replace(indexPath, "~", user.HomeDir, -1)
+	indexPath = strings.ReplaceAll(indexPath, "$HOME", user.HomeDir)
+	indexPath = strings.ReplaceAll(indexPath, "~", user.HomeDir)
 	if filepath.Base(indexPath) != "unchained" {
 		indexPath = filepath.Join(indexPath, "unchained")
 	}
@@ -145,7 +145,7 @@ func GetRootConfig() *configtypes.Config {
 		if isDefaulted {
 			ch.IpfsGateway = trueBlocksConfig.Pinning.GatewayUrl
 		}
-		ch.IpfsGateway = strings.Replace(ch.IpfsGateway, "[{CHAIN}]", "ipfs", -1)
+		ch.IpfsGateway = strings.ReplaceAll(ch.IpfsGateway, "[{CHAIN}]", "ipfs")
 		ch.LocalExplorer = clean(ch.LocalExplorer)
 		ch.RemoteExplorer = clean(ch.RemoteExplorer)
 		rpc := strings.Trim(clean(ch.GetRpcProvider()), "/") // Infura, for example, doesn't like the trailing slash
@@ -268,7 +268,7 @@ func checkUnchainedProvider(chain string, deployed uint64) error {
 	}
 	url := trueBlocksConfig.Chains[chain].GetRpcProvider()
 	str := `{ "jsonrpc": "2.0", "method": "eth_getBlockByNumber", "params": [ "{0}", true ], "id": 1 }`
-	payLoad := []byte(strings.Replace(str, "{0}", fmt.Sprintf("0x%x", deployed), -1))
+	payLoad := []byte(strings.ReplaceAll(str, "{0}", fmt.Sprintf("0x%x", deployed)))
 	req, err := http.NewRequest("POST", url, bytes.NewBuffer(payLoad))
 	if err != nil {
 		return fmt.Errorf("error creating request to rpcProvider (%s): %v", url, err)

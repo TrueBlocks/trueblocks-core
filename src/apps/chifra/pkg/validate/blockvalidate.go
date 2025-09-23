@@ -90,7 +90,7 @@ func IsDateTimeString(str string) bool {
 
 func ToIsoDateStr2(dateStr string) string {
 	// assumes an already validated date string
-	str := strings.Replace(dateStr, "T", " ", -1)
+	str := strings.ReplaceAll(dateStr, "T", " ")
 	if strings.Count(str, ":") == 0 {
 		if strings.Count(str, " ") == 1 {
 			str += ":00:00"
@@ -100,7 +100,7 @@ func ToIsoDateStr2(dateStr string) string {
 	} else if strings.Count(str, ":") == 1 {
 		str += ":00"
 	}
-	str = strings.Replace(str, " ", "T", -1)
+	str = strings.ReplaceAll(str, " ", "T")
 	str += ".000000"
 	return str
 }

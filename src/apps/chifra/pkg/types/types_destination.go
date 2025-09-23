@@ -122,7 +122,7 @@ func (s *Destination) Resolve(chain string, google, dalle, local bool) []Destina
 	ret := []Destination{}
 	if google {
 		var query = "https://www.google.com/search?q=[{TERM}]"
-		query = strings.Replace(query, "[{TERM}]", s.Term, -1)
+		query = strings.ReplaceAll(query, "[{TERM}]", s.Term)
 		var exclusions = []string{
 			"etherscan", "etherchain", "bloxy", "bitquery", "ethplorer", "tokenview", "anyblocks", "explorer",
 		}
@@ -149,13 +149,13 @@ func (s *Destination) Resolve(chain string, google, dalle, local bool) []Destina
 
 	if s.TermType == DestinationFourByte {
 		var query = "https://www.4byte.directory/signatures/?bytes4_signature=[{TERM}]"
-		query = strings.Replace(query, "[{TERM}]", s.Term, -1)
+		query = strings.ReplaceAll(query, "[{TERM}]", s.Term)
 		ret = append(ret, NewDestinationEx(*s, query, "url"))
 	}
 
 	if s.TermType == DestinationEnsName {
 		var query = "https://app.ens.domains/name/[{TERM}]/details"
-		query = strings.Replace(query, "[{TERM}]", s.Term, -1)
+		query = strings.ReplaceAll(query, "[{TERM}]", s.Term)
 		ret = append(ret, NewDestinationEx(*s, query, "url"))
 	}
 
@@ -176,8 +176,8 @@ func (s *Destination) Resolve(chain string, google, dalle, local bool) []Destina
 
 	if local {
 		url = config.GetChain(chain).LocalExplorer
-		query = strings.Replace(query, "tx/", "explorer/transactions/", -1)
-		query = strings.Replace(query, "block/", "explorer/blocks/", -1)
+		query = strings.ReplaceAll(query, "tx/", "explorer/transactions/")
+		query = strings.ReplaceAll(query, "block/", "explorer/blocks/")
 	}
 
 	ret = append(ret, NewDestinationEx(*s, url+query, "url"))

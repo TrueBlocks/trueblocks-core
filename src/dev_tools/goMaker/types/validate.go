@@ -51,9 +51,13 @@ func (cb *CodeBase) isValidSetup() error {
 		}
 	}
 
-	if !cmdLineOptionsExists && !(classDefFolderExists && hasTomlFiles) {
-		return ErrRequirementsNotMet
+	if cmdLineOptionsExists {
+		return nil
 	}
 
-	return nil
+	if classDefFolderExists && hasTomlFiles {
+		return nil
+	}
+
+	return ErrRequirementsNotMet
 }

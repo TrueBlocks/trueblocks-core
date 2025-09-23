@@ -209,11 +209,13 @@ func uniqFromTracesDetails(chain string, procFunc UniqProcFunc, flow string, tra
 		streamAppearance(procFunc, flow, traceReason(traceid, &trace, "from"), trace.Action.From, bn, txid, traceid, ts, addrMap)
 		streamAppearance(procFunc, flow, traceReason(traceid, &trace, "to"), trace.Action.To, bn, txid, traceid, ts, addrMap)
 
-		if trace.TraceType == "call" {
+		switch trace.TraceType {
+		case "call":
 			// If it's a call, get the to and from, we're done
 
-		} else if trace.TraceType == "reward" {
-			if trace.Action.RewardType == "block" {
+		case "reward":
+			switch trace.Action.RewardType {
+			case "block":
 				author := trace.Action.Author
 				fakeId := types.BlockReward
 				if author.IsPrecompile() {
@@ -224,7 +226,7 @@ func uniqFromTracesDetails(chain string, procFunc UniqProcFunc, flow string, tra
 				}
 				streamAppearance(procFunc, flow, "miner", author, bn, fakeId, traceid, ts, addrMap)
 
-			} else if trace.Action.RewardType == "uncle" {
+			case "uncle":
 				author := trace.Action.Author
 				fakeId := types.UncleReward
 				if author.IsPrecompile() {
@@ -235,7 +237,7 @@ func uniqFromTracesDetails(chain string, procFunc UniqProcFunc, flow string, tra
 				}
 				streamAppearance(procFunc, flow, "uncle", author, bn, fakeId, traceid, ts, addrMap)
 
-			} else if trace.Action.RewardType == "external" {
+			case "external":
 				author := trace.Action.Author
 				fakeId := types.ExternalReward
 				if author.IsPrecompile() {
@@ -246,16 +248,16 @@ func uniqFromTracesDetails(chain string, procFunc UniqProcFunc, flow string, tra
 				}
 				streamAppearance(procFunc, flow, "external", author, bn, fakeId, traceid, ts, addrMap)
 
-			} else {
+			default:
 				return errors.New("Unknown reward type" + trace.Action.RewardType)
 			}
 
-		} else if trace.TraceType == "suicide" {
+		case "suicide":
 			// add the contract that died, and where it sent it's money
 			streamAppearance(procFunc, flow, traceReason(traceid, &trace, "refund"), trace.Action.RefundAddress, bn, txid, traceid, ts, addrMap)
 			streamAppearance(procFunc, flow, traceReason(traceid, &trace, "self-destruct"), trace.Action.Address, bn, txid, traceid, ts, addrMap)
 
-		} else if trace.TraceType == "create" {
+		case "create":
 			if trace.Result != nil {
 				// may be both...record the self-destruct instead of the creation since we can only report on one
 				streamAppearance(procFunc, flow, traceReason(traceid, &trace, "self-destruct"), trace.Result.Address, bn, txid, traceid, ts, addrMap)
@@ -286,7 +288,7 @@ func uniqFromTracesDetails(chain string, procFunc UniqProcFunc, flow string, tra
 				}
 			}
 
-		} else {
+		default:
 			if len(trace.TraceType) > 0 && trace.BlockNumber != 0 {
 				logger.Warn(fmt.Sprintf("Unknown trace type %s for trace: %d.%d.%d", trace.TraceType, trace.BlockNumber, trace.TransactionIndex, trace.TraceIndex))
 			}
@@ -335,8 +337,8 @@ func streamAppearance(procFunc UniqProcFunc, flow string, reason string, addr ba
 				return
 			}
 		case "to":
-			test := strings.Replace(reason, "topic", "", -1)
-			test = strings.Replace(test, "generator", "", -1)
+			test := strings.ReplaceAll(reason, "topic", "")
+			test = strings.ReplaceAll(test, "generator", "")
 			if !strings.Contains(test, "to") {
 				return
 			}

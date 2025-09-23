@@ -92,14 +92,11 @@ func bytesToHashString(hashBytes []byte) string {
 func IsValidHex(typ string, val string, nBytes int) (bool, error) {
 	if _, err := ValidHex(val, nBytes); err != nil {
 		if errors.Is(err, ErrInvalidLength) {
-			//lint:ignore ST1005 sorry
-			return false, fmt.Errorf("The %s option (%s) must be %d bytes long.", typ, val, nBytes)
+			return false, fmt.Errorf("the %s option (%s) must be %d bytes long", typ, val, nBytes)
 		} else if errors.Is(err, ErrInvalidHex) {
-			//lint:ignore ST1005 sorry
-			return false, fmt.Errorf("The %s option (%s) must be hex.", typ, val)
+			return false, fmt.Errorf("the %s option (%s) must be hex", typ, val)
 		} else if errors.Is(err, ErrNoLeading0x) {
-			//lint:ignore ST1005 sorry
-			return false, fmt.Errorf("The %s option (%s) must start with '0x'.", typ, val)
+			return false, fmt.Errorf("the %s option (%s) must start with '0x'", typ, val)
 		}
 		return false, err
 	}

@@ -118,12 +118,12 @@ func (c *Command) Clean() {
 		op.GoSdkType = op.toGoSdkType()
 		op.GoOptionsType = op.toGoOptionsType()
 		if strings.Contains(op.DataType, "enum[") {
-			v := strings.Replace(strings.Replace(strings.Split(op.DataType, "[")[1], "]", "", -1), ">", "", -1)
+			v := strings.ReplaceAll(strings.ReplaceAll(strings.Split(op.DataType, "[")[1], "]", ""), ">", "")
 			op.Enums = strings.Split(v, "|")
 			for i := 0; i < len(op.Enums); i++ {
 				e := strings.TrimSpace(op.Enums[i])
 				if strings.Contains(e, "*") {
-					e = strings.Replace(e, "*", "", -1)
+					e = strings.ReplaceAll(e, "*", "")
 					op.DefaultEnum = e
 				}
 				op.Enums[i] = e
@@ -256,7 +256,7 @@ var globals = []Option{
 
 func (c *Command) PyGlobals() string {
 	ret := []string{}
-	caps := strings.Replace(strings.Replace(strings.ToLower(c.Capabilities)+"|", "default|", "verbose|fmt|version|noop|nocolor|chain|noheader|file|output|append|", -1), "caching|", "cache|decache|", -1)
+	caps := strings.ReplaceAll(strings.ReplaceAll(strings.ToLower(c.Capabilities)+"|", "default|", "verbose|fmt|version|noop|nocolor|chain|noheader|file|output|append|"), "caching|", "cache|decache|")
 	if c.Route == "names" {
 		caps = "create|update|delete|undelete|remove|" + caps
 	}
@@ -272,7 +272,7 @@ func (c *Command) PyGlobals() string {
 
 func (c *Command) YamlGlobals() string {
 	ret := []string{}
-	caps := strings.Replace(strings.Replace(strings.ToLower(c.Capabilities)+"|", "default|", "verbose|fmt|version|chain|noheader|", -1), "caching|", "cache|decache|", -1)
+	caps := strings.ReplaceAll(strings.ReplaceAll(strings.ToLower(c.Capabilities)+"|", "default|", "verbose|fmt|version|chain|noheader|"), "caching|", "cache|decache|")
 	if c.Route == "names" {
 		caps = "create|update|delete|undelete|remove|" + caps
 	}
@@ -352,7 +352,7 @@ func (c *Command) AddCaps() string {
 	str := `var capabilities caps.Capability // capabilities for chifra [{ROUTE}]
 [{CAPS}]
 `
-	return strings.Replace(strings.Replace(str, "[{CAPS}]", strings.Join(ret, "\n"), -1), "[{ROUTE}]", c.Route, -1)
+	return strings.ReplaceAll(strings.ReplaceAll(str, "[{CAPS}]", strings.Join(ret, "\n")), "[{ROUTE}]", c.Route)
 }
 
 // DefaultsApi for tag {{.DefaultsApi}}
@@ -502,7 +502,7 @@ func (c *Command) IsRoute() bool {
 func (c *Command) Example() string {
 	examplePath := filepath.Join(GetTemplatePath(), "api/examples/"+c.Route+".json")
 	contents := strings.Trim(file.AsciiFileToString(examplePath), ws)
-	contents = strings.Replace(contents, "\n", "\n                  ", -1)
+	contents = strings.ReplaceAll(contents, "\n", "\n                  ")
 	return strings.Trim(contents, ws) + "\n"
 }
 
@@ -914,9 +914,9 @@ func (op *Option) TsEnumTypes() []string {
 		opp := *op
 		opp.GoName = e
 		retType := opp.ModeType()
-		retType = strings.Replace(retType, "base.Address", "address", -1)
-		retType = strings.Replace(retType, "base.", "", -1)
-		retType = strings.Replace(retType, "types.", "", -1)
+		retType = strings.ReplaceAll(retType, "base.Address", "address")
+		retType = strings.ReplaceAll(retType, "base.", "")
+		retType = strings.ReplaceAll(retType, "types.", "")
 		ret = append(ret, retType+"[]")
 	}
 	return ret
@@ -928,9 +928,9 @@ func (c *Command) TsReturns() string {
 	for _, op := range c.Options {
 		if len(op.ReturnType) > 0 {
 			retType := op.SdkCoreType() + "[]"
-			retType = strings.Replace(retType, "base.Address", "address", -1)
-			retType = strings.Replace(retType, "base.", "", -1)
-			retType = strings.Replace(retType, "types.", "", -1)
+			retType = strings.ReplaceAll(retType, "base.Address", "address")
+			retType = strings.ReplaceAll(retType, "base.", "")
+			retType = strings.ReplaceAll(retType, "types.", "")
 			if !present[retType] {
 				if op.LongName == "mode" {
 					ret = append(ret, op.TsEnumTypes()...)
@@ -967,7 +967,7 @@ func (c *Command) TsTypes() string {
 	for _, line := range lines {
 		parts := strings.Split(line, ":")
 		if len(parts) > 1 && len(parts[1]) > 0 {
-			parts[1] = strings.TrimSpace(strings.Replace(parts[1], "[]", "", -1))
+			parts[1] = strings.TrimSpace(strings.ReplaceAll(parts[1], "[]", ""))
 			if !m[parts[1]] && !strings.Contains(parts[1], "'") {
 				if strings.Contains(parts[1], "string") || strings.Contains(parts[1], "boolean") {
 					fmt.Println("Here", parts[1])
@@ -1023,7 +1023,7 @@ func (c *Command) Deprecated() string {
 			tmplName := "deprecated"
 			tmpl := `	_ = [ROUTE]Cmd.Flags().MarkDeprecated("{{.LongName}}", "The --{{.LongName}} option has been deprecated.")`
 			val := op.executeTemplate(tmplName, tmpl)
-			val = strings.Replace(val, "[ROUTE]", op.Route, -1)
+			val = strings.ReplaceAll(val, "[ROUTE]", op.Route)
 			ret = append(ret, val)
 		}
 	}

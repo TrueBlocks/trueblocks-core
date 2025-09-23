@@ -154,7 +154,7 @@ func appendTxId(results *[]identifiers.Identifier, identifier string) {
 	}
 
 	// so the parser works for both transaction identifiers and block identifiers
-	identifier = strings.Replace(identifier, ".", "-", -1)
+	identifier = strings.ReplaceAll(identifier, ".", "-")
 
 	// so the parser works for transaction identifiers with blockHashOrNumber.*
 	if strings.Count(identifier, "-") == 1 && strings.HasSuffix(identifier, "-*") {

@@ -47,24 +47,16 @@ func (c *socketConnection) write() {
 		c.connection.Close()
 	}()
 
-	// this is a common pattern for a websocket connection
-	//nolint:staticcheck,gosimple
-	for {
-		select {
-		case message, ok := <-c.send:
-			if !ok {
-				c.Log("socketConnection closed")
-				_ = c.connection.WriteMessage(websocket.CloseMessage, []byte{})
-				return
-			}
-
-			err := c.connection.WriteJSON(message)
-			if err != nil {
-				// c.Log("Error while sending message, dropping connection: %s", err.Error())
-				c.pool.unregister <- c
-			}
+	// use for-range over the channel
+	for message := range c.send {
+		err := c.connection.WriteJSON(message)
+		if err != nil {
+			c.pool.unregister <- c
+			break
 		}
 	}
+	c.Log("socketConnection closed")
+	_ = c.connection.WriteMessage(websocket.CloseMessage, []byte{})
 }
 
 // RemoteAddr is the other end of the connection
@@ -129,8 +121,6 @@ func (pool *ConnectionPool) run() {
 
 // HandleWebsockets handles web sockets
 func HandleWebsockets(pool *ConnectionPool, w http.ResponseWriter, r *http.Request) {
-	// TODO: the line below allows any connection through WebSockets. Once the server
-	// TODO: is ready, we should implement some rules here
 	upgrader.CheckOrigin = func(r *http.Request) bool {
 		_ = r
 		return true
@@ -138,11 +128,15 @@ func HandleWebsockets(pool *ConnectionPool, w http.ResponseWriter, r *http.Reque
 
 	c, err := upgrader.Upgrade(w, r, nil)
 	if err != nil {
-		logger.Error("upgrade:", err)
+		logger.Error("websocket upgrade failed", err)
 		return
 	}
 
-	connection := &socketConnection{connection: c, send: make(chan *Message), pool: pool}
+	connection := &socketConnection{
+		connection: c,
+		send:       make(chan *Message),
+		pool:       pool,
+	}
 	pool.register <- connection
 
 	go connection.write()

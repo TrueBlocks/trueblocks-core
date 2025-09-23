@@ -126,7 +126,7 @@ func writeCustomNames(output *os.File) (err error) {
 	}()
 
 	// We don't want to save test names even in test database
-	var testAddresses map[string]bool = map[string]bool{
+	var testAddresses = map[string]bool{
 		"0x0000000000000000000000000000000000000001": true,
 		"0x0000000000000000000000000000000000000002": true,
 		"0x0000000000000000000000000000000000000003": true,

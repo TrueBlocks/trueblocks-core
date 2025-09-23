@@ -40,7 +40,7 @@ func (opts *AbisOptions) HandleList(rCtx *output.RenderCtx) error {
 				abi.Path, abi.Name = filepath.Split(fn)
 				if len(abi.Name) > 0 {
 					if strings.HasPrefix(abi.Name, "0x") {
-						abi.Address = base.HexToAddress(strings.Replace(abi.Name, ".json", "", -1))
+						abi.Address = base.HexToAddress(strings.ReplaceAll(abi.Name, ".json", ""))
 					}
 					if opts.Globals.Verbose {
 						contents := file.AsciiFileToString(filepath.Join(abi.Path, abi.Name))

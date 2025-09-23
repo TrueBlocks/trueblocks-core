@@ -4,7 +4,7 @@ TEST[DATE|TIME] Logs:  true
 TEST[DATE|TIME] Topic:  [0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ez]
 TEST[DATE|TIME] Caps:  cache,decache,ether
 TEST[DATE|TIME] Format:  json
-Error: The topic option (0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ez) must be hex.
+Error: the topic option (0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ez) must be hex
 Usage:
   chifra transactions [flags] <tx_id> [tx_id...]
 

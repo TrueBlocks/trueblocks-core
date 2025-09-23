@@ -21,7 +21,7 @@ func queryUserHelper(prompt, noResponse string, defaultToYes bool) bool {
 	reader := bufio.NewReader(os.Stdin)
 	fmt.Fprintf(os.Stderr, colors.Yellow+"%s"+colors.Off, prompt)
 	text, _ := reader.ReadString('\n')
-	text = strings.Replace(text, "\n", "", -1)
+	text = strings.ReplaceAll(text, "\n", "")
 
 	// Handle empty input (user just hit enter)
 	if text == "" {

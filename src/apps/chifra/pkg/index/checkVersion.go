@@ -57,9 +57,9 @@ func IsInitialized(chain, required string) error {
 	See https://github.com/TrueBlocks/trueblocks-core/blob/develop/src/other/migrations/README-v2.0.0.md.
 `
 			msg = colors.ColoredWith(msg, colors.Yellow)
-			msg = strings.Replace(msg, "WHICH", fileName, -1)
-			msg = strings.Replace(msg, "FOUND", config.VersionTags[bl.Header.Hash.Hex()], -1)
-			msg = strings.Replace(msg, "WANT", required, -1)
+			msg = strings.ReplaceAll(msg, "WHICH", fileName)
+			msg = strings.ReplaceAll(msg, "FOUND", config.VersionTags[bl.Header.Hash.Hex()])
+			msg = strings.ReplaceAll(msg, "WANT", required)
 			return fmt.Errorf(msg, ErrIncorrectHash)
 		}
 		return err

@@ -131,7 +131,7 @@ func StateFinishParseInternal(w io.Writer, values url.Values) *StateOptions {
 	opts.ProxyForAddr = base.HexToAddress(opts.ProxyFor)
 
 	// EXISTING_CODE
-	opts.Calldata = strings.Replace(strings.Trim(opts.Calldata, "'"), "'", "\"", -1)
+	opts.Calldata = strings.ReplaceAll(strings.Trim(opts.Calldata, "'"), "'", "\"")
 	opts.Calls = strings.Split(opts.Calldata, ":")
 	if len(opts.Blocks) == 0 {
 		if opts.Globals.TestMode {
@@ -175,7 +175,7 @@ func stateFinishParse(args []string) *StateOptions {
 			opts.Blocks = append(opts.Blocks, arg)
 		}
 	}
-	opts.Calldata = strings.Replace(strings.Trim(opts.Calldata, "'"), "'", "\"", -1)
+	opts.Calldata = strings.ReplaceAll(strings.Trim(opts.Calldata, "'"), "'", "\"")
 	opts.Calls = strings.Split(opts.Calldata, ":")
 	if len(opts.Blocks) == 0 {
 		if opts.Globals.TestMode {

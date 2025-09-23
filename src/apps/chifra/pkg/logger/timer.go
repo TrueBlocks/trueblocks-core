@@ -59,7 +59,7 @@ func (t *Timer) Report(msg string) {
 
 	name := os.Getenv("TB_TIMER_NAME")
 	if len(name) > 0 {
-		msg = strings.Replace(msg, "chifra ", "", -1) + "_" + name
+		msg = strings.ReplaceAll(msg, "chifra ", "") + "_" + name
 	}
 
 	max := func(x, y int64) int64 {

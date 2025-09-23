@@ -239,26 +239,27 @@ func (p *EtherscanProvider) defaultConvertSlurpType(address string, requestType 
 	}
 	// s.IsError = trans.TxReceiptStatus == "0"
 
-	if requestType == "int" {
+	switch requestType {
+	case "int":
 		// We use a weird marker here since Etherscan doesn't send the transaction id for internal txs and we don't
 		// want to make another RPC call. We tried (see commented code), but EtherScan balks with a weird message
 		app, _ := p.conn.GetTransactionAppByHash(s.Hash.Hex())
 		s.TransactionIndex = base.Txnum(app.TransactionIndex)
-	} else if requestType == "miner" {
+	case "miner":
 		s.BlockHash = base.HexToHash("0xdeadbeef")
 		s.TransactionIndex = types.BlockReward
 		s.From = base.BlockRewardSender
 		// TODO: This is only correct for Eth mainnet
 		s.Value.SetString("5000000000000000000", 0)
 		s.To = base.HexToAddress(address)
-	} else if requestType == "uncles" {
+	case "uncles":
 		s.BlockHash = base.HexToHash("0xdeadbeef")
 		s.TransactionIndex = types.UncleReward
 		s.From = base.UncleRewardSender
 		// TODO: This is only correct for Eth mainnet
 		s.Value.SetString("3750000000000000000", 0)
 		s.To = base.HexToAddress(address)
-	} else if requestType == "withdrawals" {
+	case "withdrawals":
 		s.BlockHash = base.HexToHash("0xdeadbeef")
 		s.TransactionIndex = types.WithdrawalAmt
 		s.From = base.WithdrawalSender
@@ -295,13 +296,13 @@ func (p *EtherscanProvider) url(value string, paginator Paginator, requestType s
 	}
 
 	const str = "[{BASE_URL}]/api?module=[{MODULE}]&sort=asc&action=[{ACTION}]&[{TT}]=[{VALUE}]&page=[{PAGE}]&offset=[{PER_PAGE}]"
-	ret := strings.Replace(str, "[{BASE_URL}]", p.baseUrl, -1)
-	ret = strings.Replace(ret, "[{MODULE}]", module, -1)
-	ret = strings.Replace(ret, "[{TT}]", tt, -1)
-	ret = strings.Replace(ret, "[{ACTION}]", actions[requestType], -1)
-	ret = strings.Replace(ret, "[{VALUE}]", value, -1)
-	ret = strings.Replace(ret, "[{PAGE}]", fmt.Sprintf("%d", paginator.Page()), -1)
-	ret = strings.Replace(ret, "[{PER_PAGE}]", fmt.Sprintf("%d", paginator.PerPage()), -1)
+	ret := strings.ReplaceAll(str, "[{BASE_URL}]", p.baseUrl)
+	ret = strings.ReplaceAll(ret, "[{MODULE}]", module)
+	ret = strings.ReplaceAll(ret, "[{TT}]", tt)
+	ret = strings.ReplaceAll(ret, "[{ACTION}]", actions[requestType])
+	ret = strings.ReplaceAll(ret, "[{VALUE}]", value)
+	ret = strings.ReplaceAll(ret, "[{PAGE}]", fmt.Sprintf("%d", paginator.Page()))
+	ret = strings.ReplaceAll(ret, "[{PER_PAGE}]", fmt.Sprintf("%d", paginator.PerPage()))
 	ret = ret + "&apikey=" + p.apiKey
 
 	return ret, nil

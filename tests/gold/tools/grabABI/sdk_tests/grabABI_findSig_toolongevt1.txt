@@ -6,6 +6,6 @@ Caps:  cache,decache
 Format:  json
 {
   "errors": [
-    "The fourbyte option (0x1aa3a00800000000000000000) must be 4 bytes long."
+    "the fourbyte option (0x1aa3a00800000000000000000) must be 4 bytes long"
   ]
 }

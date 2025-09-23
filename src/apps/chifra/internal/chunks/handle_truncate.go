@@ -31,7 +31,7 @@ func (opts *ChunksOptions) HandleTruncate(rCtx *output.RenderCtx, blockNums []ba
 	}
 
 	if !opts.Globals.IsApiMode() &&
-		!usage.QueryUser(strings.Replace(truncateWarning, "{0}", fmt.Sprintf("%d", opts.Truncate), -1), "Not truncated") {
+		!usage.QueryUser(strings.ReplaceAll(truncateWarning, "{0}", fmt.Sprintf("%d", opts.Truncate)), "Not truncated") {
 		return nil
 	}
 

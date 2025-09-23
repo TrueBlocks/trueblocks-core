@@ -43,7 +43,7 @@ func ForEveryFileInFolder(path string, forEvery ForEveryFunc, vP any) error {
 func (walker *CacheWalker) WalkRegularFolder(path string) error {
 	filenameChan := make(chan CacheFileInfo)
 
-	var nRoutines int = 1
+	var nRoutines = 1
 	go WalkFolder(context.Background(), path, nil, filenameChan)
 
 	cnt := 0
@@ -79,7 +79,7 @@ func (walker *CacheWalker) WalkBloomFilters(blockNums []base.Blknum) error {
 	// TODO: changing this will probably create data races because we append to slices and/or modify maps
 	// in the visitFunc. We need to make sure that we don't modify the same data structure in two different
 	// goroutines.
-	var nRoutines int = 1
+	var nRoutines = 1
 	go WalkCacheFolder(context.Background(), walker.chain, Index_Bloom, nil, filenameChan)
 
 	cnt := 0

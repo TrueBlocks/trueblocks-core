@@ -84,7 +84,7 @@ func clearDirectional(str string) string {
 		return str
 	}
 	// Note that this leaves invalid directional signals which will cause the check to fail
-	str = strings.Replace(str, ":next", "", -1)
-	str = strings.Replace(str, ":prev", "", -1)
+	str = strings.ReplaceAll(str, ":next", "")
+	str = strings.ReplaceAll(str, ":prev", "")
 	return str
 }

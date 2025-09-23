@@ -16,7 +16,7 @@ func FromHistory(historyFile, key string) string {
 	lines := file.AsciiFileToLines(historyFile)
 	for _, line := range lines {
 		if strings.HasPrefix(line, key+"=") {
-			return strings.Replace(line, key+"=", "", -1)
+			return strings.ReplaceAll(line, key+"=", "")
 		}
 	}
 	return ""

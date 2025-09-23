@@ -105,7 +105,7 @@ func displayBloom(bl *index.Bloom, verbose int) {
 				}
 				ch := bl.Blooms[i].Bytes[j]
 				str := fmt.Sprintf("%08b", ch)
-				fmt.Printf("%s ", strings.Replace(str, "0", ".", -1))
+				fmt.Printf("%s ", strings.ReplaceAll(str, "0", "."))
 			}
 		}
 		fmt.Println()

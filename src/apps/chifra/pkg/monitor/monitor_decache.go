@@ -69,11 +69,11 @@ func (mon *Monitor) RemoveMonitor() string {
 func (mon *Monitor) GetRemoveWarning() string {
 	addr := mon.Address.Hex()
 	count := mon.Count()
-	var warning = strings.Replace("Are sure you want to decache {0}{1} (Yn)?", "{0}", addr, -1)
+	var warning = strings.ReplaceAll("Are sure you want to decache {0}{1} (Yn)?", "{0}", addr)
 	if count > 5000 {
-		return strings.Replace(strings.Replace(warning, "{1}", ". It may take a long time to process {2} records.", -1), "{2}", fmt.Sprintf("%d", count), -1)
+		return strings.ReplaceAll(strings.ReplaceAll(warning, "{1}", ". It may take a long time to process {2} records."), "{2}", fmt.Sprintf("%d", count))
 	}
-	return strings.Replace(warning, "{1}", "", -1)
+	return strings.ReplaceAll(warning, "{1}", "")
 }
 
 func (mon *Monitor) RemoveStatements(l int, showProgress bool) error {

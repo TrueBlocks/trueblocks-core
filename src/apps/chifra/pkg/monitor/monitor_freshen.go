@@ -361,7 +361,7 @@ func (updater *MonitorUpdate) updateMonitors(result *index.AppearanceResult) {
 
 func needsMigration(addr string) error {
 	mon := Monitor{Address: base.HexToAddress(addr)}
-	path := strings.Replace(mon.Path(), ".mon.bin", ".acct.bin", -1)
+	path := strings.ReplaceAll(mon.Path(), ".mon.bin", ".acct.bin")
 	if file.FileExists(path) {
 		path = filepath.Clean(strings.ReplaceAll(path, config.PathToCache(mon.Chain), "./"))
 		return validate.Usage("Old style monitor found at {0}. Please run '{1}'", path, "chifra config --migrate cache")

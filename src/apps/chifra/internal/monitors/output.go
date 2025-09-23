@@ -49,7 +49,7 @@ func ServeMonitors(w http.ResponseWriter, r *http.Request) error {
 			}
 		} else {
 			if opts.Delete || opts.Undelete || opts.Remove {
-				delOptions = strings.Replace(delOptions, " or ", " and ", -1)
+				delOptions = strings.ReplaceAll(delOptions, " or ", " and ")
 				err1 = validate.Usage("The {0} options are not valid when using the GET route.", delOptions)
 			}
 		}

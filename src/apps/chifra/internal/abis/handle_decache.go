@@ -34,7 +34,7 @@ func (opts *AbisOptions) HandleDecache(rCtx *output.RenderCtx) error {
 						size := file.FileSize(path)
 						if size <= int64(len(abi.AbiNotFound)+5) {
 							clean := func(in string) string {
-								return strings.Replace(strings.Replace(in, " ", "", -1), "\"", "", -1)
+								return strings.ReplaceAll(strings.ReplaceAll(in, " ", ""), "\"", "")
 							}
 							contents := clean(file.AsciiFileToString(path))
 							empty := clean(abi.AbiNotFound)

@@ -18,8 +18,8 @@ type Version struct {
 }
 
 func NewVersion(str string) Version {
-	str = strings.Replace(str, "GHC-TrueBlocks//", "", -1)
-	str = strings.Replace(strings.Replace(str, "-", ".", -1), "v", "", -1)
+	str = strings.ReplaceAll(str, "GHC-TrueBlocks//", "")
+	str = strings.ReplaceAll(strings.ReplaceAll(str, "-", "."), "v", "")
 	parts := strings.Split(str, ".")
 
 	var vers Version
@@ -42,7 +42,7 @@ func NewVersion(str string) Version {
 
 // IsValidVersion returns true if the string is a full version string
 func IsValidVersion(test string) bool {
-	test = strings.Replace(test, "trueblocks-core@", "", -1)
+	test = strings.ReplaceAll(test, "trueblocks-core@", "")
 	if !strings.HasPrefix(test, "v") {
 		return false
 	}
@@ -56,7 +56,7 @@ func IsValidVersion(test string) bool {
 	if len(parts[1]) == 0 {
 		return false
 	}
-	parts[0] = strings.Replace(parts[0], "v", "", -1)
+	parts[0] = strings.ReplaceAll(parts[0], "v", "")
 	nums := strings.Split(parts[0], ".")
 	if len(nums) != 3 {
 		return false

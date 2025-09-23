@@ -21,6 +21,7 @@ func (s *Structure) RowActionsFe() string {
 }
 
 func (f *Facet) RowActionsBe(facet string) string {
+	_ = facet
 	ret := []string{}
 	for _, a := range f.Actions {
 		if a != "undelete" && rowActions[a] {
@@ -41,6 +42,7 @@ func (s *Structure) RowActionsBe(facet string) string {
 }
 
 func (f *Facet) HeaderActionsBe(facet string) string {
+	_ = facet
 	ret := []string{}
 	for _, a := range f.Actions {
 		if headerActions[a] {

@@ -152,7 +152,7 @@ func parseCsv(filePath string) ([]TestCase, error) {
 			testCase.CmdOptions = testCase.cleanForCmd()
 			testCase.SdkOptions = testCase.cleanForSdk()
 			testCase.OptionArray = strings.Split(testCase.ApiOptions, "&")
-			testCase.SdkOptionsArray = strings.Split(strings.Replace(testCase.SdkOptions, "%20", " ", -1), "&")
+			testCase.SdkOptionsArray = strings.Split(strings.ReplaceAll(testCase.SdkOptions, "%20", " "), "&")
 			testCase.ProcessRedirFile()
 			// order matters
 

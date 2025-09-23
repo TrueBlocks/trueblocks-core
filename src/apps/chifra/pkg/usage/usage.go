@@ -12,7 +12,7 @@ func Replace(msg string, values ...string) string {
 	ret := msg
 	for index, val := range values {
 		rep := "{" + strconv.FormatInt(int64(index), 10) + "}"
-		ret = strings.Replace(ret, rep, val, -1)
+		ret = strings.ReplaceAll(ret, rep, val)
 	}
 	return ret
 }

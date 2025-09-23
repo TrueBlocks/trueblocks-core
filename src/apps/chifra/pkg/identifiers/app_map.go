@@ -16,7 +16,7 @@ func IdsToApps(chain string, ids []Identifier) ([]types.Appearance, int, error) 
 				for _, bn := range blockIds {
 					s := types.Appearance{
 						BlockNumber: uint32(bn),
-						Reason:      strings.Replace(ids[index].Orig, "-", ".", -1),
+						Reason:      strings.ReplaceAll(ids[index].Orig, "-", "."),
 					}
 					ret = append(ret, s)
 				}
@@ -26,7 +26,7 @@ func IdsToApps(chain string, ids []Identifier) ([]types.Appearance, int, error) 
 				s := types.Appearance{
 					BlockNumber:      uint32(app.BlockNumber),
 					TransactionIndex: uint32(app.TransactionIndex),
-					Reason:           strings.Replace(ids[index].Orig, "-", ".", -1),
+					Reason:           strings.ReplaceAll(ids[index].Orig, "-", "."),
 				}
 				ret = append(ret, s)
 			}

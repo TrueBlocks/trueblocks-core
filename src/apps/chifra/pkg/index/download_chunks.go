@@ -99,7 +99,7 @@ func getDownloadWorker(chain string, workerArgs downloadWorkerArguments, chunkTy
 				iHash := utils.FormattedHash(false, chunk.IndexHash.String())
 				tHash := utils.FormattedHash(false, hash.String())
 				msg := fmt.Sprintf("%s %s %s", chunk.Range, bHash, iHash)
-				msg = strings.Replace(msg, tHash, colors.BrightCyan+tHash+colors.Off, -1)
+				msg = strings.ReplaceAll(msg, tHash, colors.BrightCyan+tHash+colors.Off)
 				progressChannel <- &progress.ProgressMsg{
 					Payload: &chunk,
 					Event:   progress.Start,

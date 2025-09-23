@@ -53,7 +53,7 @@ func VerifyMigrations() {
 
 	// The old $HOME/.quickBlocks folder should not exist...
 	if _, err := os.Stat(filepath.Join(user.HomeDir, ".quickBlocks")); err == nil {
-		msg := strings.Replace(shouldNotExist, "{0}", "{~/.quickBlocks}", -1)
+		msg := strings.ReplaceAll(shouldNotExist, "{0}", "{~/.quickBlocks}")
 		msg = colors.ColoredWith(msg, colors.Yellow)
 		logger.Fatal(msg)
 	}
@@ -61,7 +61,7 @@ func VerifyMigrations() {
 	// Both the config folder...
 	configFolder := config.PathToRootConfig()
 	if _, err := os.Stat(configFolder); err != nil {
-		msg := strings.Replace(doesNotExist, "{0}", "{"+configFolder+"}", -1)
+		msg := strings.ReplaceAll(doesNotExist, "{0}", "{"+configFolder+"}")
 		msg = colors.ColoredWith(msg, colors.Yellow)
 		logger.Fatal(msg)
 	}
@@ -69,7 +69,7 @@ func VerifyMigrations() {
 	// ...and the config file better exist.
 	configFile := filepath.Join(configFolder, "trueBlocks.toml")
 	if _, err := os.Stat(configFile); err != nil {
-		msg := strings.Replace(doesNotExist, "{0}", "{"+configFile+"}", -1)
+		msg := strings.ReplaceAll(doesNotExist, "{0}", "{"+configFile+"}")
 		msg = colors.ColoredWith(msg, colors.Yellow)
 		logger.Fatal(msg)
 	}
@@ -77,7 +77,7 @@ func VerifyMigrations() {
 	// ...and some chains...
 	chainArray := config.GetChains()
 	if len(chainArray) == 0 {
-		msg := strings.Replace(noChains, "{0}", "{"+configFile+"}", -1)
+		msg := strings.ReplaceAll(noChains, "{0}", "{"+configFile+"}")
 		msg = colors.ColoredWith(msg, colors.Yellow)
 		logger.Fatal(msg)
 	}
@@ -85,7 +85,7 @@ func VerifyMigrations() {
 	// We need to find the chain configuration path
 	chainConfigPath := config.MustGetPathToChainConfig("")
 	if _, err := os.Stat(chainConfigPath); err != nil {
-		msg := strings.Replace(doesNotExist, "{0}", "{"+chainConfigPath+"}", -1)
+		msg := strings.ReplaceAll(doesNotExist, "{0}", "{"+chainConfigPath+"}")
 		msg = colors.ColoredWith(msg, colors.Yellow)
 		logger.Fatal(msg)
 	}
@@ -102,7 +102,7 @@ func VerifyMigrations() {
 	for _, item := range items {
 		itemPath := filepath.Join(config.PathToCache(""), item)
 		if _, err := os.Stat(itemPath); err == nil {
-			msg := strings.Replace(shouldNotExist, "{0}", "{"+itemPath+"}", -1)
+			msg := strings.ReplaceAll(shouldNotExist, "{0}", "{"+itemPath+"}")
 			msg = colors.ColoredWith(msg, colors.Yellow)
 			logger.Fatal(msg)
 		}

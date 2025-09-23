@@ -113,8 +113,8 @@ func GetFields(t *reflect.Type, format string, header bool) (fields []string, se
 	}
 
 	if strings.Contains(format, "\t") || strings.Contains(format, ",") {
-		custom := strings.Replace(format, "\t", ",", -1)
-		custom = strings.Replace(custom, "\"", ",", -1)
+		custom := strings.ReplaceAll(format, "\t", ",")
+		custom = strings.ReplaceAll(custom, "\"", ",")
 		fields = strings.Split(custom, ",")
 
 	} else {
@@ -158,7 +158,7 @@ func LowerIfHex(addr string) string {
 }
 
 func StripComments(cmd string) string {
-	cmd = strings.Trim(strings.Replace(cmd, "\t", " ", -1), " \t")
+	cmd = strings.Trim(strings.ReplaceAll(cmd, "\t", " "), " \t")
 	if strings.Contains(cmd, "#") {
 		cmd = cmd[:strings.Index(cmd, "#")]
 	}

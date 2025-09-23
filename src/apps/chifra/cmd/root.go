@@ -87,7 +87,7 @@ func coloredNotes(notes string) string {
 	// 	return notes
 	// }
 	// if os.Getenv("NO_COLOR") == "true" {
-	// 	return strings.Replace(notes, "++", "", -1)
+	// 	return strings.ReplaceAll(notes, "++", "")
 	// }
 	// cnt := 0
 	// for {

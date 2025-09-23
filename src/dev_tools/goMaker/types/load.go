@@ -58,7 +58,7 @@ func LoadCodebase() (CodeBase, error) {
 func readStructure(st *Structure, data *any) (bool, error) {
 	_ = data
 	st.DocDescr = strings.ReplaceAll(st.DocDescr, "&#44;", ",")
-	st.ProducedBy = strings.Replace(st.ProducedBy, " ", "", -1)
+	st.ProducedBy = strings.ReplaceAll(st.ProducedBy, " ", "")
 	st.Producers = strings.Split(st.ProducedBy, ",")
 	st.ChildTabs = strings.Split(st.Children, ",")
 	st.Class = strings.Trim(st.Class, " ")

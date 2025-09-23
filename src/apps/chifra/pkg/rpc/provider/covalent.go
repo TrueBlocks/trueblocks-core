@@ -245,8 +245,8 @@ func (p *CovalentProvider) url(address base.Address, pageNumber int) (url string
 	}
 
 	url = p.baseUrl
-	url = strings.Replace(url, "[{CHAIN}]", covalentChain, -1)
-	url = strings.Replace(url, "[{ADDRESS}]", address.Hex(), -1)
-	url = strings.Replace(url, "[{PAGE}]", fmt.Sprint(pageNumber), -1)
+	url = strings.ReplaceAll(url, "[{CHAIN}]", covalentChain)
+	url = strings.ReplaceAll(url, "[{ADDRESS}]", address.Hex())
+	url = strings.ReplaceAll(url, "[{PAGE}]", fmt.Sprint(pageNumber))
 	return
 }

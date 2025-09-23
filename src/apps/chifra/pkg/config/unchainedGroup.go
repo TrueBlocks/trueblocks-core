@@ -42,7 +42,7 @@ var SpecTags = map[string]string{
 
 func KnownVersionTag(tag string) bool {
 	for _, v := range VersionTags {
-		vShort := strings.Replace(v, "trueblocks-core@", "", -1)
+		vShort := strings.ReplaceAll(v, "trueblocks-core@", "")
 		if v == tag || vShort == tag {
 			return true
 		}

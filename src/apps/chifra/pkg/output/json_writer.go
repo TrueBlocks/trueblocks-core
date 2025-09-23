@@ -188,7 +188,9 @@ func (w *JsonWriter) WriteItem(key string, value string) (n int, err error) {
 	if key == "" {
 		return w.Write([]byte(value))
 	}
-	return w.Write([]byte(fmt.Sprintf(`"%s": %s`, key, value)))
+
+	//lint:ignore QF1012 suppressing linter warning for quoted key
+	return w.Write(fmt.Appendf(nil, `"%s": %s`, key, value))
 }
 
 // WriteError saves error to be written when the writer is `Close`d

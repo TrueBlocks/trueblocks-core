@@ -65,7 +65,7 @@ func Test_GetPathTo(t *testing.T) {
 			testPath = filepath.Join(PathToIndex(test.chain), test.part)
 		}
 
-		testPath = strings.Replace(testPath, user.HomeDir, "$HOME", -1)
+		testPath = strings.ReplaceAll(testPath, user.HomeDir, "$HOME")
 		if test.expected == "" {
 			fmt.Println("")
 		} else {

@@ -255,7 +255,7 @@ var testApps = []types.AppRecord{
 }
 
 func testClean(s string) string {
-	return strings.Replace(strings.Replace(s, "\n", "", -1), " ", "", -1)
+	return strings.ReplaceAll(strings.ReplaceAll(s, "\n", ""), " ", "")
 }
 
 // TODO: ...and this - making this the String and the above ToTxt?

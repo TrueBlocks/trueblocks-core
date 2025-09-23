@@ -146,15 +146,15 @@ func toTemplate(s *types.Status, w io.Writer, testMode, diagnose, logTimerOn boo
 	}
 
 	table := templateStr
-	table = strings.Replace(table, "[CLIENT]", getClientTemplate(), -1)
-	table = strings.Replace(table, "[VERSION]", getVersionTemplate(), -1)
-	table = strings.Replace(table, "[IDS]", getIdTemplate(), -1)
-	table = strings.Replace(table, "[PROGRESS]", getProgress(s, testMode, diagnose), -1)
-	table = strings.Replace(table, "INFO ", timeDatePart+colors.Green, -1)
-	table = strings.Replace(table, "[RED]", colors.Red, -1)
-	table = strings.Replace(table, "[GREEN]", colors.Green, -1)
-	table = strings.Replace(table, "[OFF]", colors.Off, -1)
-	table = strings.Replace(table, ":", ":"+colors.Off, -1)
+	table = strings.ReplaceAll(table, "[CLIENT]", getClientTemplate())
+	table = strings.ReplaceAll(table, "[VERSION]", getVersionTemplate())
+	table = strings.ReplaceAll(table, "[IDS]", getIdTemplate())
+	table = strings.ReplaceAll(table, "[PROGRESS]", getProgress(s, testMode, diagnose))
+	table = strings.ReplaceAll(table, "INFO ", timeDatePart+colors.Green)
+	table = strings.ReplaceAll(table, "[RED]", colors.Red)
+	table = strings.ReplaceAll(table, "[GREEN]", colors.Green)
+	table = strings.ReplaceAll(table, "[OFF]", colors.Off)
+	table = strings.ReplaceAll(table, ":", ":"+colors.Off)
 
 	t, err := template.New("status").Parse(table)
 	if err != nil {
@@ -205,8 +205,8 @@ INFO [OFF]  Stage      [GREEN]{{.Meta.Staging}}[OFF] ([GREEN]{{.Diffs.Staging}}[
 INFO [OFF]  Indexing   [GREEN]{{.Meta.Unripe}}[OFF] ([GREEN]{{.Diffs.Unripe}}[OFF] behind head)
 INFO [OFF]  Timestamps [GREEN]{nTs}[OFF] ([GREEN]{nTsDiff}[OFF] behind head)
 `
-		ret = strings.Replace(ret, "{nTs}", fmt.Sprint(nTs), -1)
-		ret = strings.Replace(ret, "{nTsDiff}", fmt.Sprint(nTsDiff), -1)
+		ret = strings.ReplaceAll(ret, "{nTs}", fmt.Sprint(nTs))
+		ret = strings.ReplaceAll(ret, "{nTsDiff}", fmt.Sprint(nTsDiff))
 		return ret
 	}
 

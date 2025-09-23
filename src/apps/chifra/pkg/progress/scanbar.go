@@ -51,7 +51,7 @@ func (v *ScanBar) Report(writer io.Writer, action, msg string) {
 	x := fmt.Sprintf("%s [%s%s] %s", action, strings.Repeat(".", done), strings.Repeat(" ", remains), msg)
 	x = x[0:min(len(x), w)]
 	e := w - len(x)
-	var endPad string = strings.Repeat(" ", e)
+	var endPad = strings.Repeat(" ", e)
 	str := fmt.Sprintf("%s%s\r", x, endPad)
 	_, _ = writer.Write([]byte(str))
 }

@@ -53,7 +53,7 @@ package file
 // 	// where to write it, write it there
 // 	header.Name = filename
 // 	if len(relativeTo) > 0 {
-// 		header.Name = strings.Replace(filename, relativeTo, "", -1)
+// 		header.Name = strings.ReplaceAll(filename, relativeTo, "")
 // 	}
 
 // 	// Write file header to the tar archive

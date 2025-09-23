@@ -99,7 +99,7 @@ func readCmdOption(op *Option, data *any) (bool, error) {
 	op.Description = strings.ReplaceAll(op.Description, "&#39;", "'")
 	op.Description = strings.ReplaceAll(op.Description, "`", "")
 
-	op.DefVal = strings.Replace(op.DefVal, "NOPOS", "base.NOPOS", -1)
+	op.DefVal = strings.ReplaceAll(op.DefVal, "NOPOS", "base.NOPOS")
 
 	return true, nil
 }
@@ -129,7 +129,7 @@ func (op *Option) toGoType() string {
 	if len(dt) >= 2 {
 		isList := strings.HasPrefix(dt, "list")
 		isEnum := strings.Contains(dt, "enum[")
-		dt = strings.Replace(dt, "list", "", -1)
+		dt = strings.ReplaceAll(dt, "list", "")
 		if isEnum {
 			dt = "<string>"
 		}
@@ -173,7 +173,7 @@ func (op *Option) toGoOptionsType() string {
 		return "[]string"
 	}
 	ret := op.toGoSdkType()
-	ret = strings.Replace(ret, "base.Address", "string", -1)
+	ret = strings.ReplaceAll(ret, "base.Address", "string")
 	return ret
 }
 
@@ -189,7 +189,7 @@ func (op *Option) toGoSdkType() string {
 	}
 
 	isList := strings.HasPrefix(dt, "list")
-	dt = strings.Replace(dt, "list", "", -1)
+	dt = strings.ReplaceAll(dt, "list", "")
 	m := map[string]string{
 		"<addr>":     "string",
 		"<address>":  "base.Address",
@@ -222,8 +222,8 @@ func (op *Option) PyHotKey() string {
 
 func (op *Option) CmdDefault() string {
 	ret := op.Default()
-	ret = strings.Replace(ret, "base.NOPOSN", "0", -1)
-	ret = strings.Replace(ret, "base.NOPOS", "0", -1)
+	ret = strings.ReplaceAll(ret, "base.NOPOSN", "0")
+	ret = strings.ReplaceAll(ret, "base.NOPOS", "0")
 	return ret
 }
 
@@ -684,7 +684,7 @@ func (op *Option) RequestOpt() string {
 			ret = op.executeTemplate(tmplName, tmpl)
 		}
 	}
-	return strings.Replace(ret, "Settings.", "", -1)
+	return strings.ReplaceAll(ret, "Settings.", "")
 }
 
 func (op *Option) executeTemplate(name, tmplCode string) string {

@@ -87,9 +87,9 @@ func DebugCurl(debuggable Debuggable) {
 	}
 
 	var curlCmd = debuggable.Body()
-	curlCmd = strings.Replace(curlCmd, "[{url}]", url, -1)
-	curlCmd = strings.Replace(curlCmd, "[{headers}]", headers, -1)
-	curlCmd = strings.Replace(curlCmd, "[{payload}]", payload, -1)
+	curlCmd = strings.ReplaceAll(curlCmd, "[{url}]", url)
+	curlCmd = strings.ReplaceAll(curlCmd, "[{headers}]", headers)
+	curlCmd = strings.ReplaceAll(curlCmd, "[{payload}]", payload)
 	if devDebugMethod == "file" {
 		_ = file.AppendToAsciiFile("./curl.log", curlCmd+"\n")
 	} else {

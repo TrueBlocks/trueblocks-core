@@ -385,7 +385,7 @@ func GetCacheItem(chain string, testMode bool, cT CacheType, cacheInfo *CacheFil
 		}
 		if testMode {
 			display = strings.Replace(cacheInfo.Path, config.PathToCache(chain)+"/", "$cachePath/", 1)
-			display = strings.Replace(display, address, "--address--", -1)
+			display = strings.ReplaceAll(display, address, "--address--")
 			address = "--address--"
 		}
 		ret := map[string]any{
@@ -415,8 +415,8 @@ func GetCacheItem(chain string, testMode bool, cT CacheType, cacheInfo *CacheFil
 func WalkCacheName(ct CacheType) string {
 	// TODO: Names of caches, names of folders, names of commands are all different. This is a mess.
 	ret := CacheTypeToFolder[ct] + "Cache"
-	ret = strings.Replace(ret, "blooms", "bloom", -1)
-	ret = strings.Replace(ret, "finalized", "index", -1)
+	ret = strings.ReplaceAll(ret, "blooms", "bloom")
+	ret = strings.ReplaceAll(ret, "finalized", "index")
 	return ret
 }
 

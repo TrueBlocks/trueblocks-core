@@ -59,8 +59,8 @@ func (dt *DateTime) After(test *DateTime) bool {
 
 func (dt *DateTime) String() string {
 	ret := dt.Time.Format("2006-01-02T15:04:05")
-	ret = strings.Replace(ret, "T", " ", -1)
-	ret = strings.Replace(ret, "+0000", "", -1)
+	ret = strings.ReplaceAll(ret, "T", " ")
+	ret = strings.ReplaceAll(ret, "+0000", "")
 	return ret + " UTC"
 }
 
@@ -69,9 +69,9 @@ func (dt *DateTime) MarshalCSV() (string, error) {
 }
 
 func (dt *DateTime) UnmarshalCSV(csv string) (err error) {
-	csv = strings.Replace(csv, " UTC", "", -1)
-	csv = strings.Replace(csv, " ", "T", -1)
-	fmt := strings.Replace(time.RFC3339, "Z07:00", "", -1)
+	csv = strings.ReplaceAll(csv, " UTC", "")
+	csv = strings.ReplaceAll(csv, " ", "T")
+	fmt := strings.ReplaceAll(time.RFC3339, "Z07:00", "")
 	dt.Time, err = time.Parse(fmt, csv)
 	return err
 }

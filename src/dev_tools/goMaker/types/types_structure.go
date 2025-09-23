@@ -413,7 +413,7 @@ func (s *Structure) RendererTypes() string {
 			rendererSet[f.Renderer] = struct{}{}
 		}
 	}
-	var ret []string
+	ret := make([]string, 0, len(rendererSet))
 	for renderer := range rendererSet {
 		ret = append(ret, renderer)
 	}

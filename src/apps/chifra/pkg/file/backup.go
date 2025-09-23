@@ -39,7 +39,7 @@ func MakeBackup(tmpPath, origFn string) (BackupFile, error) {
 	}
 
 	_, name := filepath.Split(origFn)
-	pattern := strings.Replace(name, ".", ".*.", -1)
+	pattern := strings.ReplaceAll(name, ".", ".*.")
 	tmpFile, err := os.CreateTemp(tmpPath, pattern)
 	if err != nil {
 		return BackupFile{}, err

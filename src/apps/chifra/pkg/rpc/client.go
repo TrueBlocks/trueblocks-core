@@ -83,9 +83,9 @@ func (conn *Connection) getClient() (*ethclient.Client, error) {
   value in the file [{FILE}]. Quitting...
 `
 		msg := noProvider
-		msg = strings.Replace(msg, "[{PROVIDER}]", provider, -1)
-		msg = strings.Replace(msg, "[{FILE}]", config.PathToConfigFile(), -1)
-		msg = strings.Replace(msg, "https://", "<empty>", -1)
+		msg = strings.ReplaceAll(msg, "[{PROVIDER}]", provider)
+		msg = strings.ReplaceAll(msg, "[{FILE}]", config.PathToConfigFile())
+		msg = strings.ReplaceAll(msg, "https://", "<empty>")
 		return nil, fmt.Errorf("%s", msg)
 	}
 

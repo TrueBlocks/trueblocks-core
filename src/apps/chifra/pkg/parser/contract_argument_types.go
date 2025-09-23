@@ -118,7 +118,8 @@ func (n *ArgNumber) Convert(abiType *abi.Type) (any, error) {
 		return n.Big, nil
 	}
 
-	if abiType.T == abi.UintTy {
+	switch abiType.T {
+	case abi.UintTy:
 		switch abiType.Size {
 		case 8:
 			return uint8(*n.Uint), nil
@@ -129,7 +130,7 @@ func (n *ArgNumber) Convert(abiType *abi.Type) (any, error) {
 		case 64:
 			return uint64(*n.Uint), nil
 		}
-	} else if abiType.T == abi.IntTy {
+	case abi.IntTy:
 		switch abiType.Size {
 		case 8:
 			return int8(*n.Int), nil

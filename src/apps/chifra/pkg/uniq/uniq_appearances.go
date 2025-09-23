@@ -73,11 +73,13 @@ func UniqFromTraces(chain string, traces []types.Trace, addrMap AddressBooleanMa
 		addAddressToMaps(trace.Action.From, bn, txid, addrMap)
 		addAddressToMaps(trace.Action.To, bn, txid, addrMap)
 
-		if trace.TraceType == "call" {
+		switch trace.TraceType {
+		case "call":
 			// If it's a call, get the to and from, we're done
 
-		} else if trace.TraceType == "reward" {
-			if trace.Action.RewardType == "block" {
+		case "reward":
+			switch trace.Action.RewardType {
+			case "block":
 				author := trace.Action.Author
 				fakeId := types.BlockReward
 				if author.IsPrecompile() {
@@ -86,7 +88,7 @@ func UniqFromTraces(chain string, traces []types.Trace, addrMap AddressBooleanMa
 				}
 				addAddressToMaps(author, bn, fakeId, addrMap)
 
-			} else if trace.Action.RewardType == "uncle" {
+			case "uncle":
 				author := trace.Action.Author
 				fakeId := types.UncleReward
 				if author.IsPrecompile() {
@@ -95,21 +97,21 @@ func UniqFromTraces(chain string, traces []types.Trace, addrMap AddressBooleanMa
 				}
 				addAddressToMaps(author, bn, fakeId, addrMap)
 
-			} else if trace.Action.RewardType == "external" {
+			case "external":
 				// This only happens in xDai as far as we know...
 				addAddressToMaps(trace.Action.Author, bn, types.ExternalReward, addrMap)
 
-			} else {
+			default:
 				logger.Warn(fmt.Sprintf("Unknown reward type %s for trace: %d.%d.%d", trace.Action.RewardType, trace.BlockNumber, trace.TransactionIndex, trace.TraceIndex))
 				return err
 			}
 
-		} else if trace.TraceType == "suicide" {
+		case "suicide":
 			// add the contract that died, and where it sent it's money
 			addAddressToMaps(trace.Action.RefundAddress, bn, txid, addrMap)
 			addAddressToMaps(trace.Action.Address, bn, txid, addrMap)
 
-		} else if trace.TraceType == "create" {
+		case "create":
 			if trace.Result != nil {
 				// may be both...record the self-destruct instead of the creation since we can only report on one
 				addAddressToMaps(trace.Result.Address, bn, txid, addrMap)
@@ -140,7 +142,7 @@ func UniqFromTraces(chain string, traces []types.Trace, addrMap AddressBooleanMa
 				}
 			}
 
-		} else {
+		default:
 			if len(trace.TraceType) > 0 && trace.BlockNumber != 0 {
 				logger.Warn(fmt.Sprintf("Unknown trace type %s for trace: %d.%d.%d", trace.TraceType, trace.BlockNumber, trace.TransactionIndex, trace.TraceIndex))
 			}

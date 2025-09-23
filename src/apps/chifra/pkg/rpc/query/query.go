@@ -206,6 +206,6 @@ func (c rpcDebug) Method() string {
 
 func (c rpcDebug) Payload() string {
 	bytes, _ := json.MarshalIndent(c.payload, "", "")
-	payloadStr := strings.Replace(string(bytes), "\n", " ", -1)
+	payloadStr := strings.ReplaceAll(string(bytes), "\n", " ")
 	return payloadStr
 }
