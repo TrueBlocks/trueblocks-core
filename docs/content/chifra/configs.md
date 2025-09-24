@@ -71,7 +71,7 @@ the table below for the name of each tool's config file.
 
 ## Multichain
 
-If you're running against mutliple chains, you may place any of these files in the root of the
+If you're running against multiple chains, you may place any of these files in the root of the
 chain's configuration folder, and the values found there will replace any values found at the
 top level. In this way, you may configure all chains for certain values, but customize your
 configuration per chain.
