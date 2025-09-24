@@ -78,7 +78,7 @@ Where:
 
 ### Group 4
 
-**As of version 2.6.0, the `--raw` option has been removed in  its entirity.
+**As of version 2.6.0, the `--raw` option has been removed in its entirety.
 Prior to that version, the following tools had this option which would pass
 the data received directly from the node without modification.**
 
