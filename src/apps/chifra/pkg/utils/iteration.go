@@ -19,13 +19,6 @@ func IterateOverMap[Key comparable, Value any](ctx context.Context, errorChan ch
 	var wg sync.WaitGroup
 	defer close(errorChan)
 
-	max := func(x, y int) int {
-		if x > y {
-			return x
-		}
-		return y
-	}
-
 	nRoutines := max(1, runtime.GOMAXPROCS(0))
 	itemsPerPool := max(1, len(target)/nRoutines)
 

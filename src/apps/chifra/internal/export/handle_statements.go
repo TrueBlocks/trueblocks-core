@@ -82,7 +82,7 @@ func (opts *ExportOptions) HandleStatements(rCtx *output.RenderCtx, monitorArray
 							if tx, err := opts.Conn.GetTransactionByAppearance(&app, false); err != nil {
 								return err
 							} else {
-								passes, _ := filter.ApplyTxFilters(tx)
+								passes := filter.PassesTxFilter(tx)
 								if passes {
 									*value = *tx
 								}
@@ -155,7 +155,7 @@ func (opts *ExportOptions) HandleStatements(rCtx *output.RenderCtx, monitorArray
 
 						for _, item := range items {
 							var passes bool
-							passes, finished = filter.ApplyCountFilter()
+							passes, finished = filter.PassesCountFilter()
 							if passes {
 								if opts.Globals.Ether {
 									item.Symbol = "ETH"

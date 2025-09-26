@@ -120,7 +120,7 @@ func (opts *ExportOptions) HandleWithdrawals(rCtx *output.RenderCtx, monitorArra
 
 						for _, item := range items {
 							var passes bool
-							passes, finished = filter.ApplyCountFilter()
+							passes, finished = filter.PassesCountFilter()
 							if passes {
 								modelChan <- item
 							}

@@ -114,7 +114,7 @@ func (opts *ExportOptions) HandleNeighbors(rCtx *output.RenderCtx, monitorArray 
 
 						for _, item := range items {
 							var passes bool
-							passes, finished = filter.ApplyCountFilter()
+							passes, finished = filter.PassesCountFilter()
 							if passes {
 								modelChan <- &item
 							}

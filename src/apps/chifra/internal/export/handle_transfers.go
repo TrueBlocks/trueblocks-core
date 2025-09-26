@@ -85,7 +85,7 @@ func (opts *ExportOptions) HandleTransfers(rCtx *output.RenderCtx, monitorArray 
 							if tx, err := opts.Conn.GetTransactionByAppearance(&app, false); err != nil {
 								return err
 							} else {
-								passes, _ := filter.ApplyTxFilters(tx)
+								passes := filter.PassesTxFilter(tx)
 								if passes {
 									*value = *tx
 								}

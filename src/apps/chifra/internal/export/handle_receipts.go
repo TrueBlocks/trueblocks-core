@@ -77,7 +77,7 @@ func (opts *ExportOptions) HandleReceipts(rCtx *output.RenderCtx, monitorArray [
 							if tx, err := opts.Conn.GetTransactionByAppearance(&app, false); err != nil {
 								return err
 							} else {
-								passes, _ := filter.ApplyTxFilters(tx)
+								passes := filter.PassesTxFilter(tx)
 								if passes {
 									*value = *tx
 								}
@@ -105,7 +105,7 @@ func (opts *ExportOptions) HandleReceipts(rCtx *output.RenderCtx, monitorArray [
 							}
 							filteredLogs := make([]types.Log, 0, len(tx.Receipt.Logs))
 							for _, log := range tx.Receipt.Logs {
-								if filter.ApplyLogFilter(&log, addrArray) && logFilter.PassesFilter(&log) {
+								if filter.PassesLogFilter(&log, addrArray) && logFilter.PassesFilter(&log) {
 									if opts.Articulate {
 										if err := abiCache.ArticulateLog(&log); err != nil {
 											errorChan <- fmt.Errorf("error articulating log: %v", err)
@@ -130,7 +130,7 @@ func (opts *ExportOptions) HandleReceipts(rCtx *output.RenderCtx, monitorArray [
 
 						for _, item := range items {
 							var passes bool
-							passes, finished = filter.ApplyCountFilter()
+							passes, finished = filter.PassesCountFilter()
 							if passes {
 								modelChan <- item
 							}

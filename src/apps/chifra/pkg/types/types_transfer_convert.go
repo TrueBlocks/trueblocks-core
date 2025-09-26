@@ -161,7 +161,7 @@ func (s *Receipt) ToTranfers(holder base.Address, assetFilters []base.Address, a
 		if len(log.Topics) > 0 {
 			isTransfer := log.Topics[0] == topics.TransferTopic
 			isOfIterest := IsAssetOfInterest(log.Address, assetFilters)
-			passesFilter := appFilter.ApplyLogFilter(&log, []base.Address{holder})
+			passesFilter := appFilter.PassesLogFilter(&log, []base.Address{holder})
 			if isTransfer && isOfIterest && passesFilter {
 				if xfr, err := log.toTransfer(holder); err != nil {
 					return nil, err

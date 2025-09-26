@@ -70,7 +70,7 @@ func (opts *ExportOptions) HandleTraces(rCtx *output.RenderCtx, monitorArray []m
 							if tx, err := opts.Conn.GetTransactionByAppearance(&app, true); err != nil {
 								return err
 							} else {
-								passes, _ := filter.ApplyTxFilters(tx)
+								passes := filter.PassesTxFilter(tx)
 								if passes {
 									*value = *tx
 								}
@@ -124,7 +124,7 @@ func (opts *ExportOptions) HandleTraces(rCtx *output.RenderCtx, monitorArray []m
 								continue
 							}
 							var passes bool
-							passes, finished = filter.ApplyCountFilter()
+							passes, finished = filter.PassesCountFilter()
 							if passes {
 								modelChan <- item
 							}

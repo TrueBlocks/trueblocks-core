@@ -122,7 +122,7 @@ func (opts *ExportOptions) HandleBalances(rCtx *output.RenderCtx, monitorArray [
 									currentBn = item.BlockNumber
 									if idx == 0 || item.PriorBalance.Cmp(&item.Balance) != 0 || opts.Globals.Verbose {
 										var passes bool
-										passes, finished = filter.ApplyCountFilter()
+										passes, finished = filter.PassesCountFilter()
 										if passes {
 											modelChan <- item
 										}
