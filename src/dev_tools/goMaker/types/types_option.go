@@ -834,7 +834,11 @@ func (op *Option) SdkEndpoint() string {
 		copy.GoName = ""
 	}
 
-	return copy.executeTemplate(tmplName, tmpl)
+	ret := copy.executeTemplate(tmplName, tmpl)
+	if FirstUpper(op.Route) == "When" && op.GoName == "Check" {
+		ret = strings.Replace(ret, "in := opts.toInternal()", "in := opts.toInternal()\nin.Timestamps = true", 1)
+	}
+	return ret
 }
 
 func (op *Option) SdkCoreType() string {

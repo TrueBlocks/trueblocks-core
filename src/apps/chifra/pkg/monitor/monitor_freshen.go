@@ -371,14 +371,10 @@ func needsMigration(addr string) error {
 
 // TODO: Somewhat iffy code here
 const (
-	asciiAddressSize    = 42
-	asciiBlockNumSize   = 9
-	asciiTxIdSize       = 5
-	asciiAppearanceSize = 59
-	startOfBlockNum     = 42 + 1
-	endOfBlockNum       = 42 + 1 + 9
-	startOfTxId         = 42 + 1 + 9 + 1
-	endOfTxId           = 42 + 1 + 9 + 1 + 5
+	startOfBlockNum = 42 + 1
+	endOfBlockNum   = 42 + 1 + 9
+	startOfTxId     = 42 + 1 + 9 + 1
+	endOfTxId       = 42 + 1 + 9 + 1 + 5
 )
 
 func getAppearances(addrStr string, lines []string, lastVisited uint32, found int) *[]types.AppRecord {

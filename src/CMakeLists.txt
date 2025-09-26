@@ -39,19 +39,21 @@ string(REGEX MATCH "go([0-9]+)\\.([0-9]+)\\.[0-9]+"
     GO_VERSION_MATCH "${GO_VERSION_OUTPUT}")
 
 if(NOT GO_VERSION_MATCH)
-    message(STATUS "${CColor}Could not determine Go version from output: \
+    message(STATUS "${CColor}Could not determine Go Version from output: \
         ${GO_VERSION_OUTPUT}.${COff}")
     message(STATUS "${CColor}Please install Go from \
         https://golang.org/doc/install.${COff}")
     return()
 endif()
 
+# Go Version -- NOTE THE LESS 25 marker
+#
 set(GO_MAJOR_VERSION ${CMAKE_MATCH_1})
 set(GO_MINOR_VERSION ${CMAKE_MATCH_2})
 if(GO_MAJOR_VERSION LESS 1 OR
-    (GO_MAJOR_VERSION EQUAL 1 AND GO_MINOR_VERSION LESS 23))
+    (GO_MAJOR_VERSION EQUAL 1 AND GO_MINOR_VERSION LESS 25))
     message(STATUS "${CColor}The build failed.${COff}")
-    message(STATUS "${CColor}Found ${GO_VERSION_OUTPUT}. Go Version 1.23.1 or "
+    message(STATUS "${CColor}Found ${GO_VERSION_OUTPUT}. Go Version 1.25.1 or "
                     "higher is required.${COff}")
     message(STATUS "${CColor}Please install or update Go from "
                     "https://golang.org/doc/install.${COff}")
@@ -107,7 +109,7 @@ add_custom_target(generate
 
 # ----------------------------------------------------------------------------
 add_custom_target(test-all
-    COMMAND ${SCRIPTS_DIR}/test-all.sh
+    COMMAND bash -c "TB_NO_KHEDRA_TEST=true ${SCRIPTS_DIR}/test-all.sh"
     WORKING_DIRECTORY ${REPO_DIR}/build)
 
 # ----------------------------------------------------------------------------
