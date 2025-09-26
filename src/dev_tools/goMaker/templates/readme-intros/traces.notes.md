@@ -2,7 +2,7 @@
 
 The `--traces` option requires your node to enable the `trace_block` (and related) RPC endpoints. Many remote RPC providers do not enable these endpoints due to the additional load they can place on the node. If you are running your own node, you can enable these endpoints by adding `trace` to your node's startup.
 
-The test for tracing assumes your node provides tracing starting at block 1. If your is partially synced, you may export the following enviroment variable before running the command to instruct `chifra` where to test.
+The test for tracing assumes your node provides tracing starting at block 1. If your is partially synced, you may export the following environment variable before running the command to instruct `chifra` where to test.
 
 ```[bash]
 export TB_<chain>_FIRSTTRACE=<bn>

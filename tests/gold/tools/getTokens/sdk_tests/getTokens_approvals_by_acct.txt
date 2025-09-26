@@ -1,0 +1,14 @@
+tokens?addrs=0x054993ab0f2b1acc0fdc65405ee203b4271bebe6%20trueblocks.eth&approvals&byAcct
+Args: [addrs=0x054993ab0f2b1acc0fdc65405ee203b4271bebe6 trueblocks.eth approvals byAcct]
+Opts: {"addrs":["0x054993ab0f2b1acc0fdc65405ee203b4271bebe6 trueblocks.eth"],"approvals":true,"byAcct":true}
+Addrs:  [0x054993ab0f2b1acc0fdc65405ee203b4271bebe6 0xf503017d7baf7fbc0fff7492b751025c6a78179b]
+Blocks:  [17000000]
+Approvals:  true
+ByAcct:  true
+Caps:  cache,decache
+Format:  json
+{
+  "errors": [
+    "The --by_acct option is not allowed with --approvals."
+  ]
+}

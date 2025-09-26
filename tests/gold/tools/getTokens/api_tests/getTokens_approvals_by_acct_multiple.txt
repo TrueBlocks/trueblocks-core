@@ -1,0 +1,6 @@
+tokens?addrs=0x054993ab0f2b1acc0fdc65405ee203b4271bebe6%200xa0b86a33e6776b13c81a70e84dfe9ea82daa0e6c%20trueblocks.eth&approvals&byAcct
+{
+  "errors": [
+    "The --by_acct option is not allowed with --approvals."
+  ]
+}

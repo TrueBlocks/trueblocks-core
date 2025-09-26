@@ -254,6 +254,31 @@ Transfers consist of the following fields:
 | transaction         | the transaction that triggered the transfer (calculated)                               | [Transaction](/data-model/chaindata/#transaction) |
 | log                 | if a token transfer, the log that triggered the transfer (calculated)                  | [Log](/data-model/chaindata/#log)                 |
 
+## Approval
+
+An Approval represents an ERC-20 token spending permission granted by a token owner to a spender address. This data structure captures the essential elements of the `approve()` function call, including the token contract address, the owner granting permission, the spender receiving permission, and the approved amount.
+
+Approvals are fundamental to ERC-20 token interactions, enabling decentralized exchanges, automated market makers, and other DeFi protocols to spend tokens on behalf of users. By tracking these permissions, users can monitor and analyze token spending authorizations across their addresses.
+
+The following commands produce and manage Approvals:
+
+- [chifra tokens](/chifra/chainstate/#chifra-tokens)
+
+Approvals consist of the following fields:
+
+| Field       | Description                                          | Type      |
+| ----------- | ---------------------------------------------------- | --------- |
+| blockNumber | the block number at which this call was made         | blknum    |
+| timestamp   | the timestamp of the block for this call             | timestamp |
+| date        | the timestamp as a date (calculated)                 | datetime  |
+| address     | the address of the owner of the token (the approver) | address   |
+| addressName | the name of the holder, if available                 | string    |
+| spender     | the address being granted approval to spend tokens   | address   |
+| spenderName | the name of the spender, if available                | string    |
+| amount      | the amount of tokens approved for spending           | wei       |
+| token       | the address of the ERC-20 token being approved       | address   |
+| tokenName   | the name of the token, if available                  | string    |
+
 ## AppearanceTable
 
 The `appearanceTable` data model carries an address and all appearances for that address found in any given chunk.
@@ -289,5 +314,6 @@ This documentation mentions the following basic data types.
 | uint32    | a 32-bit unsigned integer              |                |
 | uint64    | a 64-bit unsigned integer              |                |
 | value     | an alias for a 64-bit unsigned integer |                |
+| wei       | an unsigned big number                 | as a string    |
 
 *Copyright (c) 2024, TrueBlocks, LLC. All rights reserved. Generated with goMaker.*

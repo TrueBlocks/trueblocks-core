@@ -302,6 +302,14 @@ paths:
           explode: true
           schema:
             type: boolean
+        - name: approvals
+          description: export all token approval transactions for the given address
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
         - name: traces
           description: export traces instead of transactional data
           required: false
@@ -2304,7 +2312,7 @@ paths:
       operationId: chainstate-tokens
       parameters:
         - name: addrs
-          description: two or more addresses (0x...), the first is an ERC20 token, balances for the rest are reported
+          description: two or more addresses (one for --approvals), the first is an ERC20 token, balances for the rest are reported
           required: true
           style: form
           in: query
@@ -2325,6 +2333,14 @@ paths:
             items:
               type: string
               format: blknum
+        - name: approvals
+          description: returns all open approvals for the given address(es)
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
         - name: parts
           description: which parts of the token information to retrieve
           required: false
@@ -2415,10 +2431,12 @@ paths:
               schema:
                 properties:
                   data:
-                    description: Produces <a href="/data-model/chainstate/#token">Token</a> data. Corresponds to the <a href="/chifra/chainstate/#chifra-tokens">chifra tokens</a> command line.
+                    description: Produces <a href="/data-model/accounts/#approval">Approval</a> or <a href="/data-model/chainstate/#token">Token</a> data. Corresponds to the <a href="/chifra/chainstate/#chifra-tokens">chifra tokens</a> command line.
                     type: array
                     items:
-                      $ref: "#/components/schemas/token"
+                      oneOf:
+                        - $ref: "#/components/schemas/approval"
+                        - $ref: "#/components/schemas/token"
                 examples:
                   [
                     {
@@ -3564,6 +3582,50 @@ components:
           items:
             $ref: "#/components/schemas/log"
           description: "if a token transfer, the log that triggered the transfer (calculated)"
+    approval:
+      description: "an ERC-20 token approval granting spending permission from owner to spender"
+      type: object
+      properties:
+        blockNumber:
+          type: number
+          format: blknum
+          description: "the block number at which this call was made"
+        timestamp:
+          type: number
+          format: timestamp
+          description: "the timestamp of the block for this call"
+        date:
+          type: string
+          format: datetime
+          description: "the timestamp as a date (calculated)"
+        address:
+          type: string
+          format: address
+          description: "the address of the owner of the token (the approver)"
+        addressName:
+          type: string
+          format: string
+          description: "the name of the holder, if available"
+        spender:
+          type: string
+          format: address
+          description: "the address being granted approval to spend tokens"
+        spenderName:
+          type: string
+          format: string
+          description: "the name of the spender, if available"
+        amount:
+          type: string
+          format: wei
+          description: "the amount of tokens approved for spending"
+        token:
+          type: string
+          format: address
+          description: "the address of the ERC-20 token being approved"
+        tokenName:
+          type: string
+          format: string
+          description: "the name of the token, if available"
     appearanceTable:
       description: "an appearance table for an address"
       type: object

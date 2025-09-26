@@ -1,0 +1,11 @@
+name        , type     , strDefault, attributes, docOrder, description
+blockNumber , blknum   ,           ,           ,        1, the block number at which this call was made
+timestamp   , timestamp,           ,           ,        2, the timestamp of the block for this call
+date        , datetime ,           , calc      ,        3, the timestamp as a date
+address     , address  ,           ,           ,        4, the address of the owner of the token (the approver)
+addressName , string   ,           ,           ,        5, the name of the holder&#44; if available
+spender     , address  ,           ,           ,        6, the address being granted approval to spend tokens
+spenderName , string   ,           ,           ,        7, the name of the spender&#44; if available
+amount      , wei      ,           ,           ,        8, the amount of tokens approved for spending
+token       , address  ,           ,           ,        9, the address of the ERC-20 token being approved
+tokenName   , string   ,           ,           ,       10, the name of the token&#44; if available

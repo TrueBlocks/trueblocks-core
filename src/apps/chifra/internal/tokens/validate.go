@@ -35,17 +35,39 @@ func (opts *TokensOptions) validateTokens() error {
 		return validate.Usage("The {0} option is not yet implemented.", "--changes")
 	}
 
-	if len(opts.Addrs) == 0 {
-		return validate.Usage("You must specify at least two address")
+	if opts.Approvals {
+		if opts.ByAcct {
+			return validate.Usage("The {0} option is not allowed with {1}.", "--by_acct", "--approvals")
+		}
+
+		if len(opts.Addrs) == 0 {
+			return validate.Usage("You must specify at least one address")
+		}
 
 	} else {
-		if opts.ByAcct {
-			if len(opts.Addrs) < 2 {
-				return validate.Usage("You must specify at least two addresses")
-			}
+		if len(opts.Addrs) == 0 {
+			return validate.Usage("You must specify at least two address")
 
-			// all but the last is assumed to be a token
-			for _, addr := range opts.Addrs[:len(opts.Addrs)-1] {
+		} else {
+			if opts.ByAcct {
+				if len(opts.Addrs) < 2 {
+					return validate.Usage("You must specify at least two addresses")
+				}
+
+				// all but the last is assumed to be a token
+				for _, addr := range opts.Addrs[:len(opts.Addrs)-1] {
+					if addr != base.FAKE_ETH_ADDRESS.Hex() {
+						err := opts.Conn.IsContractAtLatest(base.HexToAddress(addr))
+						if err != nil {
+							if errors.Is(err, rpc.ErrNotAContract) {
+								return validate.Usage("The value {0} is not a token contract.", addr)
+							}
+							return err
+						}
+					}
+				}
+			} else {
+				addr := opts.Addrs[0]
 				if addr != base.FAKE_ETH_ADDRESS.Hex() {
 					err := opts.Conn.IsContractAtLatest(base.HexToAddress(addr))
 					if err != nil {
@@ -54,18 +76,6 @@ func (opts *TokensOptions) validateTokens() error {
 						}
 						return err
 					}
-				}
-			}
-		} else {
-			// the first is assumed to be a smart contract, the rest can be either non-existent, another smart contract or an EOA
-			addr := opts.Addrs[0]
-			if addr != base.FAKE_ETH_ADDRESS.Hex() {
-				err := opts.Conn.IsContractAtLatest(base.HexToAddress(addr))
-				if err != nil {
-					if errors.Is(err, rpc.ErrNotAContract) {
-						return validate.Usage("The value {0} is not a token contract.", addr)
-					}
-					return err
 				}
 			}
 		}

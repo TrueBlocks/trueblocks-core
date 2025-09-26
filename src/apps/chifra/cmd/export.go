@@ -73,6 +73,7 @@ func init() {
 	exportCmd.Flags().BoolVarP(&exportPkg.GetOptions().Appearances, "appearances", "p", false, `export a list of appearances`)
 	exportCmd.Flags().BoolVarP(&exportPkg.GetOptions().Receipts, "receipts", "r", false, `export receipts instead of transactional data`)
 	exportCmd.Flags().BoolVarP(&exportPkg.GetOptions().Logs, "logs", "l", false, `export logs instead of transactional data`)
+	exportCmd.Flags().BoolVarP(&exportPkg.GetOptions().Approvals, "approvals", "O", false, `export all token approval transactions for the given address`)
 	exportCmd.Flags().BoolVarP(&exportPkg.GetOptions().Traces, "traces", "t", false, `export traces instead of transactional data`)
 	exportCmd.Flags().BoolVarP(&exportPkg.GetOptions().Neighbors, "neighbors", "n", false, `export the neighbors of the given address`)
 	exportCmd.Flags().BoolVarP(&exportPkg.GetOptions().Statements, "statements", "A", false, `export only statements`)

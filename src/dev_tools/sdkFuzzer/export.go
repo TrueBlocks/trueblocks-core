@@ -137,6 +137,16 @@ func TestExport(which, value, fn string, opts *sdk.ExportOptions) {
 				ReportOkay(fn)
 			}
 		}
+	case "approvals":
+		if approvals, _, err := opts.ExportApprovals(); err != nil {
+			ReportError(fn, opts, err)
+		} else {
+			if err := SaveToFile(fn, approvals); err != nil {
+				ReportError2(fn, err)
+			} else {
+				ReportOkay(fn)
+			}
+		}
 	case "traces":
 		if traces, _, err := opts.ExportTraces(); err != nil {
 			ReportError(fn, opts, err)

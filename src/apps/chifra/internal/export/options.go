@@ -34,6 +34,7 @@ type ExportOptions struct {
 	Appearances bool                  `json:"appearances,omitempty"` // Export a list of appearances
 	Receipts    bool                  `json:"receipts,omitempty"`    // Export receipts instead of transactional data
 	Logs        bool                  `json:"logs,omitempty"`        // Export logs instead of transactional data
+	Approvals   bool                  `json:"approvals,omitempty"`   // Export all token approval transactions for the given address
 	Traces      bool                  `json:"traces,omitempty"`      // Export traces instead of transactional data
 	Neighbors   bool                  `json:"neighbors,omitempty"`   // Export the neighbors of the given address
 	Statements  bool                  `json:"statements,omitempty"`  // Export only statements
@@ -80,6 +81,7 @@ func (opts *ExportOptions) testLog() {
 	logger.TestLog(opts.Appearances, "Appearances: ", opts.Appearances)
 	logger.TestLog(opts.Receipts, "Receipts: ", opts.Receipts)
 	logger.TestLog(opts.Logs, "Logs: ", opts.Logs)
+	logger.TestLog(opts.Approvals, "Approvals: ", opts.Approvals)
 	logger.TestLog(opts.Traces, "Traces: ", opts.Traces)
 	logger.TestLog(opts.Neighbors, "Neighbors: ", opts.Neighbors)
 	logger.TestLog(opts.Statements, "Statements: ", opts.Statements)
@@ -154,6 +156,8 @@ func ExportFinishParseInternal(w io.Writer, values url.Values) *ExportOptions {
 			opts.Receipts = true
 		case "logs":
 			opts.Logs = true
+		case "approvals":
+			opts.Approvals = true
 		case "traces":
 			opts.Traces = true
 		case "neighbors":

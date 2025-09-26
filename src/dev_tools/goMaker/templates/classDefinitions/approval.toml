@@ -1,0 +1,9 @@
+[settings]
+    class = "Approval"
+    doc_group = "01-Accounts"
+    doc_descr = "an ERC-20 token approval granting spending permission from owner to spender"
+    doc_route = "122-approval"
+    attributes = ""
+    produced_by = "tokens"
+    cache_type = "cacheable"
+    cache_by = "address,block"

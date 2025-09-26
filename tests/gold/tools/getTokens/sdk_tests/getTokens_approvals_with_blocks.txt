@@ -1,0 +1,86 @@
+tokens?addrs=trueblocks.eth&approvals&blocks=12000000-13000000
+Args: [addrs=trueblocks.eth approvals blocks=12000000-13000000]
+Opts: {"addrs":["trueblocks.eth"],"blocks":["12000000-13000000"],"approvals":true}
+Addrs:  [0xf503017d7baf7fbc0fff7492b751025c6a78179b]
+Blocks:  [12000000-13000000]
+Approvals:  true
+Parts:  [all]
+Caps:  cache,decache
+Format:  json
+{
+  "data": [
+    {
+      "amount": "115792089237316195423570985008687907853269984665640564039453157405169617241697",
+      "blockNumber": 12930151,
+      "date": "2021-07-31 00:26:34 UTC",
+      "owner": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
+      "spender": "0x7a250d5630b4cf539739df2c5dacb4c659f2488d",
+      "timestamp": 1627691194,
+      "token": "0x58b6a8a3302369daec383334672404ee733ab239"
+    },
+    {
+      "amount": "115792089237316195423570985008687907853269984665640564039455368446995741316059",
+      "blockNumber": 12964803,
+      "date": "2021-08-05 11:52:23 UTC",
+      "owner": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
+      "spender": "0xe592427a0aece92de3edee1f18e0157c05861564",
+      "timestamp": 1628164343,
+      "token": "0x58b6a8a3302369daec383334672404ee733ab239"
+    },
+    {
+      "amount": "100000000000000000000",
+      "blockNumber": 12271496,
+      "date": "2021-04-19 16:07:57 UTC",
+      "owner": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
+      "spender": "0x30f938fed5de6e06a9a7cd2ac3517131c317b1e7",
+      "timestamp": 1618848477,
+      "token": "0x6b175474e89094c44da98b954eedeac495271d0f"
+    },
+    {
+      "amount": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
+      "blockNumber": 12085923,
+      "date": "2021-03-22 02:26:24 UTC",
+      "owner": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
+      "spender": "0xabea9132b05a70803a4e85094fd0e1800777fbef",
+      "timestamp": 1616379984,
+      "token": "0x6b175474e89094c44da98b954eedeac495271d0f"
+    },
+    {
+      "amount": "0",
+      "blockNumber": 12526741,
+      "date": "2021-05-29 03:08:58 UTC",
+      "owner": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
+      "spender": "0xe5b16563a38342a2c64eebb436bc2da4ec83a531",
+      "timestamp": 1622257738,
+      "token": "0x6b175474e89094c44da98b954eedeac495271d0f"
+    },
+    {
+      "amount": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
+      "blockNumber": 12104313,
+      "date": "2021-03-24 22:29:28 UTC",
+      "owner": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
+      "spender": "0xe5c783ee536cf5e63e792988335c4255169be4e1",
+      "timestamp": 1616624968,
+      "token": "0x6b175474e89094c44da98b954eedeac495271d0f"
+    },
+    {
+      "amount": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
+      "blockNumber": 12757255,
+      "date": "2021-07-03 22:14:12 UTC",
+      "owner": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
+      "spender": "0xe592427a0aece92de3edee1f18e0157c05861564",
+      "timestamp": 1625350452,
+      "token": "0xdac17f958d2ee523a2206206994597c13d831ec7"
+    }
+  ],
+  "meta": {
+    "client": "0xdeadbeef",
+    "finalized": "0xdeadbeef",
+    "staging": "0xdeadbeef",
+    "ripe": "0xdeadbeef",
+    "unripe": "0xdeadbeef",
+    "chainId": 1,
+    "networkId": 1,
+    "chain": "mainnet"
+  }
+}

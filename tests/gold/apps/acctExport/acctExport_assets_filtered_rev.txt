@@ -22,6 +22,7 @@ Flags:
   -p, --appearances         export a list of appearances
   -r, --receipts            export receipts instead of transactional data
   -l, --logs                export logs instead of transactional data
+  -O, --approvals           export all token approval transactions for the given address
   -t, --traces              export traces instead of transactional data
   -n, --neighbors           export the neighbors of the given address
   -A, --statements          export only statements
