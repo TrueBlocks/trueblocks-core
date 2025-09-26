@@ -1,9 +1,10 @@
-export?addrs=trueblocks.eth&approvals&maxRecords=3
-Args: [addrs=trueblocks.eth approvals maxRecords=3]
-Opts: {"addrs":["trueblocks.eth"],"approvals":true,"maxRecords":3}
+export?addrs=trueblocks.eth&approvals&maxRecords=3&cache
+Args: [addrs=trueblocks.eth approvals maxRecords=3 cache]
+Opts: {"addrs":["trueblocks.eth"],"approvals":true,"maxRecords":3,"cache":true}
 Addrs:  [0xf503017d7baf7fbc0fff7492b751025c6a78179b]
 Approvals:  true
 MaxRecords:  3
+Cache:  true
 Caps:  cache,decache,ether
 Format:  json
 {

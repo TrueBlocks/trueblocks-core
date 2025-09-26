@@ -1,4 +1,4 @@
-export?addrs=trueblocks.eth&approvals&maxRecords=3&fmt=json
+export?addrs=trueblocks.eth&approvals&maxRecords=3&fmt=json&cache
 {
   "data": [
     {

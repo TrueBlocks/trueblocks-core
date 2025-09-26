@@ -85,6 +85,11 @@ on     , both, fast , export  , apps, acctExport, export_logs_topics_10  , n   ,
 on     , both, fast , export  , apps, acctExport, export_logs_topics_3   , n   , addrs = 0x111111517e4929d3dcbdfa7cce55d30d4b6bc4d6 & logs & topic = 0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef & max_records = 3 & fmt = csv
 on     , both, fast , export  , apps, acctExport, export_logs_topics_fb_3, n   , addrs = 0x111111517e4929d3dcbdfa7cce55d30d4b6bc4d6 & logs & topic = 0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef & first_block = 14353374 & max_records = 3 & fmt = csv
 
+# Testing --approvals
+on     , both, fast , export  , apps, acctExport, export_approvals       , y   , addrs = trueblocks.eth & approvals & max_records = 3 & fmt = json & cache
+on     , both, fast , export  , apps, acctExport, export_approvals_art   , y   , addrs = trueblocks.eth & approvals & articulate & max_records = 3 & fmt = json
+on     , both, fast , export  , apps, acctExport, export_approvals_csv   , n   , addrs = trueblocks.eth & approvals & max_records = 3 & fmt = csv
+
 on     , both, fast , export  , apps, acctExport, not_nfts               , y   , addrs = trueblocks.eth & logs & articulate & first_block = 8876230 & last_block = 9024186 & fmt = json
 on     , both, fast , export  , apps, acctExport, nfts                   , y   , addrs = trueblocks.eth & logs & articulate & nfts & first_block = 8876230 & last_block = 9024186 & fmt = json
 on     , both, fast , export  , apps, acctExport, nfts_fail              , y   , addrs = trueblocks.eth & nfts & articulate & first_block = 8876230 & last_block = 9024186 & fmt = json
