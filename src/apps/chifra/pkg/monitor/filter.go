@@ -90,9 +90,9 @@ func (mon *Monitor) ReadAndFilterAppearances(filt *types.AppearanceFilter, withC
 	return apps, len(apps), nil
 }
 
-// AsSliceOfTransactionMaps reads appearances from the monitor and returns them as batched maps
+// AsSliceOfItemMaps reads appearances from the monitor and returns them as batched maps
 // ready for transaction processing
-func (mon *Monitor) AsSliceOfTransactionMaps(filter *types.AppearanceFilter, reversed bool) ([]map[types.Appearance]*types.Transaction, int, error) {
+func AsSliceOfItemMaps[T types.MappedType](mon *Monitor, filter *types.AppearanceFilter, reversed bool) ([]map[types.Appearance]*T, int, error) {
 	apps, cnt, err := mon.ReadAndFilterAppearances(filter, false)
 	if err != nil {
 		return nil, 0, err
@@ -102,7 +102,7 @@ func (mon *Monitor) AsSliceOfTransactionMaps(filter *types.AppearanceFilter, rev
 		return nil, 0, nil
 	}
 
-	sliceOfMaps, _, err := types.AsSliceOfMaps[types.Transaction](apps, reversed)
+	sliceOfMaps, _, err := types.AsSliceOfMaps[T](apps, reversed)
 	if err != nil {
 		return nil, 0, err
 	}

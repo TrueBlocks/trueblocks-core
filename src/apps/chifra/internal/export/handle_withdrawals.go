@@ -19,21 +19,21 @@ import (
 )
 
 func (opts *ExportOptions) HandleWithdrawals(rCtx *output.RenderCtx, monitorArray []monitor.Monitor) error {
-	chain := opts.Globals.Chain
-	testMode := opts.Globals.TestMode
-	nErrors := 0
-	first := max(base.KnownBlock(chain, "shanghai"), opts.FirstBlock)
-	filter := types.NewFilter(
-		opts.Reversed,
-		false,
-		[]string{},
-		ranges.BlockRange{First: first, Last: opts.LastBlock},
-		ranges.RecordRange{First: 0, Last: opts.GetMax()},
-	)
-
 	fetchData := func(modelChan chan types.Modeler, errorChan chan error) {
+		chain := opts.Globals.Chain
+		testMode := opts.Globals.TestMode
+		nErrors := 0
+		first := max(base.KnownBlock(chain, "shanghai"), opts.FirstBlock)
+		filter := types.NewFilter(
+			opts.Reversed,
+			false,
+			[]string{},
+			ranges.BlockRange{First: first, Last: opts.LastBlock},
+			ranges.RecordRange{First: 0, Last: opts.GetMax()},
+		)
+
 		for _, mon := range monitorArray {
-			if apps, cnt, err := mon.ReadAndFilterAppearances(filter, false /* withCount */); err != nil {
+			if sliceOfMaps, cnt, err := monitor.AsSliceOfItemMaps[types.LightBlock](&mon, filter, filter.Reversed); err != nil {
 				errorChan <- err
 				rCtx.Cancel()
 
@@ -42,95 +42,89 @@ func (opts *ExportOptions) HandleWithdrawals(rCtx *output.RenderCtx, monitorArra
 				continue
 
 			} else {
-				if sliceOfMaps, _, err := types.AsSliceOfMaps[types.LightBlock](apps, filter.Reversed); err != nil {
-					errorChan <- err
-					rCtx.Cancel()
+				showProgress := opts.Globals.ShowProgress()
+				bar := logger.NewBar(logger.BarOptions{
+					Prefix:  mon.Address.Hex(),
+					Enabled: showProgress,
+					Total:   int64(cnt),
+				})
 
-				} else {
-					showProgress := opts.Globals.ShowProgress()
-					bar := logger.NewBar(logger.BarOptions{
-						Prefix:  mon.Address.Hex(),
-						Enabled: showProgress,
-						Total:   int64(cnt),
-					})
+				finished := false
+				for _, thisMap := range sliceOfMaps {
+					if rCtx.WasCanceled() {
+						return
+					}
 
-					finished := false
-					for _, thisMap := range sliceOfMaps {
-						if rCtx.WasCanceled() {
-							return
+					if finished {
+						continue
+					}
+
+					for app := range thisMap {
+						thisMap[app] = new(types.LightBlock)
+					}
+
+					iterFunc := func(app types.Appearance, value *types.LightBlock) error {
+						var block types.LightBlock
+						if block, err = opts.Conn.GetBlockHeaderByNumber(base.Blknum(app.BlockNumber)); err != nil {
+							return err
 						}
 
-						if finished {
-							continue
-						}
-
-						for app := range thisMap {
-							thisMap[app] = new(types.LightBlock)
-						}
-
-						iterFunc := func(app types.Appearance, value *types.LightBlock) error {
-							var block types.LightBlock
-							if block, err = opts.Conn.GetBlockHeaderByNumber(base.Blknum(app.BlockNumber)); err != nil {
-								return err
-							}
-
-							withdrawals := make([]types.Withdrawal, 0, 16)
-							for _, w := range block.Withdrawals {
-								if w.Address == mon.Address {
-									withdrawals = append(withdrawals, w)
-								}
-							}
-							if len(withdrawals) > 0 {
-								block.Withdrawals = withdrawals
-								*value = block
-							}
-
-							bar.Tick()
-							return nil
-						}
-
-						iterErrorChan := make(chan error)
-						iterCtx, iterCancel := context.WithCancel(context.Background())
-						defer iterCancel()
-						go utils.IterateOverMap(iterCtx, iterErrorChan, thisMap, iterFunc)
-						for err := range iterErrorChan {
-							if !testMode || nErrors == 0 {
-								errorChan <- err
-								nErrors++
+						withdrawals := make([]types.Withdrawal, 0, 16)
+						for _, w := range block.Withdrawals {
+							if w.Address == mon.Address {
+								withdrawals = append(withdrawals, w)
 							}
 						}
-
-						// Sort the items back into an ordered array by block number
-						items := make([]*types.Withdrawal, 0, len(thisMap))
-						for _, block := range thisMap {
-							for _, with := range block.Withdrawals {
-								items = append(items, &with)
-							}
+						if len(withdrawals) > 0 {
+							block.Withdrawals = withdrawals
+							*value = block
 						}
 
-						sort.Slice(items, func(i, j int) bool {
-							if opts.Reversed {
-								i, j = j, i
-							}
-							if items[i].BlockNumber == items[j].BlockNumber {
-								return items[i].Index < items[j].Index
-							}
-							return items[i].BlockNumber < items[j].BlockNumber
-						})
+						bar.Tick()
+						return nil
+					}
 
-						for _, item := range items {
-							var passes bool
-							passes, finished = filter.PassesCountFilter()
-							if passes {
-								modelChan <- item
-							}
-							if finished {
-								break
-							}
+					iterErrorChan := make(chan error)
+					iterCtx, iterCancel := context.WithCancel(context.Background())
+					defer iterCancel()
+					go utils.IterateOverMap(iterCtx, iterErrorChan, thisMap, iterFunc)
+					for err := range iterErrorChan {
+						if !testMode || nErrors == 0 {
+							errorChan <- err
+							nErrors++
 						}
 					}
-					bar.Finish(true /* newLine */)
+
+					// Sort the items back into an ordered array by block number
+					items := make([]*types.Withdrawal, 0, len(thisMap))
+					for _, block := range thisMap {
+						for _, with := range block.Withdrawals {
+							items = append(items, &with)
+						}
+					}
+
+					sort.Slice(items, func(i, j int) bool {
+						if opts.Reversed {
+							i, j = j, i
+						}
+						if items[i].BlockNumber == items[j].BlockNumber {
+							return items[i].Index < items[j].Index
+						}
+						return items[i].BlockNumber < items[j].BlockNumber
+					})
+
+					for _, item := range items {
+						var passes bool
+						passes, finished = filter.PassesCountFilter()
+						if passes {
+							modelChan <- item
+						}
+						if finished {
+							break
+						}
+					}
 				}
+				bar.Finish(true /* newLine */)
 			}
 		}
 	}

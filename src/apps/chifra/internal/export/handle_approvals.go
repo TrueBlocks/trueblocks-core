@@ -41,7 +41,7 @@ func (opts *ExportOptions) HandleApprovals(rCtx *output.RenderCtx, monitorArray 
 		logFilter := rpc.NewLogFilter([]string{}, []string{approvalTopic.Hex()})
 
 		for _, mon := range monitorArray {
-			if apps, cnt, err := mon.ReadAndFilterAppearances(filter, false /* withCount */); err != nil {
+			if sliceOfMaps, cnt, err := monitor.AsSliceOfItemMaps[types.Transaction](&mon, filter, filter.Reversed); err != nil {
 				errorChan <- err
 				rCtx.Cancel()
 
@@ -49,105 +49,99 @@ func (opts *ExportOptions) HandleApprovals(rCtx *output.RenderCtx, monitorArray 
 				continue
 
 			} else {
-				if sliceOfMaps, _, err := types.AsSliceOfMaps[types.Transaction](apps, filter.Reversed); err != nil {
-					errorChan <- err
-					rCtx.Cancel()
+				showProgress := opts.Globals.ShowProgress()
+				bar := logger.NewBar(logger.BarOptions{
+					Prefix:  mon.Address.Hex(),
+					Enabled: showProgress,
+					Total:   int64(cnt),
+				})
 
-				} else {
-					showProgress := opts.Globals.ShowProgress()
-					bar := logger.NewBar(logger.BarOptions{
-						Prefix:  mon.Address.Hex(),
-						Enabled: showProgress,
-						Total:   int64(cnt),
-					})
+				finished := false
+				for _, thisMap := range sliceOfMaps {
+					if rCtx.WasCanceled() {
+						return
+					}
 
-					finished := false
-					for _, thisMap := range sliceOfMaps {
-						if rCtx.WasCanceled() {
-							return
+					if finished {
+						continue
+					}
+
+					for app := range thisMap {
+						thisMap[app] = new(types.Transaction)
+					}
+
+					// Instead of fetching full transactions, we'll fetch logs directly from blocks
+					iterFunc := func(app types.Appearance, value *types.Transaction) error {
+						// We still need some transaction data for the final output
+						if tx, err := opts.Conn.GetTransactionByAppearance(&app, false); err != nil {
+							return err
+						} else {
+							passes := filter.PassesTxFilter(tx)
+							if passes {
+								*value = *tx
+							}
+							if bar != nil {
+								bar.Tick()
+							}
+							return nil
 						}
+					}
 
-						if finished {
+					// Set up and iterate over the map calling iterFunc for each appearance
+					iterCtx, iterCancel := context.WithCancel(context.Background())
+					defer iterCancel()
+					errChan := make(chan error)
+					go utils.IterateOverMap(iterCtx, errChan, thisMap, iterFunc)
+					if stepErr := <-errChan; stepErr != nil {
+						errorChan <- stepErr
+						return
+					}
+
+					// Extract approval logs from the transactions
+					items := make([]*types.Log, 0)
+					for _, tx := range thisMap {
+						if tx.Receipt == nil {
 							continue
 						}
-
-						for app := range thisMap {
-							thisMap[app] = new(types.Transaction)
-						}
-
-						// Instead of fetching full transactions, we'll fetch logs directly from blocks
-						iterFunc := func(app types.Appearance, value *types.Transaction) error {
-							// We still need some transaction data for the final output
-							if tx, err := opts.Conn.GetTransactionByAppearance(&app, false); err != nil {
-								return err
-							} else {
-								passes := filter.PassesTxFilter(tx)
-								if passes {
-									*value = *tx
-								}
-								if bar != nil {
-									bar.Tick()
-								}
-								return nil
-							}
-						}
-
-						// Set up and iterate over the map calling iterFunc for each appearance
-						iterCtx, iterCancel := context.WithCancel(context.Background())
-						defer iterCancel()
-						errChan := make(chan error)
-						go utils.IterateOverMap(iterCtx, errChan, thisMap, iterFunc)
-						if stepErr := <-errChan; stepErr != nil {
-							errorChan <- stepErr
-							return
-						}
-
-						// Extract approval logs from the transactions
-						items := make([]*types.Log, 0)
-						for _, tx := range thisMap {
-							if tx.Receipt == nil {
-								continue
-							}
-							for _, log := range tx.Receipt.Logs {
-								if filter.PassesLogFilter(&log, addrArray) && logFilter.PassesFilter(&log) {
-									if opts.Articulate {
-										if err = abiCache.ArticulateLog(&log); err != nil {
-											logger.Warn("Error articulating log:", err)
-										}
+						for _, log := range tx.Receipt.Logs {
+							if filter.PassesLogFilter(&log, addrArray) && logFilter.PassesFilter(&log) {
+								if opts.Articulate {
+									if err = abiCache.ArticulateLog(&log); err != nil {
+										logger.Warn("Error articulating log:", err)
 									}
-									items = append(items, &log)
 								}
-							}
-						}
-
-						// Sort the logs
-						sort.Slice(items, func(i, j int) bool {
-							if opts.Reversed {
-								i, j = j, i
-							}
-							if items[i].BlockNumber == items[j].BlockNumber {
-								if items[i].TransactionIndex == items[j].TransactionIndex {
-									return items[i].LogIndex < items[j].LogIndex
-								}
-								return items[i].TransactionIndex < items[j].TransactionIndex
-							}
-							return items[i].BlockNumber < items[j].BlockNumber
-						})
-
-						// Send the logs to output
-						for _, item := range items {
-							var passes bool
-							passes, finished = filter.PassesCountFilter()
-							if passes {
-								modelChan <- item
-							}
-							if finished {
-								break
+								items = append(items, &log)
 							}
 						}
 					}
-					bar.Finish(true /* newLine */)
+
+					// Sort the logs
+					sort.Slice(items, func(i, j int) bool {
+						if opts.Reversed {
+							i, j = j, i
+						}
+						if items[i].BlockNumber == items[j].BlockNumber {
+							if items[i].TransactionIndex == items[j].TransactionIndex {
+								return items[i].LogIndex < items[j].LogIndex
+							}
+							return items[i].TransactionIndex < items[j].TransactionIndex
+						}
+						return items[i].BlockNumber < items[j].BlockNumber
+					})
+
+					// Send the logs to output
+					for _, item := range items {
+						var passes bool
+						passes, finished = filter.PassesCountFilter()
+						if passes {
+							modelChan <- item
+						}
+						if finished {
+							break
+						}
+					}
 				}
+				bar.Finish(true /* newLine */)
 			}
 		}
 	}

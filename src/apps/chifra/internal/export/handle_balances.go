@@ -20,26 +20,26 @@ import (
 )
 
 func (opts *ExportOptions) HandleBalances(rCtx *output.RenderCtx, monitorArray []monitor.Monitor) error {
-	chain := opts.Globals.Chain
-	testMode := opts.Globals.TestMode
-	nErrors := 0
-
-	filter := types.NewFilter(
-		opts.Reversed,
-		opts.Reverted,
-		opts.Fourbytes,
-		ranges.BlockRange{First: opts.FirstBlock, Last: opts.LastBlock},
-		ranges.RecordRange{First: opts.FirstRecord, Last: opts.GetMax()},
-	)
-
 	fetchData := func(modelChan chan types.Modeler, errorChan chan error) {
+		chain := opts.Globals.Chain
+		testMode := opts.Globals.TestMode
+		nErrors := 0
+
+		filter := types.NewFilter(
+			opts.Reversed,
+			opts.Reverted,
+			opts.Fourbytes,
+			ranges.BlockRange{First: opts.FirstBlock, Last: opts.LastBlock},
+			ranges.RecordRange{First: opts.FirstRecord, Last: opts.GetMax()},
+		)
+
 		currentBn := base.Blknum(0)
 		prevBalance := base.NewWei(0)
 
 		for _, mon := range monitorArray {
 			for _, assetStr := range opts.Asset {
 				asset := base.HexToAddress(assetStr)
-				if apps, cnt, err := mon.ReadAndFilterAppearances(filter, false /* withCount */); err != nil {
+				if sliceOfMaps, cnt, err := monitor.AsSliceOfItemMaps[types.Token](&mon, filter, filter.Reversed); err != nil {
 					errorChan <- err
 					rCtx.Cancel()
 
@@ -48,101 +48,95 @@ func (opts *ExportOptions) HandleBalances(rCtx *output.RenderCtx, monitorArray [
 					continue
 
 				} else {
-					if sliceOfMaps, _, err := types.AsSliceOfMaps[types.Token](apps, filter.Reversed); err != nil {
-						errorChan <- err
-						rCtx.Cancel()
+					showProgress := opts.Globals.ShowProgress()
+					bar := logger.NewBar(logger.BarOptions{
+						Prefix:  mon.Address.Hex(),
+						Enabled: showProgress,
+						Total:   int64(cnt),
+					})
 
-					} else {
-						showProgress := opts.Globals.ShowProgress()
-						bar := logger.NewBar(logger.BarOptions{
-							Prefix:  mon.Address.Hex(),
-							Enabled: showProgress,
-							Total:   int64(cnt),
-						})
+					finished := false
+					prevBalance, _ = opts.Conn.GetBalanceAtToken(asset, mon.Address, filter.GetOuterBounds().First)
+					for _, thisMap := range sliceOfMaps {
+						if rCtx.WasCanceled() {
+							return
+						}
 
-						finished := false
-						prevBalance, _ = opts.Conn.GetBalanceAtToken(asset, mon.Address, filter.GetOuterBounds().First)
-						for _, thisMap := range sliceOfMaps {
-							if rCtx.WasCanceled() {
-								return
+						if finished {
+							continue
+						}
+
+						for app := range thisMap {
+							thisMap[app] = new(types.Token)
+						}
+
+						iterFunc := func(app types.Appearance, value *types.Token) error {
+							var balance *base.Wei
+							if balance, err = opts.Conn.GetBalanceAtToken(asset, mon.Address, base.Blknum(app.BlockNumber)); err != nil {
+								return err
 							}
+							value.Address = asset
+							value.Holder = mon.Address
+							value.BlockNumber = base.Blknum(app.BlockNumber)
+							value.TransactionIndex = base.Txnum(app.TransactionIndex)
+							value.Balance = *balance
+							value.Timestamp = app.Timestamp
+							bar.Tick()
+							return nil
+						}
 
-							if finished {
-								continue
-							}
-
-							for app := range thisMap {
-								thisMap[app] = new(types.Token)
-							}
-
-							iterFunc := func(app types.Appearance, value *types.Token) error {
-								var balance *base.Wei
-								if balance, err = opts.Conn.GetBalanceAtToken(asset, mon.Address, base.Blknum(app.BlockNumber)); err != nil {
-									return err
-								}
-								value.Address = asset
-								value.Holder = mon.Address
-								value.BlockNumber = base.Blknum(app.BlockNumber)
-								value.TransactionIndex = base.Txnum(app.TransactionIndex)
-								value.Balance = *balance
-								value.Timestamp = app.Timestamp
-								bar.Tick()
-								return nil
-							}
-
-							iterErrorChan := make(chan error)
-							iterCtx, iterCancel := context.WithCancel(context.Background())
-							defer iterCancel()
-							go utils.IterateOverMap(iterCtx, iterErrorChan, thisMap, iterFunc)
-							for err := range iterErrorChan {
-								if !testMode || nErrors == 0 {
-									errorChan <- err
-									nErrors++
-								}
-							}
-
-							items := make([]*types.Token, 0, len(thisMap))
-							for _, tx := range thisMap {
-								items = append(items, tx)
-							}
-
-							sort.Slice(items, func(i, j int) bool {
-								if opts.Reversed {
-									i, j = j, i
-								}
-								return items[i].BlockNumber < items[j].BlockNumber
-							})
-
-							for idx, item := range items {
-								visitToken := func(idx int, item *types.Token) error {
-									item.PriorBalance = *prevBalance
-									if item.BlockNumber == 0 || item.BlockNumber != currentBn || item.Timestamp == 0xdeadbeef {
-										item.Timestamp, _ = tslib.FromBnToTs(chain, item.BlockNumber)
-									}
-									currentBn = item.BlockNumber
-									if idx == 0 || item.PriorBalance.Cmp(&item.Balance) != 0 || opts.Globals.Verbose {
-										var passes bool
-										passes, finished = filter.PassesCountFilter()
-										if passes {
-											modelChan <- item
-										}
-									}
-									prevBalance = &item.Balance
-									return nil
-								}
-								if err := visitToken(idx, item); err != nil {
-									errorChan <- err
-									return
-								}
-								if finished {
-									break
-								}
+						iterErrorChan := make(chan error)
+						iterCtx, iterCancel := context.WithCancel(context.Background())
+						defer iterCancel()
+						go utils.IterateOverMap(iterCtx, iterErrorChan, thisMap, iterFunc)
+						for err := range iterErrorChan {
+							if !testMode || nErrors == 0 {
+								errorChan <- err
+								nErrors++
 							}
 						}
-						bar.Finish(true /* newLine */)
+
+						items := make([]*types.Token, 0, len(thisMap))
+						for _, tx := range thisMap {
+							items = append(items, tx)
+						}
+
+						sort.Slice(items, func(i, j int) bool {
+							if opts.Reversed {
+								i, j = j, i
+							}
+							return items[i].BlockNumber < items[j].BlockNumber
+						})
+
+						for idx, item := range items {
+							visitToken := func(idx int, item *types.Token) error {
+								item.PriorBalance = *prevBalance
+								if item.BlockNumber == 0 || item.BlockNumber != currentBn || item.Timestamp == 0xdeadbeef {
+									item.Timestamp, _ = tslib.FromBnToTs(chain, item.BlockNumber)
+								}
+								currentBn = item.BlockNumber
+								if idx == 0 || item.PriorBalance.Cmp(&item.Balance) != 0 || opts.Globals.Verbose {
+									var passes bool
+									passes, finished = filter.PassesCountFilter()
+									if passes {
+										modelChan <- item
+									}
+								}
+								prevBalance = &item.Balance
+								return nil
+							}
+							if err := visitToken(idx, item); err != nil {
+								errorChan <- err
+								return
+							}
+							if finished {
+								break
+							}
+						}
 					}
-					prevBalance = base.NewWei(0)
+					bar.Finish(true /* newLine */)
 				}
+				prevBalance = base.NewWei(0)
 			}
 		}
 	}

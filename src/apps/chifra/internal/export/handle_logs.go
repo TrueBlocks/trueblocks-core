@@ -38,7 +38,7 @@ func (opts *ExportOptions) HandleLogs(rCtx *output.RenderCtx, monitorArray []mon
 		logFilter := rpc.NewLogFilter(opts.Emitter, opts.Topic)
 
 		for _, mon := range monitorArray {
-			if sliceOfMaps, cnt, err := mon.AsSliceOfTransactionMaps(filter, filter.Reversed); err != nil {
+			if sliceOfMaps, cnt, err := monitor.AsSliceOfItemMaps[types.Transaction](&mon, filter, filter.Reversed); err != nil {
 				errorChan <- err
 				rCtx.Cancel()
 

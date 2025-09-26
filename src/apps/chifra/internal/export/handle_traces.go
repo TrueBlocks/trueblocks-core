@@ -20,18 +20,18 @@ import (
 )
 
 func (opts *ExportOptions) HandleTraces(rCtx *output.RenderCtx, monitorArray []monitor.Monitor) error {
-	abiCache := articulate.NewAbiCache(opts.Conn, opts.Articulate)
-	filter := types.NewFilter(
-		opts.Reversed,
-		opts.Reverted,
-		opts.Fourbytes,
-		ranges.BlockRange{First: opts.FirstBlock, Last: opts.LastBlock},
-		ranges.RecordRange{First: opts.FirstRecord, Last: opts.GetMax()},
-	)
-
 	fetchData := func(modelChan chan types.Modeler, errorChan chan error) {
+		abiCache := articulate.NewAbiCache(opts.Conn, opts.Articulate)
+		filter := types.NewFilter(
+			opts.Reversed,
+			opts.Reverted,
+			opts.Fourbytes,
+			ranges.BlockRange{First: opts.FirstBlock, Last: opts.LastBlock},
+			ranges.RecordRange{First: opts.FirstRecord, Last: opts.GetMax()},
+		)
+
 		for _, mon := range monitorArray {
-			if apps, cnt, err := mon.ReadAndFilterAppearances(filter, false /* withCount */); err != nil {
+			if sliceOfMaps, cnt, err := monitor.AsSliceOfItemMaps[types.Transaction](&mon, filter, filter.Reversed); err != nil {
 				errorChan <- err
 				rCtx.Cancel()
 
@@ -40,101 +40,95 @@ func (opts *ExportOptions) HandleTraces(rCtx *output.RenderCtx, monitorArray []m
 				continue
 
 			} else {
-				if sliceOfMaps, _, err := types.AsSliceOfMaps[types.Transaction](apps, filter.Reversed); err != nil {
-					errorChan <- err
-					rCtx.Cancel()
+				showProgress := opts.Globals.ShowProgress()
+				bar := logger.NewBar(logger.BarOptions{
+					Prefix:  mon.Address.Hex(),
+					Enabled: showProgress,
+					Total:   int64(cnt),
+				})
 
-				} else {
-					showProgress := opts.Globals.ShowProgress()
-					bar := logger.NewBar(logger.BarOptions{
-						Prefix:  mon.Address.Hex(),
-						Enabled: showProgress,
-						Total:   int64(cnt),
-					})
+				finished := false
+				for _, thisMap := range sliceOfMaps {
+					if rCtx.WasCanceled() {
+						return
+					}
 
-					finished := false
-					for _, thisMap := range sliceOfMaps {
-						if rCtx.WasCanceled() {
-							return
-						}
+					if finished {
+						continue
+					}
 
-						if finished {
-							continue
-						}
+					for app := range thisMap {
+						thisMap[app] = new(types.Transaction)
+					}
 
-						for app := range thisMap {
-							thisMap[app] = new(types.Transaction)
-						}
-
-						iterFunc := func(app types.Appearance, value *types.Transaction) error {
-							if tx, err := opts.Conn.GetTransactionByAppearance(&app, true); err != nil {
-								return err
-							} else {
-								passes := filter.PassesTxFilter(tx)
-								if passes {
-									*value = *tx
-								}
-								if bar != nil {
-									bar.Tick()
-								}
-								return nil
-							}
-						}
-
-						// Set up and interate over the map calling iterFunc for each appearance
-						iterCtx, iterCancel := context.WithCancel(context.Background())
-						defer iterCancel()
-						errChan := make(chan error)
-						go utils.IterateOverMap(iterCtx, errChan, thisMap, iterFunc)
-						if stepErr := <-errChan; stepErr != nil {
-							errorChan <- stepErr
-							return
-						}
-
-						items := make([]*types.Trace, 0, len(thisMap))
-						for _, tx := range thisMap {
-							for index, trace := range tx.Traces {
-								trace.TraceIndex = base.Tracenum(index)
-								isCreate := trace.Action.CallType == "creation" || trace.TraceType == "create"
-								if !opts.Factory || isCreate {
-									if opts.Articulate {
-										if err := abiCache.ArticulateTrace(&trace); err != nil {
-											errorChan <- fmt.Errorf("error articulating trace: %v", err)
-										}
-									}
-									items = append(items, &trace)
-								}
-							}
-						}
-						sort.Slice(items, func(i, j int) bool {
-							if opts.Reversed {
-								i, j = j, i
-							}
-							if items[i].BlockNumber == items[j].BlockNumber {
-								if items[i].TransactionIndex == items[j].TransactionIndex {
-									return items[i].TraceIndex < items[j].TraceIndex
-								}
-								return items[i].TransactionIndex < items[j].TransactionIndex
-							}
-							return items[i].BlockNumber < items[j].BlockNumber
-						})
-
-						for _, item := range items {
-							if item.BlockHash.IsZero() {
-								continue
-							}
-							var passes bool
-							passes, finished = filter.PassesCountFilter()
+					iterFunc := func(app types.Appearance, value *types.Transaction) error {
+						if tx, err := opts.Conn.GetTransactionByAppearance(&app, true); err != nil {
+							return err
+						} else {
+							passes := filter.PassesTxFilter(tx)
 							if passes {
-								modelChan <- item
+								*value = *tx
 							}
-							if finished {
-								break
+							if bar != nil {
+								bar.Tick()
+							}
+							return nil
+						}
+					}
+
+					// Set up and interate over the map calling iterFunc for each appearance
+					iterCtx, iterCancel := context.WithCancel(context.Background())
+					defer iterCancel()
+					errChan := make(chan error)
+					go utils.IterateOverMap(iterCtx, errChan, thisMap, iterFunc)
+					if stepErr := <-errChan; stepErr != nil {
+						errorChan <- stepErr
+						return
+					}
+
+					items := make([]*types.Trace, 0, len(thisMap))
+					for _, tx := range thisMap {
+						for index, trace := range tx.Traces {
+							trace.TraceIndex = base.Tracenum(index)
+							isCreate := trace.Action.CallType == "creation" || trace.TraceType == "create"
+							if !opts.Factory || isCreate {
+								if opts.Articulate {
+									if err := abiCache.ArticulateTrace(&trace); err != nil {
+										errorChan <- fmt.Errorf("error articulating trace: %v", err)
+									}
+								}
+								items = append(items, &trace)
 							}
 						}
 					}
-					bar.Finish(true /* newLine */)
+					sort.Slice(items, func(i, j int) bool {
+						if opts.Reversed {
+							i, j = j, i
+						}
+						if items[i].BlockNumber == items[j].BlockNumber {
+							if items[i].TransactionIndex == items[j].TransactionIndex {
+								return items[i].TraceIndex < items[j].TraceIndex
+							}
+							return items[i].TransactionIndex < items[j].TransactionIndex
+						}
+						return items[i].BlockNumber < items[j].BlockNumber
+					})
+
+					for _, item := range items {
+						if item.BlockHash.IsZero() {
+							continue
+						}
+						var passes bool
+						passes, finished = filter.PassesCountFilter()
+						if passes {
+							modelChan <- item
+						}
+						if finished {
+							break
+						}
+					}
 				}
+				bar.Finish(true /* newLine */)
 			}
 		}
 	}
