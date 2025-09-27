@@ -6,6 +6,7 @@ package exportPkg
 
 import (
 	"context"
+	"fmt"
 	"sort"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/articulate"
@@ -15,14 +16,13 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/ranges"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/topics"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
 func (opts *ExportOptions) HandleApprovals(rCtx *output.RenderCtx, monitorArray []monitor.Monitor) error {
 	fetchData := func(modelChan chan types.Modeler, errorChan chan error) {
-		opts.Fourbytes = []string{"0x095ea7b3"}
-
 		abiCache := articulate.NewAbiCache(opts.Conn, opts.Articulate)
 		filter := types.NewFilter(
 			opts.Reversed,
@@ -36,16 +36,16 @@ func (opts *ExportOptions) HandleApprovals(rCtx *output.RenderCtx, monitorArray 
 		for _, mon := range monitorArray {
 			addrArray = append(addrArray, mon.Address)
 		}
-
-		approvalTopic := base.HexToHash("0x8c5be1e5ebec7d5bd14f71427d1e84f3dd0314c0f7b2291e5b200ac8c7c3b925")
-		logFilter := rpc.NewLogFilter([]string{}, []string{approvalTopic.Hex()})
+		logFilter := rpc.NewLogFilter(opts.Emitter, []string{topics.ApprovalTopic.Hex()})
+		opts.Fourbytes = []string{topics.ApprovalFourbyte.Hex()}
 
 		for _, mon := range monitorArray {
-			if sliceOfMaps, cnt, err := monitor.AsSliceOfItemMaps[types.Transaction](&mon, filter, filter.Reversed); err != nil {
+			if sliceOfMaps, cnt, err := monitor.AsSliceOfItemMaps[[]*types.Log](&mon, filter, filter.Reversed); err != nil {
 				errorChan <- err
 				rCtx.Cancel()
 
 			} else if cnt == 0 {
+				errorChan <- fmt.Errorf("no blocks found for the query")
 				continue
 
 			} else {
@@ -67,18 +67,25 @@ func (opts *ExportOptions) HandleApprovals(rCtx *output.RenderCtx, monitorArray 
 					}
 
 					for app := range thisMap {
-						thisMap[app] = new(types.Transaction)
+						thisMap[app] = &[]*types.Log{}
 					}
 
-					// Instead of fetching full transactions, we'll fetch logs directly from blocks
-					iterFunc := func(app types.Appearance, value *types.Transaction) error {
-						// We still need some transaction data for the final output
+					iterFunc := func(app types.Appearance, value *[]*types.Log) error {
 						if tx, err := opts.Conn.GetTransactionByAppearance(&app, false); err != nil {
 							return err
 						} else {
 							passes := filter.PassesTxFilter(tx)
-							if passes {
-								*value = *tx
+							if passes && tx.Receipt != nil {
+								for _, log := range tx.Receipt.Logs {
+									if filter.PassesLogFilter(&log, addrArray) && logFilter.PassesFilter(&log) {
+										if opts.Articulate {
+											if err := abiCache.ArticulateLog(&log); err != nil {
+												logger.Warn("Error articulating log:", err)
+											}
+										}
+										*value = append(*value, &log)
+									}
+								}
 							}
 							if bar != nil {
 								bar.Tick()
@@ -87,7 +94,7 @@ func (opts *ExportOptions) HandleApprovals(rCtx *output.RenderCtx, monitorArray 
 						}
 					}
 
-					// Set up and iterate over the map calling iterFunc for each appearance
+					// Set up and iterate over the map calling iterFunc for each appearance (PARALLEL)
 					iterCtx, iterCancel := context.WithCancel(context.Background())
 					defer iterCancel()
 					errChan := make(chan error)
@@ -97,25 +104,14 @@ func (opts *ExportOptions) HandleApprovals(rCtx *output.RenderCtx, monitorArray 
 						return
 					}
 
-					// Extract approval logs from the transactions
+					// Now safely collect all logs from all log slices
 					items := make([]*types.Log, 0)
-					for _, tx := range thisMap {
-						if tx.Receipt == nil {
-							continue
-						}
-						for _, log := range tx.Receipt.Logs {
-							if filter.PassesLogFilter(&log, addrArray) && logFilter.PassesFilter(&log) {
-								if opts.Articulate {
-									if err = abiCache.ArticulateLog(&log); err != nil {
-										logger.Warn("Error articulating log:", err)
-									}
-								}
-								items = append(items, &log)
-							}
+					for _, logSlice := range thisMap {
+						if logSlice != nil && *logSlice != nil {
+							items = append(items, *logSlice...)
 						}
 					}
 
-					// Sort the logs
 					sort.Slice(items, func(i, j int) bool {
 						if opts.Reversed {
 							i, j = j, i
@@ -129,11 +125,11 @@ func (opts *ExportOptions) HandleApprovals(rCtx *output.RenderCtx, monitorArray 
 						return items[i].BlockNumber < items[j].BlockNumber
 					})
 
-					// Send the logs to output
 					for _, item := range items {
-						var passes bool
-						passes, finished = filter.PassesCountFilter()
-						if passes {
+						var passes1, passes2 bool
+						passes1, finished = filter.PassesCountFilter()
+						passes2 = !opts.Nfts || item.IsNFT()
+						if passes1 && passes2 {
 							modelChan <- item
 						}
 						if finished {

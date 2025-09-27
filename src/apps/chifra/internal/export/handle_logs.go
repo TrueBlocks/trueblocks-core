@@ -38,7 +38,7 @@ func (opts *ExportOptions) HandleLogs(rCtx *output.RenderCtx, monitorArray []mon
 		logFilter := rpc.NewLogFilter(opts.Emitter, opts.Topic)
 
 		for _, mon := range monitorArray {
-			if sliceOfMaps, cnt, err := monitor.AsSliceOfItemMaps[types.Transaction](&mon, filter, filter.Reversed); err != nil {
+			if sliceOfMaps, cnt, err := monitor.AsSliceOfItemMaps[[]*types.Log](&mon, filter, filter.Reversed); err != nil {
 				errorChan <- err
 				rCtx.Cancel()
 
@@ -64,18 +64,27 @@ func (opts *ExportOptions) HandleLogs(rCtx *output.RenderCtx, monitorArray []mon
 						continue
 					}
 
-					// Allocate all the transactions even if we don't use them.
+					// Initialize log slice pointers for each appearance
 					for app := range thisMap {
-						thisMap[app] = new(types.Transaction)
+						thisMap[app] = &[]*types.Log{}
 					}
 
-					iterFunc := func(app types.Appearance, value *types.Transaction) error {
+					iterFunc := func(app types.Appearance, value *[]*types.Log) error {
 						if tx, err := opts.Conn.GetTransactionByAppearance(&app, false); err != nil {
 							return err
 						} else {
 							passes := filter.PassesTxFilter(tx)
-							if passes {
-								*value = *tx
+							if passes && tx.Receipt != nil {
+								for _, log := range tx.Receipt.Logs {
+									if filter.PassesLogFilter(&log, addrArray) && logFilter.PassesFilter(&log) {
+										if opts.Articulate {
+											if err := abiCache.ArticulateLog(&log); err != nil {
+												return fmt.Errorf("error articulating log: %v", err)
+											}
+										}
+										*value = append(*value, &log)
+									}
+								}
 							}
 							if bar != nil {
 								bar.Tick()
@@ -84,7 +93,7 @@ func (opts *ExportOptions) HandleLogs(rCtx *output.RenderCtx, monitorArray []mon
 						}
 					}
 
-					// Set up and interate over the map calling iterFunc for each appearance
+					// Set up and iterate over the map calling iterFunc for each appearance (PARALLEL)
 					iterCtx, iterCancel := context.WithCancel(context.Background())
 					defer iterCancel()
 					errChan := make(chan error)
@@ -94,20 +103,11 @@ func (opts *ExportOptions) HandleLogs(rCtx *output.RenderCtx, monitorArray []mon
 						return
 					}
 
-					items := make([]*types.Log, 0, len(thisMap))
-					for _, tx := range thisMap {
-						if tx.Receipt == nil {
-							continue
-						}
-						for _, log := range tx.Receipt.Logs {
-							if filter.PassesLogFilter(&log, addrArray) && logFilter.PassesFilter(&log) {
-								if opts.Articulate {
-									if err = abiCache.ArticulateLog(&log); err != nil {
-										errorChan <- fmt.Errorf("error articulating log: %v", err)
-									}
-								}
-								items = append(items, &log)
-							}
+					// Now safely collect all logs from all log slices
+					items := make([]*types.Log, 0)
+					for _, logSlice := range thisMap {
+						if logSlice != nil && *logSlice != nil {
+							items = append(items, *logSlice...)
 						}
 					}
 

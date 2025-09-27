@@ -9,6 +9,7 @@ type MappedType interface {
 		Appearance |
 		Withdrawal |
 		[]Result |
+		[]*Log |
 		Token |
 		bool
 }
