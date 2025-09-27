@@ -80,7 +80,7 @@ func (opts *ExportOptions) HandleApprovals(rCtx *output.RenderCtx, monitorArray 
 									if filter.PassesLogFilter(&log, addrArray) && logFilter.PassesFilter(&log) {
 										if opts.Articulate {
 											if err := abiCache.ArticulateLog(&log); err != nil {
-												logger.Warn("Error articulating log:", err)
+												errorChan <- fmt.Errorf("error articulating log: %v", err)
 											}
 										}
 										*value = append(*value, &log)

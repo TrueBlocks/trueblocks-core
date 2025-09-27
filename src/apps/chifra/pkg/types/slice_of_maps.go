@@ -8,8 +8,10 @@ type MappedType interface {
 		LightBlock |
 		Appearance |
 		Withdrawal |
+		[]Withdrawal |
 		[]Result |
 		[]*Log |
+		[]*Trace |
 		Token |
 		bool
 }

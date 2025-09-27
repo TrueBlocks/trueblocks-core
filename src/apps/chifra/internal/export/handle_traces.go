@@ -31,7 +31,7 @@ func (opts *ExportOptions) HandleTraces(rCtx *output.RenderCtx, monitorArray []m
 		)
 
 		for _, mon := range monitorArray {
-			if sliceOfMaps, cnt, err := monitor.AsSliceOfItemMaps[types.Transaction](&mon, filter, filter.Reversed); err != nil {
+			if sliceOfMaps, cnt, err := monitor.AsSliceOfItemMaps[[]*types.Trace](&mon, filter, filter.Reversed); err != nil {
 				errorChan <- err
 				rCtx.Cancel()
 
@@ -58,16 +58,27 @@ func (opts *ExportOptions) HandleTraces(rCtx *output.RenderCtx, monitorArray []m
 					}
 
 					for app := range thisMap {
-						thisMap[app] = new(types.Transaction)
+						thisMap[app] = &[]*types.Trace{}
 					}
 
-					iterFunc := func(app types.Appearance, value *types.Transaction) error {
+					iterFunc := func(app types.Appearance, value *[]*types.Trace) error {
 						if tx, err := opts.Conn.GetTransactionByAppearance(&app, true); err != nil {
 							return err
 						} else {
 							passes := filter.PassesTxFilter(tx)
 							if passes {
-								*value = *tx
+								for index, trace := range tx.Traces {
+									trace.TraceIndex = base.Tracenum(index)
+									isCreate := trace.Action.CallType == "creation" || trace.TraceType == "create"
+									if !opts.Factory || isCreate {
+										if opts.Articulate {
+											if err := abiCache.ArticulateTrace(&trace); err != nil {
+												errorChan <- fmt.Errorf("error articulating trace: %v", err)
+											}
+										}
+										*value = append(*value, &trace)
+									}
+								}
 							}
 							if bar != nil {
 								bar.Tick()
@@ -76,7 +87,6 @@ func (opts *ExportOptions) HandleTraces(rCtx *output.RenderCtx, monitorArray []m
 						}
 					}
 
-					// Set up and interate over the map calling iterFunc for each appearance
 					iterCtx, iterCancel := context.WithCancel(context.Background())
 					defer iterCancel()
 					errChan := make(chan error)
@@ -86,19 +96,10 @@ func (opts *ExportOptions) HandleTraces(rCtx *output.RenderCtx, monitorArray []m
 						return
 					}
 
-					items := make([]*types.Trace, 0, len(thisMap))
-					for _, tx := range thisMap {
-						for index, trace := range tx.Traces {
-							trace.TraceIndex = base.Tracenum(index)
-							isCreate := trace.Action.CallType == "creation" || trace.TraceType == "create"
-							if !opts.Factory || isCreate {
-								if opts.Articulate {
-									if err := abiCache.ArticulateTrace(&trace); err != nil {
-										errorChan <- fmt.Errorf("error articulating trace: %v", err)
-									}
-								}
-								items = append(items, &trace)
-							}
+					items := make([]*types.Trace, 0, len(thisMap) * 2)
+					for _, traceSlice := range thisMap {
+						if traceSlice != nil && *traceSlice != nil {
+							items = append(items, *traceSlice...)
 						}
 					}
 					sort.Slice(items, func(i, j int) bool {

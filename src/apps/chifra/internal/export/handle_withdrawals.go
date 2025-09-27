@@ -33,7 +33,7 @@ func (opts *ExportOptions) HandleWithdrawals(rCtx *output.RenderCtx, monitorArra
 		)
 
 		for _, mon := range monitorArray {
-			if sliceOfMaps, cnt, err := monitor.AsSliceOfItemMaps[types.LightBlock](&mon, filter, filter.Reversed); err != nil {
+			if sliceOfMaps, cnt, err := monitor.AsSliceOfItemMaps[[]types.Withdrawal](&mon, filter, filter.Reversed); err != nil {
 				errorChan <- err
 				rCtx.Cancel()
 
@@ -60,24 +60,19 @@ func (opts *ExportOptions) HandleWithdrawals(rCtx *output.RenderCtx, monitorArra
 					}
 
 					for app := range thisMap {
-						thisMap[app] = new(types.LightBlock)
+						thisMap[app] = &[]types.Withdrawal{}
 					}
 
-					iterFunc := func(app types.Appearance, value *types.LightBlock) error {
+					iterFunc := func(app types.Appearance, value *[]types.Withdrawal) error {
 						var block types.LightBlock
 						if block, err = opts.Conn.GetBlockHeaderByNumber(base.Blknum(app.BlockNumber)); err != nil {
 							return err
 						}
 
-						withdrawals := make([]types.Withdrawal, 0, 16)
 						for _, w := range block.Withdrawals {
 							if w.Address == mon.Address {
-								withdrawals = append(withdrawals, w)
+								*value = append(*value, w)
 							}
-						}
-						if len(withdrawals) > 0 {
-							block.Withdrawals = withdrawals
-							*value = block
 						}
 
 						bar.Tick()
@@ -95,11 +90,12 @@ func (opts *ExportOptions) HandleWithdrawals(rCtx *output.RenderCtx, monitorArra
 						}
 					}
 
-					// Sort the items back into an ordered array by block number
-					items := make([]*types.Withdrawal, 0, len(thisMap))
-					for _, block := range thisMap {
-						for _, with := range block.Withdrawals {
-							items = append(items, &with)
+					items := make([]*types.Withdrawal, 0, len(thisMap) * 2)
+					for _, withdrawalSlice := range thisMap {
+						if withdrawalSlice != nil && *withdrawalSlice != nil {
+							for _, w := range *withdrawalSlice {
+								items = append(items, &w)
+							}
 						}
 					}
 

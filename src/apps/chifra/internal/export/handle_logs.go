@@ -79,7 +79,7 @@ func (opts *ExportOptions) HandleLogs(rCtx *output.RenderCtx, monitorArray []mon
 									if filter.PassesLogFilter(&log, addrArray) && logFilter.PassesFilter(&log) {
 										if opts.Articulate {
 											if err := abiCache.ArticulateLog(&log); err != nil {
-												return fmt.Errorf("error articulating log: %v", err)
+												errorChan <- fmt.Errorf("error articulating log: %v", err)
 											}
 										}
 										*value = append(*value, &log)
