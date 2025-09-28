@@ -174,5 +174,21 @@ func clearCache() error {
 	}
 	logger.InfoG("Successfully decached logs data")
 
+	// make sure these monitors exist for token approval tests
+	logger.InfoY("Ensuring monitors exist for token approval tests...")
+	cacheAddrs := []string{
+		"0x054993ab0f2b1acc0fdc65405ee203b4271bebe6",
+		"0xf503017d7baf7fbc0fff7492b751025c6a78179b",
+	}
+	cacheOpts := sdk.ExportOptions{
+		Addrs:     cacheAddrs,
+		LastBlock: 14000000,
+	}
+	cacheOpts.Globals.Cache = true
+	if _, _, err := cacheOpts.Export(); err != nil {
+		return fmt.Errorf("error ensuring monitors exist: %w", err)
+	}
+	logger.InfoG("Successfully ensured monitors exist")
+
 	return nil
 }

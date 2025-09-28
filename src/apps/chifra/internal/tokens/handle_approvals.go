@@ -21,7 +21,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
-const maxTestingBlock = 17000000
+const maxTestingBlock = 14000000
 
 // approvalKey represents a unique approval event
 type approvalKey struct {
