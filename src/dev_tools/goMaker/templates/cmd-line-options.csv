@@ -18,12 +18,13 @@ num,folder,group,route,tool,longName,hotKey,def_val,attributes,handler,option_ty
 12150,apps,Accounts,list,acctExport,n2,,,,,note,,,,,,No other options are permitted when --silent is selected.
 #
 13000,apps,Accounts,export,acctExport,,,,visible|docs,,command,,,Export details,[flags] <address> [address...] [topics...] [fourbytes...],default|caching|ether|names|,Export full details of transactions for one or more addresses.
-13020,apps,Accounts,export,acctExport,addrs,,,required|visible|docs,12,positional,list<addr>,transaction,,,,one or more addresses (0x...) to export
+13020,apps,Accounts,export,acctExport,addrs,,,required|visible|docs,13,positional,list<addr>,transaction,,,,one or more addresses (0x...) to export
 13030,apps,Accounts,export,acctExport,topics,,,visible|docs,,positional,list<topic>,,,,,filter by one or more log topics (only for --logs option)
 13040,apps,Accounts,export,acctExport,fourbytes,,,visible|docs,,positional,list<fourbyte>,,,,,filter by one or more fourbytes (only for transactions and trace options)
 13050,apps,Accounts,export,acctExport,appearances,p,,visible|docs,5,switch,<boolean>,appearance,,,,export a list of appearances
 13060,apps,Accounts,export,acctExport,receipts,r,,visible|docs,2,switch,<boolean>,receipt,,,,export receipts instead of transactional data
 13070,apps,Accounts,export,acctExport,logs,l,,visible|docs,3,switch,<boolean>,log,,,,export logs instead of transactional data
+13075,apps,Accounts,export,acctExport,approvals,O,,visible|docs,12,switch,<boolean>,transaction,,,,export all token approval transactions for the given address
 13080,apps,Accounts,export,acctExport,traces,t,,visible|docs,11,switch,<boolean>,trace,,,,export traces instead of transactional data
 13090,apps,Accounts,export,acctExport,neighbors,n,,visible|docs,8,switch,<boolean>,message,,,,export the neighbors of the given address
 13110,apps,Accounts,export,acctExport,statements,A,,visible|docs,9,switch,<boolean>,statement,,,,export only statements
@@ -221,9 +222,10 @@ num,folder,group,route,tool,longName,hotKey,def_val,attributes,handler,option_ty
 32195,tools,Chain State,state,getState,n12,,,,,note,,,,,,--calldata may be one or more colon-separated solidity calls&#44; four-byte plus parameters&#44; or encoded call data strings.
 #
 33000,tools,Chain State,tokens,getTokens,,,,visible|docs,,command,,,Get token balance(s),[flags] <address> <address> [address...] [block...],default|caching|names|,Retrieve token balance(s) for one or more addresses at given block(s).
-33020,tools,Chain State,tokens,getTokens,addrs,,,required|visible|docs,2,positional,list<addr>,token,,,,two or more addresses (0x...)&#44; the first is an ERC20 token&#44; balances for the rest are reported
+33020,tools,Chain State,tokens,getTokens,addrs,,,required|visible|docs,3,positional,list<addr>,token,,,,two or more addresses (one for --approvals)&#44; the first is an ERC20 token&#44; balances for the rest are reported
 33030,tools,Chain State,tokens,getTokens,blocks,,,visible|docs,,positional,list<blknum>,,,,,an optional list of one or more blocks at which to report balances&#44; defaults to 'latest'
-33040,tools,Chain State,tokens,getTokens,parts,p,,visible|docs,1,flag,list<enum[name|symbol|decimals|totalSupply|version|some|all*]>,,,,,which parts of the token information to retrieve
+33035,tools,Chain State,tokens,getTokens,approvals,O,,visible|docs,1,switch,<boolean>,token,,,,returns all open approvals for the given address(es)
+33040,tools,Chain State,tokens,getTokens,parts,p,,visible|docs,2,flag,list<enum[name|symbol|decimals|totalSupply|version|some|all*]>,,,,,which parts of the token information to retrieve
 33050,tools,Chain State,tokens,getTokens,by_acct,b,,visible|docs,,switch,<boolean>,,,,,consider each address an ERC20 token except the last&#44; whose balance is reported for each token
 33060,tools,Chain State,tokens,getTokens,changes,c,,visible|docs,,switch,<boolean>,,,,,only report a balance when it changes from one block to the next
 33070,tools,Chain State,tokens,getTokens,no_zero,z,,visible|docs,,switch,<boolean>,,,,,suppress the display of zero balance accounts
@@ -233,6 +235,7 @@ num,folder,group,route,tool,longName,hotKey,def_val,attributes,handler,option_ty
 33110,tools,Chain State,tokens,getTokens,n4,,,,,note,,,,,,If the queried node does not store historical state&#44; the results are undefined.
 33120,tools,Chain State,tokens,getTokens,n5,,,,,note,,,,,,`Special` blocks are detailed under `chifra when --list`.
 33130,tools,Chain State,tokens,getTokens,n6,,,,,note,,,,,,If the `--parts` option is not empty&#44; all addresses are considered tokens and each token's attributes are presented.
+33140,tools,Chain State,tokens,getTokens,n7,,,,,note,,,,,,For the --approvals option&#44; all open approvals are reported for each provided address.
 #
 41000,,Admin,,,,,,,,group,,,,,,Control the scraper and build the index
 #

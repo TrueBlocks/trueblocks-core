@@ -105,6 +105,16 @@ func TestTokens(which, value, fn string, opts *sdk.TokensOptions) {
 				ReportOkay(fn)
 			}
 		}
+	case "approvals":
+		if approvals, _, err := opts.TokensApprovals(); err != nil {
+			ReportError(fn, opts, err)
+		} else {
+			if err := SaveToFile(fn, approvals); err != nil {
+				ReportError2(fn, err)
+			} else {
+				ReportOkay(fn)
+			}
+		}
 	default:
 		ReportError(fn, opts, fmt.Errorf("unknown which: %s", which))
 		logger.Fatal("Quitting...")

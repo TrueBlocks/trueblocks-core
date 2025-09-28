@@ -29,16 +29,17 @@ import (
 
 // TokensOptions provides all command options for the chifra tokens command.
 type TokensOptions struct {
-	Addrs    []string                 `json:"addrs,omitempty"`    // Two or more addresses (0x...), the first is an ERC20 token, balances for the rest are reported
-	Blocks   []string                 `json:"blocks,omitempty"`   // An optional list of one or more blocks at which to report balances, defaults to 'latest'
-	BlockIds []identifiers.Identifier `json:"blockIds,omitempty"` // Block identifiers
-	Parts    []string                 `json:"parts,omitempty"`    // Which parts of the token information to retrieve
-	ByAcct   bool                     `json:"byAcct,omitempty"`   // Consider each address an ERC20 token except the last, whose balance is reported for each token
-	Changes  bool                     `json:"changes,omitempty"`  // Only report a balance when it changes from one block to the next
-	NoZero   bool                     `json:"noZero,omitempty"`   // Suppress the display of zero balance accounts
-	Globals  globals.GlobalOptions    `json:"globals,omitempty"`  // The global options
-	Conn     *rpc.Connection          `json:"conn,omitempty"`     // The connection to the RPC server
-	BadFlag  error                    `json:"badFlag,omitempty"`  // An error flag if needed
+	Addrs     []string                 `json:"addrs,omitempty"`     // Two or more addresses (one for --approvals), the first is an ERC20 token, balances for the rest are reported
+	Blocks    []string                 `json:"blocks,omitempty"`    // An optional list of one or more blocks at which to report balances, defaults to 'latest'
+	BlockIds  []identifiers.Identifier `json:"blockIds,omitempty"`  // Block identifiers
+	Approvals bool                     `json:"approvals,omitempty"` // Returns all open approvals for the given address(es)
+	Parts     []string                 `json:"parts,omitempty"`     // Which parts of the token information to retrieve
+	ByAcct    bool                     `json:"byAcct,omitempty"`    // Consider each address an ERC20 token except the last, whose balance is reported for each token
+	Changes   bool                     `json:"changes,omitempty"`   // Only report a balance when it changes from one block to the next
+	NoZero    bool                     `json:"noZero,omitempty"`    // Suppress the display of zero balance accounts
+	Globals   globals.GlobalOptions    `json:"globals,omitempty"`   // The global options
+	Conn      *rpc.Connection          `json:"conn,omitempty"`      // The connection to the RPC server
+	BadFlag   error                    `json:"badFlag,omitempty"`   // An error flag if needed
 	// EXISTING_CODE
 	// EXISTING_CODE
 }
@@ -49,6 +50,7 @@ var defaultTokensOptions = TokensOptions{}
 func (opts *TokensOptions) testLog() {
 	logger.TestLog(len(opts.Addrs) > 0, "Addrs: ", opts.Addrs)
 	logger.TestLog(len(opts.Blocks) > 0, "Blocks: ", opts.Blocks)
+	logger.TestLog(opts.Approvals, "Approvals: ", opts.Approvals)
 	logger.TestLog(len(opts.Parts) > 0, "Parts: ", opts.Parts)
 	logger.TestLog(opts.ByAcct, "ByAcct: ", opts.ByAcct)
 	logger.TestLog(opts.Changes, "Changes: ", opts.Changes)
@@ -88,6 +90,8 @@ func TokensFinishParseInternal(w io.Writer, values url.Values) *TokensOptions {
 				s := strings.Split(val, " ") // may contain space separated items
 				opts.Blocks = append(opts.Blocks, s...)
 			}
+		case "approvals":
+			opts.Approvals = true
 		case "parts":
 			for _, val := range value {
 				s := strings.Split(val, " ") // may contain space separated items
@@ -216,7 +220,8 @@ func ResetOptions(testMode bool) {
 func (opts *TokensOptions) getCaches() (caches map[walk.CacheType]bool) {
 	// EXISTING_CODE
 	caches = map[walk.CacheType]bool{
-		walk.Cache_Tokens: true,
+		walk.Cache_Tokens:       true,
+		walk.Cache_Transactions: opts.Approvals,
 	}
 	// EXISTING_CODE
 	return

@@ -104,13 +104,17 @@ func (opts *ExportOptions) validateExport() error {
 		}
 	}
 
-	if opts.Logs {
+	if opts.Approvals && (len(opts.Fourbytes) > 0 || len(opts.Topic) > 0 || len(opts.Topics) > 0) {
+		return validate.Usage("The {0} option is not permitted with {1}.", "--approvals", "four bytes or topics")
+	}
+
+	if opts.Logs || opts.Approvals {
 		for _, e := range opts.Emitter {
 			if !base.IsValidAddress(e) {
 				return validate.Usage("Invalid emitter: {0}", e)
 			}
 		}
-		for _, t := range opts.Topics {
+		for _, t := range opts.Topics { // not sure why there's two of them!
 			if !validate.IsValidHash(t) {
 				return validate.Usage("Invalid topic: {0}", t)
 			}
@@ -232,6 +236,10 @@ func (opts *ExportOptions) tooMany() ([]string, bool) {
 	}
 	if opts.Logs {
 		which = append(which, "--logs")
+		cnt++
+	}
+	if opts.Approvals {
+		which = append(which, "--approvals")
 		cnt++
 	}
 	if opts.Traces {

@@ -14,6 +14,8 @@ var EnsTransferTopic = base.HexToHash(
 	"0xd4735d920b0f87494915f556dd9b54c8f309026070caea5c737245152564d266",
 )
 
+var ApprovalFourbyte = base.HexToHash("0x095ea7b3")
+
 var KnownTopics = map[base.Hash]bool{
 	TransferTopic: true,
 	ApprovalTopic: true,

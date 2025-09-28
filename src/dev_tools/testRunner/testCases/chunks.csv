@@ -81,7 +81,7 @@ on      ,both ,fast  ,chunks ,apps ,chunkMan ,tag_test                ,y    ,mod
 # Dry run tests
 on      ,both ,fast  ,chunks ,apps ,chunkMan ,dry_run_tag             ,y    ,mode = index & tag = v2.0.0-release & dry_run
 on      ,both ,fast  ,chunks ,apps ,chunkMan ,dry_run_truncate        ,y    ,mode = index & truncate = 18000000 & dry_run
-on      ,both ,fast  ,chunks ,apps ,chunkMan ,dry_run_pin             ,y    ,mode = manifest & pin & dry_run
+local   ,both ,fast  ,chunks ,apps ,chunkMan ,dry_run_pin             ,y    ,mode = manifest & pin & dry_run
 on      ,both ,fast  ,chunks ,apps ,chunkMan ,dry_run_unpin           ,y    ,mode = pins & unpin & dry_run
 on      ,both ,fast  ,chunks ,apps ,chunkMan ,dry_run_invalid         ,y    ,mode = manifest & dry_run
 

@@ -32,20 +32,22 @@ if [ ! -f "Dockerfile" ]; then
     echo "Dockerfile does not exist in the current directory $(pwd)."
     exit 1
 fi
-IMAGE_ID=$(docker build -q \
+echo "Running docker build with full output..."
+docker build \
   --build-arg repo="$REPO" \
   --build-arg commit_sha="$COMMIT_SHA" \
   --build-arg branch="$BRANCH" \
-  .)
+  -t "trueblocks-test:$COMMIT_SHA" \
+  .
 
 RESULT=$?
-echo "IMAGE_ID=$IMAGE_ID"
-echo "RESULT=$RESULT"
-
 if [ $RESULT -ne 0 ]; then
     echo "Failed to build Docker image."
     exit 1
 fi
+
+IMAGE_ID="trueblocks-test:$COMMIT_SHA"
+echo "IMAGE_ID=$IMAGE_ID"
 
 #------------------------------------------------
 echo "Running the docker image..."

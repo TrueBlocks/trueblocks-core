@@ -83,6 +83,19 @@ on      ,both ,fast  ,tokens ,tools ,getTokens ,cache_and_decache             ,y
 on      ,both ,fast  ,tokens ,tools ,getTokens ,cache_one                     ,y    ,addrs = 0xa9fe4601811213c340e850ea305481aff02f5b28 & blocks = 12000000 & cache
 on      ,both ,fast  ,tokens ,tools ,getTokens ,decache_one                   ,y    ,addrs = 0xa9fe4601811213c340e850ea305481aff02f5b28 & blocks = 12000000 & decache
 
+# Approvals tests
+on      ,both ,fast  ,tokens ,tools ,getTokens ,approvals_basic               ,y    ,addrs = trueblocks.eth & approvals
+on      ,both ,fast  ,tokens ,tools ,getTokens ,approvals_with_token          ,y    ,addrs = 0x054993ab0f2b1acc0fdc65405ee203b4271bebe6 trueblocks.eth & approvals
+on      ,both ,fast  ,tokens ,tools ,getTokens ,approvals_multiple_accounts   ,y    ,addrs = trueblocks.eth 0x054993ab0f2b1acc0fdc65405ee203b4271bebe6 & approvals
+on      ,both ,fast  ,tokens ,tools ,getTokens ,approvals_with_blocks         ,y    ,addrs = trueblocks.eth & approvals & blocks = 12000000-13000000
+on      ,both ,fast  ,tokens ,tools ,getTokens ,approvals_by_acct             ,y    ,addrs = 0x054993ab0f2b1acc0fdc65405ee203b4271bebe6 trueblocks.eth & approvals & by_acct
+on      ,both ,fast  ,tokens ,tools ,getTokens ,approvals_by_acct_multiple    ,y    ,addrs = 0x054993ab0f2b1acc0fdc65405ee203b4271bebe6 0xa0b86a33e6776b13c81a70e84dfe9ea82daa0e6c trueblocks.eth & approvals & by_acct
+on      ,both ,fast  ,tokens ,tools ,getTokens ,approvals_fmt_json            ,y    ,addrs = trueblocks.eth & approvals & fmt = json
+on      ,both ,fast  ,tokens ,tools ,getTokens ,approvals_fmt_json_verbose    ,y    ,addrs = trueblocks.eth & approvals & fmt = json & verbose
+on      ,both ,fast  ,tokens ,tools ,getTokens ,approvals_fmt_csv             ,n    ,addrs = trueblocks.eth & approvals & fmt = csv & no_header
+on      ,both ,fast  ,tokens ,tools ,getTokens ,approvals_no_zero             ,y    ,addrs = trueblocks.eth & approvals & no_zero
+on      ,both ,fast  ,tokens ,tools ,getTokens ,approvals_cache               ,y    ,addrs = trueblocks.eth & approvals & cache
+
 # Capabilities
 # chain & fmt & help & nocolor & noop & version & verbose & no_header & file & output & append & cache & decache & ether
 on      ,both ,fast  ,tokens ,tools ,getTokens ,caps_allowed                  ,y    ,addrs = trueblocks.eth & chain & fmt & nocolor & noop & version & verbose & no_header & file & output & append & cache & decache & fail_on_purpose

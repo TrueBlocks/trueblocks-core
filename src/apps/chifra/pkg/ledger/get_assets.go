@@ -40,7 +40,7 @@ func (r *Reconciler) GetAssets(txs []*types.Transaction) ([]*types.Name, bool, e
 	results := make([]*types.Name, 0, len(slice))
 	for _, item := range slice {
 		var passes bool
-		passes, finished = r.Opts.AppFilters.ApplyCountFilter()
+		passes, finished = r.Opts.AppFilters.PassesCountFilter()
 		if passes {
 			results = append(results, item)
 		}

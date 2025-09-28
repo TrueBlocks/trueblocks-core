@@ -32,7 +32,7 @@ GO_WORK_FILE="go.work"
 rm -f "$GO_WORK_FILE"
 if [ ! -f "$GO_WORK_FILE" ]; then
     echo "// Go Version" > "$GO_WORK_FILE"
-    echo "go 1.23.1" >> "$GO_WORK_FILE"
+    echo "go 1.25.1" >> "$GO_WORK_FILE"
 fi
 
 #------------------------------------------------
@@ -46,24 +46,24 @@ find . -type f -name 'go.mod' | while read -r modfile; do
     echo "    Updated $moddir/go.mod"
     cd "$moddir" || exit
 
-    isSdk="[ "$moddir" == "./sdk" ]"
-    isChifra="[ "$moddir" == "./src/apps/chifra" ]"
-    isGoMaker="[ "$moddir" == "./src/dev_tools/goMaker" ]"
-    isNode="[ "$moddir" == "./node" ]"
-    isFourbyte="[ "$moddir" == "./examples/four_bytes" ]"
-    isKeystore="[ "$moddir" == "./examples/keystore" ]"
-    isIndexMan="[ "$moddir" == "./src/dev_tools/indexManager" ]"
-    isSimple="[ "$moddir" == "./examples/simple" ]"
+    if [ "$moddir" = "./sdk" ]; then isSdk=true; else isSdk=false; fi
+    if [ "$moddir" = "./src/apps/chifra" ]; then isChifra=true; else isChifra=false; fi
+    if [ "$moddir" = "./src/dev_tools/goMaker" ]; then isGoMaker=true; else isGoMaker=false; fi
+    if [ "$moddir" = "./node" ]; then isNode=true; else isNode=false; fi
+    if [ "$moddir" = "./examples/four_bytes" ]; then isFourbyte=true; else isFourbyte=false; fi
+    if [ "$moddir" = "./examples/keystore" ]; then isKeystore=true; else isKeystore=false; fi
+    if [ "$moddir" = "./src/dev_tools/indexManager" ]; then isIndexMan=true; else isIndexMan=false; fi
+    if [ "$moddir" = "./examples/simple" ]; then isSimple=true; else isSimple=false; fi
 
-    if $isGoMaker || $isNode || $isFourbyte; then
+    if [ "$isGoMaker" = true ] || [ "$isNode" = true ] || [ "$isFourbyte" = true ]; then
         go get github.com/btcsuite/btcd 2> /dev/null
     fi
 
-    if ! $isSdk && ! $isChifra && ! $isGoMaker && ! $isFourbyte && ! $isIndexMan && ! $isKeystore; then
+    if [ "$isSdk" = false ] && [ "$isChifra" = false ] && [ "$isGoMaker" = false ] && [ "$isFourbyte" = false ] && [ "$isIndexMan" = false ] && [ "$isKeystore" = false ]; then
         go get github.com/TrueBlocks/trueblocks-sdk/v5@latest
     fi
 
-    if ! $isChifra; then
+    if [ "$isChifra" = false ]; then
         go get github.com/TrueBlocks/trueblocks-core/src/apps/chifra@latest
     fi
 

@@ -5,10 +5,19 @@
 package types
 
 import (
+	"sort"
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/ranges"
+)
+
+type AppearanceSort int
+
+const (
+	NotSorted AppearanceSort = iota
+	Sorted
+	Reversed
 )
 
 type AppearanceFilter struct {
@@ -66,23 +75,24 @@ func (f *AppearanceFilter) GetOuterBounds() ranges.BlockRange {
 	return f.OuterBounds
 }
 
-// ApplyFilter checks to see if the appearance intersects with the user-supplied --first_block/--last_block pair (if any)
-func (f *AppearanceFilter) ApplyFilter(app *AppRecord) (passed, finished bool) {
+// PassesFilter checks to see if the appearance intersects with the user-supplied --first_block/--last_block pair (if any)
+func (f *AppearanceFilter) PassesFilter(app *AppRecord) (passed, finished bool) {
 	appRange := ranges.FileRange{First: base.Blknum(app.BlockNumber), Last: base.Blknum(app.BlockNumber)} // --first_block/--last_block
 	if !appRange.Intersects(ranges.FileRange(f.exportRange)) {
 		return false, false
 	}
-	return f.ApplyCountFilter()
+	return f.PassesCountFilter()
 }
 
-// ApplyRangeFilter checks to see if the appearance intersects with the user-supplied --first_block/--last_block pair (if any)
-func (f *AppearanceFilter) ApplyRangeFilter(app *AppRecord) (passed, finished bool) {
+// PassesRangeFilter checks to see if the appearance intersects with the user-supplied --first_block/--last_block pair (if any)
+func (f *AppearanceFilter) PassesRangeFilter(app *AppRecord) (passed, finished bool) {
 	appRange := ranges.FileRange{First: base.Blknum(app.BlockNumber), Last: base.Blknum(app.BlockNumber)} // --first_block/--last_block
 	return appRange.Intersects(ranges.FileRange(f.exportRange)), false
 }
 
-// ApplyCountFilter checks to see if the appearance is at or later than the --first_record and less than (because it's zero-based) --max_records.
-func (f *AppearanceFilter) ApplyCountFilter() (passed, finished bool) {
+// PassesCountFilter checks to see if the appearance is at or later than
+// the --first_record and less than (because it's zero-based) --max_records.
+func (f *AppearanceFilter) PassesCountFilter() (passed, finished bool) {
 	f.nSeen++
 
 	if f.nSeen < int64(f.recordRange.First) { // --first_record
@@ -97,32 +107,46 @@ func (f *AppearanceFilter) ApplyCountFilter() (passed, finished bool) {
 	return true, false
 }
 
-// ApplyTxFilters applies other filters such as the four byte and reverted filters.
-func (f *AppearanceFilter) ApplyTxFilters(tx *Transaction) (passed, finished bool) {
-	matchesReverted := !f.reverted || tx.IsError
-	matchesFourbyte := len(f.fourBytes) == 0
+// PassesTxFilter applies the four byte and reverted filters.
+func (f *AppearanceFilter) PassesTxFilter(tx *Transaction) bool {
+	// We're looking for reverted txs. This one isn't, so fail.
+	if f.reverted && !tx.IsError {
+		return false
+	}
+
+	// We're not filtering by four byte, so pass it.
+	if len(f.fourBytes) == 0 {
+		return true
+	}
+
 	for _, fourBytes := range f.fourBytes {
 		if strings.HasPrefix(tx.Input, fourBytes) {
-			matchesFourbyte = true
-			break
+			return true
 		}
 	}
-	// fmt.Println("len:", len(f.fourBytes), "matchesFourbyte", matchesFourbyte, "matchesReverted", matchesReverted)
-	return matchesFourbyte && matchesReverted, false
+
+	return false
 }
 
-func (f *AppearanceFilter) ApplyLogFilter(log *Log, addrArray []base.Address) bool {
-	haystack := make([]byte, 66*len(log.Topics)+len(log.Data))
-	haystack = append(haystack, log.Address.Hex()[2:]...)
-	for _, topic := range log.Topics {
-		haystack = append(haystack, topic.Hex()[2:]...)
-	}
-	haystack = append(haystack, log.Data[2:]...)
-
+func (f *AppearanceFilter) PassesLogFilter(log *Log, addrArray []base.Address) bool {
+	haystack := log.Log2Haystack()
 	for _, addr := range addrArray {
-		if strings.Contains(string(haystack), addr.Hex()[2:]) {
+		if strings.Contains(haystack, addr.Hex()[2:]) {
 			return true
 		}
 	}
 	return false
+}
+
+func (f *AppearanceFilter) Sort(fromDisc []AppRecord) {
+	if f.sortBy == Sorted || f.sortBy == Reversed {
+		sort.Slice(fromDisc, func(i, j int) bool {
+			if f.sortBy == Reversed {
+				i, j = j, i
+			}
+			si := (base.Blknum(fromDisc[i].BlockNumber) << 32) + base.Blknum(fromDisc[i].TransactionIndex)
+			sj := (base.Blknum(fromDisc[j].BlockNumber) << 32) + base.Blknum(fromDisc[j].TransactionIndex)
+			return si < sj
+		})
+	}
 }

@@ -15,23 +15,23 @@ import (
 )
 
 func (opts *ExportOptions) HandleCount(rCtx *output.RenderCtx, monitorArray []monitor.Monitor) error {
-	if opts.Globals.Verbose {
-		for i := 0; i < len(monitorArray); i++ {
-			_ = monitorArray[i].ReadMonitorHeader()
-			monitorArray[i].Close()
-		}
-	}
-
-	testMode := opts.Globals.TestMode
-	filter := types.NewFilter(
-		opts.Reversed,
-		opts.Reverted,
-		opts.Fourbytes,
-		ranges.BlockRange{First: opts.FirstBlock, Last: opts.LastBlock},
-		ranges.RecordRange{First: opts.FirstRecord, Last: opts.GetMax()},
-	)
-
 	fetchData := func(modelChan chan types.Modeler, errorChan chan error) {
+		if opts.Globals.Verbose {
+			for i := 0; i < len(monitorArray); i++ {
+				_ = monitorArray[i].ReadMonitorHeader()
+				monitorArray[i].Close()
+			}
+		}
+
+		testMode := opts.Globals.TestMode
+		filter := types.NewFilter(
+			opts.Reversed,
+			opts.Reverted,
+			opts.Fourbytes,
+			ranges.BlockRange{First: opts.FirstBlock, Last: opts.LastBlock},
+			ranges.RecordRange{First: opts.FirstRecord, Last: opts.GetMax()},
+		)
+
 		for _, mon := range monitorArray {
 			if apps, cnt, err := mon.ReadAndFilterAppearances(filter, true /* withCount */); err != nil {
 				errorChan <- err

@@ -63,9 +63,9 @@ func (mon *Monitor) ReadAndFilterAppearances(filt *types.AppearanceFilter, withC
 		var passes bool
 		var finished bool
 		if withCount {
-			passes, finished = filt.ApplyFilter(&app)
+			passes, finished = filt.PassesFilter(&app)
 		} else {
-			passes, finished = filt.ApplyRangeFilter(&app)
+			passes, finished = filt.PassesRangeFilter(&app)
 		}
 
 		if finished {
@@ -88,4 +88,24 @@ func (mon *Monitor) ReadAndFilterAppearances(filt *types.AppearanceFilter, withC
 	mon.Close()
 
 	return apps, len(apps), nil
+}
+
+// AsSliceOfItemMaps reads appearances from the monitor and returns them as batched maps
+// ready for transaction processing
+func AsSliceOfItemMaps[T types.MappedType](mon *Monitor, filter *types.AppearanceFilter, reversed bool) ([]map[types.Appearance]*T, int, error) {
+	apps, cnt, err := mon.ReadAndFilterAppearances(filter, false)
+	if err != nil {
+		return nil, 0, err
+	}
+
+	if cnt == 0 {
+		return nil, 0, nil
+	}
+
+	sliceOfMaps, _, err := types.AsSliceOfMaps[T](apps, reversed)
+	if err != nil {
+		return nil, 0, err
+	}
+
+	return sliceOfMaps, cnt, nil
 }

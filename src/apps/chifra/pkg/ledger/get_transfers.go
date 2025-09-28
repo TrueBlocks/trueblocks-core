@@ -31,7 +31,7 @@ func (r *Reconciler) GetTransfers(txs []*types.Transaction) ([]*types.Transfer, 
 	slice := make([]*types.Transfer, 0, len(transfers))
 	for _, item := range transfers {
 		var passes bool
-		passes, finished = r.Opts.AppFilters.ApplyCountFilter()
+		passes, finished = r.Opts.AppFilters.PassesCountFilter()
 		if passes {
 			slice = append(slice, item)
 		}

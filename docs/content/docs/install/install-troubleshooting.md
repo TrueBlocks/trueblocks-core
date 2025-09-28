@@ -19,7 +19,7 @@ This section lists solutions to problems some users have run into with the insta
 
 ### Installing go
 
-#### How do I check my Go version?
+#### How do I check my Go Version?
 
 Run this command
 
@@ -27,7 +27,7 @@ Run this command
 go version
 ```
 
-TrueBlocks needs version 1.16.x or later. If you to install or update Go, [see here](https://golang.org/doc/install).
+TrueBlocks needs version 1.25.1 or later. If you to install or update Go, [see here](https://golang.org/doc/install).
 
 ### Installing build tools
 

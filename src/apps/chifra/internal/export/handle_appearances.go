@@ -16,16 +16,16 @@ import (
 )
 
 func (opts *ExportOptions) HandleAppearances(rCtx *output.RenderCtx, monitorArray []monitor.Monitor) error {
-	chain := opts.Globals.Chain
-	filter := types.NewFilter(
-		opts.Reversed,
-		false,
-		[]string{},
-		ranges.BlockRange{First: opts.FirstBlock, Last: opts.LastBlock},
-		ranges.RecordRange{First: opts.FirstRecord, Last: opts.GetMax()},
-	)
-
 	fetchData := func(modelChan chan types.Modeler, errorChan chan error) {
+		chain := opts.Globals.Chain
+		filter := types.NewFilter(
+			opts.Reversed,
+			false,
+			[]string{},
+			ranges.BlockRange{First: opts.FirstBlock, Last: opts.LastBlock},
+			ranges.RecordRange{First: opts.FirstRecord, Last: opts.GetMax()},
+		)
+
 		currentBn := uint32(0)
 		for _, mon := range monitorArray {
 			if apps, cnt, err := mon.ReadAndFilterAppearances(filter, true /* withCount */); err != nil {

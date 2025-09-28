@@ -39,7 +39,7 @@ var tokensCmd = &cobra.Command{
 const usageTokens = `tokens [flags] <address> <address> [address...] [block...]
 
 Arguments:
-  addrs - two or more addresses (0x...), the first is an ERC20 token, balances for the rest are reported (required)
+  addrs - two or more addresses (one for --approvals), the first is an ERC20 token, balances for the rest are reported (required)
   blocks - an optional list of one or more blocks at which to report balances, defaults to 'latest'`
 
 const longTokens = `Purpose:
@@ -52,7 +52,8 @@ Notes:
   - If the token contract(s) from which you request balances are not ERC20 compliant, the results are undefined.
   - If the queried node does not store historical state, the results are undefined.
   - Special blocks are detailed under chifra when --list.
-  - If the --parts option is not empty, all addresses are considered tokens and each token's attributes are presented.`
+  - If the --parts option is not empty, all addresses are considered tokens and each token's attributes are presented.
+  - For the --approvals option, all open approvals are reported for each provided address.`
 
 func init() {
 	var capabilities caps.Capability // capabilities for chifra tokens
@@ -62,6 +63,7 @@ func init() {
 
 	tokensCmd.Flags().SortFlags = false
 
+	tokensCmd.Flags().BoolVarP(&tokensPkg.GetOptions().Approvals, "approvals", "O", false, `returns all open approvals for the given address(es)`)
 	tokensCmd.Flags().StringSliceVarP(&tokensPkg.GetOptions().Parts, "parts", "p", nil, `which parts of the token information to retrieve
 One or more of [ name | symbol | decimals | totalSupply | version | some | all ]`)
 	tokensCmd.Flags().BoolVarP(&tokensPkg.GetOptions().ByAcct, "by_acct", "b", false, `consider each address an ERC20 token except the last, whose balance is reported for each token`)

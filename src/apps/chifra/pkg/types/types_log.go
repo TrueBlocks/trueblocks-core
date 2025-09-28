@@ -356,4 +356,14 @@ func (log *Log) CompressedLog() string {
 	return MakeCompressed(log.ArticulatedLog)
 }
 
+func (log *Log) Log2Haystack() string {
+	haystack := make([]byte, 66*len(log.Topics)+len(log.Data))
+	haystack = append(haystack, log.Address.Hex()[2:]...)
+	for _, topic := range log.Topics {
+		haystack = append(haystack, topic.Hex()[2:]...)
+	}
+	haystack = append(haystack, log.Data[2:]...)
+	return string(haystack)
+}
+
 // EXISTING_CODE
