@@ -11,10 +11,6 @@ package types
 // EXISTING_CODE
 import (
 	"encoding/json"
-	"fmt"
-	"io"
-	"path/filepath"
-	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 )
@@ -22,15 +18,16 @@ import (
 // EXISTING_CODE
 
 type Approval struct {
-	Address     base.Address   `json:"address"`
-	AddressName string         `json:"addressName"`
-	Amount      base.Wei       `json:"amount"`
-	BlockNumber base.Blknum    `json:"blockNumber"`
-	Spender     base.Address   `json:"spender"`
-	SpenderName string         `json:"spenderName"`
-	Timestamp   base.Timestamp `json:"timestamp"`
-	Token       base.Address   `json:"token"`
-	TokenName   string         `json:"tokenName"`
+	Allowance    base.Wei       `json:"allowance"`
+	BlockNumber  base.Blknum    `json:"blockNumber"`
+	Owner        base.Address   `json:"owner"`
+	Spender      base.Address   `json:"spender"`
+	Timestamp    base.Timestamp `json:"timestamp"`
+	Token        base.Address   `json:"token"`
+	LastAppBlock base.Blknum    `json:"lastAppBlock"`
+	LastAppTs    base.Timestamp `json:"lastAppTs"`
+	LastAppLogID base.Lognum    `json:"lastAppLogID"`
+	LastAppTxID  base.Txnum     `json:"lastAppTxID"`
 	// EXISTING_CODE
 	// EXISTING_CODE
 }
@@ -50,14 +47,20 @@ func (s *Approval) Model(chain, format string, verbose bool, extraOpts map[strin
 
 	// EXISTING_CODE
 	model = map[string]any{
-		"blockNumber": s.BlockNumber,
-		"timestamp":   s.Timestamp,
-		"date":        s.Date(),
-		"owner":       s.Address,
-		"spender":     s.Spender,
-		"token":       s.Token,
-		"amount":      s.Amount.String(),
+		"blockNumber":  s.BlockNumber,
+		"timestamp":    s.Timestamp,
+		"date":         s.Date(),
+		"owner":        s.Owner,
+		"spender":      s.Spender,
+		"token":        s.Token,
+		"allowance":    s.Allowance.String(),
+		"lastAppBlock": s.LastAppBlock,
+		"lastAppLogID": s.LastAppLogID,
+		"lastAppTxID":  s.LastAppTxID,
+		"lastAppTs":    s.LastAppTs,
+		"lastAppDate":  base.FormattedDate(s.LastAppTs),
 	}
+	// EXISTING_CODE
 
 	order = []string{
 		"blockNumber",
@@ -66,7 +69,30 @@ func (s *Approval) Model(chain, format string, verbose bool, extraOpts map[strin
 		"owner",
 		"spender",
 		"token",
-		"amount",
+		"allowance",
+		"lastAppBlock",
+		"lastAppLogID",
+		"lastAppTxID",
+		"lastAppTs",
+		"lastAppDate",
+	}
+
+	if verbose {
+		items := []namer{
+			{addr: s.Owner, name: "ownerName"},
+			{addr: s.Spender, name: "spenderName"},
+			{addr: s.Token, name: "tokenName"},
+		}
+		for _, item := range items {
+			if name, loaded, found := nameAddress(extraOpts, item.addr); found {
+				model[item.name] = name.Name
+				order = append(order, item.name)
+			} else if loaded && format != "json" {
+				model[item.name] = ""
+				order = append(order, item.name)
+			}
+		}
+		order = reorderOrdering(order)
 	}
 	// EXISTING_CODE
 
@@ -78,121 +104,6 @@ func (s *Approval) Model(chain, format string, verbose bool, extraOpts map[strin
 
 func (s *Approval) Date() string {
 	return base.FormattedDate(s.Timestamp)
-}
-
-func (s *Approval) CacheLocations() (string, string, string) {
-	paddedId := fmt.Sprintf("%s-%09d", s.Address.Hex()[2:], s.BlockNumber)
-	parts := make([]string, 3)
-	parts[0] = paddedId[:2]
-	parts[1] = paddedId[2:4]
-	parts[2] = paddedId[4:6]
-	subFolder := strings.ToLower("Approval") + "s"
-	directory := filepath.Join(subFolder, filepath.Join(parts...))
-	return directory, paddedId, "bin"
-}
-
-func (s *Approval) MarshalCache(writer io.Writer) (err error) {
-	// Address
-	if err = base.WriteValue(writer, s.Address); err != nil {
-		return err
-	}
-
-	// AddressName
-	if err = base.WriteValue(writer, s.AddressName); err != nil {
-		return err
-	}
-
-	// Amount
-	if err = base.WriteValue(writer, &s.Amount); err != nil {
-		return err
-	}
-
-	// BlockNumber
-	if err = base.WriteValue(writer, s.BlockNumber); err != nil {
-		return err
-	}
-
-	// Spender
-	if err = base.WriteValue(writer, s.Spender); err != nil {
-		return err
-	}
-
-	// SpenderName
-	if err = base.WriteValue(writer, s.SpenderName); err != nil {
-		return err
-	}
-
-	// Timestamp
-	if err = base.WriteValue(writer, s.Timestamp); err != nil {
-		return err
-	}
-
-	// Token
-	if err = base.WriteValue(writer, s.Token); err != nil {
-		return err
-	}
-
-	// TokenName
-	if err = base.WriteValue(writer, s.TokenName); err != nil {
-		return err
-	}
-
-	return nil
-}
-
-func (s *Approval) UnmarshalCache(fileVersion uint64, reader io.Reader) (err error) {
-	// Check for compatibility and return cache.ErrIncompatibleVersion to invalidate this item (see #3638)
-	// EXISTING_CODE
-	// EXISTING_CODE
-
-	// Address
-	if err = base.ReadValue(reader, &s.Address, fileVersion); err != nil {
-		return err
-	}
-
-	// AddressName
-	if err = base.ReadValue(reader, &s.AddressName, fileVersion); err != nil {
-		return err
-	}
-
-	// Amount
-	if err = base.ReadValue(reader, &s.Amount, fileVersion); err != nil {
-		return err
-	}
-
-	// BlockNumber
-	if err = base.ReadValue(reader, &s.BlockNumber, fileVersion); err != nil {
-		return err
-	}
-
-	// Spender
-	if err = base.ReadValue(reader, &s.Spender, fileVersion); err != nil {
-		return err
-	}
-
-	// SpenderName
-	if err = base.ReadValue(reader, &s.SpenderName, fileVersion); err != nil {
-		return err
-	}
-
-	// Timestamp
-	if err = base.ReadValue(reader, &s.Timestamp, fileVersion); err != nil {
-		return err
-	}
-
-	// Token
-	if err = base.ReadValue(reader, &s.Token, fileVersion); err != nil {
-		return err
-	}
-
-	// TokenName
-	if err = base.ReadValue(reader, &s.TokenName, fileVersion); err != nil {
-		return err
-	}
-
-	s.FinishUnmarshal(fileVersion)
-
-	return nil
 }
 
 // FinishUnmarshal is used by the cache. It may be unused depending on auto-code-gen

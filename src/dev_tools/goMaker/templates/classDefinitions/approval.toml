@@ -5,5 +5,3 @@
     doc_route = "122-approval"
     attributes = ""
     produced_by = "tokens"
-    cache_type = "cacheable"
-    cache_by = "address,block"

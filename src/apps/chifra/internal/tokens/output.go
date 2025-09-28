@@ -57,8 +57,8 @@ func (opts *TokensOptions) TokensInternal(rCtx *output.RenderCtx) error {
 	// EXISTING_CODE
 	if opts.Globals.Decache {
 		err = opts.HandleDecache(rCtx)
-		// } else if opts.Approvals {
-		// 	err = opts.HandleApprovals(rCtx)
+	} else if opts.Approvals {
+		err = opts.HandleApprovals(rCtx)
 	} else if len(opts.Parts) > 0 {
 		err = opts.HandleParts(rCtx)
 	} else {

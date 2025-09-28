@@ -6,9 +6,12 @@ package tokensPkg
 
 import (
 	"errors"
+	"path/filepath"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/monitor"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
@@ -42,6 +45,13 @@ func (opts *TokensOptions) validateTokens() error {
 
 		if len(opts.Addrs) == 0 {
 			return validate.Usage("You must specify at least one address")
+		}
+
+		for _, addr := range opts.Addrs {
+			path := filepath.Join(config.PathToCache(opts.Globals.Chain), "monitors", addr+monitor.Ext)
+			if !file.FileExists(path) {
+				return validate.Usage("Run `chifra list {1}` before querying approvals.", addr, addr)
+			}
 		}
 
 	} else {

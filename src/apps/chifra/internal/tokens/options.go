@@ -21,6 +21,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/caps"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/identifiers"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/monitor"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/walk"
@@ -41,6 +42,7 @@ type TokensOptions struct {
 	Conn      *rpc.Connection          `json:"conn,omitempty"`      // The connection to the RPC server
 	BadFlag   error                    `json:"badFlag,omitempty"`   // An error flag if needed
 	// EXISTING_CODE
+	monitorArray []monitor.Monitor
 	// EXISTING_CODE
 }
 
@@ -220,7 +222,8 @@ func ResetOptions(testMode bool) {
 func (opts *TokensOptions) getCaches() (caches map[walk.CacheType]bool) {
 	// EXISTING_CODE
 	caches = map[walk.CacheType]bool{
-		walk.Cache_Tokens: true,
+		walk.Cache_Tokens:       true,
+		walk.Cache_Transactions: opts.Approvals,
 	}
 	// EXISTING_CODE
 	return

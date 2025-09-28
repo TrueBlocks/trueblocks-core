@@ -12,6 +12,7 @@ type MappedType interface {
 		[]Result |
 		[]*Log |
 		[]*Trace |
+		Approval |
 		Token |
 		bool
 }
