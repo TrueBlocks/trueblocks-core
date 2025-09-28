@@ -266,18 +266,19 @@ The following commands produce and manage Approvals:
 
 Approvals consist of the following fields:
 
-| Field       | Description                                          | Type      |
-| ----------- | ---------------------------------------------------- | --------- |
-| blockNumber | the block number at which this call was made         | blknum    |
-| timestamp   | the timestamp of the block for this call             | timestamp |
-| date        | the timestamp as a date (calculated)                 | datetime  |
-| address     | the address of the owner of the token (the approver) | address   |
-| addressName | the name of the holder, if available                 | string    |
-| spender     | the address being granted approval to spend tokens   | address   |
-| spenderName | the name of the spender, if available                | string    |
-| amount      | the amount of tokens approved for spending           | wei       |
-| token       | the address of the ERC-20 token being approved       | address   |
-| tokenName   | the name of the token, if available                  | string    |
+| Field        | Description                                            | Type      |
+| ------------ | ------------------------------------------------------ | --------- |
+| allowance    | the amount of tokens approved for spending             | wei       |
+| blockNumber  | the current block number when the report was generated | blknum    |
+| timestamp    | the current timestamp when the report was generated    | timestamp |
+| date         | the timestamp as a date (calculated)                   | datetime  |
+| owner        | the address of the owner of the token (the approver)   | address   |
+| spender      | the address being granted approval to spend tokens     | address   |
+| token        | the address of the ERC-20 token being approved         | address   |
+| lastAppBlock | the block number of the last approval event            | blknum    |
+| lastAppTs    | the timestamp of the last approval event               | timestamp |
+| lastAppTxID  | the transaction index of the last approval event       | txnum     |
+| lastAppLogID | the log index of the last approval event               | lognum    |
 
 ## AppearanceTable
 

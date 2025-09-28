@@ -20,14 +20,14 @@ import (
 type Approval struct {
 	Allowance    base.Wei       `json:"allowance"`
 	BlockNumber  base.Blknum    `json:"blockNumber"`
+	LastAppBlock base.Blknum    `json:"lastAppBlock"`
+	LastAppLogID base.Lognum    `json:"lastAppLogID"`
+	LastAppTs    base.Timestamp `json:"lastAppTs"`
+	LastAppTxID  base.Txnum     `json:"lastAppTxID"`
 	Owner        base.Address   `json:"owner"`
 	Spender      base.Address   `json:"spender"`
 	Timestamp    base.Timestamp `json:"timestamp"`
 	Token        base.Address   `json:"token"`
-	LastAppBlock base.Blknum    `json:"lastAppBlock"`
-	LastAppTs    base.Timestamp `json:"lastAppTs"`
-	LastAppLogID base.Lognum    `json:"lastAppLogID"`
-	LastAppTxID  base.Txnum     `json:"lastAppTxID"`
 	// EXISTING_CODE
 	// EXISTING_CODE
 }
@@ -60,7 +60,6 @@ func (s *Approval) Model(chain, format string, verbose bool, extraOpts map[strin
 		"lastAppTs":    s.LastAppTs,
 		"lastAppDate":  base.FormattedDate(s.LastAppTs),
 	}
-	// EXISTING_CODE
 
 	order = []string{
 		"blockNumber",

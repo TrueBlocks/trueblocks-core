@@ -7,7 +7,7 @@ info:
   license:
     name: GPL 3.0
     url: http://www.gnu.org/licenses/
-  version: 5.9.1
+  version: 5.9.3
   description: >
     A REST layer over the TrueBlocks chifra command line. With `chifra daemon`, you can
     run this on your own machine, and make calls to `localhost`.
@@ -3586,46 +3586,50 @@ components:
       description: "an ERC-20 token approval granting spending permission from owner to spender"
       type: object
       properties:
+        allowance:
+          type: string
+          format: wei
+          description: "the amount of tokens approved for spending"
         blockNumber:
           type: number
           format: blknum
-          description: "the block number at which this call was made"
+          description: "the current block number when the report was generated"
         timestamp:
           type: number
           format: timestamp
-          description: "the timestamp of the block for this call"
+          description: "the current timestamp when the report was generated"
         date:
           type: string
           format: datetime
           description: "the timestamp as a date (calculated)"
-        address:
+        owner:
           type: string
           format: address
           description: "the address of the owner of the token (the approver)"
-        addressName:
-          type: string
-          format: string
-          description: "the name of the holder, if available"
         spender:
           type: string
           format: address
           description: "the address being granted approval to spend tokens"
-        spenderName:
-          type: string
-          format: string
-          description: "the name of the spender, if available"
-        amount:
-          type: string
-          format: wei
-          description: "the amount of tokens approved for spending"
         token:
           type: string
           format: address
           description: "the address of the ERC-20 token being approved"
-        tokenName:
-          type: string
-          format: string
-          description: "the name of the token, if available"
+        lastAppBlock:
+          type: number
+          format: blknum
+          description: "the block number of the last approval event"
+        lastAppTs:
+          type: number
+          format: timestamp
+          description: "the timestamp of the last approval event"
+        lastAppTxID:
+          type: number
+          format: txnum
+          description: "the transaction index of the last approval event"
+        lastAppLogID:
+          type: number
+          format: lognum
+          description: "the log index of the last approval event"
     appearanceTable:
       description: "an appearance table for an address"
       type: object
