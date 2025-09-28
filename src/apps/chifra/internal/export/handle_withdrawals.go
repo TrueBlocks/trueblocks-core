@@ -90,7 +90,7 @@ func (opts *ExportOptions) HandleWithdrawals(rCtx *output.RenderCtx, monitorArra
 						}
 					}
 
-					items := make([]*types.Withdrawal, 0, len(thisMap) * 2)
+					items := make([]*types.Withdrawal, 0, len(thisMap)*2)
 					for _, withdrawalSlice := range thisMap {
 						if withdrawalSlice != nil && *withdrawalSlice != nil {
 							for _, w := range *withdrawalSlice {

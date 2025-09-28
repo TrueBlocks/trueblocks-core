@@ -96,7 +96,7 @@ func (opts *ExportOptions) HandleTraces(rCtx *output.RenderCtx, monitorArray []m
 						return
 					}
 
-					items := make([]*types.Trace, 0, len(thisMap) * 2)
+					items := make([]*types.Trace, 0, len(thisMap)*2)
 					for _, traceSlice := range thisMap {
 						if traceSlice != nil && *traceSlice != nil {
 							items = append(items, *traceSlice...)
