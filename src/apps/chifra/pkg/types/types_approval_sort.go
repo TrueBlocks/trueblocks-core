@@ -27,16 +27,16 @@ func ApprovalBy(field ApprovalField, order SortOrder) func(p1, p2 Approval) bool
 	case ApprovalAllowance: // wei
 		return func(p1, p2 Approval) bool {
 			if order == Ascending {
-				return p1.Allowance < p2.Allowance
+				return p1.Allowance.LessThan(&p2.Allowance)
 			}
-			return p1.Allowance > p2.Allowance
+			return p2.Allowance.LessThan(&p1.Allowance)
 		}
 	case ApprovalDate: // datetime
 		return func(p1, p2 Approval) bool {
 			if order == Ascending {
-				return p1.Date < p2.Date
+				return p1.Date() < p2.Date()
 			}
-			return p1.Date > p2.Date
+			return p1.Date() > p2.Date()
 		}
 	case ApprovalLastAppBlock: // blknum
 		return func(p1, p2 Approval) bool {
@@ -47,19 +47,17 @@ func ApprovalBy(field ApprovalField, order SortOrder) func(p1, p2 Approval) bool
 		}
 	case ApprovalOwner: // address
 		return func(p1, p2 Approval) bool {
-			cmp := p1.Owner.Cmp(p2.Address.Owner)
 			if order == Ascending {
-				return cmp == -1
+				return p1.Owner.Hex() < p2.Owner.Hex()
 			}
-			return cmp == 1
+			return p1.Owner.Hex() > p2.Owner.Hex()
 		}
 	case ApprovalSpender: // address
 		return func(p1, p2 Approval) bool {
-			cmp := p1.Spender.Cmp(p2.Address.Spender)
 			if order == Ascending {
-				return cmp == -1
+				return p1.Spender.Hex() < p2.Spender.Hex()
 			}
-			return cmp == 1
+			return p1.Spender.Hex() > p2.Spender.Hex()
 		}
 	case ApprovalTimestamp: // timestamp
 		return func(p1, p2 Approval) bool {
@@ -70,11 +68,10 @@ func ApprovalBy(field ApprovalField, order SortOrder) func(p1, p2 Approval) bool
 		}
 	case ApprovalToken: // address
 		return func(p1, p2 Approval) bool {
-			cmp := p1.Token.Cmp(p2.Address.Token)
 			if order == Ascending {
-				return cmp == -1
+				return p1.Token.Hex() < p2.Token.Hex()
 			}
-			return cmp == 1
+			return p1.Token.Hex() > p2.Token.Hex()
 		}
 
 	}

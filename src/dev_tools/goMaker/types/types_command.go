@@ -662,7 +662,7 @@ func (c *Command) BaseTypes() string {
 }
 
 // ----------------------------------------------------------------------
-func (c *Command) ReturnTypes() string {
+func (c *Command) ReturnTypesArray() []string {
 	present := map[string]bool{}
 	ret := []string{}
 	for _, op := range c.Options {
@@ -678,6 +678,12 @@ func (c *Command) ReturnTypes() string {
 			present[retType] = true
 		}
 	}
+	return ret
+}
+
+// ----------------------------------------------------------------------
+func (c *Command) ReturnTypes() string {
+	ret := c.ReturnTypesArray()
 	return strings.Join(ret, "|\n")
 }
 

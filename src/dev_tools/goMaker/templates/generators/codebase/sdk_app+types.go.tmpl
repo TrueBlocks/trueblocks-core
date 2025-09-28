@@ -1,0 +1,15 @@
+package sdk
+
+import "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
+
+// Modeler interface exposes the Model method for SDK consumers
+type Modeler interface {
+	Model(chain, format string, verbose bool, extraOpts map[string]any) types.Model
+}
+
+// Model type alias for the return type of Model()
+type Model = types.Model
+
+{{range .Commands}}{{if .HasSdkEndpoints}}{{range .ReturnTypesArray}}
+type {{replace . "types." ""}} = types.{{replace . "types." ""}}{{end}}
+{{end}}{{end}}
