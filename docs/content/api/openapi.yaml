@@ -4419,7 +4419,7 @@ components:
         date:
           type: string
           format: datetime
-          description: "date when this contract state was last updated"
+          description: "date when this contract state was last updated (calculated)"
         errorCount:
           type: number
           format: int64

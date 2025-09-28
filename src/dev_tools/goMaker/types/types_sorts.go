@@ -86,14 +86,33 @@ func getSortCode(typ string) string {
 			return p1.{{.GoName}} && !p2.{{.GoName}}
 		}
 `
+	case "wei":
+		return `	case {{.Container}}{{firstUpper .Name}}: // {{.Type}}
+		return func(p1, p2 {{.Container}}) bool {
+			if order == Ascending {
+				return p1.{{.GoName}}.LessThan(&p2.{{.GoName}})
+			}
+			return p2.{{.GoName}}.LessThan(&p1.{{.GoName}})
+		}
+`
+
+	case "datetime":
+		return `	case {{.Container}}{{firstUpper .Name}}: // {{.Type}}
+		return func(p1, p2 {{.Container}}) bool {
+			if order == Ascending {
+				return p1.{{.GoName}}() < p2.{{.GoName}}()
+			}
+			return p1.{{.GoName}}() > p2.{{.GoName}}()
+		}
+`
+
 	case "address":
 		return `	case {{.Container}}{{firstUpper .Name}}: // {{.Type}}
 		return func(p1, p2 {{.Container}}) bool {
-			cmp := p1.{{.GoName}}.Cmp(p2.Address.{{.GoName}})
 			if order == Ascending {
-				return cmp == -1
+				return p1.{{.GoName}}.LessThan(p2.{{.GoName}})
 			}
-			return cmp == 1
+			return p2.{{.GoName}}.LessThan(p1.{{.GoName}})
 		}
 `
 	case "RangeDates":

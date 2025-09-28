@@ -6,15 +6,15 @@ import (
 )
 
 type Store struct {
-	Name   string     `json:"name,omitempty" toml:"name"`
 	Source string     `json:"source,omitempty" toml:"source"`
+	Name   string     `json:"name,omitempty" toml:"name"`
 	sPtr   *Structure `json:"-" toml:"-"`
 }
 
 func NewStore(s *Structure, name string) Store {
 	ret := Store{
-		Name:   name,
 		Source: "sdk",
+		Name:   name,
 		sPtr:   s,
 	}
 	parts := strings.Split(name, ".")

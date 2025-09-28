@@ -48,16 +48,16 @@ func ApprovalBy(field ApprovalField, order SortOrder) func(p1, p2 Approval) bool
 	case ApprovalOwner: // address
 		return func(p1, p2 Approval) bool {
 			if order == Ascending {
-				return p1.Owner.Hex() < p2.Owner.Hex()
+				return p1.Owner.LessThan(p2.Owner)
 			}
-			return p1.Owner.Hex() > p2.Owner.Hex()
+			return p2.Owner.LessThan(p1.Owner)
 		}
 	case ApprovalSpender: // address
 		return func(p1, p2 Approval) bool {
 			if order == Ascending {
-				return p1.Spender.Hex() < p2.Spender.Hex()
+				return p1.Spender.LessThan(p2.Spender)
 			}
-			return p1.Spender.Hex() > p2.Spender.Hex()
+			return p2.Spender.LessThan(p1.Spender)
 		}
 	case ApprovalTimestamp: // timestamp
 		return func(p1, p2 Approval) bool {
@@ -69,9 +69,9 @@ func ApprovalBy(field ApprovalField, order SortOrder) func(p1, p2 Approval) bool
 	case ApprovalToken: // address
 		return func(p1, p2 Approval) bool {
 			if order == Ascending {
-				return p1.Token.Hex() < p2.Token.Hex()
+				return p1.Token.LessThan(p2.Token)
 			}
-			return p1.Token.Hex() > p2.Token.Hex()
+			return p2.Token.LessThan(p1.Token)
 		}
 
 	}

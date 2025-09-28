@@ -3,6 +3,6 @@ address    , address  ,           , sorts|width=340|readOnly,         ,        1
 name       , string   ,           , sorts|width=200         ,         ,        2, the name of this contract (if available)
 abi        , *Abi     ,           , noui                    ,         ,        3, the ABI for this contract
 lastUpdated, timestamp,           , sorts                   ,         ,        4, timestamp when this contract state was last updated
-date       , datetime ,           , sorts                   ,         ,        5, date when this contract state was last updated
+date       , datetime ,           , calc|sorts              ,         ,        5, date when this contract state was last updated
 errorCount , int64    ,           , width=80                ,         ,        6, number of errors encountered when calling read functions
 lastError  , string   ,           , noui                    ,         ,        7, the most recent error message when calling functions

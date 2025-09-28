@@ -10,6 +10,8 @@ type Modeler interface {
 // Model type alias for the return type of Model()
 type Model = types.Model
 
-{{range .Commands}}{{if .HasSdkEndpoints}}{{range .ReturnTypesArray}}
-type {{replace . "types." ""}} = types.{{replace . "types." ""}}{{end}}
-{{end}}{{end}}
+{{range .SortedStructs}}type {{.Class}} = types.{{.Class}}
+{{end}}
+
+// EXISTING_CODE
+// EXISTING_CODE

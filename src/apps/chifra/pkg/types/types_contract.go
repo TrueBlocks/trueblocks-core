@@ -20,7 +20,6 @@ import (
 type Contract struct {
 	Abi         *Abi           `json:"abi"`
 	Address     base.Address   `json:"address"`
-	Date        string         `json:"date"`
 	ErrorCount  int64          `json:"errorCount"`
 	LastError   string         `json:"lastError"`
 	LastUpdated base.Timestamp `json:"lastUpdated"`
@@ -60,4 +59,8 @@ func (s *Contract) FinishUnmarshal(fileVersion uint64) {
 }
 
 // EXISTING_CODE
+func (s *Contract) Date() string {
+	return base.FormattedDate(s.LastUpdated)
+}
+
 // EXISTING_CODE
