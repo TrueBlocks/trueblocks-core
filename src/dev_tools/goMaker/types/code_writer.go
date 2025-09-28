@@ -27,7 +27,7 @@ func WriteCode(existingFn, newCode string) (bool, error) {
 	if !file.FileExists(existingFn) || strings.Contains(existingFn, "/generated/") {
 		if !strings.Contains(existingFn, "/generated/") {
 			if !file.FolderExists(filepath.Dir(existingFn)) {
-				logger.Fatal("Folder does not exist for file", existingFn)
+				file.EstablishFolder(filepath.Dir(existingFn))
 			}
 			if !verbose {
 				logger.Info(colors.Yellow+"Creating", existingFn, strings.Repeat(" ", 20)+colors.Off)
@@ -182,7 +182,7 @@ func updateFile(tempFn, newCode string) (bool, error) {
 	if fileExt == "go" {
 		formattedBytes, err := format.Source([]byte(codeToWrite))
 		if err != nil {
-			_, _ = showErroredCode(codeToWrite, err)
+			_, _ = showErroredCode(origFn, codeToWrite, err)
 		}
 		codeToWrite = string(formattedBytes)
 	} else {
@@ -265,7 +265,7 @@ func updateFile(tempFn, newCode string) (bool, error) {
 				utils.System(cmd)
 				errors := file.AsciiFileToString(errFn)
 				if len(errors) > 0 {
-					return showErroredCode(codeToWrite, fmt.Errorf("prettier errors: %s", errors))
+					return showErroredCode(tmpSrcFn, codeToWrite, fmt.Errorf("prettier errors: %s", errors))
 				}
 				codeToWrite = file.AsciiFileToString(outFn)
 			}
@@ -357,8 +357,8 @@ func getPluginPath() string {
 	return ""
 }
 
-func showErroredCode(newCode string, err error) (bool, error) {
-	logger.Error("Error formatting code:", colors.Red, err, colors.Off)
+func showErroredCode(fn, newCode string, err error) (bool, error) {
+	logger.Error("Error formatting code at", fn, colors.Red, err, colors.Off)
 	logger.Info("Code that caused the error:")
 	for i, line := range strings.Split(newCode, "\n") {
 		logger.Info(fmt.Sprintf("%s%4d%s: %s", colors.Yellow, i+1, colors.Off, line))

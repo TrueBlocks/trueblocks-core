@@ -99,6 +99,10 @@ func (cb *CodeBase) LoadStructures(thePath string, callBack func(*Structure, *an
 			for i := range f.Facets {
 				f.Facets[i].NormalizeActions()
 			}
+			for i := range f.Facets {
+				// TODO: BOGUS - THIS SHOULD SPLIT AND KEEP THE LAST ITEM ONLY
+				f.Facets[i].Store = strings.ReplaceAll(f.Facets[i].Store, "dalle.", "")
+			}
 			f.Settings.Facets = f.Facets // Copy facets into the Structure
 			structMap[mapKey] = f.Settings
 		}
@@ -124,6 +128,9 @@ func (cb *CodeBase) LoadMembers(thePath string, structMap map[string]Structure) 
 		class := strings.TrimSuffix(filepath.Base(path), ".csv")
 		mapKey := strings.ToLower(class)
 		structure := structMap[mapKey]
+		if structure.Class == "" {
+			return fmt.Errorf("structure %s not found at mapKey %s", class, mapKey)
+		}
 		structure.Members, err = LoadCsv(path, readMember, nil)
 		if err != nil {
 			return err
