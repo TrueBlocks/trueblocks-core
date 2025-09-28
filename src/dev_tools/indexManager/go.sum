@@ -1,5 +1,5 @@
-github.com/TrueBlocks/trueblocks-core/src/apps/chifra v0.0.0-20250928042956-de9ea31404b7 h1:b/Kyhsyux2SETVCbMui0j8f988ZjcJL8m/bCYKNo860=
-github.com/TrueBlocks/trueblocks-core/src/apps/chifra v0.0.0-20250928042956-de9ea31404b7/go.mod h1:lTJvVlTjkOJ0StvS8li5YxJnBqSncwR2EjqY1N57+hc=
+github.com/TrueBlocks/trueblocks-core/src/apps/chifra v0.0.0-20250928045016-814dde303ad8 h1:v0hvZV4l6q9BFkbhMbELF9bhKKtJAupXqBNYm/tnroo=
+github.com/TrueBlocks/trueblocks-core/src/apps/chifra v0.0.0-20250928045016-814dde303ad8/go.mod h1:lTJvVlTjkOJ0StvS8li5YxJnBqSncwR2EjqY1N57+hc=
 github.com/bykof/gostradamus v1.1.2 h1:R25lYcHk1yawbwfef1KMZELjR5h2T9DbhGEV3LrcAVY=
 github.com/bykof/gostradamus v1.1.2/go.mod h1:OUm9IOqAsrlmfaf3j59xXDwJ0WJq0KYzIwpamQFZS10=
 github.com/cpuguy83/go-md2man/v2 v2.0.6/go.mod h1:oOW0eioCTA6cOiMLiUPZOpcVxMig6NIQQ7OS05n1F4g=
