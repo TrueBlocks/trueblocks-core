@@ -50,7 +50,7 @@ func (s *Token) Model(chain, format string, verbose bool, extraOpts map[string]a
 
 	// EXISTING_CODE
 	name := Name{}
-	if addressName, _, found := nameAddress(extraOpts, s.Address); found {
+	if addressName, _, found := labelAddress(extraOpts, s.Address); found {
 		name = addressName
 	}
 	if name.Decimals == 0 {
@@ -125,7 +125,7 @@ func (s *Token) Model(chain, format string, verbose bool, extraOpts map[string]a
 	}
 
 	if verbose {
-		if name, loaded, found := nameAddress(extraOpts, s.Holder); found {
+		if name, loaded, found := labelAddress(extraOpts, s.Holder); found {
 			model["holderName"] = name.Name
 			order = append(order, "holderName")
 		} else if loaded && format != "json" {
@@ -133,7 +133,7 @@ func (s *Token) Model(chain, format string, verbose bool, extraOpts map[string]a
 			order = append(order, "holderName")
 		}
 	}
-	order = reorderOrdering(order)
+	order = reorderFields(order)
 
 	// EXISTING_CODE
 

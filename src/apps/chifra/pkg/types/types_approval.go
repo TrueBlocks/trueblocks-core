@@ -77,13 +77,13 @@ func (s *Approval) Model(chain, format string, verbose bool, extraOpts map[strin
 	}
 
 	if verbose {
-		items := []namer{
-			{addr: s.Owner, name: "ownerName"},
-			{addr: s.Spender, name: "spenderName"},
-			{addr: s.Token, name: "tokenName"},
+		items := []Labeler{
+			NewLabeler(s.Owner, "ownerName"),
+			NewLabeler(s.Spender, "spenderName"),
+			NewLabeler(s.Token, "tokenName"),
 		}
 		for _, item := range items {
-			if name, loaded, found := nameAddress(extraOpts, item.addr); found {
+			if name, loaded, found := labelAddress(extraOpts, item.addr); found {
 				model[item.name] = name.Name
 				order = append(order, item.name)
 			} else if loaded && format != "json" {
@@ -91,7 +91,7 @@ func (s *Approval) Model(chain, format string, verbose bool, extraOpts map[strin
 				order = append(order, item.name)
 			}
 		}
-		order = reorderOrdering(order)
+		order = reorderFields(order)
 	}
 	// EXISTING_CODE
 

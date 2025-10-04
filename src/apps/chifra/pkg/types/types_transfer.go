@@ -85,7 +85,7 @@ func (s *Transfer) Model(chain, format string, verbose bool, extraOpts map[strin
 		{s.Holder, "holder"},
 	} {
 		key := item.keyPrefix + "Name"
-		if result, loaded, found := nameAddress(extraOpts, item.address); found {
+		if result, loaded, found := labelAddress(extraOpts, item.address); found {
 			model[key] = result.Name
 			order = append(order, key)
 		} else if loaded && format != "json" {
@@ -94,7 +94,7 @@ func (s *Transfer) Model(chain, format string, verbose bool, extraOpts map[strin
 		}
 	}
 
-	order = reorderOrdering(order)
+	order = reorderFields(order)
 	// EXISTING_CODE
 
 	return Model{

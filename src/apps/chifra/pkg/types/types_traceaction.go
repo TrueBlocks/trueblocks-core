@@ -103,16 +103,16 @@ func (s *TraceAction) Model(chain, format string, verbose bool, extraOpts map[st
 		if len(s.RewardType) > 0 {
 			model["rewardType"] = s.RewardType
 		}
-		items := []namer{
-			{addr: s.Address, name: "addressName"},
-			{addr: s.Author, name: "authorName"},
-			{addr: s.From, name: "fromName"},
-			{addr: s.RefundAddress, name: "refundAddressName"},
-			{addr: s.SelfDestructed, name: "selfDestructedName"},
-			{addr: s.To, name: "toName"},
+		items := []Labeler{
+			NewLabeler(s.Address, "addressName"),
+			NewLabeler(s.Author, "authorName"),
+			NewLabeler(s.From, "fromName"),
+			NewLabeler(s.RefundAddress, "refundAddressName"),
+			NewLabeler(s.SelfDestructed, "selfDestructedName"),
+			NewLabeler(s.To, "toName"),
 		}
 		for _, item := range items {
-			if name, loaded, found := nameAddress(extraOpts, item.addr); found {
+			if name, loaded, found := labelAddress(extraOpts, item.addr); found {
 				model[item.name] = name.Name
 				order = append(order, item.name)
 			} else if loaded && format != "json" {
@@ -120,7 +120,7 @@ func (s *TraceAction) Model(chain, format string, verbose bool, extraOpts map[st
 				order = append(order, item.name)
 			}
 		}
-		order = reorderOrdering(order)
+		order = reorderFields(order)
 	}
 
 	// EXISTING_CODE

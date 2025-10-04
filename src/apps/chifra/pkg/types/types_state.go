@@ -106,14 +106,14 @@ func (s *State) Model(chain, format string, verbose bool, extraOpts map[string]a
 		}
 	}
 
-	items := []namer{
-		{addr: s.Address, name: "addressName"},
+	items := []Labeler{
+		NewLabeler(s.Address, "addressName"),
 	}
 	if hasProxy {
-		items = append(items, namer{addr: s.Proxy, name: "proxyName"})
+		items = append(items, NewLabeler(s.Proxy, "proxyName"))
 	}
 	for _, item := range items {
-		if name, loaded, found := nameAddress(extraOpts, item.addr); found {
+		if name, loaded, found := labelAddress(extraOpts, item.addr); found {
 			model[item.name] = name.Name
 			order = append(order, item.name)
 		} else if loaded && format != "json" {
@@ -121,7 +121,7 @@ func (s *State) Model(chain, format string, verbose bool, extraOpts map[string]a
 			order = append(order, item.name)
 		}
 	}
-	order = reorderOrdering(order)
+	order = reorderFields(order)
 	// EXISTING_CODE
 
 	return Model{

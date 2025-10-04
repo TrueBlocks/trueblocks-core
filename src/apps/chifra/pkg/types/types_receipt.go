@@ -117,13 +117,13 @@ func (s *Receipt) Model(chain, format string, verbose bool, extraOpts map[string
 		}
 	}
 
-	items := []namer{
-		{addr: s.ContractAddress, name: "contractName"},
-		{addr: s.From, name: "fromName"},
-		{addr: s.To, name: "toName"},
+	items := []Labeler{
+		NewLabeler(s.ContractAddress, "contractName"),
+		NewLabeler(s.From, "fromName"),
+		NewLabeler(s.To, "toName"),
 	}
 	for _, item := range items {
-		if name, loaded, found := nameAddress(extraOpts, item.addr); found {
+		if name, loaded, found := labelAddress(extraOpts, item.addr); found {
 			model[item.name] = name.Name
 			order = append(order, item.name)
 		} else if loaded && format != "json" {
@@ -131,7 +131,7 @@ func (s *Receipt) Model(chain, format string, verbose bool, extraOpts map[string
 			order = append(order, item.name)
 		}
 	}
-	order = reorderOrdering(order)
+	order = reorderFields(order)
 	// EXISTING_CODE
 
 	return Model{

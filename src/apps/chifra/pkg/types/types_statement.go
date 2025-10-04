@@ -75,60 +75,28 @@ func (s Statement) String() string {
 }
 
 func (s *Statement) Model(chain, format string, verbose bool, extraOpts map[string]any) Model {
-	_ = chain
-	_ = format
-	_ = verbose
-	_ = extraOpts
-	var model = map[string]any{}
-	var order = []string{}
-
-	// EXISTING_CODE
-	model = map[string]any{
-		"accountedFor":        s.AccountedFor,
-		"amountIn":            s.AmountIn.Text(10),
-		"amountNet":           s.AmountNet().Text(10),
-		"amountOut":           s.AmountOut.Text(10),
-		"asset":               s.Asset,
-		"begBal":              s.BegBal.Text(10),
-		"begBalDiff":          s.BegBalDiff().Text(10),
-		"blockNumber":         s.BlockNumber,
-		"correctAmountIn":     s.CorrectAmountIn.Text(10),
-		"correctAmountOut":    s.CorrectAmountOut.Text(10),
-		"correctBegBalIn":     s.CorrectBegBalIn.Text(10),
-		"correctBegBalOut":    s.CorrectBegBalOut.Text(10),
-		"correctEndBalIn":     s.CorrectEndBalIn.Text(10),
-		"correctEndBalOut":    s.CorrectEndBalOut.Text(10),
-		"correctingReasons":   strings.Trim(s.CorrectingReasons, ","),
-		"date":                s.Date(),
-		"decimals":            s.Decimals,
-		"endBal":              s.EndBal.Text(10),
-		"endBalCalc":          s.EndBalCalc().Text(10),
-		"endBalDiff":          s.EndBalDiff().Text(10),
-		"gasOut":              s.GasOut.Text(10),
-		"internalIn":          s.InternalIn.Text(10),
-		"internalOut":         s.InternalOut.Text(10),
-		"logIndex":            s.LogIndex,
-		"minerBaseRewardIn":   s.MinerBaseRewardIn.Text(10),
-		"minerNephewRewardIn": s.MinerNephewRewardIn.Text(10),
-		"minerTxFeeIn":        s.MinerTxFeeIn.Text(10),
-		"minerUncleRewardIn":  s.MinerUncleRewardIn.Text(10),
-		"prefundIn":           s.PrefundIn.Text(10),
-		"prevBal":             s.PrevBal.Text(10),
-		"priceSource":         s.PriceSource,
-		"recipient":           s.Recipient,
-		"reconciled":          s.Reconciled(),
-		"selfDestructIn":      s.SelfDestructIn.Text(10),
-		"selfDestructOut":     s.SelfDestructOut.Text(10),
-		"sender":              s.Sender,
-		"spotPrice":           s.SpotPrice.String(),
-		"symbol":              s.Symbol,
-		"timestamp":           s.Timestamp,
-		"totalIn":             s.TotalIn().Text(10),
-		"totalOut":            s.TotalOut().Text(10),
-		"transactionHash":     s.TransactionHash,
-		"transactionIndex":    s.TransactionIndex,
+	props := &ModelProps{
+		Chain:     chain,
+		Format:    format,
+		Verbose:   verbose,
+		ExtraOpts: extraOpts,
 	}
 
+	rawNames := []Labeler{
+		NewLabeler(s.Asset, "asset"),
+		NewLabeler(s.AccountedFor, "accountedFor"),
+		NewLabeler(s.Sender, "sender"),
+		NewLabeler(s.Recipient, "recipient"),
+	}
+	model := s.RawMap(props, rawNames)
+
+	calcNames := []Labeler{}
+	for k, v := range s.CalcMap(props, calcNames) {
+		model[k] = v
+	}
+
+	var order = []string{}
+	// EXISTING_CODE
 	order = []string{
 		"blockNumber", "transactionIndex", "logIndex", "transactionHash", "timestamp", "date",
 		"asset", "symbol", "decimals", "spotPrice", "priceSource", "accountedFor",
@@ -141,6 +109,107 @@ func (s *Statement) Model(chain, format string, verbose bool, extraOpts map[stri
 	}
 
 	if extraOpts["ether"] == true {
+		order = append(order, []string{"begBalEth", "amountNetEth", "endBalEth",
+			"totalInEth", "amountInEth", "internalInEth", "selfDestructInEth",
+			"minerBaseRewardInEth", "minerNephewRewardInEth", "minerTxFeeInEth",
+			"minerUncleRewardInEth", "correctBegBalInEth", "correctAmountInEth", "correctEndBalInEth",
+			"prefundInEth", "totalOutEth", "amountOutEth", "internalOutEth", "correctBegBalOutEth",
+			"correctAmountOutEth", "correctEndBalOutEth", "selfDestructOutEth", "gasOutEth",
+			"begBalDiffEth", "endBalDiffEth", "endBalCalcEth", "prevBalEth"}...)
+	}
+
+	// Add name fields to order if they exist in the model
+	for _, item := range []struct {
+		keyPrefix string
+	}{
+		{"asset"},
+		{"accountedFor"},
+		{"sender"},
+		{"recipient"},
+	} {
+		key := item.keyPrefix + "Name"
+		if _, exists := model[key]; exists {
+			order = append(order, key)
+		}
+	}
+
+	order = reorderFields(order)
+	// EXISTING_CODE
+
+	return Model{
+		Data:  model,
+		Order: order,
+	}
+}
+
+// RawMap returns a map containing only the raw/base fields for this Statement.
+// This excludes any calculated or derived fields.
+func (s *Statement) RawMap(p *ModelProps, needed []Labeler) map[string]any {
+	model := map[string]any{
+		// BINGO
+		"accountedFor":        s.AccountedFor,
+		"amountIn":            s.AmountIn.Text(10),
+		"amountOut":           s.AmountOut.Text(10),
+		"asset":               s.Asset,
+		"begBal":              s.BegBal.Text(10),
+		"blockNumber":         s.BlockNumber,
+		"correctAmountIn":     s.CorrectAmountIn.Text(10),
+		"correctAmountOut":    s.CorrectAmountOut.Text(10),
+		"correctBegBalIn":     s.CorrectBegBalIn.Text(10),
+		"correctBegBalOut":    s.CorrectBegBalOut.Text(10),
+		"correctEndBalIn":     s.CorrectEndBalIn.Text(10),
+		"correctEndBalOut":    s.CorrectEndBalOut.Text(10),
+		"correctingReasons":   strings.Trim(s.CorrectingReasons, ","),
+		"decimals":            s.Decimals,
+		"endBal":              s.EndBal.Text(10),
+		"gasOut":              s.GasOut.Text(10),
+		"internalIn":          s.InternalIn.Text(10),
+		"internalOut":         s.InternalOut.Text(10),
+		"logIndex":            s.LogIndex,
+		"minerBaseRewardIn":   s.MinerBaseRewardIn.Text(10),
+		"minerNephewRewardIn": s.MinerNephewRewardIn.Text(10),
+		"minerTxFeeIn":        s.MinerTxFeeIn.Text(10),
+		"minerUncleRewardIn":  s.MinerUncleRewardIn.Text(10),
+		"prefundIn":           s.PrefundIn.Text(10),
+		"prevBal":             s.PrevBal.Text(10),
+		"priceSource":         s.PriceSource,
+		"recipient":           s.Recipient,
+		"selfDestructIn":      s.SelfDestructIn.Text(10),
+		"selfDestructOut":     s.SelfDestructOut.Text(10),
+		"sender":              s.Sender,
+		"spotPrice":           s.SpotPrice.String(),
+		"symbol":              s.Symbol,
+		"timestamp":           s.Timestamp,
+		"transactionHash":     s.TransactionHash,
+		"transactionIndex":    s.TransactionIndex,
+		// BINGO
+	}
+
+	// BINGO
+	// BINGO
+
+	return labelAddresses(p, model, needed)
+}
+
+// CalcMap returns a map containing only the calculated/derived fields for this Statement.
+// This is optimized for streaming contexts where the frontend receives the raw Statement
+// and needs to enhance it with calculated values.
+func (s *Statement) CalcMap(p *ModelProps, needed []Labeler) map[string]any {
+	model := map[string]any{
+		// BINGO
+		"amountNet":  s.AmountNet().Text(10),
+		"begBalDiff": s.BegBalDiff().Text(10),
+		"date":       s.Date(),
+		"endBalCalc": s.EndBalCalc().Text(10),
+		"endBalDiff": s.EndBalDiff().Text(10),
+		"reconciled": s.Reconciled(),
+		"totalIn":    s.TotalIn().Text(10),
+		"totalOut":   s.TotalOut().Text(10),
+		// BINGO
+	}
+
+	// BINGO
+	if p.ExtraOpts["ether"] == true {
 		decimals := int(s.Decimals)
 		model["amountInEth"] = s.AmountIn.ToFloatString(decimals)
 		model["amountNetEth"] = s.AmountNet().ToFloatString(decimals)
@@ -169,41 +238,10 @@ func (s *Statement) Model(chain, format string, verbose bool, extraOpts map[stri
 		model["selfDestructOutEth"] = s.SelfDestructOut.ToFloatString(decimals)
 		model["totalInEth"] = s.TotalIn().ToFloatString(decimals)
 		model["totalOutEth"] = s.TotalOut().ToFloatString(decimals)
-		order = append(order, []string{"begBalEth", "amountNetEth", "endBalEth",
-			"totalInEth", "amountInEth", "internalInEth", "selfDestructInEth",
-			"minerBaseRewardInEth", "minerNephewRewardInEth", "minerTxFeeInEth",
-			"minerUncleRewardInEth", "correctBegBalInEth", "correctAmountInEth", "correctEndBalInEth",
-			"prefundInEth", "totalOutEth", "amountOutEth", "internalOutEth", "correctBegBalOutEth",
-			"correctAmountOutEth", "correctEndBalOutEth", "selfDestructOutEth", "gasOutEth",
-			"begBalDiffEth", "endBalDiffEth", "endBalCalcEth", "prevBalEth"}...)
 	}
+	// BINGO
 
-	for _, item := range []struct {
-		address   base.Address
-		keyPrefix string
-	}{
-		{s.Asset, "asset"},
-		{s.AccountedFor, "accountedFor"},
-		{s.Sender, "sender"},
-		{s.Recipient, "recipient"},
-	} {
-		key := item.keyPrefix + "Name"
-		if result, loaded, found := nameAddress(extraOpts, item.address); found {
-			model[key] = result.Name
-			order = append(order, key)
-		} else if loaded && format != "json" {
-			model[key] = ""
-			order = append(order, key)
-		}
-	}
-
-	order = reorderOrdering(order)
-	// EXISTING_CODE
-
-	return Model{
-		Data:  model,
-		Order: order,
-	}
+	return labelAddresses(p, model, needed)
 }
 
 func (s *Statement) Date() string {
@@ -789,9 +827,6 @@ func (s *Statement) Signature() string {
 }
 
 func (s *Statement) ReconciliationType() string {
-	// if s.Reconciled() {
-	// 	return "ok"
-	// }
 	return "reconciliationType"
 }
 

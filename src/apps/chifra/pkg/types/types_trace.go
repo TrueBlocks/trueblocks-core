@@ -142,8 +142,8 @@ func (s *Trace) Model(chain, format string, verbose bool, extraOpts map[string]a
 			model["action::callType"] = s.Action.CallType
 			model["action::gas"] = s.Action.Gas
 			model["action::input"] = s.Action.Input
-			items := []namer{
-				{addr: s.Action.From, name: "action::fromName"},
+			items := []Labeler{
+				NewLabeler(s.Action.From, "action::fromName"),
 			}
 			if !s.Action.RefundAddress.IsZero() {
 				model["action::from"] = hexutil.Encode(s.Action.From.Bytes())
@@ -152,16 +152,16 @@ func (s *Trace) Model(chain, format string, verbose bool, extraOpts map[string]a
 				model["action::ether"] = s.Action.Balance.ToFloatString(18)
 				model["action::input"] = "0x"
 				model["action::callType"] = "self-destruct"
-				items = append(items, namer{addr: s.Action.RefundAddress, name: "action::toName"})
+				items = append(items, NewLabeler(s.Action.RefundAddress, "action::toName"))
 			} else {
 				model["action::from"] = hexutil.Encode(s.Action.From.Bytes())
 				model["action::to"] = to
 				model["action::value"] = s.Action.Value.String()
 				model["action::ether"] = s.Action.Value.ToFloatString(18)
-				items = append(items, namer{addr: s.Action.To, name: "action::toName"})
+				items = append(items, NewLabeler(s.Action.To, "action::toName"))
 			}
 			for _, item := range items {
-				if name, loaded, found := nameAddress(extraOpts, item.addr); found {
+				if name, loaded, found := labelAddress(extraOpts, item.addr); found {
 					model[item.name] = name.Name
 					order = append(order, item.name)
 				} else if loaded && format != "json" {
@@ -181,7 +181,7 @@ func (s *Trace) Model(chain, format string, verbose bool, extraOpts map[string]a
 			model["compressedTrace"] = MakeCompressed(articulatedTrace)
 			order = append(order, "compressedTrace")
 		}
-		order = reorderOrdering(order)
+		order = reorderFields(order)
 	}
 	// EXISTING_CODE
 

@@ -70,7 +70,7 @@ func (s *Abi) Model(chain, format string, verbose bool, extraOpts map[string]any
 		if s.IsKnown {
 			model["address"] = ""
 		} else {
-			if name, loaded, found := nameAddress(extraOpts, s.Address); found {
+			if name, loaded, found := labelAddress(extraOpts, s.Address); found {
 				model["name"] = name.Name
 			} else if loaded {
 				model["name"] = ""
@@ -113,7 +113,7 @@ func (s *Abi) Model(chain, format string, verbose bool, extraOpts map[string]any
 	} else {
 		model[s.Address.Hex()] = s.Functions
 		order = append(order, s.Address.Hex())
-		if name, loaded, found := nameAddress(extraOpts, s.Address); found {
+		if name, loaded, found := labelAddress(extraOpts, s.Address); found {
 			model["addressName"] = name.Name
 			order = append(order, "addressName")
 		} else if loaded && format != "json" {
@@ -121,7 +121,7 @@ func (s *Abi) Model(chain, format string, verbose bool, extraOpts map[string]any
 			order = append(order, "addressName")
 		}
 	}
-	order = reorderOrdering(order)
+	order = reorderFields(order)
 	// EXISTING_CODE
 
 	return Model{
