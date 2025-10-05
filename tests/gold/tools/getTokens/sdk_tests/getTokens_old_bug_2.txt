@@ -10,6 +10,7 @@ Format:  json
   "data": [
     {
       "address": "0xa9fe4601811213c340e850ea305481aff02f5b28",
+      "addressName": "WETH yVault",
       "blockNumber": 12000000,
       "decimals": 18,
       "name": "WETH yVault",
