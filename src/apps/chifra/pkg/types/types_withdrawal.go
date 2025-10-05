@@ -38,24 +38,25 @@ func (s Withdrawal) String() string {
 }
 
 func (s *Withdrawal) Model(chain, format string, verbose bool, extraOpts map[string]any) Model {
-	_ = chain
-	_ = format
-	_ = verbose
-	_ = extraOpts
-	var model = map[string]any{}
-	var order = []string{}
-
-	// EXISTING_CODE
-	model = map[string]any{
-		"address":        s.Address,
-		"amount":         s.Amount.String(),
-		"blockNumber":    s.BlockNumber,
-		"date":           s.Date(),
-		"index":          s.Index,
-		"timestamp":      s.Timestamp,
-		"validatorIndex": s.ValidatorIndex,
+	props := &ModelProps{
+		Chain:     chain,
+		Format:    format,
+		Verbose:   verbose,
+		ExtraOpts: extraOpts,
 	}
 
+	rawNames := []Labeler{
+		NewLabeler(s.Address, "address"),
+	}
+	model := s.RawMap(props, rawNames)
+
+	calcNames := []Labeler{}
+	for k, v := range s.CalcMap(props, calcNames) {
+		model[k] = v
+	}
+
+	var order = []string{}
+	// EXISTING_CODE
 	order = []string{
 		"blockNumber",
 		"index",
@@ -66,26 +67,53 @@ func (s *Withdrawal) Model(chain, format string, verbose bool, extraOpts map[str
 		"amount",
 	}
 
-	asEther := extraOpts["ether"] == true
-	if asEther {
-		model["ether"] = s.Amount.ToFloatString(18)
+	if extraOpts["ether"] == true {
 		order = append(order, "ether")
 	}
+	// EXISTING_CODE
 
-	if name, loaded, found := labelAddress(extraOpts, s.Address); found {
-		model["addressName"] = name.Name
-		order = append(order, "addressName")
-	} else if loaded && format != "json" {
-		model["addressName"] = ""
-		order = append(order, "addressName")
+	for _, item := range append(rawNames, calcNames...) {
+		key := item.name + "Name"
+		if _, exists := model[key]; exists {
+			order = append(order, key)
+		}
 	}
 	order = reorderFields(order)
-	// EXISTING_CODE
 
 	return Model{
 		Data:  model,
 		Order: order,
 	}
+}
+
+// RawMap returns a map containing only the raw/base fields for this Withdrawal.
+// This excludes any calculated or derived fields.
+func (s *Withdrawal) RawMap(p *ModelProps, needed []Labeler) map[string]any {
+	model := map[string]any{
+		"address":        s.Address,
+		"amount":         s.Amount.String(),
+		"blockNumber":    s.BlockNumber,
+		"index":          s.Index,
+		"timestamp":      s.Timestamp,
+		"validatorIndex": s.ValidatorIndex,
+	}
+
+	return labelAddresses(p, model, needed)
+}
+
+// CalcMap returns a map containing only the calculated/derived fields for this Withdrawal.
+// This is optimized for streaming contexts where the frontend receives the raw Withdrawal
+// and needs to enhance it with calculated values.
+func (s *Withdrawal) CalcMap(p *ModelProps, needed []Labeler) map[string]any {
+	model := map[string]any{
+		"date": s.Date(),
+	}
+
+	if p.ExtraOpts["ether"] == true {
+		model["ether"] = s.Amount.ToFloatString(18)
+	}
+
+	return labelAddresses(p, model, needed)
 }
 
 func (s *Withdrawal) Date() string {
