@@ -18,7 +18,6 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
-	"github.com/ethereum/go-ethereum/common/hexutil"
 )
 
 // EXISTING_CODE
@@ -58,32 +57,29 @@ func (s Slurp) String() string {
 }
 
 func (s *Slurp) Model(chain, format string, verbose bool, extraOpts map[string]any) Model {
-	_ = chain
-	_ = format
-	_ = verbose
-	_ = extraOpts
-	var model = map[string]any{}
+	props := &ModelProps{
+		Chain:     chain,
+		Format:    format,
+		Verbose:   verbose,
+		ExtraOpts: extraOpts,
+	}
+
+	rawNames := []Labeler{
+		NewLabeler(s.From, "from"),
+		NewLabeler(s.To, "to"),
+		NewLabeler(s.ContractAddress, "contract"),
+	}
+	model := s.RawMap(props, rawNames)
+
+	calcNames := []Labeler{}
+	for k, v := range s.CalcMap(props, calcNames) {
+		model[k] = v
+	}
+
 	var order = []string{}
-
 	// EXISTING_CODE
-	to := hexutil.Encode(s.To.Bytes())
-	if to == "0x0000000000000000000000000000000000000000" {
-		to = "0x0" // weird special case to preserve what RPC does
-	}
-
-	model = map[string]any{
-		"blockNumber": s.BlockNumber,
-		"from":        s.From,
-		"timestamp":   s.Timestamp,
-		"date":        s.Date(),
-		"to":          s.To,
-		"value":       s.Value.String(),
-	}
-
 	switch s.From {
 	case base.BlockRewardSender, base.UncleRewardSender:
-		model["from"] = s.From.Hex()
-		s.Input = ""
 		order = []string{
 			"blockNumber",
 			"timestamp",
@@ -94,10 +90,6 @@ func (s *Slurp) Model(chain, format string, verbose bool, extraOpts map[string]a
 		}
 
 	case base.WithdrawalSender:
-		model["from"] = s.From.Hex()
-		s.Input = ""
-		model["withdrawalIndex"] = s.WithdrawalIndex
-		model["validatorIndex"] = s.ValidatorIndex
 		order = []string{
 			"blockNumber",
 			"validatorIndex",
@@ -126,9 +118,56 @@ func (s *Slurp) Model(chain, format string, verbose bool, extraOpts map[string]a
 			"value",
 			"input",
 		}
+	}
 
+	isArticulated := extraOpts["articulate"] == true && s.ArticulatedTx != nil
+	if isArticulated && format != "json" {
+		order = append(order, "compressedTx")
+	}
+
+	asEther := true // like transactions, we always export ether for slurps -- extraOpts["ether"] == true
+	if asEther {
+		order = append(order, "ether")
+	}
+
+	for _, item := range append(rawNames, calcNames...) {
+		key := item.name + "Name"
+		if _, exists := model[key]; exists {
+			order = append(order, key)
+		}
+	}
+	order = reorderFields(order)
+	// EXISTING_CODE
+
+	return Model{
+		Data:  model,
+		Order: order,
+	}
+}
+
+// RawMap returns a map containing only the raw/base fields for this Slurp.
+// This excludes any calculated or derived fields.
+func (s *Slurp) RawMap(p *ModelProps, needed []Labeler) map[string]any {
+	model := map[string]any{
+		"blockNumber":      s.BlockNumber,
+		"from":             s.From,
+		"timestamp":        s.Timestamp,
+		"to":               s.To,
+		"value":            s.Value.String(),
+		"transactionIndex": s.TransactionIndex,
+	}
+
+	switch s.From {
+	case base.BlockRewardSender, base.UncleRewardSender:
+		model["from"] = s.From.Hex()
+
+	case base.WithdrawalSender:
+		model["from"] = s.From.Hex()
+		model["withdrawalIndex"] = s.WithdrawalIndex
+		model["validatorIndex"] = s.ValidatorIndex
+
+	default:
 		model["gas"] = s.Gas
-		model["gasCost"] = s.GasCost()
 		model["gasPrice"] = s.GasPrice
 		model["gasUsed"] = s.GasUsed
 		model["hash"] = s.Hash
@@ -143,14 +182,32 @@ func (s *Slurp) Model(chain, format string, verbose bool, extraOpts map[string]a
 	if s.BlockHash != base.HexToHash("0xdeadbeef") && !s.BlockHash.IsZero() {
 		model["blockHash"] = s.BlockHash
 	}
-	model["transactionIndex"] = s.TransactionIndex
+
+	return labelAddresses(p, model, needed)
+}
+
+// CalcMap returns a map containing only the calculated/derived fields for this Slurp.
+// This is optimized for streaming contexts where the frontend receives the raw Slurp
+// and needs to enhance it with calculated values.
+func (s *Slurp) CalcMap(p *ModelProps, needed []Labeler) map[string]any {
+	model := map[string]any{
+		"date": s.Date(),
+	}
+
+	switch s.From {
+	case base.BlockRewardSender, base.UncleRewardSender:
+		// No additional calculated fields for rewards
+
+	case base.WithdrawalSender:
+		// No additional calculated fields for withdrawals
+
+	default:
+		model["gasCost"] = s.GasCost()
+	}
 
 	// TODO: Turn this back on
 	var articulatedTx map[string]any
-	isArticulated := extraOpts["articulate"] == true && s.ArticulatedTx != nil
-	if isArticulated && format != "json" {
-		order = append(order, "compressedTx")
-	}
+	isArticulated := p.ExtraOpts["articulate"] == true && s.ArticulatedTx != nil
 
 	// TODO: ARTICULATE SLURP
 	if isArticulated {
@@ -171,7 +228,7 @@ func (s *Slurp) Model(chain, format string, verbose bool, extraOpts map[string]a
 		}
 	}
 
-	if format == "json" {
+	if p.Format == "json" {
 		a := s.ContractAddress.Hex()
 		if strings.HasPrefix(a, "0x") && len(a) == 42 {
 			model["contractAddress"] = a
@@ -194,16 +251,17 @@ func (s *Slurp) Model(chain, format string, verbose bool, extraOpts map[string]a
 		model["hasToken"] = s.HasToken
 		model["isError"] = s.IsError
 		// etherscan sometimes returns this word instead of a hex address
-		if s.Input == "deprecated" {
-			s.Input = "0x"
+		input := s.Input
+		if input == "deprecated" {
+			input = "0x"
 		}
-		model["input"] = s.Input
+		model["input"] = input
 
 		// TODO: ARTICULATE SLURP
 		model["compressedTx"] = ""
-		enc := s.Input
-		if len(s.Input) >= 10 {
-			enc = s.Input[:10]
+		enc := input
+		if len(input) >= 10 {
+			enc = input[:10]
 		}
 		model["encoding"] = enc
 
@@ -218,30 +276,9 @@ func (s *Slurp) Model(chain, format string, verbose bool, extraOpts map[string]a
 	asEther := true // like transactions, we always export ether for slurps -- extraOpts["ether"] == true
 	if asEther {
 		model["ether"] = s.Value.ToFloatString(18)
-		order = append(order, "ether")
 	}
 
-	items := []Labeler{
-		NewLabeler(s.From, "fromName"),
-		NewLabeler(s.To, "toName"),
-		NewLabeler(s.ContractAddress, "contractName"),
-	}
-	for _, item := range items {
-		if name, loaded, found := labelAddress(extraOpts, item.addr); found {
-			model[item.name] = name.Name
-			order = append(order, item.name)
-		} else if loaded && format != "json" {
-			model[item.name] = ""
-			order = append(order, item.name)
-		}
-	}
-	order = reorderFields(order)
-	// EXISTING_CODE
-
-	return Model{
-		Data:  model,
-		Order: order,
-	}
+	return labelAddresses(p, model, needed)
 }
 
 func (s *Slurp) Date() string {

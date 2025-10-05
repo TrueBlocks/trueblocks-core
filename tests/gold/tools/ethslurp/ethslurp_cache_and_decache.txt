@@ -2,7 +2,6 @@ chifra slurp  0x63c8c29af409bd31ec7ddeea58ff14f21e8980b0 4186279 --cache --decac
 TEST[DATE|TIME] Addrs:  [0x63c8c29af409bd31ec7ddeea58ff14f21e8980b0]
 TEST[DATE|TIME] Blocks:  [4186279]
 TEST[DATE|TIME] Parts:  [ext]
-TEST[DATE|TIME] Enabled:  transactions
 TEST[DATE|TIME] Cache:  true
 TEST[DATE|TIME] Decache:  true
 TEST[DATE|TIME] Caps:  cache,decache,ether

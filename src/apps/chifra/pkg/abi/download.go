@@ -44,7 +44,7 @@ func (abiMap *SelectorSyncMap) downloadAbi(conn *rpc.Connection, address base.Ad
 		return errors.New("cannot read Etherscan API key")
 	}
 	url := fmt.Sprintf(
-		"https://api.etherscan.io/api?module=contract&action=getabi&address=%s&apikey=%s",
+		"https://api.etherscan.io/v2/api?chainid=1&module=contract&action=getabi&address=%s&apikey=%s",
 		address.Hex(),
 		key,
 	)
