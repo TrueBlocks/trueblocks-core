@@ -117,24 +117,15 @@ func (s *Statement) Model(chain, format string, verbose bool, extraOpts map[stri
 			"correctAmountOutEth", "correctEndBalOutEth", "selfDestructOutEth", "gasOutEth",
 			"begBalDiffEth", "endBalDiffEth", "endBalCalcEth", "prevBalEth"}...)
 	}
+	// EXISTING_CODE
 
-	// Add name fields to order if they exist in the model
-	for _, item := range []struct {
-		keyPrefix string
-	}{
-		{"asset"},
-		{"accountedFor"},
-		{"sender"},
-		{"recipient"},
-	} {
-		key := item.keyPrefix + "Name"
+	for _, item := range append(rawNames, calcNames...) {
+		key := item.name + "Name"
 		if _, exists := model[key]; exists {
 			order = append(order, key)
 		}
 	}
-
 	order = reorderFields(order)
-	// EXISTING_CODE
 
 	return Model{
 		Data:  model,
