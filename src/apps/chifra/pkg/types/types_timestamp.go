@@ -31,19 +31,23 @@ func (s Timestamp) String() string {
 }
 
 func (s *Timestamp) Model(chain, format string, verbose bool, extraOpts map[string]any) Model {
-	_ = chain
-	_ = format
-	_ = verbose
-	_ = extraOpts
-	var model = map[string]any{}
-	var order = []string{}
-
-	// EXISTING_CODE
-	model = map[string]any{
-		"blockNumber": s.BlockNumber,
-		"timestamp":   s.Timestamp,
-		"diff":        s.Diff,
+	props := &ModelProps{
+		Chain:     chain,
+		Format:    format,
+		Verbose:   verbose,
+		ExtraOpts: extraOpts,
 	}
+
+	rawNames := []Labeler{} // No addresses in Timestamp
+	model := s.RawMap(props, rawNames)
+
+	calcNames := []Labeler{}
+	for k, v := range s.CalcMap(props, calcNames) {
+		model[k] = v
+	}
+
+	var order = []string{}
+	// EXISTING_CODE
 	order = []string{
 		"blockNumber",
 		"timestamp",
@@ -55,6 +59,29 @@ func (s *Timestamp) Model(chain, format string, verbose bool, extraOpts map[stri
 		Data:  model,
 		Order: order,
 	}
+}
+
+// RawMap returns a map containing only the raw/base fields for this Timestamp.
+// This excludes any calculated or derived fields.
+func (s *Timestamp) RawMap(p *ModelProps, needed []Labeler) map[string]any {
+	model := map[string]any{
+		"blockNumber": s.BlockNumber,
+		"timestamp":   s.Timestamp,
+		"diff":        s.Diff,
+	}
+
+	return labelAddresses(p, model, needed)
+}
+
+// CalcMap returns a map containing only the calculated/derived fields for this Timestamp.
+// This is optimized for streaming contexts where the frontend receives the raw Timestamp
+// and needs to enhance it with calculated values.
+func (s *Timestamp) CalcMap(p *ModelProps, needed []Labeler) map[string]any {
+	model := map[string]any{}
+
+	// No calculated fields in original Model method
+
+	return labelAddresses(p, model, needed)
 }
 
 func (s *Timestamp) Date() string {

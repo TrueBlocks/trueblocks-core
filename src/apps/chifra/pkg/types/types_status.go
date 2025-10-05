@@ -56,29 +56,23 @@ func (s Status) String() string {
 }
 
 func (s *Status) Model(chain, format string, verbose bool, extraOpts map[string]any) Model {
-	_ = chain
-	_ = format
-	_ = verbose
-	_ = extraOpts
-	var model = map[string]any{}
-	var order = []string{}
-
-	// EXISTING_CODE
-	model = map[string]any{
-		"cachePath":         s.CachePath,
-		"chainConfig":       s.ChainConfig,
-		"clientVersion":     s.ClientVersion,
-		"hasEsKey":          s.HasEsKey,
-		"hasPinKey":         s.HasPinKey,
-		"indexPath":         s.IndexPath,
-		"isApi":             s.IsApi,
-		"isArchive":         s.IsArchive,
-		"isTesting":         s.IsTesting,
-		"isTracing":         s.IsTracing,
-		"rootConfig":        s.RootConfig,
-		"rpcProvider":       s.RpcProvider,
-		"trueblocksVersion": s.Version,
+	props := &ModelProps{
+		Chain:     chain,
+		Format:    format,
+		Verbose:   verbose,
+		ExtraOpts: extraOpts,
 	}
+
+	rawNames := []Labeler{} // No addresses in Status
+	model := s.RawMap(props, rawNames)
+
+	calcNames := []Labeler{}
+	for k, v := range s.CalcMap(props, calcNames) {
+		model[k] = v
+	}
+
+	var order = []string{}
+	// EXISTING_CODE
 	order = []string{
 		"cachePath",
 		"chainConfig",
@@ -95,13 +89,56 @@ func (s *Status) Model(chain, format string, verbose bool, extraOpts map[string]
 		"trueblocksVersion",
 	}
 
-	testMode := extraOpts["testMode"] == true
+	if extraOpts["caches"] == true || len(s.Caches) > 0 {
+		order = append(order, "caches")
+	}
+
+	if extraOpts["chains"] == true {
+		order = append(order, "chains")
+	}
+	// EXISTING_CODE
+
+	return Model{
+		Data:  model,
+		Order: order,
+	}
+}
+
+// RawMap returns a map containing only the raw/base fields for this Status.
+// This excludes any calculated or derived fields.
+func (s *Status) RawMap(p *ModelProps, needed []Labeler) map[string]any {
+	model := map[string]any{
+		"cachePath":         s.CachePath,
+		"chainConfig":       s.ChainConfig,
+		"clientVersion":     s.ClientVersion,
+		"hasEsKey":          s.HasEsKey,
+		"hasPinKey":         s.HasPinKey,
+		"indexPath":         s.IndexPath,
+		"isApi":             s.IsApi,
+		"isArchive":         s.IsArchive,
+		"isTesting":         s.IsTesting,
+		"isTracing":         s.IsTracing,
+		"rootConfig":        s.RootConfig,
+		"rpcProvider":       s.RpcProvider,
+		"trueblocksVersion": s.Version,
+	}
+
+	return labelAddresses(p, model, needed)
+}
+
+// CalcMap returns a map containing only the calculated/derived fields for this Status.
+// This is optimized for streaming contexts where the frontend receives the raw Status
+// and needs to enhance it with calculated values.
+func (s *Status) CalcMap(p *ModelProps, needed []Labeler) map[string]any {
+	model := map[string]any{}
+
+	testMode := p.ExtraOpts["testMode"] == true
 
 	var caches []CacheItem
-	if extraOpts["caches"] == true {
-		chain, _ := extraOpts["chain"].(string)
+	if p.ExtraOpts["caches"] == true {
+		chain, _ := p.ExtraOpts["chain"].(string)
 		var modeTypes []walk.CacheType
-		if mt, ok := extraOpts["modeTypes"].([]walk.CacheType); ok {
+		if mt, ok := p.ExtraOpts["modeTypes"].([]walk.CacheType); ok {
 			modeTypes = mt
 		}
 		caches = s.GetCaches(chain, testMode, modeTypes)
@@ -120,21 +157,14 @@ func (s *Status) Model(chain, format string, verbose bool, extraOpts map[string]
 			}
 		}
 		model["caches"] = caches
-		order = append(order, "caches")
 	}
 
-	if extraOpts["chains"] == true {
-		testMode := extraOpts["testMode"] == true
+	if p.ExtraOpts["chains"] == true {
 		chains := s.GetChains(testMode)
 		model["chains"] = chains
-		order = append(order, "chains")
 	}
-	// EXISTING_CODE
 
-	return Model{
-		Data:  model,
-		Order: order,
-	}
+	return labelAddresses(p, model, needed)
 }
 
 // FinishUnmarshal is used by the cache. It may be unused depending on auto-code-gen
