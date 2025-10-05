@@ -50,57 +50,95 @@ func (s Transfer) String() string {
 }
 
 func (s *Transfer) Model(chain, format string, verbose bool, extraOpts map[string]any) Model {
-	_ = chain
-	_ = format
-	_ = verbose
-	_ = extraOpts
-	var model = map[string]any{}
-	var order = []string{}
-
-	// EXISTING_CODE
-	model = map[string]any{
-		"blockNumber":      s.BlockNumber,
-		"transactionIndex": s.TransactionIndex,
-		"logIndex":         s.LogIndex,
-		"asset":            s.Asset,
-		"holder":           s.Holder,
-		"amount":           s.AmountNet().Text(10),
+	props := &ModelProps{
+		Chain:     chain,
+		Format:    format,
+		Verbose:   verbose,
+		ExtraOpts: extraOpts,
 	}
 
+	rawNames := []Labeler{
+		NewLabeler(s.Asset, "asset"),
+		NewLabeler(s.Holder, "holder"),
+		// TODO: We should export sender, not? There are bugs for some reason
+		// NewLabeler(s.Sender, "sender"),
+	}
+	model := s.RawMap(props, rawNames)
+
+	calcNames := []Labeler{}
+	for k, v := range s.CalcMap(props, calcNames) {
+		model[k] = v
+	}
+
+	var order = []string{}
+	// EXISTING_CODE
 	order = []string{
 		"blockNumber", "transactionIndex", "logIndex", "asset", "holder", "amount",
 	}
 
 	if extraOpts["ether"] == true {
-		decimals := int(s.Decimals)
-		model["amountEth"] = s.AmountNet().ToFloatString(decimals)
-		order = append(order, []string{"amountEth"}...)
+		order = append(order, "amountEth")
 	}
+	// EXISTING_CODE
 
-	for _, item := range []struct {
-		address   base.Address
-		keyPrefix string
-	}{
-		{s.Asset, "asset"},
-		{s.Holder, "holder"},
-	} {
-		key := item.keyPrefix + "Name"
-		if result, loaded, found := labelAddress(extraOpts, item.address); found {
-			model[key] = result.Name
-			order = append(order, key)
-		} else if loaded && format != "json" {
-			model[key] = ""
+	for _, item := range append(rawNames, calcNames...) {
+		key := item.name + "Name"
+		if _, exists := model[key]; exists {
 			order = append(order, key)
 		}
 	}
-
 	order = reorderFields(order)
-	// EXISTING_CODE
 
 	return Model{
 		Data:  model,
 		Order: order,
 	}
+}
+
+// RawMap returns a map containing only the raw/base fields for this Transfer.
+// This excludes any calculated or derived fields.
+func (s *Transfer) RawMap(p *ModelProps, needed []Labeler) map[string]any {
+	model := map[string]any{
+		// "amountIn":            s.AmountIn.Text(10),
+		// "amountOut":           s.AmountOut.Text(10),
+		"asset":       s.Asset,
+		"blockNumber": s.BlockNumber,
+		// "decimals":            s.Decimals,
+		// "gasOut":              s.GasOut.Text(10),
+		"holder": s.Holder,
+		// "internalIn":          s.InternalIn.Text(10),
+		// "internalOut":         s.InternalOut.Text(10),
+		"logIndex": s.LogIndex,
+		// "minerBaseRewardIn":   s.MinerBaseRewardIn.Text(10),
+		// "minerNephewRewardIn": s.MinerNephewRewardIn.Text(10),
+		// "minerTxFeeIn":        s.MinerTxFeeIn.Text(10),
+		// "minerUncleRewardIn":  s.MinerUncleRewardIn.Text(10),
+		// "prefundIn":           s.PrefundIn.Text(10),
+		// "recipient":           s.Recipient,
+		// "selfDestructIn":      s.SelfDestructIn.Text(10),
+		// "selfDestructOut":     s.SelfDestructOut.Text(10),
+		// TODO: We should export sender, not? There are bugs for some reason
+		// "sender":           s.Sender,
+		"transactionIndex": s.TransactionIndex,
+	}
+
+	return labelAddresses(p, model, needed)
+}
+
+// CalcMap returns a map containing only the calculated/derived fields for this Transfer.
+// This is optimized for streaming contexts where the frontend receives the raw Transfer
+// and needs to enhance it with calculated values.
+func (s *Transfer) CalcMap(p *ModelProps, needed []Labeler) map[string]any {
+	model := map[string]any{
+		"amount": s.AmountNet().Text(10),
+	}
+
+	if p.ExtraOpts["ether"] == true {
+		decimals := int(s.Decimals)
+		model["amountEth"] = s.AmountNet().ToFloatString(decimals)
+	}
+
+	return labelAddresses(p, model, needed)
 }
 
 // FinishUnmarshal is used by the cache. It may be unused depending on auto-code-gen
