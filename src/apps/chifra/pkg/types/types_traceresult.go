@@ -35,57 +35,53 @@ func (s TraceResult) String() string {
 }
 
 func (s *TraceResult) Model(chain, format string, verbose bool, extraOpts map[string]any) Model {
-	_ = chain
-	_ = format
-	_ = verbose
-	_ = extraOpts
-	var model = map[string]any{}
-	var order = []string{}
+	props := &ModelProps{
+		Chain:     chain,
+		Format:    format,
+		Verbose:   verbose,
+		ExtraOpts: extraOpts,
+	}
 
+	rawNames := []Labeler{
+		NewLabeler(s.Address, "address"),
+	}
+	model := s.RawMap(props, rawNames)
+
+	calcNames := []Labeler{}
+	for k, v := range s.CalcMap(props, calcNames) {
+		model[k] = v
+	}
+
+	var order = []string{}
 	// EXISTING_CODE
 	if format == "json" {
 		if s.GasUsed > 0 {
-			model["gasUsed"] = s.GasUsed
 			order = append(order, "gasUsed")
 		}
 		if len(s.Output) > 2 { // "0x" is empty
-			model["output"] = s.Output
 			order = append(order, "output")
 		}
 		if !s.Address.IsZero() {
-			model["address"] = s.Address
 			order = append(order, "address")
 		}
 		if extraOpts["traces"] != true && len(s.Code) > 2 { // "0x" is empty
-			model["code"] = utils.FormattedCode(verbose, s.Code)
 			order = append(order, "code")
 		}
 	} else {
-		model = map[string]any{
-			"gasUsed": s.GasUsed,
-			"output":  s.Output,
-		}
-
 		order = []string{
 			"gasUsed",
 			"output",
 		}
 		if !s.Address.IsZero() {
-			model["address"] = hexutil.Encode(s.Address.Bytes())
 			order = append(order, "address")
 		}
-		// if len(s.Output) > 0 && s.Output != "0x" {
-		// 	model["output"] = s.Output
-		// 	order = append(order, "output")
-		// }
 	}
 
-	if name, loaded, found := labelAddress(extraOpts, s.Address); found {
-		model["addressName"] = name.Name
-		order = append(order, "addressName")
-	} else if loaded && format != "json" {
-		model["addressName"] = ""
-		order = append(order, "addressName")
+	for _, item := range append(rawNames, calcNames...) {
+		key := item.name + "Name"
+		if _, exists := model[key]; exists {
+			order = append(order, key)
+		}
 	}
 	order = reorderFields(order)
 	// EXISTING_CODE
@@ -94,6 +90,59 @@ func (s *TraceResult) Model(chain, format string, verbose bool, extraOpts map[st
 		Data:  model,
 		Order: order,
 	}
+}
+
+// RawMap returns a map containing only the raw/base fields for this TraceResult.
+// This excludes any calculated or derived fields.
+func (s *TraceResult) RawMap(p *ModelProps, needed []Labeler) map[string]any {
+	model := map[string]any{}
+
+	// Apply the same conditional logic as original - only add fields when conditions are met
+	if p.Format == "json" {
+		// For JSON format, only add fields when they have meaningful values
+		if s.GasUsed > 0 {
+			model["gasUsed"] = s.GasUsed
+		}
+		if len(s.Output) > 2 { // "0x" is empty
+			model["output"] = s.Output
+		}
+		if !s.Address.IsZero() {
+			model["address"] = s.Address
+		}
+		if p.ExtraOpts["traces"] != true && len(s.Code) > 2 { // "0x" is empty
+			model["code"] = s.Code
+		}
+	} else {
+		model["gasUsed"] = s.GasUsed
+		model["output"] = s.Output
+		if !s.Address.IsZero() {
+			model["address"] = s.Address
+		}
+	}
+
+	return labelAddresses(p, model, needed)
+}
+
+// CalcMap returns a map containing only the calculated/derived fields for this TraceResult.
+// This is optimized for streaming contexts where the frontend receives the raw TraceResult
+// and needs to enhance it with calculated values.
+func (s *TraceResult) CalcMap(p *ModelProps, needed []Labeler) map[string]any {
+	model := map[string]any{}
+
+	// Apply calculated transformations
+	if p.Format == "json" {
+		// Replace raw code with formatted code when conditions are met
+		if p.ExtraOpts["traces"] != true && len(s.Code) > 2 { // "0x" is empty
+			model["code"] = utils.FormattedCode(p.Verbose, s.Code)
+		}
+	} else {
+		// Replace raw address with hex encoded version for non-JSON formats
+		if !s.Address.IsZero() {
+			model["address"] = hexutil.Encode(s.Address.Bytes())
+		}
+	}
+
+	return labelAddresses(p, model, needed)
 }
 
 func (s *TraceResult) MarshalCache(writer io.Writer) (err error) {

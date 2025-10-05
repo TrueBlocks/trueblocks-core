@@ -43,18 +43,53 @@ func (s TraceAction) String() string {
 }
 
 func (s *TraceAction) Model(chain, format string, verbose bool, extraOpts map[string]any) Model {
-	_ = chain
-	_ = format
-	_ = verbose
-	_ = extraOpts
-	var model = map[string]any{}
-	var order = []string{}
+	props := &ModelProps{
+		Chain:     chain,
+		Format:    format,
+		Verbose:   verbose,
+		ExtraOpts: extraOpts,
+	}
 
+	rawNames := []Labeler{
+		NewLabeler(s.Address, "address"),
+		NewLabeler(s.Author, "author"),
+		NewLabeler(s.From, "from"),
+		NewLabeler(s.RefundAddress, "refundAddress"),
+		NewLabeler(s.SelfDestructed, "selfDestructed"),
+		NewLabeler(s.To, "to"),
+	}
+	model := s.RawMap(props, rawNames)
+
+	calcNames := []Labeler{}
+	for k, v := range s.CalcMap(props, calcNames) {
+		model[k] = v
+	}
+
+	var order = []string{}
 	// EXISTING_CODE
-	if format == "json" {
-		if extraOpts["traces"] != true && len(s.Init) > 0 {
-			model["init"] = utils.FormattedCode(verbose, s.Init)
+	// EXISTING_CODE
+
+	for _, item := range append(rawNames, calcNames...) {
+		key := item.name + "Name"
+		if _, exists := model[key]; exists {
+			order = append(order, key)
 		}
+	}
+	order = reorderFields(order)
+
+	return Model{
+		Data:  model,
+		Order: order,
+	}
+}
+
+// RawMap returns a map containing only the raw/base fields for this TraceAction.
+// This excludes any calculated or derived fields.
+func (s *TraceAction) RawMap(p *ModelProps, needed []Labeler) map[string]any {
+	model := map[string]any{}
+
+	// Apply the same conditional logic as original but with raw values
+	if p.Format == "json" {
 		if !s.SelfDestructed.IsZero() {
 			model["selfDestructed"] = s.SelfDestructed
 		}
@@ -71,29 +106,26 @@ func (s *TraceAction) Model(chain, format string, verbose bool, extraOpts map[st
 			model["input"] = s.Input
 		}
 
-		asEther := extraOpts["ether"] == true
+		// Always include value as raw string
 		model["value"] = s.Value.String()
-		if asEther {
-			model["ether"] = s.Value.ToFloatString(18)
-		}
 
 		if !s.RefundAddress.IsZero() {
 			model["refundAddress"] = s.RefundAddress
 			model["balance"] = s.Balance.String()
-			if asEther {
-				model["balanceEth"] = s.Balance.ToFloatString(18)
-			}
-
 		} else {
+			// Handle the to field logic from original
 			if s.To.IsZero() {
 				model["to"] = "0x0"
 			} else {
 				model["to"] = s.To
 			}
 		}
+
+		// Raw init field (not formatted)
 		if len(s.Init) > 0 {
-			model["init"] = utils.FormattedCode(verbose, s.Init)
+			model["init"] = s.Init
 		}
+
 		if !s.Address.IsZero() {
 			model["address"] = s.Address
 		}
@@ -103,32 +135,34 @@ func (s *TraceAction) Model(chain, format string, verbose bool, extraOpts map[st
 		if len(s.RewardType) > 0 {
 			model["rewardType"] = s.RewardType
 		}
-		items := []Labeler{
-			NewLabeler(s.Address, "addressName"),
-			NewLabeler(s.Author, "authorName"),
-			NewLabeler(s.From, "fromName"),
-			NewLabeler(s.RefundAddress, "refundAddressName"),
-			NewLabeler(s.SelfDestructed, "selfDestructedName"),
-			NewLabeler(s.To, "toName"),
-		}
-		for _, item := range items {
-			if name, loaded, found := labelAddress(extraOpts, item.addr); found {
-				model[item.name] = name.Name
-				order = append(order, item.name)
-			} else if loaded && format != "json" {
-				model[item.name] = ""
-				order = append(order, item.name)
+	}
+
+	return labelAddresses(p, model, needed)
+}
+
+// CalcMap returns a map containing only the calculated/derived fields for this TraceAction.
+// This is optimized for streaming contexts where the frontend receives the raw TraceAction
+// and needs to enhance it with calculated values.
+func (s *TraceAction) CalcMap(p *ModelProps, needed []Labeler) map[string]any {
+	model := map[string]any{}
+
+	if p.Format == "json" {
+		// Apply ether conversions
+		asEther := p.ExtraOpts["ether"] == true
+		if asEther {
+			model["ether"] = s.Value.ToFloatString(18)
+			if !s.RefundAddress.IsZero() {
+				model["balanceEth"] = s.Balance.ToFloatString(18)
 			}
 		}
-		order = reorderFields(order)
+
+		// Apply code formatting for init field
+		if p.ExtraOpts["traces"] != true && len(s.Init) > 0 {
+			model["init"] = utils.FormattedCode(p.Verbose, s.Init)
+		}
 	}
 
-	// EXISTING_CODE
-
-	return Model{
-		Data:  model,
-		Order: order,
-	}
+	return labelAddresses(p, model, needed)
 }
 
 func (s *TraceAction) MarshalCache(writer io.Writer) (err error) {

@@ -33,26 +33,29 @@ func (s TraceCount) String() string {
 }
 
 func (s *TraceCount) Model(chain, format string, verbose bool, extraOpts map[string]any) Model {
-	_ = chain
-	_ = format
-	_ = verbose
-	_ = extraOpts
-	var model = map[string]any{}
-	var order = []string{}
-
-	// EXISTING_CODE
-	model = map[string]any{
-		"blockNumber":      s.BlockNumber,
-		"timestamp":        s.Timestamp,
-		"tracesCnt":        s.TracesCnt,
-		"transactionHash":  s.TransactionHash,
-		"transactionIndex": s.TransactionIndex,
+	props := &ModelProps{
+		Chain:     chain,
+		Format:    format,
+		Verbose:   verbose,
+		ExtraOpts: extraOpts,
 	}
+
+	rawNames := []Labeler{} // No addresses in TraceCount
+	model := s.RawMap(props, rawNames)
+
+	calcNames := []Labeler{}
+	for k, v := range s.CalcMap(props, calcNames) {
+		model[k] = v
+	}
+
+	var order = []string{}
+	// EXISTING_CODE
 	order = []string{
 		"blockNumber",
 		"transactionIndex",
 		"transactionHash",
 		"timestamp",
+		// TODO: Do we want to add "date" here?
 		"tracesCnt",
 	}
 	// EXISTING_CODE
@@ -61,6 +64,32 @@ func (s *TraceCount) Model(chain, format string, verbose bool, extraOpts map[str
 		Data:  model,
 		Order: order,
 	}
+}
+
+// RawMap returns a map containing only the raw/base fields for this TraceCount.
+// This excludes any calculated or derived fields.
+func (s *TraceCount) RawMap(p *ModelProps, needed []Labeler) map[string]any {
+	model := map[string]any{
+		"blockNumber":      s.BlockNumber,
+		"timestamp":        s.Timestamp,
+		"tracesCnt":        s.TracesCnt,
+		"transactionHash":  s.TransactionHash,
+		"transactionIndex": s.TransactionIndex,
+	}
+
+	return labelAddresses(p, model, needed)
+}
+
+// CalcMap returns a map containing only the calculated/derived fields for this TraceCount.
+// This is optimized for streaming contexts where the frontend receives the raw TraceCount
+// and needs to enhance it with calculated values.
+func (s *TraceCount) CalcMap(p *ModelProps, needed []Labeler) map[string]any {
+	model := map[string]any{}
+
+	// No calculated fields in original Model method
+	// TODO: Do we want to add "date" here?
+
+	return labelAddresses(p, model, needed)
 }
 
 func (s *TraceCount) Date() string {

@@ -50,25 +50,34 @@ func (s Trace) String() string {
 }
 
 func (s *Trace) Model(chain, format string, verbose bool, extraOpts map[string]any) Model {
-	_ = chain
-	_ = format
-	_ = verbose
-	_ = extraOpts
-	var model = map[string]any{}
-	var order = []string{}
-
-	// EXISTING_CODE
-	model = map[string]any{
-		"blockHash":        s.BlockHash,
-		"blockNumber":      s.BlockNumber,
-		"result":           s.Result,
-		"subtraces":        s.Subtraces,
-		"timestamp":        s.Timestamp,
-		"date":             s.Date(),
-		"transactionHash":  s.TransactionHash,
-		"transactionIndex": s.TransactionIndex,
+	props := &ModelProps{
+		Chain:     chain,
+		Format:    format,
+		Verbose:   verbose,
+		ExtraOpts: extraOpts,
 	}
 
+	// Address naming depends on format - different addresses for JSON vs non-JSON
+	var rawNames []Labeler
+	if format != "json" && s.Action != nil {
+		rawNames = []Labeler{
+			NewLabeler(s.Action.From, "action::from"),
+		}
+		if !s.Action.RefundAddress.IsZero() {
+			rawNames = append(rawNames, NewLabeler(s.Action.RefundAddress, "action::to"))
+		} else {
+			rawNames = append(rawNames, NewLabeler(s.Action.To, "action::to"))
+		}
+	}
+	model := s.RawMap(props, rawNames)
+
+	calcNames := []Labeler{}
+	for k, v := range s.CalcMap(props, calcNames) {
+		model[k] = v
+	}
+
+	var order = []string{}
+	// EXISTING_CODE
 	order = []string{
 		"blockNumber",
 		"transactionIndex",
@@ -86,8 +95,90 @@ func (s *Trace) Model(chain, format string, verbose bool, extraOpts map[string]a
 		"result::output",
 	}
 
+	if format != "json" {
+		for _, item := range append(rawNames, calcNames...) {
+			key := item.name + "Name"
+			if _, exists := model[key]; exists {
+				order = append(order, key)
+			}
+		}
+
+		// Add compressedTrace if it exists
+		if _, exists := model["compressedTrace"]; exists {
+			order = append(order, "compressedTrace")
+		}
+
+		order = reorderFields(order)
+	}
+	// EXISTING_CODE
+
+	return Model{
+		Data:  model,
+		Order: order,
+	}
+}
+
+// RawMap returns a map containing only the raw/base fields for this Trace.
+// This excludes any calculated or derived fields.
+func (s *Trace) RawMap(p *ModelProps, needed []Labeler) map[string]any {
+	model := map[string]any{
+		"blockHash":   s.BlockHash,
+		"blockNumber": s.BlockNumber,
+		"subtraces":   s.Subtraces,
+		"timestamp":   s.Timestamp,
+		// TODO: Do we want date here? We did not put it in `order`.
+		// "date":             s.Date(),
+		"transactionHash":  s.TransactionHash,
+		"transactionIndex": s.TransactionIndex,
+	}
+
+	if p.Format == "json" {
+		if s.TraceAddress == nil {
+			model["traceAddress"] = []uint64{}
+		} else {
+			model["traceAddress"] = s.TraceAddress
+		}
+		if len(s.Error) > 0 {
+			model["error"] = s.Error
+		}
+		if len(s.TraceType) > 0 {
+			model["type"] = s.TraceType
+		}
+		if s.Action != nil {
+			model["action"] = s.Action.Model(p.Chain, p.Format, p.Verbose, p.ExtraOpts).Data
+		}
+		if s.Result != nil {
+			model["result"] = s.Result.Model(p.Chain, p.Format, p.Verbose, p.ExtraOpts).Data
+		}
+	} else {
+		model["error"] = s.Error
+		if s.Action != nil {
+			model["action::callType"] = s.Action.CallType
+			model["action::gas"] = s.Action.Gas
+			model["action::input"] = s.Action.Input
+		}
+		if s.Result != nil {
+			model["result::gasUsed"] = s.Result.GasUsed
+			model["result::output"] = s.Result.Output
+		} else {
+			model["result::gasUsed"] = "0"
+			model["result::output"] = ""
+		}
+	}
+
+	return labelAddresses(p, model, needed)
+}
+
+// CalcMap returns a map containing only the calculated/derived fields for this Trace.
+// This is optimized for streaming contexts where the frontend receives the raw Trace
+// and needs to enhance it with calculated values.
+func (s *Trace) CalcMap(p *ModelProps, needed []Labeler) map[string]any {
+	model := map[string]any{
+		"date": s.Date(),
+	}
+
 	var articulatedTrace map[string]any
-	isArticulated := extraOpts["articulate"] == true && s.ArticulatedTrace != nil
+	isArticulated := p.ExtraOpts["articulate"] == true && s.ArticulatedTrace != nil
 	if isArticulated {
 		articulatedTrace = map[string]any{
 			"name": s.ArticulatedTrace.Name,
@@ -106,45 +197,17 @@ func (s *Trace) Model(chain, format string, verbose bool, extraOpts map[string]a
 		}
 	}
 
-	if format == "json" {
-		if s.TraceAddress == nil {
-			model["traceAddress"] = []uint64{}
-		} else {
-			model["traceAddress"] = s.TraceAddress
-		}
-		if len(s.Error) > 0 {
-			model["error"] = s.Error
-		}
-		if len(s.TraceType) > 0 {
-			model["type"] = s.TraceType
-		}
-		if s.Action != nil {
-			model["action"] = s.Action.Model(chain, format, verbose, extraOpts).Data
-		}
-		if s.Result != nil {
-			model["result"] = s.Result.Model(chain, format, verbose, extraOpts).Data
-		}
-
+	if p.Format == "json" {
 		if isArticulated {
 			model["articulatedTrace"] = articulatedTrace
 		}
-
 	} else {
-		model["blockNumber"] = s.BlockNumber
-		model["transactionIndex"] = s.TransactionIndex
-		model["error"] = s.Error
-		model["timestamp"] = s.Timestamp
 		if s.Action != nil {
 			to := hexutil.Encode(s.Action.To.Bytes())
 			if to == "0x0000000000000000000000000000000000000000" {
 				to = "0x0"
 			}
-			model["action::callType"] = s.Action.CallType
-			model["action::gas"] = s.Action.Gas
-			model["action::input"] = s.Action.Input
-			items := []Labeler{
-				NewLabeler(s.Action.From, "action::fromName"),
-			}
+
 			if !s.Action.RefundAddress.IsZero() {
 				model["action::from"] = hexutil.Encode(s.Action.From.Bytes())
 				model["action::to"] = hexutil.Encode(s.Action.RefundAddress.Bytes())
@@ -152,43 +215,20 @@ func (s *Trace) Model(chain, format string, verbose bool, extraOpts map[string]a
 				model["action::ether"] = s.Action.Balance.ToFloatString(18)
 				model["action::input"] = "0x"
 				model["action::callType"] = "self-destruct"
-				items = append(items, NewLabeler(s.Action.RefundAddress, "action::toName"))
 			} else {
 				model["action::from"] = hexutil.Encode(s.Action.From.Bytes())
 				model["action::to"] = to
 				model["action::value"] = s.Action.Value.String()
 				model["action::ether"] = s.Action.Value.ToFloatString(18)
-				items = append(items, NewLabeler(s.Action.To, "action::toName"))
-			}
-			for _, item := range items {
-				if name, loaded, found := labelAddress(extraOpts, item.addr); found {
-					model[item.name] = name.Name
-					order = append(order, item.name)
-				} else if loaded && format != "json" {
-					model[item.name] = ""
-					order = append(order, item.name)
-				}
 			}
 		}
-		if s.Result != nil {
-			model["result::gasUsed"] = s.Result.GasUsed
-			model["result::output"] = s.Result.Output
-		} else {
-			model["result::gasUsed"] = "0"
-			model["result::output"] = ""
-		}
+
 		if isArticulated {
 			model["compressedTrace"] = MakeCompressed(articulatedTrace)
-			order = append(order, "compressedTrace")
 		}
-		order = reorderFields(order)
 	}
-	// EXISTING_CODE
 
-	return Model{
-		Data:  model,
-		Order: order,
-	}
+	return labelAddresses(p, model, needed)
 }
 
 func (s *Trace) Date() string {
