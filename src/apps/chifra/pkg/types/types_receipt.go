@@ -46,22 +46,27 @@ func (s Receipt) String() string {
 }
 
 func (s *Receipt) Model(chain, format string, verbose bool, extraOpts map[string]any) Model {
-	_ = chain
-	_ = format
-	_ = verbose
-	_ = extraOpts
-	var model = map[string]any{}
-	var order = []string{}
-
-	// EXISTING_CODE
-	model = map[string]any{
-		"blockNumber":      s.BlockNumber,
-		"gasUsed":          s.GasUsed,
-		"status":           s.Status,
-		"transactionHash":  s.TransactionHash,
-		"transactionIndex": s.TransactionIndex,
+	props := &ModelProps{
+		Chain:     chain,
+		Format:    format,
+		Verbose:   verbose,
+		ExtraOpts: extraOpts,
 	}
 
+	rawNames := []Labeler{
+		NewLabeler(s.ContractAddress, "contract"),
+		NewLabeler(s.From, "from"),
+		NewLabeler(s.To, "to"),
+	}
+	model := s.RawMap(props, rawNames)
+
+	calcNames := []Labeler{}
+	for k, v := range s.CalcMap(props, calcNames) {
+		model[k] = v
+	}
+
+	var order = []string{}
+	// EXISTING_CODE
 	order = []string{
 		"blockNumber",
 		"transactionIndex",
@@ -70,14 +75,64 @@ func (s *Receipt) Model(chain, format string, verbose bool, extraOpts map[string
 		"gasUsed",
 	}
 
-	if format == "json" {
+	if format != "json" {
+		order = append(order, "logsCnt")
+		order = append(order, "isError")
+		if verbose {
+			order = append(order, "contractAddress")
+		}
+	} else {
+		if s.IsError {
+			order = append(order, "isError")
+		}
+		if verbose {
+			order = append(order, "blockHash")
+			order = append(order, "cumulativeGasUsed")
+		}
+	}
+	// EXISTING_CODE
+
+	for _, item := range append(rawNames, calcNames...) {
+		key := item.name + "Name"
+		if _, exists := model[key]; exists {
+			order = append(order, key)
+		}
+	}
+	order = reorderFields(order)
+
+	return Model{
+		Data:  model,
+		Order: order,
+	}
+}
+
+// RawMap returns a map containing only the raw/base fields for this Receipt.
+// This excludes any calculated or derived fields.
+func (s *Receipt) RawMap(p *ModelProps, needed []Labeler) map[string]any {
+	model := map[string]any{
+		"blockNumber":      s.BlockNumber,
+		"gasUsed":          s.GasUsed,
+		"status":           s.Status,
+		"transactionHash":  s.TransactionHash,
+		"transactionIndex": s.TransactionIndex,
+	}
+
+	return labelAddresses(p, model, needed)
+}
+
+// CalcMap returns a map containing only the calculated/derived fields for this Receipt.
+// This is optimized for streaming contexts where the frontend receives the raw Receipt
+// and needs to enhance it with calculated values.
+func (s *Receipt) CalcMap(p *ModelProps, needed []Labeler) map[string]any {
+	model := map[string]any{}
+
+	if p.Format == "json" {
 		if !s.ContractAddress.IsZero() {
 			model["contractAddress"] = s.ContractAddress
 		}
 
 		if s.IsError {
 			model["isError"] = s.IsError
-			order = append(order, "isError")
 		}
 
 		if s.Logs == nil {
@@ -85,17 +140,14 @@ func (s *Receipt) Model(chain, format string, verbose bool, extraOpts map[string
 		} else {
 			logs := make([]map[string]any, 0, len(s.Logs))
 			for _, log := range s.Logs {
-				logs = append(logs, log.Model(chain, format, verbose, extraOpts).Data)
+				logs = append(logs, log.Model(p.Chain, p.Format, p.Verbose, p.ExtraOpts).Data)
 			}
 			model["logs"] = logs
 		}
 
-		if verbose {
+		if p.Verbose {
 			model["blockHash"] = s.BlockHash
-			order = append(order, "blockHash")
-
 			model["cumulativeGasUsed"] = s.CumulativeGasUsed
-			order = append(order, "cumulativeGasUsed")
 		}
 		if !s.From.IsZero() {
 			model["from"] = s.From
@@ -106,38 +158,14 @@ func (s *Receipt) Model(chain, format string, verbose bool, extraOpts map[string
 
 	} else {
 		model["logsCnt"] = len(s.Logs)
-		order = append(order, "logsCnt")
-
 		model["isError"] = s.IsError
-		order = append(order, "isError")
 
-		if verbose {
+		if p.Verbose {
 			model["contractAddress"] = s.ContractAddress.Hex()
-			order = append(order, "contractAddress")
 		}
 	}
 
-	items := []Labeler{
-		NewLabeler(s.ContractAddress, "contractName"),
-		NewLabeler(s.From, "fromName"),
-		NewLabeler(s.To, "toName"),
-	}
-	for _, item := range items {
-		if name, loaded, found := labelAddress(extraOpts, item.addr); found {
-			model[item.name] = name.Name
-			order = append(order, item.name)
-		} else if loaded && format != "json" {
-			model[item.name] = ""
-			order = append(order, item.name)
-		}
-	}
-	order = reorderFields(order)
-	// EXISTING_CODE
-
-	return Model{
-		Data:  model,
-		Order: order,
-	}
+	return labelAddresses(p, model, needed)
 }
 
 func (s *ReceiptGroup) CacheLocations() (string, string, string) {

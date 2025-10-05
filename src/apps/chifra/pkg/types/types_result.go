@@ -43,30 +43,25 @@ func (s Result) String() string {
 }
 
 func (s *Result) Model(chain, format string, verbose bool, extraOpts map[string]any) Model {
-	_ = chain
-	_ = format
-	_ = verbose
-	_ = extraOpts
-	var model = map[string]any{}
+	props := &ModelProps{
+		Chain:     chain,
+		Format:    format,
+		Verbose:   verbose,
+		ExtraOpts: extraOpts,
+	}
+
+	rawNames := []Labeler{
+		NewLabeler(s.Address, "address"),
+	}
+	model := s.RawMap(props, rawNames)
+
+	calcNames := []Labeler{}
+	for k, v := range s.CalcMap(props, calcNames) {
+		model[k] = v
+	}
+
 	var order = []string{}
-
 	// EXISTING_CODE
-	callResult := map[string]any{
-		"name":      s.Name,
-		"signature": s.Signature,
-		"encoding":  s.Encoding,
-		"outputs":   s.Values,
-	}
-	model = map[string]any{
-		"blockNumber": s.BlockNumber,
-		"timestamp":   s.Timestamp,
-		"date":        s.Date(),
-		"address":     s.Address.Hex(),
-		"encoding":    s.Encoding,
-		"bytes":       s.EncodedArguments,
-		"callResult":  callResult,
-	}
-
 	if verbose {
 		order = []string{
 			"blockNumber",
@@ -87,11 +82,59 @@ func (s *Result) Model(chain, format string, verbose bool, extraOpts map[string]
 			"bytes",
 			"compressedResult",
 		}
-		delete(model, "timestamp")
-		delete(model, "date")
+	}
+	// EXISTING_CODE
+
+	for _, item := range append(rawNames, calcNames...) {
+		key := item.name + "Name"
+		if _, exists := model[key]; exists {
+			order = append(order, key)
+		}
+	}
+	order = reorderFields(order)
+
+	return Model{
+		Data:  model,
+		Order: order,
+	}
+}
+
+// RawMap returns a map containing only the raw/base fields for this Result.
+// This excludes any calculated or derived fields.
+func (s *Result) RawMap(p *ModelProps, needed []Labeler) map[string]any {
+	model := map[string]any{
+		"blockNumber": s.BlockNumber,
+		"address":     s.Address.Hex(),
+		"encoding":    s.Encoding,
+		"bytes":       s.EncodedArguments,
 	}
 
-	isArticulated := extraOpts["articulate"] == true && s.ArticulatedOut != nil
+	if p.Verbose {
+		model["timestamp"] = s.Timestamp
+	}
+
+	return labelAddresses(p, model, needed)
+}
+
+// CalcMap returns a map containing only the calculated/derived fields for this Result.
+// This is optimized for streaming contexts where the frontend receives the raw Result
+// and needs to enhance it with calculated values.
+func (s *Result) CalcMap(p *ModelProps, needed []Labeler) map[string]any {
+	model := map[string]any{}
+
+	if p.Verbose {
+		model["date"] = s.Date()
+	}
+
+	callResult := map[string]any{
+		"name":      s.Name,
+		"signature": s.Signature,
+		"encoding":  s.Encoding,
+		"outputs":   s.Values,
+	}
+	model["callResult"] = callResult
+
+	isArticulated := p.ExtraOpts["articulate"] == true && s.ArticulatedOut != nil
 	var articulatedOut map[string]any
 	if isArticulated {
 		articulatedOut = map[string]any{
@@ -101,30 +144,17 @@ func (s *Result) Model(chain, format string, verbose bool, extraOpts map[string]
 		if outputModels != nil {
 			articulatedOut["outputs"] = outputModels
 		}
-		if format == "json" {
+		if p.Format == "json" {
 			model["callResult"] = articulatedOut
 		}
 	}
 
-	if format != "json" {
+	if p.Format != "json" {
 		model["signature"] = s.Signature
 		model["compressedResult"] = MakeCompressed(s.Values)
 	}
 
-	if name, loaded, found := labelAddress(extraOpts, s.Address); found {
-		model["addressName"] = name.Name
-		order = append(order, "addressName")
-	} else if loaded && format != "json" {
-		model["addressName"] = ""
-		order = append(order, "addressName")
-	}
-	order = reorderFields(order)
-	// EXISTING_CODE
-
-	return Model{
-		Data:  model,
-		Order: order,
-	}
+	return labelAddresses(p, model, needed)
 }
 
 func (s *Result) Date() string {

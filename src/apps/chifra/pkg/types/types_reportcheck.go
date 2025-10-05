@@ -34,20 +34,23 @@ func (s ReportCheck) String() string {
 }
 
 func (s *ReportCheck) Model(chain, format string, verbose bool, extraOpts map[string]any) Model {
-	_ = chain
-	_ = format
-	_ = verbose
-	_ = extraOpts
-	var model = map[string]any{}
-	var order = []string{}
-
-	// EXISTING_CODE
-	model = map[string]any{
-		"result":     s.Result,
-		"checkedCnt": s.CheckedCnt,
-		"visitedCnt": s.VisitedCnt,
-		"passedCnt":  s.PassedCnt,
+	props := &ModelProps{
+		Chain:     chain,
+		Format:    format,
+		Verbose:   verbose,
+		ExtraOpts: extraOpts,
 	}
+
+	rawNames := []Labeler{} // No addresses in ReportCheck
+	model := s.RawMap(props, rawNames)
+
+	calcNames := []Labeler{}
+	for k, v := range s.CalcMap(props, calcNames) {
+		model[k] = v
+	}
+
+	var order = []string{}
+	// EXISTING_CODE
 	order = []string{
 		"result",
 		"checkedCnt",
@@ -55,21 +58,7 @@ func (s *ReportCheck) Model(chain, format string, verbose bool, extraOpts map[st
 		"passedCnt",
 	}
 
-	if format == "json" {
-		if s.FailedCnt > 0 {
-			model["failedCnt"] = s.FailedCnt
-		}
-		if s.SkippedCnt > 0 {
-			model["skippedCnt"] = s.SkippedCnt
-		}
-		model["reason"] = s.Reason
-		if len(s.MsgStrings) > 0 {
-			model["msgStrings"] = s.MsgStrings
-		}
-	} else {
-		model["skippedCnt"] = s.SkippedCnt
-		model["failedCnt"] = s.FailedCnt
-		model["reason"] = s.Reason
+	if format != "json" {
 		order = append(order, []string{"skippedCnt", "failedCnt", "reason"}...)
 	}
 	// EXISTING_CODE
@@ -78,6 +67,46 @@ func (s *ReportCheck) Model(chain, format string, verbose bool, extraOpts map[st
 		Data:  model,
 		Order: order,
 	}
+}
+
+// RawMap returns a map containing only the raw/base fields for this ReportCheck.
+// This excludes any calculated or derived fields.
+func (s *ReportCheck) RawMap(p *ModelProps, needed []Labeler) map[string]any {
+	model := map[string]any{
+		"result":     s.Result,
+		"checkedCnt": s.CheckedCnt,
+		"visitedCnt": s.VisitedCnt,
+		"passedCnt":  s.PassedCnt,
+		"reason":     s.Reason,
+	}
+
+	if p.Format != "json" {
+		model["skippedCnt"] = s.SkippedCnt
+		model["failedCnt"] = s.FailedCnt
+	}
+
+	return labelAddresses(p, model, needed)
+}
+
+// CalcMap returns a map containing only the calculated/derived fields for this ReportCheck.
+// This is optimized for streaming contexts where the frontend receives the raw ReportCheck
+// and needs to enhance it with calculated values.
+func (s *ReportCheck) CalcMap(p *ModelProps, needed []Labeler) map[string]any {
+	model := map[string]any{}
+
+	if p.Format == "json" {
+		if s.FailedCnt > 0 {
+			model["failedCnt"] = s.FailedCnt
+		}
+		if s.SkippedCnt > 0 {
+			model["skippedCnt"] = s.SkippedCnt
+		}
+		if len(s.MsgStrings) > 0 {
+			model["msgStrings"] = s.MsgStrings
+		}
+	}
+
+	return labelAddresses(p, model, needed)
 }
 
 // FinishUnmarshal is used by the cache. It may be unused depending on auto-code-gen
