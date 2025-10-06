@@ -32,18 +32,11 @@ func (s RangeDates) String() string {
 }
 
 func (s *RangeDates) Model(chain, format string, verbose bool, extraOpts map[string]any) Model {
-	props := &ModelProps{
-		Chain:     chain,
-		Format:    format,
-		Verbose:   verbose,
-		ExtraOpts: extraOpts,
-	}
+	props := NewModelProps(chain, format, verbose, extraOpts)
 
-	rawNames := []Labeler{} // No addresses in RangeDates
+	rawNames := []Labeler{}
 	model := s.RawMap(props, rawNames)
-
-	calcNames := []Labeler{}
-	for k, v := range s.CalcMap(props, calcNames) {
+	for k, v := range s.CalcMap(props) {
 		model[k] = v
 	}
 
@@ -79,12 +72,12 @@ func (s *RangeDates) RawMap(p *ModelProps, needed []Labeler) map[string]any {
 // CalcMap returns a map containing only the calculated/derived fields for this RangeDates.
 // This is optimized for streaming contexts where the frontend receives the raw RangeDates
 // and needs to enhance it with calculated values.
-func (s *RangeDates) CalcMap(p *ModelProps, needed []Labeler) map[string]any {
+func (s *RangeDates) CalcMap(p *ModelProps) map[string]any {
 	model := map[string]any{}
 
 	// No calculated fields for RangeDates
 
-	return labelAddresses(p, model, needed)
+	return model
 }
 
 // FinishUnmarshal is used by the cache. It may be unused depending on auto-code-gen

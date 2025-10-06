@@ -34,18 +34,11 @@ func (s ReportCheck) String() string {
 }
 
 func (s *ReportCheck) Model(chain, format string, verbose bool, extraOpts map[string]any) Model {
-	props := &ModelProps{
-		Chain:     chain,
-		Format:    format,
-		Verbose:   verbose,
-		ExtraOpts: extraOpts,
-	}
+	props := NewModelProps(chain, format, verbose, extraOpts)
 
-	rawNames := []Labeler{} // No addresses in ReportCheck
+	rawNames := []Labeler{}
 	model := s.RawMap(props, rawNames)
-
-	calcNames := []Labeler{}
-	for k, v := range s.CalcMap(props, calcNames) {
+	for k, v := range s.CalcMap(props) {
 		model[k] = v
 	}
 
@@ -91,7 +84,7 @@ func (s *ReportCheck) RawMap(p *ModelProps, needed []Labeler) map[string]any {
 // CalcMap returns a map containing only the calculated/derived fields for this ReportCheck.
 // This is optimized for streaming contexts where the frontend receives the raw ReportCheck
 // and needs to enhance it with calculated values.
-func (s *ReportCheck) CalcMap(p *ModelProps, needed []Labeler) map[string]any {
+func (s *ReportCheck) CalcMap(p *ModelProps) map[string]any {
 	model := map[string]any{}
 
 	if p.Format == "json" {
@@ -106,7 +99,7 @@ func (s *ReportCheck) CalcMap(p *ModelProps, needed []Labeler) map[string]any {
 		}
 	}
 
-	return labelAddresses(p, model, needed)
+	return model
 }
 
 // FinishUnmarshal is used by the cache. It may be unused depending on auto-code-gen

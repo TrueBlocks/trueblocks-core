@@ -50,12 +50,7 @@ func (s Transfer) String() string {
 }
 
 func (s *Transfer) Model(chain, format string, verbose bool, extraOpts map[string]any) Model {
-	props := &ModelProps{
-		Chain:     chain,
-		Format:    format,
-		Verbose:   verbose,
-		ExtraOpts: extraOpts,
-	}
+	props := NewModelProps(chain, format, verbose, extraOpts)
 
 	rawNames := []Labeler{
 		NewLabeler(s.Asset, "asset"),
@@ -64,9 +59,7 @@ func (s *Transfer) Model(chain, format string, verbose bool, extraOpts map[strin
 		// NewLabeler(s.Sender, "sender"),
 	}
 	model := s.RawMap(props, rawNames)
-
-	calcNames := []Labeler{}
-	for k, v := range s.CalcMap(props, calcNames) {
+	for k, v := range s.CalcMap(props) {
 		model[k] = v
 	}
 
@@ -81,7 +74,7 @@ func (s *Transfer) Model(chain, format string, verbose bool, extraOpts map[strin
 	}
 	// EXISTING_CODE
 
-	for _, item := range append(rawNames, calcNames...) {
+	for _, item := range rawNames {
 		key := item.name + "Name"
 		if _, exists := model[key]; exists {
 			order = append(order, key)
@@ -128,7 +121,7 @@ func (s *Transfer) RawMap(p *ModelProps, needed []Labeler) map[string]any {
 // CalcMap returns a map containing only the calculated/derived fields for this Transfer.
 // This is optimized for streaming contexts where the frontend receives the raw Transfer
 // and needs to enhance it with calculated values.
-func (s *Transfer) CalcMap(p *ModelProps, needed []Labeler) map[string]any {
+func (s *Transfer) CalcMap(p *ModelProps) map[string]any {
 	model := map[string]any{
 		"amount": s.AmountNet().Text(10),
 	}
@@ -138,7 +131,7 @@ func (s *Transfer) CalcMap(p *ModelProps, needed []Labeler) map[string]any {
 		model["amountEth"] = s.AmountNet().ToFloatString(decimals)
 	}
 
-	return labelAddresses(p, model, needed)
+	return model
 }
 
 // FinishUnmarshal is used by the cache. It may be unused depending on auto-code-gen

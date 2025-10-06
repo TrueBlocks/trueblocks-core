@@ -35,18 +35,11 @@ func (s ChunkIndex) String() string {
 }
 
 func (s *ChunkIndex) Model(chain, format string, verbose bool, extraOpts map[string]any) Model {
-	props := &ModelProps{
-		Chain:     chain,
-		Format:    format,
-		Verbose:   verbose,
-		ExtraOpts: extraOpts,
-	}
+	props := NewModelProps(chain, format, verbose, extraOpts)
 
 	rawNames := []Labeler{}
 	model := s.RawMap(props, rawNames)
-
-	calcNames := []Labeler{}
-	for k, v := range s.CalcMap(props, calcNames) {
+	for k, v := range s.CalcMap(props) {
 		model[k] = v
 	}
 
@@ -96,7 +89,7 @@ func (s *ChunkIndex) RawMap(p *ModelProps, needed []Labeler) map[string]any {
 
 // CalcMap returns a map containing the calculated/derived fields for this ChunkIndex.
 // This includes hash formatting, range dates, and other computed values.
-func (s *ChunkIndex) CalcMap(p *ModelProps, needed []Labeler) map[string]any {
+func (s *ChunkIndex) CalcMap(p *ModelProps) map[string]any {
 	model := map[string]any{
 		"hash": FormattedTag(p.Verbose, s.Hash),
 	}
@@ -120,7 +113,7 @@ func (s *ChunkIndex) CalcMap(p *ModelProps, needed []Labeler) map[string]any {
 		}
 	}
 
-	return labelAddresses(p, model, needed)
+	return model
 }
 
 // FinishUnmarshal is used by the cache. It may be unused depending on auto-code-gen

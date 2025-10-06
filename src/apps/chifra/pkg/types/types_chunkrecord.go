@@ -34,18 +34,11 @@ func (s ChunkRecord) String() string {
 }
 
 func (s *ChunkRecord) Model(chain, format string, verbose bool, extraOpts map[string]any) Model {
-	props := &ModelProps{
-		Chain:     chain,
-		Format:    format,
-		Verbose:   verbose,
-		ExtraOpts: extraOpts,
-	}
+	props := NewModelProps(chain, format, verbose, extraOpts)
 
 	rawNames := []Labeler{}
 	model := s.RawMap(props, rawNames)
-
-	calcNames := []Labeler{}
-	for k, v := range s.CalcMap(props, calcNames) {
+	for k, v := range s.CalcMap(props) {
 		model[k] = v
 	}
 
@@ -90,7 +83,7 @@ func (s *ChunkRecord) RawMap(p *ModelProps, needed []Labeler) map[string]any {
 
 // CalcMap returns a map containing the calculated/derived fields for this ChunkRecord.
 // This includes range date formatting and other computed values.
-func (s *ChunkRecord) CalcMap(p *ModelProps, needed []Labeler) map[string]any {
+func (s *ChunkRecord) CalcMap(p *ModelProps) map[string]any {
 	model := map[string]any{}
 
 	if p.Verbose && p.Format == "json" {
@@ -107,7 +100,7 @@ func (s *ChunkRecord) CalcMap(p *ModelProps, needed []Labeler) map[string]any {
 		}
 	}
 
-	return labelAddresses(p, model, needed)
+	return model
 }
 
 // FinishUnmarshal is used by the cache. It may be unused depending on auto-code-gen

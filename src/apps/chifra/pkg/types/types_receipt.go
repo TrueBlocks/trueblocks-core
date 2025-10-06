@@ -46,12 +46,7 @@ func (s Receipt) String() string {
 }
 
 func (s *Receipt) Model(chain, format string, verbose bool, extraOpts map[string]any) Model {
-	props := &ModelProps{
-		Chain:     chain,
-		Format:    format,
-		Verbose:   verbose,
-		ExtraOpts: extraOpts,
-	}
+	props := NewModelProps(chain, format, verbose, extraOpts)
 
 	rawNames := []Labeler{
 		NewLabeler(s.ContractAddress, "contract"),
@@ -59,9 +54,7 @@ func (s *Receipt) Model(chain, format string, verbose bool, extraOpts map[string
 		NewLabeler(s.To, "to"),
 	}
 	model := s.RawMap(props, rawNames)
-
-	calcNames := []Labeler{}
-	for k, v := range s.CalcMap(props, calcNames) {
+	for k, v := range s.CalcMap(props) {
 		model[k] = v
 	}
 
@@ -92,7 +85,7 @@ func (s *Receipt) Model(chain, format string, verbose bool, extraOpts map[string
 	}
 	// EXISTING_CODE
 
-	for _, item := range append(rawNames, calcNames...) {
+	for _, item := range rawNames {
 		key := item.name + "Name"
 		if _, exists := model[key]; exists {
 			order = append(order, key)
@@ -123,7 +116,7 @@ func (s *Receipt) RawMap(p *ModelProps, needed []Labeler) map[string]any {
 // CalcMap returns a map containing only the calculated/derived fields for this Receipt.
 // This is optimized for streaming contexts where the frontend receives the raw Receipt
 // and needs to enhance it with calculated values.
-func (s *Receipt) CalcMap(p *ModelProps, needed []Labeler) map[string]any {
+func (s *Receipt) CalcMap(p *ModelProps) map[string]any {
 	model := map[string]any{}
 
 	if p.Format == "json" {
@@ -165,7 +158,7 @@ func (s *Receipt) CalcMap(p *ModelProps, needed []Labeler) map[string]any {
 		}
 	}
 
-	return labelAddresses(p, model, needed)
+	return model
 }
 
 func (s *ReceiptGroup) CacheLocations() (string, string, string) {

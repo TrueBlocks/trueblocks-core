@@ -33,18 +33,11 @@ func (s ChunkPin) String() string {
 }
 
 func (s *ChunkPin) Model(chain, format string, verbose bool, extraOpts map[string]any) Model {
-	props := &ModelProps{
-		Chain:     chain,
-		Format:    format,
-		Verbose:   verbose,
-		ExtraOpts: extraOpts,
-	}
+	props := NewModelProps(chain, format, verbose, extraOpts)
 
 	rawNames := []Labeler{}
 	model := s.RawMap(props, rawNames)
-
-	calcNames := []Labeler{}
-	for k, v := range s.CalcMap(props, calcNames) {
+	for k, v := range s.CalcMap(props) {
 		model[k] = v
 	}
 
@@ -81,10 +74,10 @@ func (s *ChunkPin) RawMap(p *ModelProps, needed []Labeler) map[string]any {
 
 // CalcMap returns a map containing the calculated/derived fields for this ChunkPin.
 // This type has no calculated fields currently.
-func (s *ChunkPin) CalcMap(p *ModelProps, needed []Labeler) map[string]any {
+func (s *ChunkPin) CalcMap(p *ModelProps) map[string]any {
 	model := map[string]any{}
 
-	return labelAddresses(p, model, needed)
+	return model
 }
 
 // FinishUnmarshal is used by the cache. It may be unused depending on auto-code-gen

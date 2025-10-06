@@ -16,8 +16,8 @@ type ModelProps struct {
 	ExtraOpts map[string]any
 }
 
-func NewModelProps(chain, format string, verbose bool, extraOpts map[string]any) ModelProps {
-	return ModelProps{
+func NewModelProps(chain, format string, verbose bool, extraOpts map[string]any) *ModelProps {
+	return &ModelProps{
 		Chain:     chain,
 		Format:    format,
 		Verbose:   verbose,

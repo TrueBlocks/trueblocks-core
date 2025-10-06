@@ -43,18 +43,13 @@ func (s Abi) String() string {
 }
 
 func (s *Abi) Model(chain, format string, verbose bool, extraOpts map[string]any) Model {
-	props := &ModelProps{
-		Chain:     chain,
-		Format:    format,
-		Verbose:   verbose,
-		ExtraOpts: extraOpts,
+	props := NewModelProps(chain, format, verbose, extraOpts)
+
+	rawNames := []Labeler{
+		NewLabeler(s.Address, "address"),
 	}
-
-	rawNames := []Labeler{NewLabeler(s.Address, "address")}
 	model := s.RawMap(props, rawNames)
-
-	calcNames := []Labeler{}
-	for k, v := range s.CalcMap(props, calcNames) {
+	for k, v := range s.CalcMap(props) {
 		model[k] = v
 	}
 
@@ -81,15 +76,22 @@ func (s *Abi) Model(chain, format string, verbose bool, extraOpts map[string]any
 		}
 	} else {
 		order = append(order, s.Address.Hex())
-		for _, item := range append(rawNames, calcNames...) {
+		for _, item := range rawNames {
 			key := item.name + "Name"
 			if _, exists := model[key]; exists {
 				order = append(order, key)
 			}
 		}
 	}
-	order = reorderFields(order)
 	// EXISTING_CODE
+
+	for _, item := range rawNames {
+		key := item.name + "Name"
+		if _, exists := model[key]; exists {
+			order = append(order, key)
+		}
+	}
+	order = reorderFields(order)
 
 	return Model{
 		Data:  model,
@@ -102,6 +104,7 @@ func (s *Abi) Model(chain, format string, verbose bool, extraOpts map[string]any
 func (s *Abi) RawMap(p *ModelProps, needed []Labeler) map[string]any {
 	model := map[string]any{}
 
+	// BINGO
 	if p.ExtraOpts["list"] == true {
 		model = map[string]any{
 			"address":     s.Address,
@@ -146,19 +149,20 @@ func (s *Abi) RawMap(p *ModelProps, needed []Labeler) map[string]any {
 		if !s.IsKnown {
 			return labelAddresses(p, model, needed)
 		}
-		return model
 	} else {
 		model[s.Address.Hex()] = s.Functions
-		return labelAddresses(p, model, needed)
 	}
+	// BINGO
+
+	return labelAddresses(p, model, needed)
 }
 
 // CalcMap returns a map containing the calculated/derived fields for this Abi.
 // This includes name resolution for non-known ABIs.
-func (s *Abi) CalcMap(p *ModelProps, needed []Labeler) map[string]any {
+func (s *Abi) CalcMap(p *ModelProps) map[string]any {
 	model := map[string]any{}
 
-	// Only handle name resolution in CalcMap for list mode when not IsKnown
+	// BINGO
 	if p.ExtraOpts["list"] == true && !s.IsKnown {
 		// This handles the special case where we override the name field
 		if name, loaded, found := labelAddress(p.ExtraOpts, s.Address); found {
@@ -168,8 +172,9 @@ func (s *Abi) CalcMap(p *ModelProps, needed []Labeler) map[string]any {
 		}
 		return model
 	}
+	// BINGO
 
-	return labelAddresses(p, model, needed)
+	return model
 }
 
 func (s *Abi) CacheLocations() (string, string, string) {

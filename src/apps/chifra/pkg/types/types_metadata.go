@@ -24,8 +24,8 @@ func (m *MetaData) String() string {
 
 func (m *MetaData) Model(chain, format string, verbose bool, extraOpts map[string]any) Model {
 	props := NewModelProps(chain, format, verbose, extraOpts)
-	rawMap := m.RawMap(&props)
-	calcMap := m.CalcMap(&props, rawMap)
+	rawMap := m.RawMap(props)
+	calcMap := m.CalcMap(props, rawMap)
 
 	// Merge raw and calculated maps
 	model := make(map[string]any)

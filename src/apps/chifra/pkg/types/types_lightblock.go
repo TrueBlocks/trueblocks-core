@@ -46,18 +46,13 @@ func (s LightBlock) String() string {
 }
 
 func (s *LightBlock) Model(chain, format string, verbose bool, extraOpts map[string]any) Model {
-	props := &ModelProps{
-		Chain:     chain,
-		Format:    format,
-		Verbose:   verbose,
-		ExtraOpts: extraOpts,
+	props := NewModelProps(chain, format, verbose, extraOpts)
+
+	rawNames := []Labeler{
+		NewLabeler(s.Miner, "miner"),
 	}
-
-	rawNames := []Labeler{NewLabeler(s.Miner, "miner")}
 	model := s.RawMap(props, rawNames)
-
-	calcNames := []Labeler{}
-	for k, v := range s.CalcMap(props, calcNames) {
+	for k, v := range s.CalcMap(props) {
 		model[k] = v
 	}
 
@@ -84,7 +79,7 @@ func (s *LightBlock) Model(chain, format string, verbose bool, extraOpts map[str
 	}
 	// EXISTING_CODE
 
-	for _, item := range append(rawNames, calcNames...) {
+	for _, item := range rawNames {
 		key := item.name + "Name"
 		if _, exists := model[key]; exists {
 			order = append(order, key)
@@ -131,13 +126,12 @@ func (s *LightBlock) RawMap(p *ModelProps, needed []Labeler) map[string]any {
 
 // CalcMap returns a map containing the calculated/derived fields for this LightBlock.
 // This includes formatted dates and labeled addresses.
-func (s *LightBlock) CalcMap(p *ModelProps, needed []Labeler) map[string]any {
+func (s *LightBlock) CalcMap(p *ModelProps) map[string]any {
 	model := map[string]any{
 		"date": s.Date(),
 	}
 
-	// Handle address labeling
-	return labelAddresses(p, model, needed)
+	return model
 }
 
 func (s *LightBlock) Date() string {

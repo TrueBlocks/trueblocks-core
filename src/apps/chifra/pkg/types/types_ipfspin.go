@@ -34,18 +34,11 @@ func (s IpfsPin) String() string {
 }
 
 func (s *IpfsPin) Model(chain, format string, verbose bool, extraOpts map[string]any) Model {
-	props := &ModelProps{
-		Chain:     chain,
-		Format:    format,
-		Verbose:   verbose,
-		ExtraOpts: extraOpts,
-	}
+	props := NewModelProps(chain, format, verbose, extraOpts)
 
 	rawNames := []Labeler{}
 	model := s.RawMap(props, rawNames)
-
-	calcNames := []Labeler{}
-	for k, v := range s.CalcMap(props, calcNames) {
+	for k, v := range s.CalcMap(props) {
 		model[k] = v
 	}
 
@@ -81,12 +74,12 @@ func (s *IpfsPin) RawMap(p *ModelProps, needed []Labeler) map[string]any {
 
 // CalcMap returns a map containing the calculated/derived fields for this IpfsPin.
 // This includes cleaned dates and any other derived values.
-func (s *IpfsPin) CalcMap(p *ModelProps, needed []Labeler) map[string]any {
+func (s *IpfsPin) CalcMap(p *ModelProps) map[string]any {
 	model := map[string]any{
 		"datePinned": cleanDate(s.DatePinned),
 	}
 
-	return labelAddresses(p, model, needed)
+	return model
 }
 
 // FinishUnmarshal is used by the cache. It may be unused depending on auto-code-gen

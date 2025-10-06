@@ -44,32 +44,26 @@ func (s State) String() string {
 }
 
 func (s *State) Model(chain, format string, verbose bool, extraOpts map[string]any) Model {
-	props := &ModelProps{
-		Chain:     chain,
-		Format:    format,
-		Verbose:   verbose,
-		ExtraOpts: extraOpts,
-	}
+	props := NewModelProps(chain, format, verbose, extraOpts)
 
 	rawNames := []Labeler{
 		NewLabeler(s.Address, "address"),
 	}
-	model := s.RawMap(props, rawNames)
 
-	calcNames := []Labeler{}
 	if extraOpts != nil {
 		if fields, ok := extraOpts["outFields"]; ok {
 			if fields, ok := fields.([]string); ok {
 				for _, field := range fields {
 					if field == "proxy" {
-						calcNames = append(calcNames, NewLabeler(s.Proxy, "proxyName"))
+						rawNames = append(rawNames, NewLabeler(s.Proxy, "proxyName"))
 					}
 				}
 			}
 		}
 	}
+	model := s.RawMap(props, rawNames)
 
-	for k, v := range s.CalcMap(props, calcNames) {
+	for k, v := range s.CalcMap(props) {
 		model[k] = v
 	}
 
@@ -97,7 +91,7 @@ func (s *State) Model(chain, format string, verbose bool, extraOpts map[string]a
 		}
 	}
 
-	for _, item := range append(rawNames, calcNames...) {
+	for _, item := range rawNames {
 		key := item.name + "Name"
 		if _, exists := model[key]; exists {
 			order = append(order, key)
@@ -132,7 +126,7 @@ func (s *State) RawMap(p *ModelProps, needed []Labeler) map[string]any {
 // CalcMap returns a map containing only the calculated/derived fields for this State.
 // This is optimized for streaming contexts where the frontend receives the raw State
 // and needs to enhance it with calculated values.
-func (s *State) CalcMap(p *ModelProps, needed []Labeler) map[string]any {
+func (s *State) CalcMap(p *ModelProps) map[string]any {
 	model := map[string]any{}
 
 	if p.Verbose {
@@ -172,7 +166,7 @@ func (s *State) CalcMap(p *ModelProps, needed []Labeler) map[string]any {
 		model["ether"] = s.Balance.ToFloatString(18)
 	}
 
-	return labelAddresses(p, model, needed)
+	return model
 }
 
 func (s *State) Date() string {

@@ -37,18 +37,11 @@ func (s Parameter) String() string {
 }
 
 func (s *Parameter) Model(chain, format string, verbose bool, extraOpts map[string]any) Model {
-	props := &ModelProps{
-		Chain:     chain,
-		Format:    format,
-		Verbose:   verbose,
-		ExtraOpts: extraOpts,
-	}
+	props := NewModelProps(chain, format, verbose, extraOpts)
 
-	rawNames := []Labeler{} // No addresses in Parameter
+	rawNames := []Labeler{}
 	model := s.RawMap(props, rawNames)
-
-	calcNames := []Labeler{}
-	for k, v := range s.CalcMap(props, calcNames) {
+	for k, v := range s.CalcMap(props) {
 		model[k] = v
 	}
 
@@ -92,7 +85,7 @@ func (s *Parameter) RawMap(p *ModelProps, needed []Labeler) map[string]any {
 // CalcMap returns a map containing only the calculated/derived fields for this Parameter.
 // This is optimized for streaming contexts where the frontend receives the raw Parameter
 // and needs to enhance it with calculated values.
-func (s *Parameter) CalcMap(p *ModelProps, needed []Labeler) map[string]any {
+func (s *Parameter) CalcMap(p *ModelProps) map[string]any {
 	model := map[string]any{}
 
 	if p.Format == "json" {
@@ -107,7 +100,7 @@ func (s *Parameter) CalcMap(p *ModelProps, needed []Labeler) map[string]any {
 		}
 	}
 
-	return labelAddresses(p, model, needed)
+	return model
 }
 
 func (s *Parameter) MarshalCache(writer io.Writer) (err error) {

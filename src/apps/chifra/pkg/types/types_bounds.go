@@ -34,18 +34,13 @@ func (s Bounds) String() string {
 }
 
 func (s *Bounds) Model(chain, format string, verbose bool, extraOpts map[string]any) Model {
-	props := &ModelProps{
-		Chain:     chain,
-		Format:    format,
-		Verbose:   verbose,
-		ExtraOpts: extraOpts,
+	props := NewModelProps(chain, format, verbose, extraOpts)
+
+	rawNames := []Labeler{
+		NewLabeler(s.FirstApp.Address, "address"),
 	}
-
-	rawNames := []Labeler{NewLabeler(s.FirstApp.Address, "address")}
 	model := s.RawMap(props, rawNames)
-
-	calcNames := []Labeler{}
-	for k, v := range s.CalcMap(props, calcNames) {
+	for k, v := range s.CalcMap(props) {
 		model[k] = v
 	}
 
@@ -64,7 +59,7 @@ func (s *Bounds) Model(chain, format string, verbose bool, extraOpts map[string]
 		"blockFreq",
 	}
 
-	for _, item := range append(rawNames, calcNames...) {
+	for _, item := range rawNames {
 		key := item.name + "Name"
 		if _, exists := model[key]; exists {
 			order = append(order, key)
@@ -105,7 +100,7 @@ func (s *Bounds) RawMap(p *ModelProps, needed []Labeler) map[string]any {
 
 // CalcMap returns a map containing the calculated/derived fields for this Bounds.
 // This includes formatted dates and computed statistics.
-func (s *Bounds) CalcMap(p *ModelProps, needed []Labeler) map[string]any {
+func (s *Bounds) CalcMap(p *ModelProps) map[string]any {
 	model := map[string]any{
 		"firstDate":  base.FormattedDate(s.FirstTs),
 		"latestDate": base.FormattedDate(s.LatestTs),
@@ -113,7 +108,7 @@ func (s *Bounds) CalcMap(p *ModelProps, needed []Labeler) map[string]any {
 		"blockFreq":  uint64(s.LatestApp.BlockNumber-s.FirstApp.BlockNumber) / s.Count,
 	}
 
-	return labelAddresses(p, model, needed)
+	return model
 }
 
 // FinishUnmarshal is used by the cache. It may be unused depending on auto-code-gen

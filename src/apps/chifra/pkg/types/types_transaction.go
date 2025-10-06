@@ -82,8 +82,8 @@ func (s Transaction) String() string {
 
 func (s *Transaction) Model(chain, format string, verbose bool, extraOpts map[string]any) Model {
 	props := NewModelProps(chain, format, verbose, extraOpts)
-	rawMap := s.RawMap(&props)
-	calcMap := s.CalcMap(&props, rawMap)
+	rawMap := s.RawMap(props)
+	calcMap := s.CalcMap(props, rawMap)
 
 	// Merge raw and calculated maps
 	model := make(map[string]any)

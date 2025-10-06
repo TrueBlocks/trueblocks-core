@@ -33,18 +33,13 @@ func (s ChunkAddress) String() string {
 }
 
 func (s *ChunkAddress) Model(chain, format string, verbose bool, extraOpts map[string]any) Model {
-	props := &ModelProps{
-		Chain:     chain,
-		Format:    format,
-		Verbose:   verbose,
-		ExtraOpts: extraOpts,
+	props := NewModelProps(chain, format, verbose, extraOpts)
+
+	rawNames := []Labeler{
+		NewLabeler(s.Address, "address"),
 	}
-
-	rawNames := []Labeler{NewLabeler(s.Address, "address")}
 	model := s.RawMap(props, rawNames)
-
-	calcNames := []Labeler{}
-	for k, v := range s.CalcMap(props, calcNames) {
+	for k, v := range s.CalcMap(props) {
 		model[k] = v
 	}
 
@@ -65,7 +60,7 @@ func (s *ChunkAddress) Model(chain, format string, verbose bool, extraOpts map[s
 		order = append(order, []string{"firstTs", "firstDate", "lastTs", "lastDate"}...)
 	}
 
-	for _, item := range append(rawNames, calcNames...) {
+	for _, item := range rawNames {
 		key := item.name + "Name"
 		if _, exists := model[key]; exists {
 			order = append(order, key)
@@ -94,7 +89,7 @@ func (s *ChunkAddress) RawMap(p *ModelProps, needed []Labeler) map[string]any {
 
 // CalcMap returns a map containing the calculated/derived fields for this ChunkAddress.
 // This includes range date formatting and other computed values.
-func (s *ChunkAddress) CalcMap(p *ModelProps, needed []Labeler) map[string]any {
+func (s *ChunkAddress) CalcMap(p *ModelProps) map[string]any {
 	model := map[string]any{}
 
 	if p.Verbose && p.Format == "json" {
@@ -111,7 +106,7 @@ func (s *ChunkAddress) CalcMap(p *ModelProps, needed []Labeler) map[string]any {
 		}
 	}
 
-	return labelAddresses(p, model, needed)
+	return model
 }
 
 // FinishUnmarshal is used by the cache. It may be unused depending on auto-code-gen

@@ -35,18 +35,13 @@ func (s Contract) String() string {
 }
 
 func (s *Contract) Model(chain, format string, verbose bool, extraOpts map[string]any) Model {
-	props := &ModelProps{
-		Chain:     chain,
-		Format:    format,
-		Verbose:   verbose,
-		ExtraOpts: extraOpts,
+	props := NewModelProps(chain, format, verbose, extraOpts)
+
+	rawNames := []Labeler{
+		NewLabeler(s.Address, "address"),
 	}
-
-	rawNames := []Labeler{NewLabeler(s.Address, "address")}
 	model := s.RawMap(props, rawNames)
-
-	calcNames := []Labeler{}
-	for k, v := range s.CalcMap(props, calcNames) {
+	for k, v := range s.CalcMap(props) {
 		model[k] = v
 	}
 
@@ -70,7 +65,7 @@ func (s *Contract) Model(chain, format string, verbose bool, extraOpts map[strin
 		order = append(order, "date")
 	}
 
-	for _, item := range append(rawNames, calcNames...) {
+	for _, item := range rawNames {
 		key := item.name + "Name"
 		if _, exists := model[key]; exists {
 			order = append(order, key)
@@ -109,14 +104,14 @@ func (s *Contract) RawMap(p *ModelProps, needed []Labeler) map[string]any {
 
 // CalcMap returns a map containing the calculated/derived fields for this Contract.
 // This includes formatted dates and other derived values.
-func (s *Contract) CalcMap(p *ModelProps, needed []Labeler) map[string]any {
+func (s *Contract) CalcMap(p *ModelProps) map[string]any {
 	model := map[string]any{}
 
 	if p.Verbose {
 		model["date"] = s.Date()
 	}
 
-	return labelAddresses(p, model, needed)
+	return model
 }
 
 // FinishUnmarshal is used by the cache. It may be unused depending on auto-code-gen

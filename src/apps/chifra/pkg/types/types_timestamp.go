@@ -31,18 +31,11 @@ func (s Timestamp) String() string {
 }
 
 func (s *Timestamp) Model(chain, format string, verbose bool, extraOpts map[string]any) Model {
-	props := &ModelProps{
-		Chain:     chain,
-		Format:    format,
-		Verbose:   verbose,
-		ExtraOpts: extraOpts,
-	}
+	props := NewModelProps(chain, format, verbose, extraOpts)
 
-	rawNames := []Labeler{} // No addresses in Timestamp
+	rawNames := []Labeler{}
 	model := s.RawMap(props, rawNames)
-
-	calcNames := []Labeler{}
-	for k, v := range s.CalcMap(props, calcNames) {
+	for k, v := range s.CalcMap(props) {
 		model[k] = v
 	}
 
@@ -76,12 +69,12 @@ func (s *Timestamp) RawMap(p *ModelProps, needed []Labeler) map[string]any {
 // CalcMap returns a map containing only the calculated/derived fields for this Timestamp.
 // This is optimized for streaming contexts where the frontend receives the raw Timestamp
 // and needs to enhance it with calculated values.
-func (s *Timestamp) CalcMap(p *ModelProps, needed []Labeler) map[string]any {
+func (s *Timestamp) CalcMap(p *ModelProps) map[string]any {
 	model := map[string]any{}
 
 	// No calculated fields in original Model method
 
-	return labelAddresses(p, model, needed)
+	return model
 }
 
 func (s *Timestamp) Date() string {

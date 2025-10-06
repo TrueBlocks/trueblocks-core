@@ -50,13 +50,7 @@ func (s Trace) String() string {
 }
 
 func (s *Trace) Model(chain, format string, verbose bool, extraOpts map[string]any) Model {
-	props := &ModelProps{
-		Chain:     chain,
-		Format:    format,
-		Verbose:   verbose,
-		ExtraOpts: extraOpts,
-	}
-
+	props := NewModelProps(chain, format, verbose, extraOpts)
 	// Address naming depends on format - different addresses for JSON vs non-JSON
 	var rawNames []Labeler
 	if format != "json" && s.Action != nil {
@@ -70,9 +64,7 @@ func (s *Trace) Model(chain, format string, verbose bool, extraOpts map[string]a
 		}
 	}
 	model := s.RawMap(props, rawNames)
-
-	calcNames := []Labeler{}
-	for k, v := range s.CalcMap(props, calcNames) {
+	for k, v := range s.CalcMap(props) {
 		model[k] = v
 	}
 
@@ -96,7 +88,7 @@ func (s *Trace) Model(chain, format string, verbose bool, extraOpts map[string]a
 	}
 
 	if format != "json" {
-		for _, item := range append(rawNames, calcNames...) {
+		for _, item := range rawNames {
 			key := item.name + "Name"
 			if _, exists := model[key]; exists {
 				order = append(order, key)
@@ -172,7 +164,7 @@ func (s *Trace) RawMap(p *ModelProps, needed []Labeler) map[string]any {
 // CalcMap returns a map containing only the calculated/derived fields for this Trace.
 // This is optimized for streaming contexts where the frontend receives the raw Trace
 // and needs to enhance it with calculated values.
-func (s *Trace) CalcMap(p *ModelProps, needed []Labeler) map[string]any {
+func (s *Trace) CalcMap(p *ModelProps) map[string]any {
 	model := map[string]any{
 		"date": s.Date(),
 	}
@@ -228,7 +220,7 @@ func (s *Trace) CalcMap(p *ModelProps, needed []Labeler) map[string]any {
 		}
 	}
 
-	return labelAddresses(p, model, needed)
+	return model
 }
 
 func (s *Trace) Date() string {

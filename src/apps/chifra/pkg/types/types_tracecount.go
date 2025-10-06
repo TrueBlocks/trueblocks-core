@@ -33,18 +33,11 @@ func (s TraceCount) String() string {
 }
 
 func (s *TraceCount) Model(chain, format string, verbose bool, extraOpts map[string]any) Model {
-	props := &ModelProps{
-		Chain:     chain,
-		Format:    format,
-		Verbose:   verbose,
-		ExtraOpts: extraOpts,
-	}
+	props := NewModelProps(chain, format, verbose, extraOpts)
 
-	rawNames := []Labeler{} // No addresses in TraceCount
+	rawNames := []Labeler{}
 	model := s.RawMap(props, rawNames)
-
-	calcNames := []Labeler{}
-	for k, v := range s.CalcMap(props, calcNames) {
+	for k, v := range s.CalcMap(props) {
 		model[k] = v
 	}
 
@@ -83,13 +76,13 @@ func (s *TraceCount) RawMap(p *ModelProps, needed []Labeler) map[string]any {
 // CalcMap returns a map containing only the calculated/derived fields for this TraceCount.
 // This is optimized for streaming contexts where the frontend receives the raw TraceCount
 // and needs to enhance it with calculated values.
-func (s *TraceCount) CalcMap(p *ModelProps, needed []Labeler) map[string]any {
+func (s *TraceCount) CalcMap(p *ModelProps) map[string]any {
 	model := map[string]any{}
 
 	// No calculated fields in original Model method
 	// TODO: Do we want to add "date" here?
 
-	return labelAddresses(p, model, needed)
+	return model
 }
 
 func (s *TraceCount) Date() string {

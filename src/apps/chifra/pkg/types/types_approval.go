@@ -38,12 +38,7 @@ func (s Approval) String() string {
 }
 
 func (s *Approval) Model(chain, format string, verbose bool, extraOpts map[string]any) Model {
-	props := &ModelProps{
-		Chain:     chain,
-		Format:    format,
-		Verbose:   verbose,
-		ExtraOpts: extraOpts,
-	}
+	props := NewModelProps(chain, format, verbose, extraOpts)
 
 	rawNames := []Labeler{
 		NewLabeler(s.Owner, "owner"),
@@ -51,9 +46,7 @@ func (s *Approval) Model(chain, format string, verbose bool, extraOpts map[strin
 		NewLabeler(s.Token, "token"),
 	}
 	model := s.RawMap(props, rawNames)
-
-	calcNames := []Labeler{}
-	for k, v := range s.CalcMap(props, calcNames) {
+	for k, v := range s.CalcMap(props) {
 		model[k] = v
 	}
 
@@ -75,7 +68,7 @@ func (s *Approval) Model(chain, format string, verbose bool, extraOpts map[strin
 	}
 
 	if verbose {
-		for _, item := range append(rawNames, calcNames...) {
+		for _, item := range rawNames {
 			key := item.name + "Name"
 			if _, exists := model[key]; exists {
 				order = append(order, key)
@@ -116,13 +109,13 @@ func (s *Approval) RawMap(p *ModelProps, needed []Labeler) map[string]any {
 
 // CalcMap returns a map containing the calculated/derived fields for this Approval.
 // This includes formatted dates and other computed values.
-func (s *Approval) CalcMap(p *ModelProps, needed []Labeler) map[string]any {
+func (s *Approval) CalcMap(p *ModelProps) map[string]any {
 	model := map[string]any{
 		"date":        s.Date(),
 		"lastAppDate": base.FormattedDate(s.LastAppTs),
 	}
 
-	return labelAddresses(p, model, needed)
+	return model
 }
 
 func (s *Approval) Date() string {

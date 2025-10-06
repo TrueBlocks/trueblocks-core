@@ -49,18 +49,13 @@ func (s Appearance) String() string {
 }
 
 func (s *Appearance) Model(chain, format string, verbose bool, extraOpts map[string]any) Model {
-	props := &ModelProps{
-		Chain:     chain,
-		Format:    format,
-		Verbose:   verbose,
-		ExtraOpts: extraOpts,
+	props := NewModelProps(chain, format, verbose, extraOpts)
+
+	rawNames := []Labeler{
+		NewLabeler(s.Address, "address"),
 	}
-
-	rawNames := []Labeler{NewLabeler(s.Address, "address")}
 	model := s.RawMap(props, rawNames)
-
-	calcNames := []Labeler{}
-	for k, v := range s.CalcMap(props, calcNames) {
+	for k, v := range s.CalcMap(props) {
 		model[k] = v
 	}
 
@@ -83,7 +78,7 @@ func (s *Appearance) Model(chain, format string, verbose bool, extraOpts map[str
 		"transactionIndex",
 	}
 
-	for _, item := range append(rawNames, calcNames...) {
+	for _, item := range rawNames {
 		key := item.name + "Name"
 		if _, exists := model[key]; exists {
 			order = append(order, key)
@@ -161,12 +156,12 @@ func (s *Appearance) RawMap(p *ModelProps, needed []Labeler) map[string]any {
 
 // CalcMap returns a map containing the calculated/derived fields for this Appearance.
 // This includes formatted dates.
-func (s *Appearance) CalcMap(p *ModelProps, needed []Labeler) map[string]any {
-	if p.ExtraOpts["appearances"] == true {
-		return labelAddresses(p, map[string]any{}, needed) // No calculated fields for appearances-only mode
-	}
-
+func (s *Appearance) CalcMap(p *ModelProps) map[string]any {
 	model := map[string]any{}
+
+	if p.ExtraOpts["appearances"] == true {
+		return model
+	}
 
 	if p.ExtraOpts["uniq"] == true {
 		if p.Verbose {
@@ -182,7 +177,7 @@ func (s *Appearance) CalcMap(p *ModelProps, needed []Labeler) map[string]any {
 		}
 	}
 
-	return labelAddresses(p, model, needed)
+	return model
 }
 
 func (s *Appearance) Date() string {

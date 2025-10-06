@@ -57,12 +57,7 @@ func (s Slurp) String() string {
 }
 
 func (s *Slurp) Model(chain, format string, verbose bool, extraOpts map[string]any) Model {
-	props := &ModelProps{
-		Chain:     chain,
-		Format:    format,
-		Verbose:   verbose,
-		ExtraOpts: extraOpts,
-	}
+	props := NewModelProps(chain, format, verbose, extraOpts)
 
 	rawNames := []Labeler{
 		NewLabeler(s.From, "from"),
@@ -70,9 +65,7 @@ func (s *Slurp) Model(chain, format string, verbose bool, extraOpts map[string]a
 		NewLabeler(s.ContractAddress, "contract"),
 	}
 	model := s.RawMap(props, rawNames)
-
-	calcNames := []Labeler{}
-	for k, v := range s.CalcMap(props, calcNames) {
+	for k, v := range s.CalcMap(props) {
 		model[k] = v
 	}
 
@@ -130,7 +123,7 @@ func (s *Slurp) Model(chain, format string, verbose bool, extraOpts map[string]a
 		order = append(order, "ether")
 	}
 
-	for _, item := range append(rawNames, calcNames...) {
+	for _, item := range rawNames {
 		key := item.name + "Name"
 		if _, exists := model[key]; exists {
 			order = append(order, key)
@@ -189,7 +182,7 @@ func (s *Slurp) RawMap(p *ModelProps, needed []Labeler) map[string]any {
 // CalcMap returns a map containing only the calculated/derived fields for this Slurp.
 // This is optimized for streaming contexts where the frontend receives the raw Slurp
 // and needs to enhance it with calculated values.
-func (s *Slurp) CalcMap(p *ModelProps, needed []Labeler) map[string]any {
+func (s *Slurp) CalcMap(p *ModelProps) map[string]any {
 	model := map[string]any{
 		"date": s.Date(),
 	}
@@ -278,7 +271,7 @@ func (s *Slurp) CalcMap(p *ModelProps, needed []Labeler) map[string]any {
 		model["ether"] = s.Value.ToFloatString(18)
 	}
 
-	return labelAddresses(p, model, needed)
+	return model
 }
 
 func (s *Slurp) Date() string {
