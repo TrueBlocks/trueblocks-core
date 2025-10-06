@@ -82,22 +82,66 @@ func (s Transaction) String() string {
 
 func (s *Transaction) Model(chain, format string, verbose bool, extraOpts map[string]any) Model {
 	props := NewModelProps(chain, format, verbose, extraOpts)
-	rawMap := s.RawMap(props)
-	calcMap := s.CalcMap(props, rawMap)
 
-	model := make(map[string]any)
-	for k, v := range rawMap {
+	rawNames := []Labeler{
+		NewLabeler(s.From, "from"),
+		NewLabeler(s.To, "to"),
+	}
+	model := s.RawMap(props, &rawNames)
+	for k, v := range s.CalcMap(props) {
 		model[k] = v
 	}
-	for k, v := range calcMap {
-		if k != "__order" {
-			model[k] = v
+
+	var order = []string{}
+	// EXISTING_CODE
+	order = []string{
+		"blockNumber",
+		"transactionIndex",
+		"timestamp",
+		"date",
+		"from",
+		"to",
+		"value",
+		"gasPrice",
+		"gasUsed",
+		"gasCost",
+		"hash",
+		"isError",
+		"encoding",
+	}
+
+	if extraOpts["articulate"] == true && s.ArticulatedTx != nil && format != "json" {
+		order = append(order, "compressedTx")
+	}
+
+	if format != "json" {
+		order = append(order, "type")
+		if extraOpts["traces"] == true {
+			order = append(order, "nTraces")
 		}
 	}
 
-	order := calcMap["__order"].([]string)
+	asEther := true // special case for transactions, we always show --ether -- extraOpts["ether"] == true
+	if asEther {
+		order = append(order, "ether")
+	}
+
+	// Add receipt log addresses to rawNames for labeling
+	if s.Receipt != nil && len(s.Receipt.Logs) > 0 {
+		for i, log := range s.Receipt.Logs {
+			logName := fmt.Sprintf("log%dAddress", i)
+			rawNames = append(rawNames, NewLabeler(log.Address, logName))
+		}
+	}
 	// EXISTING_CODE
-	// EXISTING_CODE
+
+	for _, item := range rawNames {
+		key := item.name + "Name"
+		if _, exists := model[key]; exists {
+			order = append(order, key)
+		}
+	}
+	order = reorderFields(order)
 
 	return Model{
 		Data:  model,
@@ -105,12 +149,8 @@ func (s *Transaction) Model(chain, format string, verbose bool, extraOpts map[st
 	}
 }
 
-func (s *Transaction) RawMap(props *ModelProps) map[string]any {
-	to := s.To.Hex()
-	if to == "0x0000000000000000000000000000000000000000" {
-		to = "0x0" // weird special case to preserve what RPC does
-	}
-
+// RawMap returns a map containing only the raw/base fields for this Transaction.
+func (s *Transaction) RawMap(p *ModelProps, needed *[]Labeler) map[string]any {
 	model := map[string]any{
 		// EXISTING_CODE
 		"blockNumber":      s.BlockNumber,
@@ -119,14 +159,19 @@ func (s *Transaction) RawMap(props *ModelProps) map[string]any {
 		"gasUsed":          s.GasUsed,
 		"hash":             s.Hash,
 		"timestamp":        s.Timestamp,
-		"to":               to,
 		"transactionIndex": s.TransactionIndex,
 		"value":            s.Value.String(),
 		// EXISTING_CODE
 	}
 
 	// EXISTING_CODE
-	if props.Format == "json" {
+	to := s.To.Hex()
+	if to == "0x0000000000000000000000000000000000000000" {
+		to = "0x0" // weird special case to preserve what RPC does
+	}
+	model["to"] = to
+
+	if p.Format == "json" {
 		model["blockHash"] = s.BlockHash
 		if s.Nonce > 0 {
 			model["nonce"] = s.Nonce
@@ -160,44 +205,22 @@ func (s *Transaction) RawMap(props *ModelProps) map[string]any {
 	}
 	// EXISTING_CODE
 
-	return model
+	return labelAddresses(p, model, needed)
 }
 
-func (s *Transaction) CalcMap(props *ModelProps, rawMap map[string]any) map[string]any {
+// CalcMap returns a map containing the calculated/derived fields for this Transaction.
+func (s *Transaction) CalcMap(p *ModelProps) map[string]any {
 	model := map[string]any{
 		// EXISTING_CODE
+		"date":    s.Date(),
+		"gasCost": s.GasCost(),
 		// EXISTING_CODE
 	}
 
 	// EXISTING_CODE
-	var order = []string{}
-
-	model["date"] = s.Date()
-	model["gasCost"] = s.GasCost()
-
-	// Base order
-	order = []string{
-		"blockNumber",
-		"transactionIndex",
-		"timestamp",
-		"date",
-		"from",
-		"to",
-		"value",
-		"gasPrice",
-		"gasUsed",
-		"gasCost",
-		"hash",
-		"isError",
-		"encoding",
-	}
-
 	// TODO: Shouldn't this use the Function model - the answer is yes?
 	var articulatedTx map[string]any
-	isArticulated := props.ExtraOpts["articulate"] == true && s.ArticulatedTx != nil
-	if isArticulated && props.Format != "json" {
-		order = append(order, "compressedTx")
-	}
+	isArticulated := p.ExtraOpts["articulate"] == true && s.ArticulatedTx != nil
 	if isArticulated {
 		articulatedTx = map[string]any{
 			"name": s.ArticulatedTx.Name,
@@ -216,11 +239,11 @@ func (s *Transaction) CalcMap(props *ModelProps, rawMap map[string]any) map[stri
 		}
 	}
 
-	if props.Format == "json" {
+	if p.Format == "json" {
 		if s.Statements != nil {
 			statements := make([]map[string]any, 0, len(*s.Statements))
 			for _, statement := range *s.Statements {
-				statements = append(statements, statement.Model(props.Chain, props.Format, props.Verbose, props.ExtraOpts).Data)
+				statements = append(statements, statement.Model(p.Chain, p.Format, p.Verbose, p.ExtraOpts).Data)
 			}
 			model["statements"] = statements
 		}
@@ -230,7 +253,7 @@ func (s *Transaction) CalcMap(props *ModelProps, rawMap map[string]any) map[stri
 
 			// TODO: This is quite odd. Why?
 			status := &s.Receipt.Status
-			if s.BlockNumber < base.KnownBlock(props.Chain, base.Byzantium) || *status == 4294967295-1 {
+			if s.BlockNumber < base.KnownBlock(p.Chain, base.Byzantium) || *status == 4294967295-1 {
 				status = nil
 			}
 
@@ -253,7 +276,7 @@ func (s *Transaction) CalcMap(props *ModelProps, rawMap map[string]any) map[stri
 					"timestamp": s.Timestamp,
 					"date":      s.Date(),
 				}
-				if props.ExtraOpts["articulate"] == true && log.ArticulatedLog != nil {
+				if p.ExtraOpts["articulate"] == true && log.ArticulatedLog != nil {
 					inputModels := parametersToMap(log.ArticulatedLog.Inputs)
 					articulatedLog := map[string]any{
 						"name":   log.ArticulatedLog.Name,
@@ -261,12 +284,10 @@ func (s *Transaction) CalcMap(props *ModelProps, rawMap map[string]any) map[stri
 					}
 					logModel["articulatedLog"] = articulatedLog
 				}
-				if name, loaded, found := labelAddress(props.ExtraOpts, log.Address); found {
+				if name, loaded, found := labelAddress(p.ExtraOpts, log.Address); found {
 					logModel["addressName"] = name.Name
-					order = append(order, "addressName")
-				} else if loaded && props.Format != "json" {
-					model["addressName"] = ""
-					order = append(order, "addressName")
+				} else if loaded && p.Format != "json" {
+					logModel["addressName"] = ""
 				}
 				logs = append(logs, logModel)
 			}
@@ -276,10 +297,10 @@ func (s *Transaction) CalcMap(props *ModelProps, rawMap map[string]any) map[stri
 			model["receipt"] = map[string]any{}
 		}
 
-		if props.ExtraOpts["traces"] == true && len(s.Traces) > 0 {
+		if p.ExtraOpts["traces"] == true && len(s.Traces) > 0 {
 			traceModels := make([]map[string]any, 0, len(s.Traces))
 			for _, trace := range s.Traces {
-				traceModels = append(traceModels, trace.Model(props.Chain, props.Format, props.Verbose, props.ExtraOpts).Data)
+				traceModels = append(traceModels, trace.Model(p.Chain, p.Format, p.Verbose, p.ExtraOpts).Data)
 			}
 			model["traces"] = traceModels
 		} else {
@@ -295,11 +316,10 @@ func (s *Transaction) CalcMap(props *ModelProps, rawMap map[string]any) map[stri
 		}
 
 	} else {
-		order = append(order, "type")
 		ethGasPrice := base.NewWei(0).SetUint64(uint64(s.GasPrice)).ToFloatString(18)
 		model["ethGasPrice"] = ethGasPrice
 
-		if props.ExtraOpts["articulate"] == true && s.ArticulatedTx != nil {
+		if p.ExtraOpts["articulate"] == true && s.ArticulatedTx != nil {
 			model["encoding"] = s.ArticulatedTx.Encoding
 		}
 
@@ -317,36 +337,15 @@ func (s *Transaction) CalcMap(props *ModelProps, rawMap map[string]any) map[stri
 			model["compressedTx"] = s.Message
 		}
 
-		if props.ExtraOpts["traces"] == true {
+		if p.ExtraOpts["traces"] == true {
 			model["nTraces"] = len(s.Traces)
-			order = append(order, "nTraces")
 		}
 	}
 
-	asEther := true // special case for transactions, we always show --ether -- props.ExtraOpts["ether"] == true
+	asEther := true // special case for transactions, we always show --ether -- p.ExtraOpts["ether"] == true
 	if asEther {
 		model["ether"] = s.Value.ToFloatString(18)
-		order = append(order, "ether")
 	}
-
-	items := []Labeler{
-		NewLabeler(s.From, "fromName"),
-		NewLabeler(s.To, "toName"),
-	}
-	for _, item := range items {
-		if name, loaded, found := labelAddress(props.ExtraOpts, item.addr); found {
-			model[item.name] = name.Name
-			order = append(order, item.name)
-		} else if loaded && props.Format != "json" {
-			model[item.name] = ""
-			order = append(order, item.name)
-		} else if len(name.Name) > 0 {
-			model[item.name] = name.Name
-			order = append(order, item.name)
-		}
-	}
-
-	model["__order"] = reorderFields(order)
 	// EXISTING_CODE
 
 	return model
