@@ -10,7 +10,6 @@ Format:  json
   "data": [
     {
       "address": "0xd26114cd6ee289accf82350c8d8487fedb8a0c07",
-      "addressName": "OMGToken",
       "blockNumber": 17000000,
       "decimals": 18,
       "name": "OMGToken",

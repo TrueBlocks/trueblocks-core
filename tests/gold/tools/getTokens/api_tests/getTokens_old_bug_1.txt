@@ -3,7 +3,6 @@ tokens?addrs=0xa9fe4601811213c340e850ea305481aff02f5b28%200x99c961738786e8f5f3fe
   "data": [
     {
       "address": "0xa9fe4601811213c340e850ea305481aff02f5b28",
-      "addressName": "WETH yVault",
       "balance": "219996879142647489",
       "balanceDec": "0.219996879142647489",
       "blockNumber": 11963059,

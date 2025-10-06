@@ -3,7 +3,6 @@ tokens?addrs=0xd26114cd6ee289accf82350c8d8487fedb8a0c07%200x5e44c3e467a49c9ca029
   "data": [
     {
       "address": "0xd26114cd6ee289accf82350c8d8487fedb8a0c07",
-      "addressName": "OMGToken",
       "balance": "3287500741160000000000",
       "balanceDec": "3287.50074116",
       "blockNumber": 4150000,
@@ -14,7 +13,6 @@ tokens?addrs=0xd26114cd6ee289accf82350c8d8487fedb8a0c07%200x5e44c3e467a49c9ca029
     },
     {
       "address": "0xd26114cd6ee289accf82350c8d8487fedb8a0c07",
-      "addressName": "OMGToken",
       "balance": "18469480418721020000000000",
       "balanceDec": "18469480.41872102",
       "blockNumber": 4150000,

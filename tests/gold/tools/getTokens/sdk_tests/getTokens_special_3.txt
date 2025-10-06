@@ -9,7 +9,6 @@ Format:  json
   "data": [
     {
       "address": "0xd26114cd6ee289accf82350c8d8487fedb8a0c07",
-      "addressName": "OMGToken",
       "balance": "0",
       "balanceDec": "0",
       "blockNumber": 2717576,
@@ -20,7 +19,6 @@ Format:  json
     },
     {
       "address": "0xd26114cd6ee289accf82350c8d8487fedb8a0c07",
-      "addressName": "OMGToken",
       "balance": "0",
       "balanceDec": "0",
       "blockNumber": 1428756,
@@ -31,7 +29,6 @@ Format:  json
     },
     {
       "address": "0xd26114cd6ee289accf82350c8d8487fedb8a0c07",
-      "addressName": "OMGToken",
       "balance": "18622119641743650475474",
       "balanceDec": "18622.119641743650475474",
       "blockNumber": 4370000,
@@ -42,7 +39,6 @@ Format:  json
     },
     {
       "address": "0xd26114cd6ee289accf82350c8d8487fedb8a0c07",
-      "addressName": "OMGToken",
       "balance": "0",
       "balanceDec": "0",
       "blockNumber": 2717576,
@@ -53,7 +49,6 @@ Format:  json
     },
     {
       "address": "0xd26114cd6ee289accf82350c8d8487fedb8a0c07",
-      "addressName": "OMGToken",
       "balance": "0",
       "balanceDec": "0",
       "blockNumber": 1428756,
@@ -64,7 +59,6 @@ Format:  json
     },
     {
       "address": "0xd26114cd6ee289accf82350c8d8487fedb8a0c07",
-      "addressName": "OMGToken",
       "balance": "22961881657450937415214049",
       "balanceDec": "22961881.657450937415214049",
       "blockNumber": 4370000,

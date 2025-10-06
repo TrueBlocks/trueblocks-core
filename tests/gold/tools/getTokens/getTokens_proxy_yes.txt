@@ -9,7 +9,6 @@ TEST[DATE|TIME] Format:  json
   "data": [
     {
       "address": "0x00000000441378008ea67f4284a57932b1c000a5",
-      "addressName": "TrueGBP",
       "blockNumber": 8000000,
       "date": "2019-06-21 06:55:49 UTC",
       "decimals": 18,

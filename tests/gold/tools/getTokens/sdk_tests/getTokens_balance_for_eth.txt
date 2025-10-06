@@ -9,7 +9,6 @@ Format:  json
   "data": [
     {
       "address": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
-      "addressName": "ETH",
       "balance": "0",
       "balanceDec": "0",
       "blockNumber": 0,
@@ -20,7 +19,6 @@ Format:  json
     },
     {
       "address": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
-      "addressName": "ETH",
       "balance": "250000000000000000",
       "balanceDec": "0.25",
       "blockNumber": 314572,
@@ -31,7 +29,6 @@ Format:  json
     },
     {
       "address": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
-      "addressName": "ETH",
       "balance": "313875640124360311",
       "balanceDec": "0.313875640124360311",
       "blockNumber": 778482,
@@ -42,7 +39,6 @@ Format:  json
     },
     {
       "address": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
-      "addressName": "ETH",
       "balance": "8505821942559311",
       "balanceDec": "0.008505821942559311",
       "blockNumber": 1253720,
@@ -53,7 +49,6 @@ Format:  json
     },
     {
       "address": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
-      "addressName": "ETH",
       "balance": "61713475515318299311",
       "balanceDec": "61.713475515318299311",
       "blockNumber": 1801798,
@@ -64,7 +59,6 @@ Format:  json
     },
     {
       "address": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
-      "addressName": "ETH",
       "balance": "100329427536411976510",
       "balanceDec": "100.32942753641197651",
       "blockNumber": 2357372,
@@ -75,7 +69,6 @@ Format:  json
     },
     {
       "address": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
-      "addressName": "ETH",
       "balance": "100074403960411976510",
       "balanceDec": "100.07440396041197651",
       "blockNumber": 2912406,
@@ -86,7 +79,6 @@ Format:  json
     },
     {
       "address": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
-      "addressName": "ETH",
       "balance": "100079403960411976510",
       "balanceDec": "100.07940396041197651",
       "blockNumber": 3454528,
@@ -97,7 +89,6 @@ Format:  json
     },
     {
       "address": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
-      "addressName": "ETH",
       "balance": "188494982502411976510",
       "balanceDec": "188.49498250241197651",
       "blockNumber": 3955158,
@@ -108,7 +99,6 @@ Format:  json
     },
     {
       "address": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
-      "addressName": "ETH",
       "balance": "1229428335289005290048",
       "balanceDec": "1229.428335289005290048",
       "blockNumber": 4326060,

@@ -5,5 +5,5 @@ TEST[DATE|TIME] ByAcct:  true
 TEST[DATE|TIME] Verbose:  true
 TEST[DATE|TIME] Caps:  cache,decache
 TEST[DATE|TIME] Format:  txt
-blockNumber	timestamp	date	holder	holderName	address	addressName	name	symbol	decimals	balance	balanceDec
-4000000	1499633567	2017-07-09 20:52:47 UTC	0xa25d04fa348f107428708ba19c95d1c79b3744bf		0xb9e7f8568e08d5659f5d29c4997173d84cdf2607	Swarm City Token	Swarm City Token	SWT	18	435000000000000000000000	435000
+blockNumber	timestamp	date	holder	holderName	address	name	symbol	decimals	balance	balanceDec
+4000000	1499633567	2017-07-09 20:52:47 UTC	0xa25d04fa348f107428708ba19c95d1c79b3744bf		0xb9e7f8568e08d5659f5d29c4997173d84cdf2607	Swarm City Token	SWT	18	435000000000000000000000	435000

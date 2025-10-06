@@ -3,7 +3,6 @@ tokens?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413%200xbb9bc244d798123fde78
   "data": [
     {
       "address": "0xbb9bc244d798123fde783fcc1c72d3bb8c189413",
-      "addressName": "TheDAO (L1)",
       "balance": "1000000000000000000",
       "balanceDec": "100000000000000000",
       "blockNumber": 1500000,

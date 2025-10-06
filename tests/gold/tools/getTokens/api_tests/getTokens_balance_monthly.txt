@@ -3,7 +3,6 @@ tokens?addrs=0xb9e7f8568e08d5659f5d29c4997173d84cdf2607%200xa25d04fa348f10742870
   "data": [
     {
       "address": "0xb9e7f8568e08d5659f5d29c4997173d84cdf2607",
-      "addressName": "Swarm City Token",
       "balance": "0",
       "balanceDec": "0",
       "blockNumber": 0,
@@ -14,7 +13,6 @@ tokens?addrs=0xb9e7f8568e08d5659f5d29c4997173d84cdf2607%200xa25d04fa348f10742870
     },
     {
       "address": "0xb9e7f8568e08d5659f5d29c4997173d84cdf2607",
-      "addressName": "Swarm City Token",
       "balance": "0",
       "balanceDec": "0",
       "blockNumber": 13774,
@@ -25,7 +23,6 @@ tokens?addrs=0xb9e7f8568e08d5659f5d29c4997173d84cdf2607%200xa25d04fa348f10742870
     },
     {
       "address": "0xb9e7f8568e08d5659f5d29c4997173d84cdf2607",
-      "addressName": "Swarm City Token",
       "balance": "0",
       "balanceDec": "0",
       "blockNumber": 170394,
@@ -36,7 +33,6 @@ tokens?addrs=0xb9e7f8568e08d5659f5d29c4997173d84cdf2607%200xa25d04fa348f10742870
     },
     {
       "address": "0xb9e7f8568e08d5659f5d29c4997173d84cdf2607",
-      "addressName": "Swarm City Token",
       "balance": "0",
       "balanceDec": "0",
       "blockNumber": 314572,
@@ -47,7 +43,6 @@ tokens?addrs=0xb9e7f8568e08d5659f5d29c4997173d84cdf2607%200xa25d04fa348f10742870
     },
     {
       "address": "0xb9e7f8568e08d5659f5d29c4997173d84cdf2607",
-      "addressName": "Swarm City Token",
       "balance": "0",
       "balanceDec": "0",
       "blockNumber": 470667,
@@ -58,7 +53,6 @@ tokens?addrs=0xb9e7f8568e08d5659f5d29c4997173d84cdf2607%200xa25d04fa348f10742870
     },
     {
       "address": "0xb9e7f8568e08d5659f5d29c4997173d84cdf2607",
-      "addressName": "Swarm City Token",
       "balance": "0",
       "balanceDec": "0",
       "blockNumber": 622213,
@@ -69,7 +63,6 @@ tokens?addrs=0xb9e7f8568e08d5659f5d29c4997173d84cdf2607%200xa25d04fa348f10742870
     },
     {
       "address": "0xb9e7f8568e08d5659f5d29c4997173d84cdf2607",
-      "addressName": "Swarm City Token",
       "balance": "0",
       "balanceDec": "0",
       "blockNumber": 778482,

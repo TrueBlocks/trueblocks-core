@@ -9,7 +9,6 @@ Format:  json
   "data": [
     {
       "address": "0xb9e7f8568e08d5659f5d29c4997173d84cdf2607",
-      "addressName": "Swarm City Token",
       "balance": "0",
       "balanceDec": "0",
       "blockNumber": 0,
@@ -20,7 +19,6 @@ Format:  json
     },
     {
       "address": "0xb9e7f8568e08d5659f5d29c4997173d84cdf2607",
-      "addressName": "Swarm City Token",
       "balance": "0",
       "balanceDec": "0",
       "blockNumber": 778482,
@@ -31,7 +29,6 @@ Format:  json
     },
     {
       "address": "0xb9e7f8568e08d5659f5d29c4997173d84cdf2607",
-      "addressName": "Swarm City Token",
       "balance": "0",
       "balanceDec": "0",
       "blockNumber": 2912406,
@@ -42,7 +39,6 @@ Format:  json
     },
     {
       "address": "0xb9e7f8568e08d5659f5d29c4997173d84cdf2607",
-      "addressName": "Swarm City Token",
       "balance": "15000000000000000000000",
       "balanceDec": "15000",
       "blockNumber": 4832685,
