@@ -45,7 +45,7 @@ func (s *Approval) Model(chain, format string, verbose bool, extraOpts map[strin
 		NewLabeler(s.Spender, "spender"),
 		NewLabeler(s.Token, "token"),
 	}
-	model := s.RawMap(props, rawNames)
+	model := s.RawMap(props, &rawNames)
 	for k, v := range s.CalcMap(props) {
 		model[k] = v
 	}
@@ -66,17 +66,15 @@ func (s *Approval) Model(chain, format string, verbose bool, extraOpts map[strin
 		"lastAppTs",
 		"lastAppDate",
 	}
-
-	if verbose {
-		for _, item := range rawNames {
-			key := item.name + "Name"
-			if _, exists := model[key]; exists {
-				order = append(order, key)
-			}
-		}
-		order = reorderFields(order)
-	}
 	// EXISTING_CODE
+
+	for _, item := range rawNames {
+		key := item.name + "Name"
+		if _, exists := model[key]; exists {
+			order = append(order, key)
+		}
+	}
+	order = reorderFields(order)
 
 	return Model{
 		Data:  model,
@@ -85,9 +83,9 @@ func (s *Approval) Model(chain, format string, verbose bool, extraOpts map[strin
 }
 
 // RawMap returns a map containing only the raw/base fields for this Approval.
-// This excludes any calculated or derived fields.
-func (s *Approval) RawMap(p *ModelProps, needed []Labeler) map[string]any {
+func (s *Approval) RawMap(p *ModelProps, needed *[]Labeler) map[string]any {
 	model := map[string]any{
+		// EXISTING_CODE
 		"blockNumber":  s.BlockNumber,
 		"timestamp":    s.Timestamp,
 		"owner":        s.Owner,
@@ -98,22 +96,29 @@ func (s *Approval) RawMap(p *ModelProps, needed []Labeler) map[string]any {
 		"lastAppLogID": s.LastAppLogID,
 		"lastAppTxID":  s.LastAppTxID,
 		"lastAppTs":    s.LastAppTs,
+		// EXISTING_CODE
 	}
 
-	// Handle address labeling only if verbose
+	// EXISTING_CODE
 	if p.Verbose {
 		return labelAddresses(p, model, needed)
 	}
-	return model
+	// EXISTING_CODE
+
+	return labelAddresses(p, model, needed)
 }
 
 // CalcMap returns a map containing the calculated/derived fields for this Approval.
-// This includes formatted dates and other computed values.
 func (s *Approval) CalcMap(p *ModelProps) map[string]any {
 	model := map[string]any{
+		// EXISTING_CODE
 		"date":        s.Date(),
 		"lastAppDate": base.FormattedDate(s.LastAppTs),
+		// EXISTING_CODE
 	}
+
+	// EXISTING_CODE
+	// EXISTING_CODE
 
 	return model
 }

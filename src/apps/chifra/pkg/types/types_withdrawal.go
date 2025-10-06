@@ -43,7 +43,7 @@ func (s *Withdrawal) Model(chain, format string, verbose bool, extraOpts map[str
 	rawNames := []Labeler{
 		NewLabeler(s.Address, "address"),
 	}
-	model := s.RawMap(props, rawNames)
+	model := s.RawMap(props, &rawNames)
 	for k, v := range s.CalcMap(props) {
 		model[k] = v
 	}
@@ -80,31 +80,37 @@ func (s *Withdrawal) Model(chain, format string, verbose bool, extraOpts map[str
 }
 
 // RawMap returns a map containing only the raw/base fields for this Withdrawal.
-// This excludes any calculated or derived fields.
-func (s *Withdrawal) RawMap(p *ModelProps, needed []Labeler) map[string]any {
+func (s *Withdrawal) RawMap(p *ModelProps, needed *[]Labeler) map[string]any {
 	model := map[string]any{
+		// EXISTING_CODE
 		"address":        s.Address,
 		"amount":         s.Amount.String(),
 		"blockNumber":    s.BlockNumber,
 		"index":          s.Index,
 		"timestamp":      s.Timestamp,
 		"validatorIndex": s.ValidatorIndex,
+		// EXISTING_CODE
 	}
+
+	// EXISTING_CODE
+	// EXISTING_CODE
 
 	return labelAddresses(p, model, needed)
 }
 
-// CalcMap returns a map containing only the calculated/derived fields for this Withdrawal.
-// This is optimized for streaming contexts where the frontend receives the raw Withdrawal
-// and needs to enhance it with calculated values.
+// CalcMap returns a map containing the calculated/derived fields for this Withdrawal.
 func (s *Withdrawal) CalcMap(p *ModelProps) map[string]any {
 	model := map[string]any{
+		// EXISTING_CODE
 		"date": s.Date(),
+		// EXISTING_CODE
 	}
 
+	// EXISTING_CODE
 	if p.ExtraOpts["ether"] == true {
 		model["ether"] = s.Amount.ToFloatString(18)
 	}
+	// EXISTING_CODE
 
 	return model
 }

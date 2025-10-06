@@ -25,8 +25,10 @@ func (s {{.Class}}) String() string {
 func (s *{{.Class}}) Model(chain, format string, verbose bool, extraOpts map[string]any) Model {
 	props := NewModelProps(chain, format, verbose, extraOpts)
 
-	rawNames := []Labeler{}
-	model := s.RawMap(props, rawNames)
+	rawNames := []Labeler{ {{if .HasAddresses}}{{range .Addresses}}
+		NewLabeler(s.{{firstUpper .}}, "{{.}}"),{{end}}{{end}}
+	}
+	model := s.RawMap(props, &rawNames)
 	for k, v := range s.CalcMap(props) {
 		model[k] = v
 	}
@@ -35,7 +37,7 @@ func (s *{{.Class}}) Model(chain, format string, verbose bool, extraOpts map[str
 	// EXISTING_CODE
 	// EXISTING_CODE
 
-	for _, item := range append(rawNames, calcNames...) {
+	for _, item := range rawNames {
 		key := item.name + "Name"
 		if _, exists := model[key]; exists {
 			order = append(order, key)
@@ -49,24 +51,28 @@ func (s *{{.Class}}) Model(chain, format string, verbose bool, extraOpts map[str
 	}
 }
 
-// RawMap returns a map containing only the raw/base fields for this Abi.
-// This excludes any calculated or derived fields.
-func (s *Abi) RawMap(p *ModelProps, needed []Labeler) map[string]any {
-	model := map[string]any{}
+// RawMap returns a map containing only the raw/base fields for this {{.Class}}.
+func (s *{{.Class}}) RawMap(p *ModelProps, needed *[]Labeler) map[string]any {
+	model := map[string]any{
+		// EXISTING_CODE
+		// EXISTING_CODE
+	}
 
-	// BINGO
-	// BINGO
+	// EXISTING_CODE
+	// EXISTING_CODE
 
 	return labelAddresses(p, model, needed)
 }
 
-// CalcMap returns a map containing the calculated/derived fields for this Abi.
-// This includes name resolution for non-known ABIs.
-func (s *Abi) CalcMap(p *ModelProps) map[string]any {
-	model := map[string]any{}
+// CalcMap returns a map containing the calculated/derived fields for this {{.Class}}.
+func (s *{{.Class}}) CalcMap(p *ModelProps) map[string]any {
+	model := map[string]any{
+		// EXISTING_CODE
+		// EXISTING_CODE
+	}
 
-	// BINGO
-	// BINGO
+	// EXISTING_CODE
+	// EXISTING_CODE
 
 	return model
 }

@@ -51,7 +51,7 @@ func (s *LightBlock) Model(chain, format string, verbose bool, extraOpts map[str
 	rawNames := []Labeler{
 		NewLabeler(s.Miner, "miner"),
 	}
-	model := s.RawMap(props, rawNames)
+	model := s.RawMap(props, &rawNames)
 	for k, v := range s.CalcMap(props) {
 		model[k] = v
 	}
@@ -94,16 +94,18 @@ func (s *LightBlock) Model(chain, format string, verbose bool, extraOpts map[str
 }
 
 // RawMap returns a map containing only the raw/base fields for this LightBlock.
-// This excludes any calculated or derived fields.
-func (s *LightBlock) RawMap(p *ModelProps, needed []Labeler) map[string]any {
+func (s *LightBlock) RawMap(p *ModelProps, needed *[]Labeler) map[string]any {
 	model := map[string]any{
+		// EXISTING_CODE
 		"hash":        s.Hash,
 		"blockNumber": s.BlockNumber,
 		"parentHash":  s.ParentHash,
 		"timestamp":   s.Timestamp,
 		"miner":       s.Miner,
+		// EXISTING_CODE
 	}
 
+	// EXISTING_CODE
 	if p.Format == "json" {
 		model["tx_hashes"] = s.Transactions
 		if s.BlockNumber >= base.KnownBlock(p.Chain, base.Shanghai) {
@@ -119,17 +121,21 @@ func (s *LightBlock) RawMap(p *ModelProps, needed []Labeler) map[string]any {
 			model["withdrawalsCnt"] = len(s.Withdrawals)
 		}
 	}
+	// EXISTING_CODE
 
-	// Handle address labeling
 	return labelAddresses(p, model, needed)
 }
 
 // CalcMap returns a map containing the calculated/derived fields for this LightBlock.
-// This includes formatted dates and labeled addresses.
 func (s *LightBlock) CalcMap(p *ModelProps) map[string]any {
 	model := map[string]any{
+		// EXISTING_CODE
 		"date": s.Date(),
+		// EXISTING_CODE
 	}
+
+	// EXISTING_CODE
+	// EXISTING_CODE
 
 	return model
 }

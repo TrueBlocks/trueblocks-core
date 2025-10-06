@@ -60,11 +60,11 @@ func (s *Slurp) Model(chain, format string, verbose bool, extraOpts map[string]a
 	props := NewModelProps(chain, format, verbose, extraOpts)
 
 	rawNames := []Labeler{
+		NewLabeler(s.ContractAddress, "contractAddress"),
 		NewLabeler(s.From, "from"),
 		NewLabeler(s.To, "to"),
-		NewLabeler(s.ContractAddress, "contract"),
 	}
-	model := s.RawMap(props, rawNames)
+	model := s.RawMap(props, &rawNames)
 	for k, v := range s.CalcMap(props) {
 		model[k] = v
 	}
@@ -122,6 +122,7 @@ func (s *Slurp) Model(chain, format string, verbose bool, extraOpts map[string]a
 	if asEther {
 		order = append(order, "ether")
 	}
+	// EXISTING_CODE
 
 	for _, item := range rawNames {
 		key := item.name + "Name"
@@ -130,7 +131,6 @@ func (s *Slurp) Model(chain, format string, verbose bool, extraOpts map[string]a
 		}
 	}
 	order = reorderFields(order)
-	// EXISTING_CODE
 
 	return Model{
 		Data:  model,
@@ -139,17 +139,19 @@ func (s *Slurp) Model(chain, format string, verbose bool, extraOpts map[string]a
 }
 
 // RawMap returns a map containing only the raw/base fields for this Slurp.
-// This excludes any calculated or derived fields.
-func (s *Slurp) RawMap(p *ModelProps, needed []Labeler) map[string]any {
+func (s *Slurp) RawMap(p *ModelProps, needed *[]Labeler) map[string]any {
 	model := map[string]any{
+		// EXISTING_CODE
 		"blockNumber":      s.BlockNumber,
 		"from":             s.From,
 		"timestamp":        s.Timestamp,
 		"to":               s.To,
 		"value":            s.Value.String(),
 		"transactionIndex": s.TransactionIndex,
+		// EXISTING_CODE
 	}
 
+	// EXISTING_CODE
 	switch s.From {
 	case base.BlockRewardSender, base.UncleRewardSender:
 		model["from"] = s.From.Hex()
@@ -175,18 +177,20 @@ func (s *Slurp) RawMap(p *ModelProps, needed []Labeler) map[string]any {
 	if s.BlockHash != base.HexToHash("0xdeadbeef") && !s.BlockHash.IsZero() {
 		model["blockHash"] = s.BlockHash
 	}
+	// EXISTING_CODE
 
 	return labelAddresses(p, model, needed)
 }
 
-// CalcMap returns a map containing only the calculated/derived fields for this Slurp.
-// This is optimized for streaming contexts where the frontend receives the raw Slurp
-// and needs to enhance it with calculated values.
+// CalcMap returns a map containing the calculated/derived fields for this Slurp.
 func (s *Slurp) CalcMap(p *ModelProps) map[string]any {
 	model := map[string]any{
+		// EXISTING_CODE
 		"date": s.Date(),
+		// EXISTING_CODE
 	}
 
+	// EXISTING_CODE
 	switch s.From {
 	case base.BlockRewardSender, base.UncleRewardSender:
 		// No additional calculated fields for rewards
@@ -270,6 +274,7 @@ func (s *Slurp) CalcMap(p *ModelProps) map[string]any {
 	if asEther {
 		model["ether"] = s.Value.ToFloatString(18)
 	}
+	// EXISTING_CODE
 
 	return model
 }

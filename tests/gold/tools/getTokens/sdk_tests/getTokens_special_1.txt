@@ -34,6 +34,7 @@ Format:  json
       "blockNumber": 0,
       "decimals": 18,
       "holder": "0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98",
+      "holderName": "Bittrex 1",
       "name": "OMGToken",
       "symbol": "OMG"
     },
@@ -44,6 +45,7 @@ Format:  json
       "blockNumber": 6610517,
       "decimals": 18,
       "holder": "0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98",
+      "holderName": "Bittrex 1",
       "name": "OMGToken",
       "symbol": "OMG"
     }

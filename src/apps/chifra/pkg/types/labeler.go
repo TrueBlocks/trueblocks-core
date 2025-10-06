@@ -41,9 +41,9 @@ func labelAddress(extraOpts map[string]any, address base.Address) (Name, bool, b
 }
 
 // labelAddresses adds name resolution for a list of addresses to the model
-func labelAddresses(p *ModelProps, model map[string]any, namers []Labeler) map[string]any {
+func labelAddresses(p *ModelProps, model map[string]any, namers *[]Labeler) map[string]any {
 	if p.ExtraOpts["namesMap"] != nil {
-		for _, item := range namers {
+		for _, item := range *namers {
 			key := item.name + "Name"
 			if result, loaded, found := labelAddress(p.ExtraOpts, item.addr); found {
 				model[key] = result.Name

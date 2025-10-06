@@ -51,7 +51,7 @@ func (s *Function) Model(chain, format string, verbose bool, extraOpts map[strin
 	props := NewModelProps(chain, format, verbose, extraOpts)
 
 	rawNames := []Labeler{}
-	model := s.RawMap(props, rawNames)
+	model := s.RawMap(props, &rawNames)
 	for k, v := range s.CalcMap(props) {
 		model[k] = v
 	}
@@ -88,6 +88,14 @@ func (s *Function) Model(chain, format string, verbose bool, extraOpts map[strin
 	}
 	// EXISTING_CODE
 
+	for _, item := range rawNames {
+		key := item.name + "Name"
+		if _, exists := model[key]; exists {
+			order = append(order, key)
+		}
+	}
+	order = reorderFields(order)
+
 	return Model{
 		Data:  model,
 		Order: order,
@@ -95,27 +103,33 @@ func (s *Function) Model(chain, format string, verbose bool, extraOpts map[strin
 }
 
 // RawMap returns a map containing only the raw/base fields for this Function.
-// This excludes any calculated or derived fields.
-func (s *Function) RawMap(p *ModelProps, needed []Labeler) map[string]any {
+func (s *Function) RawMap(p *ModelProps, needed *[]Labeler) map[string]any {
 	model := map[string]any{
+		// EXISTING_CODE
 		"encoding":  s.Encoding,
 		"name":      s.Name,
 		"signature": s.Signature,
 		"type":      s.FunctionType,
+		// EXISTING_CODE
 	}
 
+	// EXISTING_CODE
 	if p.Format == "json" && s.FunctionType == "function" {
 		model["stateMutability"] = s.StateMutability
 	}
+	// EXISTING_CODE
 
 	return labelAddresses(p, model, needed)
 }
 
 // CalcMap returns a map containing the calculated/derived fields for this Function.
-// This includes parameter models and other computed values.
 func (s *Function) CalcMap(p *ModelProps) map[string]any {
-	model := map[string]any{}
+	model := map[string]any{
+		// EXISTING_CODE
+		// EXISTING_CODE
+	}
 
+	// EXISTING_CODE
 	if p.Format == "json" {
 		getParameterModels := func(params []Parameter) []map[string]any {
 			result := make([]map[string]any, len(params))
@@ -136,6 +150,7 @@ func (s *Function) CalcMap(p *ModelProps) map[string]any {
 			}
 		}
 	}
+	// EXISTING_CODE
 
 	return model
 }

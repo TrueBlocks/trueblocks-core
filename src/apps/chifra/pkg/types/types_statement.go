@@ -78,12 +78,12 @@ func (s *Statement) Model(chain, format string, verbose bool, extraOpts map[stri
 	props := NewModelProps(chain, format, verbose, extraOpts)
 
 	rawNames := []Labeler{
-		NewLabeler(s.Asset, "asset"),
 		NewLabeler(s.AccountedFor, "accountedFor"),
-		NewLabeler(s.Sender, "sender"),
+		NewLabeler(s.Asset, "asset"),
 		NewLabeler(s.Recipient, "recipient"),
+		NewLabeler(s.Sender, "sender"),
 	}
-	model := s.RawMap(props, rawNames)
+	model := s.RawMap(props, &rawNames)
 	for k, v := range s.CalcMap(props) {
 		model[k] = v
 	}
@@ -127,10 +127,9 @@ func (s *Statement) Model(chain, format string, verbose bool, extraOpts map[stri
 }
 
 // RawMap returns a map containing only the raw/base fields for this Statement.
-// This excludes any calculated or derived fields.
-func (s *Statement) RawMap(p *ModelProps, needed []Labeler) map[string]any {
+func (s *Statement) RawMap(p *ModelProps, needed *[]Labeler) map[string]any {
 	model := map[string]any{
-		// BINGO
+		// EXISTING_CODE
 		"accountedFor":        s.AccountedFor,
 		"amountIn":            s.AmountIn.Text(10),
 		"amountOut":           s.AmountOut.Text(10),
@@ -166,21 +165,19 @@ func (s *Statement) RawMap(p *ModelProps, needed []Labeler) map[string]any {
 		"timestamp":           s.Timestamp,
 		"transactionHash":     s.TransactionHash,
 		"transactionIndex":    s.TransactionIndex,
-		// BINGO
+		// EXISTING_CODE
 	}
 
-	// BINGO
-	// BINGO
+	// EXISTING_CODE
+	// EXISTING_CODE
 
 	return labelAddresses(p, model, needed)
 }
 
-// CalcMap returns a map containing only the calculated/derived fields for this Statement.
-// This is optimized for streaming contexts where the frontend receives the raw Statement
-// and needs to enhance it with calculated values.
+// CalcMap returns a map containing the calculated/derived fields for this Statement.
 func (s *Statement) CalcMap(p *ModelProps) map[string]any {
 	model := map[string]any{
-		// BINGO
+		// EXISTING_CODE
 		"amountNet":  s.AmountNet().Text(10),
 		"begBalDiff": s.BegBalDiff().Text(10),
 		"date":       s.Date(),
@@ -189,10 +186,10 @@ func (s *Statement) CalcMap(p *ModelProps) map[string]any {
 		"reconciled": s.Reconciled(),
 		"totalIn":    s.TotalIn().Text(10),
 		"totalOut":   s.TotalOut().Text(10),
-		// BINGO
+		// EXISTING_CODE
 	}
 
-	// BINGO
+	// EXISTING_CODE
 	if p.ExtraOpts["ether"] == true {
 		decimals := int(s.Decimals)
 		model["amountInEth"] = s.AmountIn.ToFloatString(decimals)
@@ -223,7 +220,7 @@ func (s *Statement) CalcMap(p *ModelProps) map[string]any {
 		model["totalInEth"] = s.TotalIn().ToFloatString(decimals)
 		model["totalOutEth"] = s.TotalOut().ToFloatString(decimals)
 	}
-	// BINGO
+	// EXISTING_CODE
 
 	return model
 }

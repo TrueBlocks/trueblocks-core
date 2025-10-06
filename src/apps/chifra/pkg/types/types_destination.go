@@ -38,7 +38,7 @@ func (s *Destination) Model(chain, format string, verbose bool, extraOpts map[st
 	props := NewModelProps(chain, format, verbose, extraOpts)
 
 	rawNames := []Labeler{}
-	model := s.RawMap(props, rawNames)
+	model := s.RawMap(props, &rawNames)
 	for k, v := range s.CalcMap(props) {
 		model[k] = v
 	}
@@ -53,6 +53,14 @@ func (s *Destination) Model(chain, format string, verbose bool, extraOpts map[st
 	}
 	// EXISTING_CODE
 
+	for _, item := range rawNames {
+		key := item.name + "Name"
+		if _, exists := model[key]; exists {
+			order = append(order, key)
+		}
+	}
+	order = reorderFields(order)
+
 	return Model{
 		Data:  model,
 		Order: order,
@@ -60,22 +68,31 @@ func (s *Destination) Model(chain, format string, verbose bool, extraOpts map[st
 }
 
 // RawMap returns a map containing only the raw/base fields for this Destination.
-// This excludes any calculated or derived fields.
-func (s *Destination) RawMap(p *ModelProps, needed []Labeler) map[string]any {
+func (s *Destination) RawMap(p *ModelProps, needed *[]Labeler) map[string]any {
 	model := map[string]any{
+		// EXISTING_CODE
 		"term":     s.Term,
 		"termType": s.TermType,
 		"url":      s.Url,
 		"source":   s.Source,
+		// EXISTING_CODE
 	}
 
-	return model
+	// EXISTING_CODE
+	// EXISTING_CODE
+
+	return labelAddresses(p, model, needed)
 }
 
 // CalcMap returns a map containing the calculated/derived fields for this Destination.
-// This type has no calculated fields currently.
 func (s *Destination) CalcMap(p *ModelProps) map[string]any {
-	model := map[string]any{}
+	model := map[string]any{
+		// EXISTING_CODE
+		// EXISTING_CODE
+	}
+
+	// EXISTING_CODE
+	// EXISTING_CODE
 
 	return model
 }

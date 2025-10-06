@@ -43,11 +43,10 @@ func (s Token) String() string {
 func (s *Token) Model(chain, format string, verbose bool, extraOpts map[string]any) Model {
 	props := NewModelProps(chain, format, verbose, extraOpts)
 
-	rawNames := []Labeler{}
-	if verbose {
-		rawNames = append(rawNames, NewLabeler(s.Holder, "holder"))
+	rawNames := []Labeler{
+		NewLabeler(s.Holder, "holder"),
 	}
-	model := s.RawMap(props, rawNames)
+	model := s.RawMap(props, &rawNames)
 	for k, v := range s.CalcMap(props) {
 		model[k] = v
 	}
@@ -80,17 +79,15 @@ func (s *Token) Model(chain, format string, verbose bool, extraOpts map[string]a
 	if len(wanted) > 0 && (wanted[0] != "address" && wanted[0] != "blockNumber") {
 		order = append([]string{"address", "blockNumber"}, wanted...)
 	}
+	// EXISTING_CODE
 
-	if verbose {
-		for _, item := range rawNames {
-			key := item.name + "Name"
-			if _, exists := model[key]; exists {
-				order = append(order, key)
-			}
+	for _, item := range rawNames {
+		key := item.name + "Name"
+		if _, exists := model[key]; exists {
+			order = append(order, key)
 		}
 	}
 	order = reorderFields(order)
-	// EXISTING_CODE
 
 	return Model{
 		Data:  model,
@@ -99,11 +96,13 @@ func (s *Token) Model(chain, format string, verbose bool, extraOpts map[string]a
 }
 
 // RawMap returns a map containing only the raw/base fields for this Token.
-// This excludes any calculated or derived fields.
-func (s *Token) RawMap(p *ModelProps, needed []Labeler) map[string]any {
-	model := map[string]any{}
+func (s *Token) RawMap(p *ModelProps, needed *[]Labeler) map[string]any {
+	model := map[string]any{
+		// EXISTING_CODE
+		// EXISTING_CODE
+	}
 
-	// Get resolved name for address lookup and defaults
+	// EXISTING_CODE
 	name := Name{}
 	if addressName, _, found := labelAddress(p.ExtraOpts, s.Address); found {
 		name = addressName
@@ -172,17 +171,19 @@ func (s *Token) RawMap(p *ModelProps, needed []Labeler) map[string]any {
 			model["version"] = ""
 		}
 	}
+	// EXISTING_CODE
 
 	return labelAddresses(p, model, needed)
 }
 
-// CalcMap returns a map containing only the calculated/derived fields for this Token.
-// This is optimized for streaming contexts where the frontend receives the raw Token
-// and needs to enhance it with calculated values.
+// CalcMap returns a map containing the calculated/derived fields for this Token.
 func (s *Token) CalcMap(p *ModelProps) map[string]any {
-	model := map[string]any{}
+	model := map[string]any{
+		// EXISTING_CODE
+		// EXISTING_CODE
+	}
 
-	// Get resolved name for calculations
+	// EXISTING_CODE
 	name := Name{}
 	if addressName, _, found := labelAddress(p.ExtraOpts, s.Address); found {
 		name = addressName
@@ -232,6 +233,7 @@ func (s *Token) CalcMap(p *ModelProps) map[string]any {
 			model["totalSupply"] = s.TotalSupply.ToFloatString(int(name.Decimals))
 		}
 	}
+	// EXISTING_CODE
 
 	return model
 }

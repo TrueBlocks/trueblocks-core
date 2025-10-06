@@ -51,7 +51,7 @@ func (s *Block) Model(chain, format string, verbose bool, extraOpts map[string]a
 	rawNames := []Labeler{
 		NewLabeler(s.Miner, "miner"),
 	}
-	model := s.RawMap(props, rawNames)
+	model := s.RawMap(props, &rawNames)
 	for k, v := range s.CalcMap(props) {
 		model[k] = v
 	}
@@ -96,9 +96,9 @@ func (s *Block) Model(chain, format string, verbose bool, extraOpts map[string]a
 }
 
 // RawMap returns a map containing only the raw/base fields for this Block.
-// This excludes any calculated or derived fields.
-func (s *Block) RawMap(p *ModelProps, needed []Labeler) map[string]any {
+func (s *Block) RawMap(p *ModelProps, needed *[]Labeler) map[string]any {
 	model := map[string]any{
+		// EXISTING_CODE
 		"gasUsed":       s.GasUsed,
 		"gasLimit":      s.GasLimit,
 		"hash":          s.Hash,
@@ -108,8 +108,10 @@ func (s *Block) RawMap(p *ModelProps, needed []Labeler) map[string]any {
 		"difficulty":    s.Difficulty,
 		"timestamp":     s.Timestamp,
 		"baseFeePerGas": s.BaseFeePerGas,
+		// EXISTING_CODE
 	}
 
+	// EXISTING_CODE
 	if p.Format == "json" {
 		// If we wanted just transactions' hashes, we would return earlier. So here we know that we
 		// have transactions as objects and want to load models for them to be able to display them
@@ -141,16 +143,21 @@ func (s *Block) RawMap(p *ModelProps, needed []Labeler) map[string]any {
 		model["transactionsCnt"] = len(s.Transactions)
 		model["withdrawalsCnt"] = len(s.Withdrawals)
 	}
+	// EXISTING_CODE
 
 	return labelAddresses(p, model, needed)
 }
 
 // CalcMap returns a map containing the calculated/derived fields for this Block.
-// This includes formatted dates and other computed values.
 func (s *Block) CalcMap(p *ModelProps) map[string]any {
 	model := map[string]any{
+		// EXISTING_CODE
 		"date": s.Date(),
+		// EXISTING_CODE
 	}
+
+	// EXISTING_CODE
+	// EXISTING_CODE
 
 	return model
 }

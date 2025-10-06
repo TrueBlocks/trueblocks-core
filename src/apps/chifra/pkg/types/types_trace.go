@@ -51,19 +51,9 @@ func (s Trace) String() string {
 
 func (s *Trace) Model(chain, format string, verbose bool, extraOpts map[string]any) Model {
 	props := NewModelProps(chain, format, verbose, extraOpts)
-	// Address naming depends on format - different addresses for JSON vs non-JSON
-	var rawNames []Labeler
-	if format != "json" && s.Action != nil {
-		rawNames = []Labeler{
-			NewLabeler(s.Action.From, "action::from"),
-		}
-		if !s.Action.RefundAddress.IsZero() {
-			rawNames = append(rawNames, NewLabeler(s.Action.RefundAddress, "action::to"))
-		} else {
-			rawNames = append(rawNames, NewLabeler(s.Action.To, "action::to"))
-		}
-	}
-	model := s.RawMap(props, rawNames)
+
+	rawNames := []Labeler{}
+	model := s.RawMap(props, &rawNames)
 	for k, v := range s.CalcMap(props) {
 		model[k] = v
 	}
@@ -104,6 +94,14 @@ func (s *Trace) Model(chain, format string, verbose bool, extraOpts map[string]a
 	}
 	// EXISTING_CODE
 
+	for _, item := range rawNames {
+		key := item.name + "Name"
+		if _, exists := model[key]; exists {
+			order = append(order, key)
+		}
+	}
+	order = reorderFields(order)
+
 	return Model{
 		Data:  model,
 		Order: order,
@@ -111,9 +109,9 @@ func (s *Trace) Model(chain, format string, verbose bool, extraOpts map[string]a
 }
 
 // RawMap returns a map containing only the raw/base fields for this Trace.
-// This excludes any calculated or derived fields.
-func (s *Trace) RawMap(p *ModelProps, needed []Labeler) map[string]any {
+func (s *Trace) RawMap(p *ModelProps, needed *[]Labeler) map[string]any {
 	model := map[string]any{
+		// EXISTING_CODE
 		"blockHash":   s.BlockHash,
 		"blockNumber": s.BlockNumber,
 		"subtraces":   s.Subtraces,
@@ -122,6 +120,17 @@ func (s *Trace) RawMap(p *ModelProps, needed []Labeler) map[string]any {
 		// "date":             s.Date(),
 		"transactionHash":  s.TransactionHash,
 		"transactionIndex": s.TransactionIndex,
+		// EXISTING_CODE
+	}
+
+	// EXISTING_CODE
+	if p.Format != "json" && s.Action != nil {
+		*needed = append(*needed, NewLabeler(s.Action.From, "action::from"))
+		if !s.Action.RefundAddress.IsZero() {
+			*needed = append(*needed, NewLabeler(s.Action.RefundAddress, "action::to"))
+		} else {
+			*needed = append(*needed, NewLabeler(s.Action.To, "action::to"))
+		}
 	}
 
 	if p.Format == "json" {
@@ -157,18 +166,20 @@ func (s *Trace) RawMap(p *ModelProps, needed []Labeler) map[string]any {
 			model["result::output"] = ""
 		}
 	}
+	// EXISTING_CODE
 
 	return labelAddresses(p, model, needed)
 }
 
-// CalcMap returns a map containing only the calculated/derived fields for this Trace.
-// This is optimized for streaming contexts where the frontend receives the raw Trace
-// and needs to enhance it with calculated values.
+// CalcMap returns a map containing the calculated/derived fields for this Trace.
 func (s *Trace) CalcMap(p *ModelProps) map[string]any {
 	model := map[string]any{
+		// EXISTING_CODE
 		"date": s.Date(),
+		// EXISTING_CODE
 	}
 
+	// EXISTING_CODE
 	var articulatedTrace map[string]any
 	isArticulated := p.ExtraOpts["articulate"] == true && s.ArticulatedTrace != nil
 	if isArticulated {
@@ -219,6 +230,7 @@ func (s *Trace) CalcMap(p *ModelProps) map[string]any {
 			model["compressedTrace"] = MakeCompressed(articulatedTrace)
 		}
 	}
+	// EXISTING_CODE
 
 	return model
 }

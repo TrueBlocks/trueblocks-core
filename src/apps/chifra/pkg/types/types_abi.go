@@ -48,7 +48,7 @@ func (s *Abi) Model(chain, format string, verbose bool, extraOpts map[string]any
 	rawNames := []Labeler{
 		NewLabeler(s.Address, "address"),
 	}
-	model := s.RawMap(props, rawNames)
+	model := s.RawMap(props, &rawNames)
 	for k, v := range s.CalcMap(props) {
 		model[k] = v
 	}
@@ -100,11 +100,13 @@ func (s *Abi) Model(chain, format string, verbose bool, extraOpts map[string]any
 }
 
 // RawMap returns a map containing only the raw/base fields for this Abi.
-// This excludes any calculated or derived fields.
-func (s *Abi) RawMap(p *ModelProps, needed []Labeler) map[string]any {
-	model := map[string]any{}
+func (s *Abi) RawMap(p *ModelProps, needed *[]Labeler) map[string]any {
+	model := map[string]any{
+		// EXISTING_CODE
+		// EXISTING_CODE
+	}
 
-	// BINGO
+	// EXISTING_CODE
 	if p.ExtraOpts["list"] == true {
 		model = map[string]any{
 			"address":     s.Address,
@@ -152,17 +154,19 @@ func (s *Abi) RawMap(p *ModelProps, needed []Labeler) map[string]any {
 	} else {
 		model[s.Address.Hex()] = s.Functions
 	}
-	// BINGO
+	// EXISTING_CODE
 
 	return labelAddresses(p, model, needed)
 }
 
 // CalcMap returns a map containing the calculated/derived fields for this Abi.
-// This includes name resolution for non-known ABIs.
 func (s *Abi) CalcMap(p *ModelProps) map[string]any {
-	model := map[string]any{}
+	model := map[string]any{
+		// EXISTING_CODE
+		// EXISTING_CODE
+	}
 
-	// BINGO
+	// EXISTING_CODE
 	if p.ExtraOpts["list"] == true && !s.IsKnown {
 		// This handles the special case where we override the name field
 		if name, loaded, found := labelAddress(p.ExtraOpts, s.Address); found {
@@ -172,7 +176,7 @@ func (s *Abi) CalcMap(p *ModelProps) map[string]any {
 		}
 		return model
 	}
-	// BINGO
+	// EXISTING_CODE
 
 	return model
 }

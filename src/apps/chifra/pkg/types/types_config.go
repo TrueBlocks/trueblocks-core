@@ -27,7 +27,7 @@ func (s *Config) Model(chain, format string, verbose bool, extraOpts map[string]
 	props := NewModelProps(chain, format, verbose, extraOpts)
 
 	rawNames := []Labeler{}
-	model := s.RawMap(props, rawNames)
+	model := s.RawMap(props, &rawNames)
 	for k, v := range s.CalcMap(props) {
 		model[k] = v
 	}
@@ -51,8 +51,7 @@ func (s *Config) Model(chain, format string, verbose bool, extraOpts map[string]
 }
 
 // RawMap returns a map containing only the raw/base fields for this Config.
-// This excludes any calculated or derived fields.
-func (s *Config) RawMap(p *ModelProps, needed []Labeler) map[string]any {
+func (s *Config) RawMap(p *ModelProps, needed *[]Labeler) map[string]any {
 	model := map[string]any{
 		"version":   s.Version,
 		"settings":  s.Settings,
@@ -66,7 +65,6 @@ func (s *Config) RawMap(p *ModelProps, needed []Labeler) map[string]any {
 }
 
 // CalcMap returns a map containing the calculated/derived fields for this Config.
-// This type has no calculated fields currently.
 func (s *Config) CalcMap(p *ModelProps) map[string]any {
 	model := map[string]any{}
 

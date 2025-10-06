@@ -49,11 +49,11 @@ func (s *Receipt) Model(chain, format string, verbose bool, extraOpts map[string
 	props := NewModelProps(chain, format, verbose, extraOpts)
 
 	rawNames := []Labeler{
-		NewLabeler(s.ContractAddress, "contract"),
+		NewLabeler(s.ContractAddress, "contractAddress"),
 		NewLabeler(s.From, "from"),
 		NewLabeler(s.To, "to"),
 	}
-	model := s.RawMap(props, rawNames)
+	model := s.RawMap(props, &rawNames)
 	for k, v := range s.CalcMap(props) {
 		model[k] = v
 	}
@@ -100,25 +100,31 @@ func (s *Receipt) Model(chain, format string, verbose bool, extraOpts map[string
 }
 
 // RawMap returns a map containing only the raw/base fields for this Receipt.
-// This excludes any calculated or derived fields.
-func (s *Receipt) RawMap(p *ModelProps, needed []Labeler) map[string]any {
+func (s *Receipt) RawMap(p *ModelProps, needed *[]Labeler) map[string]any {
 	model := map[string]any{
+		// EXISTING_CODE
 		"blockNumber":      s.BlockNumber,
 		"gasUsed":          s.GasUsed,
 		"status":           s.Status,
 		"transactionHash":  s.TransactionHash,
 		"transactionIndex": s.TransactionIndex,
+		// EXISTING_CODE
 	}
+
+	// EXISTING_CODE
+	// EXISTING_CODE
 
 	return labelAddresses(p, model, needed)
 }
 
-// CalcMap returns a map containing only the calculated/derived fields for this Receipt.
-// This is optimized for streaming contexts where the frontend receives the raw Receipt
-// and needs to enhance it with calculated values.
+// CalcMap returns a map containing the calculated/derived fields for this Receipt.
 func (s *Receipt) CalcMap(p *ModelProps) map[string]any {
-	model := map[string]any{}
+	model := map[string]any{
+		// EXISTING_CODE
+		// EXISTING_CODE
+	}
 
+	// EXISTING_CODE
 	if p.Format == "json" {
 		if !s.ContractAddress.IsZero() {
 			model["contractAddress"] = s.ContractAddress
@@ -157,6 +163,7 @@ func (s *Receipt) CalcMap(p *ModelProps) map[string]any {
 			model["contractAddress"] = s.ContractAddress.Hex()
 		}
 	}
+	// EXISTING_CODE
 
 	return model
 }

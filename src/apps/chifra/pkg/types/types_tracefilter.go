@@ -38,19 +38,17 @@ func (s TraceFilter) String() string {
 
 func (s *TraceFilter) Model(chain, format string, verbose bool, extraOpts map[string]any) Model {
 	props := NewModelProps(chain, format, verbose, extraOpts)
-	rawMap := s.RawMap(props)
-	calcMap := s.CalcMap(props, rawMap)
 
-	// Merge raw and calculated maps
-	model := make(map[string]any)
-	for k, v := range rawMap {
-		model[k] = v
+	rawNames := []Labeler{
+		NewLabeler(s.FromAddress, "fromAddress"),
+		NewLabeler(s.ToAddress, "toAddress"),
 	}
-	for k, v := range calcMap {
+	model := s.RawMap(props, &rawNames)
+	for k, v := range s.CalcMap(props) {
 		model[k] = v
 	}
 
-	var order []string
+	var order = []string{}
 	// EXISTING_CODE
 	order = []string{
 		"fromBlock",
@@ -62,27 +60,50 @@ func (s *TraceFilter) Model(chain, format string, verbose bool, extraOpts map[st
 	}
 	// EXISTING_CODE
 
+	for _, item := range rawNames {
+		key := item.name + "Name"
+		if _, exists := model[key]; exists {
+			order = append(order, key)
+		}
+	}
+	order = reorderFields(order)
+
 	return Model{
 		Data:  model,
 		Order: order,
 	}
 }
 
-func (s *TraceFilter) RawMap(props *ModelProps) map[string]any {
-	return map[string]any{
+// RawMap returns a map containing only the raw/base fields for this TraceFilter.
+func (s *TraceFilter) RawMap(p *ModelProps, needed *[]Labeler) map[string]any {
+	model := map[string]any{
+		// EXISTING_CODE
 		"after":       s.After,
 		"count":       s.Count,
 		"fromAddress": s.FromAddress,
 		"fromBlock":   s.FromBlock,
 		"toAddress":   s.ToAddress,
 		"toBlock":     s.ToBlock,
+		// EXISTING_CODE
 	}
+
+	// EXISTING_CODE
+	// EXISTING_CODE
+
+	return labelAddresses(p, model, needed)
 }
 
-func (s *TraceFilter) CalcMap(props *ModelProps, rawMap map[string]any) map[string]any {
-	calcMap := make(map[string]any)
-	// TraceFilter doesn't have calculated fields, so this is empty
-	return calcMap
+// CalcMap returns a map containing the calculated/derived fields for this TraceFilter.
+func (s *TraceFilter) CalcMap(p *ModelProps) map[string]any {
+	model := map[string]any{
+		// EXISTING_CODE
+		// EXISTING_CODE
+	}
+
+	// EXISTING_CODE
+	// EXISTING_CODE
+
+	return model
 }
 
 // FinishUnmarshal is used by the cache. It may be unused depending on auto-code-gen

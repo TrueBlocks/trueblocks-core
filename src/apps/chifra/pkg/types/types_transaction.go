@@ -85,7 +85,6 @@ func (s *Transaction) Model(chain, format string, verbose bool, extraOpts map[st
 	rawMap := s.RawMap(props)
 	calcMap := s.CalcMap(props, rawMap)
 
-	// Merge raw and calculated maps
 	model := make(map[string]any)
 	for k, v := range rawMap {
 		model[k] = v
@@ -97,6 +96,8 @@ func (s *Transaction) Model(chain, format string, verbose bool, extraOpts map[st
 	}
 
 	order := calcMap["__order"].([]string)
+	// EXISTING_CODE
+	// EXISTING_CODE
 
 	return Model{
 		Data:  model,
@@ -111,6 +112,7 @@ func (s *Transaction) RawMap(props *ModelProps) map[string]any {
 	}
 
 	model := map[string]any{
+		// EXISTING_CODE
 		"blockNumber":      s.BlockNumber,
 		"from":             s.From,
 		"gasPrice":         s.GasPrice,
@@ -120,8 +122,10 @@ func (s *Transaction) RawMap(props *ModelProps) map[string]any {
 		"to":               to,
 		"transactionIndex": s.TransactionIndex,
 		"value":            s.Value.String(),
+		// EXISTING_CODE
 	}
 
+	// EXISTING_CODE
 	if props.Format == "json" {
 		model["blockHash"] = s.BlockHash
 		if s.Nonce > 0 {
@@ -154,17 +158,22 @@ func (s *Transaction) RawMap(props *ModelProps) map[string]any {
 		}
 		model["isError"] = s.IsError
 	}
+	// EXISTING_CODE
 
 	return model
 }
 
 func (s *Transaction) CalcMap(props *ModelProps, rawMap map[string]any) map[string]any {
-	calcMap := make(map[string]any)
+	model := map[string]any{
+		// EXISTING_CODE
+		// EXISTING_CODE
+	}
+
+	// EXISTING_CODE
 	var order = []string{}
 
-	// Calculated fields
-	calcMap["date"] = s.Date()
-	calcMap["gasCost"] = s.GasCost()
+	model["date"] = s.Date()
+	model["gasCost"] = s.GasCost()
 
 	// Base order
 	order = []string{
@@ -213,7 +222,7 @@ func (s *Transaction) CalcMap(props *ModelProps, rawMap map[string]any) map[stri
 			for _, statement := range *s.Statements {
 				statements = append(statements, statement.Model(props.Chain, props.Format, props.Verbose, props.ExtraOpts).Data)
 			}
-			calcMap["statements"] = statements
+			model["statements"] = statements
 		}
 
 		if s.Receipt != nil && !s.Receipt.IsDefault() {
@@ -256,15 +265,15 @@ func (s *Transaction) CalcMap(props *ModelProps, rawMap map[string]any) map[stri
 					logModel["addressName"] = name.Name
 					order = append(order, "addressName")
 				} else if loaded && props.Format != "json" {
-					calcMap["addressName"] = ""
+					model["addressName"] = ""
 					order = append(order, "addressName")
 				}
 				logs = append(logs, logModel)
 			}
 			receiptModel["logs"] = logs
-			calcMap["receipt"] = receiptModel
+			model["receipt"] = receiptModel
 		} else {
-			calcMap["receipt"] = map[string]any{}
+			model["receipt"] = map[string]any{}
 		}
 
 		if props.ExtraOpts["traces"] == true && len(s.Traces) > 0 {
@@ -272,51 +281,51 @@ func (s *Transaction) CalcMap(props *ModelProps, rawMap map[string]any) map[stri
 			for _, trace := range s.Traces {
 				traceModels = append(traceModels, trace.Model(props.Chain, props.Format, props.Verbose, props.ExtraOpts).Data)
 			}
-			calcMap["traces"] = traceModels
+			model["traces"] = traceModels
 		} else {
-			calcMap["traces"] = make([]map[string]any, 0)
+			model["traces"] = make([]map[string]any, 0)
 		}
 
 		if isArticulated {
-			calcMap["articulatedTx"] = articulatedTx
+			model["articulatedTx"] = articulatedTx
 		} else {
 			if s.Message != "" {
-				calcMap["message"] = s.Message
+				model["message"] = s.Message
 			}
 		}
 
 	} else {
 		order = append(order, "type")
 		ethGasPrice := base.NewWei(0).SetUint64(uint64(s.GasPrice)).ToFloatString(18)
-		calcMap["ethGasPrice"] = ethGasPrice
+		model["ethGasPrice"] = ethGasPrice
 
 		if props.ExtraOpts["articulate"] == true && s.ArticulatedTx != nil {
-			calcMap["encoding"] = s.ArticulatedTx.Encoding
+			model["encoding"] = s.ArticulatedTx.Encoding
 		}
 
-		calcMap["compressedTx"] = ""
+		model["compressedTx"] = ""
 		enc := s.Input
 		if len(s.Input) >= 10 {
 			enc = s.Input[:10]
 		}
-		calcMap["encoding"] = enc
+		model["encoding"] = enc
 
 		if isArticulated {
-			calcMap["compressedTx"] = MakeCompressed(articulatedTx)
+			model["compressedTx"] = MakeCompressed(articulatedTx)
 		} else if s.Message != "" {
-			calcMap["encoding"] = ""
-			calcMap["compressedTx"] = s.Message
+			model["encoding"] = ""
+			model["compressedTx"] = s.Message
 		}
 
 		if props.ExtraOpts["traces"] == true {
-			calcMap["nTraces"] = len(s.Traces)
+			model["nTraces"] = len(s.Traces)
 			order = append(order, "nTraces")
 		}
 	}
 
 	asEther := true // special case for transactions, we always show --ether -- props.ExtraOpts["ether"] == true
 	if asEther {
-		calcMap["ether"] = s.Value.ToFloatString(18)
+		model["ether"] = s.Value.ToFloatString(18)
 		order = append(order, "ether")
 	}
 
@@ -326,19 +335,21 @@ func (s *Transaction) CalcMap(props *ModelProps, rawMap map[string]any) map[stri
 	}
 	for _, item := range items {
 		if name, loaded, found := labelAddress(props.ExtraOpts, item.addr); found {
-			calcMap[item.name] = name.Name
+			model[item.name] = name.Name
 			order = append(order, item.name)
 		} else if loaded && props.Format != "json" {
-			calcMap[item.name] = ""
+			model[item.name] = ""
 			order = append(order, item.name)
 		} else if len(name.Name) > 0 {
-			calcMap[item.name] = name.Name
+			model[item.name] = name.Name
 			order = append(order, item.name)
 		}
 	}
 
-	calcMap["__order"] = reorderFields(order)
-	return calcMap
+	model["__order"] = reorderFields(order)
+	// EXISTING_CODE
+
+	return model
 }
 
 func (s *Transaction) Date() string {

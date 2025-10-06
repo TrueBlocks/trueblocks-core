@@ -54,7 +54,7 @@ func (s *Appearance) Model(chain, format string, verbose bool, extraOpts map[str
 	rawNames := []Labeler{
 		NewLabeler(s.Address, "address"),
 	}
-	model := s.RawMap(props, rawNames)
+	model := s.RawMap(props, &rawNames)
 	for k, v := range s.CalcMap(props) {
 		model[k] = v
 	}
@@ -78,14 +78,6 @@ func (s *Appearance) Model(chain, format string, verbose bool, extraOpts map[str
 		"transactionIndex",
 	}
 
-	for _, item := range rawNames {
-		key := item.name + "Name"
-		if _, exists := model[key]; exists {
-			order = append(order, key)
-		}
-	}
-	order = reorderFields(order)
-
 	if extraOpts["uniq"] == true {
 		order = append(order, "traceIndex", "reason")
 		if verbose {
@@ -100,6 +92,14 @@ func (s *Appearance) Model(chain, format string, verbose bool, extraOpts map[str
 	}
 	// EXISTING_CODE
 
+	for _, item := range rawNames {
+		key := item.name + "Name"
+		if _, exists := model[key]; exists {
+			order = append(order, key)
+		}
+	}
+	order = reorderFields(order)
+
 	return Model{
 		Data:  model,
 		Order: order,
@@ -107,20 +107,22 @@ func (s *Appearance) Model(chain, format string, verbose bool, extraOpts map[str
 }
 
 // RawMap returns a map containing only the raw/base fields for this Appearance.
-// This excludes any calculated or derived fields.
-func (s *Appearance) RawMap(p *ModelProps, needed []Labeler) map[string]any {
+func (s *Appearance) RawMap(p *ModelProps, needed *[]Labeler) map[string]any {
+	model := map[string]any{
+		// EXISTING_CODE
+		"address":          s.Address,
+		"blockNumber":      s.BlockNumber,
+		"transactionIndex": s.TransactionIndex,
+		// EXISTING_CODE
+	}
+
+	// EXISTING_CODE
 	if p.ExtraOpts["appearances"] == true {
 		model := map[string]any{
 			"blockNumber":      s.BlockNumber,
 			"transactionIndex": s.TransactionIndex,
 		}
 		return model
-	}
-
-	model := map[string]any{
-		"address":          s.Address,
-		"blockNumber":      s.BlockNumber,
-		"transactionIndex": s.TransactionIndex,
 	}
 
 	if p.ExtraOpts["uniq"] == true {
@@ -150,15 +152,19 @@ func (s *Appearance) RawMap(p *ModelProps, needed []Labeler) map[string]any {
 			model["timestamp"] = s.Timestamp
 		}
 	}
+	// EXISTING_CODE
 
 	return labelAddresses(p, model, needed)
 }
 
 // CalcMap returns a map containing the calculated/derived fields for this Appearance.
-// This includes formatted dates.
 func (s *Appearance) CalcMap(p *ModelProps) map[string]any {
-	model := map[string]any{}
+	model := map[string]any{
+		// EXISTING_CODE
+		// EXISTING_CODE
+	}
 
+	// EXISTING_CODE
 	if p.ExtraOpts["appearances"] == true {
 		return model
 	}
@@ -176,6 +182,7 @@ func (s *Appearance) CalcMap(p *ModelProps) map[string]any {
 			model["date"] = s.Date()
 		}
 	}
+	// EXISTING_CODE
 
 	return model
 }

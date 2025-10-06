@@ -48,7 +48,7 @@ func (s *Result) Model(chain, format string, verbose bool, extraOpts map[string]
 	rawNames := []Labeler{
 		NewLabeler(s.Address, "address"),
 	}
-	model := s.RawMap(props, rawNames)
+	model := s.RawMap(props, &rawNames)
 	for k, v := range s.CalcMap(props) {
 		model[k] = v
 	}
@@ -93,28 +93,33 @@ func (s *Result) Model(chain, format string, verbose bool, extraOpts map[string]
 }
 
 // RawMap returns a map containing only the raw/base fields for this Result.
-// This excludes any calculated or derived fields.
-func (s *Result) RawMap(p *ModelProps, needed []Labeler) map[string]any {
+func (s *Result) RawMap(p *ModelProps, needed *[]Labeler) map[string]any {
 	model := map[string]any{
+		// EXISTING_CODE
 		"blockNumber": s.BlockNumber,
 		"address":     s.Address.Hex(),
 		"encoding":    s.Encoding,
 		"bytes":       s.EncodedArguments,
+		// EXISTING_CODE
 	}
 
+	// EXISTING_CODE
 	if p.Verbose {
 		model["timestamp"] = s.Timestamp
 	}
+	// EXISTING_CODE
 
 	return labelAddresses(p, model, needed)
 }
 
-// CalcMap returns a map containing only the calculated/derived fields for this Result.
-// This is optimized for streaming contexts where the frontend receives the raw Result
-// and needs to enhance it with calculated values.
+// CalcMap returns a map containing the calculated/derived fields for this Result.
 func (s *Result) CalcMap(p *ModelProps) map[string]any {
-	model := map[string]any{}
+	model := map[string]any{
+		// EXISTING_CODE
+		// EXISTING_CODE
+	}
 
+	// EXISTING_CODE
 	if p.Verbose {
 		model["date"] = s.Date()
 	}
@@ -146,6 +151,7 @@ func (s *Result) CalcMap(p *ModelProps) map[string]any {
 		model["signature"] = s.Signature
 		model["compressedResult"] = MakeCompressed(s.Values)
 	}
+	// EXISTING_CODE
 
 	return model
 }

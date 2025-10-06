@@ -36,7 +36,7 @@ func (s *TraceCount) Model(chain, format string, verbose bool, extraOpts map[str
 	props := NewModelProps(chain, format, verbose, extraOpts)
 
 	rawNames := []Labeler{}
-	model := s.RawMap(props, rawNames)
+	model := s.RawMap(props, &rawNames)
 	for k, v := range s.CalcMap(props) {
 		model[k] = v
 	}
@@ -48,10 +48,18 @@ func (s *TraceCount) Model(chain, format string, verbose bool, extraOpts map[str
 		"transactionIndex",
 		"transactionHash",
 		"timestamp",
-		// TODO: Do we want to add "date" here?
+		"date",
 		"tracesCnt",
 	}
 	// EXISTING_CODE
+
+	for _, item := range rawNames {
+		key := item.name + "Name"
+		if _, exists := model[key]; exists {
+			order = append(order, key)
+		}
+	}
+	order = reorderFields(order)
 
 	return Model{
 		Data:  model,
@@ -60,27 +68,33 @@ func (s *TraceCount) Model(chain, format string, verbose bool, extraOpts map[str
 }
 
 // RawMap returns a map containing only the raw/base fields for this TraceCount.
-// This excludes any calculated or derived fields.
-func (s *TraceCount) RawMap(p *ModelProps, needed []Labeler) map[string]any {
+func (s *TraceCount) RawMap(p *ModelProps, needed *[]Labeler) map[string]any {
 	model := map[string]any{
+		// EXISTING_CODE
 		"blockNumber":      s.BlockNumber,
 		"timestamp":        s.Timestamp,
 		"tracesCnt":        s.TracesCnt,
 		"transactionHash":  s.TransactionHash,
 		"transactionIndex": s.TransactionIndex,
+		// EXISTING_CODE
 	}
+
+	// EXISTING_CODE
+	// EXISTING_CODE
 
 	return labelAddresses(p, model, needed)
 }
 
-// CalcMap returns a map containing only the calculated/derived fields for this TraceCount.
-// This is optimized for streaming contexts where the frontend receives the raw TraceCount
-// and needs to enhance it with calculated values.
+// CalcMap returns a map containing the calculated/derived fields for this TraceCount.
 func (s *TraceCount) CalcMap(p *ModelProps) map[string]any {
-	model := map[string]any{}
+	model := map[string]any{
+		// EXISTING_CODE
+		"date": s.Date(),
+		// EXISTING_CODE
+	}
 
-	// No calculated fields in original Model method
-	// TODO: Do we want to add "date" here?
+	// EXISTING_CODE
+	// EXISTING_CODE
 
 	return model
 }

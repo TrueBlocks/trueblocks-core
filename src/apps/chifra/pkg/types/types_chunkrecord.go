@@ -37,7 +37,7 @@ func (s *ChunkRecord) Model(chain, format string, verbose bool, extraOpts map[st
 	props := NewModelProps(chain, format, verbose, extraOpts)
 
 	rawNames := []Labeler{}
-	model := s.RawMap(props, rawNames)
+	model := s.RawMap(props, &rawNames)
 	for k, v := range s.CalcMap(props) {
 		model[k] = v
 	}
@@ -61,6 +61,14 @@ func (s *ChunkRecord) Model(chain, format string, verbose bool, extraOpts map[st
 	}
 	// EXISTING_CODE
 
+	for _, item := range rawNames {
+		key := item.name + "Name"
+		if _, exists := model[key]; exists {
+			order = append(order, key)
+		}
+	}
+	order = reorderFields(order)
+
 	return Model{
 		Data:  model,
 		Order: order,
@@ -68,24 +76,31 @@ func (s *ChunkRecord) Model(chain, format string, verbose bool, extraOpts map[st
 }
 
 // RawMap returns a map containing only the raw/base fields for this ChunkRecord.
-// This excludes any calculated or derived fields.
-func (s *ChunkRecord) RawMap(p *ModelProps, needed []Labeler) map[string]any {
+func (s *ChunkRecord) RawMap(p *ModelProps, needed *[]Labeler) map[string]any {
 	model := map[string]any{
+		// EXISTING_CODE
 		"range":     s.Range,
 		"bloomHash": s.BloomHash,
 		"bloomSize": s.BloomSize,
 		"indexHash": s.IndexHash,
 		"indexSize": s.IndexSize,
+		// EXISTING_CODE
 	}
+
+	// EXISTING_CODE
+	// EXISTING_CODE
 
 	return labelAddresses(p, model, needed)
 }
 
 // CalcMap returns a map containing the calculated/derived fields for this ChunkRecord.
-// This includes range date formatting and other computed values.
 func (s *ChunkRecord) CalcMap(p *ModelProps) map[string]any {
-	model := map[string]any{}
+	model := map[string]any{
+		// EXISTING_CODE
+		// EXISTING_CODE
+	}
 
+	// EXISTING_CODE
 	if p.Verbose && p.Format == "json" {
 		if s.RangeDates != nil {
 			model["rangeDates"] = s.RangeDates.Model(p.Chain, p.Format, p.Verbose, p.ExtraOpts).Data
@@ -99,6 +114,7 @@ func (s *ChunkRecord) CalcMap(p *ModelProps) map[string]any {
 			model["lastDate"] = s.RangeDates.LastDate
 		}
 	}
+	// EXISTING_CODE
 
 	return model
 }

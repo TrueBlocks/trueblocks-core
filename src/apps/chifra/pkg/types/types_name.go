@@ -46,7 +46,7 @@ func (s *Name) Model(chain, format string, verbose bool, extraOpts map[string]an
 	props := NewModelProps(chain, format, verbose, extraOpts)
 
 	rawNames := []Labeler{}
-	model := s.RawMap(props, rawNames)
+	model := s.RawMap(props, &rawNames)
 	for k, v := range s.CalcMap(props) {
 		model[k] = v
 	}
@@ -198,6 +198,7 @@ func (s *Name) Model(chain, format string, verbose bool, extraOpts map[string]an
 			order = append(order, "isErc721")
 		}
 	}
+	// EXISTING_CODE
 
 	for _, item := range rawNames {
 		key := item.name + "Name"
@@ -206,7 +207,6 @@ func (s *Name) Model(chain, format string, verbose bool, extraOpts map[string]an
 		}
 	}
 	order = reorderFields(order)
-	// EXISTING_CODE
 
 	return Model{
 		Data:  model,
@@ -215,26 +215,32 @@ func (s *Name) Model(chain, format string, verbose bool, extraOpts map[string]an
 }
 
 // RawMap returns a map containing only the raw/base fields for this Name.
-// This excludes any calculated or derived fields.
-func (s *Name) RawMap(p *ModelProps, needed []Labeler) map[string]any {
+func (s *Name) RawMap(p *ModelProps, needed *[]Labeler) map[string]any {
 	model := map[string]any{
+		// EXISTING_CODE
 		"decimals": s.Decimals,
 		"name":     s.Name,
 		"source":   s.Source,
 		"symbol":   s.Symbol,
 		"tags":     s.Tags,
+		// EXISTING_CODE
 	}
+
+	// EXISTING_CODE
+	// EXISTING_CODE
 
 	return labelAddresses(p, model, needed)
 }
 
-// CalcMap returns a map containing only the calculated/derived fields for this Name.
-// This is optimized for streaming contexts where the frontend receives the raw Name
-// and needs to enhance it with calculated values.
+// CalcMap returns a map containing the calculated/derived fields for this Name.
 func (s *Name) CalcMap(p *ModelProps) map[string]any {
-	model := map[string]any{}
+	model := map[string]any{
+		// EXISTING_CODE
+		// EXISTING_CODE
+	}
 
-	// No calculated fields in Name - all processing happens in Model()
+	// EXISTING_CODE
+	// EXISTING_CODE
 
 	return model
 }

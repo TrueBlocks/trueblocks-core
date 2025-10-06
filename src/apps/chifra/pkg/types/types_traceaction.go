@@ -53,7 +53,7 @@ func (s *TraceAction) Model(chain, format string, verbose bool, extraOpts map[st
 		NewLabeler(s.SelfDestructed, "selfDestructed"),
 		NewLabeler(s.To, "to"),
 	}
-	model := s.RawMap(props, rawNames)
+	model := s.RawMap(props, &rawNames)
 	for k, v := range s.CalcMap(props) {
 		model[k] = v
 	}
@@ -77,11 +77,13 @@ func (s *TraceAction) Model(chain, format string, verbose bool, extraOpts map[st
 }
 
 // RawMap returns a map containing only the raw/base fields for this TraceAction.
-// This excludes any calculated or derived fields.
-func (s *TraceAction) RawMap(p *ModelProps, needed []Labeler) map[string]any {
-	model := map[string]any{}
+func (s *TraceAction) RawMap(p *ModelProps, needed *[]Labeler) map[string]any {
+	model := map[string]any{
+		// EXISTING_CODE
+		// EXISTING_CODE
+	}
 
-	// Apply the same conditional logic as original but with raw values
+	// EXISTING_CODE
 	if p.Format == "json" {
 		if !s.SelfDestructed.IsZero() {
 			model["selfDestructed"] = s.SelfDestructed
@@ -129,16 +131,19 @@ func (s *TraceAction) RawMap(p *ModelProps, needed []Labeler) map[string]any {
 			model["rewardType"] = s.RewardType
 		}
 	}
+	// EXISTING_CODE
 
 	return labelAddresses(p, model, needed)
 }
 
-// CalcMap returns a map containing only the calculated/derived fields for this TraceAction.
-// This is optimized for streaming contexts where the frontend receives the raw TraceAction
-// and needs to enhance it with calculated values.
+// CalcMap returns a map containing the calculated/derived fields for this TraceAction.
 func (s *TraceAction) CalcMap(p *ModelProps) map[string]any {
-	model := map[string]any{}
+	model := map[string]any{
+		// EXISTING_CODE
+		// EXISTING_CODE
+	}
 
+	// EXISTING_CODE
 	if p.Format == "json" {
 		// Apply ether conversions
 		asEther := p.ExtraOpts["ether"] == true
@@ -154,6 +159,7 @@ func (s *TraceAction) CalcMap(p *ModelProps) map[string]any {
 			model["init"] = utils.FormattedCode(p.Verbose, s.Init)
 		}
 	}
+	// EXISTING_CODE
 
 	return model
 }

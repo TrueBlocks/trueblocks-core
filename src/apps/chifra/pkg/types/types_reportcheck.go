@@ -37,7 +37,7 @@ func (s *ReportCheck) Model(chain, format string, verbose bool, extraOpts map[st
 	props := NewModelProps(chain, format, verbose, extraOpts)
 
 	rawNames := []Labeler{}
-	model := s.RawMap(props, rawNames)
+	model := s.RawMap(props, &rawNames)
 	for k, v := range s.CalcMap(props) {
 		model[k] = v
 	}
@@ -56,6 +56,14 @@ func (s *ReportCheck) Model(chain, format string, verbose bool, extraOpts map[st
 	}
 	// EXISTING_CODE
 
+	for _, item := range rawNames {
+		key := item.name + "Name"
+		if _, exists := model[key]; exists {
+			order = append(order, key)
+		}
+	}
+	order = reorderFields(order)
+
 	return Model{
 		Data:  model,
 		Order: order,
@@ -63,30 +71,35 @@ func (s *ReportCheck) Model(chain, format string, verbose bool, extraOpts map[st
 }
 
 // RawMap returns a map containing only the raw/base fields for this ReportCheck.
-// This excludes any calculated or derived fields.
-func (s *ReportCheck) RawMap(p *ModelProps, needed []Labeler) map[string]any {
+func (s *ReportCheck) RawMap(p *ModelProps, needed *[]Labeler) map[string]any {
 	model := map[string]any{
+		// EXISTING_CODE
 		"result":     s.Result,
 		"checkedCnt": s.CheckedCnt,
 		"visitedCnt": s.VisitedCnt,
 		"passedCnt":  s.PassedCnt,
 		"reason":     s.Reason,
+		// EXISTING_CODE
 	}
 
+	// EXISTING_CODE
 	if p.Format != "json" {
 		model["skippedCnt"] = s.SkippedCnt
 		model["failedCnt"] = s.FailedCnt
 	}
+	// EXISTING_CODE
 
 	return labelAddresses(p, model, needed)
 }
 
-// CalcMap returns a map containing only the calculated/derived fields for this ReportCheck.
-// This is optimized for streaming contexts where the frontend receives the raw ReportCheck
-// and needs to enhance it with calculated values.
+// CalcMap returns a map containing the calculated/derived fields for this ReportCheck.
 func (s *ReportCheck) CalcMap(p *ModelProps) map[string]any {
-	model := map[string]any{}
+	model := map[string]any{
+		// EXISTING_CODE
+		// EXISTING_CODE
+	}
 
+	// EXISTING_CODE
 	if p.Format == "json" {
 		if s.FailedCnt > 0 {
 			model["failedCnt"] = s.FailedCnt
@@ -98,6 +111,7 @@ func (s *ReportCheck) CalcMap(p *ModelProps) map[string]any {
 			model["msgStrings"] = s.MsgStrings
 		}
 	}
+	// EXISTING_CODE
 
 	return model
 }

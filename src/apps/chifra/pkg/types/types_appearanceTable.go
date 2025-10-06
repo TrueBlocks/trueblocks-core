@@ -43,10 +43,8 @@ func (s AppearanceTable) String() string {
 func (s *AppearanceTable) Model(chain, format string, verbose bool, extraOpts map[string]any) Model {
 	props := NewModelProps(chain, format, verbose, extraOpts)
 
-	rawNames := []Labeler{
-		NewLabeler(s.AddressRecord.Address, "address"),
-	}
-	model := s.RawMap(props, rawNames)
+	rawNames := []Labeler{}
+	model := s.RawMap(props, &rawNames)
 	for k, v := range s.CalcMap(props) {
 		model[k] = v
 	}
@@ -59,6 +57,7 @@ func (s *AppearanceTable) Model(chain, format string, verbose bool, extraOpts ma
 		"count",
 		"appearances",
 	}
+	// EXISTING_CODE
 
 	for _, item := range rawNames {
 		key := item.name + "Name"
@@ -66,7 +65,7 @@ func (s *AppearanceTable) Model(chain, format string, verbose bool, extraOpts ma
 			order = append(order, key)
 		}
 	}
-	// EXISTING_CODE
+	order = reorderFields(order)
 
 	return Model{
 		Data:  model,
@@ -75,22 +74,31 @@ func (s *AppearanceTable) Model(chain, format string, verbose bool, extraOpts ma
 }
 
 // RawMap returns a map containing only the raw/base fields for this AppearanceTable.
-// This excludes any calculated or derived fields.
-func (s *AppearanceTable) RawMap(p *ModelProps, needed []Labeler) map[string]any {
+func (s *AppearanceTable) RawMap(p *ModelProps, needed *[]Labeler) map[string]any {
 	model := map[string]any{
+		// EXISTING_CODE
 		"address":     s.AddressRecord.Address.Hex(),
 		"offset":      s.AddressRecord.Offset,
 		"count":       s.AddressRecord.Count,
 		"appearances": s.Appearances,
+		// EXISTING_CODE
 	}
+
+	// EXISTING_CODE
+	// EXISTING_CODE
 
 	return labelAddresses(p, model, needed)
 }
 
 // CalcMap returns a map containing the calculated/derived fields for this AppearanceTable.
-// This type has no calculated fields currently.
 func (s *AppearanceTable) CalcMap(p *ModelProps) map[string]any {
-	model := map[string]any{}
+	model := map[string]any{
+		// EXISTING_CODE
+		// EXISTING_CODE
+	}
+
+	// EXISTING_CODE
+	// EXISTING_CODE
 
 	return model
 }

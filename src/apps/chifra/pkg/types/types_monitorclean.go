@@ -39,7 +39,7 @@ func (s *MonitorClean) Model(chain, format string, verbose bool, extraOpts map[s
 	rawNames := []Labeler{
 		NewLabeler(s.Address, "address"),
 	}
-	model := s.RawMap(props, rawNames)
+	model := s.RawMap(props, &rawNames)
 	for k, v := range s.CalcMap(props) {
 		model[k] = v
 	}
@@ -64,6 +64,7 @@ func (s *MonitorClean) Model(chain, format string, verbose bool, extraOpts map[s
 			order = append(order, key)
 		}
 	}
+	order = reorderFields(order)
 
 	return Model{
 		Data:  model,
@@ -72,28 +73,35 @@ func (s *MonitorClean) Model(chain, format string, verbose bool, extraOpts map[s
 }
 
 // RawMap returns a map containing only the raw/base fields for this MonitorClean.
-// This excludes any calculated or derived fields.
-func (s *MonitorClean) RawMap(p *ModelProps, needed []Labeler) map[string]any {
+func (s *MonitorClean) RawMap(p *ModelProps, needed *[]Labeler) map[string]any {
 	model := map[string]any{
+		// EXISTING_CODE
 		"address":  s.Address,
 		"sizeNow":  s.SizeNow,
 		"sizeThen": s.SizeThen,
 		"dups":     s.Dups,
+		// EXISTING_CODE
 	}
+
+	// EXISTING_CODE
+	// EXISTING_CODE
 
 	return labelAddresses(p, model, needed)
 }
 
-// CalcMap returns a map containing only the calculated/derived fields for this MonitorClean.
-// This is optimized for streaming contexts where the frontend receives the raw MonitorClean
-// and needs to enhance it with calculated values.
+// CalcMap returns a map containing the calculated/derived fields for this MonitorClean.
 func (s *MonitorClean) CalcMap(p *ModelProps) map[string]any {
-	model := map[string]any{}
+	model := map[string]any{
+		// EXISTING_CODE
+		// EXISTING_CODE
+	}
 
+	// EXISTING_CODE
 	if p.ExtraOpts["staged"] == true {
 		model["staged"] = s.Staged
 		model["removed"] = s.Removed
 	}
+	// EXISTING_CODE
 
 	return model
 }

@@ -35,7 +35,7 @@ func (s *RangeDates) Model(chain, format string, verbose bool, extraOpts map[str
 	props := NewModelProps(chain, format, verbose, extraOpts)
 
 	rawNames := []Labeler{}
-	model := s.RawMap(props, rawNames)
+	model := s.RawMap(props, &rawNames)
 	for k, v := range s.CalcMap(props) {
 		model[k] = v
 	}
@@ -50,6 +50,14 @@ func (s *RangeDates) Model(chain, format string, verbose bool, extraOpts map[str
 	}
 	// EXISTING_CODE
 
+	for _, item := range rawNames {
+		key := item.name + "Name"
+		if _, exists := model[key]; exists {
+			order = append(order, key)
+		}
+	}
+	order = reorderFields(order)
+
 	return Model{
 		Data:  model,
 		Order: order,
@@ -57,25 +65,31 @@ func (s *RangeDates) Model(chain, format string, verbose bool, extraOpts map[str
 }
 
 // RawMap returns a map containing only the raw/base fields for this RangeDates.
-// This excludes any calculated or derived fields.
-func (s *RangeDates) RawMap(p *ModelProps, needed []Labeler) map[string]any {
+func (s *RangeDates) RawMap(p *ModelProps, needed *[]Labeler) map[string]any {
 	model := map[string]any{
+		// EXISTING_CODE
 		"firstDate": s.FirstDate,
 		"firstTs":   s.FirstTs,
 		"lastDate":  s.LastDate,
 		"lastTs":    s.LastTs,
+		// EXISTING_CODE
 	}
+
+	// EXISTING_CODE
+	// EXISTING_CODE
 
 	return labelAddresses(p, model, needed)
 }
 
-// CalcMap returns a map containing only the calculated/derived fields for this RangeDates.
-// This is optimized for streaming contexts where the frontend receives the raw RangeDates
-// and needs to enhance it with calculated values.
+// CalcMap returns a map containing the calculated/derived fields for this RangeDates.
 func (s *RangeDates) CalcMap(p *ModelProps) map[string]any {
-	model := map[string]any{}
+	model := map[string]any{
+		// EXISTING_CODE
+		// EXISTING_CODE
+	}
 
-	// No calculated fields for RangeDates
+	// EXISTING_CODE
+	// EXISTING_CODE
 
 	return model
 }

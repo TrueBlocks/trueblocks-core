@@ -40,7 +40,7 @@ func (s *Contract) Model(chain, format string, verbose bool, extraOpts map[strin
 	rawNames := []Labeler{
 		NewLabeler(s.Address, "address"),
 	}
-	model := s.RawMap(props, rawNames)
+	model := s.RawMap(props, &rawNames)
 	for k, v := range s.CalcMap(props) {
 		model[k] = v
 	}
@@ -73,6 +73,14 @@ func (s *Contract) Model(chain, format string, verbose bool, extraOpts map[strin
 	}
 	// EXISTING_CODE
 
+	for _, item := range rawNames {
+		key := item.name + "Name"
+		if _, exists := model[key]; exists {
+			order = append(order, key)
+		}
+	}
+	order = reorderFields(order)
+
 	return Model{
 		Data:  model,
 		Order: order,
@@ -80,16 +88,18 @@ func (s *Contract) Model(chain, format string, verbose bool, extraOpts map[strin
 }
 
 // RawMap returns a map containing only the raw/base fields for this Contract.
-// This excludes any calculated or derived fields.
-func (s *Contract) RawMap(p *ModelProps, needed []Labeler) map[string]any {
+func (s *Contract) RawMap(p *ModelProps, needed *[]Labeler) map[string]any {
 	model := map[string]any{
+		// EXISTING_CODE
 		"address":     s.Address,
 		"name":        s.Name,
 		"lastUpdated": s.LastUpdated,
 		"errorCount":  s.ErrorCount,
 		"lastError":   s.LastError,
+		// EXISTING_CODE
 	}
 
+	// EXISTING_CODE
 	if p.Verbose {
 		if s.Abi != nil {
 			model["abi"] = s.Abi.Model(p.Chain, p.Format, p.Verbose, p.ExtraOpts).Data
@@ -98,18 +108,23 @@ func (s *Contract) RawMap(p *ModelProps, needed []Labeler) map[string]any {
 			model["readResults"] = s.ReadResults
 		}
 	}
+	// EXISTING_CODE
 
 	return labelAddresses(p, model, needed)
 }
 
 // CalcMap returns a map containing the calculated/derived fields for this Contract.
-// This includes formatted dates and other derived values.
 func (s *Contract) CalcMap(p *ModelProps) map[string]any {
-	model := map[string]any{}
+	model := map[string]any{
+		// EXISTING_CODE
+		// EXISTING_CODE
+	}
 
+	// EXISTING_CODE
 	if p.Verbose {
 		model["date"] = s.Date()
 	}
+	// EXISTING_CODE
 
 	return model
 }

@@ -51,7 +51,7 @@ func (s *Log) Model(chain, format string, verbose bool, extraOpts map[string]any
 	rawNames := []Labeler{
 		NewLabeler(s.Address, "address"),
 	}
-	model := s.RawMap(props, rawNames)
+	model := s.RawMap(props, &rawNames)
 	for k, v := range s.CalcMap(props) {
 		model[k] = v
 	}
@@ -79,6 +79,7 @@ func (s *Log) Model(chain, format string, verbose bool, extraOpts map[string]any
 	if isArticulated && format != "json" {
 		order = append(order, "compressedLog")
 	}
+	// EXISTING_CODE
 
 	for _, item := range rawNames {
 		key := item.name + "Name"
@@ -87,7 +88,6 @@ func (s *Log) Model(chain, format string, verbose bool, extraOpts map[string]any
 		}
 	}
 	order = reorderFields(order)
-	// EXISTING_CODE
 
 	return Model{
 		Data:  model,
@@ -96,9 +96,9 @@ func (s *Log) Model(chain, format string, verbose bool, extraOpts map[string]any
 }
 
 // RawMap returns a map containing only the raw/base fields for this Log.
-// This excludes any calculated or derived fields.
-func (s *Log) RawMap(p *ModelProps, needed []Labeler) map[string]any {
+func (s *Log) RawMap(p *ModelProps, needed *[]Labeler) map[string]any {
 	model := map[string]any{
+		// EXISTING_CODE
 		"address":          s.Address,
 		"blockHash":        s.BlockHash,
 		"blockNumber":      s.BlockNumber,
@@ -106,19 +106,24 @@ func (s *Log) RawMap(p *ModelProps, needed []Labeler) map[string]any {
 		"timestamp":        s.Timestamp,
 		"transactionIndex": s.TransactionIndex,
 		"transactionHash":  s.TransactionHash,
+		// EXISTING_CODE
 	}
+
+	// EXISTING_CODE
+	// EXISTING_CODE
 
 	return labelAddresses(p, model, needed)
 }
 
-// CalcMap returns a map containing only the calculated/derived fields for this Log.
-// This is optimized for streaming contexts where the frontend receives the raw Log
-// and needs to enhance it with calculated values.
+// CalcMap returns a map containing the calculated/derived fields for this Log.
 func (s *Log) CalcMap(p *ModelProps) map[string]any {
 	model := map[string]any{
+		// EXISTING_CODE
 		"date": s.Date(),
+		// EXISTING_CODE
 	}
 
+	// EXISTING_CODE
 	isArticulated := p.ExtraOpts["articulate"] == true && s.ArticulatedLog != nil
 	var articulatedLog = make(map[string]any)
 	if isArticulated {
@@ -174,6 +179,7 @@ func (s *Log) CalcMap(p *ModelProps) map[string]any {
 			model["topic3"] = s.Topics[3]
 		}
 	}
+	// EXISTING_CODE
 
 	return model
 }

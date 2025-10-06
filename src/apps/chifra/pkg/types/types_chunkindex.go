@@ -38,7 +38,7 @@ func (s *ChunkIndex) Model(chain, format string, verbose bool, extraOpts map[str
 	props := NewModelProps(chain, format, verbose, extraOpts)
 
 	rawNames := []Labeler{}
-	model := s.RawMap(props, rawNames)
+	model := s.RawMap(props, &rawNames)
 	for k, v := range s.CalcMap(props) {
 		model[k] = v
 	}
@@ -67,6 +67,14 @@ func (s *ChunkIndex) Model(chain, format string, verbose bool, extraOpts map[str
 	}
 	// EXISTING_CODE
 
+	for _, item := range rawNames {
+		key := item.name + "Name"
+		if _, exists := model[key]; exists {
+			order = append(order, key)
+		}
+	}
+	order = reorderFields(order)
+
 	return Model{
 		Data:  model,
 		Order: order,
@@ -74,26 +82,32 @@ func (s *ChunkIndex) Model(chain, format string, verbose bool, extraOpts map[str
 }
 
 // RawMap returns a map containing only the raw/base fields for this ChunkIndex.
-// This excludes any calculated or derived fields.
-func (s *ChunkIndex) RawMap(p *ModelProps, needed []Labeler) map[string]any {
+func (s *ChunkIndex) RawMap(p *ModelProps, needed *[]Labeler) map[string]any {
 	model := map[string]any{
+		// EXISTING_CODE
 		"range":        s.Range,
 		"magic":        s.Magic,
 		"nAddresses":   s.NAddresses,
 		"nAppearances": s.NAppearances,
 		"fileSize":     s.FileSize,
+		// EXISTING_CODE
 	}
+
+	// EXISTING_CODE
+	// EXISTING_CODE
 
 	return labelAddresses(p, model, needed)
 }
 
 // CalcMap returns a map containing the calculated/derived fields for this ChunkIndex.
-// This includes hash formatting, range dates, and other computed values.
 func (s *ChunkIndex) CalcMap(p *ModelProps) map[string]any {
 	model := map[string]any{
+		// EXISTING_CODE
 		"hash": FormattedTag(p.Verbose, s.Hash),
+		// EXISTING_CODE
 	}
 
+	// EXISTING_CODE
 	if p.Format == "json" {
 		model["hash"] = s.Hash.Hex()
 		model["hashValue"] = FormattedTag(p.Verbose, s.Hash)
@@ -112,6 +126,7 @@ func (s *ChunkIndex) CalcMap(p *ModelProps) map[string]any {
 			model["lastDate"] = s.RangeDates.LastDate
 		}
 	}
+	// EXISTING_CODE
 
 	return model
 }

@@ -37,7 +37,7 @@ func (s *Manifest) Model(chain, format string, verbose bool, extraOpts map[strin
 	props := NewModelProps(chain, format, verbose, extraOpts)
 
 	rawNames := []Labeler{}
-	model := s.RawMap(props, rawNames)
+	model := s.RawMap(props, &rawNames)
 	for k, v := range s.CalcMap(props) {
 		model[k] = v
 	}
@@ -52,6 +52,14 @@ func (s *Manifest) Model(chain, format string, verbose bool, extraOpts map[strin
 	}
 	// EXISTING_CODE
 
+	for _, item := range rawNames {
+		key := item.name + "Name"
+		if _, exists := model[key]; exists {
+			order = append(order, key)
+		}
+	}
+	order = reorderFields(order)
+
 	return Model{
 		Data:  model,
 		Order: order,
@@ -59,25 +67,31 @@ func (s *Manifest) Model(chain, format string, verbose bool, extraOpts map[strin
 }
 
 // RawMap returns a map containing only the raw/base fields for this Manifest.
-// This excludes any calculated or derived fields.
-func (s *Manifest) RawMap(p *ModelProps, needed []Labeler) map[string]any {
+func (s *Manifest) RawMap(p *ModelProps, needed *[]Labeler) map[string]any {
 	model := map[string]any{
+		// EXISTING_CODE
 		"version":       s.Version,
 		"chain":         s.Chain,
 		"specification": s.Specification,
 		"chunks":        s.Chunks,
+		// EXISTING_CODE
 	}
+
+	// EXISTING_CODE
+	// EXISTING_CODE
 
 	return labelAddresses(p, model, needed)
 }
 
-// CalcMap returns a map containing only the calculated/derived fields for this Manifest.
-// This is optimized for streaming contexts where the frontend receives the raw Manifest
-// and needs to enhance it with calculated values.
+// CalcMap returns a map containing the calculated/derived fields for this Manifest.
 func (s *Manifest) CalcMap(p *ModelProps) map[string]any {
-	model := map[string]any{}
+	model := map[string]any{
+		// EXISTING_CODE
+		// EXISTING_CODE
+	}
 
-	// No calculated fields in Manifest
+	// EXISTING_CODE
+	// EXISTING_CODE
 
 	return model
 }

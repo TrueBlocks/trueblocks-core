@@ -29,7 +29,7 @@ func (s *Message) Model(chain, format string, verbose bool, extraOpts map[string
 	props := NewModelProps(chain, format, verbose, extraOpts)
 
 	rawNames := []Labeler{}
-	model := s.RawMap(props, rawNames)
+	model := s.RawMap(props, &rawNames)
 	for k, v := range s.CalcMap(props) {
 		model[k] = v
 	}
@@ -44,6 +44,14 @@ func (s *Message) Model(chain, format string, verbose bool, extraOpts map[string
 	}
 	// EXISTING_CODE
 
+	for _, item := range rawNames {
+		key := item.name + "Name"
+		if _, exists := model[key]; exists {
+			order = append(order, key)
+		}
+	}
+	order = reorderFields(order)
+
 	return Model{
 		Data:  model,
 		Order: order,
@@ -51,27 +59,33 @@ func (s *Message) Model(chain, format string, verbose bool, extraOpts map[string
 }
 
 // RawMap returns a map containing only the raw/base fields for this Message.
-// This excludes any calculated or derived fields.
-func (s *Message) RawMap(p *ModelProps, needed []Labeler) map[string]any {
-	model := map[string]any{}
+func (s *Message) RawMap(p *ModelProps, needed *[]Labeler) map[string]any {
+	model := map[string]any{
+		// EXISTING_CODE
+		// EXISTING_CODE
+	}
 
+	// EXISTING_CODE
 	if len(s.Msg) > 0 {
 		model["msg"] = s.Msg
 	}
 	if s.Num > 0 {
 		model["num"] = s.Num
 	}
+	// EXISTING_CODE
 
 	return labelAddresses(p, model, needed)
 }
 
-// CalcMap returns a map containing only the calculated/derived fields for this Message.
-// This is optimized for streaming contexts where the frontend receives the raw Message
-// and needs to enhance it with calculated values.
+// CalcMap returns a map containing the calculated/derived fields for this Message.
 func (s *Message) CalcMap(p *ModelProps) map[string]any {
-	model := map[string]any{}
+	model := map[string]any{
+		// EXISTING_CODE
+		// EXISTING_CODE
+	}
 
-	// No calculated fields in Message
+	// EXISTING_CODE
+	// EXISTING_CODE
 
 	return model
 }

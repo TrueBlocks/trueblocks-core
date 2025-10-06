@@ -40,7 +40,7 @@ func (s *Parameter) Model(chain, format string, verbose bool, extraOpts map[stri
 	props := NewModelProps(chain, format, verbose, extraOpts)
 
 	rawNames := []Labeler{}
-	model := s.RawMap(props, rawNames)
+	model := s.RawMap(props, &rawNames)
 	for k, v := range s.CalcMap(props) {
 		model[k] = v
 	}
@@ -65,6 +65,14 @@ func (s *Parameter) Model(chain, format string, verbose bool, extraOpts map[stri
 	}
 	// EXISTING_CODE
 
+	for _, item := range rawNames {
+		key := item.name + "Name"
+		if _, exists := model[key]; exists {
+			order = append(order, key)
+		}
+	}
+	order = reorderFields(order)
+
 	return Model{
 		Data:  model,
 		Order: order,
@@ -72,22 +80,28 @@ func (s *Parameter) Model(chain, format string, verbose bool, extraOpts map[stri
 }
 
 // RawMap returns a map containing only the raw/base fields for this Parameter.
-// This excludes any calculated or derived fields.
-func (s *Parameter) RawMap(p *ModelProps, needed []Labeler) map[string]any {
+func (s *Parameter) RawMap(p *ModelProps, needed *[]Labeler) map[string]any {
 	model := map[string]any{
+		// EXISTING_CODE
 		"name": s.Name,
 		"type": s.ParameterType,
+		// EXISTING_CODE
 	}
+
+	// EXISTING_CODE
+	// EXISTING_CODE
 
 	return labelAddresses(p, model, needed)
 }
 
-// CalcMap returns a map containing only the calculated/derived fields for this Parameter.
-// This is optimized for streaming contexts where the frontend receives the raw Parameter
-// and needs to enhance it with calculated values.
+// CalcMap returns a map containing the calculated/derived fields for this Parameter.
 func (s *Parameter) CalcMap(p *ModelProps) map[string]any {
-	model := map[string]any{}
+	model := map[string]any{
+		// EXISTING_CODE
+		// EXISTING_CODE
+	}
 
+	// EXISTING_CODE
 	if p.Format == "json" {
 		if s.Indexed {
 			model["indexed"] = s.Indexed
@@ -99,6 +113,7 @@ func (s *Parameter) CalcMap(p *ModelProps) map[string]any {
 			model["components"] = s.Components
 		}
 	}
+	// EXISTING_CODE
 
 	return model
 }

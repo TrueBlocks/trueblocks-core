@@ -34,7 +34,7 @@ func (s *Chain) Model(chain, format string, verbose bool, extraOpts map[string]a
 	props := NewModelProps(chain, format, verbose, extraOpts)
 
 	rawNames := []Labeler{}
-	model := s.RawMap(props, rawNames)
+	model := s.RawMap(props, &rawNames)
 	for k, v := range s.CalcMap(props) {
 		model[k] = v
 	}
@@ -52,6 +52,14 @@ func (s *Chain) Model(chain, format string, verbose bool, extraOpts map[string]a
 	}
 	// EXISTING_CODE
 
+	for _, item := range rawNames {
+		key := item.name + "Name"
+		if _, exists := model[key]; exists {
+			order = append(order, key)
+		}
+	}
+	order = reorderFields(order)
+
 	return Model{
 		Data:  model,
 		Order: order,
@@ -59,9 +67,9 @@ func (s *Chain) Model(chain, format string, verbose bool, extraOpts map[string]a
 }
 
 // RawMap returns a map containing only the raw/base fields for this Chain.
-// This excludes any calculated or derived fields.
-func (s *Chain) RawMap(p *ModelProps, needed []Labeler) map[string]any {
+func (s *Chain) RawMap(p *ModelProps, needed *[]Labeler) map[string]any {
 	model := map[string]any{
+		// EXISTING_CODE
 		"chain":          s.Chain,
 		"chainId":        s.ChainId,
 		"ipfsGateway":    s.IpfsGateway,
@@ -69,15 +77,24 @@ func (s *Chain) RawMap(p *ModelProps, needed []Labeler) map[string]any {
 		"remoteExplorer": s.RemoteExplorer,
 		"rpcProvider":    s.RpcProvider,
 		"symbol":         s.Symbol,
+		// EXISTING_CODE
 	}
+
+	// EXISTING_CODE
+	// EXISTING_CODE
 
 	return labelAddresses(p, model, needed)
 }
 
 // CalcMap returns a map containing the calculated/derived fields for this Chain.
-// This type has no calculated fields currently.
 func (s *Chain) CalcMap(p *ModelProps) map[string]any {
-	model := map[string]any{}
+	model := map[string]any{
+		// EXISTING_CODE
+		// EXISTING_CODE
+	}
+
+	// EXISTING_CODE
+	// EXISTING_CODE
 
 	return model
 }

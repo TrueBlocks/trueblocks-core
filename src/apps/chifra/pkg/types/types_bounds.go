@@ -36,10 +36,8 @@ func (s Bounds) String() string {
 func (s *Bounds) Model(chain, format string, verbose bool, extraOpts map[string]any) Model {
 	props := NewModelProps(chain, format, verbose, extraOpts)
 
-	rawNames := []Labeler{
-		NewLabeler(s.FirstApp.Address, "address"),
-	}
-	model := s.RawMap(props, rawNames)
+	rawNames := []Labeler{}
+	model := s.RawMap(props, &rawNames)
 	for k, v := range s.CalcMap(props) {
 		model[k] = v
 	}
@@ -58,6 +56,7 @@ func (s *Bounds) Model(chain, format string, verbose bool, extraOpts map[string]
 		"blockSpan",
 		"blockFreq",
 	}
+	// EXISTING_CODE
 
 	for _, item := range rawNames {
 		key := item.name + "Name"
@@ -65,7 +64,7 @@ func (s *Bounds) Model(chain, format string, verbose bool, extraOpts map[string]
 			order = append(order, key)
 		}
 	}
-	// EXISTING_CODE
+	order = reorderFields(order)
 
 	return Model{
 		Data:  model,
@@ -74,19 +73,17 @@ func (s *Bounds) Model(chain, format string, verbose bool, extraOpts map[string]
 }
 
 // RawMap returns a map containing only the raw/base fields for this Bounds.
-// This excludes any calculated or derived fields.
-func (s *Bounds) RawMap(p *ModelProps, needed []Labeler) map[string]any {
-	// Set appearances flag for the nested Appearance models
-	p.ExtraOpts["appearances"] = true
-
+func (s *Bounds) RawMap(p *ModelProps, needed *[]Labeler) map[string]any {
 	model := map[string]any{
+		// EXISTING_CODE
 		"address":  s.FirstApp.Address,
 		"count":    s.Count,
 		"firstTs":  s.FirstTs,
 		"latestTs": s.LatestTs,
+		// EXISTING_CODE
 	}
 
-	// Handle appearance formatting based on format
+	// EXISTING_CODE
 	if p.Format == "txt" || p.Format == "csv" {
 		model["firstApp"] = fmt.Sprintf("%d.%d", s.FirstApp.BlockNumber, s.FirstApp.TransactionIndex)
 		model["latestApp"] = fmt.Sprintf("%d.%d", s.LatestApp.BlockNumber, s.LatestApp.TransactionIndex)
@@ -94,19 +91,24 @@ func (s *Bounds) RawMap(p *ModelProps, needed []Labeler) map[string]any {
 		model["firstApp"] = s.FirstApp.Model(p.Chain, p.Format, p.Verbose, p.ExtraOpts).Data
 		model["latestApp"] = s.LatestApp.Model(p.Chain, p.Format, p.Verbose, p.ExtraOpts).Data
 	}
+	// EXISTING_CODE
 
 	return labelAddresses(p, model, needed)
 }
 
 // CalcMap returns a map containing the calculated/derived fields for this Bounds.
-// This includes formatted dates and computed statistics.
 func (s *Bounds) CalcMap(p *ModelProps) map[string]any {
 	model := map[string]any{
+		// EXISTING_CODE
 		"firstDate":  base.FormattedDate(s.FirstTs),
 		"latestDate": base.FormattedDate(s.LatestTs),
 		"blockSpan":  (s.LatestApp.BlockNumber - s.FirstApp.BlockNumber),
 		"blockFreq":  uint64(s.LatestApp.BlockNumber-s.FirstApp.BlockNumber) / s.Count,
+		// EXISTING_CODE
 	}
+
+	// EXISTING_CODE
+	// EXISTING_CODE
 
 	return model
 }

@@ -48,21 +48,9 @@ func (s *State) Model(chain, format string, verbose bool, extraOpts map[string]a
 
 	rawNames := []Labeler{
 		NewLabeler(s.Address, "address"),
+		NewLabeler(s.Proxy, "proxy"),
 	}
-
-	if extraOpts != nil {
-		if fields, ok := extraOpts["outFields"]; ok {
-			if fields, ok := fields.([]string); ok {
-				for _, field := range fields {
-					if field == "proxy" {
-						rawNames = append(rawNames, NewLabeler(s.Proxy, "proxyName"))
-					}
-				}
-			}
-		}
-	}
-	model := s.RawMap(props, rawNames)
-
+	model := s.RawMap(props, &rawNames)
 	for k, v := range s.CalcMap(props) {
 		model[k] = v
 	}
@@ -90,6 +78,7 @@ func (s *State) Model(chain, format string, verbose bool, extraOpts map[string]a
 			order = append(order, "ether")
 		}
 	}
+	// EXISTING_CODE
 
 	for _, item := range rawNames {
 		key := item.name + "Name"
@@ -98,7 +87,6 @@ func (s *State) Model(chain, format string, verbose bool, extraOpts map[string]a
 		}
 	}
 	order = reorderFields(order)
-	// EXISTING_CODE
 
 	return Model{
 		Data:  model,
@@ -107,28 +95,33 @@ func (s *State) Model(chain, format string, verbose bool, extraOpts map[string]a
 }
 
 // RawMap returns a map containing only the raw/base fields for this State.
-// This excludes any calculated or derived fields.
-func (s *State) RawMap(p *ModelProps, needed []Labeler) map[string]any {
+func (s *State) RawMap(p *ModelProps, needed *[]Labeler) map[string]any {
 	model := map[string]any{
+		// EXISTING_CODE
 		"blockNumber": s.BlockNumber,
 		"address":     s.Address,
+		// EXISTING_CODE
 	}
 
+	// EXISTING_CODE
 	if p.Verbose {
 		if s.Timestamp > 0 {
 			model["timestamp"] = s.Timestamp
 		}
 	}
+	// EXISTING_CODE
 
 	return labelAddresses(p, model, needed)
 }
 
-// CalcMap returns a map containing only the calculated/derived fields for this State.
-// This is optimized for streaming contexts where the frontend receives the raw State
-// and needs to enhance it with calculated values.
+// CalcMap returns a map containing the calculated/derived fields for this State.
 func (s *State) CalcMap(p *ModelProps) map[string]any {
-	model := map[string]any{}
+	model := map[string]any{
+		// EXISTING_CODE
+		// EXISTING_CODE
+	}
 
+	// EXISTING_CODE
 	if p.Verbose {
 		if s.Timestamp > 0 {
 			model["date"] = s.Date()
@@ -165,6 +158,7 @@ func (s *State) CalcMap(p *ModelProps) map[string]any {
 	if _, ok := model["balance"]; ok {
 		model["ether"] = s.Balance.ToFloatString(18)
 	}
+	// EXISTING_CODE
 
 	return model
 }

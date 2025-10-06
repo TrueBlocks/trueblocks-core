@@ -36,7 +36,7 @@ func (s *ChunkPin) Model(chain, format string, verbose bool, extraOpts map[strin
 	props := NewModelProps(chain, format, verbose, extraOpts)
 
 	rawNames := []Labeler{}
-	model := s.RawMap(props, rawNames)
+	model := s.RawMap(props, &rawNames)
 	for k, v := range s.CalcMap(props) {
 		model[k] = v
 	}
@@ -52,6 +52,14 @@ func (s *ChunkPin) Model(chain, format string, verbose bool, extraOpts map[strin
 	}
 	// EXISTING_CODE
 
+	for _, item := range rawNames {
+		key := item.name + "Name"
+		if _, exists := model[key]; exists {
+			order = append(order, key)
+		}
+	}
+	order = reorderFields(order)
+
 	return Model{
 		Data:  model,
 		Order: order,
@@ -59,23 +67,32 @@ func (s *ChunkPin) Model(chain, format string, verbose bool, extraOpts map[strin
 }
 
 // RawMap returns a map containing only the raw/base fields for this ChunkPin.
-// This excludes any calculated or derived fields.
-func (s *ChunkPin) RawMap(p *ModelProps, needed []Labeler) map[string]any {
+func (s *ChunkPin) RawMap(p *ModelProps, needed *[]Labeler) map[string]any {
 	model := map[string]any{
+		// EXISTING_CODE
 		"chain":         s.Chain,
 		"version":       s.Version,
 		"manifestHash":  s.ManifestHash,
 		"timestampHash": s.TimestampHash,
 		"specHash":      s.SpecHash,
+		// EXISTING_CODE
 	}
+
+	// EXISTING_CODE
+	// EXISTING_CODE
 
 	return labelAddresses(p, model, needed)
 }
 
 // CalcMap returns a map containing the calculated/derived fields for this ChunkPin.
-// This type has no calculated fields currently.
 func (s *ChunkPin) CalcMap(p *ModelProps) map[string]any {
-	model := map[string]any{}
+	model := map[string]any{
+		// EXISTING_CODE
+		// EXISTING_CODE
+	}
+
+	// EXISTING_CODE
+	// EXISTING_CODE
 
 	return model
 }

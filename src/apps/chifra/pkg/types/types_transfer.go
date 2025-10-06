@@ -55,10 +55,8 @@ func (s *Transfer) Model(chain, format string, verbose bool, extraOpts map[strin
 	rawNames := []Labeler{
 		NewLabeler(s.Asset, "asset"),
 		NewLabeler(s.Holder, "holder"),
-		// TODO: We should export sender, not? There are bugs for some reason
-		// NewLabeler(s.Sender, "sender"),
 	}
-	model := s.RawMap(props, rawNames)
+	model := s.RawMap(props, &rawNames)
 	for k, v := range s.CalcMap(props) {
 		model[k] = v
 	}
@@ -89,47 +87,37 @@ func (s *Transfer) Model(chain, format string, verbose bool, extraOpts map[strin
 }
 
 // RawMap returns a map containing only the raw/base fields for this Transfer.
-// This excludes any calculated or derived fields.
-func (s *Transfer) RawMap(p *ModelProps, needed []Labeler) map[string]any {
+func (s *Transfer) RawMap(p *ModelProps, needed *[]Labeler) map[string]any {
 	model := map[string]any{
-		// "amountIn":            s.AmountIn.Text(10),
-		// "amountOut":           s.AmountOut.Text(10),
-		"asset":       s.Asset,
-		"blockNumber": s.BlockNumber,
-		// "decimals":            s.Decimals,
-		// "gasOut":              s.GasOut.Text(10),
-		"holder": s.Holder,
-		// "internalIn":          s.InternalIn.Text(10),
-		// "internalOut":         s.InternalOut.Text(10),
-		"logIndex": s.LogIndex,
-		// "minerBaseRewardIn":   s.MinerBaseRewardIn.Text(10),
-		// "minerNephewRewardIn": s.MinerNephewRewardIn.Text(10),
-		// "minerTxFeeIn":        s.MinerTxFeeIn.Text(10),
-		// "minerUncleRewardIn":  s.MinerUncleRewardIn.Text(10),
-		// "prefundIn":           s.PrefundIn.Text(10),
-		// "recipient":           s.Recipient,
-		// "selfDestructIn":      s.SelfDestructIn.Text(10),
-		// "selfDestructOut":     s.SelfDestructOut.Text(10),
-		// TODO: We should export sender, not? There are bugs for some reason
-		// "sender":           s.Sender,
+		// EXISTING_CODE
+		"asset":            s.Asset,
+		"blockNumber":      s.BlockNumber,
+		"holder":           s.Holder,
+		"logIndex":         s.LogIndex,
 		"transactionIndex": s.TransactionIndex,
+		// EXISTING_CODE
 	}
+
+	// EXISTING_CODE
+	// EXISTING_CODE
 
 	return labelAddresses(p, model, needed)
 }
 
-// CalcMap returns a map containing only the calculated/derived fields for this Transfer.
-// This is optimized for streaming contexts where the frontend receives the raw Transfer
-// and needs to enhance it with calculated values.
+// CalcMap returns a map containing the calculated/derived fields for this Transfer.
 func (s *Transfer) CalcMap(p *ModelProps) map[string]any {
 	model := map[string]any{
+		// EXISTING_CODE
 		"amount": s.AmountNet().Text(10),
+		// EXISTING_CODE
 	}
 
+	// EXISTING_CODE
 	if p.ExtraOpts["ether"] == true {
 		decimals := int(s.Decimals)
 		model["amountEth"] = s.AmountNet().ToFloatString(decimals)
 	}
+	// EXISTING_CODE
 
 	return model
 }

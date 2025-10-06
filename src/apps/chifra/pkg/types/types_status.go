@@ -59,7 +59,7 @@ func (s *Status) Model(chain, format string, verbose bool, extraOpts map[string]
 	props := NewModelProps(chain, format, verbose, extraOpts)
 
 	rawNames := []Labeler{}
-	model := s.RawMap(props, rawNames)
+	model := s.RawMap(props, &rawNames)
 	for k, v := range s.CalcMap(props) {
 		model[k] = v
 	}
@@ -91,6 +91,14 @@ func (s *Status) Model(chain, format string, verbose bool, extraOpts map[string]
 	}
 	// EXISTING_CODE
 
+	for _, item := range rawNames {
+		key := item.name + "Name"
+		if _, exists := model[key]; exists {
+			order = append(order, key)
+		}
+	}
+	order = reorderFields(order)
+
 	return Model{
 		Data:  model,
 		Order: order,
@@ -98,9 +106,9 @@ func (s *Status) Model(chain, format string, verbose bool, extraOpts map[string]
 }
 
 // RawMap returns a map containing only the raw/base fields for this Status.
-// This excludes any calculated or derived fields.
-func (s *Status) RawMap(p *ModelProps, needed []Labeler) map[string]any {
+func (s *Status) RawMap(p *ModelProps, needed *[]Labeler) map[string]any {
 	model := map[string]any{
+		// EXISTING_CODE
 		"cachePath":         s.CachePath,
 		"chainConfig":       s.ChainConfig,
 		"clientVersion":     s.ClientVersion,
@@ -114,17 +122,23 @@ func (s *Status) RawMap(p *ModelProps, needed []Labeler) map[string]any {
 		"rootConfig":        s.RootConfig,
 		"rpcProvider":       s.RpcProvider,
 		"trueblocksVersion": s.Version,
+		// EXISTING_CODE
 	}
+
+	// EXISTING_CODE
+	// EXISTING_CODE
 
 	return labelAddresses(p, model, needed)
 }
 
-// CalcMap returns a map containing only the calculated/derived fields for this Status.
-// This is optimized for streaming contexts where the frontend receives the raw Status
-// and needs to enhance it with calculated values.
+// CalcMap returns a map containing the calculated/derived fields for this Status.
 func (s *Status) CalcMap(p *ModelProps) map[string]any {
-	model := map[string]any{}
+	model := map[string]any{
+		// EXISTING_CODE
+		// EXISTING_CODE
+	}
 
+	// EXISTING_CODE
 	testMode := p.ExtraOpts["testMode"] == true
 
 	var caches []CacheItem
@@ -156,6 +170,7 @@ func (s *Status) CalcMap(p *ModelProps) map[string]any {
 		chains := s.GetChains(testMode)
 		model["chains"] = chains
 	}
+	// EXISTING_CODE
 
 	return model
 }

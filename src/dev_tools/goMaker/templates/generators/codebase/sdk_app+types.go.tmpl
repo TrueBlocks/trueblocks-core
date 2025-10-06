@@ -9,6 +9,7 @@ type Modeler interface {
 
 // Model type alias for the return type of Model()
 type Model = types.Model
+type ModelProps = types.ModelProps
 
 {{range .SortedStructs}}type {{.Class}} = types.{{.Class}}
 {{end}}

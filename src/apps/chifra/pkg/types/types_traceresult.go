@@ -40,7 +40,7 @@ func (s *TraceResult) Model(chain, format string, verbose bool, extraOpts map[st
 	rawNames := []Labeler{
 		NewLabeler(s.Address, "address"),
 	}
-	model := s.RawMap(props, rawNames)
+	model := s.RawMap(props, &rawNames)
 	for k, v := range s.CalcMap(props) {
 		model[k] = v
 	}
@@ -69,6 +69,7 @@ func (s *TraceResult) Model(chain, format string, verbose bool, extraOpts map[st
 			order = append(order, "address")
 		}
 	}
+	// EXISTING_CODE
 
 	for _, item := range rawNames {
 		key := item.name + "Name"
@@ -77,7 +78,6 @@ func (s *TraceResult) Model(chain, format string, verbose bool, extraOpts map[st
 		}
 	}
 	order = reorderFields(order)
-	// EXISTING_CODE
 
 	return Model{
 		Data:  model,
@@ -86,11 +86,13 @@ func (s *TraceResult) Model(chain, format string, verbose bool, extraOpts map[st
 }
 
 // RawMap returns a map containing only the raw/base fields for this TraceResult.
-// This excludes any calculated or derived fields.
-func (s *TraceResult) RawMap(p *ModelProps, needed []Labeler) map[string]any {
-	model := map[string]any{}
+func (s *TraceResult) RawMap(p *ModelProps, needed *[]Labeler) map[string]any {
+	model := map[string]any{
+		// EXISTING_CODE
+		// EXISTING_CODE
+	}
 
-	// Apply the same conditional logic as original - only add fields when conditions are met
+	// EXISTING_CODE
 	if p.Format == "json" {
 		// For JSON format, only add fields when they have meaningful values
 		if s.GasUsed > 0 {
@@ -112,17 +114,19 @@ func (s *TraceResult) RawMap(p *ModelProps, needed []Labeler) map[string]any {
 			model["address"] = s.Address
 		}
 	}
+	// EXISTING_CODE
 
 	return labelAddresses(p, model, needed)
 }
 
-// CalcMap returns a map containing only the calculated/derived fields for this TraceResult.
-// This is optimized for streaming contexts where the frontend receives the raw TraceResult
-// and needs to enhance it with calculated values.
+// CalcMap returns a map containing the calculated/derived fields for this TraceResult.
 func (s *TraceResult) CalcMap(p *ModelProps) map[string]any {
-	model := map[string]any{}
+	model := map[string]any{
+		// EXISTING_CODE
+		// EXISTING_CODE
+	}
 
-	// Apply calculated transformations
+	// EXISTING_CODE
 	if p.Format == "json" {
 		// Replace raw code with formatted code when conditions are met
 		if p.ExtraOpts["traces"] != true && len(s.Code) > 2 { // "0x" is empty
@@ -134,6 +138,7 @@ func (s *TraceResult) CalcMap(p *ModelProps) map[string]any {
 			model["address"] = hexutil.Encode(s.Address.Bytes())
 		}
 	}
+	// EXISTING_CODE
 
 	return model
 }
