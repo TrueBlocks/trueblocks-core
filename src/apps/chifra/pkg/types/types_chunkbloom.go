@@ -38,22 +38,23 @@ func (s ChunkBloom) String() string {
 }
 
 func (s *ChunkBloom) Model(chain, format string, verbose bool, extraOpts map[string]any) Model {
-	_ = chain
-	_ = format
-	_ = verbose
-	_ = extraOpts
-	var model = map[string]any{}
-	var order = []string{}
-
-	// EXISTING_CODE
-	model = map[string]any{
-		"range":     s.Range,
-		"magic":     s.Magic,
-		"hash":      FormattedTag(verbose, s.Hash),
-		"nBlooms":   s.NBlooms,
-		"fileSize":  s.FileSize,
-		"byteWidth": s.ByteWidth,
+	props := &ModelProps{
+		Chain:     chain,
+		Format:    format,
+		Verbose:   verbose,
+		ExtraOpts: extraOpts,
 	}
+
+	rawNames := []Labeler{}
+	model := s.RawMap(props, rawNames)
+
+	calcNames := []Labeler{}
+	for k, v := range s.CalcMap(props, calcNames) {
+		model[k] = v
+	}
+
+	var order = []string{}
+	// EXISTING_CODE
 	order = []string{
 		"range",
 		"magic",
@@ -64,28 +65,19 @@ func (s *ChunkBloom) Model(chain, format string, verbose bool, extraOpts map[str
 	}
 
 	if verbose {
-		model["nInserted"] = s.NInserted
 		order = append(order, "nInserted")
 	}
 
 	if format == "json" {
-		model["hash"] = s.Hash.Hex()
-		model["hashValue"] = FormattedTag(verbose, s.Hash)
+		order = append(order, "hashValue")
 	}
 
 	if verbose && format == "json" {
 		if s.RangeDates != nil {
-			model["rangeDates"] = s.RangeDates.Model(chain, format, verbose, extraOpts).Data
+			order = append(order, "rangeDates")
 		}
 	} else if verbose {
-		model["firstTs"], model["firstDate"], model["lastTs"], model["lastDate"] = 0, "", 0, ""
 		order = append(order, []string{"firstTs", "firstDate", "lastTs", "lastDate"}...)
-		if s.RangeDates != nil {
-			model["firstTs"] = s.RangeDates.FirstTs
-			model["firstDate"] = s.RangeDates.FirstDate
-			model["lastTs"] = s.RangeDates.LastTs
-			model["lastDate"] = s.RangeDates.LastDate
-		}
 	}
 	// EXISTING_CODE
 
@@ -93,6 +85,53 @@ func (s *ChunkBloom) Model(chain, format string, verbose bool, extraOpts map[str
 		Data:  model,
 		Order: order,
 	}
+}
+
+// RawMap returns a map containing only the raw/base fields for this ChunkBloom.
+// This excludes any calculated or derived fields.
+func (s *ChunkBloom) RawMap(p *ModelProps, needed []Labeler) map[string]any {
+	model := map[string]any{
+		"range":     s.Range,
+		"magic":     s.Magic,
+		"nBlooms":   s.NBlooms,
+		"fileSize":  s.FileSize,
+		"byteWidth": s.ByteWidth,
+	}
+
+	if p.Verbose {
+		model["nInserted"] = s.NInserted
+	}
+
+	return labelAddresses(p, model, needed)
+}
+
+// CalcMap returns a map containing the calculated/derived fields for this ChunkBloom.
+// This includes hash formatting, range dates, and other computed values.
+func (s *ChunkBloom) CalcMap(p *ModelProps, needed []Labeler) map[string]any {
+	model := map[string]any{
+		"hash": FormattedTag(p.Verbose, s.Hash),
+	}
+
+	if p.Format == "json" {
+		model["hash"] = s.Hash.Hex()
+		model["hashValue"] = FormattedTag(p.Verbose, s.Hash)
+	}
+
+	if p.Verbose && p.Format == "json" {
+		if s.RangeDates != nil {
+			model["rangeDates"] = s.RangeDates.Model(p.Chain, p.Format, p.Verbose, p.ExtraOpts).Data
+		}
+	} else if p.Verbose {
+		model["firstTs"], model["firstDate"], model["lastTs"], model["lastDate"] = 0, "", 0, ""
+		if s.RangeDates != nil {
+			model["firstTs"] = s.RangeDates.FirstTs
+			model["firstDate"] = s.RangeDates.FirstDate
+			model["lastTs"] = s.RangeDates.LastTs
+			model["lastDate"] = s.RangeDates.LastDate
+		}
+	}
+
+	return labelAddresses(p, model, needed)
 }
 
 // FinishUnmarshal is used by the cache. It may be unused depending on auto-code-gen

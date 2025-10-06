@@ -48,13 +48,22 @@ func (s Function) String() string {
 }
 
 func (s *Function) Model(chain, format string, verbose bool, extraOpts map[string]any) Model {
-	_ = chain
-	_ = format
-	_ = verbose
-	_ = extraOpts
-	var model = map[string]any{}
-	var order = []string{}
+	props := &ModelProps{
+		Chain:     chain,
+		Format:    format,
+		Verbose:   verbose,
+		ExtraOpts: extraOpts,
+	}
 
+	rawNames := []Labeler{}
+	model := s.RawMap(props, rawNames)
+
+	calcNames := []Labeler{}
+	for k, v := range s.CalcMap(props, calcNames) {
+		model[k] = v
+	}
+
+	var order = []string{}
 	// EXISTING_CODE
 	if extraOpts["encodingSignatureOnly"] == true {
 		return Model{
@@ -66,13 +75,6 @@ func (s *Function) Model(chain, format string, verbose bool, extraOpts map[strin
 		}
 	}
 
-	model = map[string]any{
-		"encoding":  s.Encoding,
-		"name":      s.Name,
-		"signature": s.Signature,
-		"type":      s.FunctionType,
-	}
-
 	order = []string{
 		"encoding",
 		"type",
@@ -80,16 +82,57 @@ func (s *Function) Model(chain, format string, verbose bool, extraOpts map[strin
 		"signature",
 	}
 
-	if format == "json" {
+	if format == "json" && verbose {
+		if s.Inputs != nil {
+			order = append(order, "inputs")
+		}
+		if s.Outputs != nil {
+			order = append(order, "outputs")
+		}
+	}
+	if format == "json" && s.FunctionType == "function" {
+		order = append(order, "stateMutability")
+	}
+	// EXISTING_CODE
+
+	return Model{
+		Data:  model,
+		Order: order,
+	}
+}
+
+// RawMap returns a map containing only the raw/base fields for this Function.
+// This excludes any calculated or derived fields.
+func (s *Function) RawMap(p *ModelProps, needed []Labeler) map[string]any {
+	model := map[string]any{
+		"encoding":  s.Encoding,
+		"name":      s.Name,
+		"signature": s.Signature,
+		"type":      s.FunctionType,
+	}
+
+	if p.Format == "json" && s.FunctionType == "function" {
+		model["stateMutability"] = s.StateMutability
+	}
+
+	return labelAddresses(p, model, needed)
+}
+
+// CalcMap returns a map containing the calculated/derived fields for this Function.
+// This includes parameter models and other computed values.
+func (s *Function) CalcMap(p *ModelProps, needed []Labeler) map[string]any {
+	model := map[string]any{}
+
+	if p.Format == "json" {
 		getParameterModels := func(params []Parameter) []map[string]any {
 			result := make([]map[string]any, len(params))
 			for index, param := range params {
-				result[index] = param.Model(chain, format, verbose, extraOpts).Data
+				result[index] = param.Model(p.Chain, p.Format, p.Verbose, p.ExtraOpts).Data
 				result[index]["name"] = param.DisplayName(index)
 			}
 			return result
 		}
-		if verbose {
+		if p.Verbose {
 			inputs := getParameterModels(s.Inputs)
 			if inputs != nil {
 				model["inputs"] = inputs
@@ -99,16 +142,9 @@ func (s *Function) Model(chain, format string, verbose bool, extraOpts map[strin
 				model["outputs"] = outputs
 			}
 		}
-		if s.FunctionType == "function" {
-			model["stateMutability"] = s.StateMutability
-		}
 	}
-	// EXISTING_CODE
 
-	return Model{
-		Data:  model,
-		Order: order,
-	}
+	return labelAddresses(p, model, needed)
 }
 
 func (s *Function) MarshalCache(writer io.Writer) (err error) {

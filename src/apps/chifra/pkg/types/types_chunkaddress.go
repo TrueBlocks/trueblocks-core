@@ -33,20 +33,23 @@ func (s ChunkAddress) String() string {
 }
 
 func (s *ChunkAddress) Model(chain, format string, verbose bool, extraOpts map[string]any) Model {
-	_ = chain
-	_ = format
-	_ = verbose
-	_ = extraOpts
-	var model = map[string]any{}
-	var order = []string{}
-
-	// EXISTING_CODE
-	model = map[string]any{
-		"address": s.Address,
-		"range":   s.Range,
-		"offset":  s.Offset,
-		"count":   s.Count,
+	props := &ModelProps{
+		Chain:     chain,
+		Format:    format,
+		Verbose:   verbose,
+		ExtraOpts: extraOpts,
 	}
+
+	rawNames := []Labeler{NewLabeler(s.Address, "address")}
+	model := s.RawMap(props, rawNames)
+
+	calcNames := []Labeler{}
+	for k, v := range s.CalcMap(props, calcNames) {
+		model[k] = v
+	}
+
+	var order = []string{}
+	// EXISTING_CODE
 	order = []string{
 		"address",
 		"range",
@@ -56,16 +59,16 @@ func (s *ChunkAddress) Model(chain, format string, verbose bool, extraOpts map[s
 
 	if verbose && format == "json" {
 		if s.RangeDates != nil {
-			model["rangeDates"] = s.RangeDates.Model(chain, format, verbose, extraOpts).Data
+			order = append(order, "rangeDates")
 		}
 	} else if verbose {
-		model["firstTs"], model["firstDate"], model["lastTs"], model["lastDate"] = 0, "", 0, ""
 		order = append(order, []string{"firstTs", "firstDate", "lastTs", "lastDate"}...)
-		if s.RangeDates != nil {
-			model["firstTs"] = s.RangeDates.FirstTs
-			model["firstDate"] = s.RangeDates.FirstDate
-			model["lastTs"] = s.RangeDates.LastTs
-			model["lastDate"] = s.RangeDates.LastDate
+	}
+
+	for _, item := range append(rawNames, calcNames...) {
+		key := item.name + "Name"
+		if _, exists := model[key]; exists {
+			order = append(order, key)
 		}
 	}
 	// EXISTING_CODE
@@ -74,6 +77,41 @@ func (s *ChunkAddress) Model(chain, format string, verbose bool, extraOpts map[s
 		Data:  model,
 		Order: order,
 	}
+}
+
+// RawMap returns a map containing only the raw/base fields for this ChunkAddress.
+// This excludes any calculated or derived fields.
+func (s *ChunkAddress) RawMap(p *ModelProps, needed []Labeler) map[string]any {
+	model := map[string]any{
+		"address": s.Address,
+		"range":   s.Range,
+		"offset":  s.Offset,
+		"count":   s.Count,
+	}
+
+	return labelAddresses(p, model, needed)
+}
+
+// CalcMap returns a map containing the calculated/derived fields for this ChunkAddress.
+// This includes range date formatting and other computed values.
+func (s *ChunkAddress) CalcMap(p *ModelProps, needed []Labeler) map[string]any {
+	model := map[string]any{}
+
+	if p.Verbose && p.Format == "json" {
+		if s.RangeDates != nil {
+			model["rangeDates"] = s.RangeDates.Model(p.Chain, p.Format, p.Verbose, p.ExtraOpts).Data
+		}
+	} else if p.Verbose {
+		model["firstTs"], model["firstDate"], model["lastTs"], model["lastDate"] = 0, "", 0, ""
+		if s.RangeDates != nil {
+			model["firstTs"] = s.RangeDates.FirstTs
+			model["firstDate"] = s.RangeDates.FirstDate
+			model["lastTs"] = s.RangeDates.LastTs
+			model["lastDate"] = s.RangeDates.LastDate
+		}
+	}
+
+	return labelAddresses(p, model, needed)
 }
 
 // FinishUnmarshal is used by the cache. It may be unused depending on auto-code-gen

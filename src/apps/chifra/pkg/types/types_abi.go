@@ -43,22 +43,24 @@ func (s Abi) String() string {
 }
 
 func (s *Abi) Model(chain, format string, verbose bool, extraOpts map[string]any) Model {
-	_ = chain
-	_ = format
-	_ = verbose
-	_ = extraOpts
-	var model = map[string]any{}
-	var order = []string{}
+	props := &ModelProps{
+		Chain:     chain,
+		Format:    format,
+		Verbose:   verbose,
+		ExtraOpts: extraOpts,
+	}
 
+	rawNames := []Labeler{NewLabeler(s.Address, "address")}
+	model := s.RawMap(props, rawNames)
+
+	calcNames := []Labeler{}
+	for k, v := range s.CalcMap(props, calcNames) {
+		model[k] = v
+	}
+
+	var order = []string{}
 	// EXISTING_CODE
 	if extraOpts["list"] == true {
-		model = map[string]any{
-			"address":     s.Address,
-			"name":        s.Name,
-			"lastModDate": s.LastModDate,
-			"fileSize":    s.FileSize,
-			"isKnown":     s.IsKnown,
-		}
 		order = []string{
 			"address",
 			"name",
@@ -67,58 +69,23 @@ func (s *Abi) Model(chain, format string, verbose bool, extraOpts map[string]any
 			"isKnown",
 		}
 
-		if s.IsKnown {
-			model["address"] = ""
-		} else {
-			if name, loaded, found := labelAddress(extraOpts, s.Address); found {
-				model["name"] = name.Name
-			} else if loaded {
-				model["name"] = ""
-			}
-		}
-		if format == "json" && s.Address.IsZero() {
-			delete(model, "address")
-		}
-
 		if verbose {
-			if format == "json" {
-				if s.IsEmpty {
-					model["isEmpty"] = s.IsEmpty
-				}
-			} else {
-				model["isEmpty"] = s.IsEmpty
+			if format != "json" {
 				order = append(order, "isEmpty")
 			}
-			model["nFunctions"] = s.NFunctions
-			order = append(order, "nFunctions")
-			model["nEvents"] = s.NEvents
-			order = append(order, "nEvents")
-			if format == "json" {
-				if s.HasConstructor {
-					model["hasConstructor"] = s.HasConstructor
-				}
-				if s.HasFallback {
-					model["hasFallback"] = s.HasFallback
-				}
-			} else {
-				model["hasConstructor"] = s.HasConstructor
-				order = append(order, "hasConstructor")
-				model["hasFallback"] = s.HasFallback
-				order = append(order, "hasFallback")
+			order = append(order, "nFunctions", "nEvents")
+			if format != "json" {
+				order = append(order, "hasConstructor", "hasFallback")
 			}
-			model["path"] = s.Path
 			order = append(order, "path")
 		}
-
 	} else {
-		model[s.Address.Hex()] = s.Functions
 		order = append(order, s.Address.Hex())
-		if name, loaded, found := labelAddress(extraOpts, s.Address); found {
-			model["addressName"] = name.Name
-			order = append(order, "addressName")
-		} else if loaded && format != "json" {
-			model["addressName"] = ""
-			order = append(order, "addressName")
+		for _, item := range append(rawNames, calcNames...) {
+			key := item.name + "Name"
+			if _, exists := model[key]; exists {
+				order = append(order, key)
+			}
 		}
 	}
 	order = reorderFields(order)
@@ -128,6 +95,81 @@ func (s *Abi) Model(chain, format string, verbose bool, extraOpts map[string]any
 		Data:  model,
 		Order: order,
 	}
+}
+
+// RawMap returns a map containing only the raw/base fields for this Abi.
+// This excludes any calculated or derived fields.
+func (s *Abi) RawMap(p *ModelProps, needed []Labeler) map[string]any {
+	model := map[string]any{}
+
+	if p.ExtraOpts["list"] == true {
+		model = map[string]any{
+			"address":     s.Address,
+			"name":        s.Name,
+			"lastModDate": s.LastModDate,
+			"fileSize":    s.FileSize,
+			"isKnown":     s.IsKnown,
+		}
+
+		if s.IsKnown {
+			model["address"] = ""
+		}
+		if p.Format == "json" && s.Address.IsZero() {
+			delete(model, "address")
+		}
+
+		if p.Verbose {
+			if p.Format == "json" {
+				if s.IsEmpty {
+					model["isEmpty"] = s.IsEmpty
+				}
+			} else {
+				model["isEmpty"] = s.IsEmpty
+			}
+			model["nFunctions"] = s.NFunctions
+			model["nEvents"] = s.NEvents
+			if p.Format == "json" {
+				if s.HasConstructor {
+					model["hasConstructor"] = s.HasConstructor
+				}
+				if s.HasFallback {
+					model["hasFallback"] = s.HasFallback
+				}
+			} else {
+				model["hasConstructor"] = s.HasConstructor
+				model["hasFallback"] = s.HasFallback
+			}
+			model["path"] = s.Path
+		}
+
+		// Handle address labeling for list mode (but not if IsKnown)
+		if !s.IsKnown {
+			return labelAddresses(p, model, needed)
+		}
+		return model
+	} else {
+		model[s.Address.Hex()] = s.Functions
+		return labelAddresses(p, model, needed)
+	}
+}
+
+// CalcMap returns a map containing the calculated/derived fields for this Abi.
+// This includes name resolution for non-known ABIs.
+func (s *Abi) CalcMap(p *ModelProps, needed []Labeler) map[string]any {
+	model := map[string]any{}
+
+	// Only handle name resolution in CalcMap for list mode when not IsKnown
+	if p.ExtraOpts["list"] == true && !s.IsKnown {
+		// This handles the special case where we override the name field
+		if name, loaded, found := labelAddress(p.ExtraOpts, s.Address); found {
+			model["name"] = name.Name
+		} else if loaded {
+			model["name"] = ""
+		}
+		return model
+	}
+
+	return labelAddresses(p, model, needed)
 }
 
 func (s *Abi) CacheLocations() (string, string, string) {

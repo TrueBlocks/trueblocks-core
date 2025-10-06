@@ -38,29 +38,27 @@ func (s Approval) String() string {
 }
 
 func (s *Approval) Model(chain, format string, verbose bool, extraOpts map[string]any) Model {
-	_ = chain
-	_ = format
-	_ = verbose
-	_ = extraOpts
-	var model = map[string]any{}
-	var order = []string{}
-
-	// EXISTING_CODE
-	model = map[string]any{
-		"blockNumber":  s.BlockNumber,
-		"timestamp":    s.Timestamp,
-		"date":         s.Date(),
-		"owner":        s.Owner,
-		"spender":      s.Spender,
-		"token":        s.Token,
-		"allowance":    s.Allowance.String(),
-		"lastAppBlock": s.LastAppBlock,
-		"lastAppLogID": s.LastAppLogID,
-		"lastAppTxID":  s.LastAppTxID,
-		"lastAppTs":    s.LastAppTs,
-		"lastAppDate":  base.FormattedDate(s.LastAppTs),
+	props := &ModelProps{
+		Chain:     chain,
+		Format:    format,
+		Verbose:   verbose,
+		ExtraOpts: extraOpts,
 	}
 
+	rawNames := []Labeler{
+		NewLabeler(s.Owner, "owner"),
+		NewLabeler(s.Spender, "spender"),
+		NewLabeler(s.Token, "token"),
+	}
+	model := s.RawMap(props, rawNames)
+
+	calcNames := []Labeler{}
+	for k, v := range s.CalcMap(props, calcNames) {
+		model[k] = v
+	}
+
+	var order = []string{}
+	// EXISTING_CODE
 	order = []string{
 		"blockNumber",
 		"timestamp",
@@ -77,18 +75,10 @@ func (s *Approval) Model(chain, format string, verbose bool, extraOpts map[strin
 	}
 
 	if verbose {
-		items := []Labeler{
-			NewLabeler(s.Owner, "ownerName"),
-			NewLabeler(s.Spender, "spenderName"),
-			NewLabeler(s.Token, "tokenName"),
-		}
-		for _, item := range items {
-			if name, loaded, found := labelAddress(extraOpts, item.addr); found {
-				model[item.name] = name.Name
-				order = append(order, item.name)
-			} else if loaded && format != "json" {
-				model[item.name] = ""
-				order = append(order, item.name)
+		for _, item := range append(rawNames, calcNames...) {
+			key := item.name + "Name"
+			if _, exists := model[key]; exists {
+				order = append(order, key)
 			}
 		}
 		order = reorderFields(order)
@@ -99,6 +89,40 @@ func (s *Approval) Model(chain, format string, verbose bool, extraOpts map[strin
 		Data:  model,
 		Order: order,
 	}
+}
+
+// RawMap returns a map containing only the raw/base fields for this Approval.
+// This excludes any calculated or derived fields.
+func (s *Approval) RawMap(p *ModelProps, needed []Labeler) map[string]any {
+	model := map[string]any{
+		"blockNumber":  s.BlockNumber,
+		"timestamp":    s.Timestamp,
+		"owner":        s.Owner,
+		"spender":      s.Spender,
+		"token":        s.Token,
+		"allowance":    s.Allowance.String(),
+		"lastAppBlock": s.LastAppBlock,
+		"lastAppLogID": s.LastAppLogID,
+		"lastAppTxID":  s.LastAppTxID,
+		"lastAppTs":    s.LastAppTs,
+	}
+
+	// Handle address labeling only if verbose
+	if p.Verbose {
+		return labelAddresses(p, model, needed)
+	}
+	return model
+}
+
+// CalcMap returns a map containing the calculated/derived fields for this Approval.
+// This includes formatted dates and other computed values.
+func (s *Approval) CalcMap(p *ModelProps, needed []Labeler) map[string]any {
+	model := map[string]any{
+		"date":        s.Date(),
+		"lastAppDate": base.FormattedDate(s.LastAppTs),
+	}
+
+	return labelAddresses(p, model, needed)
 }
 
 func (s *Approval) Date() string {

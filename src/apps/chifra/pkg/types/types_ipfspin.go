@@ -34,21 +34,23 @@ func (s IpfsPin) String() string {
 }
 
 func (s *IpfsPin) Model(chain, format string, verbose bool, extraOpts map[string]any) Model {
-	_ = chain
-	_ = format
-	_ = verbose
-	_ = extraOpts
-	var model = map[string]any{}
-	var order = []string{}
-
-	// EXISTING_CODE
-	model = map[string]any{
-		"fileName":   s.FileName,
-		"cid":        s.Cid,
-		"datePinned": cleanDate(s.DatePinned),
-		"status":     s.Status,
-		"size":       s.Size,
+	props := &ModelProps{
+		Chain:     chain,
+		Format:    format,
+		Verbose:   verbose,
+		ExtraOpts: extraOpts,
 	}
+
+	rawNames := []Labeler{}
+	model := s.RawMap(props, rawNames)
+
+	calcNames := []Labeler{}
+	for k, v := range s.CalcMap(props, calcNames) {
+		model[k] = v
+	}
+
+	var order = []string{}
+	// EXISTING_CODE
 	order = []string{
 		"fileName",
 		"cid",
@@ -62,6 +64,29 @@ func (s *IpfsPin) Model(chain, format string, verbose bool, extraOpts map[string
 		Data:  model,
 		Order: order,
 	}
+}
+
+// RawMap returns a map containing only the raw/base fields for this IpfsPin.
+// This excludes any calculated or derived fields.
+func (s *IpfsPin) RawMap(p *ModelProps, needed []Labeler) map[string]any {
+	model := map[string]any{
+		"fileName": s.FileName,
+		"cid":      s.Cid,
+		"status":   s.Status,
+		"size":     s.Size,
+	}
+
+	return labelAddresses(p, model, needed)
+}
+
+// CalcMap returns a map containing the calculated/derived fields for this IpfsPin.
+// This includes cleaned dates and any other derived values.
+func (s *IpfsPin) CalcMap(p *ModelProps, needed []Labeler) map[string]any {
+	model := map[string]any{
+		"datePinned": cleanDate(s.DatePinned),
+	}
+
+	return labelAddresses(p, model, needed)
 }
 
 // FinishUnmarshal is used by the cache. It may be unused depending on auto-code-gen

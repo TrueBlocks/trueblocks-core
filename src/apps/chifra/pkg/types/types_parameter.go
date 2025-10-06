@@ -37,19 +37,23 @@ func (s Parameter) String() string {
 }
 
 func (s *Parameter) Model(chain, format string, verbose bool, extraOpts map[string]any) Model {
-	_ = chain
-	_ = format
-	_ = verbose
-	_ = extraOpts
-	var model = map[string]any{}
-	var order = []string{}
-
-	// EXISTING_CODE
-	model = map[string]any{
-		"name": s.Name,
-		"type": s.ParameterType,
+	props := &ModelProps{
+		Chain:     chain,
+		Format:    format,
+		Verbose:   verbose,
+		ExtraOpts: extraOpts,
 	}
 
+	rawNames := []Labeler{} // No addresses in Parameter
+	model := s.RawMap(props, rawNames)
+
+	calcNames := []Labeler{}
+	for k, v := range s.CalcMap(props, calcNames) {
+		model[k] = v
+	}
+
+	var order = []string{}
+	// EXISTING_CODE
 	order = []string{
 		"type",
 		"name",
@@ -57,15 +61,12 @@ func (s *Parameter) Model(chain, format string, verbose bool, extraOpts map[stri
 
 	if format == "json" {
 		if s.Indexed {
-			model["indexed"] = s.Indexed
 			order = append(order, "indexed")
 		}
 		if s.ParameterType != s.InternalType {
-			model["internalType"] = s.InternalType
 			order = append(order, "internalType")
 		}
 		if len(s.Components) > 0 {
-			model["components"] = s.Components
 			order = append(order, "components")
 		}
 	}
@@ -75,6 +76,38 @@ func (s *Parameter) Model(chain, format string, verbose bool, extraOpts map[stri
 		Data:  model,
 		Order: order,
 	}
+}
+
+// RawMap returns a map containing only the raw/base fields for this Parameter.
+// This excludes any calculated or derived fields.
+func (s *Parameter) RawMap(p *ModelProps, needed []Labeler) map[string]any {
+	model := map[string]any{
+		"name": s.Name,
+		"type": s.ParameterType,
+	}
+
+	return labelAddresses(p, model, needed)
+}
+
+// CalcMap returns a map containing only the calculated/derived fields for this Parameter.
+// This is optimized for streaming contexts where the frontend receives the raw Parameter
+// and needs to enhance it with calculated values.
+func (s *Parameter) CalcMap(p *ModelProps, needed []Labeler) map[string]any {
+	model := map[string]any{}
+
+	if p.Format == "json" {
+		if s.Indexed {
+			model["indexed"] = s.Indexed
+		}
+		if s.ParameterType != s.InternalType {
+			model["internalType"] = s.InternalType
+		}
+		if len(s.Components) > 0 {
+			model["components"] = s.Components
+		}
+	}
+
+	return labelAddresses(p, model, needed)
 }
 
 func (s *Parameter) MarshalCache(writer io.Writer) (err error) {

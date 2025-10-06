@@ -49,95 +49,140 @@ func (s Appearance) String() string {
 }
 
 func (s *Appearance) Model(chain, format string, verbose bool, extraOpts map[string]any) Model {
-	_ = chain
-	_ = format
-	_ = verbose
-	_ = extraOpts
-	var model = map[string]any{}
-	var order = []string{}
+	props := &ModelProps{
+		Chain:     chain,
+		Format:    format,
+		Verbose:   verbose,
+		ExtraOpts: extraOpts,
+	}
 
+	rawNames := []Labeler{NewLabeler(s.Address, "address")}
+	model := s.RawMap(props, rawNames)
+
+	calcNames := []Labeler{}
+	for k, v := range s.CalcMap(props, calcNames) {
+		model[k] = v
+	}
+
+	var order = []string{}
 	// EXISTING_CODE
 	if extraOpts["appearances"] == true {
-		model = map[string]any{
-			"blockNumber":      s.BlockNumber,
-			"transactionIndex": s.TransactionIndex,
-		}
 		order = []string{
 			"blockNumber",
 			"transactionIndex",
 		}
-
 		return Model{
 			Data:  model,
 			Order: order,
 		}
 	}
 
-	model = map[string]any{
-		"address":          s.Address,
-		"blockNumber":      s.BlockNumber,
-		"transactionIndex": s.TransactionIndex,
-	}
 	order = []string{
 		"address",
 		"blockNumber",
 		"transactionIndex",
 	}
 
-	if name, loaded, found := labelAddress(extraOpts, s.Address); found {
-		model["addressName"] = name.Name
-		order = append(order, "addressName")
-	} else if loaded && format != "json" {
-		model["addressName"] = ""
-		order = append(order, "addressName")
+	for _, item := range append(rawNames, calcNames...) {
+		key := item.name + "Name"
+		if _, exists := model[key]; exists {
+			order = append(order, key)
+		}
 	}
 	order = reorderFields(order)
 
 	if extraOpts["uniq"] == true {
-		if s.TraceIndex > 0 {
-			model["traceIndex"] = s.TraceIndex
-		} else if format != "json" {
-			model["traceIndex"] = ""
-		}
-		order = append(order, "traceIndex")
-		model["reason"] = s.Reason
-		order = append(order, "reason")
+		order = append(order, "traceIndex", "reason")
 		if verbose {
-			model["timestamp"] = s.Timestamp
-			order = append(order, "timestamp")
-			model["date"] = s.Date()
-			order = append(order, "date")
+			order = append(order, "timestamp", "date")
 		}
 	} else if extraOpts["export"] == true && format == "json" {
-		if verbose {
-			if s.Timestamp != base.NOPOSI {
-				model["timestamp"] = s.Timestamp
-			}
-			model["date"] = s.Date()
-		}
+		// Order handled in RawMap/CalcMap
 	} else {
 		if verbose {
-			if s.TraceIndex > 0 {
-				model["traceIndex"] = s.TraceIndex
-			} else if format != "json" {
-				model["traceIndex"] = ""
-			}
-			order = append(order, "traceIndex")
-			model["reason"] = s.Reason
-			order = append(order, "reason")
-			model["timestamp"] = s.Timestamp
-			order = append(order, "timestamp")
-			model["date"] = s.Date()
-			order = append(order, "date")
+			order = append(order, "traceIndex", "reason", "timestamp", "date")
 		}
 	}
-
 	// EXISTING_CODE
 
 	return Model{
 		Data:  model,
 		Order: order,
 	}
+}
+
+// RawMap returns a map containing only the raw/base fields for this Appearance.
+// This excludes any calculated or derived fields.
+func (s *Appearance) RawMap(p *ModelProps, needed []Labeler) map[string]any {
+	if p.ExtraOpts["appearances"] == true {
+		model := map[string]any{
+			"blockNumber":      s.BlockNumber,
+			"transactionIndex": s.TransactionIndex,
+		}
+		return model
+	}
+
+	model := map[string]any{
+		"address":          s.Address,
+		"blockNumber":      s.BlockNumber,
+		"transactionIndex": s.TransactionIndex,
+	}
+
+	if p.ExtraOpts["uniq"] == true {
+		if s.TraceIndex > 0 {
+			model["traceIndex"] = s.TraceIndex
+		} else if p.Format != "json" {
+			model["traceIndex"] = ""
+		}
+		model["reason"] = s.Reason
+		if p.Verbose {
+			model["timestamp"] = s.Timestamp
+		}
+	} else if p.ExtraOpts["export"] == true && p.Format == "json" {
+		if p.Verbose {
+			if s.Timestamp != base.NOPOSI {
+				model["timestamp"] = s.Timestamp
+			}
+		}
+	} else {
+		if p.Verbose {
+			if s.TraceIndex > 0 {
+				model["traceIndex"] = s.TraceIndex
+			} else if p.Format != "json" {
+				model["traceIndex"] = ""
+			}
+			model["reason"] = s.Reason
+			model["timestamp"] = s.Timestamp
+		}
+	}
+
+	return labelAddresses(p, model, needed)
+}
+
+// CalcMap returns a map containing the calculated/derived fields for this Appearance.
+// This includes formatted dates.
+func (s *Appearance) CalcMap(p *ModelProps, needed []Labeler) map[string]any {
+	if p.ExtraOpts["appearances"] == true {
+		return labelAddresses(p, map[string]any{}, needed) // No calculated fields for appearances-only mode
+	}
+
+	model := map[string]any{}
+
+	if p.ExtraOpts["uniq"] == true {
+		if p.Verbose {
+			model["date"] = s.Date()
+		}
+	} else if p.ExtraOpts["export"] == true && p.Format == "json" {
+		if p.Verbose {
+			model["date"] = s.Date()
+		}
+	} else {
+		if p.Verbose {
+			model["date"] = s.Date()
+		}
+	}
+
+	return labelAddresses(p, model, needed)
 }
 
 func (s *Appearance) Date() string {

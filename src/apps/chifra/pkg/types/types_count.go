@@ -27,17 +27,23 @@ func (s Count) String() string {
 }
 
 func (s *Count) Model(chain, format string, verbose bool, extraOpts map[string]any) Model {
-	_ = chain
-	_ = format
-	_ = verbose
-	_ = extraOpts
-	var model = map[string]any{}
-	var order = []string{}
-
-	// EXISTING_CODE
-	model = map[string]any{
-		"count": s.Count,
+	props := &ModelProps{
+		Chain:     chain,
+		Format:    format,
+		Verbose:   verbose,
+		ExtraOpts: extraOpts,
 	}
+
+	rawNames := []Labeler{}
+	model := s.RawMap(props, rawNames)
+
+	calcNames := []Labeler{}
+	for k, v := range s.CalcMap(props, calcNames) {
+		model[k] = v
+	}
+
+	var order = []string{}
+	// EXISTING_CODE
 	order = []string{
 		"count",
 	}
@@ -47,6 +53,24 @@ func (s *Count) Model(chain, format string, verbose bool, extraOpts map[string]a
 		Data:  model,
 		Order: order,
 	}
+}
+
+// RawMap returns a map containing only the raw/base fields for this Count.
+// This excludes any calculated or derived fields.
+func (s *Count) RawMap(p *ModelProps, needed []Labeler) map[string]any {
+	model := map[string]any{
+		"count": s.Count,
+	}
+
+	return labelAddresses(p, model, needed)
+}
+
+// CalcMap returns a map containing the calculated/derived fields for this Count.
+// This type has no calculated fields currently.
+func (s *Count) CalcMap(p *ModelProps, needed []Labeler) map[string]any {
+	model := map[string]any{}
+
+	return labelAddresses(p, model, needed)
 }
 
 // FinishUnmarshal is used by the cache. It may be unused depending on auto-code-gen

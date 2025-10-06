@@ -46,25 +46,25 @@ func (s Log) String() string {
 }
 
 func (s *Log) Model(chain, format string, verbose bool, extraOpts map[string]any) Model {
-	_ = chain
-	_ = format
-	_ = verbose
-	_ = extraOpts
-	var model = map[string]any{}
-	var order = []string{}
-
-	// EXISTING_CODE
-	model = map[string]any{
-		"address":          s.Address,
-		"blockHash":        s.BlockHash,
-		"blockNumber":      s.BlockNumber,
-		"logIndex":         s.LogIndex,
-		"timestamp":        s.Timestamp,
-		"date":             s.Date(),
-		"transactionIndex": s.TransactionIndex,
-		"transactionHash":  s.TransactionHash,
+	props := &ModelProps{
+		Chain:     chain,
+		Format:    format,
+		Verbose:   verbose,
+		ExtraOpts: extraOpts,
 	}
 
+	rawNames := []Labeler{
+		NewLabeler(s.Address, "address"),
+	}
+	model := s.RawMap(props, rawNames)
+
+	calcNames := []Labeler{}
+	for k, v := range s.CalcMap(props, calcNames) {
+		model[k] = v
+	}
+
+	var order = []string{}
+	// EXISTING_CODE
 	order = []string{
 		"blockNumber",
 		"transactionIndex",
@@ -83,6 +83,50 @@ func (s *Log) Model(chain, format string, verbose bool, extraOpts map[string]any
 	}
 
 	isArticulated := extraOpts["articulate"] == true && s.ArticulatedLog != nil
+	if isArticulated && format != "json" {
+		order = append(order, "compressedLog")
+	}
+
+	for _, item := range append(rawNames, calcNames...) {
+		key := item.name + "Name"
+		if _, exists := model[key]; exists {
+			order = append(order, key)
+		}
+	}
+	order = reorderFields(order)
+	// EXISTING_CODE
+
+	return Model{
+		Data:  model,
+		Order: order,
+	}
+}
+
+// RawMap returns a map containing only the raw/base fields for this Log.
+// This excludes any calculated or derived fields.
+func (s *Log) RawMap(p *ModelProps, needed []Labeler) map[string]any {
+	model := map[string]any{
+		"address":          s.Address,
+		"blockHash":        s.BlockHash,
+		"blockNumber":      s.BlockNumber,
+		"logIndex":         s.LogIndex,
+		"timestamp":        s.Timestamp,
+		"transactionIndex": s.TransactionIndex,
+		"transactionHash":  s.TransactionHash,
+	}
+
+	return labelAddresses(p, model, needed)
+}
+
+// CalcMap returns a map containing only the calculated/derived fields for this Log.
+// This is optimized for streaming contexts where the frontend receives the raw Log
+// and needs to enhance it with calculated values.
+func (s *Log) CalcMap(p *ModelProps, needed []Labeler) map[string]any {
+	model := map[string]any{
+		"date": s.Date(),
+	}
+
+	isArticulated := p.ExtraOpts["articulate"] == true && s.ArticulatedLog != nil
 	var articulatedLog = make(map[string]any)
 	if isArticulated {
 		articulatedLog["name"] = s.ArticulatedLog.Name
@@ -92,7 +136,7 @@ func (s *Log) Model(chain, format string, verbose bool, extraOpts map[string]any
 		}
 	}
 
-	if format == "json" {
+	if p.Format == "json" {
 		if s.IsNFT() {
 			model["isNFT"] = s.IsNFT()
 		}
@@ -118,7 +162,6 @@ func (s *Log) Model(chain, format string, verbose bool, extraOpts map[string]any
 
 		if isArticulated {
 			model["compressedLog"] = MakeCompressed(articulatedLog)
-			order = append(order, "compressedLog")
 		}
 
 		model["topic0"] = ""
@@ -139,20 +182,7 @@ func (s *Log) Model(chain, format string, verbose bool, extraOpts map[string]any
 		}
 	}
 
-	if name, loaded, found := labelAddress(extraOpts, s.Address); found {
-		model["addressName"] = name.Name
-		order = append(order, "addressName")
-	} else if loaded && format != "json" {
-		model["addressName"] = ""
-		order = append(order, "addressName")
-	}
-	order = reorderFields(order)
-	// EXISTING_CODE
-
-	return Model{
-		Data:  model,
-		Order: order,
-	}
+	return labelAddresses(p, model, needed)
 }
 
 func (s *Log) Date() string {

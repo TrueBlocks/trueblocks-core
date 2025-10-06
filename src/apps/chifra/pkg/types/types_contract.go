@@ -35,20 +35,88 @@ func (s Contract) String() string {
 }
 
 func (s *Contract) Model(chain, format string, verbose bool, extraOpts map[string]any) Model {
-	_ = chain
-	_ = format
-	_ = verbose
-	_ = extraOpts
-	var model = map[string]any{}
-	var order = []string{}
+	props := &ModelProps{
+		Chain:     chain,
+		Format:    format,
+		Verbose:   verbose,
+		ExtraOpts: extraOpts,
+	}
 
+	rawNames := []Labeler{NewLabeler(s.Address, "address")}
+	model := s.RawMap(props, rawNames)
+
+	calcNames := []Labeler{}
+	for k, v := range s.CalcMap(props, calcNames) {
+		model[k] = v
+	}
+
+	var order = []string{}
 	// EXISTING_CODE
+	order = []string{
+		"address",
+		"name",
+		"lastUpdated",
+		"errorCount",
+		"lastError",
+	}
+
+	if verbose {
+		if s.Abi != nil {
+			order = append(order, "abi")
+		}
+		if s.ReadResults != nil {
+			order = append(order, "readResults")
+		}
+		order = append(order, "date")
+	}
+
+	for _, item := range append(rawNames, calcNames...) {
+		key := item.name + "Name"
+		if _, exists := model[key]; exists {
+			order = append(order, key)
+		}
+	}
 	// EXISTING_CODE
 
 	return Model{
 		Data:  model,
 		Order: order,
 	}
+}
+
+// RawMap returns a map containing only the raw/base fields for this Contract.
+// This excludes any calculated or derived fields.
+func (s *Contract) RawMap(p *ModelProps, needed []Labeler) map[string]any {
+	model := map[string]any{
+		"address":     s.Address,
+		"name":        s.Name,
+		"lastUpdated": s.LastUpdated,
+		"errorCount":  s.ErrorCount,
+		"lastError":   s.LastError,
+	}
+
+	if p.Verbose {
+		if s.Abi != nil {
+			model["abi"] = s.Abi.Model(p.Chain, p.Format, p.Verbose, p.ExtraOpts).Data
+		}
+		if s.ReadResults != nil {
+			model["readResults"] = s.ReadResults
+		}
+	}
+
+	return labelAddresses(p, model, needed)
+}
+
+// CalcMap returns a map containing the calculated/derived fields for this Contract.
+// This includes formatted dates and other derived values.
+func (s *Contract) CalcMap(p *ModelProps, needed []Labeler) map[string]any {
+	model := map[string]any{}
+
+	if p.Verbose {
+		model["date"] = s.Date()
+	}
+
+	return labelAddresses(p, model, needed)
 }
 
 // FinishUnmarshal is used by the cache. It may be unused depending on auto-code-gen

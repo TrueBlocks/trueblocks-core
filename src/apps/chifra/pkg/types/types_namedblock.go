@@ -33,31 +33,66 @@ func (s NamedBlock) String() string {
 }
 
 func (s *NamedBlock) Model(chain, format string, verbose bool, extraOpts map[string]any) Model {
-	_ = chain
-	_ = format
-	_ = verbose
-	_ = extraOpts
-	var model = map[string]any{}
-	var order = []string{}
-
-	// EXISTING_CODE
-	model = map[string]any{
-		"blockNumber": s.BlockNumber,
-		"timestamp":   s.Timestamp,
-		"date":        s.Date(),
+	props := &ModelProps{
+		Chain:     chain,
+		Format:    format,
+		Verbose:   verbose,
+		ExtraOpts: extraOpts,
 	}
 
+	rawNames := []Labeler{} // No addresses in NamedBlock
+	model := s.RawMap(props, rawNames)
+
+	calcNames := []Labeler{}
+	for k, v := range s.CalcMap(props, calcNames) {
+		model[k] = v
+	}
+
+	var order = []string{}
+	// EXISTING_CODE
 	order = []string{
 		"blockNumber",
 		"timestamp",
 		"date",
+		"name",
 	}
 
-	if format == "json" {
+	if verbose {
+		order = append(order, "component")
+		order = append(order, "description")
+	}
+	// EXISTING_CODE
+
+	return Model{
+		Data:  model,
+		Order: order,
+	}
+}
+
+// RawMap returns a map containing only the raw/base fields for this NamedBlock.
+// This excludes any calculated or derived fields.
+func (s *NamedBlock) RawMap(p *ModelProps, needed []Labeler) map[string]any {
+	model := map[string]any{
+		"blockNumber": s.BlockNumber,
+		"timestamp":   s.Timestamp,
+	}
+
+	return labelAddresses(p, model, needed)
+}
+
+// CalcMap returns a map containing only the calculated/derived fields for this NamedBlock.
+// This is optimized for streaming contexts where the frontend receives the raw NamedBlock
+// and needs to enhance it with calculated values.
+func (s *NamedBlock) CalcMap(p *ModelProps, needed []Labeler) map[string]any {
+	model := map[string]any{
+		"date": s.Date(),
+	}
+
+	if p.Format == "json" {
 		if len(s.Name) > 0 {
 			model["name"] = s.Name
 		}
-		if verbose {
+		if p.Verbose {
 			if len(s.Component) > 0 {
 				model["component"] = s.Component
 			}
@@ -65,26 +100,15 @@ func (s *NamedBlock) Model(chain, format string, verbose bool, extraOpts map[str
 				model["description"] = s.Description
 			}
 		}
-
 	} else {
 		model["name"] = s.Name
-		order = append(order, "name")
-
-		if verbose {
+		if p.Verbose {
 			model["component"] = s.Component
-			order = append(order, "component")
-
 			model["description"] = s.Description
-			order = append(order, "description")
 		}
 	}
 
-	// EXISTING_CODE
-
-	return Model{
-		Data:  model,
-		Order: order,
-	}
+	return labelAddresses(p, model, needed)
 }
 
 func (s *NamedBlock) Date() string {

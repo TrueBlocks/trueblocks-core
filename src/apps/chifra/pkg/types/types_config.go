@@ -24,29 +24,60 @@ func (s Config) String() string {
 }
 
 func (s *Config) Model(chain, format string, verbose bool, extraOpts map[string]any) Model {
-	_ = chain
-	_ = format
-	_ = verbose
-	_ = extraOpts
-	// keys := map[string]any{}
-	// for key, value := range s.Keys {
-	// 	keys[key] = value
-	// }
-	c := map[string]any{}
-	for key, value := range s.Chains {
-		c[key] = value
+	props := &ModelProps{
+		Chain:     chain,
+		Format:    format,
+		Verbose:   verbose,
+		ExtraOpts: extraOpts,
 	}
+
+	rawNames := []Labeler{}
+	model := s.RawMap(props, rawNames)
+
+	calcNames := []Labeler{}
+	for k, v := range s.CalcMap(props, calcNames) {
+		model[k] = v
+	}
+
+	var order = []string{}
+	// EXISTING_CODE
+	order = []string{
+		"version",
+		"settings",
+		"keys",
+		"pinning",
+		"unchained",
+		"chains",
+	}
+	// EXISTING_CODE
+
 	return Model{
-		Data: map[string]any{
-			"version":   s.Version,
-			"settings":  s.Settings,
-			"keys":      s.Keys,
-			"pinnging":  s.Pinning,
-			"unchained": s.Unchained,
-			"chains":    s.Chains,
-		},
-		Order: []string{},
+		Data:  model,
+		Order: order,
 	}
+}
+
+// RawMap returns a map containing only the raw/base fields for this Config.
+// This excludes any calculated or derived fields.
+func (s *Config) RawMap(p *ModelProps, needed []Labeler) map[string]any {
+	model := map[string]any{
+		"version":   s.Version,
+		"settings":  s.Settings,
+		"keys":      s.Keys,
+		"pinning":   s.Pinning,
+		"unchained": s.Unchained,
+		"chains":    s.Chains,
+	}
+
+	return labelAddresses(p, model, needed)
+}
+
+// CalcMap returns a map containing the calculated/derived fields for this Config.
+// This type has no calculated fields currently.
+func (s *Config) CalcMap(p *ModelProps, needed []Labeler) map[string]any {
+	model := map[string]any{}
+
+	return labelAddresses(p, model, needed)
 }
 
 func (s *Config) FinishUnmarshal(fileVersion uint64) {

@@ -48,13 +48,10 @@ func (s *Token) Model(chain, format string, verbose bool, extraOpts map[string]a
 		ExtraOpts: extraOpts,
 	}
 
-	rawNames := []Labeler{
-		NewLabeler(s.Address, "address"),
-	}
+	rawNames := []Labeler{}
 	if verbose {
 		rawNames = append(rawNames, NewLabeler(s.Holder, "holder"))
 	}
-
 	model := s.RawMap(props, rawNames)
 
 	calcNames := []Labeler{}

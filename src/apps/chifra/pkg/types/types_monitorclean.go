@@ -34,20 +34,25 @@ func (s MonitorClean) String() string {
 }
 
 func (s *MonitorClean) Model(chain, format string, verbose bool, extraOpts map[string]any) Model {
-	_ = chain
-	_ = format
-	_ = verbose
-	_ = extraOpts
-	var model = map[string]any{}
-	var order = []string{}
-
-	// EXISTING_CODE
-	model = map[string]any{
-		"address":  s.Address,
-		"sizeNow":  s.SizeNow,
-		"sizeThen": s.SizeThen,
-		"dups":     s.Dups,
+	props := &ModelProps{
+		Chain:     chain,
+		Format:    format,
+		Verbose:   verbose,
+		ExtraOpts: extraOpts,
 	}
+
+	rawNames := []Labeler{
+		NewLabeler(s.Address, "address"),
+	}
+	model := s.RawMap(props, rawNames)
+
+	calcNames := []Labeler{}
+	for k, v := range s.CalcMap(props, calcNames) {
+		model[k] = v
+	}
+
+	var order = []string{}
+	// EXISTING_CODE
 	order = []string{
 		"address",
 		"sizeNow",
@@ -56,16 +61,48 @@ func (s *MonitorClean) Model(chain, format string, verbose bool, extraOpts map[s
 	}
 
 	if extraOpts["staged"] == true {
-		model["staged"] = s.Staged
-		model["removed"] = s.Removed
 		order = append(order, "staged", "removed")
 	}
 	// EXISTING_CODE
+
+	for _, item := range append(rawNames, calcNames...) {
+		key := item.name + "Name"
+		if _, exists := model[key]; exists {
+			order = append(order, key)
+		}
+	}
 
 	return Model{
 		Data:  model,
 		Order: order,
 	}
+}
+
+// RawMap returns a map containing only the raw/base fields for this MonitorClean.
+// This excludes any calculated or derived fields.
+func (s *MonitorClean) RawMap(p *ModelProps, needed []Labeler) map[string]any {
+	model := map[string]any{
+		"address":  s.Address,
+		"sizeNow":  s.SizeNow,
+		"sizeThen": s.SizeThen,
+		"dups":     s.Dups,
+	}
+
+	return labelAddresses(p, model, needed)
+}
+
+// CalcMap returns a map containing only the calculated/derived fields for this MonitorClean.
+// This is optimized for streaming contexts where the frontend receives the raw MonitorClean
+// and needs to enhance it with calculated values.
+func (s *MonitorClean) CalcMap(p *ModelProps, needed []Labeler) map[string]any {
+	model := map[string]any{}
+
+	if p.ExtraOpts["staged"] == true {
+		model["staged"] = s.Staged
+		model["removed"] = s.Removed
+	}
+
+	return labelAddresses(p, model, needed)
 }
 
 // FinishUnmarshal is used by the cache. It may be unused depending on auto-code-gen

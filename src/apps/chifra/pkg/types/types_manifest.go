@@ -34,20 +34,23 @@ func (s Manifest) String() string {
 }
 
 func (s *Manifest) Model(chain, format string, verbose bool, extraOpts map[string]any) Model {
-	_ = chain
-	_ = format
-	_ = verbose
-	_ = extraOpts
-	var model = map[string]any{}
-	var order = []string{}
-
-	// EXISTING_CODE
-	model = map[string]any{
-		"version":       s.Version,
-		"chain":         s.Chain,
-		"specification": s.Specification,
-		"chunks":        s.Chunks,
+	props := &ModelProps{
+		Chain:     chain,
+		Format:    format,
+		Verbose:   verbose,
+		ExtraOpts: extraOpts,
 	}
+
+	rawNames := []Labeler{} // No addresses in Manifest
+	model := s.RawMap(props, rawNames)
+
+	calcNames := []Labeler{}
+	for k, v := range s.CalcMap(props, calcNames) {
+		model[k] = v
+	}
+
+	var order = []string{}
+	// EXISTING_CODE
 	order = []string{
 		"version",
 		"chain",
@@ -60,6 +63,30 @@ func (s *Manifest) Model(chain, format string, verbose bool, extraOpts map[strin
 		Data:  model,
 		Order: order,
 	}
+}
+
+// RawMap returns a map containing only the raw/base fields for this Manifest.
+// This excludes any calculated or derived fields.
+func (s *Manifest) RawMap(p *ModelProps, needed []Labeler) map[string]any {
+	model := map[string]any{
+		"version":       s.Version,
+		"chain":         s.Chain,
+		"specification": s.Specification,
+		"chunks":        s.Chunks,
+	}
+
+	return labelAddresses(p, model, needed)
+}
+
+// CalcMap returns a map containing only the calculated/derived fields for this Manifest.
+// This is optimized for streaming contexts where the frontend receives the raw Manifest
+// and needs to enhance it with calculated values.
+func (s *Manifest) CalcMap(p *ModelProps, needed []Labeler) map[string]any {
+	model := map[string]any{}
+
+	// No calculated fields in Manifest
+
+	return labelAddresses(p, model, needed)
 }
 
 // FinishUnmarshal is used by the cache. It may be unused depending on auto-code-gen

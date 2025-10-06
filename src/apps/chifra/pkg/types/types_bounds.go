@@ -34,31 +34,23 @@ func (s Bounds) String() string {
 }
 
 func (s *Bounds) Model(chain, format string, verbose bool, extraOpts map[string]any) Model {
-	_ = chain
-	_ = format
-	_ = verbose
-	_ = extraOpts
-	var model = map[string]any{}
-	var order = []string{}
+	props := &ModelProps{
+		Chain:     chain,
+		Format:    format,
+		Verbose:   verbose,
+		ExtraOpts: extraOpts,
+	}
 
+	rawNames := []Labeler{NewLabeler(s.FirstApp.Address, "address")}
+	model := s.RawMap(props, rawNames)
+
+	calcNames := []Labeler{}
+	for k, v := range s.CalcMap(props, calcNames) {
+		model[k] = v
+	}
+
+	var order = []string{}
 	// EXISTING_CODE
-	extraOpts["appearances"] = true
-	model = map[string]any{
-		"address":    s.FirstApp.Address,
-		"count":      s.Count,
-		"firstApp":   s.FirstApp.Model(chain, format, verbose, extraOpts).Data, //fmt.Sprintf("%d.%d", s.FirstApp.BlockNumber, s.FirstApp.TransactionIndex),
-		"firstTs":    s.FirstTs,
-		"firstDate":  base.FormattedDate(s.FirstTs),
-		"latestApp":  s.LatestApp.Model(chain, format, verbose, extraOpts).Data, //fmt.Sprintf("%d.%d", s.LatestApp.BlockNumber, s.LatestApp.TransactionIndex),
-		"latestTs":   s.LatestTs,
-		"latestDate": base.FormattedDate(s.LatestTs),
-		"blockSpan":  (s.LatestApp.BlockNumber - s.FirstApp.BlockNumber),
-		"blockFreq":  uint64(s.LatestApp.BlockNumber-s.FirstApp.BlockNumber) / s.Count,
-	}
-	if format == "txt" || format == "csv" {
-		model["firstApp"] = fmt.Sprintf("%d.%d", s.FirstApp.BlockNumber, s.FirstApp.TransactionIndex)
-		model["latestApp"] = fmt.Sprintf("%d.%d", s.LatestApp.BlockNumber, s.LatestApp.TransactionIndex)
-	}
 	order = []string{
 		"address",
 		"count",
@@ -71,12 +63,57 @@ func (s *Bounds) Model(chain, format string, verbose bool, extraOpts map[string]
 		"blockSpan",
 		"blockFreq",
 	}
+
+	for _, item := range append(rawNames, calcNames...) {
+		key := item.name + "Name"
+		if _, exists := model[key]; exists {
+			order = append(order, key)
+		}
+	}
 	// EXISTING_CODE
 
 	return Model{
 		Data:  model,
 		Order: order,
 	}
+}
+
+// RawMap returns a map containing only the raw/base fields for this Bounds.
+// This excludes any calculated or derived fields.
+func (s *Bounds) RawMap(p *ModelProps, needed []Labeler) map[string]any {
+	// Set appearances flag for the nested Appearance models
+	p.ExtraOpts["appearances"] = true
+
+	model := map[string]any{
+		"address":  s.FirstApp.Address,
+		"count":    s.Count,
+		"firstTs":  s.FirstTs,
+		"latestTs": s.LatestTs,
+	}
+
+	// Handle appearance formatting based on format
+	if p.Format == "txt" || p.Format == "csv" {
+		model["firstApp"] = fmt.Sprintf("%d.%d", s.FirstApp.BlockNumber, s.FirstApp.TransactionIndex)
+		model["latestApp"] = fmt.Sprintf("%d.%d", s.LatestApp.BlockNumber, s.LatestApp.TransactionIndex)
+	} else {
+		model["firstApp"] = s.FirstApp.Model(p.Chain, p.Format, p.Verbose, p.ExtraOpts).Data
+		model["latestApp"] = s.LatestApp.Model(p.Chain, p.Format, p.Verbose, p.ExtraOpts).Data
+	}
+
+	return labelAddresses(p, model, needed)
+}
+
+// CalcMap returns a map containing the calculated/derived fields for this Bounds.
+// This includes formatted dates and computed statistics.
+func (s *Bounds) CalcMap(p *ModelProps, needed []Labeler) map[string]any {
+	model := map[string]any{
+		"firstDate":  base.FormattedDate(s.FirstTs),
+		"latestDate": base.FormattedDate(s.LatestTs),
+		"blockSpan":  (s.LatestApp.BlockNumber - s.FirstApp.BlockNumber),
+		"blockFreq":  uint64(s.LatestApp.BlockNumber-s.FirstApp.BlockNumber) / s.Count,
+	}
+
+	return labelAddresses(p, model, needed)
 }
 
 // FinishUnmarshal is used by the cache. It may be unused depending on auto-code-gen

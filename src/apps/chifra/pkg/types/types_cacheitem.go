@@ -33,32 +33,60 @@ func (s CacheItem) String() string {
 }
 
 func (s *CacheItem) Model(chain, format string, verbose bool, extraOpts map[string]any) Model {
-	_ = chain
-	_ = format
-	_ = verbose
-	_ = extraOpts
-	var model = map[string]any{}
-	var order = []string{}
+	props := &ModelProps{
+		Chain:     chain,
+		Format:    format,
+		Verbose:   verbose,
+		ExtraOpts: extraOpts,
+	}
 
+	rawNames := []Labeler{}
+	model := s.RawMap(props, rawNames)
+
+	calcNames := []Labeler{}
+	for k, v := range s.CalcMap(props, calcNames) {
+		model[k] = v
+	}
+
+	var order = []string{}
 	// EXISTING_CODE
-	model["type"] = s.CacheItemType
-	order = append(order, "type")
-	model["path"] = s.Path
-	order = append(order, "path")
-	model["nFiles"] = s.NFiles
-	order = append(order, "nFiles")
-	model["nFolders"] = s.NFolders
-	order = append(order, "nFolders")
-	model["sizeInBytes"] = s.SizeInBytes
-	order = append(order, "sizeInBytes")
-	model["lastCached"] = s.LastCached
-	order = append(order, "lastCached")
+	order = []string{
+		"type",
+		"path",
+		"nFiles",
+		"nFolders",
+		"sizeInBytes",
+		"lastCached",
+	}
 	// EXISTING_CODE
 
 	return Model{
 		Data:  model,
 		Order: order,
 	}
+}
+
+// RawMap returns a map containing only the raw/base fields for this CacheItem.
+// This excludes any calculated or derived fields.
+func (s *CacheItem) RawMap(p *ModelProps, needed []Labeler) map[string]any {
+	model := map[string]any{
+		"type":        s.CacheItemType,
+		"path":        s.Path,
+		"nFiles":      s.NFiles,
+		"nFolders":    s.NFolders,
+		"sizeInBytes": s.SizeInBytes,
+		"lastCached":  s.LastCached,
+	}
+
+	return labelAddresses(p, model, needed)
+}
+
+// CalcMap returns a map containing the calculated/derived fields for this CacheItem.
+// This type has no calculated fields currently.
+func (s *CacheItem) CalcMap(p *ModelProps, needed []Labeler) map[string]any {
+	model := map[string]any{}
+
+	return labelAddresses(p, model, needed)
 }
 
 // FinishUnmarshal is used by the cache. It may be unused depending on auto-code-gen

@@ -46,21 +46,23 @@ func (s LightBlock) String() string {
 }
 
 func (s *LightBlock) Model(chain, format string, verbose bool, extraOpts map[string]any) Model {
-	_ = chain
-	_ = format
-	_ = verbose
-	_ = extraOpts
-	var model = map[string]any{}
-	var order = []string{}
-
-	// EXISTING_CODE
-	model = map[string]any{
-		"hash":        s.Hash,
-		"blockNumber": s.BlockNumber,
-		"parentHash":  s.ParentHash,
-		"timestamp":   s.Timestamp,
-		"date":        s.Date(),
+	props := &ModelProps{
+		Chain:     chain,
+		Format:    format,
+		Verbose:   verbose,
+		ExtraOpts: extraOpts,
 	}
+
+	rawNames := []Labeler{NewLabeler(s.Miner, "miner")}
+	model := s.RawMap(props, rawNames)
+
+	calcNames := []Labeler{}
+	for k, v := range s.CalcMap(props, calcNames) {
+		model[k] = v
+	}
+
+	var order = []string{}
+	// EXISTING_CODE
 	order = []string{
 		"hash",
 		"blockNumber",
@@ -70,37 +72,72 @@ func (s *LightBlock) Model(chain, format string, verbose bool, extraOpts map[str
 	}
 
 	if format == "json" {
-		model["tx_hashes"] = s.Transactions
+		order = append(order, "tx_hashes")
 		if s.BlockNumber >= base.KnownBlock(chain, base.Shanghai) {
-			withs := make([]map[string]any, 0, len(s.Withdrawals))
-			for _, w := range s.Withdrawals {
-				withs = append(withs, w.Model(chain, format, verbose, extraOpts).Data)
-			}
-			model["withdrawals"] = withs
+			order = append(order, "withdrawals")
 		}
 	} else {
-		model["transactionsCnt"] = len(s.Transactions)
 		order = append(order, "transactionsCnt")
 		if s.BlockNumber > base.KnownBlock(chain, base.Shanghai) {
-			model["withdrawalsCnt"] = len(s.Withdrawals)
 			order = append(order, "withdrawalsCnt")
 		}
 	}
+	// EXISTING_CODE
 
-	if name, loaded, found := labelAddress(extraOpts, s.Miner); found {
-		model["minerName"] = name.Name
-		order = append(order, "minerName")
-	} else if loaded && format != "json" {
-		model["minerName"] = ""
-		order = append(order, "minerName")
+	for _, item := range append(rawNames, calcNames...) {
+		key := item.name + "Name"
+		if _, exists := model[key]; exists {
+			order = append(order, key)
+		}
 	}
 	order = reorderFields(order)
-	// EXISTING_CODE
 
 	return Model{
 		Data:  model,
 		Order: order,
 	}
+}
+
+// RawMap returns a map containing only the raw/base fields for this LightBlock.
+// This excludes any calculated or derived fields.
+func (s *LightBlock) RawMap(p *ModelProps, needed []Labeler) map[string]any {
+	model := map[string]any{
+		"hash":        s.Hash,
+		"blockNumber": s.BlockNumber,
+		"parentHash":  s.ParentHash,
+		"timestamp":   s.Timestamp,
+		"miner":       s.Miner,
+	}
+
+	if p.Format == "json" {
+		model["tx_hashes"] = s.Transactions
+		if s.BlockNumber >= base.KnownBlock(p.Chain, base.Shanghai) {
+			withs := make([]map[string]any, 0, len(s.Withdrawals))
+			for _, w := range s.Withdrawals {
+				withs = append(withs, w.Model(p.Chain, p.Format, p.Verbose, p.ExtraOpts).Data)
+			}
+			model["withdrawals"] = withs
+		}
+	} else {
+		model["transactionsCnt"] = len(s.Transactions)
+		if s.BlockNumber > base.KnownBlock(p.Chain, base.Shanghai) {
+			model["withdrawalsCnt"] = len(s.Withdrawals)
+		}
+	}
+
+	// Handle address labeling
+	return labelAddresses(p, model, needed)
+}
+
+// CalcMap returns a map containing the calculated/derived fields for this LightBlock.
+// This includes formatted dates and labeled addresses.
+func (s *LightBlock) CalcMap(p *ModelProps, needed []Labeler) map[string]any {
+	model := map[string]any{
+		"date": s.Date(),
+	}
+
+	// Handle address labeling
+	return labelAddresses(p, model, needed)
 }
 
 func (s *LightBlock) Date() string {

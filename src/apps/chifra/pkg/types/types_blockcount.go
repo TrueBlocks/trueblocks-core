@@ -36,29 +36,30 @@ func (s BlockCount) String() string {
 }
 
 func (s *BlockCount) Model(chain, format string, verbose bool, extraOpts map[string]any) Model {
-	_ = chain
-	_ = format
-	_ = verbose
-	_ = extraOpts
-	var model = map[string]any{}
-	var order = []string{}
-
-	// EXISTING_CODE
-	model = map[string]any{
-		"blockNumber":     s.BlockNumber,
-		"transactionsCnt": s.TransactionsCnt,
+	props := &ModelProps{
+		Chain:     chain,
+		Format:    format,
+		Verbose:   verbose,
+		ExtraOpts: extraOpts,
 	}
 
+	rawNames := []Labeler{}
+	model := s.RawMap(props, rawNames)
+
+	calcNames := []Labeler{}
+	for k, v := range s.CalcMap(props, calcNames) {
+		model[k] = v
+	}
+
+	var order = []string{}
+	// EXISTING_CODE
 	order = []string{
 		"blockNumber",
 		"transactionsCnt",
 	}
 
 	if verbose {
-		model["timestamp"] = s.Timestamp
-		order = append(order, "timestamp")
-		model["date"] = s.Date()
-		order = append(order, "date")
+		order = append(order, "timestamp", "date")
 	}
 
 	wantsUncles := extraOpts["uncles"] == true
@@ -67,7 +68,50 @@ func (s *BlockCount) Model(chain, format string, verbose bool, extraOpts map[str
 	wantsUniqs := extraOpts["uniqs"] == true
 	wantsWithdrawals := true
 
-	if format == "json" {
+	if format != "json" {
+		if wantsUncles {
+			order = append(order, "unclesCnt")
+		}
+		if wantsLogs {
+			order = append(order, "logsCnt")
+		}
+		if wantsTraces {
+			order = append(order, "tracesCnt")
+		}
+		if wantsUniqs {
+			order = append(order, "addressCnt")
+		}
+		if wantsWithdrawals {
+			order = append(order, "withdrawalsCnt")
+		}
+	}
+	// EXISTING_CODE
+
+	return Model{
+		Data:  model,
+		Order: order,
+	}
+}
+
+// RawMap returns a map containing only the raw/base fields for this BlockCount.
+// This excludes any calculated or derived fields.
+func (s *BlockCount) RawMap(p *ModelProps, needed []Labeler) map[string]any {
+	model := map[string]any{
+		"blockNumber":     s.BlockNumber,
+		"transactionsCnt": s.TransactionsCnt,
+	}
+
+	if p.Verbose {
+		model["timestamp"] = s.Timestamp
+	}
+
+	wantsUncles := p.ExtraOpts["uncles"] == true
+	wantsLogs := p.ExtraOpts["logs"] == true
+	wantsTraces := p.ExtraOpts["traces"] == true
+	wantsUniqs := p.ExtraOpts["uniqs"] == true
+	wantsWithdrawals := true
+
+	if p.Format == "json" {
 		if wantsUncles && s.UnclesCnt > 0 {
 			model["unclesCnt"] = s.UnclesCnt
 		}
@@ -83,35 +127,37 @@ func (s *BlockCount) Model(chain, format string, verbose bool, extraOpts map[str
 		if wantsWithdrawals && s.WithdrawalsCnt > 0 {
 			model["withdrawalsCnt"] = s.WithdrawalsCnt
 		}
-
 	} else {
 		if wantsUncles {
 			model["unclesCnt"] = s.UnclesCnt
-			order = append(order, "unclesCnt")
 		}
 		if wantsLogs {
 			model["logsCnt"] = s.LogsCnt
-			order = append(order, "logsCnt")
 		}
 		if wantsTraces {
 			model["tracesCnt"] = s.TracesCnt
-			order = append(order, "tracesCnt")
 		}
 		if wantsUniqs {
 			model["addressCnt"] = s.AddressCnt
-			order = append(order, "addressCnt")
 		}
 		if wantsWithdrawals {
 			model["withdrawalsCnt"] = s.WithdrawalsCnt
-			order = append(order, "withdrawalsCnt")
 		}
 	}
-	// EXISTING_CODE
 
-	return Model{
-		Data:  model,
-		Order: order,
+	return labelAddresses(p, model, needed)
+}
+
+// CalcMap returns a map containing the calculated/derived fields for this BlockCount.
+// This includes formatted dates.
+func (s *BlockCount) CalcMap(p *ModelProps, needed []Labeler) map[string]any {
+	model := map[string]any{}
+
+	if p.Verbose {
+		model["date"] = s.Date()
 	}
+
+	return labelAddresses(p, model, needed)
 }
 
 func (s *BlockCount) Date() string {

@@ -46,27 +46,23 @@ func (s Block) String() string {
 }
 
 func (s *Block) Model(chain, format string, verbose bool, extraOpts map[string]any) Model {
-	_ = chain
-	_ = format
-	_ = verbose
-	_ = extraOpts
-	var model = map[string]any{}
-	var order = []string{}
-
-	// EXISTING_CODE
-	model = map[string]any{
-		"gasUsed":       s.GasUsed,
-		"gasLimit":      s.GasLimit,
-		"hash":          s.Hash,
-		"blockNumber":   s.BlockNumber,
-		"parentHash":    s.ParentHash,
-		"miner":         s.Miner.Hex(),
-		"difficulty":    s.Difficulty,
-		"timestamp":     s.Timestamp,
-		"date":          s.Date(),
-		"baseFeePerGas": s.BaseFeePerGas,
+	props := &ModelProps{
+		Chain:     chain,
+		Format:    format,
+		Verbose:   verbose,
+		ExtraOpts: extraOpts,
 	}
 
+	rawNames := []Labeler{NewLabeler(s.Miner, "miner")}
+	model := s.RawMap(props, rawNames)
+
+	calcNames := []Labeler{}
+	for k, v := range s.CalcMap(props, calcNames) {
+		model[k] = v
+	}
+
+	var order = []string{}
+	// EXISTING_CODE
 	order = []string{
 		"blockNumber",
 		"timestamp",
@@ -81,48 +77,19 @@ func (s *Block) Model(chain, format string, verbose bool, extraOpts map[string]a
 	}
 
 	if format == "json" {
-		// If we wanted just transactions' hashes, we would return earlier. So here we know that we
-		// have transactions as objects and want to load models for them to be able to display them
-		txs, ok := any(s.Transactions).([]Transaction)
-		if ok {
-			items := make([]map[string]any, 0, len(txs))
-			for _, txObject := range txs {
-				items = append(items, txObject.Model(chain, format, verbose, extraOpts).Data)
-			}
-			model["transactions"] = items
-		} else {
-			model["transactions"] = s.Transactions
-		}
-		order = append(order, "transactions")
-		if s.Uncles == nil {
-			model["uncles"] = []base.Hash{}
-		} else {
-			model["uncles"] = s.Uncles
-		}
-		order = append(order, "uncles")
+		order = append(order, "transactions", "uncles")
 		if len(s.Withdrawals) > 0 {
-			withs := make([]map[string]any, 0, len(s.Withdrawals))
-			for _, w := range s.Withdrawals {
-				withs = append(withs, w.Model(chain, format, verbose, extraOpts).Data)
-			}
-			model["withdrawals"] = withs
 			order = append(order, "withdrawals")
-		} else {
-			model["withdrawals"] = []Withdrawal{}
 		}
 	} else {
-		model["transactionsCnt"] = len(s.Transactions)
-		order = append(order, "transactionsCnt")
-		model["withdrawalsCnt"] = len(s.Withdrawals)
-		order = append(order, "withdrawalsCnt")
+		order = append(order, "transactionsCnt", "withdrawalsCnt")
 	}
 
-	if name, loaded, found := labelAddress(extraOpts, s.Miner); found {
-		model["minerName"] = name.Name
-		order = append(order, "minerName")
-	} else if loaded && format != "json" {
-		model["minerName"] = ""
-		order = append(order, "minerName")
+	for _, item := range append(rawNames, calcNames...) {
+		key := item.name + "Name"
+		if _, exists := model[key]; exists {
+			order = append(order, key)
+		}
 	}
 	order = reorderFields(order)
 	// EXISTING_CODE
@@ -131,6 +98,66 @@ func (s *Block) Model(chain, format string, verbose bool, extraOpts map[string]a
 		Data:  model,
 		Order: order,
 	}
+}
+
+// RawMap returns a map containing only the raw/base fields for this Block.
+// This excludes any calculated or derived fields.
+func (s *Block) RawMap(p *ModelProps, needed []Labeler) map[string]any {
+	model := map[string]any{
+		"gasUsed":       s.GasUsed,
+		"gasLimit":      s.GasLimit,
+		"hash":          s.Hash,
+		"blockNumber":   s.BlockNumber,
+		"parentHash":    s.ParentHash,
+		"miner":         s.Miner.Hex(),
+		"difficulty":    s.Difficulty,
+		"timestamp":     s.Timestamp,
+		"baseFeePerGas": s.BaseFeePerGas,
+	}
+
+	if p.Format == "json" {
+		// If we wanted just transactions' hashes, we would return earlier. So here we know that we
+		// have transactions as objects and want to load models for them to be able to display them
+		txs, ok := any(s.Transactions).([]Transaction)
+		if ok {
+			items := make([]map[string]any, 0, len(txs))
+			for _, txObject := range txs {
+				items = append(items, txObject.Model(p.Chain, p.Format, p.Verbose, p.ExtraOpts).Data)
+			}
+			model["transactions"] = items
+		} else {
+			model["transactions"] = s.Transactions
+		}
+		if s.Uncles == nil {
+			model["uncles"] = []base.Hash{}
+		} else {
+			model["uncles"] = s.Uncles
+		}
+		if len(s.Withdrawals) > 0 {
+			withs := make([]map[string]any, 0, len(s.Withdrawals))
+			for _, w := range s.Withdrawals {
+				withs = append(withs, w.Model(p.Chain, p.Format, p.Verbose, p.ExtraOpts).Data)
+			}
+			model["withdrawals"] = withs
+		} else {
+			model["withdrawals"] = []Withdrawal{}
+		}
+	} else {
+		model["transactionsCnt"] = len(s.Transactions)
+		model["withdrawalsCnt"] = len(s.Withdrawals)
+	}
+
+	return labelAddresses(p, model, needed)
+}
+
+// CalcMap returns a map containing the calculated/derived fields for this Block.
+// This includes formatted dates and other computed values.
+func (s *Block) CalcMap(p *ModelProps, needed []Labeler) map[string]any {
+	model := map[string]any{
+		"date": s.Date(),
+	}
+
+	return labelAddresses(p, model, needed)
 }
 
 func (s *Block) Date() string {

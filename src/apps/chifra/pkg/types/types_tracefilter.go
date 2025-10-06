@@ -37,23 +37,21 @@ func (s TraceFilter) String() string {
 }
 
 func (s *TraceFilter) Model(chain, format string, verbose bool, extraOpts map[string]any) Model {
-	_ = chain
-	_ = format
-	_ = verbose
-	_ = extraOpts
-	var model = map[string]any{}
-	var order = []string{}
+	props := NewModelProps(chain, format, verbose, extraOpts)
+	rawMap := s.RawMap(&props)
+	calcMap := s.CalcMap(&props, rawMap)
 
-	// EXISTING_CODE
-	model = map[string]any{
-		"after":       s.After,
-		"count":       s.Count,
-		"fromAddress": s.FromAddress,
-		"fromBlock":   s.FromBlock,
-		"toAddress":   s.ToAddress,
-		"toBlock":     s.ToBlock,
+	// Merge raw and calculated maps
+	model := make(map[string]any)
+	for k, v := range rawMap {
+		model[k] = v
+	}
+	for k, v := range calcMap {
+		model[k] = v
 	}
 
+	var order []string
+	// EXISTING_CODE
 	order = []string{
 		"fromBlock",
 		"toBlock",
@@ -68,6 +66,23 @@ func (s *TraceFilter) Model(chain, format string, verbose bool, extraOpts map[st
 		Data:  model,
 		Order: order,
 	}
+}
+
+func (s *TraceFilter) RawMap(props *ModelProps) map[string]any {
+	return map[string]any{
+		"after":       s.After,
+		"count":       s.Count,
+		"fromAddress": s.FromAddress,
+		"fromBlock":   s.FromBlock,
+		"toAddress":   s.ToAddress,
+		"toBlock":     s.ToBlock,
+	}
+}
+
+func (s *TraceFilter) CalcMap(props *ModelProps, rawMap map[string]any) map[string]any {
+	calcMap := make(map[string]any)
+	// TraceFilter doesn't have calculated fields, so this is empty
+	return calcMap
 }
 
 // FinishUnmarshal is used by the cache. It may be unused depending on auto-code-gen

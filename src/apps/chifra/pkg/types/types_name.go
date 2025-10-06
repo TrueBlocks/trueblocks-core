@@ -43,45 +43,44 @@ func (s Name) String() string {
 }
 
 func (s *Name) Model(chain, format string, verbose bool, extraOpts map[string]any) Model {
-	_ = chain
-	_ = format
-	_ = verbose
-	_ = extraOpts
-	var model = map[string]any{}
-	var order = []string{}
-
-	// EXISTING_CODE
-	switch extraOpts["single"] {
-	case "tags", "address":
-		if extraOpts["single"] == "tags" {
-			model["tags"] = s.Tags
-		} else {
-			model["address"] = s.Address.Hex()
-		}
-		order = append(order, extraOpts["single"].(string))
-		return Model{
-			Data:  model,
-			Order: order,
-		}
-	case "asset":
-		model["address"] = s.Address.Hex()
-		model["symbol"] = s.Symbol
-		model["name"] = s.Name
-		model["decimals"] = s.Decimals
-		order = append(order, []string{"address", "symbol", "name", "decimals"}...)
-		return Model{
-			Data:  model,
-			Order: order,
-		}
+	props := &ModelProps{
+		Chain:     chain,
+		Format:    format,
+		Verbose:   verbose,
+		ExtraOpts: extraOpts,
 	}
 
-	model = map[string]any{
-		"address":  s.Address,
-		"decimals": s.Decimals,
-		"name":     s.Name,
-		"source":   s.Source,
-		"symbol":   s.Symbol,
-		"tags":     s.Tags,
+	rawNames := []Labeler{}
+	model := s.RawMap(props, rawNames)
+
+	calcNames := []Labeler{}
+	for k, v := range s.CalcMap(props, calcNames) {
+		model[k] = v
+	}
+
+	var order = []string{}
+	// EXISTING_CODE
+	switch extraOpts["single"] {
+	case "tags":
+		return Model{
+			Data:  map[string]any{"tags": s.Tags},
+			Order: []string{"tags"},
+		}
+	case "address":
+		return Model{
+			Data:  map[string]any{"address": s.Address.Hex()},
+			Order: []string{"address"},
+		}
+	case "asset":
+		return Model{
+			Data: map[string]any{
+				"address":  s.Address.Hex(),
+				"symbol":   s.Symbol,
+				"name":     s.Name,
+				"decimals": s.Decimals,
+			},
+			Order: []string{"address", "symbol", "name", "decimals"},
+		}
 	}
 
 	order = []string{
@@ -207,12 +206,44 @@ func (s *Name) Model(chain, format string, verbose bool, extraOpts map[string]an
 		}
 	}
 
+	for _, item := range append(rawNames, calcNames...) {
+		key := item.name + "Name"
+		if _, exists := model[key]; exists {
+			order = append(order, key)
+		}
+	}
+	order = reorderFields(order)
 	// EXISTING_CODE
 
 	return Model{
 		Data:  model,
 		Order: order,
 	}
+}
+
+// RawMap returns a map containing only the raw/base fields for this Name.
+// This excludes any calculated or derived fields.
+func (s *Name) RawMap(p *ModelProps, needed []Labeler) map[string]any {
+	model := map[string]any{
+		"decimals": s.Decimals,
+		"name":     s.Name,
+		"source":   s.Source,
+		"symbol":   s.Symbol,
+		"tags":     s.Tags,
+	}
+
+	return labelAddresses(p, model, needed)
+}
+
+// CalcMap returns a map containing only the calculated/derived fields for this Name.
+// This is optimized for streaming contexts where the frontend receives the raw Name
+// and needs to enhance it with calculated values.
+func (s *Name) CalcMap(p *ModelProps, needed []Labeler) map[string]any {
+	model := map[string]any{}
+
+	// No calculated fields in Name - all processing happens in Model()
+
+	return labelAddresses(p, model, needed)
 }
 
 // FinishUnmarshal is used by the cache. It may be unused depending on auto-code-gen

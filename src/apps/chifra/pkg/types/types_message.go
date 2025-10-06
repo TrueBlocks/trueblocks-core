@@ -26,20 +26,27 @@ func (s Message) String() string {
 }
 
 func (s *Message) Model(chain, format string, verbose bool, extraOpts map[string]any) Model {
-	_ = chain
-	_ = format
-	_ = verbose
-	_ = extraOpts
-	var model = map[string]any{}
-	var order = []string{}
+	props := &ModelProps{
+		Chain:     chain,
+		Format:    format,
+		Verbose:   verbose,
+		ExtraOpts: extraOpts,
+	}
 
+	rawNames := []Labeler{} // No addresses in Message
+	model := s.RawMap(props, rawNames)
+
+	calcNames := []Labeler{}
+	for k, v := range s.CalcMap(props, calcNames) {
+		model[k] = v
+	}
+
+	var order = []string{}
 	// EXISTING_CODE
 	if len(s.Msg) > 0 {
-		model["msg"] = s.Msg
 		order = append(order, "msg")
 	}
 	if s.Num > 0 {
-		model["num"] = s.Num
 		order = append(order, "num")
 	}
 	// EXISTING_CODE
@@ -48,6 +55,32 @@ func (s *Message) Model(chain, format string, verbose bool, extraOpts map[string
 		Data:  model,
 		Order: order,
 	}
+}
+
+// RawMap returns a map containing only the raw/base fields for this Message.
+// This excludes any calculated or derived fields.
+func (s *Message) RawMap(p *ModelProps, needed []Labeler) map[string]any {
+	model := map[string]any{}
+
+	if len(s.Msg) > 0 {
+		model["msg"] = s.Msg
+	}
+	if s.Num > 0 {
+		model["num"] = s.Num
+	}
+
+	return labelAddresses(p, model, needed)
+}
+
+// CalcMap returns a map containing only the calculated/derived fields for this Message.
+// This is optimized for streaming contexts where the frontend receives the raw Message
+// and needs to enhance it with calculated values.
+func (s *Message) CalcMap(p *ModelProps, needed []Labeler) map[string]any {
+	model := map[string]any{}
+
+	// No calculated fields in Message
+
+	return labelAddresses(p, model, needed)
 }
 
 // FinishUnmarshal is used by the cache. It may be unused depending on auto-code-gen

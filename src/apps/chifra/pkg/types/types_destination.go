@@ -35,20 +35,23 @@ func (s Destination) String() string {
 }
 
 func (s *Destination) Model(chain, format string, verbose bool, extraOpts map[string]any) Model {
-	_ = chain
-	_ = format
-	_ = verbose
-	_ = extraOpts
-	var model = map[string]any{}
-	var order = []string{}
-
-	// EXISTING_CODE
-	model = map[string]any{
-		"term":     s.Term,
-		"termType": s.TermType,
-		"url":      s.Url,
-		"source":   s.Source,
+	props := &ModelProps{
+		Chain:     chain,
+		Format:    format,
+		Verbose:   verbose,
+		ExtraOpts: extraOpts,
 	}
+
+	rawNames := []Labeler{}
+	model := s.RawMap(props, rawNames)
+
+	calcNames := []Labeler{}
+	for k, v := range s.CalcMap(props, calcNames) {
+		model[k] = v
+	}
+
+	var order = []string{}
+	// EXISTING_CODE
 	order = []string{
 		"term",
 		"termType",
@@ -61,6 +64,27 @@ func (s *Destination) Model(chain, format string, verbose bool, extraOpts map[st
 		Data:  model,
 		Order: order,
 	}
+}
+
+// RawMap returns a map containing only the raw/base fields for this Destination.
+// This excludes any calculated or derived fields.
+func (s *Destination) RawMap(p *ModelProps, needed []Labeler) map[string]any {
+	model := map[string]any{
+		"term":     s.Term,
+		"termType": s.TermType,
+		"url":      s.Url,
+		"source":   s.Source,
+	}
+
+	return model
+}
+
+// CalcMap returns a map containing the calculated/derived fields for this Destination.
+// This type has no calculated fields currently.
+func (s *Destination) CalcMap(p *ModelProps, needed []Labeler) map[string]any {
+	model := map[string]any{}
+
+	return model
 }
 
 // FinishUnmarshal is used by the cache. It may be unused depending on auto-code-gen

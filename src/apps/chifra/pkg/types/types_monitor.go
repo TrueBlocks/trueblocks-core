@@ -38,19 +38,25 @@ func (s Monitor) String() string {
 }
 
 func (s *Monitor) Model(chain, format string, verbose bool, extraOpts map[string]any) Model {
-	_ = chain
-	_ = format
-	_ = verbose
-	_ = extraOpts
-	var model = map[string]any{}
-	var order = []string{}
-
-	// EXISTING_CODE
-	model = map[string]any{
-		"address":  s.Address,
-		"nRecords": s.NRecords,
-		"fileSize": s.FileSize,
+	props := &ModelProps{
+		Chain:     chain,
+		Format:    format,
+		Verbose:   verbose,
+		ExtraOpts: extraOpts,
 	}
+
+	rawNames := []Labeler{
+		NewLabeler(s.Address, "address"),
+	}
+	model := s.RawMap(props, rawNames)
+
+	calcNames := []Labeler{}
+	for k, v := range s.CalcMap(props, calcNames) {
+		model[k] = v
+	}
+
+	var order = []string{}
+	// EXISTING_CODE
 	order = []string{
 		"address",
 		"nRecords",
@@ -58,28 +64,20 @@ func (s *Monitor) Model(chain, format string, verbose bool, extraOpts map[string
 	}
 
 	if extraOpts["list"] == true {
-		model["isEmpty"] = s.IsEmpty
-		model["isStaged"] = s.IsStaged
 		order = append(order, "isEmpty")
 		order = append(order, "isStaged")
 	}
 
 	if verbose {
-		model["lastScanned"] = s.LastScanned
-		model["deleted"] = s.Deleted
-		if extraOpts["testMode"] == true {
-			model["lastScanned"] = "--lastScanned--"
-		}
 		order = append(order, "lastScanned")
 		order = append(order, "deleted")
 	}
 
-	if name, loaded, found := labelAddress(extraOpts, s.Address); found {
-		model["addressName"] = name.Name
-		order = append(order, "addressName")
-	} else if loaded && format != "json" {
-		model["addressName"] = ""
-		order = append(order, "addressName")
+	for _, item := range append(rawNames, calcNames...) {
+		key := item.name + "Name"
+		if _, exists := model[key]; exists {
+			order = append(order, key)
+		}
 	}
 	order = reorderFields(order)
 	// EXISTING_CODE
@@ -88,6 +86,40 @@ func (s *Monitor) Model(chain, format string, verbose bool, extraOpts map[string
 		Data:  model,
 		Order: order,
 	}
+}
+
+// RawMap returns a map containing only the raw/base fields for this Monitor.
+// This excludes any calculated or derived fields.
+func (s *Monitor) RawMap(p *ModelProps, needed []Labeler) map[string]any {
+	model := map[string]any{
+		"address":  s.Address,
+		"nRecords": s.NRecords,
+		"fileSize": s.FileSize,
+	}
+
+	return labelAddresses(p, model, needed)
+}
+
+// CalcMap returns a map containing only the calculated/derived fields for this Monitor.
+// This is optimized for streaming contexts where the frontend receives the raw Monitor
+// and needs to enhance it with calculated values.
+func (s *Monitor) CalcMap(p *ModelProps, needed []Labeler) map[string]any {
+	model := map[string]any{}
+
+	if p.ExtraOpts["list"] == true {
+		model["isEmpty"] = s.IsEmpty
+		model["isStaged"] = s.IsStaged
+	}
+
+	if p.Verbose {
+		model["lastScanned"] = s.LastScanned
+		model["deleted"] = s.Deleted
+		if p.ExtraOpts["testMode"] == true {
+			model["lastScanned"] = "--lastScanned--"
+		}
+	}
+
+	return labelAddresses(p, model, needed)
 }
 
 func (s *Monitor) MarshalCache(writer io.Writer) (err error) {
