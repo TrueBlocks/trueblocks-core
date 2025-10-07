@@ -157,7 +157,8 @@ func (s *Appearance) RawMap(p *ModelProps, needed *[]Labeler) map[string]any {
 	return labelAddresses(p, model, needed)
 }
 
-// CalcMap returns a map containing the calculated/derived fields for this Appearance.
+// CalcMap calculated fields:
+// - date (string, omitempty - only when verbose=true)
 func (s *Appearance) CalcMap(p *ModelProps) map[string]any {
 	model := map[string]any{
 		// EXISTING_CODE

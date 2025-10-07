@@ -208,7 +208,19 @@ func (s *Transaction) RawMap(p *ModelProps, needed *[]Labeler) map[string]any {
 	return labelAddresses(p, model, needed)
 }
 
-// CalcMap returns a map containing the calculated/derived fields for this Transaction.
+// CalcMap calculated fields:
+// - date (string)
+// - gasCost (base.Wei)
+// - articulatedTx (object, omitempty - only when articulate=true and ArticulatedTx!=nil)
+// - statements ([]object, omitempty - only when format=json and Statements!=nil)
+// - receipt (object, omitempty - only when format=json)
+// - traces ([]object, omitempty - only when format=json)
+// - message (string, omitempty - only when format=json and not articulated)
+// - ethGasPrice (string, omitempty - only when format!=json)
+// - encoding (string, omitempty - only when format!=json)
+// - compressedTx (string, omitempty - only when format!=json)
+// - nTraces (int, omitempty - only when format!=json and traces=true)
+// - ether (string)
 func (s *Transaction) CalcMap(p *ModelProps) map[string]any {
 	model := map[string]any{
 		// EXISTING_CODE

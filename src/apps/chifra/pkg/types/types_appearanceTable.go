@@ -90,7 +90,7 @@ func (s *AppearanceTable) RawMap(p *ModelProps, needed *[]Labeler) map[string]an
 	return labelAddresses(p, model, needed)
 }
 
-// CalcMap returns a map containing the calculated/derived fields for this AppearanceTable.
+// CalcMap calculated fields: (none)
 func (s *AppearanceTable) CalcMap(p *ModelProps) map[string]any {
 	model := map[string]any{
 		// EXISTING_CODE

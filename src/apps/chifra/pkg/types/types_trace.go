@@ -171,7 +171,16 @@ func (s *Trace) RawMap(p *ModelProps, needed *[]Labeler) map[string]any {
 	return labelAddresses(p, model, needed)
 }
 
-// CalcMap returns a map containing the calculated/derived fields for this Trace.
+// CalcMap calculated fields:
+// - date (string)
+// - articulatedTrace (object, omitempty - only when format=json and articulate=true and ArticulatedTrace!=nil)
+// - action::from (string, omitempty - only when format!=json and Action!=nil)
+// - action::to (string, omitempty - only when format!=json and Action!=nil)
+// - action::value (string, omitempty - only when format!=json and Action!=nil)
+// - action::ether (string, omitempty - only when format!=json and Action!=nil)
+// - action::input (string, omitempty - only when format!=json and Action!=nil and RefundAddress set)
+// - action::callType (string, omitempty - only when format!=json and Action!=nil and RefundAddress set)
+// - compressedTrace (string, omitempty - only when format!=json and articulated)
 func (s *Trace) CalcMap(p *ModelProps) map[string]any {
 	model := map[string]any{
 		// EXISTING_CODE

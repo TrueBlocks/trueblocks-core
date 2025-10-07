@@ -109,7 +109,14 @@ func (s *ChunkBloom) RawMap(p *ModelProps, needed *[]Labeler) map[string]any {
 	return labelAddresses(p, model, needed)
 }
 
-// CalcMap returns a map containing the calculated/derived fields for this ChunkBloom.
+// CalcMap calculated fields:
+// - hash (string)
+// - hashValue (string, omitempty - when format=json)
+// - rangeDates (object, omitempty - only when verbose=true and format=json)
+// - firstTs (base.Timestamp, omitempty - only when verbose=true and format!=json)
+// - firstDate (string, omitempty - only when verbose=true and format!=json)
+// - lastTs (base.Timestamp, omitempty - only when verbose=true and format!=json)
+// - lastDate (string, omitempty - only when verbose=true and format!=json)
 func (s *ChunkBloom) CalcMap(p *ModelProps) map[string]any {
 	model := map[string]any{
 		// EXISTING_CODE

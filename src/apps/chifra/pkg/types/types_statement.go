@@ -174,7 +174,42 @@ func (s *Statement) RawMap(p *ModelProps, needed *[]Labeler) map[string]any {
 	return labelAddresses(p, model, needed)
 }
 
-// CalcMap returns a map containing the calculated/derived fields for this Statement.
+// CalcMap calculated fields:
+// - amountNet (base.Wei)
+// - begBalDiff (base.Wei)
+// - date (string)
+// - endBalCalc (base.Wei)
+// - endBalDiff (base.Wei)
+// - reconciled (bool)
+// - totalIn (base.Wei)
+// - totalOut (base.Wei)
+// - amountInEth (string, omitempty - only when ether=true)
+// - amountNetEth (string, omitempty - only when ether=true)
+// - amountOutEth (string, omitempty - only when ether=true)
+// - begBalDiffEth (string, omitempty - only when ether=true)
+// - begBalEth (string, omitempty - only when ether=true)
+// - correctAmountInEth (string, omitempty - only when ether=true)
+// - correctAmountOutEth (string, omitempty - only when ether=true)
+// - correctBegBalInEth (string, omitempty - only when ether=true)
+// - correctBegBalOutEth (string, omitempty - only when ether=true)
+// - correctEndBalInEth (string, omitempty - only when ether=true)
+// - correctEndBalOutEth (string, omitempty - only when ether=true)
+// - endBalCalcEth (string, omitempty - only when ether=true)
+// - endBalDiffEth (string, omitempty - only when ether=true)
+// - endBalEth (string, omitempty - only when ether=true)
+// - gasOutEth (string, omitempty - only when ether=true)
+// - internalInEth (string, omitempty - only when ether=true)
+// - internalOutEth (string, omitempty - only when ether=true)
+// - minerBaseRewardInEth (string, omitempty - only when ether=true)
+// - minerNephewRewardInEth (string, omitempty - only when ether=true)
+// - minerTxFeeInEth (string, omitempty - only when ether=true)
+// - minerUncleRewardInEth (string, omitempty - only when ether=true)
+// - prefundInEth (string, omitempty - only when ether=true)
+// - prevBalEth (string, omitempty - only when ether=true)
+// - selfDestructInEth (string, omitempty - only when ether=true)
+// - selfDestructOutEth (string, omitempty - only when ether=true)
+// - totalInEth (string, omitempty - only when ether=true)
+// - totalOutEth (string, omitempty - only when ether=true)
 func (s *Statement) CalcMap(p *ModelProps) map[string]any {
 	model := map[string]any{
 		// EXISTING_CODE

@@ -84,7 +84,7 @@ func (s *ChunkPin) RawMap(p *ModelProps, needed *[]Labeler) map[string]any {
 	return labelAddresses(p, model, needed)
 }
 
-// CalcMap returns a map containing the calculated/derived fields for this ChunkPin.
+// CalcMap calculated fields: (none)
 func (s *ChunkPin) CalcMap(p *ModelProps) map[string]any {
 	model := map[string]any{
 		// EXISTING_CODE

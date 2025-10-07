@@ -104,7 +104,9 @@ func (s *Transfer) RawMap(p *ModelProps, needed *[]Labeler) map[string]any {
 	return labelAddresses(p, model, needed)
 }
 
-// CalcMap returns a map containing the calculated/derived fields for this Transfer.
+// CalcMap calculated fields:
+// - amount (base.Wei)
+// - amountEth (string, omitempty - only when ether=true)
 func (s *Transfer) CalcMap(p *ModelProps) map[string]any {
 	model := map[string]any{
 		// EXISTING_CODE
