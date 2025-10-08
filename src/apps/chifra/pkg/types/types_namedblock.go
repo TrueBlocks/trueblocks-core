@@ -88,6 +88,7 @@ func (s *NamedBlock) RawMap(p *ModelProps, needed *[]Labeler) map[string]any {
 
 // CalcMap returns a map containing the calculated/derived fields for this type.
 func (s *NamedBlock) CalcMap(p *ModelProps) map[string]any {
+	_ = p // delint
 	model := map[string]any{
 		// EXISTING_CODE
 		"date": s.Date(),
@@ -139,7 +140,8 @@ type NamedBlockCalcs struct {
 	// EXISTING_CODE
 }
 
-func (s *NamedBlock) EnsureCalcs(p *ModelProps, requestedFields []string) error {
+func (s *NamedBlock) EnsureCalcs(p *ModelProps, fieldFilter []string) error {
+	_ = fieldFilter // delint
 	if s.Calcs != nil {
 		return nil
 	}

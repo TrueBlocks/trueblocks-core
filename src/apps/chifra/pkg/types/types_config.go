@@ -67,6 +67,7 @@ func (s *Config) RawMap(p *ModelProps, needed *[]Labeler) map[string]any {
 
 // CalcMap returns a map containing the calculated/derived fields for this Config.
 func (s *Config) CalcMap(p *ModelProps) map[string]any {
+	_ = p // delint
 	model := map[string]any{}
 
 	return model
@@ -85,7 +86,8 @@ type ConfigCalcs struct {
 	// EXISTING_CODE
 }
 
-func (s *Config) EnsureCalcs(p *ModelProps, requestedFields []string) error {
+func (s *Config) EnsureCalcs(p *ModelProps, fieldFilter []string) error {
+	_ = fieldFilter // delint
 	if s.Calcs != nil {
 		return nil
 	}

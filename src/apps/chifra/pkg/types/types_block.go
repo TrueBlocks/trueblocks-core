@@ -151,6 +151,7 @@ func (s *Block) RawMap(p *ModelProps, needed *[]Labeler) map[string]any {
 
 // CalcMap returns a map containing the calculated/derived fields for this type.
 func (s *Block) CalcMap(p *ModelProps) map[string]any {
+	_ = p // delint
 	model := map[string]any{
 		// EXISTING_CODE
 		"date": s.Date(),
@@ -352,7 +353,8 @@ type BlockCalcs struct {
 	// EXISTING_CODE
 }
 
-func (s *Block) EnsureCalcs(p *ModelProps, requestedFields []string) error {
+func (s *Block) EnsureCalcs(p *ModelProps, fieldFilter []string) error {
+	_ = fieldFilter // delint
 	if s.Calcs != nil {
 		return nil
 	}

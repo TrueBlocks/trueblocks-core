@@ -115,6 +115,7 @@ func (s *Result) RawMap(p *ModelProps, needed *[]Labeler) map[string]any {
 
 // CalcMap returns a map containing the calculated/derived fields for this type.
 func (s *Result) CalcMap(p *ModelProps) map[string]any {
+	_ = p // delint
 	model := map[string]any{
 		// EXISTING_CODE
 		// EXISTING_CODE
@@ -293,7 +294,8 @@ type ResultCalcs struct {
 	// EXISTING_CODE
 }
 
-func (s *Result) EnsureCalcs(p *ModelProps, requestedFields []string) error {
+func (s *Result) EnsureCalcs(p *ModelProps, fieldFilter []string) error {
+	_ = fieldFilter // delint
 	if s.Calcs != nil {
 		return nil
 	}

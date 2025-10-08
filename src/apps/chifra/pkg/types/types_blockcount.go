@@ -155,6 +155,7 @@ func (s *BlockCount) RawMap(p *ModelProps, needed *[]Labeler) map[string]any {
 
 // CalcMap returns a map containing the calculated/derived fields for this type.
 func (s *BlockCount) CalcMap(p *ModelProps) map[string]any {
+	_ = p // delint
 	model := map[string]any{
 		// EXISTING_CODE
 		// EXISTING_CODE
@@ -188,7 +189,8 @@ type BlockCountCalcs struct {
 	// EXISTING_CODE
 }
 
-func (s *BlockCount) EnsureCalcs(p *ModelProps, requestedFields []string) error {
+func (s *BlockCount) EnsureCalcs(p *ModelProps, fieldFilter []string) error {
+	_ = fieldFilter // delint
 	if s.Calcs != nil {
 		return nil
 	}

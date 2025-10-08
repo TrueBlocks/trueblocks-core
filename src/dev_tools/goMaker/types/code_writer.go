@@ -27,7 +27,7 @@ func WriteCode(existingFn, newCode string) (bool, error) {
 	if !file.FileExists(existingFn) || strings.Contains(existingFn, "/generated/") {
 		if !strings.Contains(existingFn, "/generated/") {
 			if !file.FolderExists(filepath.Dir(existingFn)) {
-				file.EstablishFolder(filepath.Dir(existingFn))
+				_ = file.EstablishFolder(filepath.Dir(existingFn))
 			}
 			if !verbose {
 				logger.Info(colors.Yellow+"Creating", existingFn, strings.Repeat(" ", 20)+colors.Off)

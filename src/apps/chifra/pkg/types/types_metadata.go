@@ -59,6 +59,7 @@ func (m *MetaData) Model(chain, format string, verbose bool, extraOpts map[strin
 }
 
 func (m *MetaData) RawMap(props *ModelProps) map[string]any {
+	_ = props // delint
 	return map[string]any{
 		"client":    m.Latest,
 		"finalized": m.Finalized,
@@ -72,6 +73,8 @@ func (m *MetaData) RawMap(props *ModelProps) map[string]any {
 }
 
 func (m *MetaData) CalcMap(props *ModelProps, rawMap map[string]any) map[string]any {
+	_ = props  // delint
+	_ = rawMap // delint
 	calcMap := make(map[string]any)
 
 	// Add calculated fields that are based on the raw data
@@ -108,7 +111,8 @@ type MetaDataCalcs struct {
 	// EXISTING_CODE
 }
 
-func (s *MetaData) EnsureCalcs(p *ModelProps, requestedFields []string) error {
+func (s *MetaData) EnsureCalcs(p *ModelProps, fieldFilter []string) error {
+	_ = fieldFilter // delint
 	if s.Calcs != nil {
 		return nil
 	}

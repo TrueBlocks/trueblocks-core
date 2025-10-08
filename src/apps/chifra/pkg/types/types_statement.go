@@ -177,6 +177,7 @@ func (s *Statement) RawMap(p *ModelProps, needed *[]Labeler) map[string]any {
 
 // CalcMap returns a map containing the calculated/derived fields for this type.
 func (s *Statement) CalcMap(p *ModelProps) map[string]any {
+	_ = p // delint
 	model := map[string]any{
 		// EXISTING_CODE
 		"amountNet":  s.AmountNet().Text(10),
@@ -670,7 +671,8 @@ type StatementCalcs struct {
 	// EXISTING_CODE
 }
 
-func (s *Statement) EnsureCalcs(p *ModelProps, requestedFields []string) error {
+func (s *Statement) EnsureCalcs(p *ModelProps, fieldFilter []string) error {
+	_ = fieldFilter // delint
 	if s.Calcs != nil {
 		return nil
 	}
