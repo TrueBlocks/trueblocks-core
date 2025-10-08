@@ -16,14 +16,15 @@ import (
 // EXISTING_CODE
 
 type ReportCheck struct {
-	CheckedCnt uint64   `json:"checkedCnt"`
-	FailedCnt  uint64   `json:"failedCnt"`
-	MsgStrings []string `json:"msgStrings"`
-	PassedCnt  uint64   `json:"passedCnt"`
-	Reason     string   `json:"reason"`
-	Result     string   `json:"result"`
-	SkippedCnt uint64   `json:"skippedCnt"`
-	VisitedCnt uint64   `json:"visitedCnt"`
+	CheckedCnt uint64            `json:"checkedCnt"`
+	FailedCnt  uint64            `json:"failedCnt"`
+	MsgStrings []string          `json:"msgStrings"`
+	PassedCnt  uint64            `json:"passedCnt"`
+	Reason     string            `json:"reason"`
+	Result     string            `json:"result"`
+	SkippedCnt uint64            `json:"skippedCnt"`
+	VisitedCnt uint64            `json:"visitedCnt"`
+	Calcs      *ReportCheckCalcs `json:"calcs,omitempty"`
 	// EXISTING_CODE
 	// EXISTING_CODE
 }
@@ -92,7 +93,7 @@ func (s *ReportCheck) RawMap(p *ModelProps, needed *[]Labeler) map[string]any {
 	return labelAddresses(p, model, needed)
 }
 
-// CalcMap returns a map containing the calculated/derived fields for this ReportCheck.
+// CalcMap returns a map containing the calculated/derived fields for this type.
 func (s *ReportCheck) CalcMap(p *ModelProps) map[string]any {
 	model := map[string]any{
 		// EXISTING_CODE
@@ -119,8 +120,37 @@ func (s *ReportCheck) CalcMap(p *ModelProps) map[string]any {
 // FinishUnmarshal is used by the cache. It may be unused depending on auto-code-gen
 func (s *ReportCheck) FinishUnmarshal(fileVersion uint64) {
 	_ = fileVersion
+	s.Calcs = nil
 	// EXISTING_CODE
 	// EXISTING_CODE
+}
+
+// ReportCheckCalcs holds lazy-loaded calculated fields for ReportCheck
+type ReportCheckCalcs struct {
+	// EXISTING_CODE
+	FailedCnt  uint64   `json:"failedCnt,omitempty"`
+	SkippedCnt uint64   `json:"skippedCnt,omitempty"`
+	MsgStrings []string `json:"msgStrings,omitempty"`
+	// EXISTING_CODE
+}
+
+func (s *ReportCheck) EnsureCalcs(p *ModelProps, requestedFields []string) error {
+	if s.Calcs != nil {
+		return nil
+	}
+
+	calcMap := s.CalcMap(p)
+	if len(calcMap) == 0 {
+		return nil
+	}
+
+	jsonBytes, err := json.Marshal(calcMap)
+	if err != nil {
+		return err
+	}
+
+	s.Calcs = &ReportCheckCalcs{}
+	return json.Unmarshal(jsonBytes, s.Calcs)
 }
 
 // EXISTING_CODE

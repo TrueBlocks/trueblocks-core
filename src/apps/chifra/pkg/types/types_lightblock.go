@@ -23,18 +23,19 @@ import (
 // EXISTING_CODE
 
 type LightBlock struct {
-	BaseFeePerGas base.Gas       `json:"baseFeePerGas"`
-	BlockNumber   base.Blknum    `json:"blockNumber"`
-	Difficulty    base.Value     `json:"difficulty"`
-	GasLimit      base.Gas       `json:"gasLimit"`
-	GasUsed       base.Gas       `json:"gasUsed"`
-	Hash          base.Hash      `json:"hash"`
-	Miner         base.Address   `json:"miner"`
-	ParentHash    base.Hash      `json:"parentHash"`
-	Timestamp     base.Timestamp `json:"timestamp"`
-	Transactions  []string       `json:"transactions"`
-	Uncles        []base.Hash    `json:"uncles,omitempty"`
-	Withdrawals   []Withdrawal   `json:"withdrawals,omitempty"`
+	BaseFeePerGas base.Gas         `json:"baseFeePerGas"`
+	BlockNumber   base.Blknum      `json:"blockNumber"`
+	Difficulty    base.Value       `json:"difficulty"`
+	GasLimit      base.Gas         `json:"gasLimit"`
+	GasUsed       base.Gas         `json:"gasUsed"`
+	Hash          base.Hash        `json:"hash"`
+	Miner         base.Address     `json:"miner"`
+	ParentHash    base.Hash        `json:"parentHash"`
+	Timestamp     base.Timestamp   `json:"timestamp"`
+	Transactions  []string         `json:"transactions"`
+	Uncles        []base.Hash      `json:"uncles,omitempty"`
+	Withdrawals   []Withdrawal     `json:"withdrawals,omitempty"`
+	Calcs         *LightBlockCalcs `json:"calcs,omitempty"`
 	// EXISTING_CODE
 	Number base.Blknum `json:"number"`
 	// EXISTING_CODE
@@ -126,7 +127,7 @@ func (s *LightBlock) RawMap(p *ModelProps, needed *[]Labeler) map[string]any {
 	return labelAddresses(p, model, needed)
 }
 
-// CalcMap returns a map containing the calculated/derived fields for this LightBlock.
+// CalcMap returns a map containing the calculated/derived fields for this type.
 func (s *LightBlock) CalcMap(p *ModelProps) map[string]any {
 	model := map[string]any{
 		// EXISTING_CODE
@@ -309,8 +310,35 @@ func (s *LightBlock) UnmarshalCache(fileVersion uint64, reader io.Reader) (err e
 // FinishUnmarshal is used by the cache. It may be unused depending on auto-code-gen
 func (s *LightBlock) FinishUnmarshal(fileVersion uint64) {
 	_ = fileVersion
+	s.Calcs = nil
 	// EXISTING_CODE
 	// EXISTING_CODE
+}
+
+// LightBlockCalcs holds lazy-loaded calculated fields for LightBlock
+type LightBlockCalcs struct {
+	// EXISTING_CODE
+	Date string `json:"date"`
+	// EXISTING_CODE
+}
+
+func (s *LightBlock) EnsureCalcs(p *ModelProps, requestedFields []string) error {
+	if s.Calcs != nil {
+		return nil
+	}
+
+	calcMap := s.CalcMap(p)
+	if len(calcMap) == 0 {
+		return nil
+	}
+
+	jsonBytes, err := json.Marshal(calcMap)
+	if err != nil {
+		return err
+	}
+
+	s.Calcs = &LightBlockCalcs{}
+	return json.Unmarshal(jsonBytes, s.Calcs)
 }
 
 // EXISTING_CODE

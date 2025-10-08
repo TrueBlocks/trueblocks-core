@@ -16,6 +16,7 @@ type Config struct {
 	Pinning   configtypes.PinningGroup          `json:"pinning" toml:"pinning"`
 	Unchained configtypes.UnchainedGroup        `json:"unchained" toml:"unchained,omitempty" comment:"Do not edit these values unless instructed to do so."`
 	Chains    map[string]configtypes.ChainGroup `json:"chains" toml:"chains"`
+	Calcs     *ConfigCalcs                      `json:"calcs,omitempty"`
 }
 
 func (s Config) String() string {
@@ -73,6 +74,34 @@ func (s *Config) CalcMap(p *ModelProps) map[string]any {
 
 func (s *Config) FinishUnmarshal(fileVersion uint64) {
 	_ = fileVersion
+	s.Calcs = nil
+	// EXISTING_CODE
+	// EXISTING_CODE
+}
+
+// ConfigCalcs holds lazy-loaded calculated fields for Config
+type ConfigCalcs struct {
+	// EXISTING_CODE
+	// EXISTING_CODE
+}
+
+func (s *Config) EnsureCalcs(p *ModelProps, requestedFields []string) error {
+	if s.Calcs != nil {
+		return nil
+	}
+
+	calcMap := s.CalcMap(p)
+	if len(calcMap) == 0 {
+		return nil
+	}
+
+	jsonBytes, err := json.Marshal(calcMap)
+	if err != nil {
+		return err
+	}
+
+	s.Calcs = &ConfigCalcs{}
+	return json.Unmarshal(jsonBytes, s.Calcs)
 }
 
 func (s *Config) ShallowCopy() Config {

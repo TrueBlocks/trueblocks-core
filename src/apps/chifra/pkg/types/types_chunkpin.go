@@ -18,11 +18,12 @@ import (
 // EXISTING_CODE
 
 type ChunkPin struct {
-	Chain         string        `json:"chain"`
-	ManifestHash  base.IpfsHash `json:"manifestHash"`
-	SpecHash      base.IpfsHash `json:"specHash"`
-	TimestampHash base.IpfsHash `json:"timestampHash"`
-	Version       string        `json:"version"`
+	Chain         string         `json:"chain"`
+	ManifestHash  base.IpfsHash  `json:"manifestHash"`
+	SpecHash      base.IpfsHash  `json:"specHash"`
+	TimestampHash base.IpfsHash  `json:"timestampHash"`
+	Version       string         `json:"version"`
+	Calcs         *ChunkPinCalcs `json:"calcs,omitempty"`
 	// EXISTING_CODE
 	// EXISTING_CODE
 }
@@ -84,7 +85,7 @@ func (s *ChunkPin) RawMap(p *ModelProps, needed *[]Labeler) map[string]any {
 	return labelAddresses(p, model, needed)
 }
 
-// CalcMap calculated fields: (none)
+// CalcMap returns a map containing the calculated/derived fields for this type.
 func (s *ChunkPin) CalcMap(p *ModelProps) map[string]any {
 	model := map[string]any{
 		// EXISTING_CODE
@@ -100,8 +101,34 @@ func (s *ChunkPin) CalcMap(p *ModelProps) map[string]any {
 // FinishUnmarshal is used by the cache. It may be unused depending on auto-code-gen
 func (s *ChunkPin) FinishUnmarshal(fileVersion uint64) {
 	_ = fileVersion
+	s.Calcs = nil
 	// EXISTING_CODE
 	// EXISTING_CODE
+}
+
+// ChunkPinCalcs holds lazy-loaded calculated fields for ChunkPin
+type ChunkPinCalcs struct {
+	// EXISTING_CODE
+	// EXISTING_CODE
+}
+
+func (s *ChunkPin) EnsureCalcs(p *ModelProps, requestedFields []string) error {
+	if s.Calcs != nil {
+		return nil
+	}
+
+	calcMap := s.CalcMap(p)
+	if len(calcMap) == 0 {
+		return nil
+	}
+
+	jsonBytes, err := json.Marshal(calcMap)
+	if err != nil {
+		return err
+	}
+
+	s.Calcs = &ChunkPinCalcs{}
+	return json.Unmarshal(jsonBytes, s.Calcs)
 }
 
 // EXISTING_CODE

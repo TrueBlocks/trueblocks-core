@@ -20,13 +20,14 @@ import (
 // EXISTING_CODE
 
 type Parameter struct {
-	Components    []Parameter `json:"components,omitempty"`
-	Indexed       bool        `json:"indexed,omitempty"`
-	InternalType  string      `json:"internalType,omitempty"`
-	Name          string      `json:"name"`
-	StrDefault    string      `json:"strDefault,omitempty"`
-	ParameterType string      `json:"type"`
-	Value         any         `json:"value,omitempty"`
+	Components    []Parameter     `json:"components,omitempty"`
+	Indexed       bool            `json:"indexed,omitempty"`
+	InternalType  string          `json:"internalType,omitempty"`
+	Name          string          `json:"name"`
+	StrDefault    string          `json:"strDefault,omitempty"`
+	ParameterType string          `json:"type"`
+	Value         any             `json:"value,omitempty"`
+	Calcs         *ParameterCalcs `json:"calcs,omitempty"`
 	// EXISTING_CODE
 	// EXISTING_CODE
 }
@@ -94,7 +95,7 @@ func (s *Parameter) RawMap(p *ModelProps, needed *[]Labeler) map[string]any {
 	return labelAddresses(p, model, needed)
 }
 
-// CalcMap returns a map containing the calculated/derived fields for this Parameter.
+// CalcMap returns a map containing the calculated/derived fields for this type.
 func (s *Parameter) CalcMap(p *ModelProps) map[string]any {
 	model := map[string]any{
 		// EXISTING_CODE
@@ -218,8 +219,36 @@ func (s *Parameter) UnmarshalCache(fileVersion uint64, reader io.Reader) (err er
 // FinishUnmarshal is used by the cache. It may be unused depending on auto-code-gen
 func (s *Parameter) FinishUnmarshal(fileVersion uint64) {
 	_ = fileVersion
+	s.Calcs = nil
 	// EXISTING_CODE
 	// EXISTING_CODE
+}
+
+// ParameterCalcs holds lazy-loaded calculated fields for Parameter
+type ParameterCalcs struct {
+	// EXISTING_CODE
+	Indexed      bool   `json:"indexed,omitempty"`
+	InternalType string `json:"internalType,omitempty"`
+	// EXISTING_CODE
+}
+
+func (s *Parameter) EnsureCalcs(p *ModelProps, requestedFields []string) error {
+	if s.Calcs != nil {
+		return nil
+	}
+
+	calcMap := s.CalcMap(p)
+	if len(calcMap) == 0 {
+		return nil
+	}
+
+	jsonBytes, err := json.Marshal(calcMap)
+	if err != nil {
+		return err
+	}
+
+	s.Calcs = &ParameterCalcs{}
+	return json.Unmarshal(jsonBytes, s.Calcs)
 }
 
 // EXISTING_CODE

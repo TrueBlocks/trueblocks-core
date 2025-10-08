@@ -20,19 +20,20 @@ import (
 // EXISTING_CODE
 
 type TraceAction struct {
-	Address        base.Address `json:"address,omitempty"`
-	Author         base.Address `json:"author,omitempty"`
-	Balance        base.Wei     `json:"balance,omitempty"`
-	CallType       string       `json:"callType"`
-	From           base.Address `json:"from"`
-	Gas            base.Gas     `json:"gas"`
-	Init           string       `json:"init,omitempty"`
-	Input          string       `json:"input,omitempty"`
-	RefundAddress  base.Address `json:"refundAddress,omitempty"`
-	RewardType     string       `json:"rewardType,omitempty"`
-	SelfDestructed base.Address `json:"selfDestructed,omitempty"`
-	To             base.Address `json:"to"`
-	Value          base.Wei     `json:"value"`
+	Address        base.Address      `json:"address,omitempty"`
+	Author         base.Address      `json:"author,omitempty"`
+	Balance        base.Wei          `json:"balance,omitempty"`
+	CallType       string            `json:"callType"`
+	From           base.Address      `json:"from"`
+	Gas            base.Gas          `json:"gas"`
+	Init           string            `json:"init,omitempty"`
+	Input          string            `json:"input,omitempty"`
+	RefundAddress  base.Address      `json:"refundAddress,omitempty"`
+	RewardType     string            `json:"rewardType,omitempty"`
+	SelfDestructed base.Address      `json:"selfDestructed,omitempty"`
+	To             base.Address      `json:"to"`
+	Value          base.Wei          `json:"value"`
+	Calcs          *TraceActionCalcs `json:"calcs,omitempty"`
 	// EXISTING_CODE
 	// EXISTING_CODE
 }
@@ -136,7 +137,7 @@ func (s *TraceAction) RawMap(p *ModelProps, needed *[]Labeler) map[string]any {
 	return labelAddresses(p, model, needed)
 }
 
-// CalcMap returns a map containing the calculated/derived fields for this TraceAction.
+// CalcMap returns a map containing the calculated/derived fields for this type.
 func (s *TraceAction) CalcMap(p *ModelProps) map[string]any {
 	model := map[string]any{
 		// EXISTING_CODE
@@ -311,8 +312,36 @@ func (s *TraceAction) UnmarshalCache(fileVersion uint64, reader io.Reader) (err 
 // FinishUnmarshal is used by the cache. It may be unused depending on auto-code-gen
 func (s *TraceAction) FinishUnmarshal(fileVersion uint64) {
 	_ = fileVersion
+	s.Calcs = nil
 	// EXISTING_CODE
 	// EXISTING_CODE
+}
+
+// TraceActionCalcs holds lazy-loaded calculated fields for TraceAction
+type TraceActionCalcs struct {
+	// EXISTING_CODE
+	Ether      string `json:"ether,omitempty"`
+	BalanceEth string `json:"balanceEth,omitempty"`
+	// EXISTING_CODE
+}
+
+func (s *TraceAction) EnsureCalcs(p *ModelProps, requestedFields []string) error {
+	if s.Calcs != nil {
+		return nil
+	}
+
+	calcMap := s.CalcMap(p)
+	if len(calcMap) == 0 {
+		return nil
+	}
+
+	jsonBytes, err := json.Marshal(calcMap)
+	if err != nil {
+		return err
+	}
+
+	s.Calcs = &TraceActionCalcs{}
+	return json.Unmarshal(jsonBytes, s.Calcs)
 }
 
 // EXISTING_CODE

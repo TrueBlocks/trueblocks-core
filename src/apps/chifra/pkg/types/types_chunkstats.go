@@ -14,19 +14,20 @@ import "encoding/json"
 // EXISTING_CODE
 
 type ChunkStats struct {
-	AddrsPerBlock float64     `json:"addrsPerBlock"`
-	AppsPerAddr   float64     `json:"appsPerAddr"`
-	AppsPerBlock  float64     `json:"appsPerBlock"`
-	BloomSz       uint64      `json:"bloomSz"`
-	ChunkSz       uint64      `json:"chunkSz"`
-	NAddrs        uint64      `json:"nAddrs"`
-	NApps         uint64      `json:"nApps"`
-	NBlocks       uint64      `json:"nBlocks"`
-	NBlooms       uint64      `json:"nBlooms"`
-	Range         string      `json:"range"`
-	RangeDates    *RangeDates `json:"rangeDates,omitempty"`
-	Ratio         float64     `json:"ratio"`
-	RecWid        uint64      `json:"recWid"`
+	AddrsPerBlock float64          `json:"addrsPerBlock"`
+	AppsPerAddr   float64          `json:"appsPerAddr"`
+	AppsPerBlock  float64          `json:"appsPerBlock"`
+	BloomSz       uint64           `json:"bloomSz"`
+	ChunkSz       uint64           `json:"chunkSz"`
+	NAddrs        uint64           `json:"nAddrs"`
+	NApps         uint64           `json:"nApps"`
+	NBlocks       uint64           `json:"nBlocks"`
+	NBlooms       uint64           `json:"nBlooms"`
+	Range         string           `json:"range"`
+	RangeDates    *RangeDates      `json:"rangeDates,omitempty"`
+	Ratio         float64          `json:"ratio"`
+	RecWid        uint64           `json:"recWid"`
+	Calcs         *ChunkStatsCalcs `json:"calcs,omitempty"`
 	// EXISTING_CODE
 	// EXISTING_CODE
 }
@@ -110,7 +111,7 @@ func (s *ChunkStats) RawMap(p *ModelProps, needed *[]Labeler) map[string]any {
 	return labelAddresses(p, model, needed)
 }
 
-// CalcMap returns a map containing the calculated/derived fields for this ChunkStats.
+// CalcMap returns a map containing the calculated/derived fields for this type.
 func (s *ChunkStats) CalcMap(p *ModelProps) map[string]any {
 	model := map[string]any{
 		// EXISTING_CODE
@@ -138,8 +139,39 @@ func (s *ChunkStats) CalcMap(p *ModelProps) map[string]any {
 // FinishUnmarshal is used by the cache. It may be unused depending on auto-code-gen
 func (s *ChunkStats) FinishUnmarshal(fileVersion uint64) {
 	_ = fileVersion
+	s.Calcs = nil
 	// EXISTING_CODE
 	// EXISTING_CODE
+}
+
+// ChunkStatsCalcs holds lazy-loaded calculated fields for ChunkStats
+type ChunkStatsCalcs struct {
+	// EXISTING_CODE
+	RangeDates interface{} `json:"rangeDates,omitempty"`
+	FirstTs    uint64      `json:"firstTs,omitempty"`
+	FirstDate  string      `json:"firstDate,omitempty"`
+	LastTs     uint64      `json:"lastTs,omitempty"`
+	LastDate   string      `json:"lastDate,omitempty"`
+	// EXISTING_CODE
+}
+
+func (s *ChunkStats) EnsureCalcs(p *ModelProps, requestedFields []string) error {
+	if s.Calcs != nil {
+		return nil
+	}
+
+	calcMap := s.CalcMap(p)
+	if len(calcMap) == 0 {
+		return nil
+	}
+
+	jsonBytes, err := json.Marshal(calcMap)
+	if err != nil {
+		return err
+	}
+
+	s.Calcs = &ChunkStatsCalcs{}
+	return json.Unmarshal(jsonBytes, s.Calcs)
 }
 
 // EXISTING_CODE

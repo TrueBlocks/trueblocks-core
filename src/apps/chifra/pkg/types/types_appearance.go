@@ -33,12 +33,13 @@ type ChunkAppearance = Appearance
 // EXISTING_CODE
 
 type Appearance struct {
-	Address          base.Address   `json:"address"`
-	BlockNumber      uint32         `json:"blockNumber"`
-	Reason           string         `json:"reason,omitempty"`
-	Timestamp        base.Timestamp `json:"timestamp"`
-	TraceIndex       uint32         `json:"traceIndex,omitempty"`
-	TransactionIndex uint32         `json:"transactionIndex"`
+	Address          base.Address     `json:"address"`
+	BlockNumber      uint32           `json:"blockNumber"`
+	Reason           string           `json:"reason,omitempty"`
+	Timestamp        base.Timestamp   `json:"timestamp"`
+	TraceIndex       uint32           `json:"traceIndex,omitempty"`
+	TransactionIndex uint32           `json:"transactionIndex"`
+	Calcs            *AppearanceCalcs `json:"calcs,omitempty"`
 	// EXISTING_CODE
 	// EXISTING_CODE
 }
@@ -157,8 +158,7 @@ func (s *Appearance) RawMap(p *ModelProps, needed *[]Labeler) map[string]any {
 	return labelAddresses(p, model, needed)
 }
 
-// CalcMap calculated fields:
-// - date (string, omitempty - only when verbose=true)
+// CalcMap returns a map containing the calculated/derived fields for this type.
 func (s *Appearance) CalcMap(p *ModelProps) map[string]any {
 	model := map[string]any{
 		// EXISTING_CODE
@@ -195,8 +195,35 @@ func (s *Appearance) Date() string {
 // FinishUnmarshal is used by the cache. It may be unused depending on auto-code-gen
 func (s *Appearance) FinishUnmarshal(fileVersion uint64) {
 	_ = fileVersion
+	s.Calcs = nil
 	// EXISTING_CODE
 	// EXISTING_CODE
+}
+
+// AppearanceCalcs holds lazy-loaded calculated fields for Appearance
+type AppearanceCalcs struct {
+	// EXISTING_CODE
+	Date string `json:"date,omitempty"`
+	// EXISTING_CODE
+}
+
+func (s *Appearance) EnsureCalcs(p *ModelProps, requestedFields []string) error {
+	if s.Calcs != nil {
+		return nil
+	}
+
+	calcMap := s.CalcMap(p)
+	if len(calcMap) == 0 {
+		return nil
+	}
+
+	jsonBytes, err := json.Marshal(calcMap)
+	if err != nil {
+		return err
+	}
+
+	s.Calcs = &AppearanceCalcs{}
+	return json.Unmarshal(jsonBytes, s.Calcs)
 }
 
 // EXISTING_CODE

@@ -16,13 +16,14 @@ import (
 // EXISTING_CODE
 
 type CacheItem struct {
-	Items         []any  `json:"items"`
-	LastCached    string `json:"lastCached,omitempty"`
-	NFiles        uint64 `json:"nFiles"`
-	NFolders      uint64 `json:"nFolders"`
-	Path          string `json:"path"`
-	SizeInBytes   int64  `json:"sizeInBytes"`
-	CacheItemType string `json:"type"`
+	Items         []any           `json:"items"`
+	LastCached    string          `json:"lastCached,omitempty"`
+	NFiles        uint64          `json:"nFiles"`
+	NFolders      uint64          `json:"nFolders"`
+	Path          string          `json:"path"`
+	SizeInBytes   int64           `json:"sizeInBytes"`
+	CacheItemType string          `json:"type"`
+	Calcs         *CacheItemCalcs `json:"calcs,omitempty"`
 	// EXISTING_CODE
 	// EXISTING_CODE
 }
@@ -86,7 +87,7 @@ func (s *CacheItem) RawMap(p *ModelProps, needed *[]Labeler) map[string]any {
 	return labelAddresses(p, model, needed)
 }
 
-// CalcMap calculated fields: (none)
+// CalcMap returns a map containing the calculated/derived fields for this type.
 func (s *CacheItem) CalcMap(p *ModelProps) map[string]any {
 	model := map[string]any{
 		// EXISTING_CODE
@@ -102,8 +103,34 @@ func (s *CacheItem) CalcMap(p *ModelProps) map[string]any {
 // FinishUnmarshal is used by the cache. It may be unused depending on auto-code-gen
 func (s *CacheItem) FinishUnmarshal(fileVersion uint64) {
 	_ = fileVersion
+	s.Calcs = nil
 	// EXISTING_CODE
 	// EXISTING_CODE
+}
+
+// CacheItemCalcs holds lazy-loaded calculated fields for CacheItem
+type CacheItemCalcs struct {
+	// EXISTING_CODE
+	// EXISTING_CODE
+}
+
+func (s *CacheItem) EnsureCalcs(p *ModelProps, requestedFields []string) error {
+	if s.Calcs != nil {
+		return nil
+	}
+
+	calcMap := s.CalcMap(p)
+	if len(calcMap) == 0 {
+		return nil
+	}
+
+	jsonBytes, err := json.Marshal(calcMap)
+	if err != nil {
+		return err
+	}
+
+	s.Calcs = &CacheItemCalcs{}
+	return json.Unmarshal(jsonBytes, s.Calcs)
 }
 
 // EXISTING_CODE

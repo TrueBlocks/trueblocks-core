@@ -21,12 +21,13 @@ import (
 // EXISTING_CODE
 
 type TraceFilter struct {
-	After       uint64       `json:"after,omitempty"`
-	Count       uint64       `json:"count,omitempty"`
-	FromAddress base.Address `json:"fromAddress,omitempty"`
-	FromBlock   base.Blknum  `json:"fromBlock,omitempty"`
-	ToAddress   base.Address `json:"toAddress,omitempty"`
-	ToBlock     base.Blknum  `json:"toBlock,omitempty"`
+	After       uint64            `json:"after,omitempty"`
+	Count       uint64            `json:"count,omitempty"`
+	FromAddress base.Address      `json:"fromAddress,omitempty"`
+	FromBlock   base.Blknum       `json:"fromBlock,omitempty"`
+	ToAddress   base.Address      `json:"toAddress,omitempty"`
+	ToBlock     base.Blknum       `json:"toBlock,omitempty"`
+	Calcs       *TraceFilterCalcs `json:"calcs,omitempty"`
 	// EXISTING_CODE
 	// EXISTING_CODE
 }
@@ -93,7 +94,7 @@ func (s *TraceFilter) RawMap(p *ModelProps, needed *[]Labeler) map[string]any {
 	return labelAddresses(p, model, needed)
 }
 
-// CalcMap returns a map containing the calculated/derived fields for this TraceFilter.
+// CalcMap returns a map containing the calculated/derived fields for this type.
 func (s *TraceFilter) CalcMap(p *ModelProps) map[string]any {
 	model := map[string]any{
 		// EXISTING_CODE
@@ -109,8 +110,34 @@ func (s *TraceFilter) CalcMap(p *ModelProps) map[string]any {
 // FinishUnmarshal is used by the cache. It may be unused depending on auto-code-gen
 func (s *TraceFilter) FinishUnmarshal(fileVersion uint64) {
 	_ = fileVersion
+	s.Calcs = nil
 	// EXISTING_CODE
 	// EXISTING_CODE
+}
+
+// TraceFilterCalcs holds lazy-loaded calculated fields for TraceFilter
+type TraceFilterCalcs struct {
+	// EXISTING_CODE
+	// EXISTING_CODE
+}
+
+func (s *TraceFilter) EnsureCalcs(p *ModelProps, requestedFields []string) error {
+	if s.Calcs != nil {
+		return nil
+	}
+
+	calcMap := s.CalcMap(p)
+	if len(calcMap) == 0 {
+		return nil
+	}
+
+	jsonBytes, err := json.Marshal(calcMap)
+	if err != nil {
+		return err
+	}
+
+	s.Calcs = &TraceFilterCalcs{}
+	return json.Unmarshal(jsonBytes, s.Calcs)
 }
 
 // EXISTING_CODE

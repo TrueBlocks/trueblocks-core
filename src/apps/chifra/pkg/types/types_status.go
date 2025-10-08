@@ -24,26 +24,27 @@ import (
 // EXISTING_CODE
 
 type Status struct {
-	CachePath     string      `json:"cachePath,omitempty"`
-	Caches        []CacheItem `json:"caches"`
-	Chain         string      `json:"chain,omitempty"`
-	ChainConfig   string      `json:"chainConfig,omitempty"`
-	ChainId       string      `json:"chainId,omitempty"`
-	Chains        []Chain     `json:"chains"`
-	ClientVersion string      `json:"clientVersion,omitempty"`
-	HasEsKey      bool        `json:"hasEsKey,omitempty"`
-	HasPinKey     bool        `json:"hasPinKey,omitempty"`
-	IndexPath     string      `json:"indexPath,omitempty"`
-	IsApi         bool        `json:"isApi,omitempty"`
-	IsArchive     bool        `json:"isArchive,omitempty"`
-	IsScraping    bool        `json:"isScraping,omitempty"`
-	IsTesting     bool        `json:"isTesting,omitempty"`
-	IsTracing     bool        `json:"isTracing,omitempty"`
-	NetworkId     string      `json:"networkId,omitempty"`
-	Progress      string      `json:"progress,omitempty"`
-	RootConfig    string      `json:"rootConfig,omitempty"`
-	RpcProvider   string      `json:"rpcProvider,omitempty"`
-	Version       string      `json:"version,omitempty"`
+	CachePath     string       `json:"cachePath,omitempty"`
+	Caches        []CacheItem  `json:"caches"`
+	Chain         string       `json:"chain,omitempty"`
+	ChainConfig   string       `json:"chainConfig,omitempty"`
+	ChainId       string       `json:"chainId,omitempty"`
+	Chains        []Chain      `json:"chains"`
+	ClientVersion string       `json:"clientVersion,omitempty"`
+	HasEsKey      bool         `json:"hasEsKey,omitempty"`
+	HasPinKey     bool         `json:"hasPinKey,omitempty"`
+	IndexPath     string       `json:"indexPath,omitempty"`
+	IsApi         bool         `json:"isApi,omitempty"`
+	IsArchive     bool         `json:"isArchive,omitempty"`
+	IsScraping    bool         `json:"isScraping,omitempty"`
+	IsTesting     bool         `json:"isTesting,omitempty"`
+	IsTracing     bool         `json:"isTracing,omitempty"`
+	NetworkId     string       `json:"networkId,omitempty"`
+	Progress      string       `json:"progress,omitempty"`
+	RootConfig    string       `json:"rootConfig,omitempty"`
+	RpcProvider   string       `json:"rpcProvider,omitempty"`
+	Version       string       `json:"version,omitempty"`
+	Calcs         *StatusCalcs `json:"calcs,omitempty"`
 	// EXISTING_CODE
 	Meta  *MetaData `json:"meta,omitempty"`
 	Diffs *MetaData `json:"diffs,omitempty"`
@@ -131,7 +132,7 @@ func (s *Status) RawMap(p *ModelProps, needed *[]Labeler) map[string]any {
 	return labelAddresses(p, model, needed)
 }
 
-// CalcMap returns a map containing the calculated/derived fields for this Status.
+// CalcMap returns a map containing the calculated/derived fields for this type.
 func (s *Status) CalcMap(p *ModelProps) map[string]any {
 	model := map[string]any{
 		// EXISTING_CODE
@@ -178,8 +179,36 @@ func (s *Status) CalcMap(p *ModelProps) map[string]any {
 // FinishUnmarshal is used by the cache. It may be unused depending on auto-code-gen
 func (s *Status) FinishUnmarshal(fileVersion uint64) {
 	_ = fileVersion
+	s.Calcs = nil
 	// EXISTING_CODE
 	// EXISTING_CODE
+}
+
+// StatusCalcs holds lazy-loaded calculated fields for Status
+type StatusCalcs struct {
+	// EXISTING_CODE
+	Caches []CacheItem `json:"caches,omitempty"`
+	Chains []Chain     `json:"chains,omitempty"`
+	// EXISTING_CODE
+}
+
+func (s *Status) EnsureCalcs(p *ModelProps, requestedFields []string) error {
+	if s.Calcs != nil {
+		return nil
+	}
+
+	calcMap := s.CalcMap(p)
+	if len(calcMap) == 0 {
+		return nil
+	}
+
+	jsonBytes, err := json.Marshal(calcMap)
+	if err != nil {
+		return err
+	}
+
+	s.Calcs = &StatusCalcs{}
+	return json.Unmarshal(jsonBytes, s.Calcs)
 }
 
 // EXISTING_CODE

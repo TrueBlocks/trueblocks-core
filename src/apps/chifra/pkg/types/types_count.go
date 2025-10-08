@@ -16,7 +16,8 @@ import (
 // EXISTING_CODE
 
 type Count struct {
-	Count uint64 `json:"count"`
+	Count uint64      `json:"count"`
+	Calcs *CountCalcs `json:"calcs,omitempty"`
 	// EXISTING_CODE
 	// EXISTING_CODE
 }
@@ -70,7 +71,7 @@ func (s *Count) RawMap(p *ModelProps, needed *[]Labeler) map[string]any {
 	return labelAddresses(p, model, needed)
 }
 
-// CalcMap returns a map containing the calculated/derived fields for this Count.
+// CalcMap returns a map containing the calculated/derived fields for this type.
 func (s *Count) CalcMap(p *ModelProps) map[string]any {
 	model := map[string]any{
 		// EXISTING_CODE
@@ -86,8 +87,34 @@ func (s *Count) CalcMap(p *ModelProps) map[string]any {
 // FinishUnmarshal is used by the cache. It may be unused depending on auto-code-gen
 func (s *Count) FinishUnmarshal(fileVersion uint64) {
 	_ = fileVersion
+	s.Calcs = nil
 	// EXISTING_CODE
 	// EXISTING_CODE
+}
+
+// CountCalcs holds lazy-loaded calculated fields for Count
+type CountCalcs struct {
+	// EXISTING_CODE
+	// EXISTING_CODE
+}
+
+func (s *Count) EnsureCalcs(p *ModelProps, requestedFields []string) error {
+	if s.Calcs != nil {
+		return nil
+	}
+
+	calcMap := s.CalcMap(p)
+	if len(calcMap) == 0 {
+		return nil
+	}
+
+	jsonBytes, err := json.Marshal(calcMap)
+	if err != nil {
+		return err
+	}
+
+	s.Calcs = &CountCalcs{}
+	return json.Unmarshal(jsonBytes, s.Calcs)
 }
 
 // EXISTING_CODE

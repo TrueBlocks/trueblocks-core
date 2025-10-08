@@ -47,27 +47,28 @@ func NewReward(block, nephew, txFee, uncle *base.Wei) (Rewards, base.Wei) {
 // EXISTING_CODE
 
 type Transaction struct {
-	ArticulatedTx        *Function      `json:"articulatedTx"`
-	BlockHash            base.Hash      `json:"blockHash"`
-	BlockNumber          base.Blknum    `json:"blockNumber"`
-	From                 base.Address   `json:"from"`
-	Gas                  base.Gas       `json:"gas"`
-	GasPrice             base.Gas       `json:"gasPrice"`
-	GasUsed              base.Gas       `json:"gasUsed"`
-	HasToken             bool           `json:"hasToken"`
-	Hash                 base.Hash      `json:"hash"`
-	Input                string         `json:"input"`
-	IsError              bool           `json:"isError"`
-	MaxFeePerGas         base.Gas       `json:"maxFeePerGas"`
-	MaxPriorityFeePerGas base.Gas       `json:"maxPriorityFeePerGas"`
-	Nonce                base.Value     `json:"nonce"`
-	Receipt              *Receipt       `json:"receipt"`
-	Timestamp            base.Timestamp `json:"timestamp"`
-	To                   base.Address   `json:"to"`
-	Traces               []Trace        `json:"traces"`
-	TransactionIndex     base.Txnum     `json:"transactionIndex"`
-	TransactionType      string         `json:"type"`
-	Value                base.Wei       `json:"value"`
+	ArticulatedTx        *Function         `json:"articulatedTx"`
+	BlockHash            base.Hash         `json:"blockHash"`
+	BlockNumber          base.Blknum       `json:"blockNumber"`
+	From                 base.Address      `json:"from"`
+	Gas                  base.Gas          `json:"gas"`
+	GasPrice             base.Gas          `json:"gasPrice"`
+	GasUsed              base.Gas          `json:"gasUsed"`
+	HasToken             bool              `json:"hasToken"`
+	Hash                 base.Hash         `json:"hash"`
+	Input                string            `json:"input"`
+	IsError              bool              `json:"isError"`
+	MaxFeePerGas         base.Gas          `json:"maxFeePerGas"`
+	MaxPriorityFeePerGas base.Gas          `json:"maxPriorityFeePerGas"`
+	Nonce                base.Value        `json:"nonce"`
+	Receipt              *Receipt          `json:"receipt"`
+	Timestamp            base.Timestamp    `json:"timestamp"`
+	To                   base.Address      `json:"to"`
+	Traces               []Trace           `json:"traces"`
+	TransactionIndex     base.Txnum        `json:"transactionIndex"`
+	TransactionType      string            `json:"type"`
+	Value                base.Wei          `json:"value"`
+	Calcs                *TransactionCalcs `json:"calcs,omitempty"`
 	// EXISTING_CODE
 	Message    string       `json:"-"`
 	Rewards    *Rewards     `json:"-"`
@@ -208,19 +209,7 @@ func (s *Transaction) RawMap(p *ModelProps, needed *[]Labeler) map[string]any {
 	return labelAddresses(p, model, needed)
 }
 
-// CalcMap calculated fields:
-// - date (string)
-// - gasCost (base.Wei)
-// - articulatedTx (object, omitempty - only when articulate=true and ArticulatedTx!=nil)
-// - statements ([]object, omitempty - only when format=json and Statements!=nil)
-// - receipt (object, omitempty - only when format=json)
-// - traces ([]object, omitempty - only when format=json)
-// - message (string, omitempty - only when format=json and not articulated)
-// - ethGasPrice (string, omitempty - only when format!=json)
-// - encoding (string, omitempty - only when format!=json)
-// - compressedTx (string, omitempty - only when format!=json)
-// - nTraces (int, omitempty - only when format!=json and traces=true)
-// - ether (string)
+// CalcMap returns a map containing the calculated/derived fields for this type.
 func (s *Transaction) CalcMap(p *ModelProps) map[string]any {
 	model := map[string]any{
 		// EXISTING_CODE
@@ -609,8 +598,46 @@ func (s *Transaction) UnmarshalCache(fileVersion uint64, reader io.Reader) (err 
 // FinishUnmarshal is used by the cache. It may be unused depending on auto-code-gen
 func (s *Transaction) FinishUnmarshal(fileVersion uint64) {
 	_ = fileVersion
+	s.Calcs = nil
 	// EXISTING_CODE
 	// EXISTING_CODE
+}
+
+// TransactionCalcs holds lazy-loaded calculated fields for Transaction
+type TransactionCalcs struct {
+	// EXISTING_CODE
+	Date          string                 `json:"date"`
+	GasCost       base.Wei               `json:"gasCost"`
+	ArticulatedTx map[string]interface{} `json:"articulatedTx,omitempty"`
+	Statements    []map[string]any       `json:"statements,omitempty"`
+	Receipt       map[string]interface{} `json:"receipt,omitempty"`
+	Traces        []map[string]any       `json:"traces,omitempty"`
+	Message       string                 `json:"message,omitempty"`
+	EthGasPrice   string                 `json:"ethGasPrice,omitempty"`
+	Encoding      string                 `json:"encoding,omitempty"`
+	CompressedTx  string                 `json:"compressedTx,omitempty"`
+	NTraces       int                    `json:"nTraces,omitempty"`
+	Ether         string                 `json:"ether"`
+	// EXISTING_CODE
+}
+
+func (s *Transaction) EnsureCalcs(p *ModelProps, requestedFields []string) error {
+	if s.Calcs != nil {
+		return nil
+	}
+
+	calcMap := s.CalcMap(p)
+	if len(calcMap) == 0 {
+		return nil
+	}
+
+	jsonBytes, err := json.Marshal(calcMap)
+	if err != nil {
+		return err
+	}
+
+	s.Calcs = &TransactionCalcs{}
+	return json.Unmarshal(jsonBytes, s.Calcs)
 }
 
 // EXISTING_CODE

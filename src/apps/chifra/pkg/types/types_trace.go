@@ -37,6 +37,7 @@ type Trace struct {
 	TransactionHash  base.Hash      `json:"transactionHash"`
 	TransactionIndex base.Txnum     `json:"transactionIndex"`
 	TraceType        string         `json:"type,omitempty"`
+	Calcs            *TraceCalcs    `json:"calcs,omitempty"`
 	// EXISTING_CODE
 	TraceIndex          base.Tracenum `json:"-"`
 	sortString          string        `json:"-"`
@@ -171,16 +172,7 @@ func (s *Trace) RawMap(p *ModelProps, needed *[]Labeler) map[string]any {
 	return labelAddresses(p, model, needed)
 }
 
-// CalcMap calculated fields:
-// - date (string)
-// - articulatedTrace (object, omitempty - only when format=json and articulate=true and ArticulatedTrace!=nil)
-// - action::from (string, omitempty - only when format!=json and Action!=nil)
-// - action::to (string, omitempty - only when format!=json and Action!=nil)
-// - action::value (string, omitempty - only when format!=json and Action!=nil)
-// - action::ether (string, omitempty - only when format!=json and Action!=nil)
-// - action::input (string, omitempty - only when format!=json and Action!=nil and RefundAddress set)
-// - action::callType (string, omitempty - only when format!=json and Action!=nil and RefundAddress set)
-// - compressedTrace (string, omitempty - only when format!=json and articulated)
+// CalcMap returns a map containing the calculated/derived fields for this type.
 func (s *Trace) CalcMap(p *ModelProps) map[string]any {
 	model := map[string]any{
 		// EXISTING_CODE
@@ -441,8 +433,43 @@ func (s *Trace) UnmarshalCache(fileVersion uint64, reader io.Reader) (err error)
 // FinishUnmarshal is used by the cache. It may be unused depending on auto-code-gen
 func (s *Trace) FinishUnmarshal(fileVersion uint64) {
 	_ = fileVersion
+	s.Calcs = nil
 	// EXISTING_CODE
 	// EXISTING_CODE
+}
+
+// TraceCalcs holds lazy-loaded calculated fields for Trace
+type TraceCalcs struct {
+	// EXISTING_CODE
+	Date             string                 `json:"date"`
+	ArticulatedTrace map[string]interface{} `json:"articulatedTrace,omitempty"`
+	ActionFrom       string                 `json:"action::from,omitempty"`
+	ActionTo         string                 `json:"action::to,omitempty"`
+	ActionValue      string                 `json:"action::value,omitempty"`
+	ActionEther      string                 `json:"action::ether,omitempty"`
+	ActionInput      string                 `json:"action::input,omitempty"`
+	ActionCallType   string                 `json:"action::callType,omitempty"`
+	CompressedTrace  string                 `json:"compressedTrace,omitempty"`
+	// EXISTING_CODE
+}
+
+func (s *Trace) EnsureCalcs(p *ModelProps, requestedFields []string) error {
+	if s.Calcs != nil {
+		return nil
+	}
+
+	calcMap := s.CalcMap(p)
+	if len(calcMap) == 0 {
+		return nil
+	}
+
+	jsonBytes, err := json.Marshal(calcMap)
+	if err != nil {
+		return err
+	}
+
+	s.Calcs = &TraceCalcs{}
+	return json.Unmarshal(jsonBytes, s.Calcs)
 }
 
 // EXISTING_CODE

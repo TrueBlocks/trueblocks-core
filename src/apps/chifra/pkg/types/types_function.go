@@ -25,16 +25,17 @@ import (
 // EXISTING_CODE
 
 type Function struct {
-	Anonymous       bool        `json:"anonymous,omitempty"`
-	Constant        bool        `json:"constant,omitempty"`
-	Encoding        string      `json:"encoding"`
-	Inputs          []Parameter `json:"inputs"`
-	Message         string      `json:"message,omitempty"`
-	Name            string      `json:"name"`
-	Outputs         []Parameter `json:"outputs"`
-	Signature       string      `json:"signature,omitempty"`
-	StateMutability string      `json:"stateMutability,omitempty"`
-	FunctionType    string      `json:"type"`
+	Anonymous       bool           `json:"anonymous,omitempty"`
+	Constant        bool           `json:"constant,omitempty"`
+	Encoding        string         `json:"encoding"`
+	Inputs          []Parameter    `json:"inputs"`
+	Message         string         `json:"message,omitempty"`
+	Name            string         `json:"name"`
+	Outputs         []Parameter    `json:"outputs"`
+	Signature       string         `json:"signature,omitempty"`
+	StateMutability string         `json:"stateMutability,omitempty"`
+	FunctionType    string         `json:"type"`
+	Calcs           *FunctionCalcs `json:"calcs,omitempty"`
 	// EXISTING_CODE
 	payable   bool
 	abiMethod *abi.Method
@@ -122,7 +123,7 @@ func (s *Function) RawMap(p *ModelProps, needed *[]Labeler) map[string]any {
 	return labelAddresses(p, model, needed)
 }
 
-// CalcMap returns a map containing the calculated/derived fields for this Function.
+// CalcMap returns a map containing the calculated/derived fields for this type.
 func (s *Function) CalcMap(p *ModelProps) map[string]any {
 	model := map[string]any{
 		// EXISTING_CODE
@@ -282,8 +283,36 @@ func (s *Function) UnmarshalCache(fileVersion uint64, reader io.Reader) (err err
 // FinishUnmarshal is used by the cache. It may be unused depending on auto-code-gen
 func (s *Function) FinishUnmarshal(fileVersion uint64) {
 	_ = fileVersion
+	s.Calcs = nil
 	// EXISTING_CODE
 	// EXISTING_CODE
+}
+
+// FunctionCalcs holds lazy-loaded calculated fields for Function
+type FunctionCalcs struct {
+	// EXISTING_CODE
+	Inputs  []interface{} `json:"inputs,omitempty"`
+	Outputs []interface{} `json:"outputs,omitempty"`
+	// EXISTING_CODE
+}
+
+func (s *Function) EnsureCalcs(p *ModelProps, requestedFields []string) error {
+	if s.Calcs != nil {
+		return nil
+	}
+
+	calcMap := s.CalcMap(p)
+	if len(calcMap) == 0 {
+		return nil
+	}
+
+	jsonBytes, err := json.Marshal(calcMap)
+	if err != nil {
+		return err
+	}
+
+	s.Calcs = &FunctionCalcs{}
+	return json.Unmarshal(jsonBytes, s.Calcs)
 }
 
 // EXISTING_CODE

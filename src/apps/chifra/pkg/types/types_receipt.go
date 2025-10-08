@@ -23,19 +23,20 @@ import (
 // EXISTING_CODE
 
 type Receipt struct {
-	BlockHash         base.Hash    `json:"blockHash,omitempty"`
-	BlockNumber       base.Blknum  `json:"blockNumber"`
-	ContractAddress   base.Address `json:"contractAddress,omitempty"`
-	CumulativeGasUsed base.Gas     `json:"cumulativeGasUsed,omitempty"`
-	EffectiveGasPrice base.Gas     `json:"effectiveGasPrice,omitempty"`
-	From              base.Address `json:"from,omitempty"`
-	GasUsed           base.Gas     `json:"gasUsed"`
-	IsError           bool         `json:"isError,omitempty"`
-	Logs              []Log        `json:"logs"`
-	Status            base.Value   `json:"status"`
-	To                base.Address `json:"to,omitempty"`
-	TransactionHash   base.Hash    `json:"transactionHash"`
-	TransactionIndex  base.Txnum   `json:"transactionIndex"`
+	BlockHash         base.Hash     `json:"blockHash,omitempty"`
+	BlockNumber       base.Blknum   `json:"blockNumber"`
+	ContractAddress   base.Address  `json:"contractAddress,omitempty"`
+	CumulativeGasUsed base.Gas      `json:"cumulativeGasUsed,omitempty"`
+	EffectiveGasPrice base.Gas      `json:"effectiveGasPrice,omitempty"`
+	From              base.Address  `json:"from,omitempty"`
+	GasUsed           base.Gas      `json:"gasUsed"`
+	IsError           bool          `json:"isError,omitempty"`
+	Logs              []Log         `json:"logs"`
+	Status            base.Value    `json:"status"`
+	To                base.Address  `json:"to,omitempty"`
+	TransactionHash   base.Hash     `json:"transactionHash"`
+	TransactionIndex  base.Txnum    `json:"transactionIndex"`
+	Calcs             *ReceiptCalcs `json:"calcs,omitempty"`
 	// EXISTING_CODE
 	// EXISTING_CODE
 }
@@ -117,7 +118,7 @@ func (s *Receipt) RawMap(p *ModelProps, needed *[]Labeler) map[string]any {
 	return labelAddresses(p, model, needed)
 }
 
-// CalcMap returns a map containing the calculated/derived fields for this Receipt.
+// CalcMap returns a map containing the calculated/derived fields for this type.
 func (s *Receipt) CalcMap(p *ModelProps) map[string]any {
 	model := map[string]any{
 		// EXISTING_CODE
@@ -365,8 +366,36 @@ func (s *Receipt) UnmarshalCache(fileVersion uint64, reader io.Reader) (err erro
 // FinishUnmarshal is used by the cache. It may be unused depending on auto-code-gen
 func (s *Receipt) FinishUnmarshal(fileVersion uint64) {
 	_ = fileVersion
+	s.Calcs = nil
 	// EXISTING_CODE
 	// EXISTING_CODE
+}
+
+// ReceiptCalcs holds lazy-loaded calculated fields for Receipt
+type ReceiptCalcs struct {
+	// EXISTING_CODE
+	ContractAddress base.Address `json:"contractAddress,omitempty"`
+	IsError         bool         `json:"isError,omitempty"`
+	// EXISTING_CODE
+}
+
+func (s *Receipt) EnsureCalcs(p *ModelProps, requestedFields []string) error {
+	if s.Calcs != nil {
+		return nil
+	}
+
+	calcMap := s.CalcMap(p)
+	if len(calcMap) == 0 {
+		return nil
+	}
+
+	jsonBytes, err := json.Marshal(calcMap)
+	if err != nil {
+		return err
+	}
+
+	s.Calcs = &ReceiptCalcs{}
+	return json.Unmarshal(jsonBytes, s.Calcs)
 }
 
 // EXISTING_CODE

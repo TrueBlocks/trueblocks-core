@@ -21,10 +21,11 @@ import (
 // EXISTING_CODE
 
 type Destination struct {
-	Source   string   `json:"source"`
-	Term     string   `json:"term"`
-	TermType DestType `json:"termType"`
-	Url      string   `json:"url"`
+	Source   string            `json:"source"`
+	Term     string            `json:"term"`
+	TermType DestType          `json:"termType"`
+	Url      string            `json:"url"`
+	Calcs    *DestinationCalcs `json:"calcs,omitempty"`
 	// EXISTING_CODE
 	// EXISTING_CODE
 }
@@ -84,7 +85,7 @@ func (s *Destination) RawMap(p *ModelProps, needed *[]Labeler) map[string]any {
 	return labelAddresses(p, model, needed)
 }
 
-// CalcMap returns a map containing the calculated/derived fields for this Destination.
+// CalcMap returns a map containing the calculated/derived fields for this type.
 func (s *Destination) CalcMap(p *ModelProps) map[string]any {
 	model := map[string]any{
 		// EXISTING_CODE
@@ -100,8 +101,34 @@ func (s *Destination) CalcMap(p *ModelProps) map[string]any {
 // FinishUnmarshal is used by the cache. It may be unused depending on auto-code-gen
 func (s *Destination) FinishUnmarshal(fileVersion uint64) {
 	_ = fileVersion
+	s.Calcs = nil
 	// EXISTING_CODE
 	// EXISTING_CODE
+}
+
+// DestinationCalcs holds lazy-loaded calculated fields for Destination
+type DestinationCalcs struct {
+	// EXISTING_CODE
+	// EXISTING_CODE
+}
+
+func (s *Destination) EnsureCalcs(p *ModelProps, requestedFields []string) error {
+	if s.Calcs != nil {
+		return nil
+	}
+
+	calcMap := s.CalcMap(p)
+	if len(calcMap) == 0 {
+		return nil
+	}
+
+	jsonBytes, err := json.Marshal(calcMap)
+	if err != nil {
+		return err
+	}
+
+	s.Calcs = &DestinationCalcs{}
+	return json.Unmarshal(jsonBytes, s.Calcs)
 }
 
 // EXISTING_CODE

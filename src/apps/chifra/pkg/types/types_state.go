@@ -34,6 +34,7 @@ type State struct {
 	Parts       StatePart      `json:"parts"`
 	Proxy       base.Address   `json:"proxy"`
 	Timestamp   base.Timestamp `json:"timestamp"`
+	Calcs       *StateCalcs    `json:"calcs,omitempty"`
 	// EXISTING_CODE
 	// EXISTING_CODE
 }
@@ -114,7 +115,7 @@ func (s *State) RawMap(p *ModelProps, needed *[]Labeler) map[string]any {
 	return labelAddresses(p, model, needed)
 }
 
-// CalcMap returns a map containing the calculated/derived fields for this State.
+// CalcMap returns a map containing the calculated/derived fields for this type.
 func (s *State) CalcMap(p *ModelProps) map[string]any {
 	model := map[string]any{
 		// EXISTING_CODE
@@ -297,8 +298,35 @@ func (s *State) UnmarshalCache(fileVersion uint64, reader io.Reader) (err error)
 // FinishUnmarshal is used by the cache. It may be unused depending on auto-code-gen
 func (s *State) FinishUnmarshal(fileVersion uint64) {
 	_ = fileVersion
+	s.Calcs = nil
 	// EXISTING_CODE
 	// EXISTING_CODE
+}
+
+// StateCalcs holds lazy-loaded calculated fields for State
+type StateCalcs struct {
+	// EXISTING_CODE
+	Date string `json:"date,omitempty"`
+	// EXISTING_CODE
+}
+
+func (s *State) EnsureCalcs(p *ModelProps, requestedFields []string) error {
+	if s.Calcs != nil {
+		return nil
+	}
+
+	calcMap := s.CalcMap(p)
+	if len(calcMap) == 0 {
+		return nil
+	}
+
+	jsonBytes, err := json.Marshal(calcMap)
+	if err != nil {
+		return err
+	}
+
+	s.Calcs = &StateCalcs{}
+	return json.Unmarshal(jsonBytes, s.Calcs)
 }
 
 // EXISTING_CODE

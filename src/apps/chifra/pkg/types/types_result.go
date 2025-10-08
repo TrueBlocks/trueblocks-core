@@ -31,6 +31,7 @@ type Result struct {
 	Name             string         `json:"name"`
 	Signature        string         `json:"signature"`
 	Timestamp        base.Timestamp `json:"timestamp"`
+	Calcs            *ResultCalcs   `json:"calcs,omitempty"`
 	// EXISTING_CODE
 	Values        map[string]string `json:"values"`
 	ReturnedBytes string
@@ -112,7 +113,7 @@ func (s *Result) RawMap(p *ModelProps, needed *[]Labeler) map[string]any {
 	return labelAddresses(p, model, needed)
 }
 
-// CalcMap returns a map containing the calculated/derived fields for this Result.
+// CalcMap returns a map containing the calculated/derived fields for this type.
 func (s *Result) CalcMap(p *ModelProps) map[string]any {
 	model := map[string]any{
 		// EXISTING_CODE
@@ -275,12 +276,40 @@ func (s *Result) UnmarshalCache(fileVersion uint64, reader io.Reader) (err error
 // FinishUnmarshal is used by the cache. It may be unused depending on auto-code-gen
 func (s *Result) FinishUnmarshal(fileVersion uint64) {
 	_ = fileVersion
+	s.Calcs = nil
 	// EXISTING_CODE
 	s.Values = make(map[string]string)
 	for index, output := range s.ArticulatedOut.Outputs {
 		s.Values[output.DisplayName(index)] = fmt.Sprint(output.Value)
 	}
 	// EXISTING_CODE
+}
+
+// ResultCalcs holds lazy-loaded calculated fields for Result
+type ResultCalcs struct {
+	// EXISTING_CODE
+	Date       string      `json:"date,omitempty"`
+	CallResult interface{} `json:"callResult"`
+	// EXISTING_CODE
+}
+
+func (s *Result) EnsureCalcs(p *ModelProps, requestedFields []string) error {
+	if s.Calcs != nil {
+		return nil
+	}
+
+	calcMap := s.CalcMap(p)
+	if len(calcMap) == 0 {
+		return nil
+	}
+
+	jsonBytes, err := json.Marshal(calcMap)
+	if err != nil {
+		return err
+	}
+
+	s.Calcs = &ResultCalcs{}
+	return json.Unmarshal(jsonBytes, s.Calcs)
 }
 
 // EXISTING_CODE

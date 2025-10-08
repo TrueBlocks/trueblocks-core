@@ -46,6 +46,7 @@ type Slurp struct {
 	ValidatorIndex    base.Value     `json:"validatorIndex"`
 	Value             base.Wei       `json:"value"`
 	WithdrawalIndex   base.Value     `json:"withdrawalIndex"`
+	Calcs             *SlurpCalcs    `json:"calcs,omitempty"`
 	// EXISTING_CODE
 	Amount base.Wei `json:"amount"`
 	// EXISTING_CODE
@@ -182,7 +183,7 @@ func (s *Slurp) RawMap(p *ModelProps, needed *[]Labeler) map[string]any {
 	return labelAddresses(p, model, needed)
 }
 
-// CalcMap returns a map containing the calculated/derived fields for this Slurp.
+// CalcMap returns a map containing the calculated/derived fields for this type.
 func (s *Slurp) CalcMap(p *ModelProps) map[string]any {
 	model := map[string]any{
 		// EXISTING_CODE
@@ -563,8 +564,41 @@ func (s *Slurp) UnmarshalCache(fileVersion uint64, reader io.Reader) (err error)
 // FinishUnmarshal is used by the cache. It may be unused depending on auto-code-gen
 func (s *Slurp) FinishUnmarshal(fileVersion uint64) {
 	_ = fileVersion
+	s.Calcs = nil
 	// EXISTING_CODE
 	// EXISTING_CODE
+}
+
+// SlurpCalcs holds lazy-loaded calculated fields for Slurp
+type SlurpCalcs struct {
+	// EXISTING_CODE
+	Date            string      `json:"date"`
+	GasCost         base.Wei    `json:"gasCost,omitempty"`
+	ContractAddress string      `json:"contractAddress,omitempty"`
+	Input           string      `json:"input,omitempty"`
+	ArticulatedTx   interface{} `json:"articulatedTx,omitempty"`
+	HasToken        bool        `json:"hasToken,omitempty"`
+	IsError         bool        `json:"isError,omitempty"`
+	// EXISTING_CODE
+}
+
+func (s *Slurp) EnsureCalcs(p *ModelProps, requestedFields []string) error {
+	if s.Calcs != nil {
+		return nil
+	}
+
+	calcMap := s.CalcMap(p)
+	if len(calcMap) == 0 {
+		return nil
+	}
+
+	jsonBytes, err := json.Marshal(calcMap)
+	if err != nil {
+		return err
+	}
+
+	s.Calcs = &SlurpCalcs{}
+	return json.Unmarshal(jsonBytes, s.Calcs)
 }
 
 // EXISTING_CODE

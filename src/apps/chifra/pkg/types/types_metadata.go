@@ -7,14 +7,15 @@ import (
 )
 
 type MetaData struct {
-	Latest    base.Blknum `json:"client"`
-	Finalized base.Blknum `json:"finalized"`
-	Staging   base.Blknum `json:"staging"`
-	Ripe      base.Blknum `json:"ripe"`
-	Unripe    base.Blknum `json:"unripe"`
-	ChainId   uint64      `json:"chainId,omitempty"`
-	NetworkId uint64      `json:"networkId,omitempty"`
-	Chain     string      `json:"chain,omitempty"`
+	Latest    base.Blknum    `json:"client"`
+	Finalized base.Blknum    `json:"finalized"`
+	Staging   base.Blknum    `json:"staging"`
+	Ripe      base.Blknum    `json:"ripe"`
+	Unripe    base.Blknum    `json:"unripe"`
+	ChainId   uint64         `json:"chainId,omitempty"`
+	NetworkId uint64         `json:"networkId,omitempty"`
+	Chain     string         `json:"chain,omitempty"`
+	Calcs     *MetaDataCalcs `json:"calcs,omitempty"`
 }
 
 func (m *MetaData) String() string {
@@ -95,6 +96,35 @@ func (m *MetaData) NextIndexHeight() base.Blknum {
 // ChainHeight returns the block after the height of the index.
 func (m *MetaData) ChainHeight() base.Blknum {
 	return m.Latest
+}
+
+// MetaDataCalcs holds lazy-loaded calculated fields for MetaData
+type MetaDataCalcs struct {
+	// EXISTING_CODE
+	IndexHeight     base.Blknum `json:"indexHeight"`
+	NextIndexHeight base.Blknum `json:"nextIndexHeight"`
+	ChainHeight     base.Blknum `json:"chainHeight"`
+	StageHeight     base.Blknum `json:"stageHeight"`
+	// EXISTING_CODE
+}
+
+func (s *MetaData) EnsureCalcs(p *ModelProps, requestedFields []string) error {
+	if s.Calcs != nil {
+		return nil
+	}
+
+	calcMap := s.CalcMap(p, make(map[string]any))
+	if len(calcMap) == 0 {
+		return nil
+	}
+
+	jsonBytes, err := json.Marshal(calcMap)
+	if err != nil {
+		return err
+	}
+
+	s.Calcs = &MetaDataCalcs{}
+	return json.Unmarshal(jsonBytes, s.Calcs)
 }
 
 // StageHeight returns the highest block that's been staged

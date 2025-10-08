@@ -18,10 +18,11 @@ import (
 // EXISTING_CODE
 
 type RangeDates struct {
-	FirstDate string         `json:"firstDate,omitempty"`
-	FirstTs   base.Timestamp `json:"firstTs,omitempty"`
-	LastDate  string         `json:"lastDate,omitempty"`
-	LastTs    base.Timestamp `json:"lastTs,omitempty"`
+	FirstDate string           `json:"firstDate,omitempty"`
+	FirstTs   base.Timestamp   `json:"firstTs,omitempty"`
+	LastDate  string           `json:"lastDate,omitempty"`
+	LastTs    base.Timestamp   `json:"lastTs,omitempty"`
+	Calcs     *RangeDatesCalcs `json:"calcs,omitempty"`
 	// EXISTING_CODE
 	// EXISTING_CODE
 }
@@ -81,7 +82,7 @@ func (s *RangeDates) RawMap(p *ModelProps, needed *[]Labeler) map[string]any {
 	return labelAddresses(p, model, needed)
 }
 
-// CalcMap returns a map containing the calculated/derived fields for this RangeDates.
+// CalcMap returns a map containing the calculated/derived fields for this type.
 func (s *RangeDates) CalcMap(p *ModelProps) map[string]any {
 	model := map[string]any{
 		// EXISTING_CODE
@@ -97,8 +98,34 @@ func (s *RangeDates) CalcMap(p *ModelProps) map[string]any {
 // FinishUnmarshal is used by the cache. It may be unused depending on auto-code-gen
 func (s *RangeDates) FinishUnmarshal(fileVersion uint64) {
 	_ = fileVersion
+	s.Calcs = nil
 	// EXISTING_CODE
 	// EXISTING_CODE
+}
+
+// RangeDatesCalcs holds lazy-loaded calculated fields for RangeDates
+type RangeDatesCalcs struct {
+	// EXISTING_CODE
+	// EXISTING_CODE
+}
+
+func (s *RangeDates) EnsureCalcs(p *ModelProps, requestedFields []string) error {
+	if s.Calcs != nil {
+		return nil
+	}
+
+	calcMap := s.CalcMap(p)
+	if len(calcMap) == 0 {
+		return nil
+	}
+
+	jsonBytes, err := json.Marshal(calcMap)
+	if err != nil {
+		return err
+	}
+
+	s.Calcs = &RangeDatesCalcs{}
+	return json.Unmarshal(jsonBytes, s.Calcs)
 }
 
 // EXISTING_CODE

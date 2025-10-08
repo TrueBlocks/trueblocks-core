@@ -36,6 +36,7 @@ type Log struct {
 	Topics           []base.Hash    `json:"topics,omitempty"`
 	TransactionHash  base.Hash      `json:"transactionHash"`
 	TransactionIndex base.Txnum     `json:"transactionIndex"`
+	Calcs            *LogCalcs      `json:"calcs,omitempty"`
 	// EXISTING_CODE
 	// EXISTING_CODE
 }
@@ -115,7 +116,7 @@ func (s *Log) RawMap(p *ModelProps, needed *[]Labeler) map[string]any {
 	return labelAddresses(p, model, needed)
 }
 
-// CalcMap returns a map containing the calculated/derived fields for this Log.
+// CalcMap returns a map containing the calculated/derived fields for this type.
 func (s *Log) CalcMap(p *ModelProps) map[string]any {
 	model := map[string]any{
 		// EXISTING_CODE
@@ -347,8 +348,44 @@ func (s *Log) UnmarshalCache(fileVersion uint64, reader io.Reader) (err error) {
 // FinishUnmarshal is used by the cache. It may be unused depending on auto-code-gen
 func (s *Log) FinishUnmarshal(fileVersion uint64) {
 	_ = fileVersion
+	s.Calcs = nil
 	// EXISTING_CODE
 	// EXISTING_CODE
+}
+
+// LogCalcs holds lazy-loaded calculated fields for Log
+type LogCalcs struct {
+	// EXISTING_CODE
+	Date           string                 `json:"date"`
+	IsNFT          bool                   `json:"isNFT,omitempty"`
+	Data           string                 `json:"data,omitempty"`
+	ArticulatedLog map[string]interface{} `json:"articulatedLog,omitempty"`
+	Topics         []string               `json:"topics,omitempty"`
+	CompressedLog  string                 `json:"compressedLog,omitempty"`
+	Topic0         string                 `json:"topic0,omitempty"`
+	Topic1         string                 `json:"topic1,omitempty"`
+	Topic2         string                 `json:"topic2,omitempty"`
+	Topic3         string                 `json:"topic3,omitempty"`
+	// EXISTING_CODE
+}
+
+func (s *Log) EnsureCalcs(p *ModelProps, requestedFields []string) error {
+	if s.Calcs != nil {
+		return nil
+	}
+
+	calcMap := s.CalcMap(p)
+	if len(calcMap) == 0 {
+		return nil
+	}
+
+	jsonBytes, err := json.Marshal(calcMap)
+	if err != nil {
+		return err
+	}
+
+	s.Calcs = &LogCalcs{}
+	return json.Unmarshal(jsonBytes, s.Calcs)
 }
 
 // EXISTING_CODE

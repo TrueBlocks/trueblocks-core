@@ -23,41 +23,42 @@ import (
 // EXISTING_CODE
 
 type Statement struct {
-	AccountedFor        base.Address   `json:"accountedFor"`
-	AmountIn            base.Wei       `json:"amountIn,omitempty"`
-	AmountOut           base.Wei       `json:"amountOut,omitempty"`
-	Asset               base.Address   `json:"asset"`
-	BegBal              base.Wei       `json:"begBal"`
-	BlockNumber         base.Blknum    `json:"blockNumber"`
-	CorrectAmountIn     base.Wei       `json:"correctAmountIn,omitempty"`
-	CorrectAmountOut    base.Wei       `json:"correctAmountOut,omitempty"`
-	CorrectBegBalIn     base.Wei       `json:"correctBegBalIn,omitempty"`
-	CorrectBegBalOut    base.Wei       `json:"correctBegBalOut,omitempty"`
-	CorrectEndBalIn     base.Wei       `json:"correctEndBalIn,omitempty"`
-	CorrectEndBalOut    base.Wei       `json:"correctEndBalOut,omitempty"`
-	CorrectingReasons   string         `json:"correctingReasons,omitempty"`
-	Decimals            base.Value     `json:"decimals"`
-	EndBal              base.Wei       `json:"endBal"`
-	GasOut              base.Wei       `json:"gasOut,omitempty"`
-	InternalIn          base.Wei       `json:"internalIn,omitempty"`
-	InternalOut         base.Wei       `json:"internalOut,omitempty"`
-	LogIndex            base.Lognum    `json:"logIndex"`
-	MinerBaseRewardIn   base.Wei       `json:"minerBaseRewardIn,omitempty"`
-	MinerNephewRewardIn base.Wei       `json:"minerNephewRewardIn,omitempty"`
-	MinerTxFeeIn        base.Wei       `json:"minerTxFeeIn,omitempty"`
-	MinerUncleRewardIn  base.Wei       `json:"minerUncleRewardIn,omitempty"`
-	PrefundIn           base.Wei       `json:"prefundIn,omitempty"`
-	PrevBal             base.Wei       `json:"prevBal,omitempty"`
-	PriceSource         string         `json:"priceSource"`
-	Recipient           base.Address   `json:"recipient"`
-	SelfDestructIn      base.Wei       `json:"selfDestructIn,omitempty"`
-	SelfDestructOut     base.Wei       `json:"selfDestructOut,omitempty"`
-	Sender              base.Address   `json:"sender"`
-	SpotPrice           base.Float     `json:"spotPrice"`
-	Symbol              string         `json:"symbol"`
-	Timestamp           base.Timestamp `json:"timestamp"`
-	TransactionHash     base.Hash      `json:"transactionHash"`
-	TransactionIndex    base.Txnum     `json:"transactionIndex"`
+	AccountedFor        base.Address    `json:"accountedFor"`
+	AmountIn            base.Wei        `json:"amountIn,omitempty"`
+	AmountOut           base.Wei        `json:"amountOut,omitempty"`
+	Asset               base.Address    `json:"asset"`
+	BegBal              base.Wei        `json:"begBal"`
+	BlockNumber         base.Blknum     `json:"blockNumber"`
+	CorrectAmountIn     base.Wei        `json:"correctAmountIn,omitempty"`
+	CorrectAmountOut    base.Wei        `json:"correctAmountOut,omitempty"`
+	CorrectBegBalIn     base.Wei        `json:"correctBegBalIn,omitempty"`
+	CorrectBegBalOut    base.Wei        `json:"correctBegBalOut,omitempty"`
+	CorrectEndBalIn     base.Wei        `json:"correctEndBalIn,omitempty"`
+	CorrectEndBalOut    base.Wei        `json:"correctEndBalOut,omitempty"`
+	CorrectingReasons   string          `json:"correctingReasons,omitempty"`
+	Decimals            base.Value      `json:"decimals"`
+	EndBal              base.Wei        `json:"endBal"`
+	GasOut              base.Wei        `json:"gasOut,omitempty"`
+	InternalIn          base.Wei        `json:"internalIn,omitempty"`
+	InternalOut         base.Wei        `json:"internalOut,omitempty"`
+	LogIndex            base.Lognum     `json:"logIndex"`
+	MinerBaseRewardIn   base.Wei        `json:"minerBaseRewardIn,omitempty"`
+	MinerNephewRewardIn base.Wei        `json:"minerNephewRewardIn,omitempty"`
+	MinerTxFeeIn        base.Wei        `json:"minerTxFeeIn,omitempty"`
+	MinerUncleRewardIn  base.Wei        `json:"minerUncleRewardIn,omitempty"`
+	PrefundIn           base.Wei        `json:"prefundIn,omitempty"`
+	PrevBal             base.Wei        `json:"prevBal,omitempty"`
+	PriceSource         string          `json:"priceSource"`
+	Recipient           base.Address    `json:"recipient"`
+	SelfDestructIn      base.Wei        `json:"selfDestructIn,omitempty"`
+	SelfDestructOut     base.Wei        `json:"selfDestructOut,omitempty"`
+	Sender              base.Address    `json:"sender"`
+	SpotPrice           base.Float      `json:"spotPrice"`
+	Symbol              string          `json:"symbol"`
+	Timestamp           base.Timestamp  `json:"timestamp"`
+	TransactionHash     base.Hash       `json:"transactionHash"`
+	TransactionIndex    base.Txnum      `json:"transactionIndex"`
+	Calcs               *StatementCalcs `json:"calcs,omitempty"`
 	// EXISTING_CODE
 	CorrectionId base.Value   `json:"correctionId"`
 	Holder       base.Address `json:"holder"`
@@ -174,42 +175,7 @@ func (s *Statement) RawMap(p *ModelProps, needed *[]Labeler) map[string]any {
 	return labelAddresses(p, model, needed)
 }
 
-// CalcMap calculated fields:
-// - amountNet (base.Wei)
-// - begBalDiff (base.Wei)
-// - date (string)
-// - endBalCalc (base.Wei)
-// - endBalDiff (base.Wei)
-// - reconciled (bool)
-// - totalIn (base.Wei)
-// - totalOut (base.Wei)
-// - amountInEth (string, omitempty - only when ether=true)
-// - amountNetEth (string, omitempty - only when ether=true)
-// - amountOutEth (string, omitempty - only when ether=true)
-// - begBalDiffEth (string, omitempty - only when ether=true)
-// - begBalEth (string, omitempty - only when ether=true)
-// - correctAmountInEth (string, omitempty - only when ether=true)
-// - correctAmountOutEth (string, omitempty - only when ether=true)
-// - correctBegBalInEth (string, omitempty - only when ether=true)
-// - correctBegBalOutEth (string, omitempty - only when ether=true)
-// - correctEndBalInEth (string, omitempty - only when ether=true)
-// - correctEndBalOutEth (string, omitempty - only when ether=true)
-// - endBalCalcEth (string, omitempty - only when ether=true)
-// - endBalDiffEth (string, omitempty - only when ether=true)
-// - endBalEth (string, omitempty - only when ether=true)
-// - gasOutEth (string, omitempty - only when ether=true)
-// - internalInEth (string, omitempty - only when ether=true)
-// - internalOutEth (string, omitempty - only when ether=true)
-// - minerBaseRewardInEth (string, omitempty - only when ether=true)
-// - minerNephewRewardInEth (string, omitempty - only when ether=true)
-// - minerTxFeeInEth (string, omitempty - only when ether=true)
-// - minerUncleRewardInEth (string, omitempty - only when ether=true)
-// - prefundInEth (string, omitempty - only when ether=true)
-// - prevBalEth (string, omitempty - only when ether=true)
-// - selfDestructInEth (string, omitempty - only when ether=true)
-// - selfDestructOutEth (string, omitempty - only when ether=true)
-// - totalInEth (string, omitempty - only when ether=true)
-// - totalOutEth (string, omitempty - only when ether=true)
+// CalcMap returns a map containing the calculated/derived fields for this type.
 func (s *Statement) CalcMap(p *ModelProps) map[string]any {
 	model := map[string]any{
 		// EXISTING_CODE
@@ -658,8 +624,69 @@ func (s *Statement) UnmarshalCache(fileVersion uint64, reader io.Reader) (err er
 // FinishUnmarshal is used by the cache. It may be unused depending on auto-code-gen
 func (s *Statement) FinishUnmarshal(fileVersion uint64) {
 	_ = fileVersion
+	s.Calcs = nil
 	// EXISTING_CODE
 	// EXISTING_CODE
+}
+
+// StatementCalcs holds lazy-loaded calculated fields for Statement
+type StatementCalcs struct {
+	// EXISTING_CODE
+	AmountNet              base.Wei `json:"amountNet"`
+	BegBalDiff             base.Wei `json:"begBalDiff"`
+	Date                   string   `json:"date"`
+	EndBalCalc             base.Wei `json:"endBalCalc"`
+	EndBalDiff             base.Wei `json:"endBalDiff"`
+	Reconciled             bool     `json:"reconciled"`
+	TotalIn                base.Wei `json:"totalIn"`
+	TotalOut               base.Wei `json:"totalOut"`
+	AmountInEth            string   `json:"amountInEth,omitempty"`
+	AmountNetEth           string   `json:"amountNetEth,omitempty"`
+	AmountOutEth           string   `json:"amountOutEth,omitempty"`
+	BegBalDiffEth          string   `json:"begBalDiffEth,omitempty"`
+	BegBalEth              string   `json:"begBalEth,omitempty"`
+	CorrectAmountInEth     string   `json:"correctAmountInEth,omitempty"`
+	CorrectAmountOutEth    string   `json:"correctAmountOutEth,omitempty"`
+	CorrectBegBalInEth     string   `json:"correctBegBalInEth,omitempty"`
+	CorrectBegBalOutEth    string   `json:"correctBegBalOutEth,omitempty"`
+	CorrectEndBalInEth     string   `json:"correctEndBalInEth,omitempty"`
+	CorrectEndBalOutEth    string   `json:"correctEndBalOutEth,omitempty"`
+	EndBalCalcEth          string   `json:"endBalCalcEth,omitempty"`
+	EndBalDiffEth          string   `json:"endBalDiffEth,omitempty"`
+	EndBalEth              string   `json:"endBalEth,omitempty"`
+	GasOutEth              string   `json:"gasOutEth,omitempty"`
+	InternalInEth          string   `json:"internalInEth,omitempty"`
+	InternalOutEth         string   `json:"internalOutEth,omitempty"`
+	MinerBaseRewardInEth   string   `json:"minerBaseRewardInEth,omitempty"`
+	MinerNephewRewardInEth string   `json:"minerNephewRewardInEth,omitempty"`
+	MinerTxFeeInEth        string   `json:"minerTxFeeInEth,omitempty"`
+	MinerUncleRewardInEth  string   `json:"minerUncleRewardInEth,omitempty"`
+	PrefundInEth           string   `json:"prefundInEth,omitempty"`
+	PrevBalEth             string   `json:"prevBalEth,omitempty"`
+	SelfDestructInEth      string   `json:"selfDestructInEth,omitempty"`
+	SelfDestructOutEth     string   `json:"selfDestructOutEth,omitempty"`
+	TotalInEth             string   `json:"totalInEth,omitempty"`
+	TotalOutEth            string   `json:"totalOutEth,omitempty"`
+	// EXISTING_CODE
+}
+
+func (s *Statement) EnsureCalcs(p *ModelProps, requestedFields []string) error {
+	if s.Calcs != nil {
+		return nil
+	}
+
+	calcMap := s.CalcMap(p)
+	if len(calcMap) == 0 {
+		return nil
+	}
+
+	jsonBytes, err := json.Marshal(calcMap)
+	if err != nil {
+		return err
+	}
+
+	s.Calcs = &StatementCalcs{}
+	return json.Unmarshal(jsonBytes, s.Calcs)
 }
 
 // EXISTING_CODE

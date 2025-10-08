@@ -18,26 +18,27 @@ import (
 // EXISTING_CODE
 
 type Transfer struct {
-	AmountIn            base.Wei     `json:"amountIn,omitempty"`
-	AmountOut           base.Wei     `json:"amountOut,omitempty"`
-	Asset               base.Address `json:"asset"`
-	BlockNumber         base.Blknum  `json:"blockNumber"`
-	Decimals            uint64       `json:"decimals"`
-	GasOut              base.Wei     `json:"gasOut,omitempty"`
-	Holder              base.Address `json:"holder"`
-	InternalIn          base.Wei     `json:"internalIn,omitempty"`
-	InternalOut         base.Wei     `json:"internalOut,omitempty"`
-	LogIndex            base.Lognum  `json:"logIndex"`
-	MinerBaseRewardIn   base.Wei     `json:"minerBaseRewardIn,omitempty"`
-	MinerNephewRewardIn base.Wei     `json:"minerNephewRewardIn,omitempty"`
-	MinerTxFeeIn        base.Wei     `json:"minerTxFeeIn,omitempty"`
-	MinerUncleRewardIn  base.Wei     `json:"minerUncleRewardIn,omitempty"`
-	PrefundIn           base.Wei     `json:"prefundIn,omitempty"`
-	Recipient           base.Address `json:"recipient"`
-	SelfDestructIn      base.Wei     `json:"selfDestructIn,omitempty"`
-	SelfDestructOut     base.Wei     `json:"selfDestructOut,omitempty"`
-	Sender              base.Address `json:"sender"`
-	TransactionIndex    base.Txnum   `json:"transactionIndex"`
+	AmountIn            base.Wei       `json:"amountIn,omitempty"`
+	AmountOut           base.Wei       `json:"amountOut,omitempty"`
+	Asset               base.Address   `json:"asset"`
+	BlockNumber         base.Blknum    `json:"blockNumber"`
+	Decimals            uint64         `json:"decimals"`
+	GasOut              base.Wei       `json:"gasOut,omitempty"`
+	Holder              base.Address   `json:"holder"`
+	InternalIn          base.Wei       `json:"internalIn,omitempty"`
+	InternalOut         base.Wei       `json:"internalOut,omitempty"`
+	LogIndex            base.Lognum    `json:"logIndex"`
+	MinerBaseRewardIn   base.Wei       `json:"minerBaseRewardIn,omitempty"`
+	MinerNephewRewardIn base.Wei       `json:"minerNephewRewardIn,omitempty"`
+	MinerTxFeeIn        base.Wei       `json:"minerTxFeeIn,omitempty"`
+	MinerUncleRewardIn  base.Wei       `json:"minerUncleRewardIn,omitempty"`
+	PrefundIn           base.Wei       `json:"prefundIn,omitempty"`
+	Recipient           base.Address   `json:"recipient"`
+	SelfDestructIn      base.Wei       `json:"selfDestructIn,omitempty"`
+	SelfDestructOut     base.Wei       `json:"selfDestructOut,omitempty"`
+	Sender              base.Address   `json:"sender"`
+	TransactionIndex    base.Txnum     `json:"transactionIndex"`
+	Calcs               *TransferCalcs `json:"calcs,omitempty"`
 	// EXISTING_CODE
 	Log         *Log         `json:"log,omitempty"`
 	Transaction *Transaction `json:"transaction,omitempty"`
@@ -104,9 +105,7 @@ func (s *Transfer) RawMap(p *ModelProps, needed *[]Labeler) map[string]any {
 	return labelAddresses(p, model, needed)
 }
 
-// CalcMap calculated fields:
-// - amount (base.Wei)
-// - amountEth (string, omitempty - only when ether=true)
+// CalcMap returns a map containing the calculated/derived fields for this type.
 func (s *Transfer) CalcMap(p *ModelProps) map[string]any {
 	model := map[string]any{
 		// EXISTING_CODE
@@ -127,8 +126,36 @@ func (s *Transfer) CalcMap(p *ModelProps) map[string]any {
 // FinishUnmarshal is used by the cache. It may be unused depending on auto-code-gen
 func (s *Transfer) FinishUnmarshal(fileVersion uint64) {
 	_ = fileVersion
+	s.Calcs = nil
 	// EXISTING_CODE
 	// EXISTING_CODE
+}
+
+// TransferCalcs holds lazy-loaded calculated fields for Transfer
+type TransferCalcs struct {
+	// EXISTING_CODE
+	Amount    base.Wei `json:"amount"`
+	AmountEth string   `json:"amountEth,omitempty"`
+	// EXISTING_CODE
+}
+
+func (s *Transfer) EnsureCalcs(p *ModelProps, requestedFields []string) error {
+	if s.Calcs != nil {
+		return nil
+	}
+
+	calcMap := s.CalcMap(p)
+	if len(calcMap) == 0 {
+		return nil
+	}
+
+	jsonBytes, err := json.Marshal(calcMap)
+	if err != nil {
+		return err
+	}
+
+	s.Calcs = &TransferCalcs{}
+	return json.Unmarshal(jsonBytes, s.Calcs)
 }
 
 // EXISTING_CODE

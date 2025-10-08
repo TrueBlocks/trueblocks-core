@@ -31,6 +31,7 @@ type Name struct {
 	Source     string       `json:"source"`
 	Symbol     string       `json:"symbol"`
 	Tags       string       `json:"tags"`
+	Calcs      *NameCalcs   `json:"calcs,omitempty"`
 	// EXISTING_CODE
 	Prefund base.Wei `json:"prefund,omitempty"`
 	Parts   Parts    `json:"parts,omitempty"`
@@ -232,7 +233,7 @@ func (s *Name) RawMap(p *ModelProps, needed *[]Labeler) map[string]any {
 	return labelAddresses(p, model, needed)
 }
 
-// CalcMap returns a map containing the calculated/derived fields for this Name.
+// CalcMap returns a map containing the calculated/derived fields for this type.
 func (s *Name) CalcMap(p *ModelProps) map[string]any {
 	model := map[string]any{
 		// EXISTING_CODE
@@ -248,8 +249,34 @@ func (s *Name) CalcMap(p *ModelProps) map[string]any {
 // FinishUnmarshal is used by the cache. It may be unused depending on auto-code-gen
 func (s *Name) FinishUnmarshal(fileVersion uint64) {
 	_ = fileVersion
+	s.Calcs = nil
 	// EXISTING_CODE
 	// EXISTING_CODE
+}
+
+// NameCalcs holds lazy-loaded calculated fields for Name
+type NameCalcs struct {
+	// EXISTING_CODE
+	// EXISTING_CODE
+}
+
+func (s *Name) EnsureCalcs(p *ModelProps, requestedFields []string) error {
+	if s.Calcs != nil {
+		return nil
+	}
+
+	calcMap := s.CalcMap(p)
+	if len(calcMap) == 0 {
+		return nil
+	}
+
+	jsonBytes, err := json.Marshal(calcMap)
+	if err != nil {
+		return err
+	}
+
+	s.Calcs = &NameCalcs{}
+	return json.Unmarshal(jsonBytes, s.Calcs)
 }
 
 // EXISTING_CODE

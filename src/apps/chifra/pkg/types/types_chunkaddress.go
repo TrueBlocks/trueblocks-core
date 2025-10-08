@@ -18,11 +18,12 @@ import (
 // EXISTING_CODE
 
 type ChunkAddress struct {
-	Address    base.Address `json:"address"`
-	Count      uint64       `json:"count"`
-	Offset     uint64       `json:"offset"`
-	Range      string       `json:"range"`
-	RangeDates *RangeDates  `json:"rangeDates,omitempty"`
+	Address    base.Address       `json:"address"`
+	Count      uint64             `json:"count"`
+	Offset     uint64             `json:"offset"`
+	Range      string             `json:"range"`
+	RangeDates *RangeDates        `json:"rangeDates,omitempty"`
+	Calcs      *ChunkAddressCalcs `json:"calcs,omitempty"`
 	// EXISTING_CODE
 	// EXISTING_CODE
 }
@@ -99,12 +100,7 @@ func (s *ChunkAddress) RawMap(p *ModelProps, needed *[]Labeler) map[string]any {
 	return labelAddresses(p, model, needed)
 }
 
-// CalcMap calculated fields:
-// - rangeDates (object, omitempty - only when verbose=true and format=json)
-// - firstTs (base.Timestamp, omitempty - only when verbose=true and format!=json)
-// - firstDate (string, omitempty - only when verbose=true and format!=json)
-// - lastTs (base.Timestamp, omitempty - only when verbose=true and format!=json)
-// - lastDate (string, omitempty - only when verbose=true and format!=json)
+// CalcMap returns a map containing the calculated/derived fields for this type.
 func (s *ChunkAddress) CalcMap(p *ModelProps) map[string]any {
 	model := map[string]any{
 		// EXISTING_CODE
@@ -133,8 +129,39 @@ func (s *ChunkAddress) CalcMap(p *ModelProps) map[string]any {
 // FinishUnmarshal is used by the cache. It may be unused depending on auto-code-gen
 func (s *ChunkAddress) FinishUnmarshal(fileVersion uint64) {
 	_ = fileVersion
+	s.Calcs = nil
 	// EXISTING_CODE
 	// EXISTING_CODE
+}
+
+// ChunkAddressCalcs holds lazy-loaded calculated fields for ChunkAddress
+type ChunkAddressCalcs struct {
+	// EXISTING_CODE
+	RangeDates interface{}    `json:"rangeDates,omitempty"`
+	FirstTs    base.Timestamp `json:"firstTs,omitempty"`
+	FirstDate  string         `json:"firstDate,omitempty"`
+	LastTs     base.Timestamp `json:"lastTs,omitempty"`
+	LastDate   string         `json:"lastDate,omitempty"`
+	// EXISTING_CODE
+}
+
+func (s *ChunkAddress) EnsureCalcs(p *ModelProps, requestedFields []string) error {
+	if s.Calcs != nil {
+		return nil
+	}
+
+	calcMap := s.CalcMap(p)
+	if len(calcMap) == 0 {
+		return nil
+	}
+
+	jsonBytes, err := json.Marshal(calcMap)
+	if err != nil {
+		return err
+	}
+
+	s.Calcs = &ChunkAddressCalcs{}
+	return json.Unmarshal(jsonBytes, s.Calcs)
 }
 
 // EXISTING_CODE

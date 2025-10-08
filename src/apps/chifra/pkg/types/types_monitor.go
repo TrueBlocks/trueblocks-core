@@ -20,14 +20,15 @@ import (
 // EXISTING_CODE
 
 type Monitor struct {
-	Address     base.Address `json:"address"`
-	Deleted     bool         `json:"deleted"`
-	FileSize    int64        `json:"fileSize"`
-	IsEmpty     bool         `json:"isEmpty"`
-	IsStaged    bool         `json:"isStaged"`
-	LastScanned uint32       `json:"lastScanned"`
-	NRecords    int64        `json:"nRecords"`
-	Name        string       `json:"name"`
+	Address     base.Address  `json:"address"`
+	Deleted     bool          `json:"deleted"`
+	FileSize    int64         `json:"fileSize"`
+	IsEmpty     bool          `json:"isEmpty"`
+	IsStaged    bool          `json:"isStaged"`
+	LastScanned uint32        `json:"lastScanned"`
+	NRecords    int64         `json:"nRecords"`
+	Name        string        `json:"name"`
+	Calcs       *MonitorCalcs `json:"calcs,omitempty"`
 	// EXISTING_CODE
 	// EXISTING_CODE
 }
@@ -105,7 +106,7 @@ func (s *Monitor) RawMap(p *ModelProps, needed *[]Labeler) map[string]any {
 	return labelAddresses(p, model, needed)
 }
 
-// CalcMap returns a map containing the calculated/derived fields for this Monitor.
+// CalcMap returns a map containing the calculated/derived fields for this type.
 func (s *Monitor) CalcMap(p *ModelProps) map[string]any {
 	model := map[string]any{
 		// EXISTING_CODE
@@ -235,8 +236,36 @@ func (s *Monitor) UnmarshalCache(fileVersion uint64, reader io.Reader) (err erro
 // FinishUnmarshal is used by the cache. It may be unused depending on auto-code-gen
 func (s *Monitor) FinishUnmarshal(fileVersion uint64) {
 	_ = fileVersion
+	s.Calcs = nil
 	// EXISTING_CODE
 	// EXISTING_CODE
+}
+
+// MonitorCalcs holds lazy-loaded calculated fields for Monitor
+type MonitorCalcs struct {
+	// EXISTING_CODE
+	IsEmpty  bool `json:"isEmpty,omitempty"`
+	IsStaged bool `json:"isStaged,omitempty"`
+	// EXISTING_CODE
+}
+
+func (s *Monitor) EnsureCalcs(p *ModelProps, requestedFields []string) error {
+	if s.Calcs != nil {
+		return nil
+	}
+
+	calcMap := s.CalcMap(p)
+	if len(calcMap) == 0 {
+		return nil
+	}
+
+	jsonBytes, err := json.Marshal(calcMap)
+	if err != nil {
+		return err
+	}
+
+	s.Calcs = &MonitorCalcs{}
+	return json.Unmarshal(jsonBytes, s.Calcs)
 }
 
 // EXISTING_CODE

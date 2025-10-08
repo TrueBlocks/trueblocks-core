@@ -18,12 +18,13 @@ import (
 // EXISTING_CODE
 
 type ChunkRecord struct {
-	BloomHash  base.IpfsHash `json:"bloomHash"`
-	BloomSize  int64         `json:"bloomSize"`
-	IndexHash  base.IpfsHash `json:"indexHash"`
-	IndexSize  int64         `json:"indexSize"`
-	Range      string        `json:"range"`
-	RangeDates *RangeDates   `json:"rangeDates,omitempty"`
+	BloomHash  base.IpfsHash     `json:"bloomHash"`
+	BloomSize  int64             `json:"bloomSize"`
+	IndexHash  base.IpfsHash     `json:"indexHash"`
+	IndexSize  int64             `json:"indexSize"`
+	Range      string            `json:"range"`
+	RangeDates *RangeDates       `json:"rangeDates,omitempty"`
+	Calcs      *ChunkRecordCalcs `json:"calcs,omitempty"`
 	// EXISTING_CODE
 	// EXISTING_CODE
 }
@@ -93,7 +94,7 @@ func (s *ChunkRecord) RawMap(p *ModelProps, needed *[]Labeler) map[string]any {
 	return labelAddresses(p, model, needed)
 }
 
-// CalcMap returns a map containing the calculated/derived fields for this ChunkRecord.
+// CalcMap returns a map containing the calculated/derived fields for this type.
 func (s *ChunkRecord) CalcMap(p *ModelProps) map[string]any {
 	model := map[string]any{
 		// EXISTING_CODE
@@ -122,8 +123,39 @@ func (s *ChunkRecord) CalcMap(p *ModelProps) map[string]any {
 // FinishUnmarshal is used by the cache. It may be unused depending on auto-code-gen
 func (s *ChunkRecord) FinishUnmarshal(fileVersion uint64) {
 	_ = fileVersion
+	s.Calcs = nil
 	// EXISTING_CODE
 	// EXISTING_CODE
+}
+
+// ChunkRecordCalcs holds lazy-loaded calculated fields for ChunkRecord
+type ChunkRecordCalcs struct {
+	// EXISTING_CODE
+	RangeDates interface{}    `json:"rangeDates,omitempty"`
+	FirstTs    base.Timestamp `json:"firstTs,omitempty"`
+	FirstDate  string         `json:"firstDate,omitempty"`
+	LastTs     base.Timestamp `json:"lastTs,omitempty"`
+	LastDate   string         `json:"lastDate,omitempty"`
+	// EXISTING_CODE
+}
+
+func (s *ChunkRecord) EnsureCalcs(p *ModelProps, requestedFields []string) error {
+	if s.Calcs != nil {
+		return nil
+	}
+
+	calcMap := s.CalcMap(p)
+	if len(calcMap) == 0 {
+		return nil
+	}
+
+	jsonBytes, err := json.Marshal(calcMap)
+	if err != nil {
+		return err
+	}
+
+	s.Calcs = &ChunkRecordCalcs{}
+	return json.Unmarshal(jsonBytes, s.Calcs)
 }
 
 // EXISTING_CODE

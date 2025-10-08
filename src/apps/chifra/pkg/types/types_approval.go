@@ -28,6 +28,7 @@ type Approval struct {
 	Spender      base.Address   `json:"spender"`
 	Timestamp    base.Timestamp `json:"timestamp"`
 	Token        base.Address   `json:"token"`
+	Calcs        *ApprovalCalcs `json:"calcs,omitempty"`
 	// EXISTING_CODE
 	// EXISTING_CODE
 }
@@ -108,9 +109,7 @@ func (s *Approval) RawMap(p *ModelProps, needed *[]Labeler) map[string]any {
 	return labelAddresses(p, model, needed)
 }
 
-// CalcMap calculated fields:
-// - date (string)
-// - lastAppDate (string)
+// CalcMap returns a map containing the calculated/derived fields for this type.
 func (s *Approval) CalcMap(p *ModelProps) map[string]any {
 	model := map[string]any{
 		// EXISTING_CODE
@@ -132,8 +131,36 @@ func (s *Approval) Date() string {
 // FinishUnmarshal is used by the cache. It may be unused depending on auto-code-gen
 func (s *Approval) FinishUnmarshal(fileVersion uint64) {
 	_ = fileVersion
+	s.Calcs = nil
 	// EXISTING_CODE
 	// EXISTING_CODE
+}
+
+// ApprovalCalcs holds lazy-loaded calculated fields for Approval
+type ApprovalCalcs struct {
+	// EXISTING_CODE
+	Date        string `json:"date"`
+	LastAppDate string `json:"lastAppDate"`
+	// EXISTING_CODE
+}
+
+func (s *Approval) EnsureCalcs(p *ModelProps, requestedFields []string) error {
+	if s.Calcs != nil {
+		return nil
+	}
+
+	calcMap := s.CalcMap(p)
+	if len(calcMap) == 0 {
+		return nil
+	}
+
+	jsonBytes, err := json.Marshal(calcMap)
+	if err != nil {
+		return err
+	}
+
+	s.Calcs = &ApprovalCalcs{}
+	return json.Unmarshal(jsonBytes, s.Calcs)
 }
 
 // EXISTING_CODE

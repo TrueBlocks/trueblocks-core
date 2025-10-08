@@ -14,8 +14,9 @@ import "encoding/json"
 // EXISTING_CODE
 
 type Message struct {
-	Msg string `json:"msg,omitempty"`
-	Num int64  `json:"num,omitempty"`
+	Msg   string        `json:"msg,omitempty"`
+	Num   int64         `json:"num,omitempty"`
+	Calcs *MessageCalcs `json:"calcs,omitempty"`
 	// EXISTING_CODE
 	// EXISTING_CODE
 }
@@ -77,7 +78,7 @@ func (s *Message) RawMap(p *ModelProps, needed *[]Labeler) map[string]any {
 	return labelAddresses(p, model, needed)
 }
 
-// CalcMap returns a map containing the calculated/derived fields for this Message.
+// CalcMap returns a map containing the calculated/derived fields for this type.
 func (s *Message) CalcMap(p *ModelProps) map[string]any {
 	model := map[string]any{
 		// EXISTING_CODE
@@ -93,8 +94,34 @@ func (s *Message) CalcMap(p *ModelProps) map[string]any {
 // FinishUnmarshal is used by the cache. It may be unused depending on auto-code-gen
 func (s *Message) FinishUnmarshal(fileVersion uint64) {
 	_ = fileVersion
+	s.Calcs = nil
 	// EXISTING_CODE
 	// EXISTING_CODE
+}
+
+// MessageCalcs holds lazy-loaded calculated fields for Message
+type MessageCalcs struct {
+	// EXISTING_CODE
+	// EXISTING_CODE
+}
+
+func (s *Message) EnsureCalcs(p *ModelProps, requestedFields []string) error {
+	if s.Calcs != nil {
+		return nil
+	}
+
+	calcMap := s.CalcMap(p)
+	if len(calcMap) == 0 {
+		return nil
+	}
+
+	jsonBytes, err := json.Marshal(calcMap)
+	if err != nil {
+		return err
+	}
+
+	s.Calcs = &MessageCalcs{}
+	return json.Unmarshal(jsonBytes, s.Calcs)
 }
 
 // EXISTING_CODE

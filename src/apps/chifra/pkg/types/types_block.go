@@ -35,6 +35,7 @@ type Block struct {
 	Transactions  []Transaction  `json:"transactions"`
 	Uncles        []base.Hash    `json:"uncles,omitempty"`
 	Withdrawals   []Withdrawal   `json:"withdrawals,omitempty"`
+	Calcs         *BlockCalcs    `json:"calcs,omitempty"`
 	// EXISTING_CODE
 	Number base.Blknum `json:"number"`
 	// EXISTING_CODE
@@ -148,8 +149,7 @@ func (s *Block) RawMap(p *ModelProps, needed *[]Labeler) map[string]any {
 	return labelAddresses(p, model, needed)
 }
 
-// CalcMap calculated fields:
-// - date (string)
+// CalcMap returns a map containing the calculated/derived fields for this type.
 func (s *Block) CalcMap(p *ModelProps) map[string]any {
 	model := map[string]any{
 		// EXISTING_CODE
@@ -340,8 +340,35 @@ func (s *Block) UnmarshalCache(fileVersion uint64, reader io.Reader) (err error)
 // FinishUnmarshal is used by the cache. It may be unused depending on auto-code-gen
 func (s *Block) FinishUnmarshal(fileVersion uint64) {
 	_ = fileVersion
+	s.Calcs = nil
 	// EXISTING_CODE
 	// EXISTING_CODE
+}
+
+// BlockCalcs holds lazy-loaded calculated fields for Block
+type BlockCalcs struct {
+	// EXISTING_CODE
+	Date string `json:"date"`
+	// EXISTING_CODE
+}
+
+func (s *Block) EnsureCalcs(p *ModelProps, requestedFields []string) error {
+	if s.Calcs != nil {
+		return nil
+	}
+
+	calcMap := s.CalcMap(p)
+	if len(calcMap) == 0 {
+		return nil
+	}
+
+	jsonBytes, err := json.Marshal(calcMap)
+	if err != nil {
+		return err
+	}
+
+	s.Calcs = &BlockCalcs{}
+	return json.Unmarshal(jsonBytes, s.Calcs)
 }
 
 // EXISTING_CODE

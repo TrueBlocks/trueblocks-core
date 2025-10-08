@@ -14,13 +14,14 @@ import "encoding/json"
 // EXISTING_CODE
 
 type Chain struct {
-	Chain          string `json:"chain"`
-	ChainId        uint64 `json:"chainId"`
-	IpfsGateway    string `json:"ipfsGateway"`
-	LocalExplorer  string `json:"localExplorer"`
-	RemoteExplorer string `json:"remoteExplorer"`
-	RpcProvider    string `json:"rpcProvider"`
-	Symbol         string `json:"symbol"`
+	Chain          string      `json:"chain"`
+	ChainId        uint64      `json:"chainId"`
+	IpfsGateway    string      `json:"ipfsGateway"`
+	LocalExplorer  string      `json:"localExplorer"`
+	RemoteExplorer string      `json:"remoteExplorer"`
+	RpcProvider    string      `json:"rpcProvider"`
+	Symbol         string      `json:"symbol"`
+	Calcs          *ChainCalcs `json:"calcs,omitempty"`
 	// EXISTING_CODE
 	// EXISTING_CODE
 }
@@ -86,7 +87,7 @@ func (s *Chain) RawMap(p *ModelProps, needed *[]Labeler) map[string]any {
 	return labelAddresses(p, model, needed)
 }
 
-// CalcMap calculated fields: (none)
+// CalcMap returns a map containing the calculated/derived fields for this type.
 func (s *Chain) CalcMap(p *ModelProps) map[string]any {
 	model := map[string]any{
 		// EXISTING_CODE
@@ -102,8 +103,34 @@ func (s *Chain) CalcMap(p *ModelProps) map[string]any {
 // FinishUnmarshal is used by the cache. It may be unused depending on auto-code-gen
 func (s *Chain) FinishUnmarshal(fileVersion uint64) {
 	_ = fileVersion
+	s.Calcs = nil
 	// EXISTING_CODE
 	// EXISTING_CODE
+}
+
+// ChainCalcs holds lazy-loaded calculated fields for Chain
+type ChainCalcs struct {
+	// EXISTING_CODE
+	// EXISTING_CODE
+}
+
+func (s *Chain) EnsureCalcs(p *ModelProps, requestedFields []string) error {
+	if s.Calcs != nil {
+		return nil
+	}
+
+	calcMap := s.CalcMap(p)
+	if len(calcMap) == 0 {
+		return nil
+	}
+
+	jsonBytes, err := json.Marshal(calcMap)
+	if err != nil {
+		return err
+	}
+
+	s.Calcs = &ChainCalcs{}
+	return json.Unmarshal(jsonBytes, s.Calcs)
 }
 
 // EXISTING_CODE
