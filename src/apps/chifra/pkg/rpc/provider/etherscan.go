@@ -23,7 +23,7 @@ const etherscanFirstPage = 1
 const etherscanRequestsPerSecond = 5
 const etherscanMaxPerPage = 3000
 
-var etherscanBaseUrl = "https://api.etherscan.io"
+var etherscanBaseUrl = "https://api.etherscan.io/v2"
 
 type EtherscanProvider struct {
 	printProgress bool
@@ -295,7 +295,7 @@ func (p *EtherscanProvider) url(value string, paginator Paginator, requestType s
 		tt = "txhash"
 	}
 
-	const str = "[{BASE_URL}]/api?module=[{MODULE}]&sort=asc&action=[{ACTION}]&[{TT}]=[{VALUE}]&page=[{PAGE}]&offset=[{PER_PAGE}]"
+	const str = "[{BASE_URL}]/api?chainid=1&module=[{MODULE}]&sort=asc&action=[{ACTION}]&[{TT}]=[{VALUE}]&page=[{PAGE}]&offset=[{PER_PAGE}]"
 	ret := strings.ReplaceAll(str, "[{BASE_URL}]", p.baseUrl)
 	ret = strings.ReplaceAll(ret, "[{MODULE}]", module)
 	ret = strings.ReplaceAll(ret, "[{TT}]", tt)

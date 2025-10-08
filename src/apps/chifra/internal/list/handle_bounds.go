@@ -58,5 +58,8 @@ func (opts *ListOptions) HandleBounds(rCtx *output.RenderCtx, monitorArray []mon
 		}
 	}
 
-	return output.StreamMany(rCtx, fetchData, opts.Globals.OutputOpts())
+	extraOpts := map[string]any{
+		"appearances": true,
+	}
+	return output.StreamMany(rCtx, fetchData, opts.Globals.OutputOptsWithExtra(extraOpts))
 }

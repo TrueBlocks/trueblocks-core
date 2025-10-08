@@ -23,19 +23,20 @@ import (
 // EXISTING_CODE
 
 type Receipt struct {
-	BlockHash         base.Hash    `json:"blockHash,omitempty"`
-	BlockNumber       base.Blknum  `json:"blockNumber"`
-	ContractAddress   base.Address `json:"contractAddress,omitempty"`
-	CumulativeGasUsed base.Gas     `json:"cumulativeGasUsed,omitempty"`
-	EffectiveGasPrice base.Gas     `json:"effectiveGasPrice,omitempty"`
-	From              base.Address `json:"from,omitempty"`
-	GasUsed           base.Gas     `json:"gasUsed"`
-	IsError           bool         `json:"isError,omitempty"`
-	Logs              []Log        `json:"logs"`
-	Status            base.Value   `json:"status"`
-	To                base.Address `json:"to,omitempty"`
-	TransactionHash   base.Hash    `json:"transactionHash"`
-	TransactionIndex  base.Txnum   `json:"transactionIndex"`
+	BlockHash         base.Hash     `json:"blockHash,omitempty"`
+	BlockNumber       base.Blknum   `json:"blockNumber"`
+	ContractAddress   base.Address  `json:"contractAddress,omitempty"`
+	CumulativeGasUsed base.Gas      `json:"cumulativeGasUsed,omitempty"`
+	EffectiveGasPrice base.Gas      `json:"effectiveGasPrice,omitempty"`
+	From              base.Address  `json:"from,omitempty"`
+	GasUsed           base.Gas      `json:"gasUsed"`
+	IsError           bool          `json:"isError,omitempty"`
+	Logs              []Log         `json:"logs"`
+	Status            base.Value    `json:"status"`
+	To                base.Address  `json:"to,omitempty"`
+	TransactionHash   base.Hash     `json:"transactionHash"`
+	TransactionIndex  base.Txnum    `json:"transactionIndex"`
+	Calcs             *ReceiptCalcs `json:"calcs,omitempty"`
 	// EXISTING_CODE
 	// EXISTING_CODE
 }
@@ -46,22 +47,20 @@ func (s Receipt) String() string {
 }
 
 func (s *Receipt) Model(chain, format string, verbose bool, extraOpts map[string]any) Model {
-	_ = chain
-	_ = format
-	_ = verbose
-	_ = extraOpts
-	var model = map[string]any{}
-	var order = []string{}
+	props := NewModelProps(chain, format, verbose, extraOpts)
 
-	// EXISTING_CODE
-	model = map[string]any{
-		"blockNumber":      s.BlockNumber,
-		"gasUsed":          s.GasUsed,
-		"status":           s.Status,
-		"transactionHash":  s.TransactionHash,
-		"transactionIndex": s.TransactionIndex,
+	rawNames := []Labeler{
+		NewLabeler(s.ContractAddress, "contractAddress"),
+		NewLabeler(s.From, "from"),
+		NewLabeler(s.To, "to"),
+	}
+	model := s.RawMap(props, &rawNames)
+	for k, v := range s.CalcMap(props) {
+		model[k] = v
 	}
 
+	var order = []string{}
+	// EXISTING_CODE
 	order = []string{
 		"blockNumber",
 		"transactionIndex",
@@ -70,14 +69,71 @@ func (s *Receipt) Model(chain, format string, verbose bool, extraOpts map[string
 		"gasUsed",
 	}
 
-	if format == "json" {
+	if format != "json" {
+		order = append(order, "logsCnt")
+		order = append(order, "isError")
+		if verbose {
+			order = append(order, "contractAddress")
+		}
+	} else {
+		if s.IsError {
+			order = append(order, "isError")
+		}
+		if verbose {
+			order = append(order, "blockHash")
+			order = append(order, "cumulativeGasUsed")
+		}
+	}
+	// EXISTING_CODE
+
+	for _, item := range rawNames {
+		key := item.name + "Name"
+		if _, exists := model[key]; exists {
+			order = append(order, key)
+		}
+	}
+	order = reorderFields(order)
+
+	return Model{
+		Data:  model,
+		Order: order,
+	}
+}
+
+// RawMap returns a map containing only the raw/base fields for this Receipt.
+func (s *Receipt) RawMap(p *ModelProps, needed *[]Labeler) map[string]any {
+	model := map[string]any{
+		// EXISTING_CODE
+		"blockNumber":      s.BlockNumber,
+		"gasUsed":          s.GasUsed,
+		"status":           s.Status,
+		"transactionHash":  s.TransactionHash,
+		"transactionIndex": s.TransactionIndex,
+		// EXISTING_CODE
+	}
+
+	// EXISTING_CODE
+	// EXISTING_CODE
+
+	return labelAddresses(p, model, needed)
+}
+
+// CalcMap returns a map containing the calculated/derived fields for this type.
+func (s *Receipt) CalcMap(p *ModelProps) map[string]any {
+	_ = p // delint
+	model := map[string]any{
+		// EXISTING_CODE
+		// EXISTING_CODE
+	}
+
+	// EXISTING_CODE
+	if p.Format == "json" {
 		if !s.ContractAddress.IsZero() {
 			model["contractAddress"] = s.ContractAddress
 		}
 
 		if s.IsError {
 			model["isError"] = s.IsError
-			order = append(order, "isError")
 		}
 
 		if s.Logs == nil {
@@ -85,17 +141,14 @@ func (s *Receipt) Model(chain, format string, verbose bool, extraOpts map[string
 		} else {
 			logs := make([]map[string]any, 0, len(s.Logs))
 			for _, log := range s.Logs {
-				logs = append(logs, log.Model(chain, format, verbose, extraOpts).Data)
+				logs = append(logs, log.Model(p.Chain, p.Format, p.Verbose, p.ExtraOpts).Data)
 			}
 			model["logs"] = logs
 		}
 
-		if verbose {
+		if p.Verbose {
 			model["blockHash"] = s.BlockHash
-			order = append(order, "blockHash")
-
 			model["cumulativeGasUsed"] = s.CumulativeGasUsed
-			order = append(order, "cumulativeGasUsed")
 		}
 		if !s.From.IsZero() {
 			model["from"] = s.From
@@ -106,38 +159,15 @@ func (s *Receipt) Model(chain, format string, verbose bool, extraOpts map[string
 
 	} else {
 		model["logsCnt"] = len(s.Logs)
-		order = append(order, "logsCnt")
-
 		model["isError"] = s.IsError
-		order = append(order, "isError")
 
-		if verbose {
+		if p.Verbose {
 			model["contractAddress"] = s.ContractAddress.Hex()
-			order = append(order, "contractAddress")
 		}
 	}
-
-	items := []namer{
-		{addr: s.ContractAddress, name: "contractName"},
-		{addr: s.From, name: "fromName"},
-		{addr: s.To, name: "toName"},
-	}
-	for _, item := range items {
-		if name, loaded, found := nameAddress(extraOpts, item.addr); found {
-			model[item.name] = name.Name
-			order = append(order, item.name)
-		} else if loaded && format != "json" {
-			model[item.name] = ""
-			order = append(order, item.name)
-		}
-	}
-	order = reorderOrdering(order)
 	// EXISTING_CODE
 
-	return Model{
-		Data:  model,
-		Order: order,
-	}
+	return model
 }
 
 func (s *ReceiptGroup) CacheLocations() (string, string, string) {
@@ -337,8 +367,37 @@ func (s *Receipt) UnmarshalCache(fileVersion uint64, reader io.Reader) (err erro
 // FinishUnmarshal is used by the cache. It may be unused depending on auto-code-gen
 func (s *Receipt) FinishUnmarshal(fileVersion uint64) {
 	_ = fileVersion
+	s.Calcs = nil
 	// EXISTING_CODE
 	// EXISTING_CODE
+}
+
+// ReceiptCalcs holds lazy-loaded calculated fields for Receipt
+type ReceiptCalcs struct {
+	// EXISTING_CODE
+	ContractAddress base.Address `json:"contractAddress,omitempty"`
+	IsError         bool         `json:"isError,omitempty"`
+	// EXISTING_CODE
+}
+
+func (s *Receipt) EnsureCalcs(p *ModelProps, fieldFilter []string) error {
+	_ = fieldFilter // delint
+	if s.Calcs != nil {
+		return nil
+	}
+
+	calcMap := s.CalcMap(p)
+	if len(calcMap) == 0 {
+		return nil
+	}
+
+	jsonBytes, err := json.Marshal(calcMap)
+	if err != nil {
+		return err
+	}
+
+	s.Calcs = &ReceiptCalcs{}
+	return json.Unmarshal(jsonBytes, s.Calcs)
 }
 
 // EXISTING_CODE

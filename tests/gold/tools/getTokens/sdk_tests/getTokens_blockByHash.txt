@@ -14,6 +14,7 @@ Format:  json
       "blockNumber": 3001001,
       "decimals": 18,
       "holder": "0xcfb98637bcae43c13323eaa1731ced2b716962fd",
+      "holderName": "Nimiq Network Interim Token",
       "name": "OMGToken",
       "symbol": "OMG"
     },
@@ -24,6 +25,7 @@ Format:  json
       "blockNumber": 4401001,
       "decimals": 18,
       "holder": "0xcfb98637bcae43c13323eaa1731ced2b716962fd",
+      "holderName": "Nimiq Network Interim Token",
       "name": "OMGToken",
       "symbol": "OMG"
     }

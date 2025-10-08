@@ -18,9 +18,10 @@ import (
 // EXISTING_CODE
 
 type Timestamp struct {
-	BlockNumber base.Blknum    `json:"blockNumber"`
-	Diff        int64          `json:"diff"`
-	Timestamp   base.Timestamp `json:"timestamp"`
+	BlockNumber base.Blknum     `json:"blockNumber"`
+	Diff        int64           `json:"diff"`
+	Timestamp   base.Timestamp  `json:"timestamp"`
+	Calcs       *TimestampCalcs `json:"calcs,omitempty"`
 	// EXISTING_CODE
 	// EXISTING_CODE
 }
@@ -31,19 +32,16 @@ func (s Timestamp) String() string {
 }
 
 func (s *Timestamp) Model(chain, format string, verbose bool, extraOpts map[string]any) Model {
-	_ = chain
-	_ = format
-	_ = verbose
-	_ = extraOpts
-	var model = map[string]any{}
-	var order = []string{}
+	props := NewModelProps(chain, format, verbose, extraOpts)
 
-	// EXISTING_CODE
-	model = map[string]any{
-		"blockNumber": s.BlockNumber,
-		"timestamp":   s.Timestamp,
-		"diff":        s.Diff,
+	rawNames := []Labeler{}
+	model := s.RawMap(props, &rawNames)
+	for k, v := range s.CalcMap(props) {
+		model[k] = v
 	}
+
+	var order = []string{}
+	// EXISTING_CODE
 	order = []string{
 		"blockNumber",
 		"timestamp",
@@ -51,10 +49,49 @@ func (s *Timestamp) Model(chain, format string, verbose bool, extraOpts map[stri
 	}
 	// EXISTING_CODE
 
+	for _, item := range rawNames {
+		key := item.name + "Name"
+		if _, exists := model[key]; exists {
+			order = append(order, key)
+		}
+	}
+	order = reorderFields(order)
+
 	return Model{
 		Data:  model,
 		Order: order,
 	}
+}
+
+// RawMap returns a map containing only the raw/base fields for this Timestamp.
+func (s *Timestamp) RawMap(p *ModelProps, needed *[]Labeler) map[string]any {
+	model := map[string]any{
+		// EXISTING_CODE
+		"blockNumber": s.BlockNumber,
+		"timestamp":   s.Timestamp,
+		"diff":        s.Diff,
+		// EXISTING_CODE
+	}
+
+	// EXISTING_CODE
+	// EXISTING_CODE
+
+	return labelAddresses(p, model, needed)
+}
+
+// CalcMap returns a map containing the calculated/derived fields for this type.
+func (s *Timestamp) CalcMap(p *ModelProps) map[string]any {
+	_ = p // delint
+	model := map[string]any{
+		// EXISTING_CODE
+		"date": s.Date(),
+		// EXISTING_CODE
+	}
+
+	// EXISTING_CODE
+	// EXISTING_CODE
+
+	return model
 }
 
 func (s *Timestamp) Date() string {
@@ -64,8 +101,36 @@ func (s *Timestamp) Date() string {
 // FinishUnmarshal is used by the cache. It may be unused depending on auto-code-gen
 func (s *Timestamp) FinishUnmarshal(fileVersion uint64) {
 	_ = fileVersion
+	s.Calcs = nil
 	// EXISTING_CODE
 	// EXISTING_CODE
+}
+
+// TimestampCalcs holds lazy-loaded calculated fields for Timestamp
+type TimestampCalcs struct {
+	// EXISTING_CODE
+	Date string `json:"date"`
+	// EXISTING_CODE
+}
+
+func (s *Timestamp) EnsureCalcs(p *ModelProps, fieldFilter []string) error {
+	_ = fieldFilter // delint
+	if s.Calcs != nil {
+		return nil
+	}
+
+	calcMap := s.CalcMap(p)
+	if len(calcMap) == 0 {
+		return nil
+	}
+
+	jsonBytes, err := json.Marshal(calcMap)
+	if err != nil {
+		return err
+	}
+
+	s.Calcs = &TimestampCalcs{}
+	return json.Unmarshal(jsonBytes, s.Calcs)
 }
 
 // EXISTING_CODE

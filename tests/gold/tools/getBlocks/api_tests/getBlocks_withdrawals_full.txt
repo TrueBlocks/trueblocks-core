@@ -5,6 +5,7 @@ blocks?blocks=17034900&hashes
       "blockNumber": 17034900,
       "date": "2023-04-12 22:35:23 UTC",
       "hash": "0x06e3ed937d795a5c33831880806d3f1726d6f5756f1f7c109ed5572171c73d4a",
+      "miner": "0x95222290dd7278aa3ddd389cc1e1d165cc4bafe5",
       "parentHash": "0x0a7f8a484260cd1598e02cb528f7497092000c4bf788ce4dd568f8676712c1f2",
       "timestamp": 1681338923,
       "tx_hashes": [

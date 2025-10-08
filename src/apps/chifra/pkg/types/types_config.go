@@ -16,6 +16,7 @@ type Config struct {
 	Pinning   configtypes.PinningGroup          `json:"pinning" toml:"pinning"`
 	Unchained configtypes.UnchainedGroup        `json:"unchained" toml:"unchained,omitempty" comment:"Do not edit these values unless instructed to do so."`
 	Chains    map[string]configtypes.ChainGroup `json:"chains" toml:"chains"`
+	Calcs     *ConfigCalcs                      `json:"calcs,omitempty"`
 }
 
 func (s Config) String() string {
@@ -24,33 +25,85 @@ func (s Config) String() string {
 }
 
 func (s *Config) Model(chain, format string, verbose bool, extraOpts map[string]any) Model {
-	_ = chain
-	_ = format
-	_ = verbose
-	_ = extraOpts
-	// keys := map[string]any{}
-	// for key, value := range s.Keys {
-	// 	keys[key] = value
-	// }
-	c := map[string]any{}
-	for key, value := range s.Chains {
-		c[key] = value
+	props := NewModelProps(chain, format, verbose, extraOpts)
+
+	rawNames := []Labeler{}
+	model := s.RawMap(props, &rawNames)
+	for k, v := range s.CalcMap(props) {
+		model[k] = v
 	}
+
+	var order = []string{}
+	// EXISTING_CODE
+	order = []string{
+		"version",
+		"settings",
+		"keys",
+		"pinning",
+		"unchained",
+		"chains",
+	}
+	// EXISTING_CODE
+
 	return Model{
-		Data: map[string]any{
-			"version":   s.Version,
-			"settings":  s.Settings,
-			"keys":      s.Keys,
-			"pinnging":  s.Pinning,
-			"unchained": s.Unchained,
-			"chains":    s.Chains,
-		},
-		Order: []string{},
+		Data:  model,
+		Order: order,
 	}
+}
+
+// RawMap returns a map containing only the raw/base fields for this Config.
+func (s *Config) RawMap(p *ModelProps, needed *[]Labeler) map[string]any {
+	model := map[string]any{
+		"version":   s.Version,
+		"settings":  s.Settings,
+		"keys":      s.Keys,
+		"pinning":   s.Pinning,
+		"unchained": s.Unchained,
+		"chains":    s.Chains,
+	}
+
+	return labelAddresses(p, model, needed)
+}
+
+// CalcMap returns a map containing the calculated/derived fields for this Config.
+func (s *Config) CalcMap(p *ModelProps) map[string]any {
+	_ = p // delint
+	model := map[string]any{}
+
+	return model
 }
 
 func (s *Config) FinishUnmarshal(fileVersion uint64) {
 	_ = fileVersion
+	s.Calcs = nil
+	// EXISTING_CODE
+	// EXISTING_CODE
+}
+
+// ConfigCalcs holds lazy-loaded calculated fields for Config
+type ConfigCalcs struct {
+	// EXISTING_CODE
+	// EXISTING_CODE
+}
+
+func (s *Config) EnsureCalcs(p *ModelProps, fieldFilter []string) error {
+	_ = fieldFilter // delint
+	if s.Calcs != nil {
+		return nil
+	}
+
+	calcMap := s.CalcMap(p)
+	if len(calcMap) == 0 {
+		return nil
+	}
+
+	jsonBytes, err := json.Marshal(calcMap)
+	if err != nil {
+		return err
+	}
+
+	s.Calcs = &ConfigCalcs{}
+	return json.Unmarshal(jsonBytes, s.Calcs)
 }
 
 func (s *Config) ShallowCopy() Config {

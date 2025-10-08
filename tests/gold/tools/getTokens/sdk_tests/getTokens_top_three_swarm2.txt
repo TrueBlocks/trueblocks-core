@@ -14,6 +14,7 @@ Format:  json
       "blockNumber": 4285364,
       "decimals": 18,
       "holder": "0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98",
+      "holderName": "Bittrex 1",
       "name": "Swarm City Token",
       "symbol": "SWT"
     },
@@ -24,6 +25,7 @@ Format:  json
       "blockNumber": 3510999,
       "decimals": 18,
       "holder": "0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98",
+      "holderName": "Bittrex 1",
       "name": "Swarm City Token",
       "symbol": "SWT"
     },
@@ -34,6 +36,7 @@ Format:  json
       "blockNumber": 2510010,
       "decimals": 18,
       "holder": "0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98",
+      "holderName": "Bittrex 1",
       "name": "Swarm City Token",
       "symbol": "SWT"
     },

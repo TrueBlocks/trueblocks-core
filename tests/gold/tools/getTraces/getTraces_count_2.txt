@@ -7,6 +7,7 @@ TEST[DATE|TIME] Format:  json
   "data": [
     {
       "blockNumber": 1001001,
+      "date": "2016-02-14 03:51:23 UTC",
       "timestamp": 1455421883,
       "tracesCnt": 1,
       "transactionHash": "0xef2ea39c20ba09553b2f3cf02380406ac766039ca56612937eed5e7f3503fb3a",
@@ -14,6 +15,7 @@ TEST[DATE|TIME] Format:  json
     },
     {
       "blockNumber": 2597783,
+      "date": "2016-11-09 22:57:22 UTC",
       "timestamp": 1478732242,
       "tracesCnt": 1,
       "transactionHash": "0x37c469573ca24f538d91f39e9d0b8d49927a36d70496ef74521cbf5c44a056d4",

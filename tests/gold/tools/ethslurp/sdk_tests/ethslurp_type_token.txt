@@ -3,6 +3,6 @@ Args: [addrs=0x9519afbc60719a83c470ceec41e32d3e4b8b262e types=token blocks=0-150
 Opts: null
 {
   "errors": [
-    "Invalid key (types) in route."
+    "invalid key (types) in route"
   ]
 }

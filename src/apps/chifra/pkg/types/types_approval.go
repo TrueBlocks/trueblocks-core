@@ -28,6 +28,7 @@ type Approval struct {
 	Spender      base.Address   `json:"spender"`
 	Timestamp    base.Timestamp `json:"timestamp"`
 	Token        base.Address   `json:"token"`
+	Calcs        *ApprovalCalcs `json:"calcs,omitempty"`
 	// EXISTING_CODE
 	// EXISTING_CODE
 }
@@ -38,29 +39,20 @@ func (s Approval) String() string {
 }
 
 func (s *Approval) Model(chain, format string, verbose bool, extraOpts map[string]any) Model {
-	_ = chain
-	_ = format
-	_ = verbose
-	_ = extraOpts
-	var model = map[string]any{}
-	var order = []string{}
+	props := NewModelProps(chain, format, verbose, extraOpts)
 
-	// EXISTING_CODE
-	model = map[string]any{
-		"blockNumber":  s.BlockNumber,
-		"timestamp":    s.Timestamp,
-		"date":         s.Date(),
-		"owner":        s.Owner,
-		"spender":      s.Spender,
-		"token":        s.Token,
-		"allowance":    s.Allowance.String(),
-		"lastAppBlock": s.LastAppBlock,
-		"lastAppLogID": s.LastAppLogID,
-		"lastAppTxID":  s.LastAppTxID,
-		"lastAppTs":    s.LastAppTs,
-		"lastAppDate":  base.FormattedDate(s.LastAppTs),
+	rawNames := []Labeler{
+		NewLabeler(s.Owner, "owner"),
+		NewLabeler(s.Spender, "spender"),
+		NewLabeler(s.Token, "token"),
+	}
+	model := s.RawMap(props, &rawNames)
+	for k, v := range s.CalcMap(props) {
+		model[k] = v
 	}
 
+	var order = []string{}
+	// EXISTING_CODE
 	order = []string{
 		"blockNumber",
 		"timestamp",
@@ -75,30 +67,62 @@ func (s *Approval) Model(chain, format string, verbose bool, extraOpts map[strin
 		"lastAppTs",
 		"lastAppDate",
 	}
-
-	if verbose {
-		items := []namer{
-			{addr: s.Owner, name: "ownerName"},
-			{addr: s.Spender, name: "spenderName"},
-			{addr: s.Token, name: "tokenName"},
-		}
-		for _, item := range items {
-			if name, loaded, found := nameAddress(extraOpts, item.addr); found {
-				model[item.name] = name.Name
-				order = append(order, item.name)
-			} else if loaded && format != "json" {
-				model[item.name] = ""
-				order = append(order, item.name)
-			}
-		}
-		order = reorderOrdering(order)
-	}
 	// EXISTING_CODE
+
+	for _, item := range rawNames {
+		key := item.name + "Name"
+		if _, exists := model[key]; exists {
+			order = append(order, key)
+		}
+	}
+	order = reorderFields(order)
 
 	return Model{
 		Data:  model,
 		Order: order,
 	}
+}
+
+// RawMap returns a map containing only the raw/base fields for this Approval.
+func (s *Approval) RawMap(p *ModelProps, needed *[]Labeler) map[string]any {
+	model := map[string]any{
+		// EXISTING_CODE
+		"blockNumber":  s.BlockNumber,
+		"timestamp":    s.Timestamp,
+		"owner":        s.Owner,
+		"spender":      s.Spender,
+		"token":        s.Token,
+		"allowance":    s.Allowance.String(),
+		"lastAppBlock": s.LastAppBlock,
+		"lastAppLogID": s.LastAppLogID,
+		"lastAppTxID":  s.LastAppTxID,
+		"lastAppTs":    s.LastAppTs,
+		// EXISTING_CODE
+	}
+
+	// EXISTING_CODE
+	if p.Verbose {
+		return labelAddresses(p, model, needed)
+	}
+	// EXISTING_CODE
+
+	return labelAddresses(p, model, needed)
+}
+
+// CalcMap returns a map containing the calculated/derived fields for this type.
+func (s *Approval) CalcMap(p *ModelProps) map[string]any {
+	_ = p // delint
+	model := map[string]any{
+		// EXISTING_CODE
+		"date":        s.Date(),
+		"lastAppDate": base.FormattedDate(s.LastAppTs),
+		// EXISTING_CODE
+	}
+
+	// EXISTING_CODE
+	// EXISTING_CODE
+
+	return model
 }
 
 func (s *Approval) Date() string {
@@ -108,8 +132,37 @@ func (s *Approval) Date() string {
 // FinishUnmarshal is used by the cache. It may be unused depending on auto-code-gen
 func (s *Approval) FinishUnmarshal(fileVersion uint64) {
 	_ = fileVersion
+	s.Calcs = nil
 	// EXISTING_CODE
 	// EXISTING_CODE
+}
+
+// ApprovalCalcs holds lazy-loaded calculated fields for Approval
+type ApprovalCalcs struct {
+	// EXISTING_CODE
+	Date        string `json:"date"`
+	LastAppDate string `json:"lastAppDate"`
+	// EXISTING_CODE
+}
+
+func (s *Approval) EnsureCalcs(p *ModelProps, fieldFilter []string) error {
+	_ = fieldFilter // delint
+	if s.Calcs != nil {
+		return nil
+	}
+
+	calcMap := s.CalcMap(p)
+	if len(calcMap) == 0 {
+		return nil
+	}
+
+	jsonBytes, err := json.Marshal(calcMap)
+	if err != nil {
+		return err
+	}
+
+	s.Calcs = &ApprovalCalcs{}
+	return json.Unmarshal(jsonBytes, s.Calcs)
 }
 
 // EXISTING_CODE

@@ -31,11 +31,10 @@ func NameBy(field NameField, order SortOrder) func(p1, p2 Name) bool {
 	switch field {
 	case NameAddress: // address
 		return func(p1, p2 Name) bool {
-			cmp := p1.Address.Cmp(p2.Address.Address)
 			if order == Ascending {
-				return cmp == -1
+				return p1.Address.LessThan(p2.Address)
 			}
-			return cmp == 1
+			return p2.Address.LessThan(p1.Address)
 		}
 	case NameDecimals: // uint64
 		return func(p1, p2 Name) bool {

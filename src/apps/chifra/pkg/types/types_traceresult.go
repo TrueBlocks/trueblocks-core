@@ -21,10 +21,11 @@ import (
 // EXISTING_CODE
 
 type TraceResult struct {
-	Address base.Address `json:"address,omitempty"`
-	Code    string       `json:"code,omitempty"`
-	GasUsed base.Gas     `json:"gasUsed,omitempty"`
-	Output  string       `json:"output,omitempty"`
+	Address base.Address      `json:"address,omitempty"`
+	Code    string            `json:"code,omitempty"`
+	GasUsed base.Gas          `json:"gasUsed,omitempty"`
+	Output  string            `json:"output,omitempty"`
+	Calcs   *TraceResultCalcs `json:"calcs,omitempty"`
 	// EXISTING_CODE
 	// EXISTING_CODE
 }
@@ -35,65 +36,113 @@ func (s TraceResult) String() string {
 }
 
 func (s *TraceResult) Model(chain, format string, verbose bool, extraOpts map[string]any) Model {
-	_ = chain
-	_ = format
-	_ = verbose
-	_ = extraOpts
-	var model = map[string]any{}
-	var order = []string{}
+	props := NewModelProps(chain, format, verbose, extraOpts)
 
+	rawNames := []Labeler{
+		NewLabeler(s.Address, "address"),
+	}
+	model := s.RawMap(props, &rawNames)
+	for k, v := range s.CalcMap(props) {
+		model[k] = v
+	}
+
+	var order = []string{}
 	// EXISTING_CODE
 	if format == "json" {
 		if s.GasUsed > 0 {
-			model["gasUsed"] = s.GasUsed
 			order = append(order, "gasUsed")
 		}
 		if len(s.Output) > 2 { // "0x" is empty
-			model["output"] = s.Output
 			order = append(order, "output")
 		}
 		if !s.Address.IsZero() {
-			model["address"] = s.Address
 			order = append(order, "address")
 		}
 		if extraOpts["traces"] != true && len(s.Code) > 2 { // "0x" is empty
-			model["code"] = utils.FormattedCode(verbose, s.Code)
 			order = append(order, "code")
 		}
 	} else {
-		model = map[string]any{
-			"gasUsed": s.GasUsed,
-			"output":  s.Output,
-		}
-
 		order = []string{
 			"gasUsed",
 			"output",
 		}
 		if !s.Address.IsZero() {
-			model["address"] = hexutil.Encode(s.Address.Bytes())
 			order = append(order, "address")
 		}
-		// if len(s.Output) > 0 && s.Output != "0x" {
-		// 	model["output"] = s.Output
-		// 	order = append(order, "output")
-		// }
 	}
-
-	if name, loaded, found := nameAddress(extraOpts, s.Address); found {
-		model["addressName"] = name.Name
-		order = append(order, "addressName")
-	} else if loaded && format != "json" {
-		model["addressName"] = ""
-		order = append(order, "addressName")
-	}
-	order = reorderOrdering(order)
 	// EXISTING_CODE
+
+	for _, item := range rawNames {
+		key := item.name + "Name"
+		if _, exists := model[key]; exists {
+			order = append(order, key)
+		}
+	}
+	order = reorderFields(order)
 
 	return Model{
 		Data:  model,
 		Order: order,
 	}
+}
+
+// RawMap returns a map containing only the raw/base fields for this TraceResult.
+func (s *TraceResult) RawMap(p *ModelProps, needed *[]Labeler) map[string]any {
+	model := map[string]any{
+		// EXISTING_CODE
+		// EXISTING_CODE
+	}
+
+	// EXISTING_CODE
+	if p.Format == "json" {
+		// For JSON format, only add fields when they have meaningful values
+		if s.GasUsed > 0 {
+			model["gasUsed"] = s.GasUsed
+		}
+		if len(s.Output) > 2 { // "0x" is empty
+			model["output"] = s.Output
+		}
+		if !s.Address.IsZero() {
+			model["address"] = s.Address
+		}
+		if p.ExtraOpts["traces"] != true && len(s.Code) > 2 { // "0x" is empty
+			model["code"] = s.Code
+		}
+	} else {
+		model["gasUsed"] = s.GasUsed
+		model["output"] = s.Output
+		if !s.Address.IsZero() {
+			model["address"] = s.Address
+		}
+	}
+	// EXISTING_CODE
+
+	return labelAddresses(p, model, needed)
+}
+
+// CalcMap returns a map containing the calculated/derived fields for this type.
+func (s *TraceResult) CalcMap(p *ModelProps) map[string]any {
+	_ = p // delint
+	model := map[string]any{
+		// EXISTING_CODE
+		// EXISTING_CODE
+	}
+
+	// EXISTING_CODE
+	if p.Format == "json" {
+		// Replace raw code with formatted code when conditions are met
+		if p.ExtraOpts["traces"] != true && len(s.Code) > 2 { // "0x" is empty
+			model["code"] = utils.FormattedCode(p.Verbose, s.Code)
+		}
+	} else {
+		// Replace raw address with hex encoded version for non-JSON formats
+		if !s.Address.IsZero() {
+			model["address"] = hexutil.Encode(s.Address.Bytes())
+		}
+	}
+	// EXISTING_CODE
+
+	return model
 }
 
 func (s *TraceResult) MarshalCache(writer io.Writer) (err error) {
@@ -153,8 +202,37 @@ func (s *TraceResult) UnmarshalCache(fileVersion uint64, reader io.Reader) (err 
 // FinishUnmarshal is used by the cache. It may be unused depending on auto-code-gen
 func (s *TraceResult) FinishUnmarshal(fileVersion uint64) {
 	_ = fileVersion
+	s.Calcs = nil
 	// EXISTING_CODE
 	// EXISTING_CODE
+}
+
+// TraceResultCalcs holds lazy-loaded calculated fields for TraceResult
+type TraceResultCalcs struct {
+	// EXISTING_CODE
+	Code    string `json:"code,omitempty"`
+	Address string `json:"address,omitempty"`
+	// EXISTING_CODE
+}
+
+func (s *TraceResult) EnsureCalcs(p *ModelProps, fieldFilter []string) error {
+	_ = fieldFilter // delint
+	if s.Calcs != nil {
+		return nil
+	}
+
+	calcMap := s.CalcMap(p)
+	if len(calcMap) == 0 {
+		return nil
+	}
+
+	jsonBytes, err := json.Marshal(calcMap)
+	if err != nil {
+		return err
+	}
+
+	s.Calcs = &TraceResultCalcs{}
+	return json.Unmarshal(jsonBytes, s.Calcs)
 }
 
 // EXISTING_CODE

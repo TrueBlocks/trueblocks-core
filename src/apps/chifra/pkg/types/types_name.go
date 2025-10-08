@@ -31,6 +31,7 @@ type Name struct {
 	Source     string       `json:"source"`
 	Symbol     string       `json:"symbol"`
 	Tags       string       `json:"tags"`
+	Calcs      *NameCalcs   `json:"calcs,omitempty"`
 	// EXISTING_CODE
 	Prefund base.Wei `json:"prefund,omitempty"`
 	Parts   Parts    `json:"parts,omitempty"`
@@ -43,45 +44,37 @@ func (s Name) String() string {
 }
 
 func (s *Name) Model(chain, format string, verbose bool, extraOpts map[string]any) Model {
-	_ = chain
-	_ = format
-	_ = verbose
-	_ = extraOpts
-	var model = map[string]any{}
-	var order = []string{}
+	props := NewModelProps(chain, format, verbose, extraOpts)
 
-	// EXISTING_CODE
-	switch extraOpts["single"] {
-	case "tags", "address":
-		if extraOpts["single"] == "tags" {
-			model["tags"] = s.Tags
-		} else {
-			model["address"] = s.Address.Hex()
-		}
-		order = append(order, extraOpts["single"].(string))
-		return Model{
-			Data:  model,
-			Order: order,
-		}
-	case "asset":
-		model["address"] = s.Address.Hex()
-		model["symbol"] = s.Symbol
-		model["name"] = s.Name
-		model["decimals"] = s.Decimals
-		order = append(order, []string{"address", "symbol", "name", "decimals"}...)
-		return Model{
-			Data:  model,
-			Order: order,
-		}
+	rawNames := []Labeler{}
+	model := s.RawMap(props, &rawNames)
+	for k, v := range s.CalcMap(props) {
+		model[k] = v
 	}
 
-	model = map[string]any{
-		"address":  s.Address,
-		"decimals": s.Decimals,
-		"name":     s.Name,
-		"source":   s.Source,
-		"symbol":   s.Symbol,
-		"tags":     s.Tags,
+	var order = []string{}
+	// EXISTING_CODE
+	switch extraOpts["single"] {
+	case "tags":
+		return Model{
+			Data:  map[string]any{"tags": s.Tags},
+			Order: []string{"tags"},
+		}
+	case "address":
+		return Model{
+			Data:  map[string]any{"address": s.Address.Hex()},
+			Order: []string{"address"},
+		}
+	case "asset":
+		return Model{
+			Data: map[string]any{
+				"address":  s.Address.Hex(),
+				"symbol":   s.Symbol,
+				"name":     s.Name,
+				"decimals": s.Decimals,
+			},
+			Order: []string{"address", "symbol", "name", "decimals"},
+		}
 	}
 
 	order = []string{
@@ -206,8 +199,15 @@ func (s *Name) Model(chain, format string, verbose bool, extraOpts map[string]an
 			order = append(order, "isErc721")
 		}
 	}
-
 	// EXISTING_CODE
+
+	for _, item := range rawNames {
+		key := item.name + "Name"
+		if _, exists := model[key]; exists {
+			order = append(order, key)
+		}
+	}
+	order = reorderFields(order)
 
 	return Model{
 		Data:  model,
@@ -215,11 +215,70 @@ func (s *Name) Model(chain, format string, verbose bool, extraOpts map[string]an
 	}
 }
 
+// RawMap returns a map containing only the raw/base fields for this Name.
+func (s *Name) RawMap(p *ModelProps, needed *[]Labeler) map[string]any {
+	model := map[string]any{
+		// EXISTING_CODE
+		"decimals": s.Decimals,
+		"name":     s.Name,
+		"source":   s.Source,
+		"symbol":   s.Symbol,
+		"tags":     s.Tags,
+		// EXISTING_CODE
+	}
+
+	// EXISTING_CODE
+	// EXISTING_CODE
+
+	return labelAddresses(p, model, needed)
+}
+
+// CalcMap returns a map containing the calculated/derived fields for this type.
+func (s *Name) CalcMap(p *ModelProps) map[string]any {
+	_ = p // delint
+	model := map[string]any{
+		// EXISTING_CODE
+		// EXISTING_CODE
+	}
+
+	// EXISTING_CODE
+	// EXISTING_CODE
+
+	return model
+}
+
 // FinishUnmarshal is used by the cache. It may be unused depending on auto-code-gen
 func (s *Name) FinishUnmarshal(fileVersion uint64) {
 	_ = fileVersion
+	s.Calcs = nil
 	// EXISTING_CODE
 	// EXISTING_CODE
+}
+
+// NameCalcs holds lazy-loaded calculated fields for Name
+type NameCalcs struct {
+	// EXISTING_CODE
+	// EXISTING_CODE
+}
+
+func (s *Name) EnsureCalcs(p *ModelProps, fieldFilter []string) error {
+	_ = fieldFilter // delint
+	if s.Calcs != nil {
+		return nil
+	}
+
+	calcMap := s.CalcMap(p)
+	if len(calcMap) == 0 {
+		return nil
+	}
+
+	jsonBytes, err := json.Marshal(calcMap)
+	if err != nil {
+		return err
+	}
+
+	s.Calcs = &NameCalcs{}
+	return json.Unmarshal(jsonBytes, s.Calcs)
 }
 
 // EXISTING_CODE

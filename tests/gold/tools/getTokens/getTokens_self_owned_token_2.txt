@@ -3,5 +3,5 @@ TEST[DATE|TIME] Addrs:  [0xbb9bc244d798123fde783fcc1c72d3bb8c189413 0xbb9bc244d7
 TEST[DATE|TIME] Blocks:  [1500000]
 TEST[DATE|TIME] Caps:  cache,decache
 TEST[DATE|TIME] Format:  txt
-blockNumber	holder	address	name	symbol	decimals	balance	balanceDec
-1500000	0xbb9bc244d798123fde783fcc1c72d3bb8c189413	0xbb9bc244d798123fde783fcc1c72d3bb8c189413	TheDAO (L1)	TheDAO	1	1000000000000000000	100000000000000000
+blockNumber	holder	holderName	address	name	symbol	decimals	balance	balanceDec
+1500000	0xbb9bc244d798123fde783fcc1c72d3bb8c189413	TheDAO (L1)	0xbb9bc244d798123fde783fcc1c72d3bb8c189413	TheDAO (L1)	TheDAO	1	1000000000000000000	100000000000000000

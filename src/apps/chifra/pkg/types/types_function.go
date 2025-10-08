@@ -25,16 +25,17 @@ import (
 // EXISTING_CODE
 
 type Function struct {
-	Anonymous       bool        `json:"anonymous,omitempty"`
-	Constant        bool        `json:"constant,omitempty"`
-	Encoding        string      `json:"encoding"`
-	Inputs          []Parameter `json:"inputs"`
-	Message         string      `json:"message,omitempty"`
-	Name            string      `json:"name"`
-	Outputs         []Parameter `json:"outputs"`
-	Signature       string      `json:"signature,omitempty"`
-	StateMutability string      `json:"stateMutability,omitempty"`
-	FunctionType    string      `json:"type"`
+	Anonymous       bool           `json:"anonymous,omitempty"`
+	Constant        bool           `json:"constant,omitempty"`
+	Encoding        string         `json:"encoding"`
+	Inputs          []Parameter    `json:"inputs"`
+	Message         string         `json:"message,omitempty"`
+	Name            string         `json:"name"`
+	Outputs         []Parameter    `json:"outputs"`
+	Signature       string         `json:"signature,omitempty"`
+	StateMutability string         `json:"stateMutability,omitempty"`
+	FunctionType    string         `json:"type"`
+	Calcs           *FunctionCalcs `json:"calcs,omitempty"`
 	// EXISTING_CODE
 	payable   bool
 	abiMethod *abi.Method
@@ -48,13 +49,15 @@ func (s Function) String() string {
 }
 
 func (s *Function) Model(chain, format string, verbose bool, extraOpts map[string]any) Model {
-	_ = chain
-	_ = format
-	_ = verbose
-	_ = extraOpts
-	var model = map[string]any{}
-	var order = []string{}
+	props := NewModelProps(chain, format, verbose, extraOpts)
 
+	rawNames := []Labeler{}
+	model := s.RawMap(props, &rawNames)
+	for k, v := range s.CalcMap(props) {
+		model[k] = v
+	}
+
+	var order = []string{}
 	// EXISTING_CODE
 	if extraOpts["encodingSignatureOnly"] == true {
 		return Model{
@@ -66,13 +69,6 @@ func (s *Function) Model(chain, format string, verbose bool, extraOpts map[strin
 		}
 	}
 
-	model = map[string]any{
-		"encoding":  s.Encoding,
-		"name":      s.Name,
-		"signature": s.Signature,
-		"type":      s.FunctionType,
-	}
-
 	order = []string{
 		"encoding",
 		"type",
@@ -80,16 +76,72 @@ func (s *Function) Model(chain, format string, verbose bool, extraOpts map[strin
 		"signature",
 	}
 
-	if format == "json" {
+	if format == "json" && verbose {
+		if s.Inputs != nil {
+			order = append(order, "inputs")
+		}
+		if s.Outputs != nil {
+			order = append(order, "outputs")
+		}
+	}
+	if format == "json" && s.FunctionType == "function" {
+		order = append(order, "stateMutability")
+	}
+	// EXISTING_CODE
+
+	for _, item := range rawNames {
+		key := item.name + "Name"
+		if _, exists := model[key]; exists {
+			order = append(order, key)
+		}
+	}
+	order = reorderFields(order)
+
+	return Model{
+		Data:  model,
+		Order: order,
+	}
+}
+
+// RawMap returns a map containing only the raw/base fields for this Function.
+func (s *Function) RawMap(p *ModelProps, needed *[]Labeler) map[string]any {
+	model := map[string]any{
+		// EXISTING_CODE
+		"encoding":  s.Encoding,
+		"name":      s.Name,
+		"signature": s.Signature,
+		"type":      s.FunctionType,
+		// EXISTING_CODE
+	}
+
+	// EXISTING_CODE
+	if p.Format == "json" && s.FunctionType == "function" {
+		model["stateMutability"] = s.StateMutability
+	}
+	// EXISTING_CODE
+
+	return labelAddresses(p, model, needed)
+}
+
+// CalcMap returns a map containing the calculated/derived fields for this type.
+func (s *Function) CalcMap(p *ModelProps) map[string]any {
+	_ = p // delint
+	model := map[string]any{
+		// EXISTING_CODE
+		// EXISTING_CODE
+	}
+
+	// EXISTING_CODE
+	if p.Format == "json" {
 		getParameterModels := func(params []Parameter) []map[string]any {
 			result := make([]map[string]any, len(params))
 			for index, param := range params {
-				result[index] = param.Model(chain, format, verbose, extraOpts).Data
+				result[index] = param.Model(p.Chain, p.Format, p.Verbose, p.ExtraOpts).Data
 				result[index]["name"] = param.DisplayName(index)
 			}
 			return result
 		}
-		if verbose {
+		if p.Verbose {
 			inputs := getParameterModels(s.Inputs)
 			if inputs != nil {
 				model["inputs"] = inputs
@@ -99,16 +151,10 @@ func (s *Function) Model(chain, format string, verbose bool, extraOpts map[strin
 				model["outputs"] = outputs
 			}
 		}
-		if s.FunctionType == "function" {
-			model["stateMutability"] = s.StateMutability
-		}
 	}
 	// EXISTING_CODE
 
-	return Model{
-		Data:  model,
-		Order: order,
-	}
+	return model
 }
 
 func (s *Function) MarshalCache(writer io.Writer) (err error) {
@@ -238,8 +284,37 @@ func (s *Function) UnmarshalCache(fileVersion uint64, reader io.Reader) (err err
 // FinishUnmarshal is used by the cache. It may be unused depending on auto-code-gen
 func (s *Function) FinishUnmarshal(fileVersion uint64) {
 	_ = fileVersion
+	s.Calcs = nil
 	// EXISTING_CODE
 	// EXISTING_CODE
+}
+
+// FunctionCalcs holds lazy-loaded calculated fields for Function
+type FunctionCalcs struct {
+	// EXISTING_CODE
+	Inputs  []interface{} `json:"inputs,omitempty"`
+	Outputs []interface{} `json:"outputs,omitempty"`
+	// EXISTING_CODE
+}
+
+func (s *Function) EnsureCalcs(p *ModelProps, fieldFilter []string) error {
+	_ = fieldFilter // delint
+	if s.Calcs != nil {
+		return nil
+	}
+
+	calcMap := s.CalcMap(p)
+	if len(calcMap) == 0 {
+		return nil
+	}
+
+	jsonBytes, err := json.Marshal(calcMap)
+	if err != nil {
+		return err
+	}
+
+	s.Calcs = &FunctionCalcs{}
+	return json.Unmarshal(jsonBytes, s.Calcs)
 }
 
 // EXISTING_CODE

@@ -33,12 +33,13 @@ type ChunkAppearance = Appearance
 // EXISTING_CODE
 
 type Appearance struct {
-	Address          base.Address   `json:"address"`
-	BlockNumber      uint32         `json:"blockNumber"`
-	Reason           string         `json:"reason,omitempty"`
-	Timestamp        base.Timestamp `json:"timestamp"`
-	TraceIndex       uint32         `json:"traceIndex,omitempty"`
-	TransactionIndex uint32         `json:"transactionIndex"`
+	Address          base.Address     `json:"address"`
+	BlockNumber      uint32           `json:"blockNumber"`
+	Reason           string           `json:"reason,omitempty"`
+	Timestamp        base.Timestamp   `json:"timestamp"`
+	TraceIndex       uint32           `json:"traceIndex,omitempty"`
+	TransactionIndex uint32           `json:"transactionIndex"`
+	Calcs            *AppearanceCalcs `json:"calcs,omitempty"`
 	// EXISTING_CODE
 	// EXISTING_CODE
 }
@@ -49,95 +50,143 @@ func (s Appearance) String() string {
 }
 
 func (s *Appearance) Model(chain, format string, verbose bool, extraOpts map[string]any) Model {
-	_ = chain
-	_ = format
-	_ = verbose
-	_ = extraOpts
-	var model = map[string]any{}
-	var order = []string{}
+	props := NewModelProps(chain, format, verbose, extraOpts)
 
+	rawNames := []Labeler{
+		NewLabeler(s.Address, "address"),
+	}
+	model := s.RawMap(props, &rawNames)
+	for k, v := range s.CalcMap(props) {
+		model[k] = v
+	}
+
+	var order = []string{}
 	// EXISTING_CODE
 	if extraOpts["appearances"] == true {
-		model = map[string]any{
-			"blockNumber":      s.BlockNumber,
-			"transactionIndex": s.TransactionIndex,
-		}
 		order = []string{
 			"blockNumber",
 			"transactionIndex",
 		}
-
 		return Model{
 			Data:  model,
 			Order: order,
 		}
 	}
 
-	model = map[string]any{
-		"address":          s.Address,
-		"blockNumber":      s.BlockNumber,
-		"transactionIndex": s.TransactionIndex,
-	}
 	order = []string{
 		"address",
 		"blockNumber",
 		"transactionIndex",
 	}
 
-	if name, loaded, found := nameAddress(extraOpts, s.Address); found {
-		model["addressName"] = name.Name
-		order = append(order, "addressName")
-	} else if loaded && format != "json" {
-		model["addressName"] = ""
-		order = append(order, "addressName")
-	}
-	order = reorderOrdering(order)
-
 	if extraOpts["uniq"] == true {
-		if s.TraceIndex > 0 {
-			model["traceIndex"] = s.TraceIndex
-		} else if format != "json" {
-			model["traceIndex"] = ""
-		}
-		order = append(order, "traceIndex")
-		model["reason"] = s.Reason
-		order = append(order, "reason")
+		order = append(order, "traceIndex", "reason")
 		if verbose {
-			model["timestamp"] = s.Timestamp
-			order = append(order, "timestamp")
-			model["date"] = s.Date()
-			order = append(order, "date")
+			order = append(order, "timestamp", "date")
 		}
 	} else if extraOpts["export"] == true && format == "json" {
-		if verbose {
-			if s.Timestamp != base.NOPOSI {
-				model["timestamp"] = s.Timestamp
-			}
-			model["date"] = s.Date()
-		}
+		// Order handled in RawMap/CalcMap
 	} else {
 		if verbose {
-			if s.TraceIndex > 0 {
-				model["traceIndex"] = s.TraceIndex
-			} else if format != "json" {
-				model["traceIndex"] = ""
-			}
-			order = append(order, "traceIndex")
-			model["reason"] = s.Reason
-			order = append(order, "reason")
-			model["timestamp"] = s.Timestamp
-			order = append(order, "timestamp")
-			model["date"] = s.Date()
-			order = append(order, "date")
+			order = append(order, "traceIndex", "reason", "timestamp", "date")
 		}
 	}
-
 	// EXISTING_CODE
+
+	for _, item := range rawNames {
+		key := item.name + "Name"
+		if _, exists := model[key]; exists {
+			order = append(order, key)
+		}
+	}
+	order = reorderFields(order)
 
 	return Model{
 		Data:  model,
 		Order: order,
 	}
+}
+
+// RawMap returns a map containing only the raw/base fields for this Appearance.
+func (s *Appearance) RawMap(p *ModelProps, needed *[]Labeler) map[string]any {
+	model := map[string]any{
+		// EXISTING_CODE
+		"address":          s.Address,
+		"blockNumber":      s.BlockNumber,
+		"transactionIndex": s.TransactionIndex,
+		// EXISTING_CODE
+	}
+
+	// EXISTING_CODE
+	if p.ExtraOpts["appearances"] == true {
+		model := map[string]any{
+			"blockNumber":      s.BlockNumber,
+			"transactionIndex": s.TransactionIndex,
+		}
+		return model
+	}
+
+	if p.ExtraOpts["uniq"] == true {
+		if s.TraceIndex > 0 {
+			model["traceIndex"] = s.TraceIndex
+		} else if p.Format != "json" {
+			model["traceIndex"] = ""
+		}
+		model["reason"] = s.Reason
+		if p.Verbose {
+			model["timestamp"] = s.Timestamp
+		}
+	} else if p.ExtraOpts["export"] == true && p.Format == "json" {
+		if p.Verbose {
+			if s.Timestamp != base.NOPOSI {
+				model["timestamp"] = s.Timestamp
+			}
+		}
+	} else {
+		if p.Verbose {
+			if s.TraceIndex > 0 {
+				model["traceIndex"] = s.TraceIndex
+			} else if p.Format != "json" {
+				model["traceIndex"] = ""
+			}
+			model["reason"] = s.Reason
+			model["timestamp"] = s.Timestamp
+		}
+	}
+	// EXISTING_CODE
+
+	return labelAddresses(p, model, needed)
+}
+
+// CalcMap returns a map containing the calculated/derived fields for this type.
+func (s *Appearance) CalcMap(p *ModelProps) map[string]any {
+	_ = p // delint
+	model := map[string]any{
+		// EXISTING_CODE
+		// EXISTING_CODE
+	}
+
+	// EXISTING_CODE
+	if p.ExtraOpts["appearances"] == true {
+		return model
+	}
+
+	if p.ExtraOpts["uniq"] == true {
+		if p.Verbose {
+			model["date"] = s.Date()
+		}
+	} else if p.ExtraOpts["export"] == true && p.Format == "json" {
+		if p.Verbose {
+			model["date"] = s.Date()
+		}
+	} else {
+		if p.Verbose {
+			model["date"] = s.Date()
+		}
+	}
+	// EXISTING_CODE
+
+	return model
 }
 
 func (s *Appearance) Date() string {
@@ -147,8 +196,36 @@ func (s *Appearance) Date() string {
 // FinishUnmarshal is used by the cache. It may be unused depending on auto-code-gen
 func (s *Appearance) FinishUnmarshal(fileVersion uint64) {
 	_ = fileVersion
+	s.Calcs = nil
 	// EXISTING_CODE
 	// EXISTING_CODE
+}
+
+// AppearanceCalcs holds lazy-loaded calculated fields for Appearance
+type AppearanceCalcs struct {
+	// EXISTING_CODE
+	Date string `json:"date,omitempty"`
+	// EXISTING_CODE
+}
+
+func (s *Appearance) EnsureCalcs(p *ModelProps, fieldFilter []string) error {
+	_ = fieldFilter // delint
+	if s.Calcs != nil {
+		return nil
+	}
+
+	calcMap := s.CalcMap(p)
+	if len(calcMap) == 0 {
+		return nil
+	}
+
+	jsonBytes, err := json.Marshal(calcMap)
+	if err != nil {
+		return err
+	}
+
+	s.Calcs = &AppearanceCalcs{}
+	return json.Unmarshal(jsonBytes, s.Calcs)
 }
 
 // EXISTING_CODE

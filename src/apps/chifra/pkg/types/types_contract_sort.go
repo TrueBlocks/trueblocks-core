@@ -23,18 +23,17 @@ func ContractBy(field ContractField, order SortOrder) func(p1, p2 Contract) bool
 	switch field {
 	case ContractAddress: // address
 		return func(p1, p2 Contract) bool {
-			cmp := p1.Address.Cmp(p2.Address.Address)
 			if order == Ascending {
-				return cmp == -1
+				return p1.Address.LessThan(p2.Address)
 			}
-			return cmp == 1
+			return p2.Address.LessThan(p1.Address)
 		}
 	case ContractDate: // datetime
 		return func(p1, p2 Contract) bool {
 			if order == Ascending {
-				return p1.Date < p2.Date
+				return p1.Date() < p2.Date()
 			}
-			return p1.Date > p2.Date
+			return p1.Date() > p2.Date()
 		}
 	case ContractLastUpdated: // timestamp
 		return func(p1, p2 Contract) bool {

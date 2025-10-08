@@ -420,3 +420,41 @@ func (s *Structure) RendererTypes() string {
 	sort.Strings(ret)
 	return strings.Join(ret, ",")
 }
+
+func (m *Member) IsAddress(s *Structure) bool {
+	if m.IsRemoved() {
+		return false
+	}
+	if m.Type != "address" {
+		return false
+	}
+	if s.Class == "Name" {
+		return false
+	}
+	if s.Class == "Transfer" && (m.Name == "recipient" || m.Name == "sender") {
+		return false
+	}
+	if s.Class == "Token" && (m.Name == "address") {
+		return false
+	}
+	return true
+}
+
+func (s *Structure) HasAddresses() bool {
+	for _, m := range s.Members {
+		if m.IsAddress(s) {
+			return true
+		}
+	}
+	return false
+}
+
+func (s *Structure) Addresses() []string {
+	ret := []string{}
+	for _, m := range s.Members {
+		if m.IsAddress(s) {
+			ret = append(ret, m.Name)
+		}
+	}
+	return ret
+}

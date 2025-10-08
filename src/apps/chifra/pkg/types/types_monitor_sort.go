@@ -26,11 +26,10 @@ func MonitorBy(field MonitorField, order SortOrder) func(p1, p2 Monitor) bool {
 	switch field {
 	case MonitorAddress: // address
 		return func(p1, p2 Monitor) bool {
-			cmp := p1.Address.Cmp(p2.Address.Address)
 			if order == Ascending {
-				return cmp == -1
+				return p1.Address.LessThan(p2.Address)
 			}
-			return cmp == 1
+			return p2.Address.LessThan(p1.Address)
 		}
 	case MonitorDeleted: // bool
 		return func(p1, p2 Monitor) bool {

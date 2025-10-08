@@ -36,6 +36,7 @@ type Log struct {
 	Topics           []base.Hash    `json:"topics,omitempty"`
 	TransactionHash  base.Hash      `json:"transactionHash"`
 	TransactionIndex base.Txnum     `json:"transactionIndex"`
+	Calcs            *LogCalcs      `json:"calcs,omitempty"`
 	// EXISTING_CODE
 	// EXISTING_CODE
 }
@@ -46,25 +47,18 @@ func (s Log) String() string {
 }
 
 func (s *Log) Model(chain, format string, verbose bool, extraOpts map[string]any) Model {
-	_ = chain
-	_ = format
-	_ = verbose
-	_ = extraOpts
-	var model = map[string]any{}
-	var order = []string{}
+	props := NewModelProps(chain, format, verbose, extraOpts)
 
-	// EXISTING_CODE
-	model = map[string]any{
-		"address":          s.Address,
-		"blockHash":        s.BlockHash,
-		"blockNumber":      s.BlockNumber,
-		"logIndex":         s.LogIndex,
-		"timestamp":        s.Timestamp,
-		"date":             s.Date(),
-		"transactionIndex": s.TransactionIndex,
-		"transactionHash":  s.TransactionHash,
+	rawNames := []Labeler{
+		NewLabeler(s.Address, "address"),
+	}
+	model := s.RawMap(props, &rawNames)
+	for k, v := range s.CalcMap(props) {
+		model[k] = v
 	}
 
+	var order = []string{}
+	// EXISTING_CODE
 	order = []string{
 		"blockNumber",
 		"transactionIndex",
@@ -83,6 +77,56 @@ func (s *Log) Model(chain, format string, verbose bool, extraOpts map[string]any
 	}
 
 	isArticulated := extraOpts["articulate"] == true && s.ArticulatedLog != nil
+	if isArticulated && format != "json" {
+		order = append(order, "compressedLog")
+	}
+	// EXISTING_CODE
+
+	for _, item := range rawNames {
+		key := item.name + "Name"
+		if _, exists := model[key]; exists {
+			order = append(order, key)
+		}
+	}
+	order = reorderFields(order)
+
+	return Model{
+		Data:  model,
+		Order: order,
+	}
+}
+
+// RawMap returns a map containing only the raw/base fields for this Log.
+func (s *Log) RawMap(p *ModelProps, needed *[]Labeler) map[string]any {
+	model := map[string]any{
+		// EXISTING_CODE
+		"address":          s.Address,
+		"blockHash":        s.BlockHash,
+		"blockNumber":      s.BlockNumber,
+		"logIndex":         s.LogIndex,
+		"timestamp":        s.Timestamp,
+		"transactionIndex": s.TransactionIndex,
+		"transactionHash":  s.TransactionHash,
+		// EXISTING_CODE
+	}
+
+	// EXISTING_CODE
+	// EXISTING_CODE
+
+	return labelAddresses(p, model, needed)
+}
+
+// CalcMap returns a map containing the calculated/derived fields for this type.
+func (s *Log) CalcMap(p *ModelProps) map[string]any {
+	_ = p // delint
+	model := map[string]any{
+		// EXISTING_CODE
+		"date": s.Date(),
+		// EXISTING_CODE
+	}
+
+	// EXISTING_CODE
+	isArticulated := p.ExtraOpts["articulate"] == true && s.ArticulatedLog != nil
 	var articulatedLog = make(map[string]any)
 	if isArticulated {
 		articulatedLog["name"] = s.ArticulatedLog.Name
@@ -92,7 +136,7 @@ func (s *Log) Model(chain, format string, verbose bool, extraOpts map[string]any
 		}
 	}
 
-	if format == "json" {
+	if p.Format == "json" {
 		if s.IsNFT() {
 			model["isNFT"] = s.IsNFT()
 		}
@@ -118,7 +162,6 @@ func (s *Log) Model(chain, format string, verbose bool, extraOpts map[string]any
 
 		if isArticulated {
 			model["compressedLog"] = MakeCompressed(articulatedLog)
-			order = append(order, "compressedLog")
 		}
 
 		model["topic0"] = ""
@@ -138,21 +181,9 @@ func (s *Log) Model(chain, format string, verbose bool, extraOpts map[string]any
 			model["topic3"] = s.Topics[3]
 		}
 	}
-
-	if name, loaded, found := nameAddress(extraOpts, s.Address); found {
-		model["addressName"] = name.Name
-		order = append(order, "addressName")
-	} else if loaded && format != "json" {
-		model["addressName"] = ""
-		order = append(order, "addressName")
-	}
-	order = reorderOrdering(order)
 	// EXISTING_CODE
 
-	return Model{
-		Data:  model,
-		Order: order,
-	}
+	return model
 }
 
 func (s *Log) Date() string {
@@ -318,8 +349,45 @@ func (s *Log) UnmarshalCache(fileVersion uint64, reader io.Reader) (err error) {
 // FinishUnmarshal is used by the cache. It may be unused depending on auto-code-gen
 func (s *Log) FinishUnmarshal(fileVersion uint64) {
 	_ = fileVersion
+	s.Calcs = nil
 	// EXISTING_CODE
 	// EXISTING_CODE
+}
+
+// LogCalcs holds lazy-loaded calculated fields for Log
+type LogCalcs struct {
+	// EXISTING_CODE
+	Date           string                 `json:"date"`
+	IsNFT          bool                   `json:"isNFT,omitempty"`
+	Data           string                 `json:"data,omitempty"`
+	ArticulatedLog map[string]interface{} `json:"articulatedLog,omitempty"`
+	Topics         []string               `json:"topics,omitempty"`
+	CompressedLog  string                 `json:"compressedLog,omitempty"`
+	Topic0         string                 `json:"topic0,omitempty"`
+	Topic1         string                 `json:"topic1,omitempty"`
+	Topic2         string                 `json:"topic2,omitempty"`
+	Topic3         string                 `json:"topic3,omitempty"`
+	// EXISTING_CODE
+}
+
+func (s *Log) EnsureCalcs(p *ModelProps, fieldFilter []string) error {
+	_ = fieldFilter // delint
+	if s.Calcs != nil {
+		return nil
+	}
+
+	calcMap := s.CalcMap(p)
+	if len(calcMap) == 0 {
+		return nil
+	}
+
+	jsonBytes, err := json.Marshal(calcMap)
+	if err != nil {
+		return err
+	}
+
+	s.Calcs = &LogCalcs{}
+	return json.Unmarshal(jsonBytes, s.Calcs)
 }
 
 // EXISTING_CODE

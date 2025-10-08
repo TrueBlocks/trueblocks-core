@@ -31,6 +31,7 @@ type Token struct {
 	TotalSupply      base.Wei       `json:"totalSupply"`
 	TransactionIndex base.Txnum     `json:"transactionIndex,omitempty"`
 	TokenType        TokenType      `json:"type"`
+	Calcs            *TokenCalcs    `json:"calcs,omitempty"`
 	// EXISTING_CODE
 	// EXISTING_CODE
 }
@@ -41,25 +42,18 @@ func (s Token) String() string {
 }
 
 func (s *Token) Model(chain, format string, verbose bool, extraOpts map[string]any) Model {
-	_ = chain
-	_ = format
-	_ = verbose
-	_ = extraOpts
-	var model = map[string]any{}
+	props := NewModelProps(chain, format, verbose, extraOpts)
+
+	rawNames := []Labeler{
+		NewLabeler(s.Holder, "holder"),
+	}
+	model := s.RawMap(props, &rawNames)
+	for k, v := range s.CalcMap(props) {
+		model[k] = v
+	}
+
 	var order = []string{}
-
 	// EXISTING_CODE
-	name := Name{}
-	if addressName, _, found := nameAddress(extraOpts, s.Address); found {
-		name = addressName
-	}
-	if name.Decimals == 0 {
-		name.Decimals = 18
-	}
-	if name.Symbol == "" {
-		name.Symbol = name.Address.DefaultSymbol()
-	}
-
 	wanted := extraOpts["parts"].([]string)
 	if len(wanted) == 1 {
 		switch wanted[0] {
@@ -86,23 +80,80 @@ func (s *Token) Model(chain, format string, verbose bool, extraOpts map[string]a
 	if len(wanted) > 0 && (wanted[0] != "address" && wanted[0] != "blockNumber") {
 		order = append([]string{"address", "blockNumber"}, wanted...)
 	}
+	// EXISTING_CODE
 
+	for _, item := range rawNames {
+		key := item.name + "Name"
+		if _, exists := model[key]; exists {
+			order = append(order, key)
+		}
+	}
+	order = reorderFields(order)
+
+	return Model{
+		Data:  model,
+		Order: order,
+	}
+}
+
+// RawMap returns a map containing only the raw/base fields for this Token.
+func (s *Token) RawMap(p *ModelProps, needed *[]Labeler) map[string]any {
+	model := map[string]any{
+		// EXISTING_CODE
+		// EXISTING_CODE
+	}
+
+	// EXISTING_CODE
+	name := Name{}
+	if addressName, _, found := labelAddress(p.ExtraOpts, s.Address); found {
+		name = addressName
+	}
+	if name.Decimals == 0 {
+		name.Decimals = 18
+	}
+	if name.Symbol == "" {
+		name.Symbol = name.Address.DefaultSymbol()
+	}
+
+	// Determine which fields to include based on order logic from original
+	wanted := p.ExtraOpts["parts"].([]string)
+	if len(wanted) == 1 {
+		switch wanted[0] {
+		case "all":
+			if p.Verbose {
+				wanted = []string{"address", "blockNumber", "timestamp", "date", "name", "symbol", "decimals", "totalSupply"}
+			} else {
+				wanted = []string{"address", "blockNumber", "name", "symbol", "decimals", "totalSupply"}
+			}
+		case "all_held":
+			if p.Verbose {
+				wanted = []string{
+					"blockNumber", "timestamp", "date", "holder", "address", "name", "symbol", "decimals", "balance", "balanceDec",
+				}
+			} else {
+				wanted = []string{
+					"blockNumber", "holder", "address", "name", "symbol", "decimals", "balance", "balanceDec",
+				}
+			}
+		}
+	}
+
+	order := wanted
+	if len(wanted) > 0 && (wanted[0] != "address" && wanted[0] != "blockNumber") {
+		order = append([]string{"address", "blockNumber"}, wanted...)
+	}
+
+	// Add fields based on order - raw fields only
 	for _, part := range order {
 		switch part {
 		case "address":
 			model["address"] = s.Address
 		case "balance":
 			model["balance"] = s.Balance.String()
-		case "balanceDec":
-			model["balanceDec"] = s.Balance.ToFloatString(int(name.Decimals))
 		case "blockNumber":
 			model["blockNumber"] = s.BlockNumber
-		case "date":
-			model["date"] = s.Date()
 		case "decimals":
 			model["decimals"] = name.Decimals
-		case "diff":
-			model["diff"] = s.formattedDiff(name.Decimals)
 		case "holder":
 			model["holder"] = s.Holder
 		case "name":
@@ -115,32 +166,78 @@ func (s *Token) Model(chain, format string, verbose bool, extraOpts map[string]a
 			}
 		case "timestamp":
 			model["timestamp"] = s.Timestamp
-		case "totalSupply":
-			model["totalSupply"] = s.TotalSupply.ToFloatString(int(name.Decimals))
 		case "transactionIndex":
 			model["transactionIndex"] = s.TransactionIndex
 		case "version":
 			model["version"] = ""
 		}
 	}
-
-	if verbose {
-		if name, loaded, found := nameAddress(extraOpts, s.Holder); found {
-			model["holderName"] = name.Name
-			order = append(order, "holderName")
-		} else if loaded && format != "json" {
-			model["holderName"] = ""
-			order = append(order, "holderName")
-		}
-	}
-	order = reorderOrdering(order)
-
 	// EXISTING_CODE
 
-	return Model{
-		Data:  model,
-		Order: order,
+	return labelAddresses(p, model, needed)
+}
+
+// CalcMap returns a map containing the calculated/derived fields for this type.
+func (s *Token) CalcMap(p *ModelProps) map[string]any {
+	_ = p // delint
+	model := map[string]any{
+		// EXISTING_CODE
+		// EXISTING_CODE
 	}
+
+	// EXISTING_CODE
+	name := Name{}
+	if addressName, _, found := labelAddress(p.ExtraOpts, s.Address); found {
+		name = addressName
+	}
+	if name.Decimals == 0 {
+		name.Decimals = 18
+	}
+
+	// Determine which fields to include based on order logic from original
+	wanted := p.ExtraOpts["parts"].([]string)
+	if len(wanted) == 1 {
+		switch wanted[0] {
+		case "all":
+			if p.Verbose {
+				wanted = []string{"address", "blockNumber", "timestamp", "date", "name", "symbol", "decimals", "totalSupply"}
+			} else {
+				wanted = []string{"address", "blockNumber", "name", "symbol", "decimals", "totalSupply"}
+			}
+		case "all_held":
+			if p.Verbose {
+				wanted = []string{
+					"blockNumber", "timestamp", "date", "holder", "address", "name", "symbol", "decimals", "balance", "balanceDec",
+				}
+			} else {
+				wanted = []string{
+					"blockNumber", "holder", "address", "name", "symbol", "decimals", "balance", "balanceDec",
+				}
+			}
+		}
+	}
+
+	order := wanted
+	if len(wanted) > 0 && (wanted[0] != "address" && wanted[0] != "blockNumber") {
+		order = append([]string{"address", "blockNumber"}, wanted...)
+	}
+
+	// Add calculated/derived fields based on order
+	for _, part := range order {
+		switch part {
+		case "balanceDec":
+			model["balanceDec"] = s.Balance.ToFloatString(int(name.Decimals))
+		case "date":
+			model["date"] = s.Date()
+		case "diff":
+			model["diff"] = s.formattedDiff(name.Decimals)
+		case "totalSupply":
+			model["totalSupply"] = s.TotalSupply.ToFloatString(int(name.Decimals))
+		}
+	}
+	// EXISTING_CODE
+
+	return model
 }
 
 func (s *Token) Date() string {
@@ -150,8 +247,39 @@ func (s *Token) Date() string {
 // FinishUnmarshal is used by the cache. It may be unused depending on auto-code-gen
 func (s *Token) FinishUnmarshal(fileVersion uint64) {
 	_ = fileVersion
+	s.Calcs = nil
 	// EXISTING_CODE
 	// EXISTING_CODE
+}
+
+// TokenCalcs holds lazy-loaded calculated fields for Token
+type TokenCalcs struct {
+	// EXISTING_CODE
+	BalanceDec  string `json:"balanceDec,omitempty"`
+	Date        string `json:"date,omitempty"`
+	Diff        string `json:"diff,omitempty"`
+	TotalSupply string `json:"totalSupply,omitempty"`
+	// EXISTING_CODE
+}
+
+func (s *Token) EnsureCalcs(p *ModelProps, fieldFilter []string) error {
+	_ = fieldFilter // delint
+	if s.Calcs != nil {
+		return nil
+	}
+
+	calcMap := s.CalcMap(p)
+	if len(calcMap) == 0 {
+		return nil
+	}
+
+	jsonBytes, err := json.Marshal(calcMap)
+	if err != nil {
+		return err
+	}
+
+	s.Calcs = &TokenCalcs{}
+	return json.Unmarshal(jsonBytes, s.Calcs)
 }
 
 // EXISTING_CODE

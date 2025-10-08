@@ -18,11 +18,12 @@ import (
 // EXISTING_CODE
 
 type ChunkAddress struct {
-	Address    base.Address `json:"address"`
-	Count      uint64       `json:"count"`
-	Offset     uint64       `json:"offset"`
-	Range      string       `json:"range"`
-	RangeDates *RangeDates  `json:"rangeDates,omitempty"`
+	Address    base.Address       `json:"address"`
+	Count      uint64             `json:"count"`
+	Offset     uint64             `json:"offset"`
+	Range      string             `json:"range"`
+	RangeDates *RangeDates        `json:"rangeDates,omitempty"`
+	Calcs      *ChunkAddressCalcs `json:"calcs,omitempty"`
 	// EXISTING_CODE
 	// EXISTING_CODE
 }
@@ -33,20 +34,18 @@ func (s ChunkAddress) String() string {
 }
 
 func (s *ChunkAddress) Model(chain, format string, verbose bool, extraOpts map[string]any) Model {
-	_ = chain
-	_ = format
-	_ = verbose
-	_ = extraOpts
-	var model = map[string]any{}
-	var order = []string{}
+	props := NewModelProps(chain, format, verbose, extraOpts)
 
-	// EXISTING_CODE
-	model = map[string]any{
-		"address": s.Address,
-		"range":   s.Range,
-		"offset":  s.Offset,
-		"count":   s.Count,
+	rawNames := []Labeler{
+		NewLabeler(s.Address, "address"),
 	}
+	model := s.RawMap(props, &rawNames)
+	for k, v := range s.CalcMap(props) {
+		model[k] = v
+	}
+
+	var order = []string{}
+	// EXISTING_CODE
 	order = []string{
 		"address",
 		"range",
@@ -56,11 +55,66 @@ func (s *ChunkAddress) Model(chain, format string, verbose bool, extraOpts map[s
 
 	if verbose && format == "json" {
 		if s.RangeDates != nil {
-			model["rangeDates"] = s.RangeDates.Model(chain, format, verbose, extraOpts).Data
+			order = append(order, "rangeDates")
 		}
 	} else if verbose {
-		model["firstTs"], model["firstDate"], model["lastTs"], model["lastDate"] = 0, "", 0, ""
 		order = append(order, []string{"firstTs", "firstDate", "lastTs", "lastDate"}...)
+	}
+
+	for _, item := range rawNames {
+		key := item.name + "Name"
+		if _, exists := model[key]; exists {
+			order = append(order, key)
+		}
+	}
+	// EXISTING_CODE
+
+	for _, item := range rawNames {
+		key := item.name + "Name"
+		if _, exists := model[key]; exists {
+			order = append(order, key)
+		}
+	}
+	order = reorderFields(order)
+
+	return Model{
+		Data:  model,
+		Order: order,
+	}
+}
+
+// RawMap returns a map containing only the raw/base fields for this ChunkAddress.
+func (s *ChunkAddress) RawMap(p *ModelProps, needed *[]Labeler) map[string]any {
+	model := map[string]any{
+		// EXISTING_CODE
+		"address": s.Address,
+		"range":   s.Range,
+		"offset":  s.Offset,
+		"count":   s.Count,
+		// EXISTING_CODE
+	}
+
+	// EXISTING_CODE
+	// EXISTING_CODE
+
+	return labelAddresses(p, model, needed)
+}
+
+// CalcMap returns a map containing the calculated/derived fields for this type.
+func (s *ChunkAddress) CalcMap(p *ModelProps) map[string]any {
+	_ = p // delint
+	model := map[string]any{
+		// EXISTING_CODE
+		// EXISTING_CODE
+	}
+
+	// EXISTING_CODE
+	if p.Verbose && p.Format == "json" {
+		if s.RangeDates != nil {
+			model["rangeDates"] = s.RangeDates.Model(p.Chain, p.Format, p.Verbose, p.ExtraOpts).Data
+		}
+	} else if p.Verbose {
+		model["firstTs"], model["firstDate"], model["lastTs"], model["lastDate"] = 0, "", 0, ""
 		if s.RangeDates != nil {
 			model["firstTs"] = s.RangeDates.FirstTs
 			model["firstDate"] = s.RangeDates.FirstDate
@@ -70,17 +124,46 @@ func (s *ChunkAddress) Model(chain, format string, verbose bool, extraOpts map[s
 	}
 	// EXISTING_CODE
 
-	return Model{
-		Data:  model,
-		Order: order,
-	}
+	return model
 }
 
 // FinishUnmarshal is used by the cache. It may be unused depending on auto-code-gen
 func (s *ChunkAddress) FinishUnmarshal(fileVersion uint64) {
 	_ = fileVersion
+	s.Calcs = nil
 	// EXISTING_CODE
 	// EXISTING_CODE
+}
+
+// ChunkAddressCalcs holds lazy-loaded calculated fields for ChunkAddress
+type ChunkAddressCalcs struct {
+	// EXISTING_CODE
+	RangeDates interface{}    `json:"rangeDates,omitempty"`
+	FirstTs    base.Timestamp `json:"firstTs,omitempty"`
+	FirstDate  string         `json:"firstDate,omitempty"`
+	LastTs     base.Timestamp `json:"lastTs,omitempty"`
+	LastDate   string         `json:"lastDate,omitempty"`
+	// EXISTING_CODE
+}
+
+func (s *ChunkAddress) EnsureCalcs(p *ModelProps, fieldFilter []string) error {
+	_ = fieldFilter // delint
+	if s.Calcs != nil {
+		return nil
+	}
+
+	calcMap := s.CalcMap(p)
+	if len(calcMap) == 0 {
+		return nil
+	}
+
+	jsonBytes, err := json.Marshal(calcMap)
+	if err != nil {
+		return err
+	}
+
+	s.Calcs = &ChunkAddressCalcs{}
+	return json.Unmarshal(jsonBytes, s.Calcs)
 }
 
 // EXISTING_CODE

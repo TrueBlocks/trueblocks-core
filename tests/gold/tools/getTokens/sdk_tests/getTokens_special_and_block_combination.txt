@@ -44,6 +44,7 @@ Format:  json
       "blockNumber": 4225341,
       "decimals": 18,
       "holder": "0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98",
+      "holderName": "Bittrex 1",
       "name": "OMGToken",
       "symbol": "OMG"
     },
@@ -54,6 +55,7 @@ Format:  json
       "blockNumber": 2717576,
       "decimals": 18,
       "holder": "0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98",
+      "holderName": "Bittrex 1",
       "name": "OMGToken",
       "symbol": "OMG"
     },
@@ -64,6 +66,7 @@ Format:  json
       "blockNumber": 1428756,
       "decimals": 18,
       "holder": "0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98",
+      "holderName": "Bittrex 1",
       "name": "OMGToken",
       "symbol": "OMG"
     }

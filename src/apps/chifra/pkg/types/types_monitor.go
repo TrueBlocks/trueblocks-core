@@ -20,14 +20,15 @@ import (
 // EXISTING_CODE
 
 type Monitor struct {
-	Address     base.Address `json:"address"`
-	Deleted     bool         `json:"deleted"`
-	FileSize    int64        `json:"fileSize"`
-	IsEmpty     bool         `json:"isEmpty"`
-	IsStaged    bool         `json:"isStaged"`
-	LastScanned uint32       `json:"lastScanned"`
-	NRecords    int64        `json:"nRecords"`
-	Name        string       `json:"name"`
+	Address     base.Address  `json:"address"`
+	Deleted     bool          `json:"deleted"`
+	FileSize    int64         `json:"fileSize"`
+	IsEmpty     bool          `json:"isEmpty"`
+	IsStaged    bool          `json:"isStaged"`
+	LastScanned uint32        `json:"lastScanned"`
+	NRecords    int64         `json:"nRecords"`
+	Name        string        `json:"name"`
+	Calcs       *MonitorCalcs `json:"calcs,omitempty"`
 	// EXISTING_CODE
 	// EXISTING_CODE
 }
@@ -38,19 +39,18 @@ func (s Monitor) String() string {
 }
 
 func (s *Monitor) Model(chain, format string, verbose bool, extraOpts map[string]any) Model {
-	_ = chain
-	_ = format
-	_ = verbose
-	_ = extraOpts
-	var model = map[string]any{}
-	var order = []string{}
+	props := NewModelProps(chain, format, verbose, extraOpts)
 
-	// EXISTING_CODE
-	model = map[string]any{
-		"address":  s.Address,
-		"nRecords": s.NRecords,
-		"fileSize": s.FileSize,
+	rawNames := []Labeler{
+		NewLabeler(s.Address, "address"),
 	}
+	model := s.RawMap(props, &rawNames)
+	for k, v := range s.CalcMap(props) {
+		model[k] = v
+	}
+
+	var order = []string{}
+	// EXISTING_CODE
 	order = []string{
 		"address",
 		"nRecords",
@@ -58,36 +58,78 @@ func (s *Monitor) Model(chain, format string, verbose bool, extraOpts map[string
 	}
 
 	if extraOpts["list"] == true {
-		model["isEmpty"] = s.IsEmpty
-		model["isStaged"] = s.IsStaged
 		order = append(order, "isEmpty")
 		order = append(order, "isStaged")
 	}
 
 	if verbose {
-		model["lastScanned"] = s.LastScanned
-		model["deleted"] = s.Deleted
-		if extraOpts["testMode"] == true {
-			model["lastScanned"] = "--lastScanned--"
-		}
 		order = append(order, "lastScanned")
 		order = append(order, "deleted")
 	}
 
-	if name, loaded, found := nameAddress(extraOpts, s.Address); found {
-		model["addressName"] = name.Name
-		order = append(order, "addressName")
-	} else if loaded && format != "json" {
-		model["addressName"] = ""
-		order = append(order, "addressName")
+	for _, item := range rawNames {
+		key := item.name + "Name"
+		if _, exists := model[key]; exists {
+			order = append(order, key)
+		}
 	}
-	order = reorderOrdering(order)
+	order = reorderFields(order)
 	// EXISTING_CODE
+
+	for _, item := range rawNames {
+		key := item.name + "Name"
+		if _, exists := model[key]; exists {
+			order = append(order, key)
+		}
+	}
+	order = reorderFields(order)
 
 	return Model{
 		Data:  model,
 		Order: order,
 	}
+}
+
+// RawMap returns a map containing only the raw/base fields for this Monitor.
+func (s *Monitor) RawMap(p *ModelProps, needed *[]Labeler) map[string]any {
+	model := map[string]any{
+		// EXISTING_CODE
+		"address":  s.Address,
+		"nRecords": s.NRecords,
+		"fileSize": s.FileSize,
+		// EXISTING_CODE
+	}
+
+	// EXISTING_CODE
+	// EXISTING_CODE
+
+	return labelAddresses(p, model, needed)
+}
+
+// CalcMap returns a map containing the calculated/derived fields for this type.
+func (s *Monitor) CalcMap(p *ModelProps) map[string]any {
+	_ = p // delint
+	model := map[string]any{
+		// EXISTING_CODE
+		// EXISTING_CODE
+	}
+
+	// EXISTING_CODE
+	if p.ExtraOpts["list"] == true {
+		model["isEmpty"] = s.IsEmpty
+		model["isStaged"] = s.IsStaged
+	}
+
+	if p.Verbose {
+		model["lastScanned"] = s.LastScanned
+		model["deleted"] = s.Deleted
+		if p.ExtraOpts["testMode"] == true {
+			model["lastScanned"] = "--lastScanned--"
+		}
+	}
+	// EXISTING_CODE
+
+	return model
 }
 
 func (s *Monitor) MarshalCache(writer io.Writer) (err error) {
@@ -195,8 +237,37 @@ func (s *Monitor) UnmarshalCache(fileVersion uint64, reader io.Reader) (err erro
 // FinishUnmarshal is used by the cache. It may be unused depending on auto-code-gen
 func (s *Monitor) FinishUnmarshal(fileVersion uint64) {
 	_ = fileVersion
+	s.Calcs = nil
 	// EXISTING_CODE
 	// EXISTING_CODE
+}
+
+// MonitorCalcs holds lazy-loaded calculated fields for Monitor
+type MonitorCalcs struct {
+	// EXISTING_CODE
+	IsEmpty  bool `json:"isEmpty,omitempty"`
+	IsStaged bool `json:"isStaged,omitempty"`
+	// EXISTING_CODE
+}
+
+func (s *Monitor) EnsureCalcs(p *ModelProps, fieldFilter []string) error {
+	_ = fieldFilter // delint
+	if s.Calcs != nil {
+		return nil
+	}
+
+	calcMap := s.CalcMap(p)
+	if len(calcMap) == 0 {
+		return nil
+	}
+
+	jsonBytes, err := json.Marshal(calcMap)
+	if err != nil {
+		return err
+	}
+
+	s.Calcs = &MonitorCalcs{}
+	return json.Unmarshal(jsonBytes, s.Calcs)
 }
 
 // EXISTING_CODE

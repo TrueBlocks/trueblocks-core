@@ -8,6 +8,7 @@ tokens?addrs=0xd26114cd6ee289accf82350c8d8487fedb8a0c07%200xcfb98637bcae43c13323
       "blockNumber": 3001001,
       "decimals": 18,
       "holder": "0xcfb98637bcae43c13323eaa1731ced2b716962fd",
+      "holderName": "Nimiq Network Interim Token",
       "name": "OMGToken",
       "symbol": "OMG"
     },
@@ -18,6 +19,7 @@ tokens?addrs=0xd26114cd6ee289accf82350c8d8487fedb8a0c07%200xcfb98637bcae43c13323
       "blockNumber": 4401001,
       "decimals": 18,
       "holder": "0xcfb98637bcae43c13323eaa1731ced2b716962fd",
+      "holderName": "Nimiq Network Interim Token",
       "name": "OMGToken",
       "symbol": "OMG"
     }

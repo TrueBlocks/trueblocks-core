@@ -147,6 +147,7 @@ var knownTypes = map[string]bool{
 	"DestType":    true,
 }
 
+// Validate - called from FinishLoad to validate the codebase
 func (cb *CodeBase) Validate() error {
 	structureNames := make(map[string]bool, len(cb.Structures))
 	for _, st := range cb.Structures {
@@ -210,26 +211,30 @@ func (cb *CodeBase) Validate() error {
 
 	for _, st := range cb.Structures {
 		for _, f := range st.Facets {
-			test := strings.Replace(f.Store, "dalle.", "", 1)
-			if !structureNames[test] {
-				msg := fmt.Sprintf("facet store %s in structure %s not found. Missing .toml file?", f.Store, st.Class)
-				pwd, _ := os.Getwd()
-				tomlFile := filepath.Join(pwd, "code_gen/templates/classDefinitions", strings.ToLower(f.Store)+".toml")
+			pwd, _ := os.Getwd()
+			tomlFile := filepath.Join(pwd, "code_gen/templates/classDefinitions", strings.ToLower(f.Store)+".toml")
+			csvFile := filepath.Join(pwd, "code_gen/templates/classDefinitions/fields", strings.ToLower(f.Store)+".csv")
+
+			if !structureNames[f.Store] {
+				var msg string
 				if !file.FileExists(tomlFile) {
+					msg = fmt.Sprintf("facet store %s in structure %s not found. Missing .toml file? %s.", f.Store, st.Class, tomlFile)
 					logger.InfoBR("TOML file missing:", tomlFile)
 				} else {
 					logger.InfoBR("TOML file found:", tomlFile)
 				}
-				csvFile := filepath.Join(pwd, "code_gen/templates/classDefinitions/fields", strings.ToLower(f.Store)+".csv")
 				if !file.FileExists(csvFile) {
+					msg = fmt.Sprintf("facet store %s in structure %s not found. Missing .csv file? %s.", f.Store, st.Class, csvFile)
 					logger.InfoBR("CSV file missing:", csvFile)
 				} else {
 					logger.InfoBR("CSV file found:", csvFile)
 				}
 				logger.Fatal(msg)
 			}
+
 			if len(st.Members) == 0 {
-				msg := fmt.Sprintf("No members found in structure: %s", st.Class)
+				csvFile := filepath.Join(pwd, "code_gen/templates/classDefinitions/fields", strings.ToLower(st.Class)+".csv")
+				msg := fmt.Sprintf("No members found in structure: %s %s", st.Class, csvFile)
 				logger.Fatal(msg)
 			}
 		}

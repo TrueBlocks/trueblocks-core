@@ -18,13 +18,14 @@ import (
 // EXISTING_CODE
 
 type ChunkIndex struct {
-	FileSize     uint64      `json:"fileSize"`
-	Hash         base.Hash   `json:"hash"`
-	Magic        string      `json:"magic"`
-	NAddresses   uint64      `json:"nAddresses"`
-	NAppearances uint64      `json:"nAppearances"`
-	Range        string      `json:"range"`
-	RangeDates   *RangeDates `json:"rangeDates,omitempty"`
+	FileSize     uint64           `json:"fileSize"`
+	Hash         base.Hash        `json:"hash"`
+	Magic        string           `json:"magic"`
+	NAddresses   uint64           `json:"nAddresses"`
+	NAppearances uint64           `json:"nAppearances"`
+	Range        string           `json:"range"`
+	RangeDates   *RangeDates      `json:"rangeDates,omitempty"`
+	Calcs        *ChunkIndexCalcs `json:"calcs,omitempty"`
 	// EXISTING_CODE
 	// EXISTING_CODE
 }
@@ -35,22 +36,16 @@ func (s ChunkIndex) String() string {
 }
 
 func (s *ChunkIndex) Model(chain, format string, verbose bool, extraOpts map[string]any) Model {
-	_ = chain
-	_ = format
-	_ = verbose
-	_ = extraOpts
-	var model = map[string]any{}
-	var order = []string{}
+	props := NewModelProps(chain, format, verbose, extraOpts)
 
-	// EXISTING_CODE
-	model = map[string]any{
-		"range":        s.Range,
-		"magic":        s.Magic,
-		"hash":         FormattedTag(verbose, s.Hash),
-		"nAddresses":   s.NAddresses,
-		"nAppearances": s.NAppearances,
-		"fileSize":     s.FileSize,
+	rawNames := []Labeler{}
+	model := s.RawMap(props, &rawNames)
+	for k, v := range s.CalcMap(props) {
+		model[k] = v
 	}
+
+	var order = []string{}
+	// EXISTING_CODE
 	order = []string{
 		"range",
 		"magic",
@@ -59,18 +54,73 @@ func (s *ChunkIndex) Model(chain, format string, verbose bool, extraOpts map[str
 		"nAppearances",
 		"fileSize",
 	}
+
 	if format == "json" {
-		model["hash"] = s.Hash.Hex()
-		model["hashValue"] = FormattedTag(verbose, s.Hash)
+		order = append(order, "hashValue")
 	}
 
 	if verbose && format == "json" {
 		if s.RangeDates != nil {
-			model["rangeDates"] = s.RangeDates.Model(chain, format, verbose, extraOpts).Data
+			order = append(order, "rangeDates")
 		}
 	} else if verbose {
-		model["firstTs"], model["firstDate"], model["lastTs"], model["lastDate"] = 0, "", 0, ""
 		order = append(order, []string{"firstTs", "firstDate", "lastTs", "lastDate"}...)
+	}
+	// EXISTING_CODE
+
+	for _, item := range rawNames {
+		key := item.name + "Name"
+		if _, exists := model[key]; exists {
+			order = append(order, key)
+		}
+	}
+	order = reorderFields(order)
+
+	return Model{
+		Data:  model,
+		Order: order,
+	}
+}
+
+// RawMap returns a map containing only the raw/base fields for this ChunkIndex.
+func (s *ChunkIndex) RawMap(p *ModelProps, needed *[]Labeler) map[string]any {
+	model := map[string]any{
+		// EXISTING_CODE
+		"range":        s.Range,
+		"magic":        s.Magic,
+		"nAddresses":   s.NAddresses,
+		"nAppearances": s.NAppearances,
+		"fileSize":     s.FileSize,
+		// EXISTING_CODE
+	}
+
+	// EXISTING_CODE
+	// EXISTING_CODE
+
+	return labelAddresses(p, model, needed)
+}
+
+// CalcMap returns a map containing the calculated/derived fields for this type.
+func (s *ChunkIndex) CalcMap(p *ModelProps) map[string]any {
+	_ = p // delint
+	model := map[string]any{
+		// EXISTING_CODE
+		"hash": FormattedTag(p.Verbose, s.Hash),
+		// EXISTING_CODE
+	}
+
+	// EXISTING_CODE
+	if p.Format == "json" {
+		model["hash"] = s.Hash.Hex()
+		model["hashValue"] = FormattedTag(p.Verbose, s.Hash)
+	}
+
+	if p.Verbose && p.Format == "json" {
+		if s.RangeDates != nil {
+			model["rangeDates"] = s.RangeDates.Model(p.Chain, p.Format, p.Verbose, p.ExtraOpts).Data
+		}
+	} else if p.Verbose {
+		model["firstTs"], model["firstDate"], model["lastTs"], model["lastDate"] = 0, "", 0, ""
 		if s.RangeDates != nil {
 			model["firstTs"] = s.RangeDates.FirstTs
 			model["firstDate"] = s.RangeDates.FirstDate
@@ -80,17 +130,48 @@ func (s *ChunkIndex) Model(chain, format string, verbose bool, extraOpts map[str
 	}
 	// EXISTING_CODE
 
-	return Model{
-		Data:  model,
-		Order: order,
-	}
+	return model
 }
 
 // FinishUnmarshal is used by the cache. It may be unused depending on auto-code-gen
 func (s *ChunkIndex) FinishUnmarshal(fileVersion uint64) {
 	_ = fileVersion
+	s.Calcs = nil
 	// EXISTING_CODE
 	// EXISTING_CODE
+}
+
+// ChunkIndexCalcs holds lazy-loaded calculated fields for ChunkIndex
+type ChunkIndexCalcs struct {
+	// EXISTING_CODE
+	Hash       string         `json:"hash"`
+	HashValue  string         `json:"hashValue,omitempty"`
+	RangeDates interface{}    `json:"rangeDates,omitempty"`
+	FirstTs    base.Timestamp `json:"firstTs,omitempty"`
+	FirstDate  string         `json:"firstDate,omitempty"`
+	LastTs     base.Timestamp `json:"lastTs,omitempty"`
+	LastDate   string         `json:"lastDate,omitempty"`
+	// EXISTING_CODE
+}
+
+func (s *ChunkIndex) EnsureCalcs(p *ModelProps, fieldFilter []string) error {
+	_ = fieldFilter // delint
+	if s.Calcs != nil {
+		return nil
+	}
+
+	calcMap := s.CalcMap(p)
+	if len(calcMap) == 0 {
+		return nil
+	}
+
+	jsonBytes, err := json.Marshal(calcMap)
+	if err != nil {
+		return err
+	}
+
+	s.Calcs = &ChunkIndexCalcs{}
+	return json.Unmarshal(jsonBytes, s.Calcs)
 }
 
 // EXISTING_CODE

@@ -18,6 +18,7 @@ tokens?addrs=0xd26114cd6ee289accf82350c8d8487fedb8a0c07%200x5e44c3e467a49c9ca029
       "blockNumber": 4000000,
       "decimals": 18,
       "holder": "0xd26114cd6ee289accf82350c8d8487fedb8a0c07",
+      "holderName": "OMGToken",
       "name": "OMGToken",
       "symbol": "OMG"
     }

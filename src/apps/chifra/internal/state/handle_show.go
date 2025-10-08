@@ -37,7 +37,7 @@ func (opts *StateOptions) HandleShow(rCtx *output.RenderCtx) error {
 		}
 	}
 
-	stateFields, outputFields, none := types.SliceToStateParts(opts.Parts)
+	stateFields, outFields, none := types.SliceToStateParts(opts.Parts)
 
 	cnt := 0
 	fetchData := func(modelChan chan types.Modeler, errorChan chan error) {
@@ -99,7 +99,7 @@ func (opts *StateOptions) HandleShow(rCtx *output.RenderCtx) error {
 	}
 
 	extraOpts := map[string]any{
-		"fields": outputFields,
+		"outFields": outFields,
 	}
 
 	return output.StreamMany(rCtx, fetchData, opts.Globals.OutputOptsWithExtra(extraOpts))

@@ -35,6 +35,7 @@ type Block struct {
 	Transactions  []Transaction  `json:"transactions"`
 	Uncles        []base.Hash    `json:"uncles,omitempty"`
 	Withdrawals   []Withdrawal   `json:"withdrawals,omitempty"`
+	Calcs         *BlockCalcs    `json:"calcs,omitempty"`
 	// EXISTING_CODE
 	Number base.Blknum `json:"number"`
 	// EXISTING_CODE
@@ -46,27 +47,18 @@ func (s Block) String() string {
 }
 
 func (s *Block) Model(chain, format string, verbose bool, extraOpts map[string]any) Model {
-	_ = chain
-	_ = format
-	_ = verbose
-	_ = extraOpts
-	var model = map[string]any{}
-	var order = []string{}
+	props := NewModelProps(chain, format, verbose, extraOpts)
 
-	// EXISTING_CODE
-	model = map[string]any{
-		"gasUsed":       s.GasUsed,
-		"gasLimit":      s.GasLimit,
-		"hash":          s.Hash,
-		"blockNumber":   s.BlockNumber,
-		"parentHash":    s.ParentHash,
-		"miner":         s.Miner.Hex(),
-		"difficulty":    s.Difficulty,
-		"timestamp":     s.Timestamp,
-		"date":          s.Date(),
-		"baseFeePerGas": s.BaseFeePerGas,
+	rawNames := []Labeler{
+		NewLabeler(s.Miner, "miner"),
+	}
+	model := s.RawMap(props, &rawNames)
+	for k, v := range s.CalcMap(props) {
+		model[k] = v
 	}
 
+	var order = []string{}
+	// EXISTING_CODE
 	order = []string{
 		"blockNumber",
 		"timestamp",
@@ -81,56 +73,95 @@ func (s *Block) Model(chain, format string, verbose bool, extraOpts map[string]a
 	}
 
 	if format == "json" {
+		order = append(order, "transactions", "uncles")
+		if len(s.Withdrawals) > 0 {
+			order = append(order, "withdrawals")
+		}
+	} else {
+		order = append(order, "transactionsCnt", "withdrawalsCnt")
+	}
+	// EXISTING_CODE
+
+	for _, item := range rawNames {
+		key := item.name + "Name"
+		if _, exists := model[key]; exists {
+			order = append(order, key)
+		}
+	}
+	order = reorderFields(order)
+
+	return Model{
+		Data:  model,
+		Order: order,
+	}
+}
+
+// RawMap returns a map containing only the raw/base fields for this Block.
+func (s *Block) RawMap(p *ModelProps, needed *[]Labeler) map[string]any {
+	model := map[string]any{
+		// EXISTING_CODE
+		"gasUsed":       s.GasUsed,
+		"gasLimit":      s.GasLimit,
+		"hash":          s.Hash,
+		"blockNumber":   s.BlockNumber,
+		"parentHash":    s.ParentHash,
+		"miner":         s.Miner.Hex(),
+		"difficulty":    s.Difficulty,
+		"timestamp":     s.Timestamp,
+		"baseFeePerGas": s.BaseFeePerGas,
+		// EXISTING_CODE
+	}
+
+	// EXISTING_CODE
+	if p.Format == "json" {
 		// If we wanted just transactions' hashes, we would return earlier. So here we know that we
 		// have transactions as objects and want to load models for them to be able to display them
 		txs, ok := any(s.Transactions).([]Transaction)
 		if ok {
 			items := make([]map[string]any, 0, len(txs))
 			for _, txObject := range txs {
-				items = append(items, txObject.Model(chain, format, verbose, extraOpts).Data)
+				items = append(items, txObject.Model(p.Chain, p.Format, p.Verbose, p.ExtraOpts).Data)
 			}
 			model["transactions"] = items
 		} else {
 			model["transactions"] = s.Transactions
 		}
-		order = append(order, "transactions")
 		if s.Uncles == nil {
 			model["uncles"] = []base.Hash{}
 		} else {
 			model["uncles"] = s.Uncles
 		}
-		order = append(order, "uncles")
 		if len(s.Withdrawals) > 0 {
 			withs := make([]map[string]any, 0, len(s.Withdrawals))
 			for _, w := range s.Withdrawals {
-				withs = append(withs, w.Model(chain, format, verbose, extraOpts).Data)
+				withs = append(withs, w.Model(p.Chain, p.Format, p.Verbose, p.ExtraOpts).Data)
 			}
 			model["withdrawals"] = withs
-			order = append(order, "withdrawals")
 		} else {
 			model["withdrawals"] = []Withdrawal{}
 		}
 	} else {
 		model["transactionsCnt"] = len(s.Transactions)
-		order = append(order, "transactionsCnt")
 		model["withdrawalsCnt"] = len(s.Withdrawals)
-		order = append(order, "withdrawalsCnt")
 	}
-
-	if name, loaded, found := nameAddress(extraOpts, s.Miner); found {
-		model["minerName"] = name.Name
-		order = append(order, "minerName")
-	} else if loaded && format != "json" {
-		model["minerName"] = ""
-		order = append(order, "minerName")
-	}
-	order = reorderOrdering(order)
 	// EXISTING_CODE
 
-	return Model{
-		Data:  model,
-		Order: order,
+	return labelAddresses(p, model, needed)
+}
+
+// CalcMap returns a map containing the calculated/derived fields for this type.
+func (s *Block) CalcMap(p *ModelProps) map[string]any {
+	_ = p // delint
+	model := map[string]any{
+		// EXISTING_CODE
+		"date": s.Date(),
+		// EXISTING_CODE
 	}
+
+	// EXISTING_CODE
+	// EXISTING_CODE
+
+	return model
 }
 
 func (s *Block) Date() string {
@@ -310,8 +341,36 @@ func (s *Block) UnmarshalCache(fileVersion uint64, reader io.Reader) (err error)
 // FinishUnmarshal is used by the cache. It may be unused depending on auto-code-gen
 func (s *Block) FinishUnmarshal(fileVersion uint64) {
 	_ = fileVersion
+	s.Calcs = nil
 	// EXISTING_CODE
 	// EXISTING_CODE
+}
+
+// BlockCalcs holds lazy-loaded calculated fields for Block
+type BlockCalcs struct {
+	// EXISTING_CODE
+	Date string `json:"date"`
+	// EXISTING_CODE
+}
+
+func (s *Block) EnsureCalcs(p *ModelProps, fieldFilter []string) error {
+	_ = fieldFilter // delint
+	if s.Calcs != nil {
+		return nil
+	}
+
+	calcMap := s.CalcMap(p)
+	if len(calcMap) == 0 {
+		return nil
+	}
+
+	jsonBytes, err := json.Marshal(calcMap)
+	if err != nil {
+		return err
+	}
+
+	s.Calcs = &BlockCalcs{}
+	return json.Unmarshal(jsonBytes, s.Calcs)
 }
 
 // EXISTING_CODE
