@@ -75,7 +75,7 @@ func (opts *ExportOptions) HandleShow(rCtx *output.RenderCtx, monitorArray []mon
 						}
 					}
 
-					// Set up and interate over the map calling iterFunc for each appearance
+					// Set up and iterate over the map calling iterFunc for each appearance
 					iterCtx, iterCancel := context.WithCancel(context.Background())
 					defer iterCancel()
 					errChan := make(chan error)
