@@ -108,6 +108,8 @@ type fetchDataFunc func(modelChan chan types.Modeler, errorChan chan error)
 func StreamMany(rCtx *RenderCtx, fetchData fetchDataFunc, options OutputOptions) error {
 	if rCtx.ModelChan != nil {
 		fetchData(rCtx.ModelChan, rCtx.ErrorChan)
+		close(rCtx.ModelChan)
+		close(rCtx.ErrorChan)
 		return nil
 	}
 
