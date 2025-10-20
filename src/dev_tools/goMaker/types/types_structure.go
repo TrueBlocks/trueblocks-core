@@ -13,6 +13,7 @@ import (
 
 type Structure struct {
 	Class       string    `json:"class,omitempty" toml:"class" csv:"class"`
+	DisplayName string    `json:"display_name,omitempty" toml:"display_name"`
 	DocGroup    string    `json:"doc_group,omitempty" toml:"doc_group" csv:"doc_group"`
 	DocRoute    string    `json:"doc_route,omitempty" toml:"doc_route"`
 	DocDescr    string    `json:"doc_descr,omitempty" toml:"doc_descr" csv:"doc_descr"`

@@ -6,15 +6,17 @@ import (
 )
 
 type Facet struct {
-	Name       string          `json:"name"`
-	Store      string          `json:"store"`
-	Actions    []string        `toml:"actions" json:"actions"`
-	Confirms   map[string]bool `json:"-" toml:"-"` // actions requiring confirmation (parsed from -confirm suffix)
-	ViewType   string          `toml:"viewType" json:"viewType"`
-	Renderer   string          `toml:"renderer" json:"renderer"`
-	Attributes string          `json:"attributes"`
-	stPtr      *Structure      `json:"-"`
-	Disabled   bool            `json:"disabled" toml:"disabled"`
+	DisplayName string          `toml:"display_name" json:"display_name"`
+	Name        string          `json:"name"`
+	Store       string          `json:"store"`
+	Actions     []string        `toml:"actions" json:"actions"`
+	Confirms    map[string]bool `json:"-" toml:"-"` // actions requiring confirmation (parsed from -confirm suffix)
+	ViewType    string          `toml:"viewType" json:"viewType"`
+	Renderer    string          `toml:"renderer" json:"renderer"`
+	Attributes  string          `json:"attributes"`
+	stPtr       *Structure      `json:"-"`
+	Disabled    bool            `json:"disabled" toml:"disabled"`
+	NeedsCalcs  bool            `json:"needsCalcs" toml:"needsCalcs"`
 }
 
 var allowedViewTypes = map[string]bool{

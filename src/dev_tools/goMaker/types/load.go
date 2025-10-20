@@ -57,6 +57,10 @@ func LoadCodebase() (CodeBase, error) {
 
 func readStructure(st *Structure, data *any) (bool, error) {
 	_ = data
+	if len(st.DisplayName) == 0 {
+		st.DisplayName = st.Class
+	}
+	st.Class = strings.ReplaceAll(st.Class, " ", "")
 	st.DocDescr = strings.ReplaceAll(st.DocDescr, "&#44;", ",")
 	st.ProducedBy = strings.ReplaceAll(st.ProducedBy, " ", "")
 	st.Producers = strings.Split(st.ProducedBy, ",")
@@ -102,6 +106,12 @@ func (cb *CodeBase) LoadStructures(thePath string, callBack func(*Structure, *an
 			for i := range f.Facets {
 				// TODO: BOGUS - THIS SHOULD SPLIT AND KEEP THE LAST ITEM ONLY
 				f.Facets[i].Store = strings.ReplaceAll(f.Facets[i].Store, "dalle.", "")
+			}
+			for i := 0; i < len(f.Facets); i++ {
+				if len(f.Facets[i].DisplayName) == 0 {
+					f.Facets[i].DisplayName = f.Facets[i].Name
+				}
+				f.Facets[i].Name = strings.ReplaceAll(f.Facets[i].Name, " ", "")
 			}
 			f.Settings.Facets = f.Facets // Copy facets into the Structure
 			structMap[mapKey] = f.Settings
