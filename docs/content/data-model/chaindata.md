@@ -150,21 +150,21 @@ The following commands produce and manage Logs:
 
 Logs consist of the following fields:
 
-| Field            | Description                                                                                       | Type                                    |
-| ---------------- | ------------------------------------------------------------------------------------------------- | --------------------------------------- |
-| blockNumber      | the number of the block                                                                           | blknum                                  |
-| transactionIndex | the zero-indexed position of the transaction in the block                                         | txnum                                   |
-| logIndex         | the zero-indexed position of this log relative to the block                                       | lognum                                  |
-| timestamp        | the timestamp of the block this log appears in                                                    | timestamp                               |
-| date             | the timestamp as a date (calculated)                                                              | datetime                                |
-| address          | the smart contract that emitted this log                                                          | address                                 |
-| topics           | the first topic hashes event signature of the log, up to 3 additional index parameters may appear | topic[]                                 |
-| data             | any remaining un-indexed parameters to the event                                                  | bytes                                   |
-| transactionHash  | the hash of the transction                                                                        | hash                                    |
-| blockHash        | the hash of the block                                                                             | hash                                    |
-| articulatedLog   | a human-readable version of the topic and data fields                                             | [Function](/data-model/other/#function) |
-| compressedLog    | a truncated, more readable version of the articulation (calculated)                               | string                                  |
-| isNFT            | true if the log is an NFT transfer (calculated)                                                   | bool                                    |
+| Field            | Description                                                                | Type                                    |
+| ---------------- | -------------------------------------------------------------------------- | --------------------------------------- |
+| blockNumber      | the number of the block                                                    | blknum                                  |
+| transactionIndex | the zero-indexed position of the transaction in the block                  | txnum                                   |
+| logIndex         | the zero-indexed position of this log relative to the block                | lognum                                  |
+| timestamp        | the timestamp of the block this log appears in                             | timestamp                               |
+| date             | the timestamp as a date (calculated)                                       | datetime                                |
+| address          | the smart contract that emitted this log                                   | address                                 |
+| topics           | first topic event signature up to 3 additional index parameters may appear | topic[]                                 |
+| data             | any remaining un-indexed parameters to the event                           | bytes                                   |
+| transactionHash  | the hash of the transction                                                 | hash                                    |
+| blockHash        | the hash of the block                                                      | hash                                    |
+| articulatedLog   | a human-readable version of the topic and data fields                      | [Function](/data-model/other/#function) |
+| compressedLog    | a truncated, more readable version of the articulation (calculated)        | string                                  |
+| isNFT            | true if the log is an NFT transfer (calculated)                            | bool                                    |
 
 ## Trace
 

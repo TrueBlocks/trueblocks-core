@@ -13,6 +13,7 @@ type Member struct {
 	Type        string     `json:"type,omitempty" csv:"type"`
 	StrDefault  string     `json:"strDefault,omitempty" csv:"strDefault"`
 	Attributes  string     `json:"attributes,omitempty" csv:"attributes"`
+	Section     string     `json:"section,omitempty" csv:"section"`
 	DocOrder    int        `json:"docOrder,omitempty" csv:"docOrder"`
 	Upgrades    string     `json:"upgrades,omitempty" csv:"upgrades"`
 	Description string     `json:"description,omitempty" csv:"description"`
@@ -88,6 +89,10 @@ func (m *Member) IsNoTag() bool {
 
 func (m *Member) IsCalc() bool {
 	return strings.Contains(m.Attributes, "calc")
+}
+
+func (m *Member) IsNoTable() bool {
+	return strings.Contains(m.Attributes, "noTable")
 }
 
 func (m *Member) HasUpgrade() bool {
@@ -495,6 +500,7 @@ func readMember(m *Member, data *any) (bool, error) {
 	m.Upgrades = strings.Trim(m.Upgrades, " ")
 	m.StrDefault = strings.Trim(m.StrDefault, " ")
 	m.Attributes = strings.Trim(m.Attributes, " ")
+	m.Section = strings.Trim(m.Section, " ")
 	m.Description = strings.Trim(m.Description, " ")
 
 	m.Description = strings.ReplaceAll(m.Description, "&#44;", ",")

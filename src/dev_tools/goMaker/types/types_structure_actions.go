@@ -150,6 +150,7 @@ var rowActions = map[string]bool{
 	"remove":   true,
 	"autoname": true,
 	"update":   true,
+	"revoke":   true,
 	"cleanRow": true,
 }
 

@@ -3888,7 +3888,7 @@ components:
           type: array
           items:
             $ref: "#/components/schemas/topic"
-          description: "the first topic hashes event signature of the log, up to 3 additional index parameters may appear"
+          description: "first topic event signature up to 3 additional index parameters may appear"
         data:
           type: string
           format: bytes

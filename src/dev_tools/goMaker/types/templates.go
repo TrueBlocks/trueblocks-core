@@ -10,9 +10,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 )
 
-var (
-	codebaseCache map[string]*template.Template
-)
+var codebaseCache map[string]*template.Template
 
 func init() {
 	codebaseCache = make(map[string]*template.Template)
@@ -48,6 +46,7 @@ func getFuncMap() template.FuncMap {
 	toLowerPlural := func(s string) string { return Lower(Plural(s)) }
 	split := func(s string, k string) []string { return strings.Split(s, k) }
 	hasPrefix := func(s, prefix string) bool { return strings.HasPrefix(s, prefix) }
+	hasSuffix := func(s, suffix string) bool { return strings.HasSuffix(s, suffix) }
 	contains := func(s, substr string) bool { return strings.Contains(s, substr) }
 	trim := func(s string) string { return strings.TrimSpace(s) }
 	or := func(a, b bool) bool { return a || b }
@@ -144,6 +143,7 @@ func getFuncMap() template.FuncMap {
 		"split":         split,
 		"trim":          trim,
 		"hasPrefix":     hasPrefix,
+		"hasSuffix":     hasSuffix,
 		"contains":      contains,
 		"regexCompile":  regexCompile,
 		"regexReplace":  regexReplace,

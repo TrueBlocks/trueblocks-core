@@ -5,8 +5,9 @@ import (
 	"os"
 	"strings"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/gocarina/gocsv"
+
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 )
 
 type Validater interface {
@@ -57,7 +58,6 @@ func LoadCsv[T Validater, D any](thePath string, callBack func(*T, *D) (bool, er
 
 	if theFile, err := os.OpenFile(thePath, os.O_RDWR, os.ModePerm); err != nil {
 		return []T{}, err
-
 	} else {
 		defer theFile.Close()
 		if err := gocsv.UnmarshalToCallback(theFile, callbackFunc); err != nil {

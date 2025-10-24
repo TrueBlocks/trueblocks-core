@@ -106,3 +106,14 @@ func (f *Facet) StoreSource() string {
 	}
 	return ""
 }
+
+func (s *Store) NeedsBuckets() bool {
+	st := s.sPtr
+	for _, f := range st.Facets {
+		// fmt.Printf("Checking facet %s for store %s: %t \n", f.Name, s.Name, f.Store == s.Name && (f.PanelChart || f.FacetChart))
+		if f.Store == s.Name && (f.PanelChart || f.FacetChart) {
+			return true
+		}
+	}
+	return false
+}

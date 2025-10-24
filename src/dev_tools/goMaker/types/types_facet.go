@@ -13,10 +13,13 @@ type Facet struct {
 	Confirms    map[string]bool `json:"-" toml:"-"` // actions requiring confirmation (parsed from -confirm suffix)
 	ViewType    string          `toml:"viewType" json:"viewType"`
 	Renderer    string          `toml:"renderer" json:"renderer"`
+	Navigate    string          `toml:"navigate" json:"navigate"`
 	Attributes  string          `json:"attributes"`
 	stPtr       *Structure      `json:"-"`
 	Disabled    bool            `json:"disabled" toml:"disabled"`
 	NeedsCalcs  bool            `json:"needsCalcs" toml:"needsCalcs"`
+	PanelChart  bool            `json:"panelChart" toml:"panelChart"`
+	FacetChart  bool            `json:"facetChart" toml:"facetChart"`
 }
 
 var allowedViewTypes = map[string]bool{
@@ -116,6 +119,19 @@ func (f *Facet) Divider() string {
 		return "dividerBefore"
 	} else if strings.Contains(f.Attributes, "dividerAfter") {
 		return "dividerAfter"
+	}
+	return ""
+}
+
+func (f *Facet) NavigateTo() string {
+	if len(f.Navigate) > 0 {
+		parts := strings.Split(f.Navigate, "|")
+		if len(parts) != 4 {
+			return fmt.Sprintf("The navigate string must have at least four parts. %s", f.Navigate)
+		}
+		return fmt.Sprintf(
+			"types.NewRowActionNavigation(\"%s\", \"%s\", \"%s\", \"%s\")",
+			parts[0], parts[1], parts[2], parts[3])
 	}
 	return ""
 }

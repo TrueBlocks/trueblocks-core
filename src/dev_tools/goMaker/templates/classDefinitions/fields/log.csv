@@ -5,7 +5,7 @@ logIndex         ,lognum    ,           ,               ,              ,       3
 timestamp        ,timestamp ,           ,omitempty      ,              ,       4 ,the timestamp of the block this log appears in
 date             ,datetime  ,           ,calc           ,              ,       5 ,the timestamp as a date
 address          ,address   ,           ,               ,              ,       6 ,the smart contract that emitted this log
-topics           ,[]topic   ,           ,omitempty      ,              ,       7 ,the first topic hashes event signature of the log&#44; up to 3 additional index parameters may appear
+topics           ,[]topic   ,           ,omitempty      ,              ,       7 ,first topic event signature up to 3 additional index parameters may appear
 data             ,bytes     ,           ,omitempty      ,              ,       8 ,any remaining un-indexed parameters to the event
 transactionHash  ,hash      ,           ,               ,              ,       9 ,the hash of the transction
 blockHash        ,hash      ,           ,               ,              ,      10 ,the hash of the block

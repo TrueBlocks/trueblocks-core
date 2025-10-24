@@ -400,7 +400,25 @@ func (s *Structure) CalcMembers() []string {
 
 func (s *Structure) HasForms() bool {
 	for _, f := range s.Facets {
-		if f.IsForm() {
+		if f.Renderer == "panel" {
+			return true
+		}
+	}
+	return false
+}
+
+func (s *Structure) HasCustomPanel() bool {
+	for _, f := range s.Facets {
+		if f.Renderer == "panel" {
+			return true
+		}
+	}
+	return false
+}
+
+func (s *Structure) HasCustomFacet() bool {
+	for _, f := range s.Facets {
+		if f.Renderer == "facet" {
 			return true
 		}
 	}
