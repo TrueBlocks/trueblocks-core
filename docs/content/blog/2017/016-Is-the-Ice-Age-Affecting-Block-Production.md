@@ -12,7 +12,7 @@ weight: 984
 
 This is just one of 100’s of questions we have about what is happening on the Ethereum blockchain. We’re developing TrueBlocks to help us answer these questions and more.
 
-[TrueBlocks](https://github.com/TrueBlocks/trueblocks-core) is a set of software libraries, applications, and command line tools that provide fast, easy, fully-decentralized access to the Ethereum blockchain data. As part of preparing for our next release, we’ve written a a number of simple command line tools to test our code. One of these is called `whenBlock` which helped us answer the question above.
+[TrueBlocks](https://github.com/TrueBlocks/trueblocks-core) is a set of software libraries, applications, and command line tools that provide fast, easy, fully-decentralized access to the Ethereum blockchain data. As part of preparing for our next release, we've written a number of simple command line tools to test our code. One of these is called `whenBlock` which helped us answer the question above.
 
 Here’s the help screen from `whenBlock`:
 

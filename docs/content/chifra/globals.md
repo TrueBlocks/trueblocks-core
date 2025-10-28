@@ -93,7 +93,7 @@ chifra slurp
 
 ### Group 5
 
-This final group of tools do not produce any real data. They are mostly used for configuration and/or to start and stop long-running processes. They allow no additional options over the default, but disable the following options depending on context. The `deamon` option, which provides all the tools via a local API, disables `--chain` because one sends chain with the URL.
+This final group of tools do not produce any real data. They are mostly used for configuration and/or to start and stop long-running processes. They allow no additional options over the default, but disable the following options depending on context. The `daemon` option, which provides all the tools via a local API, disables `--chain` because one sends chain with the URL.
 
 | Group | Cmd     | Enabled | Disabled                                   |
 | ----- | ------- | ------- | ------------------------------------------ |

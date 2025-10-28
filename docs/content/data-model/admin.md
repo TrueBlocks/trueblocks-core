@@ -106,7 +106,7 @@ ChunkRecords consist of the following fields:
 ## ChunkIndex
 
 The `indexchunk` data model represents internal information about each Unchained Index index chunk.
-It is used mostly interenally to study the characteristics of the Unchained Index.
+It is used mostly internally to study the characteristics of the Unchained Index.
 
 The following commands produce and manage ChunkIndexes:
 
@@ -165,7 +165,7 @@ ChunkAddress consist of the following fields:
 | address    | the address in this record                                                | address                                     |
 | range      | the block range of the chunk from which this address record was taken     | blkrange                                    |
 | offset     | the offset into the appearance table of the first record for this address | uint64                                      |
-| count      | the number of records in teh appearance table for this address            | uint64                                      |
+| count      | the number of records in the appearance table for this address            | uint64                                      |
 | rangeDates | if verbose, the block and timestamp bounds of the chunk (may be null)     | [RangeDates](/data-model/admin/#rangedates) |
 
 ## IpfsPin

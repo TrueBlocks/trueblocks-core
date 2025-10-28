@@ -64,7 +64,7 @@ The `.toml` file contains the following fields:
 
 | Name         | Description                                                                      | Notes                                                                                        |
 | ------------ | -------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------- |
-| class        | the name of teh data model in lower case                                         |                                                                                              |
+| class        | the name of the data model in lower case                                         |                                                                                              |
 | contained_by | if this data model is contained by other models, the list of other models        |                                                                                              |
 | doc_group    | corresponds the subcommand's group for documentation purposes                    |                                                                                              |
 | doc_route    | corresponds to the subsection of the data model documentation for this type      | poorly named                                                                                 |
