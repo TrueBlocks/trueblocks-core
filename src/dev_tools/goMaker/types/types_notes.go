@@ -21,6 +21,9 @@ func (c *Command) HelpNotes() string {
 		if tmpl == "" {
 			logger.Fatal("Could not read template file: ", readmePath)
 		}
+		if err := ValidateTemplate(tmpl, readmePath); err != nil {
+			logger.Fatal(err)
+		}
 		return "\n\n" + strings.Trim(c.executeTemplate(tmplName, tmpl), ws)
 	}
 	return ""

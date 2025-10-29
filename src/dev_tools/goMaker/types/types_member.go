@@ -597,3 +597,66 @@ func (m *Member) Align() string {
 func (m *Member) ReadOnly() bool {
 	return m.UiType() == "address"
 }
+
+// GetFormatter returns the appropriate formatter string for this field
+func (m *Member) GetFormatter() string {
+	name := m.Name
+	fieldType := m.Type
+	description := m.Description
+
+	// Handle "no formatter" cases
+	if strings.HasPrefix(name, "n") ||
+		strings.HasSuffix(name, "Bytes") ||
+		strings.Contains(name, "Per") {
+		return ""
+	}
+
+	// Handle specific types
+	switch fieldType {
+	case "address":
+		return "address"
+	case "ether":
+		return "ether"
+	case "wei", "int256", "uint256":
+		if strings.HasSuffix(name, "Eth") {
+			return "ether"
+		}
+		return "wei"
+	case "blkrange":
+		return "blkrange"
+	case "timestamp":
+		return "datetime"
+	case "hash", "ipfshash":
+		return "hash"
+	case "bool":
+		// Boolean formatter only if name doesn't start with "is" or "has"
+		if !strings.HasPrefix(name, "is") && !strings.HasPrefix(name, "has") {
+			return "boolean"
+		}
+	}
+
+	// Handle name patterns
+	if strings.HasSuffix(name, "Eth") {
+		return "ether"
+	}
+	if strings.HasSuffix(name, "num") || strings.HasSuffix(fieldType, "num") || name == "count" {
+		return "number"
+	}
+	if strings.HasPrefix(fieldType, "uint") || strings.HasPrefix(fieldType, "float") {
+		return "number"
+	}
+	if strings.HasSuffix(strings.ToLower(name), "url") {
+		return "url"
+	}
+	if name == "fileName" || strings.HasSuffix(name, "Path") || name == "path" {
+		return "path"
+	}
+	if strings.HasSuffix(name, "Date") {
+		return "datetime"
+	}
+	if name == "size" && strings.Contains(description, "on disc") {
+		return "calc.fileSize"
+	}
+
+	return ""
+}

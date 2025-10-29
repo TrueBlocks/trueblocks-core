@@ -2,7 +2,9 @@ package types
 
 import (
 	"encoding/json"
+	"fmt"
 	"path/filepath"
+	"slices"
 	"sort"
 	"strings"
 
@@ -27,6 +29,7 @@ type Structure struct {
 	CacheAs     string    `json:"cache_as,omitempty" toml:"cache_as"`
 	CacheBy     string    `json:"cache_by,omitempty" toml:"cache_by"`
 	CacheType   string    `json:"cache_type,omitempty" toml:"cache_type"`
+	StoreType   string    `json:"store_type,omitempty" toml:"store_type"`
 	DisableGo   bool      `json:"disable_go,omitempty" toml:"disable_go"`
 	DisableDocs bool      `json:"disable_docs,omitempty" toml:"disable_docs"`
 	Attributes  string    `json:"attributes,omitempty" toml:"attributes"`
@@ -49,6 +52,14 @@ func (s *Structure) String() string {
 }
 
 func (s Structure) Validate() bool {
+	// Validate StoreType field
+	if s.StoreType != "" {
+		validStoreTypes := []string{"singleton", "chain-scoped", "address-scoped", "not-scoped"}
+		if !slices.Contains(validStoreTypes, s.StoreType) {
+			logger.Fatal("Invalid StoreType for structure", s.Class, ":", s.StoreType, ". Must be one of:", strings.Join(validStoreTypes, ", "))
+		}
+	}
+
 	for _, facet := range s.Facets {
 		if err := facet.ValidateAll(); err != nil {
 			logger.Fatal("Facet validation failed:", err)
@@ -366,7 +377,7 @@ func (s *Structure) FacetsStr() string {
 	}
 	ret := []string{}
 	for _, f := range s.Facets {
-		ret = append(ret, f.Name+" ("+f.Store+")")
+		ret = append(ret, f.Name+" ("+f.StoreName+")")
 	}
 	return strings.Join(ret, ", ")
 }
@@ -476,4 +487,60 @@ func (s *Structure) Addresses() []string {
 		}
 	}
 	return ret
+}
+
+func (s *Structure) RemoveCallback() string {
+	removePattern := s.analyzeRemovePattern()
+
+	switch removePattern {
+	case "deleted-check":
+		return fmt.Sprintf(`useCallback(
+        (row: unknown) => Boolean((row as unknown as types.%s)?.deleted),
+        [],
+      )`, Singular(s.Class))
+
+	case "facet-specific":
+		return `useCallback(
+        (_row: unknown) => getCurrentDataFacet() === types.DataFacet.DOWNLOADED,
+        [getCurrentDataFacet],
+      )`
+
+	default:
+		return `useCallback(
+        (_row: unknown) => false,
+        [],
+      )`
+	}
+}
+
+func (s *Structure) analyzeRemovePattern() string {
+	hasDeleteUndeleteRemove := false
+	hasRemoveOnly := false
+	hasAnyRemove := false
+
+	for _, facet := range s.Facets {
+		actions := facet.Actions
+
+		hasDelete := slices.Contains(actions, "delete")
+		hasUndelete := slices.Contains(actions, "undelete")
+		hasRemove := slices.Contains(actions, "remove") || slices.Contains(actions, "remove-confirm")
+		if hasRemove {
+			hasAnyRemove = true
+			if hasDelete && hasUndelete {
+				hasDeleteUndeleteRemove = true
+			} else if hasRemove && !hasDelete && !hasUndelete {
+				hasRemoveOnly = true
+			}
+		}
+	}
+
+	if hasDeleteUndeleteRemove {
+		return "deleted-check"
+	}
+
+	if hasRemoveOnly && hasAnyRemove {
+		return "facet-specific"
+	}
+
+	return "none"
 }

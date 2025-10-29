@@ -517,6 +517,9 @@ func (c *Command) HelpIntro() string {
 	if tmpl == "" {
 		logger.Fatal("Could not read template file: ", readmePath)
 	}
+	if err := ValidateTemplate(tmpl, readmePath); err != nil {
+		logger.Fatal(err)
+	}
 	return strings.Trim(c.executeTemplate(tmplName, tmpl), ws)
 }
 

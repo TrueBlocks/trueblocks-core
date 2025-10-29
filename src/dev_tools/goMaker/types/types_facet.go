@@ -8,7 +8,9 @@ import (
 type Facet struct {
 	DisplayName string          `toml:"display_name" json:"display_name"`
 	Name        string          `json:"name"`
-	Store       string          `json:"store"`
+	Store       string          `json:"store"` // This will be parsed into StoreName and StoreSource
+	StoreName   string          `json:"storeName"`
+	StoreSource string          `json:"storeSource"`
 	Actions     []string        `toml:"actions" json:"actions"`
 	Confirms    map[string]bool `json:"-" toml:"-"` // actions requiring confirmation (parsed from -confirm suffix)
 	ViewType    string          `toml:"viewType" json:"viewType"`
@@ -32,7 +34,10 @@ func (f *Facet) SingleStore() string {
 	if f == nil {
 		return ""
 	}
-	return Singular(f.Store)
+	if f.StoreName != "Dresses" {
+		return Singular(f.StoreName)
+	}
+	return f.StoreName
 }
 
 func (f *Facet) ValidateViewType() error {

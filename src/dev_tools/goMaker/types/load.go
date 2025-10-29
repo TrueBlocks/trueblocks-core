@@ -104,8 +104,19 @@ func (cb *CodeBase) LoadStructures(thePath string, callBack func(*Structure, *an
 				f.Facets[i].NormalizeActions()
 			}
 			for i := range f.Facets {
-				// TODO: BOGUS - THIS SHOULD SPLIT AND KEEP THE LAST ITEM ONLY
-				f.Facets[i].Store = strings.ReplaceAll(f.Facets[i].Store, "dalle.", "")
+				// Parse store into StoreSource and StoreName
+				if strings.Contains(f.Facets[i].Store, ".") {
+					parts := strings.Split(f.Facets[i].Store, ".")
+					if len(parts) >= 2 {
+						f.Facets[i].StoreSource = parts[0]
+						f.Facets[i].StoreName = parts[1]
+					}
+				} else {
+					// Default to "sdk" if no prefix specified
+					f.Facets[i].StoreSource = "sdk"
+					f.Facets[i].StoreName = f.Facets[i].Store
+				}
+				f.Facets[i].Store = "NOT NEEDED AFTER LOAD - THIS MESSAGE PROVES IT"
 			}
 			for i := 0; i < len(f.Facets); i++ {
 				if len(f.Facets[i].DisplayName) == 0 {
@@ -117,7 +128,6 @@ func (cb *CodeBase) LoadStructures(thePath string, callBack func(*Structure, *an
 			structMap[mapKey] = f.Settings
 		}
 		return nil
-
 	}); err != nil {
 		return err
 	}

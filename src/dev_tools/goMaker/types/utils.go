@@ -7,10 +7,11 @@ import (
 	"path/filepath"
 	"strings"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"golang.org/x/text/cases"
 	"golang.org/x/text/language"
+
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 )
 
 var ErrNoTemplateFolder = errors.New("could not find the templates directory")
@@ -62,13 +63,16 @@ func getGeneratorContents(fullPath, subPath, group, reason string) string {
 	}
 
 	tmpl := file.AsciiFileToString(gPath)
+	if err := ValidateTemplate(tmpl, gPath); err != nil {
+		logger.Fatal(err)
+	}
 	tmpl = strings.ReplaceAll(tmpl, "[{GROUP}]", group)
 	tmpl = strings.ReplaceAll(tmpl, "[{REASON}]", reason)
 	return tmpl
 }
 
 func convertToDestPath(source, routeTag, typeTag, groupTag, reason string) string {
-	var singularWords = map[string]bool{
+	singularWords := map[string]bool{
 		"project": true,
 		"history": true,
 		"session": true,
@@ -88,7 +92,7 @@ func convertToDestPath(source, routeTag, typeTag, groupTag, reason string) strin
 	dest = strings.ReplaceAll(dest, "route+internal", routeTag+"+internal")
 	dest = strings.ReplaceAll(dest, "_Route_", "/"+Proper(routeTag)+"/")
 	dest = strings.ReplaceAll(dest, "Route+internal", Proper(routeTag)+"+internal")
-	reps := []string{".go", ".md", ".py", ".ts"}
+	reps := []string{".go", ".md", ".py", ".ts", ".test"}
 	for _, rep := range reps {
 		dest = strings.ReplaceAll(dest, "route"+rep, routeTag+rep)
 		dest = strings.ReplaceAll(dest, "Route"+rep, Proper(routeTag)+rep)
@@ -149,7 +153,37 @@ func GetTemplatePath() string {
 
 func getTemplateContents(fnIn string) string {
 	fn := filepath.Join(GetTemplatePath(), fnIn+".md")
-	return file.AsciiFileToString(fn)
+	content := file.AsciiFileToString(fn)
+	if err := ValidateTemplate(content, fn); err != nil {
+		logger.Fatal(err)
+	}
+	return content
+}
+
+// ValidateTemplate validates that EXISTING_CODE markers are properly formatted
+func ValidateTemplate(content, templatePath string) error {
+	lines := strings.Split(content, "\n")
+	existingCodeCount := 0
+
+	for i, line := range lines {
+		if strings.Contains(line, "// EXISTING_CODE") {
+			// Check rule 1: // EXISTING_CODE must be at the end of the line after stripping whitespace
+			trimmed := strings.TrimSpace(line)
+			if !strings.HasSuffix(trimmed, "// EXISTING_CODE") {
+				return fmt.Errorf("line %d in template %s contains '// EXISTING_CODE' but it's not at the end of the line: %s",
+					i+1, templatePath, line)
+			}
+			existingCodeCount++
+		}
+	}
+
+	// Check rule 2: Must have even number of EXISTING_CODE markers (including zero)
+	if existingCodeCount%2 != 0 {
+		return fmt.Errorf("template %s has %d '// EXISTING_CODE' markers, but must have an even number",
+			templatePath, existingCodeCount)
+	}
+
+	return nil
 }
 
 func GetGeneratedPath() string {

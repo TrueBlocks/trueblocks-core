@@ -212,19 +212,19 @@ func (cb *CodeBase) Validate() error {
 	for _, st := range cb.Structures {
 		for _, f := range st.Facets {
 			pwd, _ := os.Getwd()
-			tomlFile := filepath.Join(pwd, "code_gen/templates/classDefinitions", strings.ToLower(f.Store)+".toml")
-			csvFile := filepath.Join(pwd, "code_gen/templates/classDefinitions/fields", strings.ToLower(f.Store)+".csv")
+			tomlFile := filepath.Join(pwd, "code_gen/templates/classDefinitions", strings.ToLower(f.StoreName)+".toml")
+			csvFile := filepath.Join(pwd, "code_gen/templates/classDefinitions/fields", strings.ToLower(f.StoreName)+".csv")
 
-			if !structureNames[f.Store] {
+			if !structureNames[f.StoreName] {
 				var msg string
 				if !file.FileExists(tomlFile) {
-					msg = fmt.Sprintf("facet store %s in structure %s not found. Missing .toml file? %s.", f.Store, st.Class, tomlFile)
+					msg = fmt.Sprintf("facet store %s in structure %s not found. Missing .toml file? %s.", f.StoreName, st.Class, tomlFile)
 					logger.InfoBR("TOML file missing:", tomlFile)
 				} else {
 					logger.InfoBR("TOML file found:", tomlFile)
 				}
 				if !file.FileExists(csvFile) {
-					msg = fmt.Sprintf("facet store %s in structure %s not found. Missing .csv file? %s.", f.Store, st.Class, csvFile)
+					msg = fmt.Sprintf("facet store %s in structure %s not found. Missing .csv file? %s.", f.StoreName, st.Class, csvFile)
 					logger.InfoBR("CSV file missing:", csvFile)
 				} else {
 					logger.InfoBR("CSV file found:", csvFile)
@@ -241,7 +241,6 @@ func (cb *CodeBase) Validate() error {
 	}
 
 	return nil
-
 }
 
 func (op *Option) Stripped() string {

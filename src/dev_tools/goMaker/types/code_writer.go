@@ -67,6 +67,7 @@ func WriteCode(existingFn, newCode string) (bool, error) {
 		return false, fmt.Errorf("error applying template: %v %s", err, existingFn)
 	}
 
+	existingFn = strings.Replace(existingFn, "/Users/jrush/Development", "./", 1)
 	msg := LogMessage{
 		MessageType: "Progress",
 		Message:     existingFn,

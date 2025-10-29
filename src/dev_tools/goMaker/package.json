@@ -1,0 +1,38 @@
+{
+  "name": "goMaker",
+  "version": "1.0.0",
+  "description": "A development tool that aids in various aspects of building TrueBlocks by automatically generating help files, API interface specs, command line options parsers and test case files",
+  "main": "main.go",
+  "scripts": {
+    "build": "mkdir -p bin && go build -o bin/goMaker main.go",
+    "deploy": "yarn build && cp bin/goMaker /usr/local/bin/ && echo '✅ Installed to /usr/local/bin/goMaker' && which goMaker && echo '✅ Installation verified'",
+    "lint": "golangci-lint run && markdownlint README.md",
+    "clean": "rm -rf bin/",
+    "test": "go test ./..."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TrueBlocks/trueblocks-minidapps.git"
+  },
+  "keywords": [
+    "go",
+    "trueblocks",
+    "codegen",
+    "development-tool",
+    "code-generation",
+    "template",
+    "cli"
+  ],
+  "author": "TrueBlocks",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/TrueBlocks/trueblocks-minidapps/issues"
+  },
+  "homepage": "https://github.com/TrueBlocks/trueblocks-minidapps#readme",
+  "engines": {
+    "node": ">=16.0.0"
+  },
+  "devDependencies": {
+    "markdownlint-cli": "^0.45.0"
+  }
+}

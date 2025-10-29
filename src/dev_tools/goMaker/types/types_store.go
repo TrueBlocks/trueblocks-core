@@ -54,7 +54,7 @@ func (s *Store) NMembers() int {
 func (s *Structure) Stores() []Store {
 	stores := make(map[string]bool)
 	for _, f := range s.Facets {
-		stores[f.Store] = true
+		stores[f.StoreName] = true
 	}
 	sorted := []string{}
 	for store := range stores {
@@ -72,46 +72,10 @@ func (f *Facet) SortFunc() string {
 	return "sdk.Sort" + f.Name
 }
 
-func (f *Facet) StoreName() string {
-	if f == nil || f.stPtr == nil {
-		return ""
-	}
-	if store := f.stPtr.FindStore(f.Store); store != nil {
-		return store.Name
-	}
-	return ""
-}
-
-func (s *Structure) FindStore(store string) *Store {
-	if strings.Contains(store, ".") {
-		parts := strings.Split(store, ".")
-		if len(parts) > 0 {
-			store = parts[1]
-		}
-	}
-	for _, st := range s.Stores() {
-		if st.Name == store {
-			return &st
-		}
-	}
-	return nil
-}
-
-func (f *Facet) StoreSource() string {
-	if f == nil || f.stPtr == nil {
-		return ""
-	}
-	if store := f.stPtr.FindStore(f.Store); store != nil {
-		return store.Source
-	}
-	return ""
-}
-
 func (s *Store) NeedsBuckets() bool {
 	st := s.sPtr
 	for _, f := range st.Facets {
-		// fmt.Printf("Checking facet %s for store %s: %t \n", f.Name, s.Name, f.Store == s.Name && (f.PanelChart || f.FacetChart))
-		if f.Store == s.Name && (f.PanelChart || f.FacetChart) {
+		if f.StoreName == s.Name && (f.PanelChart || f.FacetChart) {
 			return true
 		}
 	}

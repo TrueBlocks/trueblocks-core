@@ -7,7 +7,32 @@ import (
 )
 
 func (s *Structure) HasDelete() bool {
-	return strings.Contains(strings.Join(s.UniqueActions(), ","), "delete")
+	return s.Class != "Dresses" && strings.Contains(strings.Join(s.UniqueActions(), ","), "delete")
+}
+
+func (s *Structure) HasAutoname() bool {
+	return strings.Contains(strings.Join(s.UniqueActions(), ","), "autoname")
+}
+
+func (s *Structure) HasUpdate() bool {
+	return s.Class == "Names" && strings.Contains(strings.Join(s.UniqueActions(), ","), "update")
+}
+
+func (s *Structure) HasCrud() bool {
+	crudActions := []string{"create", "update", "delete", "remove", "undelete", "autoname", "remove-confirm"}
+	for _, facet := range s.Facets {
+		if facet.Renderer == "facet" {
+			continue
+		}
+		for _, action := range facet.Actions {
+			for _, crudAction := range crudActions {
+				if action == crudAction {
+					return true
+				}
+			}
+		}
+	}
+	return false
 }
 
 func (s *Structure) RowActionsFe() string {
@@ -30,7 +55,11 @@ func (f *Facet) RowActionsBe(facet string) string {
 			}
 		}
 	}
-	return "\"" + strings.Join(ret, "\", \"") + "\""
+	r := strings.Join(ret, "\", \"")
+	if r == "" {
+		return ""
+	}
+	return "\"" + r + "\""
 }
 
 func (s *Structure) RowActionsBe(facet string) string {
@@ -51,7 +80,11 @@ func (f *Facet) HeaderActionsBe(facet string) string {
 			}
 		}
 	}
-	return "\"" + strings.Join(ret, "\", \"") + "\""
+	r := strings.Join(ret, "\", \"")
+	if r == "" {
+		return ""
+	}
+	return "\"" + r + "\""
 }
 
 func (s *Structure) HeaderActionsBe(facet string) string {
@@ -108,7 +141,7 @@ func contains(sl []string, v string) bool {
 	return false
 }
 
-func (s *Structure) Handlers() string {
+func (s *Structure) Handlers_inner() string {
 	ret := []string{}
 	for _, action := range s.UniqueActions() {
 		if action == "undelete" || !rowActions[action] {
@@ -124,15 +157,18 @@ func (s *Structure) Handlers() string {
 	return strings.Join(ret, ",")
 }
 
-// func (s *Structure) Handlers() string {
-// handlers := s.Handlers_inner()
-// handlers = strings.ReplaceAll(handlers, "handleAutoname,", "handleAutoname: originalHandleAutoname,")
-// handlers = strings.ReplaceAll(handlers, ",", ",\n")
-// return handlers
-// }
+func (s *Structure) Handlers() string {
+	ret := s.Handlers_inner()
+	if s.HasRowActions() && s.Class != "Dresses" {
+		ret = ret + ", handleRowAction"
+	} else if s.Class == "Dresses" {
+		ret = "handleRowAction"
+	}
+	return ret
+}
 
 func (s *Structure) HandlerStrs() string {
-	handlers := strings.Split(s.Handlers(), ",")
+	handlers := strings.Split(s.Handlers_inner(), ",")
 	ret := []string{}
 	for _, handler := range handlers {
 		handler = strings.TrimSpace(handler)
@@ -162,22 +198,14 @@ var headerActions = map[string]bool{
 	"export":  true,
 }
 
-func (f *Facet) HasActions() bool {
-	if f == nil {
-		return false
-	}
-	return len(f.Actions) > 0
-}
-
-func (s *Structure) HasActions() bool {
-	for _, f := range s.Facets {
-		if f.HasActions() {
+func (s *Store) HasActions(facets []Facet) bool {
+	for _, f := range facets {
+		if f.StoreName == s.Name && len(f.Actions) > 0 {
 			return true
 		}
 	}
 	return false
 }
-
 func (s *Structure) HasCrudActions() bool {
 	for _, f := range s.Facets {
 		for _, action := range f.Actions {
@@ -196,4 +224,13 @@ func (s *Structure) FacetByName(facet string) *Facet {
 		}
 	}
 	return nil
+}
+
+func (s *Structure) HasRowActions() bool {
+	for _, f := range s.Facets {
+		if len(f.Navigate) > 0 {
+			return true
+		}
+	}
+	return false
 }

@@ -1,11 +1,11 @@
-## goMaker
+# goMaker
 
 `goMaker` is development-only tool that aids in various aspects of building TrueBlocks. The program is
 disabled for most users, but for core developers it can be used to automatically generate help files,
 API interface specs, command line options parsers and many of the test case files. Generally, regular
 users will not use `goMaker`.
 
-### Usage
+## Usage
 
 `Usage:`    goMaker
 `Purpose:`  Automatically writes files for various purposes.
@@ -56,7 +56,7 @@ with the following fields:
   - `note` - a note (used for documentation only, this appears in the notes section of the READMEs)
   - `alias` - an alias (used for the Hugo website only, this aliases old pages)
 
-### Notes on Data Models
+## Notes on Data Models
 
 The `goMaker` program also generates a huge number of source code files and documentation related to the various data models produced or consumed by the various TrueBlocks tools. These data models are stored in `.toml` files in the `./src/dev_tools/goMaker/templates/classDefinitions` folder and the model's fields (in a `.csv`) are stored in a subfolder called `fields`. There are two files for each data model (a `.toml` and a `.csv`) names identically to the data model's name.
 
@@ -75,10 +75,10 @@ The `.toml` file contains the following fields:
 | cache_by     | the fields by which to identify cache items                                      | (one of \[ `address` \| `address,block` \| `address,block,fourbyte` \| `address,tx` \| `block` \| `tx` \] |
 | cache_type   | one of \[ `cacheable` \| `marshal_only` \]                                       |                                                                                              |
 
-### Notes on Templates
+## Notes on Templates
 
 The `./src/dev_tools/goMaker/templates` folder also contains a number of templates used by the `goMaker` program. The names of these templates corresponds to the location in the repo's paths the generated files will be written. For example, the `./sdk_route.go.tmpl` writes files to the `./sdk` folder. The filename of the file is `<route>.go` where `<route>` is the route of the subcommand. The template name may contain the word "route" or the word "type" which is sequentially replaced with either the routes or the data model types.
 
-### Fin
+## Fin
 
 Enough already. Experiment if you must.
