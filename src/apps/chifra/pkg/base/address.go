@@ -228,15 +228,16 @@ func (a *Address) CheckSum() string {
 	hash.Write([]byte(str))
 	hashSum := hash.Sum(nil)
 	hashStr := hex.EncodeToString(hashSum)
-	result := "0x"
+	var result strings.Builder
+	result.WriteString("0x")
 	for i := 0; i < len(str); i++ {
 		if hashStr[i] >= '8' {
-			result += strings.ToUpper(string(str[i]))
+			result.WriteString(strings.ToUpper(string(str[i])))
 		} else {
-			result += string(str[i])
+			result.WriteString(string(str[i]))
 		}
 	}
-	return result
+	return result.String()
 }
 
 // Display returns a string representation of the address with the left and right most characters

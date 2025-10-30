@@ -129,11 +129,11 @@ func (opts *StatusOptions) HandleModes(rCtx *output.RenderCtx) error {
 		}
 
 		if totalRecords == 0 {
-			str := ""
+			var str strings.Builder
 			for _, m := range opts.Modes {
-				str += m + " "
+				str.WriteString(m + " ")
 			}
-			errorChan <- errors.New("no files were found in the [" + strings.Trim(str, " ") + "] caches")
+			errorChan <- errors.New("no files were found in the [" + strings.Trim(str.String(), " ") + "] caches")
 			return
 		}
 

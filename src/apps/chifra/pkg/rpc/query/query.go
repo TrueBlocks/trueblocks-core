@@ -193,11 +193,12 @@ func (c rpcDebug) Body() string {
 }
 
 func (c rpcDebug) Headers() string {
-	ret := `-H "Content-Type: application/json"`
+	var ret strings.Builder
+	ret.WriteString(`-H "Content-Type: application/json"`)
 	for key, value := range c.headers {
-		ret += fmt.Sprintf(` -H "%s: %s"`, key, value)
+		ret.WriteString(fmt.Sprintf(` -H "%s: %s"`, key, value))
 	}
-	return ret
+	return ret.String()
 }
 
 func (c rpcDebug) Method() string {
