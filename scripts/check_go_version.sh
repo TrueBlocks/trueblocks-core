@@ -27,7 +27,7 @@ fi
 
 #------------------------------------------------
 # Extract Go version from Dockerfile FROM line
-DOCKER_GO_VERSION=$(grep "FROM golang:" "$DOCKERFILE_PATH" | grep -o '[0-9][0-9.]*' | head -1)
+DOCKER_GO_VERSION=$(grep -Po '^FROM\s+golang:\K[0-9]+(\.[0-9]+){0,2}' "$DOCKERFILE_PATH" | head -1)
 
 if [ -z "$DOCKER_GO_VERSION" ]; then
     echo "❌ ERROR: Could not extract Go version from Dockerfile"
