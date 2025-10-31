@@ -1,7 +1,0 @@
-[settings]
-    class = "Token"
-    doc_group = "03-Chain State"
-    doc_descr = "on-chain token-related data such as totalSupply, symbol, decimals, and individual balances for a given address at a given block"
-    doc_route = "306-token"
-    attributes = ""
-    produced_by = "tokens, export"

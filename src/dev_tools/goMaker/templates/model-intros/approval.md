@@ -1,3 +1,0 @@
-An Approval represents an ERC-20 token spending permission granted by a token owner to a spender address. This data structure captures the essential elements of the `approve()` function call, including the token contract address, the owner granting permission, the spender receiving permission, and the approved amount.
-
-Approvals are fundamental to ERC-20 token interactions, enabling decentralized exchanges, automated market makers, and other DeFi protocols to spend tokens on behalf of users. By tracking these permissions, users can monitor and analyze token spending authorizations across their addresses.

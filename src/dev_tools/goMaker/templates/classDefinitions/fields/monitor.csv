@@ -1,9 +1,0 @@
-name        ,type    ,strDefault ,attributes ,upgrades   ,docOrder ,description
-address     ,address ,           ,sorts      ,           ,       1 ,the address of this monitor
-deleted     ,bool    ,           ,sorts      ,           ,       8 ,`true` if this monitor has been deleted&#44; `false` otherwise
-isEmpty     ,bool    ,           ,sorts      ,>3.1.2:bool ,       6 ,`true` if the monitor has no appearances&#44; `false` otherwise
-isStaged    ,bool    ,           ,sorts      ,>3.1.2:bool ,       7 ,`true` if the monitor file in on the stage&#44; `false` otherwise
-fileSize    ,int64   ,           ,sorts      ,           ,       4 ,the size of this monitor on disc
-lastScanned ,uint32  ,           ,sorts      ,           ,       5 ,the last scanned block number
-nRecords    ,int64   ,           ,sorts      ,           ,       3 ,the number of appearances for this monitor
-name        ,string  ,           ,           ,           ,       2 ,the name of this monitor (if any)

@@ -1,8 +1,0 @@
-name        ,type   ,strDefault ,attributes      ,docOrder ,description
-type        ,string ,           ,sorts           ,       1 ,the type of the cache
-items       ,[]any  ,           ,                ,       2 ,the individual items in the cache (if --verbose)
-lastCached  ,string ,           ,sorts|omitempty ,       3 ,the date of the most recent item added to the cache
-nFiles      ,uint64 ,           ,sorts           ,       4 ,the number of items in the cache
-nFolders    ,uint64 ,           ,sorts           ,       5 ,the number of folders holding that many items
-path        ,string ,           ,sorts           ,       6 ,the path to the top of the given cache
-sizeInBytes ,int64  ,           ,sorts           ,       7 ,the size of the cache in bytes

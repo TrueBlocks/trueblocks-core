@@ -1,7 +1,0 @@
-[settings]
-    class = "Message"
-    doc_group = "05-Other"
-    doc_descr = "used for various responses when no real data is generated"
-    doc_route = "518-message"
-    attributes = ""
-    produced_by = "blocks, chunks, export, logs, monitors, names, scrape, state, traces, transactions, when"

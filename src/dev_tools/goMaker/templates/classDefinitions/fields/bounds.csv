@@ -1,8 +1,0 @@
-name       ,type       ,strDefault ,attributes ,docOrder ,description
-count      ,uint64     ,           ,           ,       1 ,the number of appearances for this address
-firstApp   ,Appearance ,           ,           ,       2 ,the block number and transaction id of the first appearance of this address
-firstTs    ,timestamp  ,           ,           ,       3 ,the timestamp of the first appearance of this address
-firstDate  ,datetime   ,           ,calc       ,       4 ,the first appearance timestamp as a date
-latestApp  ,Appearance ,           ,           ,       5 ,the block number and transaction id of the latest appearance of this address
-latestTs   ,timestamp  ,           ,           ,       6 ,the timestamp of the latest appearance of this address
-latestDate ,datetime   ,           ,calc       ,       7 ,the latest appearance timestamp as a date

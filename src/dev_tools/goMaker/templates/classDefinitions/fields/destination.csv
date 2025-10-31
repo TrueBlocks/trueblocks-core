@@ -1,5 +1,0 @@
-name     ,type     ,strDefault ,attributes ,docOrder ,description
-term     ,string   ,           ,           ,       1 ,the term used to produce the url
-termType ,DestType ,           ,           ,       2 ,the type of the term
-url      ,string   ,           ,           ,       3 ,the url produced
-source   ,string   ,           ,           ,       4 ,the option that produced the url

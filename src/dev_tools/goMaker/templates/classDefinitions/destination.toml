@@ -1,7 +1,0 @@
-[settings]
-    class = "Destination"
-    doc_group = "05-Other"
-    doc_descr = "an enhanced url used by chifra explore"
-    doc_route = "524-destination"
-    attributes = ""
-    produced_by = "explore"
