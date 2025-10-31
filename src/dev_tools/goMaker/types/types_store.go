@@ -81,3 +81,27 @@ func (s *Store) NeedsBuckets() bool {
 	}
 	return false
 }
+
+func (s *Store) GetMapKey() string {
+	if s.sPtr == nil {
+		return ""
+	}
+	for _, f := range s.sPtr.Facets {
+		if f.StoreName == s.Name && f.MapKey != "" {
+			return f.MapKey
+		}
+	}
+	return ""
+}
+
+func (s *Store) UseMapKey() bool {
+	if s.sPtr == nil {
+		return false
+	}
+	for _, f := range s.sPtr.Facets {
+		if f.StoreName == s.Name && f.UseMapKey {
+			return true
+		}
+	}
+	return false
+}

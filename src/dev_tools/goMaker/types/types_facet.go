@@ -8,6 +8,7 @@ import (
 type Facet struct {
 	DisplayName string          `toml:"display_name" json:"display_name"`
 	Name        string          `json:"name"`
+	MapKey      string          `json:"mapKey" toml:"mapKey"`
 	Store       string          `json:"store"` // This will be parsed into StoreName and StoreSource
 	StoreName   string          `json:"storeName"`
 	StoreSource string          `json:"storeSource"`
@@ -22,6 +23,7 @@ type Facet struct {
 	NeedsCalcs  bool            `json:"needsCalcs" toml:"needsCalcs"`
 	PanelChart  bool            `json:"panelChart" toml:"panelChart"`
 	FacetChart  bool            `json:"facetChart" toml:"facetChart"`
+	UseMapKey   bool            `json:"useMapKey" toml:"useMapKey"`
 }
 
 var allowedViewTypes = map[string]bool{

@@ -21,9 +21,7 @@ func (item *CodeBase) ProcessGroupFile(source, group, reason string) error {
 	}
 
 	VerboseLog("  Reading template from:", fullPath)
-	tmpl := getGeneratorContents(fullPath, subPath, group, reason)
-	dest := convertToDestPath(fullPath, "", "", group, reason)
-
+	tmpl, dest := getGeneratorContentsAndDest(fullPath, subPath, group, reason, "", "", group)
 	VerboseLog("  Generating file:", dest)
 	tmplName := fullPath + group + reason
 	result := item.executeTemplate(tmplName, tmpl)

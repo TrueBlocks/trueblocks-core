@@ -164,7 +164,7 @@ func (s *Structure) Handlers() string {
 	} else if s.Class == "Dresses" {
 		ret = "handleRowAction"
 	}
-	return ret
+	return strings.Trim(ret, ", ")
 }
 
 func (s *Structure) HandlerStrs() string {

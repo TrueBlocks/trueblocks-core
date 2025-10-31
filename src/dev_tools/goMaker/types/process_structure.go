@@ -22,13 +22,12 @@ func (item *Structure) ProcessFile(sourceIn, group, reason string) error {
 	}
 
 	VerboseLog("  Reading template from:", fullPath)
-	tmpl := getGeneratorContents(fullPath, subPath, group, reason)
 	// For types in pkg/types/<route>/<type>.go format, pass the route
 	route := item.Route
 	if route == "" {
 		route = strings.ToLower(item.Class)
 	}
-	dest := convertToDestPath(fullPath, route, item.Name(), group, reason)
+	tmpl, dest := getGeneratorContentsAndDest(fullPath, subPath, group, reason, route, item.Name(), group)
 
 	VerboseLog("  Generating file:", dest)
 	tmplName := fullPath + group + reason

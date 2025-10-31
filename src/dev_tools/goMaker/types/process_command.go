@@ -17,9 +17,7 @@ func (item *Command) ProcessFile(source, group, reason string) error {
 		return nil
 	}
 
-	tmpl := getGeneratorContents(fullPath, subPath, group, reason)
-	dest := convertToDestPath(fullPath, item.Route, "", group, reason)
-
+	tmpl, dest := getGeneratorContentsAndDest(fullPath, subPath, group, reason, item.Route, "", group)
 	tmplName := fullPath + group + reason
 	result := item.executeTemplate(tmplName, tmpl)
 	_, err := WriteCode(dest, result)
