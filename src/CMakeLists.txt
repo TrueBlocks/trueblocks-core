@@ -104,7 +104,7 @@ endif()
 
 # ----------------------------------------------------------------------------
 add_custom_target(generate
-    COMMAND ${BIN_DIR}/goMaker
+    COMMAND goMaker
     WORKING_DIRECTORY ${REPO_DIR})
 
 # ----------------------------------------------------------------------------
