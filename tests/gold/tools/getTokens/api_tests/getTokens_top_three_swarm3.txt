@@ -8,6 +8,7 @@ tokens?addrs=0xb9e7f8568e08d5659f5d29c4997173d84cdf2607%200xfbb1b73c4f0bda4f67dc
       "blockNumber": 4285364,
       "decimals": 18,
       "holder": "0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98",
+      "holderName": "Bittrex 1",
       "name": "Swarm City Token",
       "symbol": "SWT"
     },
@@ -18,6 +19,7 @@ tokens?addrs=0xb9e7f8568e08d5659f5d29c4997173d84cdf2607%200xfbb1b73c4f0bda4f67dc
       "blockNumber": 3510999,
       "decimals": 18,
       "holder": "0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98",
+      "holderName": "Bittrex 1",
       "name": "Swarm City Token",
       "symbol": "SWT"
     },
@@ -28,6 +30,7 @@ tokens?addrs=0xb9e7f8568e08d5659f5d29c4997173d84cdf2607%200xfbb1b73c4f0bda4f67dc
       "blockNumber": 2510010,
       "decimals": 18,
       "holder": "0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98",
+      "holderName": "Bittrex 1",
       "name": "Swarm City Token",
       "symbol": "SWT"
     },

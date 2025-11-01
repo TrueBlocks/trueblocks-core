@@ -14,6 +14,7 @@ Format:  json
       "blockNumber": 2000000,
       "decimals": 18,
       "holder": "0xb9e7f8568e08d5659f5d29c4997173d84cdf2607",
+      "holderName": "Swarm City Token",
       "name": "OMGToken",
       "symbol": "OMG"
     }
