@@ -7,7 +7,6 @@ package statePkg
 import (
 	"errors"
 	"fmt"
-	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/call"
@@ -155,18 +154,17 @@ func (opts *StateOptions) checkCommands(callAddress base.Address, isSend bool) e
 	// an empty list of commands is okay...
 	for _, cmd := range opts.Calls {
 		if _, suggestions, err := call.NewContractCall(opts.Conn, callAddress, cmd); err != nil {
-			var message strings.Builder
-			message.WriteString(fmt.Sprintf("the --calldata value provided (%s) was not found: %s", cmd, err))
+			message := fmt.Sprintf("the --calldata value provided (%s) was not found: %s", cmd, err)
 			if len(suggestions) > 0 {
-				message.WriteString(" Suggestions: ")
+				message += " Suggestions: "
 				for index, suggestion := range suggestions {
 					if index > 0 {
-						message.WriteString(" ")
+						message += " "
 					}
-					message.WriteString(fmt.Sprintf("%d: %s.", index+1, suggestion))
+					message += fmt.Sprintf("%d: %s.", index+1, suggestion)
 				}
 			}
-			return errors.New(message.String())
+			return errors.New(message)
 		}
 	}
 	return nil
