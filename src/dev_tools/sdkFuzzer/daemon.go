@@ -8,7 +8,7 @@ import (
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v5/pkg/file"
-	sdk "github.com/TrueBlocks/trueblocks-sdk/v5"
+	sdk "github.com/TrueBlocks/trueblocks-sdk/v6"
 )
 
 // EXISTING_CODE

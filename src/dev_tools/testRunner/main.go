@@ -19,7 +19,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v5/pkg/colors"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v5/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v5/pkg/logger"
-	"github.com/TrueBlocks/trueblocks-sdk/v5/services"
+	"github.com/TrueBlocks/trueblocks-sdk/v6/services"
 )
 
 func init() {

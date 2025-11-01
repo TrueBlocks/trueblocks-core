@@ -1,9 +1,9 @@
-module github.com/TrueBlocks/trueblocks-core/sdkFuzzer/v5
+module github.com/TrueBlocks/trueblocks-core/sdkFuzzer/v6
 
 // Go Version
 go 1.25.1
 
-require github.com/TrueBlocks/trueblocks-sdk/v5 v5.9.3
+require github.com/TrueBlocks/trueblocks-sdk/v6 v5.9.3
 
 require (
 	github.com/Microsoft/go-winio v0.6.2 // indirect

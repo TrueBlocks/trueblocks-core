@@ -60,7 +60,7 @@ find . -type f -name 'go.mod' | while read -r modfile; do
     fi
 
     if [ "$isSdk" = false ] && [ "$isChifra" = false ] && [ "$isGoMaker" = false ] && [ "$isFourbyte" = false ] && [ "$isIndexMan" = false ] && [ "$isKeystore" = false ]; then
-        go get github.com/TrueBlocks/trueblocks-sdk/v5@latest
+        go get github.com/TrueBlocks/trueblocks-sdk/v6@latest
     fi
 
     if [ "$isChifra" = false ]; then
