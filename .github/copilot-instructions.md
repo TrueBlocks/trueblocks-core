@@ -116,8 +116,10 @@ TrueBlocks is a Go-based blockchain data indexing system that provides fast, loc
 ```bash
 # Full build with CMake
 cd build && make
-# Go build only
-cd src/apps/chifra && go build
+# Go build only (always use -o /tmp to avoid workspace clutter)
+cd src/apps/chifra && go build -o /tmp/chifra
+# For other modules
+go build -o /tmp/[binary-name] .
 ```
 
 **Testing**: Multi-layer approach:

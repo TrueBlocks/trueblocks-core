@@ -1,4 +1,4 @@
-module github.com/TrueBlocks/trueblocks-core/testRunner
+module github.com/TrueBlocks/trueblocks-core/testRunner/v5
 
 // Go Version
 go 1.25.1

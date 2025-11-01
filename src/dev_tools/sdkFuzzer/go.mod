@@ -1,4 +1,4 @@
-module github.com/TrueBlocks/trueblocks-core/sdkFuzzer
+module github.com/TrueBlocks/trueblocks-core/sdkFuzzer/v5
 
 // Go Version
 go 1.25.1
