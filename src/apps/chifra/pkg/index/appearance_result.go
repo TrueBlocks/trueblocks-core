@@ -4,9 +4,9 @@ import (
 	"encoding/binary"
 	"io"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v5/pkg/base"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v5/pkg/ranges"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v5/pkg/types"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v6/pkg/base"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v6/pkg/ranges"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v6/pkg/types"
 )
 
 // AppearanceResult carries the appearances found in a single Index for the given address.

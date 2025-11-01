@@ -7,13 +7,13 @@ package statePkg
 import (
 	"fmt"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v5/pkg/base"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v5/pkg/cache"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v5/pkg/call"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v5/pkg/decache"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v5/pkg/output"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v5/pkg/types"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v5/pkg/walk"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v6/pkg/base"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v6/pkg/cache"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v6/pkg/call"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v6/pkg/decache"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v6/pkg/output"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v6/pkg/types"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v6/pkg/walk"
 )
 
 func (opts *StateOptions) HandleDecache(rCtx *output.RenderCtx) error {

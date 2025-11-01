@@ -1,10 +1,10 @@
 package decache
 
 import (
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v5/pkg/base"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v5/pkg/cache"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v5/pkg/types"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v5/pkg/walk"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v6/pkg/base"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v6/pkg/cache"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v6/pkg/types"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v6/pkg/walk"
 )
 
 func LocationsFromAddressAndAppearances(address base.Address, apps []types.Appearance, cT walk.CacheType) ([]cache.Locator, error) {

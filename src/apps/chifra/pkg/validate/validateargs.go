@@ -7,11 +7,11 @@ package validate
 import (
 	"strings"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v5/pkg/base"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v5/pkg/identifiers"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v5/pkg/logger"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v5/pkg/ranges"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v5/pkg/tslib"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v6/pkg/base"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v6/pkg/identifiers"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v6/pkg/logger"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v6/pkg/ranges"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v6/pkg/tslib"
 )
 
 // ValidArgumentType is a bitmask used to make it easier to validate multiple

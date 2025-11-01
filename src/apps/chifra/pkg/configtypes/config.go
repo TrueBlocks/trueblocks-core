@@ -6,7 +6,7 @@ import (
 	"io"
 	"os"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v5/pkg/version"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v6/pkg/version"
 	"github.com/pelletier/go-toml/v2"
 )
 

@@ -12,9 +12,9 @@ import (
 	"io"
 	"net/url"
 
-	slurp "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v5/internal/slurp"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v5/pkg/output"
-	outputHelpers "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v5/pkg/output/helpers"
+	slurp "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v6/internal/slurp"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v6/pkg/output"
+	outputHelpers "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v6/pkg/output/helpers"
 )
 
 // Slurp provides an interface to the command line chifra slurp through the SDK.

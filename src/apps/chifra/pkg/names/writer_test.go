@@ -5,8 +5,8 @@ import (
 	"encoding/csv"
 	"testing"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v5/pkg/base"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v5/pkg/types"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v6/pkg/base"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v6/pkg/types"
 )
 
 func TestNewNameWriter(t *testing.T) {

@@ -7,14 +7,14 @@ import (
 	"text/template"
 	"time"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v5/pkg/colors"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v5/pkg/config"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v5/pkg/logger"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v5/pkg/output"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v5/pkg/tslib"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v5/pkg/types"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v5/pkg/validate"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v5/pkg/version"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v6/pkg/colors"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v6/pkg/config"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v6/pkg/logger"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v6/pkg/output"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v6/pkg/tslib"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v6/pkg/types"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v6/pkg/validate"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v6/pkg/version"
 )
 
 func (opts *StatusOptions) HandleShow(rCtx *output.RenderCtx) error {

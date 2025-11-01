@@ -7,7 +7,7 @@ package cmd
 import (
 	"fmt"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v5/pkg/version"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v6/pkg/version"
 	"github.com/spf13/cobra"
 )
 

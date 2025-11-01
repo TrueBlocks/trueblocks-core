@@ -1,9 +1,9 @@
 package articulate
 
 import (
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v5/pkg/abi"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v5/pkg/logger"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v5/pkg/rpc"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v6/pkg/abi"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v6/pkg/logger"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v6/pkg/rpc"
 )
 
 type AbiCache struct {

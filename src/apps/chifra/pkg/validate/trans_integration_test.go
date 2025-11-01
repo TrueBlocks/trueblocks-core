@@ -8,9 +8,9 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v5/pkg/colors"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v5/pkg/identifiers"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v5/pkg/utils"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v6/pkg/colors"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v6/pkg/identifiers"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v6/pkg/utils"
 )
 
 func Test_TransactionIds(t *testing.T) {

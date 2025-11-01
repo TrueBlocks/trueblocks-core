@@ -5,7 +5,7 @@
 package rpc
 
 import (
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v5/pkg/base"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v6/pkg/base"
 )
 
 // TODO: The following most likely does not work for non-mainnet chains which

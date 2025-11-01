@@ -5,10 +5,10 @@
 package transactionsPkg
 
 import (
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v5/pkg/decache"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v5/pkg/output"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v5/pkg/types"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v5/pkg/walk"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v6/pkg/decache"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v6/pkg/output"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v6/pkg/types"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v6/pkg/walk"
 )
 
 func (opts *TransactionsOptions) HandleDecache(rCtx *output.RenderCtx) error {

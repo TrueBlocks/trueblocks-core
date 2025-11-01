@@ -5,8 +5,8 @@ import (
 	"bytes"
 	"testing"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v5/pkg/names"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v5/pkg/output"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v6/pkg/names"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v6/pkg/output"
 )
 
 func BenchmarkNamesOptions_HandleShow_CommandLine(b *testing.B) {

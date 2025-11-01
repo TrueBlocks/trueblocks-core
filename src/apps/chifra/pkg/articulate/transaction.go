@@ -3,10 +3,10 @@ package articulate
 import (
 	"errors"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v5/pkg/abi"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v5/pkg/decode"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v5/pkg/rpc"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v5/pkg/types"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v6/pkg/abi"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v6/pkg/decode"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v6/pkg/rpc"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v6/pkg/types"
 )
 
 func (abiCache *AbiCache) ArticulateTransaction(tx *types.Transaction) error {

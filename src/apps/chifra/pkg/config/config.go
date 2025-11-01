@@ -14,11 +14,11 @@ import (
 	"strings"
 	"sync"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v5/pkg/configtypes"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v5/pkg/logger"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v5/pkg/usage"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v5/pkg/utils"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v5/pkg/version"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v6/pkg/configtypes"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v6/pkg/logger"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v6/pkg/usage"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v6/pkg/utils"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v6/pkg/version"
 )
 
 const envPrefix = "TB_"

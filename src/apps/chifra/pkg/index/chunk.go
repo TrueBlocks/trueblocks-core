@@ -17,8 +17,8 @@ import (
 	"io"
 	"os"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v5/pkg/config"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v5/pkg/ranges"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v6/pkg/config"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v6/pkg/ranges"
 	shell "github.com/ipfs/go-ipfs-api"
 )
 

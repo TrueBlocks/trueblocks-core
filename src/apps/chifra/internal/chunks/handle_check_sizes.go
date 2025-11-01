@@ -7,12 +7,12 @@ package chunksPkg
 import (
 	"fmt"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v5/pkg/base"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v5/pkg/file"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v5/pkg/index"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v5/pkg/manifest"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v5/pkg/ranges"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v5/pkg/types"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v6/pkg/base"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v6/pkg/file"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v6/pkg/index"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v6/pkg/manifest"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v6/pkg/ranges"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v6/pkg/types"
 )
 
 // CheckSizes compares the file on disc to the file size suggested in the manifest

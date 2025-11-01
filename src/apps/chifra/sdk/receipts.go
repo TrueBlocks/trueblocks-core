@@ -12,9 +12,9 @@ import (
 	"io"
 	"net/url"
 
-	receipts "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v5/internal/receipts"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v5/pkg/output"
-	outputHelpers "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v5/pkg/output/helpers"
+	receipts "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v6/internal/receipts"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v6/pkg/output"
+	outputHelpers "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v6/pkg/output/helpers"
 )
 
 // Receipts provides an interface to the command line chifra receipts through the SDK.

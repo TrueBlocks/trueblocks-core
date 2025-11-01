@@ -1,6 +1,6 @@
 package listPkg
 
-import "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v5/pkg/monitor"
+import "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v6/pkg/monitor"
 
 func (opts *ListOptions) FreshenMonitorsForList(monitorArray *[]monitor.Monitor) (bool, error) {
 	var updater = monitor.NewUpdater(opts.Globals.Chain, opts.Globals.TestMode, false /* skipFreshen */, opts.Addrs)

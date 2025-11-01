@@ -1,6 +1,6 @@
 package notify
 
-import "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v5/pkg/types"
+import "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v6/pkg/types"
 
 // TODO: THIS IS PART OF THE NOTIFY CODE TO BE USED FOR MONITORING
 type Message string

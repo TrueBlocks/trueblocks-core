@@ -1,6 +1,6 @@
 package topics
 
-import "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v5/pkg/base"
+import "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v6/pkg/base"
 
 // TransferTopic is here because these three topics make up almost all of the logs in the entire history
 // of the chain, we get significant speed-ups if we handle these items without regular processing.

@@ -12,12 +12,12 @@ package cmd
 import (
 	"os"
 
-	chunksPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v5/internal/chunks"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v5/internal/globals"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v5/pkg/base"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v5/pkg/caps"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v5/pkg/file"
-	outputHelpers "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v5/pkg/output/helpers"
+	chunksPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v6/internal/chunks"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v6/internal/globals"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v6/pkg/base"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v6/pkg/caps"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v6/pkg/file"
+	outputHelpers "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v6/pkg/output/helpers"
 	"github.com/spf13/cobra"
 )
 

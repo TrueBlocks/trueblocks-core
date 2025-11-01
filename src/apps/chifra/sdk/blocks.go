@@ -12,9 +12,9 @@ import (
 	"io"
 	"net/url"
 
-	blocks "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v5/internal/blocks"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v5/pkg/output"
-	outputHelpers "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v5/pkg/output/helpers"
+	blocks "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v6/internal/blocks"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v6/pkg/output"
+	outputHelpers "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v6/pkg/output/helpers"
 )
 
 // Blocks provides an interface to the command line chifra blocks through the SDK.

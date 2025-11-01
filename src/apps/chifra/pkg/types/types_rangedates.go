@@ -12,7 +12,7 @@ package types
 import (
 	"encoding/json"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v5/pkg/base"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v6/pkg/base"
 )
 
 // EXISTING_CODE

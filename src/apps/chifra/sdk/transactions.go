@@ -12,9 +12,9 @@ import (
 	"io"
 	"net/url"
 
-	transactions "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v5/internal/transactions"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v5/pkg/output"
-	outputHelpers "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v5/pkg/output/helpers"
+	transactions "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v6/internal/transactions"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v6/pkg/output"
+	outputHelpers "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v6/pkg/output/helpers"
 )
 
 // Transactions provides an interface to the command line chifra transactions through the SDK.

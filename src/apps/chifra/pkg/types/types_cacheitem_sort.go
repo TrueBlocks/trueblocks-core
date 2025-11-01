@@ -8,7 +8,7 @@
 
 package types
 
-import "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v5/pkg/logger"
+import "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v6/pkg/logger"
 
 type CacheItemField string
 
