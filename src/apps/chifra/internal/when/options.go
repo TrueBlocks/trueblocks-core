@@ -16,14 +16,14 @@ import (
 	"net/url"
 	"strings"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/caps"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/identifiers"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/walk"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v6/internal/globals"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v6/pkg/base"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v6/pkg/caps"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v6/pkg/identifiers"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v6/pkg/logger"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v6/pkg/rpc"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v6/pkg/validate"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v6/pkg/walk"
 	// EXISTING_CODE
 )
 

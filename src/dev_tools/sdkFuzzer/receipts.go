@@ -12,9 +12,9 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
-	sdk "github.com/TrueBlocks/trueblocks-sdk/v5"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v6/pkg/file"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v6/pkg/logger"
+	sdk "github.com/TrueBlocks/trueblocks-sdk/v6"
 )
 
 // EXISTING_CODE

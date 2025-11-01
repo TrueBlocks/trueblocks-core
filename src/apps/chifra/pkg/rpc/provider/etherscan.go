@@ -9,13 +9,13 @@ import (
 	"strings"
 	"time"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/debug"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v6/pkg/base"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v6/pkg/config"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v6/pkg/debug"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v6/pkg/logger"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v6/pkg/rpc"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v6/pkg/types"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v6/pkg/utils"
 	"golang.org/x/time/rate"
 )
 

@@ -1,7 +1,7 @@
 package monitor
 
 import (
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v6/pkg/types"
 )
 
 func (mon *Monitor) TruncateTo(chain string, num uint32) (bool, error) {

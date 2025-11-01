@@ -109,15 +109,15 @@ The following commands produce and manage Contracts:
 
 Contracts consist of the following fields:
 
-| Field       | Description                                              | Type                          |
-| ----------- | -------------------------------------------------------- | ----------------------------- |
-| address     | the address of this smart contract                       | address                       |
-| name        | the name of this contract (if available)                 | string                        |
-| abi         | the ABI for this contract                                | [Abi](/data-model/other/#abi) |
-| lastUpdated | timestamp when this contract state was last updated      | timestamp                     |
-| date        | date when this contract state was last updated           | datetime                      |
-| errorCount  | number of errors encountered when calling read functions | int64                         |
-| lastError   | the most recent error message when calling functions     | string                        |
+| Field       | Description                                                 | Type                          |
+| ----------- | ----------------------------------------------------------- | ----------------------------- |
+| address     | the address of this smart contract                          | address                       |
+| name        | the name of this contract (if available)                    | string                        |
+| abi         | the ABI for this contract                                   | [Abi](/data-model/other/#abi) |
+| lastUpdated | timestamp when this contract state was last updated         | timestamp                     |
+| date        | date when this contract state was last updated (calculated) | datetime                      |
+| errorCount  | number of errors encountered when calling read functions    | int64                         |
+| lastError   | the most recent error message when calling functions        | string                        |
 
 ## Base types
 

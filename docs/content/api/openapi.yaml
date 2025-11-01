@@ -7,7 +7,7 @@ info:
   license:
     name: GPL 3.0
     url: http://www.gnu.org/licenses/
-  version: 5.9.3
+  version: 6.0.3
   description: >
     A REST layer over the TrueBlocks chifra command line. With `chifra daemon`, you can
     run this on your own machine, and make calls to `localhost`.
@@ -3888,7 +3888,7 @@ components:
           type: array
           items:
             $ref: "#/components/schemas/topic"
-          description: "the first topic hashes event signature of the log, up to 3 additional index parameters may appear"
+          description: "first topic event signature up to 3 additional index parameters may appear"
         data:
           type: string
           format: bytes
@@ -4419,7 +4419,7 @@ components:
         date:
           type: string
           format: datetime
-          description: "date when this contract state was last updated"
+          description: "date when this contract state was last updated (calculated)"
         errorCount:
           type: number
           format: int64

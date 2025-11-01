@@ -7,8 +7,8 @@ import (
 	"os"
 	"sort"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v6/pkg/base"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v6/pkg/config"
 )
 
 type TimestampRecord struct {

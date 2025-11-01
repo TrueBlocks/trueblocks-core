@@ -1,11 +1,11 @@
 package decache
 
 import (
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/identifiers"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v6/pkg/base"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v6/pkg/cache"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v6/pkg/identifiers"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v6/pkg/rpc"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v6/pkg/types"
 )
 
 func LocationsFromBlocks(conn *rpc.Connection, ids []identifiers.Identifier) ([]cache.Locator, error) {

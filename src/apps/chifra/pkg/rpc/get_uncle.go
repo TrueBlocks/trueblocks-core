@@ -7,9 +7,9 @@ package rpc
 import (
 	"fmt"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc/query"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v6/pkg/base"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v6/pkg/rpc/query"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v6/pkg/types"
 )
 
 // GetUncleBodiesByNumber returns the number of uncles in a block. (search: FromRpc)

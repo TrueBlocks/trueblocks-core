@@ -3,7 +3,7 @@ package ledger
 import (
 	"sort"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v6/pkg/types"
 )
 
 // -----------------------------------------------------------------

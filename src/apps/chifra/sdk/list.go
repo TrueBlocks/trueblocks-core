@@ -12,9 +12,9 @@ import (
 	"io"
 	"net/url"
 
-	list "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/list"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
-	outputHelpers "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output/helpers"
+	list "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v6/internal/list"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v6/pkg/output"
+	outputHelpers "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v6/pkg/output/helpers"
 )
 
 // List provides an interface to the command line chifra list through the SDK.

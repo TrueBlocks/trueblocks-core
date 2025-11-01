@@ -15,10 +15,10 @@ import (
 	"sort"
 	"time"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/walk"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v6/pkg/base"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v6/pkg/config"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v6/pkg/file"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v6/pkg/walk"
 )
 
 // EXISTING_CODE

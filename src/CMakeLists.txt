@@ -104,7 +104,7 @@ endif()
 
 # ----------------------------------------------------------------------------
 add_custom_target(generate
-    COMMAND ${BIN_DIR}/goMaker
+    COMMAND goMaker
     WORKING_DIRECTORY ${REPO_DIR})
 
 # ----------------------------------------------------------------------------
@@ -146,7 +146,7 @@ add_subdirectory(other/install)
 add_go_installable_program(chifra
     ${CMAKE_SOURCE_DIR}/apps/chifra ${BIN_DIR})
 add_go_installable_program(goMaker
-    ${CMAKE_SOURCE_DIR}/dev_tools/goMaker ${BIN_DIR})
+    ${CMAKE_SOURCE_DIR}/dev_tools/goMaker /usr/local/bin)
 add_go_installable_program(indexManager
     ${CMAKE_SOURCE_DIR}/dev_tools/indexManager ${BIN_DIR})
 

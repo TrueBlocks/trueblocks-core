@@ -5,7 +5,7 @@ import (
 	"os"
 	"time"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v6/pkg/file"
 )
 
 func main() {

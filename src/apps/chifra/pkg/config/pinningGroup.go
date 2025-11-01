@@ -7,7 +7,7 @@ package config
 import (
 	"strings"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/configtypes"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v6/pkg/configtypes"
 	shell "github.com/ipfs/go-ipfs-api"
 )
 

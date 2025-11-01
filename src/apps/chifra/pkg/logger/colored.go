@@ -1,7 +1,7 @@
 package logger
 
 import (
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v6/pkg/colors"
 )
 
 func toColored(s severity, color string, v ...any) {

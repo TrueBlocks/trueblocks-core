@@ -4,7 +4,7 @@
 
 package config
 
-import "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/configtypes"
+import "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v6/pkg/configtypes"
 
 func GetVersion() configtypes.VersionGroup {
 	return GetRootConfig().Version

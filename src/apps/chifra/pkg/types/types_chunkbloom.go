@@ -12,9 +12,9 @@ package types
 import (
 	"encoding/json"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v6/pkg/base"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v6/pkg/config"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v6/pkg/utils"
 )
 
 // EXISTING_CODE

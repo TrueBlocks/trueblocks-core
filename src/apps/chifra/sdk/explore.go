@@ -12,9 +12,9 @@ import (
 	"io"
 	"net/url"
 
-	explore "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/explore"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
-	outputHelpers "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output/helpers"
+	explore "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v6/internal/explore"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v6/pkg/output"
+	outputHelpers "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v6/pkg/output/helpers"
 )
 
 // Explore provides an interface to the command line chifra explore through the SDK.

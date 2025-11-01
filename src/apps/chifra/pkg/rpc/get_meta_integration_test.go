@@ -10,7 +10,7 @@ package rpc
 import (
 	"testing"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v6/pkg/utils"
 )
 
 func Test_GetMetaData(t *testing.T) {

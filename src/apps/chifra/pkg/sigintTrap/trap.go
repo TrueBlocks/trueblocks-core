@@ -10,7 +10,7 @@ import (
 	"os/signal"
 	"sync"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v6/pkg/colors"
 )
 
 var TrapMessage = colors.Yellow + "Ctrl+C. Finishing..." + colors.Off

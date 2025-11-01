@@ -16,10 +16,10 @@ import (
 	"text/template"
 	"unicode"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
-	"github.com/TrueBlocks/trueblocks-sdk/v5/services"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v6/pkg/colors"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v6/pkg/file"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v6/pkg/logger"
+	"github.com/TrueBlocks/trueblocks-sdk/v6/services"
 )
 
 func init() {

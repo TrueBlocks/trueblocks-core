@@ -7,8 +7,8 @@ package rpc
 import (
 	"context"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/walk"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v6/pkg/types"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v6/pkg/walk"
 )
 
 // TODO: use types.MetaData throughout

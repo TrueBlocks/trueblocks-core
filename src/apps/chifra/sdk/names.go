@@ -12,9 +12,9 @@ import (
 	"io"
 	"net/url"
 
-	names "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/names"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
-	outputHelpers "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output/helpers"
+	names "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v6/internal/names"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v6/pkg/output"
+	outputHelpers "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v6/pkg/output/helpers"
 )
 
 // Names provides an interface to the command line chifra names through the SDK.

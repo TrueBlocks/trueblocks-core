@@ -5,9 +5,9 @@
 package whenPkg
 
 import (
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/tslib"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v6/pkg/output"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v6/pkg/tslib"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v6/pkg/types"
 )
 
 func (opts *WhenOptions) HandleTimestampsCount(rCtx *output.RenderCtx) error {

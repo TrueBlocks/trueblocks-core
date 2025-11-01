@@ -12,11 +12,11 @@ package cmd
 import (
 	"os"
 
-	daemonPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/daemon"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/caps"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
-	outputHelpers "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output/helpers"
+	daemonPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v6/internal/daemon"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v6/internal/globals"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v6/pkg/caps"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v6/pkg/file"
+	outputHelpers "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v6/pkg/output/helpers"
 	"github.com/spf13/cobra"
 )
 

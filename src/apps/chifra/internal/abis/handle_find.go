@@ -19,11 +19,11 @@ import (
 	"github.com/ethereum/go-ethereum/crypto"
 	ants "github.com/panjf2000/ants/v2"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/abi"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/progress"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v6/pkg/abi"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v6/pkg/logger"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v6/pkg/output"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v6/pkg/progress"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v6/pkg/types"
 )
 
 func (opts *AbisOptions) HandleFind(rCtx *output.RenderCtx) error {

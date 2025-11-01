@@ -10,11 +10,11 @@ import (
 	"path/filepath"
 	"strings"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/history"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/usage"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v6/pkg/config"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v6/pkg/file"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v6/pkg/history"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v6/pkg/usage"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v6/pkg/validate"
 )
 
 func (opts *InitOptions) validateInit() error {

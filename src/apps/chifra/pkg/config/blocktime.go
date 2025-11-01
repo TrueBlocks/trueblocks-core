@@ -5,7 +5,7 @@
 package config
 
 import (
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v6/pkg/logger"
 )
 
 // Default block times for known chains (in seconds)

@@ -1,10 +1,10 @@
 package monitorsPkg
 
 import (
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/monitor"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/usage"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v6/pkg/monitor"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v6/pkg/output"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v6/pkg/types"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v6/pkg/usage"
 )
 
 func (opts *MonitorsOptions) HandleDecache(rCtx *output.RenderCtx) error {

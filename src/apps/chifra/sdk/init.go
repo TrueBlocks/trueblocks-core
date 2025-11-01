@@ -12,9 +12,9 @@ import (
 	"io"
 	"net/url"
 
-	initPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/init"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
-	outputHelpers "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output/helpers"
+	initPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v6/internal/init"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v6/pkg/output"
+	outputHelpers "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v6/pkg/output/helpers"
 )
 
 // Init provides an interface to the command line chifra init through the SDK.

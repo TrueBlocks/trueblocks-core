@@ -1,22 +1,19 @@
-module github.com/TrueBlocks/trueblocks-core/testRunner
+module github.com/TrueBlocks/trueblocks-core/testRunner/v6
 
 // Go Version
 go 1.25.1
 
-require (
-	github.com/TrueBlocks/trueblocks-core/src/apps/chifra v0.0.0-20250923033958-180bbc7ebdbd
-	github.com/TrueBlocks/trueblocks-sdk/v5 v5.3.0
-)
+require github.com/TrueBlocks/trueblocks-sdk/v6 v6.0.3
 
 require (
 	github.com/Microsoft/go-winio v0.6.2 // indirect
+	github.com/TrueBlocks/trueblocks-core/src/apps/chifra v0.0.0-20250928045016-814dde303ad8 // indirect
 	github.com/alecthomas/participle/v2 v2.1.4 // indirect
 	github.com/benbjohnson/clock v1.3.5 // indirect
 	github.com/bits-and-blooms/bitset v1.22.0 // indirect
 	github.com/blang/semver/v4 v4.0.0 // indirect
 	github.com/bykof/gostradamus v1.1.2 // indirect
-	github.com/consensys/bavard v0.1.30 // indirect
-	github.com/consensys/gnark-crypto v0.17.0 // indirect
+	github.com/consensys/gnark-crypto v0.18.1 // indirect
 	github.com/crackcomm/go-gitignore v0.0.0-20241020182519-7843d2ba8fdf // indirect
 	github.com/crate-crypto/go-ipa v0.0.0-20240724233137-53bbb0ceb27a // indirect
 	github.com/crate-crypto/go-kzg-4844 v1.1.0 // indirect
@@ -41,10 +38,8 @@ require (
 	github.com/libp2p/go-buffer-pool v0.1.0 // indirect
 	github.com/libp2p/go-flow-metrics v0.2.0 // indirect
 	github.com/libp2p/go-libp2p v0.41.1 // indirect
-	github.com/mattn/go-colorable v0.1.14 // indirect
 	github.com/minio/sha256-simd v1.0.1 // indirect
 	github.com/mitchellh/go-homedir v1.1.0 // indirect
-	github.com/mmcloughlin/addchain v0.4.0 // indirect
 	github.com/mr-tron/base58 v1.2.0 // indirect
 	github.com/multiformats/go-base32 v0.1.0 // indirect
 	github.com/multiformats/go-base36 v0.2.0 // indirect
@@ -77,5 +72,4 @@ require (
 	golang.org/x/time v0.11.0 // indirect
 	google.golang.org/protobuf v1.36.6 // indirect
 	lukechampine.com/blake3 v1.4.1 // indirect
-	rsc.io/tmplfunc v0.0.3 // indirect
 )

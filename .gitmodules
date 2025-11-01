@@ -9,4 +9,4 @@
 	url = https://github.com/TrueBlocks/trueblocks-sdk.git
 [submodule "src/dev_tools/goMaker"]
 	path = src/dev_tools/goMaker
-	url = https://github.com/TrueBlocks/goMaker
+	url = https://github.com/TrueBlocks/goMaker.git

@@ -3,7 +3,7 @@ package parser
 import (
 	"errors"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v6/pkg/base"
 )
 
 var errInvalidSelector = errors.New("expected valid four byte selector")

@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"io"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v6/pkg/base"
 )
 
 func (bl *Bloom) IsMember(addr base.Address) bool {

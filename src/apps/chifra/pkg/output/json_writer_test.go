@@ -7,7 +7,7 @@ import (
 	"strconv"
 	"testing"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v6/pkg/types"
 )
 
 func helperReportStringMismatch(t *testing.T, expected, result string) {

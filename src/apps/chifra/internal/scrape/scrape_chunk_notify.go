@@ -1,10 +1,10 @@
 package scrapePkg
 
 import (
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/index"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/notify"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/ranges"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v6/pkg/config"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v6/pkg/index"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v6/pkg/notify"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v6/pkg/ranges"
 )
 
 // TODO: THIS IS PART OF THE NOTIFY CODE TO BE USED FOR MONITORING

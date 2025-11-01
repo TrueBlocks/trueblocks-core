@@ -1,7 +1,7 @@
 package statusPkg
 
 import (
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v6/pkg/output"
 )
 
 func (opts *StatusOptions) HandleChains(rCtx *output.RenderCtx) error {

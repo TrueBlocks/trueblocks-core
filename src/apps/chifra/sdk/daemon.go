@@ -12,9 +12,9 @@ import (
 	"io"
 	"net/url"
 
-	daemon "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/daemon"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
-	outputHelpers "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output/helpers"
+	daemon "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v6/internal/daemon"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v6/pkg/output"
+	outputHelpers "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v6/pkg/output/helpers"
 )
 
 // Daemon provides an interface to the command line chifra daemon through the SDK.

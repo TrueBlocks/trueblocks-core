@@ -7,7 +7,7 @@ package config
 import (
 	"strconv"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/configtypes"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v6/pkg/configtypes"
 )
 
 // GetScrape returns the scraper settings per chain

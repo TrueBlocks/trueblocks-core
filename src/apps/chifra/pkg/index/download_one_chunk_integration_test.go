@@ -3,9 +3,9 @@ package index
 import (
 	"testing"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/manifest"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/ranges"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v6/pkg/manifest"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v6/pkg/ranges"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v6/pkg/types"
 )
 
 func Test_EstablishValidFilename(t *testing.T) {

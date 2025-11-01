@@ -1,18 +1,14 @@
 // Copyright 2016, 2024 The TrueBlocks Authors. All rights reserved.
 // Use of this source code is governed by a license that can
 // be found in the LICENSE file.
-/*
- * Parts of this file were auto generated. Edit only those parts of
- * the code inside of 'EXISTING_CODE' tags.
- */
 package main
 
 // EXISTING_CODE
 import (
 	"strings"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
-	sdk "github.com/TrueBlocks/trueblocks-sdk/v5"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v6/pkg/file"
+	sdk "github.com/TrueBlocks/trueblocks-sdk/v6"
 )
 
 // EXISTING_CODE

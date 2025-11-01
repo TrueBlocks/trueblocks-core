@@ -12,9 +12,9 @@ import (
 	"io"
 	"net/url"
 
-	scrape "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/scrape"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
-	outputHelpers "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output/helpers"
+	scrape "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v6/internal/scrape"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v6/pkg/output"
+	outputHelpers "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v6/pkg/output/helpers"
 )
 
 // Scrape provides an interface to the command line chifra scrape through the SDK.

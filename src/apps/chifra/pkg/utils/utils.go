@@ -15,7 +15,7 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v6/pkg/logger"
 )
 
 // IsServerWriter tries to cast `w` into `http.ResponseWriter`

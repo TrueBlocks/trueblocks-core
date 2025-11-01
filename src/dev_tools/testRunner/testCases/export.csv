@@ -87,7 +87,7 @@ on     , both, fast , export  , apps, acctExport, export_logs_topics_fb_3, n   ,
 
 # Testing --approvals
 on     , both, fast , export  , apps, acctExport, export_approvals       , y   , addrs = trueblocks.eth & approvals & max_records = 3 & fmt = json & cache
-on     , both, fast , export  , apps, acctExport, export_approvals_art   , y   , addrs = trueblocks.eth & approvals & articulate & max_records = 3 & fmt = json
+off    , both, fast , export  , apps, acctExport, export_approvals_art   , y   , addrs = trueblocks.eth & approvals & articulate & max_records = 3 & fmt = json
 on     , both, fast , export  , apps, acctExport, export_approvals_csv   , n   , addrs = trueblocks.eth & approvals & max_records = 3 & fmt = csv
 on     , both, fast , export  , apps, acctExport, export_wo_emitter      , y   , addrs = trueblocks.eth & approvals & max_records = 30 & cache & fmt = json
 on     , both, fast , export  , apps, acctExport, export_with_emitter    , y   , addrs = trueblocks.eth & approvals & max_records = 30 & cache & emitter = 0x6b175474e89094c44da98b954eedeac495271d0f & fmt = json
