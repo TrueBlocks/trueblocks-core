@@ -2,38 +2,7 @@
 
 This file details changes made to TrueBlocks over time. All version prior to version 3.0.0 are now no longer supported.
 
-## v6.1.0 - Summary (2025/11/01)
-
-**Note:** The repository `VERSION` file contains `6.1.0`, but this `CHANGES.md` does not contain detailed release notes for `v6.0.x` or `v6.1.0` — only a placeholder for `v6.0.0`. Below is a concise, facts-backed summary of the nearest documented release (v5.0.0) and guidance for producing an exact, commit-level changelog between `v5.0.0` and `v6.1.0`.
-
-Summary of the most relevant, user-facing changes from `v5.0.0` (Lancaster, 2025-03-28):
-
-- Major focus: fully automated ETH and ERC20 token balance reconciliation.
-- New and improved `chifra export` features: `--assets`, `--transfers`, `--nfts`, and a much improved `--statements` (massive performance increase via a new Statements cache).
-- SDK bump and hardening: SDK moved to v5 in that release (note guidance to import `github.com/TrueBlocks/trueblocks-sdk/v6`). Improved JSON parsing and better test coverage.
-- Data model breaking changes: Statement and Transfer types changed (many added/renamed/removed fields). Important examples:
-  - `Statement` adds reconciliation fields (`correctAmountIn`, `correctAmountOut`, `correctBegBalIn`, etc.), renames `assetAddr`→`asset`, `assetSymbol`→`symbol`, and changes `SpotPrice` from `float64` to `big.Float` (breaking).
-  - `Transfer` has many new fields (amountOut, internalOut, gasOut, transaction, log, blockNumber, transactionIndex, logIndex, holder, asset, decimals, sender, recipient, amountIn, internalIn, minerBaseRewardIn, minerNephewRewardIn, minerTxFeeIn, minerUncleRewardIn, prefundIn, selfDestructIn, ...).
-  - `Log` gains `isNFT`.
-- System changes: `base` package hardening (nil handling), removal of `base.Min`/`base.Max`, renaming `base.Ether`→`base.Float`; Go bumped to 1.23.1; CI/lint updates; cache UX improvements; auto-codegen improvements; TrueBlocks Key deprecated/removed.
-- CLI changes and deprecations: many `chifra monitors` watch-related options removed; `chifra daemon` options deprecated in favor of `khedra`; `chifra slurp` key option removed; `chifra tokens --by_acct` bug fixed; `--accounting` deprecated for `chifra export`.
-- Testing: ~90 new tests around `chifra export` plus better fuzzing and many unit tests.
-
-If you want a precise, commit/PR-based changelog between the tag nearest `v5.0.0` and the current `v6.1.0`, run the following (from the repo root). These commands will list tags and then show merged commit messages between the two tags:
-
-```fish
-git tag --sort=v:refname
-git log --merges --pretty=format:'%h %s' v5.0.0..v6.1.0
-git log --pretty=format:'%h %s' v5.0.0..v6.1.0
-```
-
-Or to produce a compact summary of merged PR titles (if the repo uses merge commits for PRs):
-
-```fish
-git log --merges --pretty=format:'%h %s' v5.0.0..v6.1.0
-```
-
-If you'd like, I can run those git commands now and append a generated summary (grouped by features, breaking changes, fixes) into this file. Otherwise, keep reading below for the original `v5.0.0` release notes.
+## v6.0.0 - Coming soon...
 
 ## v5.0.0 - All About Them Recons - Lancaster (2025/03/28)
 
