@@ -3,11 +3,13 @@ module github.com/TrueBlocks/trueblocks-core/testRunner/v6
 // Go Version
 go 1.25.1
 
-require github.com/TrueBlocks/trueblocks-sdk/v6 v6.0.3
+require (
+	github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v6 v6.0.0-20251101171820-26ef25a50713
+	github.com/TrueBlocks/trueblocks-sdk/v6 v6.0.5
+)
 
 require (
 	github.com/Microsoft/go-winio v0.6.2 // indirect
-	github.com/TrueBlocks/trueblocks-core/src/apps/chifra v0.0.0-20250928045016-814dde303ad8 // indirect
 	github.com/alecthomas/participle/v2 v2.1.4 // indirect
 	github.com/benbjohnson/clock v1.3.5 // indirect
 	github.com/bits-and-blooms/bitset v1.22.0 // indirect
