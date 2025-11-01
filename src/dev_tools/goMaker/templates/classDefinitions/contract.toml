@@ -1,7 +1,0 @@
-[settings]
-    class = "Contract"
-    doc_group = "03-Chain State"
-    doc_descr = "smart contract state and interaction data including read function results, write function forms, and event history"
-    doc_route = "312-contract"
-    attributes = ""
-    produced_by = ""

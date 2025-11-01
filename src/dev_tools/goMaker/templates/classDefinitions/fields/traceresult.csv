@@ -1,5 +1,0 @@
-name    ,type    ,strDefault ,attributes ,docOrder ,description
-address ,address ,           ,omitempty  ,       1 ,address of new contract&#44; if any
-code    ,bytes   ,           ,omitempty  ,       2 ,if this trace is creating a new smart contract&#44; the byte code of that contract
-gasUsed ,gas     ,           ,omitempty  ,       3 ,the amount of gas used by this trace
-output  ,bytes   ,           ,omitempty  ,       4 ,the result of the call of this trace

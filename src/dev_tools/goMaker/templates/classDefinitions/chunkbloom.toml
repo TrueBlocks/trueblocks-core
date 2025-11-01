@@ -1,7 +1,0 @@
-[settings]
-    class = "ChunkBloom"
-    doc_group = "04-Admin"
-    doc_descr = "internal-use only data model detailing a single bloom filter file"
-    doc_route = "415-chunkBloom"
-    attributes = ""
-    produced_by = "chunks"

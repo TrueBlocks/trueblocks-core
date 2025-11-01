@@ -1,9 +1,0 @@
-[settings]
-    class = "Monitor"
-    doc_group = "01-Accounts"
-    doc_descr = "a local file indicating a user's interest in an address. Includes caches for reconicilations, transactions, and appearances as well as an optional association to named account"
-    doc_route = "106-monitor"
-    attributes = ""
-    produced_by = "monitors, list, export, slurp"
-    contains = "appearance, appearancetable"
-    cache_type = "marshal_only"

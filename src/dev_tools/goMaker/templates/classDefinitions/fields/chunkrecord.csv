@@ -1,7 +1,0 @@
-name       ,type        ,strDefault ,attributes      ,docOrder ,description
-range      ,blkrange    ,           ,sorts           ,       1 ,the block range (inclusive) covered by this chunk
-bloomHash  ,ipfshash    ,           ,                ,       2 ,the IPFS hash of the bloom filter at that range
-indexHash  ,ipfshash    ,           ,                ,       3 ,the IPFS hash of the index chunk at that range
-bloomSize  ,int64       ,           ,sorts           ,       4 ,the size of the bloom filter in bytes
-indexSize  ,int64       ,           ,sorts           ,       5 ,the size of the index portion in bytes
-rangeDates ,*RangeDates ,           ,sorts|omitempty ,       6 ,if verbose&#44; the block and timestamp bounds of the chunk (may be null)

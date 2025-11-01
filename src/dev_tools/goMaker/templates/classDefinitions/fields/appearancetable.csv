@@ -1,3 +1,0 @@
-name          ,type             ,strDefault ,attributes ,docOrder ,description
-AddressRecord ,AddrRecord    ,           ,           ,       1 ,the address record for these appearances
-Appearances   ,[]AppRecord ,           ,           ,       2 ,all the appearances for this address

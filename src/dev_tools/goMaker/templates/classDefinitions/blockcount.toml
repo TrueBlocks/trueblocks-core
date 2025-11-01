@@ -1,7 +1,0 @@
-[settings]
-    class = "BlockCount"
-    doc_group = "02-Chain Data"
-    doc_descr = "counts of various parts of the block data such as tx_count, trace_count, etc."
-    doc_route = "236-blockCount"
-    attributes = ""
-    produced_by = "blocks"

@@ -1,8 +1,0 @@
-name           ,type   ,strDefault                  ,attributes ,docOrder ,description
-chain          ,string ,                            ,sorts      ,       1 ,the common name of the chain
-chainId        ,uint64 ,                            ,sorts      ,       2 ,the chain id as reported by the RPC
-symbol         ,string ,                            ,sorts      ,       3 ,the symbol of the base currency on the chain
-rpcProvider    ,string ,http://localhost:8545       ,sorts      ,       4 ,a valid RPC provider for the chain
-remoteExplorer ,string ,http://etherscan.io         ,sorts      ,       5 ,a remote explorer for the chain such as Etherscan
-localExplorer  ,string ,http://localhost:1234       ,sorts      ,       6 ,the local explorer for the chain (typically TrueBlocks Explorer)
-ipfsGateway    ,string ,http://gateway.ipfs.io/ipfs ,sorts      ,       7 ,an IPFS gateway for pinning the index if enabled
