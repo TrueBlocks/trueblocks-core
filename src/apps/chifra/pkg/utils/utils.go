@@ -53,11 +53,11 @@ func PadLeft(str string, totalLen int, pad rune) string {
 	if pad == 0 {
 		pad = ' '
 	}
-	lead := ""
+	var lead strings.Builder
 	for i := 0; i < totalLen-len(str); i++ {
-		lead += string(pad)
+		lead.WriteString(string(pad))
 	}
-	return lead + str
+	return lead.String() + str
 }
 
 func PadRight(str string, totalLen int, pad rune) string {
@@ -67,11 +67,11 @@ func PadRight(str string, totalLen int, pad rune) string {
 	if pad == 0 {
 		pad = ' '
 	}
-	tail := ""
+	var tail strings.Builder
 	for i := 0; i < totalLen-len(str); i++ {
-		tail += string(pad)
+		tail.WriteString(string(pad))
 	}
-	return str + tail
+	return str + tail.String()
 }
 
 func MakeFirstLowerCase(s string) string {
