@@ -26,8 +26,8 @@ func (opts *ExportOptions) HandleApprovals(rCtx *output.RenderCtx, monitorArray 
 		abiCache := articulate.NewAbiCache(opts.Conn, opts.Articulate)
 		filter := types.NewFilter(
 			opts.Reversed,
-			opts.Reverted,
-			opts.Fourbytes,
+			false,
+			[]string{topics.ApprovalFourbyte},
 			ranges.BlockRange{First: opts.FirstBlock, Last: opts.LastBlock},
 			ranges.RecordRange{First: opts.FirstRecord, Last: opts.GetMax()},
 		)
@@ -37,10 +37,9 @@ func (opts *ExportOptions) HandleApprovals(rCtx *output.RenderCtx, monitorArray 
 			addrArray = append(addrArray, mon.Address)
 		}
 		logFilter := rpc.NewLogFilter(opts.Emitter, []string{topics.ApprovalTopic.Hex()})
-		opts.Fourbytes = []string{topics.ApprovalFourbyte.Hex()}
 
 		for _, mon := range monitorArray {
-			if sliceOfMaps, cnt, err := monitor.AsSliceOfItemMaps[[]*types.Log](&mon, filter, filter.Reversed); err != nil {
+			if sliceOfMaps, cnt, err := monitor.AsSliceOfItemMaps[types.Transaction](&mon, filter, filter.Reversed); err != nil {
 				errorChan <- err
 				rCtx.Cancel()
 
@@ -67,25 +66,45 @@ func (opts *ExportOptions) HandleApprovals(rCtx *output.RenderCtx, monitorArray 
 					}
 
 					for app := range thisMap {
-						thisMap[app] = &[]*types.Log{}
+						thisMap[app] = new(types.Transaction)
 					}
 
-					iterFunc := func(app types.Appearance, value *[]*types.Log) error {
+					iterFunc := func(app types.Appearance, value *types.Transaction) error {
 						if tx, err := opts.Conn.GetTransactionByAppearance(&app, false); err != nil {
 							return err
 						} else {
-							passes := filter.PassesTxFilter(tx)
-							if passes && tx.Receipt != nil {
+							passesFourByte := filter.PassesTxFilter(tx)
+							hasApprovalLogs := false
+							if tx.Receipt != nil {
+								filteredLogs := make([]types.Log, 0, len(tx.Receipt.Logs))
+								hasEmitterLogs := len(opts.Emitter) == 0
 								for _, log := range tx.Receipt.Logs {
-									if filter.PassesLogFilter(&log, addrArray) && logFilter.PassesFilter(&log) {
-										if opts.Articulate {
-											if err := abiCache.ArticulateLog(&log); err != nil {
-												errorChan <- fmt.Errorf("error articulating log: %v", err)
+									if !hasEmitterLogs {
+										for _, emitter := range opts.Emitter {
+											if log.Address.Hex() == emitter {
+												hasEmitterLogs = true
+												break
 											}
 										}
-										*value = append(*value, &log)
+									}
+
+									if filter.PassesLogFilter(&log, addrArray) && logFilter.PassesFilter(&log) {
+										log.BlockHash = tx.BlockHash
+										log.BlockNumber = tx.BlockNumber
+										log.TransactionHash = tx.Hash
+										log.TransactionIndex = tx.TransactionIndex
+										filteredLogs = append(filteredLogs, log)
+										hasApprovalLogs = true
 									}
 								}
+
+								shouldInclude := (passesFourByte && hasEmitterLogs) || hasApprovalLogs
+								if shouldInclude {
+									tx.Receipt.Logs = filteredLogs
+									*value = *tx
+								}
+							} else if passesFourByte && len(opts.Emitter) == 0 {
+								*value = *tx
 							}
 							if bar != nil {
 								bar.Tick()
@@ -104,11 +123,15 @@ func (opts *ExportOptions) HandleApprovals(rCtx *output.RenderCtx, monitorArray 
 						return
 					}
 
-					// Now safely collect all logs from all log slices
-					items := make([]*types.Log, 0)
-					for _, logSlice := range thisMap {
-						if logSlice != nil && *logSlice != nil {
-							items = append(items, *logSlice...)
+					items := make([]*types.Transaction, 0, len(thisMap))
+					for _, tx := range thisMap {
+						if !tx.BlockHash.IsZero() {
+							if opts.Articulate {
+								if err := abiCache.ArticulateTransaction(tx); err != nil {
+									errorChan <- err // continue even on error
+								}
+							}
+							items = append(items, tx)
 						}
 					}
 
@@ -117,19 +140,18 @@ func (opts *ExportOptions) HandleApprovals(rCtx *output.RenderCtx, monitorArray 
 							i, j = j, i
 						}
 						if items[i].BlockNumber == items[j].BlockNumber {
-							if items[i].TransactionIndex == items[j].TransactionIndex {
-								return items[i].LogIndex < items[j].LogIndex
-							}
 							return items[i].TransactionIndex < items[j].TransactionIndex
 						}
 						return items[i].BlockNumber < items[j].BlockNumber
 					})
 
 					for _, item := range items {
-						var passes1, passes2 bool
-						passes1, finished = filter.PassesCountFilter()
-						passes2 = !opts.Nfts || item.IsNFT()
-						if passes1 && passes2 {
+						if item.BlockHash.IsZero() {
+							continue
+						}
+						var passes bool
+						passes, finished = filter.PassesCountFilter()
+						if passes {
 							modelChan <- item
 						}
 						if finished {
