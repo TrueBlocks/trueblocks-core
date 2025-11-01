@@ -14,7 +14,7 @@
 package main
 
 import (
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v6/cmd"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v6/pkg/debug"
 )
 

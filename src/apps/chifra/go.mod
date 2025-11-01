@@ -1,4 +1,4 @@
-module github.com/TrueBlocks/trueblocks-core/src/apps/chifra
+module github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v6
 
 // Go Version
 go 1.25.1
