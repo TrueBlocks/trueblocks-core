@@ -20,19 +20,20 @@ import (
 // EXISTING_CODE
 
 type TraceAction struct {
-	Address        base.Address `json:"address,omitempty"`
-	Author         base.Address `json:"author,omitempty"`
-	Balance        base.Wei     `json:"balance,omitempty"`
-	CallType       string       `json:"callType"`
-	From           base.Address `json:"from"`
-	Gas            base.Gas     `json:"gas"`
-	Init           string       `json:"init,omitempty"`
-	Input          string       `json:"input,omitempty"`
-	RefundAddress  base.Address `json:"refundAddress,omitempty"`
-	RewardType     string       `json:"rewardType,omitempty"`
-	SelfDestructed base.Address `json:"selfDestructed,omitempty"`
-	To             base.Address `json:"to"`
-	Value          base.Wei     `json:"value"`
+	Address        base.Address      `json:"address,omitempty"`
+	Author         base.Address      `json:"author,omitempty"`
+	Balance        base.Wei          `json:"balance,omitempty"`
+	CallType       string            `json:"callType"`
+	From           base.Address      `json:"from"`
+	Gas            base.Gas          `json:"gas"`
+	Init           string            `json:"init,omitempty"`
+	Input          string            `json:"input,omitempty"`
+	RefundAddress  base.Address      `json:"refundAddress,omitempty"`
+	RewardType     string            `json:"rewardType,omitempty"`
+	SelfDestructed base.Address      `json:"selfDestructed,omitempty"`
+	To             base.Address      `json:"to"`
+	Value          base.Wei          `json:"value"`
+	Calcs          *TraceActionCalcs `json:"calcs,omitempty"`
 	// EXISTING_CODE
 	// EXISTING_CODE
 }
@@ -43,18 +44,48 @@ func (s TraceAction) String() string {
 }
 
 func (s *TraceAction) Model(chain, format string, verbose bool, extraOpts map[string]any) Model {
-	_ = chain
-	_ = format
-	_ = verbose
-	_ = extraOpts
-	var model = map[string]any{}
+	props := NewModelProps(chain, format, verbose, extraOpts)
+
+	rawNames := []Labeler{
+		NewLabeler(s.Address, "address"),
+		NewLabeler(s.Author, "author"),
+		NewLabeler(s.From, "from"),
+		NewLabeler(s.RefundAddress, "refundAddress"),
+		NewLabeler(s.SelfDestructed, "selfDestructed"),
+		NewLabeler(s.To, "to"),
+	}
+	model := s.RawMap(props, &rawNames)
+	for k, v := range s.CalcMap(props) {
+		model[k] = v
+	}
+
 	var order = []string{}
+	// EXISTING_CODE
+	// EXISTING_CODE
+
+	for _, item := range rawNames {
+		key := item.name + "Name"
+		if _, exists := model[key]; exists {
+			order = append(order, key)
+		}
+	}
+	order = reorderFields(order)
+
+	return Model{
+		Data:  model,
+		Order: order,
+	}
+}
+
+// RawMap returns a map containing only the raw/base fields for this TraceAction.
+func (s *TraceAction) RawMap(p *ModelProps, needed *[]Labeler) map[string]any {
+	model := map[string]any{
+		// EXISTING_CODE
+		// EXISTING_CODE
+	}
 
 	// EXISTING_CODE
-	if format == "json" {
-		if extraOpts["traces"] != true && len(s.Init) > 0 {
-			model["init"] = utils.FormattedCode(verbose, s.Init)
-		}
+	if p.Format == "json" {
 		if !s.SelfDestructed.IsZero() {
 			model["selfDestructed"] = s.SelfDestructed
 		}
@@ -71,29 +102,26 @@ func (s *TraceAction) Model(chain, format string, verbose bool, extraOpts map[st
 			model["input"] = s.Input
 		}
 
-		asEther := extraOpts["ether"] == true
+		// Always include value as raw string
 		model["value"] = s.Value.String()
-		if asEther {
-			model["ether"] = s.Value.ToFloatString(18)
-		}
 
 		if !s.RefundAddress.IsZero() {
 			model["refundAddress"] = s.RefundAddress
 			model["balance"] = s.Balance.String()
-			if asEther {
-				model["balanceEth"] = s.Balance.ToFloatString(18)
-			}
-
 		} else {
+			// Handle the to field logic from original
 			if s.To.IsZero() {
 				model["to"] = "0x0"
 			} else {
 				model["to"] = s.To
 			}
 		}
+
+		// Raw init field (not formatted)
 		if len(s.Init) > 0 {
-			model["init"] = utils.FormattedCode(verbose, s.Init)
+			model["init"] = s.Init
 		}
+
 		if !s.Address.IsZero() {
 			model["address"] = s.Address
 		}
@@ -103,32 +131,39 @@ func (s *TraceAction) Model(chain, format string, verbose bool, extraOpts map[st
 		if len(s.RewardType) > 0 {
 			model["rewardType"] = s.RewardType
 		}
-		items := []namer{
-			{addr: s.Address, name: "addressName"},
-			{addr: s.Author, name: "authorName"},
-			{addr: s.From, name: "fromName"},
-			{addr: s.RefundAddress, name: "refundAddressName"},
-			{addr: s.SelfDestructed, name: "selfDestructedName"},
-			{addr: s.To, name: "toName"},
-		}
-		for _, item := range items {
-			if name, loaded, found := nameAddress(extraOpts, item.addr); found {
-				model[item.name] = name.Name
-				order = append(order, item.name)
-			} else if loaded && format != "json" {
-				model[item.name] = ""
-				order = append(order, item.name)
-			}
-		}
-		order = reorderOrdering(order)
+	}
+	// EXISTING_CODE
+
+	return labelAddresses(p, model, needed)
+}
+
+// CalcMap returns a map containing the calculated/derived fields for this type.
+func (s *TraceAction) CalcMap(p *ModelProps) map[string]any {
+	_ = p // delint
+	model := map[string]any{
+		// EXISTING_CODE
+		// EXISTING_CODE
 	}
 
 	// EXISTING_CODE
+	if p.Format == "json" {
+		// Apply ether conversions
+		asEther := p.ExtraOpts["ether"] == true
+		if asEther {
+			model["ether"] = s.Value.ToFloatString(18)
+			if !s.RefundAddress.IsZero() {
+				model["balanceEth"] = s.Balance.ToFloatString(18)
+			}
+		}
 
-	return Model{
-		Data:  model,
-		Order: order,
+		// Apply code formatting for init field
+		if p.ExtraOpts["traces"] != true && len(s.Init) > 0 {
+			model["init"] = utils.FormattedCode(p.Verbose, s.Init)
+		}
 	}
+	// EXISTING_CODE
+
+	return model
 }
 
 func (s *TraceAction) MarshalCache(writer io.Writer) (err error) {
@@ -278,8 +313,37 @@ func (s *TraceAction) UnmarshalCache(fileVersion uint64, reader io.Reader) (err 
 // FinishUnmarshal is used by the cache. It may be unused depending on auto-code-gen
 func (s *TraceAction) FinishUnmarshal(fileVersion uint64) {
 	_ = fileVersion
+	s.Calcs = nil
 	// EXISTING_CODE
 	// EXISTING_CODE
+}
+
+// TraceActionCalcs holds lazy-loaded calculated fields for TraceAction
+type TraceActionCalcs struct {
+	// EXISTING_CODE
+	Ether      string `json:"ether,omitempty"`
+	BalanceEth string `json:"balanceEth,omitempty"`
+	// EXISTING_CODE
+}
+
+func (s *TraceAction) EnsureCalcs(p *ModelProps, fieldFilter []string) error {
+	_ = fieldFilter // delint
+	if s.Calcs != nil {
+		return nil
+	}
+
+	calcMap := s.CalcMap(p)
+	if len(calcMap) == 0 {
+		return nil
+	}
+
+	jsonBytes, err := json.Marshal(calcMap)
+	if err != nil {
+		return err
+	}
+
+	s.Calcs = &TraceActionCalcs{}
+	return json.Unmarshal(jsonBytes, s.Calcs)
 }
 
 // EXISTING_CODE

@@ -23,18 +23,19 @@ import (
 // EXISTING_CODE
 
 type LightBlock struct {
-	BaseFeePerGas base.Gas       `json:"baseFeePerGas"`
-	BlockNumber   base.Blknum    `json:"blockNumber"`
-	Difficulty    base.Value     `json:"difficulty"`
-	GasLimit      base.Gas       `json:"gasLimit"`
-	GasUsed       base.Gas       `json:"gasUsed"`
-	Hash          base.Hash      `json:"hash"`
-	Miner         base.Address   `json:"miner"`
-	ParentHash    base.Hash      `json:"parentHash"`
-	Timestamp     base.Timestamp `json:"timestamp"`
-	Transactions  []string       `json:"transactions"`
-	Uncles        []base.Hash    `json:"uncles,omitempty"`
-	Withdrawals   []Withdrawal   `json:"withdrawals,omitempty"`
+	BaseFeePerGas base.Gas         `json:"baseFeePerGas"`
+	BlockNumber   base.Blknum      `json:"blockNumber"`
+	Difficulty    base.Value       `json:"difficulty"`
+	GasLimit      base.Gas         `json:"gasLimit"`
+	GasUsed       base.Gas         `json:"gasUsed"`
+	Hash          base.Hash        `json:"hash"`
+	Miner         base.Address     `json:"miner"`
+	ParentHash    base.Hash        `json:"parentHash"`
+	Timestamp     base.Timestamp   `json:"timestamp"`
+	Transactions  []string         `json:"transactions"`
+	Uncles        []base.Hash      `json:"uncles,omitempty"`
+	Withdrawals   []Withdrawal     `json:"withdrawals,omitempty"`
+	Calcs         *LightBlockCalcs `json:"calcs,omitempty"`
 	// EXISTING_CODE
 	Number base.Blknum `json:"number"`
 	// EXISTING_CODE
@@ -46,21 +47,18 @@ func (s LightBlock) String() string {
 }
 
 func (s *LightBlock) Model(chain, format string, verbose bool, extraOpts map[string]any) Model {
-	_ = chain
-	_ = format
-	_ = verbose
-	_ = extraOpts
-	var model = map[string]any{}
-	var order = []string{}
+	props := NewModelProps(chain, format, verbose, extraOpts)
 
-	// EXISTING_CODE
-	model = map[string]any{
-		"hash":        s.Hash,
-		"blockNumber": s.BlockNumber,
-		"parentHash":  s.ParentHash,
-		"timestamp":   s.Timestamp,
-		"date":        s.Date(),
+	rawNames := []Labeler{
+		NewLabeler(s.Miner, "miner"),
 	}
+	model := s.RawMap(props, &rawNames)
+	for k, v := range s.CalcMap(props) {
+		model[k] = v
+	}
+
+	var order = []string{}
+	// EXISTING_CODE
 	order = []string{
 		"hash",
 		"blockNumber",
@@ -70,37 +68,78 @@ func (s *LightBlock) Model(chain, format string, verbose bool, extraOpts map[str
 	}
 
 	if format == "json" {
-		model["tx_hashes"] = s.Transactions
+		order = append(order, "tx_hashes")
 		if s.BlockNumber >= base.KnownBlock(chain, base.Shanghai) {
-			withs := make([]map[string]any, 0, len(s.Withdrawals))
-			for _, w := range s.Withdrawals {
-				withs = append(withs, w.Model(chain, format, verbose, extraOpts).Data)
-			}
-			model["withdrawals"] = withs
+			order = append(order, "withdrawals")
 		}
 	} else {
-		model["transactionsCnt"] = len(s.Transactions)
 		order = append(order, "transactionsCnt")
 		if s.BlockNumber > base.KnownBlock(chain, base.Shanghai) {
-			model["withdrawalsCnt"] = len(s.Withdrawals)
 			order = append(order, "withdrawalsCnt")
 		}
 	}
-
-	if name, loaded, found := nameAddress(extraOpts, s.Miner); found {
-		model["minerName"] = name.Name
-		order = append(order, "minerName")
-	} else if loaded && format != "json" {
-		model["minerName"] = ""
-		order = append(order, "minerName")
-	}
-	order = reorderOrdering(order)
 	// EXISTING_CODE
+
+	for _, item := range rawNames {
+		key := item.name + "Name"
+		if _, exists := model[key]; exists {
+			order = append(order, key)
+		}
+	}
+	order = reorderFields(order)
 
 	return Model{
 		Data:  model,
 		Order: order,
 	}
+}
+
+// RawMap returns a map containing only the raw/base fields for this LightBlock.
+func (s *LightBlock) RawMap(p *ModelProps, needed *[]Labeler) map[string]any {
+	model := map[string]any{
+		// EXISTING_CODE
+		"hash":        s.Hash,
+		"blockNumber": s.BlockNumber,
+		"parentHash":  s.ParentHash,
+		"timestamp":   s.Timestamp,
+		"miner":       s.Miner,
+		// EXISTING_CODE
+	}
+
+	// EXISTING_CODE
+	if p.Format == "json" {
+		model["tx_hashes"] = s.Transactions
+		if s.BlockNumber >= base.KnownBlock(p.Chain, base.Shanghai) {
+			withs := make([]map[string]any, 0, len(s.Withdrawals))
+			for _, w := range s.Withdrawals {
+				withs = append(withs, w.Model(p.Chain, p.Format, p.Verbose, p.ExtraOpts).Data)
+			}
+			model["withdrawals"] = withs
+		}
+	} else {
+		model["transactionsCnt"] = len(s.Transactions)
+		if s.BlockNumber > base.KnownBlock(p.Chain, base.Shanghai) {
+			model["withdrawalsCnt"] = len(s.Withdrawals)
+		}
+	}
+	// EXISTING_CODE
+
+	return labelAddresses(p, model, needed)
+}
+
+// CalcMap returns a map containing the calculated/derived fields for this type.
+func (s *LightBlock) CalcMap(p *ModelProps) map[string]any {
+	_ = p // delint
+	model := map[string]any{
+		// EXISTING_CODE
+		"date": s.Date(),
+		// EXISTING_CODE
+	}
+
+	// EXISTING_CODE
+	// EXISTING_CODE
+
+	return model
 }
 
 func (s *LightBlock) Date() string {
@@ -272,8 +311,36 @@ func (s *LightBlock) UnmarshalCache(fileVersion uint64, reader io.Reader) (err e
 // FinishUnmarshal is used by the cache. It may be unused depending on auto-code-gen
 func (s *LightBlock) FinishUnmarshal(fileVersion uint64) {
 	_ = fileVersion
+	s.Calcs = nil
 	// EXISTING_CODE
 	// EXISTING_CODE
+}
+
+// LightBlockCalcs holds lazy-loaded calculated fields for LightBlock
+type LightBlockCalcs struct {
+	// EXISTING_CODE
+	Date string `json:"date"`
+	// EXISTING_CODE
+}
+
+func (s *LightBlock) EnsureCalcs(p *ModelProps, fieldFilter []string) error {
+	_ = fieldFilter // delint
+	if s.Calcs != nil {
+		return nil
+	}
+
+	calcMap := s.CalcMap(p)
+	if len(calcMap) == 0 {
+		return nil
+	}
+
+	jsonBytes, err := json.Marshal(calcMap)
+	if err != nil {
+		return err
+	}
+
+	s.Calcs = &LightBlockCalcs{}
+	return json.Unmarshal(jsonBytes, s.Calcs)
 }
 
 // EXISTING_CODE

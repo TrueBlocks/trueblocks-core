@@ -14,19 +14,20 @@ import "encoding/json"
 // EXISTING_CODE
 
 type ChunkStats struct {
-	AddrsPerBlock float64     `json:"addrsPerBlock"`
-	AppsPerAddr   float64     `json:"appsPerAddr"`
-	AppsPerBlock  float64     `json:"appsPerBlock"`
-	BloomSz       uint64      `json:"bloomSz"`
-	ChunkSz       uint64      `json:"chunkSz"`
-	NAddrs        uint64      `json:"nAddrs"`
-	NApps         uint64      `json:"nApps"`
-	NBlocks       uint64      `json:"nBlocks"`
-	NBlooms       uint64      `json:"nBlooms"`
-	Range         string      `json:"range"`
-	RangeDates    *RangeDates `json:"rangeDates,omitempty"`
-	Ratio         float64     `json:"ratio"`
-	RecWid        uint64      `json:"recWid"`
+	AddrsPerBlock float64          `json:"addrsPerBlock"`
+	AppsPerAddr   float64          `json:"appsPerAddr"`
+	AppsPerBlock  float64          `json:"appsPerBlock"`
+	BloomSz       uint64           `json:"bloomSz"`
+	ChunkSz       uint64           `json:"chunkSz"`
+	NAddrs        uint64           `json:"nAddrs"`
+	NApps         uint64           `json:"nApps"`
+	NBlocks       uint64           `json:"nBlocks"`
+	NBlooms       uint64           `json:"nBlooms"`
+	Range         string           `json:"range"`
+	RangeDates    *RangeDates      `json:"rangeDates,omitempty"`
+	Ratio         float64          `json:"ratio"`
+	RecWid        uint64           `json:"recWid"`
+	Calcs         *ChunkStatsCalcs `json:"calcs,omitempty"`
 	// EXISTING_CODE
 	// EXISTING_CODE
 }
@@ -37,28 +38,16 @@ func (s ChunkStats) String() string {
 }
 
 func (s *ChunkStats) Model(chain, format string, verbose bool, extraOpts map[string]any) Model {
-	_ = chain
-	_ = format
-	_ = verbose
-	_ = extraOpts
-	var model = map[string]any{}
-	var order = []string{}
+	props := NewModelProps(chain, format, verbose, extraOpts)
 
-	// EXISTING_CODE
-	model = map[string]any{
-		"addrsPerBlock": s.AddrsPerBlock,
-		"appsPerAddr":   s.AppsPerAddr,
-		"appsPerBlock":  s.AppsPerBlock,
-		"bloomSz":       s.BloomSz,
-		"chunkSz":       s.ChunkSz,
-		"range":         s.Range,
-		"nAddrs":        s.NAddrs,
-		"nApps":         s.NApps,
-		"nBlocks":       s.NBlocks,
-		"nBlooms":       s.NBlooms,
-		"ratio":         s.Ratio,
-		"recWid":        s.RecWid,
+	rawNames := []Labeler{}
+	model := s.RawMap(props, &rawNames)
+	for k, v := range s.CalcMap(props) {
+		model[k] = v
 	}
+
+	var order = []string{}
+	// EXISTING_CODE
 	order = []string{
 		"range",
 		"nAddrs",
@@ -76,10 +65,66 @@ func (s *ChunkStats) Model(chain, format string, verbose bool, extraOpts map[str
 
 	if verbose && format == "json" {
 		if s.RangeDates != nil {
-			model["rangeDates"] = s.RangeDates.Model(chain, format, verbose, extraOpts).Data
+			order = append(order, "rangeDates")
 		}
 	} else if verbose {
 		order = append(order, []string{"firstTs", "firstDate", "lastTs", "lastDate"}...)
+	}
+	// EXISTING_CODE
+
+	for _, item := range rawNames {
+		key := item.name + "Name"
+		if _, exists := model[key]; exists {
+			order = append(order, key)
+		}
+	}
+	order = reorderFields(order)
+
+	return Model{
+		Data:  model,
+		Order: order,
+	}
+}
+
+// RawMap returns a map containing only the raw/base fields for this ChunkStats.
+func (s *ChunkStats) RawMap(p *ModelProps, needed *[]Labeler) map[string]any {
+	model := map[string]any{
+		// EXISTING_CODE
+		"addrsPerBlock": s.AddrsPerBlock,
+		"appsPerAddr":   s.AppsPerAddr,
+		"appsPerBlock":  s.AppsPerBlock,
+		"bloomSz":       s.BloomSz,
+		"chunkSz":       s.ChunkSz,
+		"range":         s.Range,
+		"nAddrs":        s.NAddrs,
+		"nApps":         s.NApps,
+		"nBlocks":       s.NBlocks,
+		"nBlooms":       s.NBlooms,
+		"ratio":         s.Ratio,
+		"recWid":        s.RecWid,
+		// EXISTING_CODE
+	}
+
+	// EXISTING_CODE
+	// EXISTING_CODE
+
+	return labelAddresses(p, model, needed)
+}
+
+// CalcMap returns a map containing the calculated/derived fields for this type.
+func (s *ChunkStats) CalcMap(p *ModelProps) map[string]any {
+	_ = p // delint
+	model := map[string]any{
+		// EXISTING_CODE
+		// EXISTING_CODE
+	}
+
+	// EXISTING_CODE
+	if p.Verbose && p.Format == "json" {
+		if s.RangeDates != nil {
+			model["rangeDates"] = s.RangeDates.Model(p.Chain, p.Format, p.Verbose, p.ExtraOpts).Data
+		}
+	} else if p.Verbose {
 		if s.RangeDates != nil {
 			model["firstTs"] = s.RangeDates.FirstTs
 			model["firstDate"] = s.RangeDates.FirstDate
@@ -89,17 +134,46 @@ func (s *ChunkStats) Model(chain, format string, verbose bool, extraOpts map[str
 	}
 	// EXISTING_CODE
 
-	return Model{
-		Data:  model,
-		Order: order,
-	}
+	return model
 }
 
 // FinishUnmarshal is used by the cache. It may be unused depending on auto-code-gen
 func (s *ChunkStats) FinishUnmarshal(fileVersion uint64) {
 	_ = fileVersion
+	s.Calcs = nil
 	// EXISTING_CODE
 	// EXISTING_CODE
+}
+
+// ChunkStatsCalcs holds lazy-loaded calculated fields for ChunkStats
+type ChunkStatsCalcs struct {
+	// EXISTING_CODE
+	RangeDates interface{} `json:"rangeDates,omitempty"`
+	FirstTs    uint64      `json:"firstTs,omitempty"`
+	FirstDate  string      `json:"firstDate,omitempty"`
+	LastTs     uint64      `json:"lastTs,omitempty"`
+	LastDate   string      `json:"lastDate,omitempty"`
+	// EXISTING_CODE
+}
+
+func (s *ChunkStats) EnsureCalcs(p *ModelProps, fieldFilter []string) error {
+	_ = fieldFilter // delint
+	if s.Calcs != nil {
+		return nil
+	}
+
+	calcMap := s.CalcMap(p)
+	if len(calcMap) == 0 {
+		return nil
+	}
+
+	jsonBytes, err := json.Marshal(calcMap)
+	if err != nil {
+		return err
+	}
+
+	s.Calcs = &ChunkStatsCalcs{}
+	return json.Unmarshal(jsonBytes, s.Calcs)
 }
 
 // EXISTING_CODE

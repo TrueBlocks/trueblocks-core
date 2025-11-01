@@ -22,12 +22,13 @@ import (
 // EXISTING_CODE
 
 type Withdrawal struct {
-	Address        base.Address   `json:"address"`
-	Amount         base.Wei       `json:"amount"`
-	BlockNumber    base.Blknum    `json:"blockNumber"`
-	Index          base.Value     `json:"index"`
-	Timestamp      base.Timestamp `json:"timestamp"`
-	ValidatorIndex base.Value     `json:"validatorIndex"`
+	Address        base.Address     `json:"address"`
+	Amount         base.Wei         `json:"amount"`
+	BlockNumber    base.Blknum      `json:"blockNumber"`
+	Index          base.Value       `json:"index"`
+	Timestamp      base.Timestamp   `json:"timestamp"`
+	ValidatorIndex base.Value       `json:"validatorIndex"`
+	Calcs          *WithdrawalCalcs `json:"calcs,omitempty"`
 	// EXISTING_CODE
 	// EXISTING_CODE
 }
@@ -38,24 +39,18 @@ func (s Withdrawal) String() string {
 }
 
 func (s *Withdrawal) Model(chain, format string, verbose bool, extraOpts map[string]any) Model {
-	_ = chain
-	_ = format
-	_ = verbose
-	_ = extraOpts
-	var model = map[string]any{}
-	var order = []string{}
+	props := NewModelProps(chain, format, verbose, extraOpts)
 
-	// EXISTING_CODE
-	model = map[string]any{
-		"address":        s.Address,
-		"amount":         s.Amount.String(),
-		"blockNumber":    s.BlockNumber,
-		"date":           s.Date(),
-		"index":          s.Index,
-		"timestamp":      s.Timestamp,
-		"validatorIndex": s.ValidatorIndex,
+	rawNames := []Labeler{
+		NewLabeler(s.Address, "address"),
+	}
+	model := s.RawMap(props, &rawNames)
+	for k, v := range s.CalcMap(props) {
+		model[k] = v
 	}
 
+	var order = []string{}
+	// EXISTING_CODE
 	order = []string{
 		"blockNumber",
 		"index",
@@ -66,26 +61,60 @@ func (s *Withdrawal) Model(chain, format string, verbose bool, extraOpts map[str
 		"amount",
 	}
 
-	asEther := extraOpts["ether"] == true
-	if asEther {
-		model["ether"] = s.Amount.ToFloatString(18)
+	if extraOpts["ether"] == true {
 		order = append(order, "ether")
 	}
-
-	if name, loaded, found := nameAddress(extraOpts, s.Address); found {
-		model["addressName"] = name.Name
-		order = append(order, "addressName")
-	} else if loaded && format != "json" {
-		model["addressName"] = ""
-		order = append(order, "addressName")
-	}
-	order = reorderOrdering(order)
 	// EXISTING_CODE
+
+	for _, item := range rawNames {
+		key := item.name + "Name"
+		if _, exists := model[key]; exists {
+			order = append(order, key)
+		}
+	}
+	order = reorderFields(order)
 
 	return Model{
 		Data:  model,
 		Order: order,
 	}
+}
+
+// RawMap returns a map containing only the raw/base fields for this Withdrawal.
+func (s *Withdrawal) RawMap(p *ModelProps, needed *[]Labeler) map[string]any {
+	model := map[string]any{
+		// EXISTING_CODE
+		"address":        s.Address,
+		"amount":         s.Amount.String(),
+		"blockNumber":    s.BlockNumber,
+		"index":          s.Index,
+		"timestamp":      s.Timestamp,
+		"validatorIndex": s.ValidatorIndex,
+		// EXISTING_CODE
+	}
+
+	// EXISTING_CODE
+	// EXISTING_CODE
+
+	return labelAddresses(p, model, needed)
+}
+
+// CalcMap returns a map containing the calculated/derived fields for this type.
+func (s *Withdrawal) CalcMap(p *ModelProps) map[string]any {
+	_ = p // delint
+	model := map[string]any{
+		// EXISTING_CODE
+		"date": s.Date(),
+		// EXISTING_CODE
+	}
+
+	// EXISTING_CODE
+	if p.ExtraOpts["ether"] == true {
+		model["ether"] = s.Amount.ToFloatString(18)
+	}
+	// EXISTING_CODE
+
+	return model
 }
 
 func (s *Withdrawal) Date() string {
@@ -194,8 +223,37 @@ func (s *Withdrawal) UnmarshalCache(fileVersion uint64, reader io.Reader) (err e
 // FinishUnmarshal is used by the cache. It may be unused depending on auto-code-gen
 func (s *Withdrawal) FinishUnmarshal(fileVersion uint64) {
 	_ = fileVersion
+	s.Calcs = nil
 	// EXISTING_CODE
 	// EXISTING_CODE
+}
+
+// WithdrawalCalcs holds lazy-loaded calculated fields for Withdrawal
+type WithdrawalCalcs struct {
+	// EXISTING_CODE
+	Date  string `json:"date"`
+	Ether string `json:"ether,omitempty"`
+	// EXISTING_CODE
+}
+
+func (s *Withdrawal) EnsureCalcs(p *ModelProps, fieldFilter []string) error {
+	_ = fieldFilter // delint
+	if s.Calcs != nil {
+		return nil
+	}
+
+	calcMap := s.CalcMap(p)
+	if len(calcMap) == 0 {
+		return nil
+	}
+
+	jsonBytes, err := json.Marshal(calcMap)
+	if err != nil {
+		return err
+	}
+
+	s.Calcs = &WithdrawalCalcs{}
+	return json.Unmarshal(jsonBytes, s.Calcs)
 }
 
 // EXISTING_CODE

@@ -33,6 +33,7 @@ type Abi struct {
 	NFunctions     int64        `json:"nFunctions"`
 	Name           string       `json:"name"`
 	Path           string       `json:"path"`
+	Calcs          *AbiCalcs    `json:"calcs,omitempty"`
 	// EXISTING_CODE
 	// EXISTING_CODE
 }
@@ -43,22 +44,19 @@ func (s Abi) String() string {
 }
 
 func (s *Abi) Model(chain, format string, verbose bool, extraOpts map[string]any) Model {
-	_ = chain
-	_ = format
-	_ = verbose
-	_ = extraOpts
-	var model = map[string]any{}
-	var order = []string{}
+	props := NewModelProps(chain, format, verbose, extraOpts)
 
+	rawNames := []Labeler{
+		NewLabeler(s.Address, "address"),
+	}
+	model := s.RawMap(props, &rawNames)
+	for k, v := range s.CalcMap(props) {
+		model[k] = v
+	}
+
+	var order = []string{}
 	// EXISTING_CODE
 	if extraOpts["list"] == true {
-		model = map[string]any{
-			"address":     s.Address,
-			"name":        s.Name,
-			"lastModDate": s.LastModDate,
-			"fileSize":    s.FileSize,
-			"isKnown":     s.IsKnown,
-		}
 		order = []string{
 			"address",
 			"name",
@@ -67,33 +65,76 @@ func (s *Abi) Model(chain, format string, verbose bool, extraOpts map[string]any
 			"isKnown",
 		}
 
-		if s.IsKnown {
-			model["address"] = ""
-		} else {
-			if name, loaded, found := nameAddress(extraOpts, s.Address); found {
-				model["name"] = name.Name
-			} else if loaded {
-				model["name"] = ""
+		if verbose {
+			if format != "json" {
+				order = append(order, "isEmpty")
+			}
+			order = append(order, "nFunctions", "nEvents")
+			if format != "json" {
+				order = append(order, "hasConstructor", "hasFallback")
+			}
+			order = append(order, "path")
+		}
+	} else {
+		order = append(order, s.Address.Hex())
+		for _, item := range rawNames {
+			key := item.name + "Name"
+			if _, exists := model[key]; exists {
+				order = append(order, key)
 			}
 		}
-		if format == "json" && s.Address.IsZero() {
+	}
+	// EXISTING_CODE
+
+	for _, item := range rawNames {
+		key := item.name + "Name"
+		if _, exists := model[key]; exists {
+			order = append(order, key)
+		}
+	}
+	order = reorderFields(order)
+
+	return Model{
+		Data:  model,
+		Order: order,
+	}
+}
+
+// RawMap returns a map containing only the raw/base fields for this Abi.
+func (s *Abi) RawMap(p *ModelProps, needed *[]Labeler) map[string]any {
+	model := map[string]any{
+		// EXISTING_CODE
+		// EXISTING_CODE
+	}
+
+	// EXISTING_CODE
+	if p.ExtraOpts["list"] == true {
+		model = map[string]any{
+			"address":     s.Address,
+			"name":        s.Name,
+			"lastModDate": s.LastModDate,
+			"fileSize":    s.FileSize,
+			"isKnown":     s.IsKnown,
+		}
+
+		if s.IsKnown {
+			model["address"] = ""
+		}
+		if p.Format == "json" && s.Address.IsZero() {
 			delete(model, "address")
 		}
 
-		if verbose {
-			if format == "json" {
+		if p.Verbose {
+			if p.Format == "json" {
 				if s.IsEmpty {
 					model["isEmpty"] = s.IsEmpty
 				}
 			} else {
 				model["isEmpty"] = s.IsEmpty
-				order = append(order, "isEmpty")
 			}
 			model["nFunctions"] = s.NFunctions
-			order = append(order, "nFunctions")
 			model["nEvents"] = s.NEvents
-			order = append(order, "nEvents")
-			if format == "json" {
+			if p.Format == "json" {
 				if s.HasConstructor {
 					model["hasConstructor"] = s.HasConstructor
 				}
@@ -102,32 +143,44 @@ func (s *Abi) Model(chain, format string, verbose bool, extraOpts map[string]any
 				}
 			} else {
 				model["hasConstructor"] = s.HasConstructor
-				order = append(order, "hasConstructor")
 				model["hasFallback"] = s.HasFallback
-				order = append(order, "hasFallback")
 			}
 			model["path"] = s.Path
-			order = append(order, "path")
 		}
 
+		// Handle address labeling for list mode (but not if IsKnown)
+		if !s.IsKnown {
+			return labelAddresses(p, model, needed)
+		}
 	} else {
 		model[s.Address.Hex()] = s.Functions
-		order = append(order, s.Address.Hex())
-		if name, loaded, found := nameAddress(extraOpts, s.Address); found {
-			model["addressName"] = name.Name
-			order = append(order, "addressName")
-		} else if loaded && format != "json" {
-			model["addressName"] = ""
-			order = append(order, "addressName")
-		}
 	}
-	order = reorderOrdering(order)
 	// EXISTING_CODE
 
-	return Model{
-		Data:  model,
-		Order: order,
+	return labelAddresses(p, model, needed)
+}
+
+// CalcMap returns a map containing the calculated/derived fields for this type.
+func (s *Abi) CalcMap(p *ModelProps) map[string]any {
+	_ = p // delint
+	model := map[string]any{
+		// EXISTING_CODE
+		// EXISTING_CODE
 	}
+
+	// EXISTING_CODE
+	if p.ExtraOpts["list"] == true && !s.IsKnown {
+		// This handles the special case where we override the name field
+		if name, loaded, found := labelAddress(p.ExtraOpts, s.Address); found {
+			model["name"] = name.Name
+		} else if loaded {
+			model["name"] = ""
+		}
+		return model
+	}
+	// EXISTING_CODE
+
+	return model
 }
 
 func (s *Abi) CacheLocations() (string, string, string) {
@@ -283,8 +336,36 @@ func (s *Abi) UnmarshalCache(fileVersion uint64, reader io.Reader) (err error) {
 // FinishUnmarshal is used by the cache. It may be unused depending on auto-code-gen
 func (s *Abi) FinishUnmarshal(fileVersion uint64) {
 	_ = fileVersion
+	s.Calcs = nil
 	// EXISTING_CODE
 	// EXISTING_CODE
+}
+
+// AbiCalcs holds lazy-loaded calculated fields for Abi
+type AbiCalcs struct {
+	// EXISTING_CODE
+	Name string `json:"name,omitempty"`
+	// EXISTING_CODE
+}
+
+func (s *Abi) EnsureCalcs(p *ModelProps, fieldFilter []string) error {
+	_ = fieldFilter // delint
+	if s.Calcs != nil {
+		return nil
+	}
+
+	calcMap := s.CalcMap(p)
+	if len(calcMap) == 0 {
+		return nil
+	}
+
+	jsonBytes, err := json.Marshal(calcMap)
+	if err != nil {
+		return err
+	}
+
+	s.Calcs = &AbiCalcs{}
+	return json.Unmarshal(jsonBytes, s.Calcs)
 }
 
 // EXISTING_CODE

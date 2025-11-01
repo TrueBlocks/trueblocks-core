@@ -18,7 +18,6 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v6/pkg/base"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v6/pkg/cache"
-	"github.com/ethereum/go-ethereum/common/hexutil"
 )
 
 // EXISTING_CODE
@@ -47,6 +46,7 @@ type Slurp struct {
 	ValidatorIndex    base.Value     `json:"validatorIndex"`
 	Value             base.Wei       `json:"value"`
 	WithdrawalIndex   base.Value     `json:"withdrawalIndex"`
+	Calcs             *SlurpCalcs    `json:"calcs,omitempty"`
 	// EXISTING_CODE
 	Amount base.Wei `json:"amount"`
 	// EXISTING_CODE
@@ -58,32 +58,22 @@ func (s Slurp) String() string {
 }
 
 func (s *Slurp) Model(chain, format string, verbose bool, extraOpts map[string]any) Model {
-	_ = chain
-	_ = format
-	_ = verbose
-	_ = extraOpts
-	var model = map[string]any{}
+	props := NewModelProps(chain, format, verbose, extraOpts)
+
+	rawNames := []Labeler{
+		NewLabeler(s.ContractAddress, "contractAddress"),
+		NewLabeler(s.From, "from"),
+		NewLabeler(s.To, "to"),
+	}
+	model := s.RawMap(props, &rawNames)
+	for k, v := range s.CalcMap(props) {
+		model[k] = v
+	}
+
 	var order = []string{}
-
 	// EXISTING_CODE
-	to := hexutil.Encode(s.To.Bytes())
-	if to == "0x0000000000000000000000000000000000000000" {
-		to = "0x0" // weird special case to preserve what RPC does
-	}
-
-	model = map[string]any{
-		"blockNumber": s.BlockNumber,
-		"from":        s.From,
-		"timestamp":   s.Timestamp,
-		"date":        s.Date(),
-		"to":          s.To,
-		"value":       s.Value.String(),
-	}
-
 	switch s.From {
 	case base.BlockRewardSender, base.UncleRewardSender:
-		model["from"] = s.From.Hex()
-		s.Input = ""
 		order = []string{
 			"blockNumber",
 			"timestamp",
@@ -94,10 +84,6 @@ func (s *Slurp) Model(chain, format string, verbose bool, extraOpts map[string]a
 		}
 
 	case base.WithdrawalSender:
-		model["from"] = s.From.Hex()
-		s.Input = ""
-		model["withdrawalIndex"] = s.WithdrawalIndex
-		model["validatorIndex"] = s.ValidatorIndex
 		order = []string{
 			"blockNumber",
 			"validatorIndex",
@@ -126,9 +112,58 @@ func (s *Slurp) Model(chain, format string, verbose bool, extraOpts map[string]a
 			"value",
 			"input",
 		}
+	}
 
+	isArticulated := extraOpts["articulate"] == true && s.ArticulatedTx != nil
+	if isArticulated && format != "json" {
+		order = append(order, "compressedTx")
+	}
+
+	asEther := true // like transactions, we always export ether for slurps -- extraOpts["ether"] == true
+	if asEther {
+		order = append(order, "ether")
+	}
+	// EXISTING_CODE
+
+	for _, item := range rawNames {
+		key := item.name + "Name"
+		if _, exists := model[key]; exists {
+			order = append(order, key)
+		}
+	}
+	order = reorderFields(order)
+
+	return Model{
+		Data:  model,
+		Order: order,
+	}
+}
+
+// RawMap returns a map containing only the raw/base fields for this Slurp.
+func (s *Slurp) RawMap(p *ModelProps, needed *[]Labeler) map[string]any {
+	model := map[string]any{
+		// EXISTING_CODE
+		"blockNumber":      s.BlockNumber,
+		"from":             s.From,
+		"timestamp":        s.Timestamp,
+		"to":               s.To,
+		"value":            s.Value.String(),
+		"transactionIndex": s.TransactionIndex,
+		// EXISTING_CODE
+	}
+
+	// EXISTING_CODE
+	switch s.From {
+	case base.BlockRewardSender, base.UncleRewardSender:
+		model["from"] = s.From.Hex()
+
+	case base.WithdrawalSender:
+		model["from"] = s.From.Hex()
+		model["withdrawalIndex"] = s.WithdrawalIndex
+		model["validatorIndex"] = s.ValidatorIndex
+
+	default:
 		model["gas"] = s.Gas
-		model["gasCost"] = s.GasCost()
 		model["gasPrice"] = s.GasPrice
 		model["gasUsed"] = s.GasUsed
 		model["hash"] = s.Hash
@@ -143,14 +178,35 @@ func (s *Slurp) Model(chain, format string, verbose bool, extraOpts map[string]a
 	if s.BlockHash != base.HexToHash("0xdeadbeef") && !s.BlockHash.IsZero() {
 		model["blockHash"] = s.BlockHash
 	}
-	model["transactionIndex"] = s.TransactionIndex
+	// EXISTING_CODE
+
+	return labelAddresses(p, model, needed)
+}
+
+// CalcMap returns a map containing the calculated/derived fields for this type.
+func (s *Slurp) CalcMap(p *ModelProps) map[string]any {
+	_ = p // delint
+	model := map[string]any{
+		// EXISTING_CODE
+		"date": s.Date(),
+		// EXISTING_CODE
+	}
+
+	// EXISTING_CODE
+	switch s.From {
+	case base.BlockRewardSender, base.UncleRewardSender:
+		// No additional calculated fields for rewards
+
+	case base.WithdrawalSender:
+		// No additional calculated fields for withdrawals
+
+	default:
+		model["gasCost"] = s.GasCost()
+	}
 
 	// TODO: Turn this back on
 	var articulatedTx map[string]any
-	isArticulated := extraOpts["articulate"] == true && s.ArticulatedTx != nil
-	if isArticulated && format != "json" {
-		order = append(order, "compressedTx")
-	}
+	isArticulated := p.ExtraOpts["articulate"] == true && s.ArticulatedTx != nil
 
 	// TODO: ARTICULATE SLURP
 	if isArticulated {
@@ -171,7 +227,7 @@ func (s *Slurp) Model(chain, format string, verbose bool, extraOpts map[string]a
 		}
 	}
 
-	if format == "json" {
+	if p.Format == "json" {
 		a := s.ContractAddress.Hex()
 		if strings.HasPrefix(a, "0x") && len(a) == 42 {
 			model["contractAddress"] = a
@@ -194,16 +250,17 @@ func (s *Slurp) Model(chain, format string, verbose bool, extraOpts map[string]a
 		model["hasToken"] = s.HasToken
 		model["isError"] = s.IsError
 		// etherscan sometimes returns this word instead of a hex address
-		if s.Input == "deprecated" {
-			s.Input = "0x"
+		input := s.Input
+		if input == "deprecated" {
+			input = "0x"
 		}
-		model["input"] = s.Input
+		model["input"] = input
 
 		// TODO: ARTICULATE SLURP
 		model["compressedTx"] = ""
-		enc := s.Input
-		if len(s.Input) >= 10 {
-			enc = s.Input[:10]
+		enc := input
+		if len(input) >= 10 {
+			enc = input[:10]
 		}
 		model["encoding"] = enc
 
@@ -218,30 +275,10 @@ func (s *Slurp) Model(chain, format string, verbose bool, extraOpts map[string]a
 	asEther := true // like transactions, we always export ether for slurps -- extraOpts["ether"] == true
 	if asEther {
 		model["ether"] = s.Value.ToFloatString(18)
-		order = append(order, "ether")
 	}
-
-	items := []namer{
-		{addr: s.From, name: "fromName"},
-		{addr: s.To, name: "toName"},
-		{addr: s.ContractAddress, name: "contractName"},
-	}
-	for _, item := range items {
-		if name, loaded, found := nameAddress(extraOpts, item.addr); found {
-			model[item.name] = name.Name
-			order = append(order, item.name)
-		} else if loaded && format != "json" {
-			model[item.name] = ""
-			order = append(order, item.name)
-		}
-	}
-	order = reorderOrdering(order)
 	// EXISTING_CODE
 
-	return Model{
-		Data:  model,
-		Order: order,
-	}
+	return model
 }
 
 func (s *Slurp) Date() string {
@@ -528,8 +565,42 @@ func (s *Slurp) UnmarshalCache(fileVersion uint64, reader io.Reader) (err error)
 // FinishUnmarshal is used by the cache. It may be unused depending on auto-code-gen
 func (s *Slurp) FinishUnmarshal(fileVersion uint64) {
 	_ = fileVersion
+	s.Calcs = nil
 	// EXISTING_CODE
 	// EXISTING_CODE
+}
+
+// SlurpCalcs holds lazy-loaded calculated fields for Slurp
+type SlurpCalcs struct {
+	// EXISTING_CODE
+	Date            string      `json:"date"`
+	GasCost         base.Wei    `json:"gasCost,omitempty"`
+	ContractAddress string      `json:"contractAddress,omitempty"`
+	Input           string      `json:"input,omitempty"`
+	ArticulatedTx   interface{} `json:"articulatedTx,omitempty"`
+	HasToken        bool        `json:"hasToken,omitempty"`
+	IsError         bool        `json:"isError,omitempty"`
+	// EXISTING_CODE
+}
+
+func (s *Slurp) EnsureCalcs(p *ModelProps, fieldFilter []string) error {
+	_ = fieldFilter // delint
+	if s.Calcs != nil {
+		return nil
+	}
+
+	calcMap := s.CalcMap(p)
+	if len(calcMap) == 0 {
+		return nil
+	}
+
+	jsonBytes, err := json.Marshal(calcMap)
+	if err != nil {
+		return err
+	}
+
+	s.Calcs = &SlurpCalcs{}
+	return json.Unmarshal(jsonBytes, s.Calcs)
 }
 
 // EXISTING_CODE

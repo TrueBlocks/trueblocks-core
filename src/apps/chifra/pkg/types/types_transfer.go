@@ -18,26 +18,27 @@ import (
 // EXISTING_CODE
 
 type Transfer struct {
-	AmountIn            base.Wei     `json:"amountIn,omitempty"`
-	AmountOut           base.Wei     `json:"amountOut,omitempty"`
-	Asset               base.Address `json:"asset"`
-	BlockNumber         base.Blknum  `json:"blockNumber"`
-	Decimals            uint64       `json:"decimals"`
-	GasOut              base.Wei     `json:"gasOut,omitempty"`
-	Holder              base.Address `json:"holder"`
-	InternalIn          base.Wei     `json:"internalIn,omitempty"`
-	InternalOut         base.Wei     `json:"internalOut,omitempty"`
-	LogIndex            base.Lognum  `json:"logIndex"`
-	MinerBaseRewardIn   base.Wei     `json:"minerBaseRewardIn,omitempty"`
-	MinerNephewRewardIn base.Wei     `json:"minerNephewRewardIn,omitempty"`
-	MinerTxFeeIn        base.Wei     `json:"minerTxFeeIn,omitempty"`
-	MinerUncleRewardIn  base.Wei     `json:"minerUncleRewardIn,omitempty"`
-	PrefundIn           base.Wei     `json:"prefundIn,omitempty"`
-	Recipient           base.Address `json:"recipient"`
-	SelfDestructIn      base.Wei     `json:"selfDestructIn,omitempty"`
-	SelfDestructOut     base.Wei     `json:"selfDestructOut,omitempty"`
-	Sender              base.Address `json:"sender"`
-	TransactionIndex    base.Txnum   `json:"transactionIndex"`
+	AmountIn            base.Wei       `json:"amountIn,omitempty"`
+	AmountOut           base.Wei       `json:"amountOut,omitempty"`
+	Asset               base.Address   `json:"asset"`
+	BlockNumber         base.Blknum    `json:"blockNumber"`
+	Decimals            uint64         `json:"decimals"`
+	GasOut              base.Wei       `json:"gasOut,omitempty"`
+	Holder              base.Address   `json:"holder"`
+	InternalIn          base.Wei       `json:"internalIn,omitempty"`
+	InternalOut         base.Wei       `json:"internalOut,omitempty"`
+	LogIndex            base.Lognum    `json:"logIndex"`
+	MinerBaseRewardIn   base.Wei       `json:"minerBaseRewardIn,omitempty"`
+	MinerNephewRewardIn base.Wei       `json:"minerNephewRewardIn,omitempty"`
+	MinerTxFeeIn        base.Wei       `json:"minerTxFeeIn,omitempty"`
+	MinerUncleRewardIn  base.Wei       `json:"minerUncleRewardIn,omitempty"`
+	PrefundIn           base.Wei       `json:"prefundIn,omitempty"`
+	Recipient           base.Address   `json:"recipient"`
+	SelfDestructIn      base.Wei       `json:"selfDestructIn,omitempty"`
+	SelfDestructOut     base.Wei       `json:"selfDestructOut,omitempty"`
+	Sender              base.Address   `json:"sender"`
+	TransactionIndex    base.Txnum     `json:"transactionIndex"`
+	Calcs               *TransferCalcs `json:"calcs,omitempty"`
 	// EXISTING_CODE
 	Log         *Log         `json:"log,omitempty"`
 	Transaction *Transaction `json:"transaction,omitempty"`
@@ -50,52 +51,35 @@ func (s Transfer) String() string {
 }
 
 func (s *Transfer) Model(chain, format string, verbose bool, extraOpts map[string]any) Model {
-	_ = chain
-	_ = format
-	_ = verbose
-	_ = extraOpts
-	var model = map[string]any{}
-	var order = []string{}
+	props := NewModelProps(chain, format, verbose, extraOpts)
 
-	// EXISTING_CODE
-	model = map[string]any{
-		"blockNumber":      s.BlockNumber,
-		"transactionIndex": s.TransactionIndex,
-		"logIndex":         s.LogIndex,
-		"asset":            s.Asset,
-		"holder":           s.Holder,
-		"amount":           s.AmountNet().Text(10),
+	rawNames := []Labeler{
+		NewLabeler(s.Asset, "asset"),
+		NewLabeler(s.Holder, "holder"),
+	}
+	model := s.RawMap(props, &rawNames)
+	for k, v := range s.CalcMap(props) {
+		model[k] = v
 	}
 
+	var order = []string{}
+	// EXISTING_CODE
 	order = []string{
 		"blockNumber", "transactionIndex", "logIndex", "asset", "holder", "amount",
 	}
 
 	if extraOpts["ether"] == true {
-		decimals := int(s.Decimals)
-		model["amountEth"] = s.AmountNet().ToFloatString(decimals)
-		order = append(order, []string{"amountEth"}...)
+		order = append(order, "amountEth")
 	}
+	// EXISTING_CODE
 
-	for _, item := range []struct {
-		address   base.Address
-		keyPrefix string
-	}{
-		{s.Asset, "asset"},
-		{s.Holder, "holder"},
-	} {
-		key := item.keyPrefix + "Name"
-		if result, loaded, found := nameAddress(extraOpts, item.address); found {
-			model[key] = result.Name
-			order = append(order, key)
-		} else if loaded && format != "json" {
-			model[key] = ""
+	for _, item := range rawNames {
+		key := item.name + "Name"
+		if _, exists := model[key]; exists {
 			order = append(order, key)
 		}
 	}
-
-	order = reorderOrdering(order)
-	// EXISTING_CODE
+	order = reorderFields(order)
 
 	return Model{
 		Data:  model,
@@ -103,11 +87,77 @@ func (s *Transfer) Model(chain, format string, verbose bool, extraOpts map[strin
 	}
 }
 
+// RawMap returns a map containing only the raw/base fields for this Transfer.
+func (s *Transfer) RawMap(p *ModelProps, needed *[]Labeler) map[string]any {
+	model := map[string]any{
+		// EXISTING_CODE
+		"asset":            s.Asset,
+		"blockNumber":      s.BlockNumber,
+		"holder":           s.Holder,
+		"logIndex":         s.LogIndex,
+		"transactionIndex": s.TransactionIndex,
+		// EXISTING_CODE
+	}
+
+	// EXISTING_CODE
+	// EXISTING_CODE
+
+	return labelAddresses(p, model, needed)
+}
+
+// CalcMap returns a map containing the calculated/derived fields for this type.
+func (s *Transfer) CalcMap(p *ModelProps) map[string]any {
+	_ = p // delint
+	model := map[string]any{
+		// EXISTING_CODE
+		"amount": s.AmountNet().Text(10),
+		// EXISTING_CODE
+	}
+
+	// EXISTING_CODE
+	if p.ExtraOpts["ether"] == true {
+		decimals := int(s.Decimals)
+		model["amountEth"] = s.AmountNet().ToFloatString(decimals)
+	}
+	// EXISTING_CODE
+
+	return model
+}
+
 // FinishUnmarshal is used by the cache. It may be unused depending on auto-code-gen
 func (s *Transfer) FinishUnmarshal(fileVersion uint64) {
 	_ = fileVersion
+	s.Calcs = nil
 	// EXISTING_CODE
 	// EXISTING_CODE
+}
+
+// TransferCalcs holds lazy-loaded calculated fields for Transfer
+type TransferCalcs struct {
+	// EXISTING_CODE
+	Amount    base.Wei `json:"amount"`
+	AmountEth string   `json:"amountEth,omitempty"`
+	// EXISTING_CODE
+}
+
+func (s *Transfer) EnsureCalcs(p *ModelProps, fieldFilter []string) error {
+	_ = fieldFilter // delint
+	if s.Calcs != nil {
+		return nil
+	}
+
+	calcMap := s.CalcMap(p)
+	if len(calcMap) == 0 {
+		return nil
+	}
+
+	jsonBytes, err := json.Marshal(calcMap)
+	if err != nil {
+		return err
+	}
+
+	s.Calcs = &TransferCalcs{}
+	return json.Unmarshal(jsonBytes, s.Calcs)
 }
 
 // EXISTING_CODE

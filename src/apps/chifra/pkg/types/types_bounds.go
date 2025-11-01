@@ -24,6 +24,7 @@ type Bounds struct {
 	FirstTs   base.Timestamp `json:"firstTs"`
 	LatestApp Appearance     `json:"latestApp"`
 	LatestTs  base.Timestamp `json:"latestTs"`
+	Calcs     *BoundsCalcs   `json:"calcs,omitempty"`
 	// EXISTING_CODE
 	// EXISTING_CODE
 }
@@ -34,31 +35,16 @@ func (s Bounds) String() string {
 }
 
 func (s *Bounds) Model(chain, format string, verbose bool, extraOpts map[string]any) Model {
-	_ = chain
-	_ = format
-	_ = verbose
-	_ = extraOpts
-	var model = map[string]any{}
-	var order = []string{}
+	props := NewModelProps(chain, format, verbose, extraOpts)
 
+	rawNames := []Labeler{}
+	model := s.RawMap(props, &rawNames)
+	for k, v := range s.CalcMap(props) {
+		model[k] = v
+	}
+
+	var order = []string{}
 	// EXISTING_CODE
-	extraOpts["appearances"] = true
-	model = map[string]any{
-		"address":    s.FirstApp.Address,
-		"count":      s.Count,
-		"firstApp":   s.FirstApp.Model(chain, format, verbose, extraOpts).Data, //fmt.Sprintf("%d.%d", s.FirstApp.BlockNumber, s.FirstApp.TransactionIndex),
-		"firstTs":    s.FirstTs,
-		"firstDate":  base.FormattedDate(s.FirstTs),
-		"latestApp":  s.LatestApp.Model(chain, format, verbose, extraOpts).Data, //fmt.Sprintf("%d.%d", s.LatestApp.BlockNumber, s.LatestApp.TransactionIndex),
-		"latestTs":   s.LatestTs,
-		"latestDate": base.FormattedDate(s.LatestTs),
-		"blockSpan":  (s.LatestApp.BlockNumber - s.FirstApp.BlockNumber),
-		"blockFreq":  uint64(s.LatestApp.BlockNumber-s.FirstApp.BlockNumber) / s.Count,
-	}
-	if format == "txt" || format == "csv" {
-		model["firstApp"] = fmt.Sprintf("%d.%d", s.FirstApp.BlockNumber, s.FirstApp.TransactionIndex)
-		model["latestApp"] = fmt.Sprintf("%d.%d", s.LatestApp.BlockNumber, s.LatestApp.TransactionIndex)
-	}
 	order = []string{
 		"address",
 		"count",
@@ -73,17 +59,98 @@ func (s *Bounds) Model(chain, format string, verbose bool, extraOpts map[string]
 	}
 	// EXISTING_CODE
 
+	for _, item := range rawNames {
+		key := item.name + "Name"
+		if _, exists := model[key]; exists {
+			order = append(order, key)
+		}
+	}
+	order = reorderFields(order)
+
 	return Model{
 		Data:  model,
 		Order: order,
 	}
 }
 
+// RawMap returns a map containing only the raw/base fields for this Bounds.
+func (s *Bounds) RawMap(p *ModelProps, needed *[]Labeler) map[string]any {
+	model := map[string]any{
+		// EXISTING_CODE
+		"address":  s.FirstApp.Address,
+		"count":    s.Count,
+		"firstTs":  s.FirstTs,
+		"latestTs": s.LatestTs,
+		// EXISTING_CODE
+	}
+
+	// EXISTING_CODE
+	if p.Format == "txt" || p.Format == "csv" {
+		model["firstApp"] = fmt.Sprintf("%d.%d", s.FirstApp.BlockNumber, s.FirstApp.TransactionIndex)
+		model["latestApp"] = fmt.Sprintf("%d.%d", s.LatestApp.BlockNumber, s.LatestApp.TransactionIndex)
+	} else {
+		model["firstApp"] = s.FirstApp.Model(p.Chain, p.Format, p.Verbose, p.ExtraOpts).Data
+		model["latestApp"] = s.LatestApp.Model(p.Chain, p.Format, p.Verbose, p.ExtraOpts).Data
+	}
+	// EXISTING_CODE
+
+	return labelAddresses(p, model, needed)
+}
+
+// CalcMap returns a map containing the calculated/derived fields for this type.
+func (s *Bounds) CalcMap(p *ModelProps) map[string]any {
+	_ = p // delint
+	model := map[string]any{
+		// EXISTING_CODE
+		"firstDate":  base.FormattedDate(s.FirstTs),
+		"latestDate": base.FormattedDate(s.LatestTs),
+		"blockSpan":  (s.LatestApp.BlockNumber - s.FirstApp.BlockNumber),
+		"blockFreq":  uint64(s.LatestApp.BlockNumber-s.FirstApp.BlockNumber) / s.Count,
+		// EXISTING_CODE
+	}
+
+	// EXISTING_CODE
+	// EXISTING_CODE
+
+	return model
+}
+
 // FinishUnmarshal is used by the cache. It may be unused depending on auto-code-gen
 func (s *Bounds) FinishUnmarshal(fileVersion uint64) {
 	_ = fileVersion
+	s.Calcs = nil
 	// EXISTING_CODE
 	// EXISTING_CODE
+}
+
+// BoundsCalcs holds lazy-loaded calculated fields for Bounds
+type BoundsCalcs struct {
+	// EXISTING_CODE
+	FirstDate  string `json:"firstDate"`
+	LatestDate string `json:"latestDate"`
+	BlockSpan  uint64 `json:"blockSpan"`
+	BlockFreq  uint64 `json:"blockFreq"`
+	// EXISTING_CODE
+}
+
+func (s *Bounds) EnsureCalcs(p *ModelProps, fieldFilter []string) error {
+	_ = fieldFilter // delint
+	if s.Calcs != nil {
+		return nil
+	}
+
+	calcMap := s.CalcMap(p)
+	if len(calcMap) == 0 {
+		return nil
+	}
+
+	jsonBytes, err := json.Marshal(calcMap)
+	if err != nil {
+		return err
+	}
+
+	s.Calcs = &BoundsCalcs{}
+	return json.Unmarshal(jsonBytes, s.Calcs)
 }
 
 // EXISTING_CODE

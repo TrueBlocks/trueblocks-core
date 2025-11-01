@@ -23,41 +23,42 @@ import (
 // EXISTING_CODE
 
 type Statement struct {
-	AccountedFor        base.Address   `json:"accountedFor"`
-	AmountIn            base.Wei       `json:"amountIn,omitempty"`
-	AmountOut           base.Wei       `json:"amountOut,omitempty"`
-	Asset               base.Address   `json:"asset"`
-	BegBal              base.Wei       `json:"begBal"`
-	BlockNumber         base.Blknum    `json:"blockNumber"`
-	CorrectAmountIn     base.Wei       `json:"correctAmountIn,omitempty"`
-	CorrectAmountOut    base.Wei       `json:"correctAmountOut,omitempty"`
-	CorrectBegBalIn     base.Wei       `json:"correctBegBalIn,omitempty"`
-	CorrectBegBalOut    base.Wei       `json:"correctBegBalOut,omitempty"`
-	CorrectEndBalIn     base.Wei       `json:"correctEndBalIn,omitempty"`
-	CorrectEndBalOut    base.Wei       `json:"correctEndBalOut,omitempty"`
-	CorrectingReasons   string         `json:"correctingReasons,omitempty"`
-	Decimals            base.Value     `json:"decimals"`
-	EndBal              base.Wei       `json:"endBal"`
-	GasOut              base.Wei       `json:"gasOut,omitempty"`
-	InternalIn          base.Wei       `json:"internalIn,omitempty"`
-	InternalOut         base.Wei       `json:"internalOut,omitempty"`
-	LogIndex            base.Lognum    `json:"logIndex"`
-	MinerBaseRewardIn   base.Wei       `json:"minerBaseRewardIn,omitempty"`
-	MinerNephewRewardIn base.Wei       `json:"minerNephewRewardIn,omitempty"`
-	MinerTxFeeIn        base.Wei       `json:"minerTxFeeIn,omitempty"`
-	MinerUncleRewardIn  base.Wei       `json:"minerUncleRewardIn,omitempty"`
-	PrefundIn           base.Wei       `json:"prefundIn,omitempty"`
-	PrevBal             base.Wei       `json:"prevBal,omitempty"`
-	PriceSource         string         `json:"priceSource"`
-	Recipient           base.Address   `json:"recipient"`
-	SelfDestructIn      base.Wei       `json:"selfDestructIn,omitempty"`
-	SelfDestructOut     base.Wei       `json:"selfDestructOut,omitempty"`
-	Sender              base.Address   `json:"sender"`
-	SpotPrice           base.Float     `json:"spotPrice"`
-	Symbol              string         `json:"symbol"`
-	Timestamp           base.Timestamp `json:"timestamp"`
-	TransactionHash     base.Hash      `json:"transactionHash"`
-	TransactionIndex    base.Txnum     `json:"transactionIndex"`
+	AccountedFor        base.Address    `json:"accountedFor"`
+	AmountIn            base.Wei        `json:"amountIn,omitempty"`
+	AmountOut           base.Wei        `json:"amountOut,omitempty"`
+	Asset               base.Address    `json:"asset"`
+	BegBal              base.Wei        `json:"begBal"`
+	BlockNumber         base.Blknum     `json:"blockNumber"`
+	CorrectAmountIn     base.Wei        `json:"correctAmountIn,omitempty"`
+	CorrectAmountOut    base.Wei        `json:"correctAmountOut,omitempty"`
+	CorrectBegBalIn     base.Wei        `json:"correctBegBalIn,omitempty"`
+	CorrectBegBalOut    base.Wei        `json:"correctBegBalOut,omitempty"`
+	CorrectEndBalIn     base.Wei        `json:"correctEndBalIn,omitempty"`
+	CorrectEndBalOut    base.Wei        `json:"correctEndBalOut,omitempty"`
+	CorrectingReasons   string          `json:"correctingReasons,omitempty"`
+	Decimals            base.Value      `json:"decimals"`
+	EndBal              base.Wei        `json:"endBal"`
+	GasOut              base.Wei        `json:"gasOut,omitempty"`
+	InternalIn          base.Wei        `json:"internalIn,omitempty"`
+	InternalOut         base.Wei        `json:"internalOut,omitempty"`
+	LogIndex            base.Lognum     `json:"logIndex"`
+	MinerBaseRewardIn   base.Wei        `json:"minerBaseRewardIn,omitempty"`
+	MinerNephewRewardIn base.Wei        `json:"minerNephewRewardIn,omitempty"`
+	MinerTxFeeIn        base.Wei        `json:"minerTxFeeIn,omitempty"`
+	MinerUncleRewardIn  base.Wei        `json:"minerUncleRewardIn,omitempty"`
+	PrefundIn           base.Wei        `json:"prefundIn,omitempty"`
+	PrevBal             base.Wei        `json:"prevBal,omitempty"`
+	PriceSource         string          `json:"priceSource"`
+	Recipient           base.Address    `json:"recipient"`
+	SelfDestructIn      base.Wei        `json:"selfDestructIn,omitempty"`
+	SelfDestructOut     base.Wei        `json:"selfDestructOut,omitempty"`
+	Sender              base.Address    `json:"sender"`
+	SpotPrice           base.Float      `json:"spotPrice"`
+	Symbol              string          `json:"symbol"`
+	Timestamp           base.Timestamp  `json:"timestamp"`
+	TransactionHash     base.Hash       `json:"transactionHash"`
+	TransactionIndex    base.Txnum      `json:"transactionIndex"`
+	Calcs               *StatementCalcs `json:"calcs,omitempty"`
 	// EXISTING_CODE
 	CorrectionId base.Value   `json:"correctionId"`
 	Holder       base.Address `json:"holder"`
@@ -75,60 +76,21 @@ func (s Statement) String() string {
 }
 
 func (s *Statement) Model(chain, format string, verbose bool, extraOpts map[string]any) Model {
-	_ = chain
-	_ = format
-	_ = verbose
-	_ = extraOpts
-	var model = map[string]any{}
-	var order = []string{}
+	props := NewModelProps(chain, format, verbose, extraOpts)
 
-	// EXISTING_CODE
-	model = map[string]any{
-		"accountedFor":        s.AccountedFor,
-		"amountIn":            s.AmountIn.Text(10),
-		"amountNet":           s.AmountNet().Text(10),
-		"amountOut":           s.AmountOut.Text(10),
-		"asset":               s.Asset,
-		"begBal":              s.BegBal.Text(10),
-		"begBalDiff":          s.BegBalDiff().Text(10),
-		"blockNumber":         s.BlockNumber,
-		"correctAmountIn":     s.CorrectAmountIn.Text(10),
-		"correctAmountOut":    s.CorrectAmountOut.Text(10),
-		"correctBegBalIn":     s.CorrectBegBalIn.Text(10),
-		"correctBegBalOut":    s.CorrectBegBalOut.Text(10),
-		"correctEndBalIn":     s.CorrectEndBalIn.Text(10),
-		"correctEndBalOut":    s.CorrectEndBalOut.Text(10),
-		"correctingReasons":   strings.Trim(s.CorrectingReasons, ","),
-		"date":                s.Date(),
-		"decimals":            s.Decimals,
-		"endBal":              s.EndBal.Text(10),
-		"endBalCalc":          s.EndBalCalc().Text(10),
-		"endBalDiff":          s.EndBalDiff().Text(10),
-		"gasOut":              s.GasOut.Text(10),
-		"internalIn":          s.InternalIn.Text(10),
-		"internalOut":         s.InternalOut.Text(10),
-		"logIndex":            s.LogIndex,
-		"minerBaseRewardIn":   s.MinerBaseRewardIn.Text(10),
-		"minerNephewRewardIn": s.MinerNephewRewardIn.Text(10),
-		"minerTxFeeIn":        s.MinerTxFeeIn.Text(10),
-		"minerUncleRewardIn":  s.MinerUncleRewardIn.Text(10),
-		"prefundIn":           s.PrefundIn.Text(10),
-		"prevBal":             s.PrevBal.Text(10),
-		"priceSource":         s.PriceSource,
-		"recipient":           s.Recipient,
-		"reconciled":          s.Reconciled(),
-		"selfDestructIn":      s.SelfDestructIn.Text(10),
-		"selfDestructOut":     s.SelfDestructOut.Text(10),
-		"sender":              s.Sender,
-		"spotPrice":           s.SpotPrice.String(),
-		"symbol":              s.Symbol,
-		"timestamp":           s.Timestamp,
-		"totalIn":             s.TotalIn().Text(10),
-		"totalOut":            s.TotalOut().Text(10),
-		"transactionHash":     s.TransactionHash,
-		"transactionIndex":    s.TransactionIndex,
+	rawNames := []Labeler{
+		NewLabeler(s.AccountedFor, "accountedFor"),
+		NewLabeler(s.Asset, "asset"),
+		NewLabeler(s.Recipient, "recipient"),
+		NewLabeler(s.Sender, "sender"),
+	}
+	model := s.RawMap(props, &rawNames)
+	for k, v := range s.CalcMap(props) {
+		model[k] = v
 	}
 
+	var order = []string{}
+	// EXISTING_CODE
 	order = []string{
 		"blockNumber", "transactionIndex", "logIndex", "transactionHash", "timestamp", "date",
 		"asset", "symbol", "decimals", "spotPrice", "priceSource", "accountedFor",
@@ -141,6 +103,96 @@ func (s *Statement) Model(chain, format string, verbose bool, extraOpts map[stri
 	}
 
 	if extraOpts["ether"] == true {
+		order = append(order, []string{"begBalEth", "amountNetEth", "endBalEth",
+			"totalInEth", "amountInEth", "internalInEth", "selfDestructInEth",
+			"minerBaseRewardInEth", "minerNephewRewardInEth", "minerTxFeeInEth",
+			"minerUncleRewardInEth", "correctBegBalInEth", "correctAmountInEth", "correctEndBalInEth",
+			"prefundInEth", "totalOutEth", "amountOutEth", "internalOutEth", "correctBegBalOutEth",
+			"correctAmountOutEth", "correctEndBalOutEth", "selfDestructOutEth", "gasOutEth",
+			"begBalDiffEth", "endBalDiffEth", "endBalCalcEth", "prevBalEth"}...)
+	}
+	// EXISTING_CODE
+
+	for _, item := range rawNames {
+		key := item.name + "Name"
+		if _, exists := model[key]; exists {
+			order = append(order, key)
+		}
+	}
+	order = reorderFields(order)
+
+	return Model{
+		Data:  model,
+		Order: order,
+	}
+}
+
+// RawMap returns a map containing only the raw/base fields for this Statement.
+func (s *Statement) RawMap(p *ModelProps, needed *[]Labeler) map[string]any {
+	model := map[string]any{
+		// EXISTING_CODE
+		"accountedFor":        s.AccountedFor,
+		"amountIn":            s.AmountIn.Text(10),
+		"amountOut":           s.AmountOut.Text(10),
+		"asset":               s.Asset,
+		"begBal":              s.BegBal.Text(10),
+		"blockNumber":         s.BlockNumber,
+		"correctAmountIn":     s.CorrectAmountIn.Text(10),
+		"correctAmountOut":    s.CorrectAmountOut.Text(10),
+		"correctBegBalIn":     s.CorrectBegBalIn.Text(10),
+		"correctBegBalOut":    s.CorrectBegBalOut.Text(10),
+		"correctEndBalIn":     s.CorrectEndBalIn.Text(10),
+		"correctEndBalOut":    s.CorrectEndBalOut.Text(10),
+		"correctingReasons":   strings.Trim(s.CorrectingReasons, ","),
+		"decimals":            s.Decimals,
+		"endBal":              s.EndBal.Text(10),
+		"gasOut":              s.GasOut.Text(10),
+		"internalIn":          s.InternalIn.Text(10),
+		"internalOut":         s.InternalOut.Text(10),
+		"logIndex":            s.LogIndex,
+		"minerBaseRewardIn":   s.MinerBaseRewardIn.Text(10),
+		"minerNephewRewardIn": s.MinerNephewRewardIn.Text(10),
+		"minerTxFeeIn":        s.MinerTxFeeIn.Text(10),
+		"minerUncleRewardIn":  s.MinerUncleRewardIn.Text(10),
+		"prefundIn":           s.PrefundIn.Text(10),
+		"prevBal":             s.PrevBal.Text(10),
+		"priceSource":         s.PriceSource,
+		"recipient":           s.Recipient,
+		"selfDestructIn":      s.SelfDestructIn.Text(10),
+		"selfDestructOut":     s.SelfDestructOut.Text(10),
+		"sender":              s.Sender,
+		"spotPrice":           s.SpotPrice.String(),
+		"symbol":              s.Symbol,
+		"timestamp":           s.Timestamp,
+		"transactionHash":     s.TransactionHash,
+		"transactionIndex":    s.TransactionIndex,
+		// EXISTING_CODE
+	}
+
+	// EXISTING_CODE
+	// EXISTING_CODE
+
+	return labelAddresses(p, model, needed)
+}
+
+// CalcMap returns a map containing the calculated/derived fields for this type.
+func (s *Statement) CalcMap(p *ModelProps) map[string]any {
+	_ = p // delint
+	model := map[string]any{
+		// EXISTING_CODE
+		"amountNet":  s.AmountNet().Text(10),
+		"begBalDiff": s.BegBalDiff().Text(10),
+		"date":       s.Date(),
+		"endBalCalc": s.EndBalCalc().Text(10),
+		"endBalDiff": s.EndBalDiff().Text(10),
+		"reconciled": s.Reconciled(),
+		"totalIn":    s.TotalIn().Text(10),
+		"totalOut":   s.TotalOut().Text(10),
+		// EXISTING_CODE
+	}
+
+	// EXISTING_CODE
+	if p.ExtraOpts["ether"] == true {
 		decimals := int(s.Decimals)
 		model["amountInEth"] = s.AmountIn.ToFloatString(decimals)
 		model["amountNetEth"] = s.AmountNet().ToFloatString(decimals)
@@ -169,41 +221,10 @@ func (s *Statement) Model(chain, format string, verbose bool, extraOpts map[stri
 		model["selfDestructOutEth"] = s.SelfDestructOut.ToFloatString(decimals)
 		model["totalInEth"] = s.TotalIn().ToFloatString(decimals)
 		model["totalOutEth"] = s.TotalOut().ToFloatString(decimals)
-		order = append(order, []string{"begBalEth", "amountNetEth", "endBalEth",
-			"totalInEth", "amountInEth", "internalInEth", "selfDestructInEth",
-			"minerBaseRewardInEth", "minerNephewRewardInEth", "minerTxFeeInEth",
-			"minerUncleRewardInEth", "correctBegBalInEth", "correctAmountInEth", "correctEndBalInEth",
-			"prefundInEth", "totalOutEth", "amountOutEth", "internalOutEth", "correctBegBalOutEth",
-			"correctAmountOutEth", "correctEndBalOutEth", "selfDestructOutEth", "gasOutEth",
-			"begBalDiffEth", "endBalDiffEth", "endBalCalcEth", "prevBalEth"}...)
 	}
-
-	for _, item := range []struct {
-		address   base.Address
-		keyPrefix string
-	}{
-		{s.Asset, "asset"},
-		{s.AccountedFor, "accountedFor"},
-		{s.Sender, "sender"},
-		{s.Recipient, "recipient"},
-	} {
-		key := item.keyPrefix + "Name"
-		if result, loaded, found := nameAddress(extraOpts, item.address); found {
-			model[key] = result.Name
-			order = append(order, key)
-		} else if loaded && format != "json" {
-			model[key] = ""
-			order = append(order, key)
-		}
-	}
-
-	order = reorderOrdering(order)
 	// EXISTING_CODE
 
-	return Model{
-		Data:  model,
-		Order: order,
-	}
+	return model
 }
 
 func (s *Statement) Date() string {
@@ -604,8 +625,70 @@ func (s *Statement) UnmarshalCache(fileVersion uint64, reader io.Reader) (err er
 // FinishUnmarshal is used by the cache. It may be unused depending on auto-code-gen
 func (s *Statement) FinishUnmarshal(fileVersion uint64) {
 	_ = fileVersion
+	s.Calcs = nil
 	// EXISTING_CODE
 	// EXISTING_CODE
+}
+
+// StatementCalcs holds lazy-loaded calculated fields for Statement
+type StatementCalcs struct {
+	// EXISTING_CODE
+	AmountNet              base.Wei `json:"amountNet"`
+	BegBalDiff             base.Wei `json:"begBalDiff"`
+	Date                   string   `json:"date"`
+	EndBalCalc             base.Wei `json:"endBalCalc"`
+	EndBalDiff             base.Wei `json:"endBalDiff"`
+	Reconciled             bool     `json:"reconciled"`
+	TotalIn                base.Wei `json:"totalIn"`
+	TotalOut               base.Wei `json:"totalOut"`
+	AmountInEth            string   `json:"amountInEth,omitempty"`
+	AmountNetEth           string   `json:"amountNetEth,omitempty"`
+	AmountOutEth           string   `json:"amountOutEth,omitempty"`
+	BegBalDiffEth          string   `json:"begBalDiffEth,omitempty"`
+	BegBalEth              string   `json:"begBalEth,omitempty"`
+	CorrectAmountInEth     string   `json:"correctAmountInEth,omitempty"`
+	CorrectAmountOutEth    string   `json:"correctAmountOutEth,omitempty"`
+	CorrectBegBalInEth     string   `json:"correctBegBalInEth,omitempty"`
+	CorrectBegBalOutEth    string   `json:"correctBegBalOutEth,omitempty"`
+	CorrectEndBalInEth     string   `json:"correctEndBalInEth,omitempty"`
+	CorrectEndBalOutEth    string   `json:"correctEndBalOutEth,omitempty"`
+	EndBalCalcEth          string   `json:"endBalCalcEth,omitempty"`
+	EndBalDiffEth          string   `json:"endBalDiffEth,omitempty"`
+	EndBalEth              string   `json:"endBalEth,omitempty"`
+	GasOutEth              string   `json:"gasOutEth,omitempty"`
+	InternalInEth          string   `json:"internalInEth,omitempty"`
+	InternalOutEth         string   `json:"internalOutEth,omitempty"`
+	MinerBaseRewardInEth   string   `json:"minerBaseRewardInEth,omitempty"`
+	MinerNephewRewardInEth string   `json:"minerNephewRewardInEth,omitempty"`
+	MinerTxFeeInEth        string   `json:"minerTxFeeInEth,omitempty"`
+	MinerUncleRewardInEth  string   `json:"minerUncleRewardInEth,omitempty"`
+	PrefundInEth           string   `json:"prefundInEth,omitempty"`
+	PrevBalEth             string   `json:"prevBalEth,omitempty"`
+	SelfDestructInEth      string   `json:"selfDestructInEth,omitempty"`
+	SelfDestructOutEth     string   `json:"selfDestructOutEth,omitempty"`
+	TotalInEth             string   `json:"totalInEth,omitempty"`
+	TotalOutEth            string   `json:"totalOutEth,omitempty"`
+	// EXISTING_CODE
+}
+
+func (s *Statement) EnsureCalcs(p *ModelProps, fieldFilter []string) error {
+	_ = fieldFilter // delint
+	if s.Calcs != nil {
+		return nil
+	}
+
+	calcMap := s.CalcMap(p)
+	if len(calcMap) == 0 {
+		return nil
+	}
+
+	jsonBytes, err := json.Marshal(calcMap)
+	if err != nil {
+		return err
+	}
+
+	s.Calcs = &StatementCalcs{}
+	return json.Unmarshal(jsonBytes, s.Calcs)
 }
 
 // EXISTING_CODE
@@ -789,9 +872,6 @@ func (s *Statement) Signature() string {
 }
 
 func (s *Statement) ReconciliationType() string {
-	// if s.Reconciled() {
-	// 	return "ok"
-	// }
 	return "reconciliationType"
 }
 

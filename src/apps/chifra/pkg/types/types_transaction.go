@@ -47,27 +47,28 @@ func NewReward(block, nephew, txFee, uncle *base.Wei) (Rewards, base.Wei) {
 // EXISTING_CODE
 
 type Transaction struct {
-	ArticulatedTx        *Function      `json:"articulatedTx"`
-	BlockHash            base.Hash      `json:"blockHash"`
-	BlockNumber          base.Blknum    `json:"blockNumber"`
-	From                 base.Address   `json:"from"`
-	Gas                  base.Gas       `json:"gas"`
-	GasPrice             base.Gas       `json:"gasPrice"`
-	GasUsed              base.Gas       `json:"gasUsed"`
-	HasToken             bool           `json:"hasToken"`
-	Hash                 base.Hash      `json:"hash"`
-	Input                string         `json:"input"`
-	IsError              bool           `json:"isError"`
-	MaxFeePerGas         base.Gas       `json:"maxFeePerGas"`
-	MaxPriorityFeePerGas base.Gas       `json:"maxPriorityFeePerGas"`
-	Nonce                base.Value     `json:"nonce"`
-	Receipt              *Receipt       `json:"receipt"`
-	Timestamp            base.Timestamp `json:"timestamp"`
-	To                   base.Address   `json:"to"`
-	Traces               []Trace        `json:"traces"`
-	TransactionIndex     base.Txnum     `json:"transactionIndex"`
-	TransactionType      string         `json:"type"`
-	Value                base.Wei       `json:"value"`
+	ArticulatedTx        *Function         `json:"articulatedTx"`
+	BlockHash            base.Hash         `json:"blockHash"`
+	BlockNumber          base.Blknum       `json:"blockNumber"`
+	From                 base.Address      `json:"from"`
+	Gas                  base.Gas          `json:"gas"`
+	GasPrice             base.Gas          `json:"gasPrice"`
+	GasUsed              base.Gas          `json:"gasUsed"`
+	HasToken             bool              `json:"hasToken"`
+	Hash                 base.Hash         `json:"hash"`
+	Input                string            `json:"input"`
+	IsError              bool              `json:"isError"`
+	MaxFeePerGas         base.Gas          `json:"maxFeePerGas"`
+	MaxPriorityFeePerGas base.Gas          `json:"maxPriorityFeePerGas"`
+	Nonce                base.Value        `json:"nonce"`
+	Receipt              *Receipt          `json:"receipt"`
+	Timestamp            base.Timestamp    `json:"timestamp"`
+	To                   base.Address      `json:"to"`
+	Traces               []Trace           `json:"traces"`
+	TransactionIndex     base.Txnum        `json:"transactionIndex"`
+	TransactionType      string            `json:"type"`
+	Value                base.Wei          `json:"value"`
+	Calcs                *TransactionCalcs `json:"calcs,omitempty"`
 	// EXISTING_CODE
 	Message    string       `json:"-"`
 	Rewards    *Rewards     `json:"-"`
@@ -81,32 +82,19 @@ func (s Transaction) String() string {
 }
 
 func (s *Transaction) Model(chain, format string, verbose bool, extraOpts map[string]any) Model {
-	_ = chain
-	_ = format
-	_ = verbose
-	_ = extraOpts
-	var model = map[string]any{}
+	props := NewModelProps(chain, format, verbose, extraOpts)
+
+	rawNames := []Labeler{
+		NewLabeler(s.From, "from"),
+		NewLabeler(s.To, "to"),
+	}
+	model := s.RawMap(props, &rawNames)
+	for k, v := range s.CalcMap(props) {
+		model[k] = v
+	}
+
 	var order = []string{}
-
 	// EXISTING_CODE
-	to := s.To.Hex()
-	if to == "0x0000000000000000000000000000000000000000" {
-		to = "0x0" // weird special case to preserve what RPC does
-	}
-
-	model = map[string]any{
-		"blockNumber":      s.BlockNumber,
-		"from":             s.From,
-		"gasPrice":         s.GasPrice,
-		"gasUsed":          s.GasUsed,
-		"hash":             s.Hash,
-		"timestamp":        s.Timestamp,
-		"date":             s.Date(),
-		"to":               to,
-		"transactionIndex": s.TransactionIndex,
-		"value":            s.Value.String(),
-	}
-
 	order = []string{
 		"blockNumber",
 		"transactionIndex",
@@ -123,46 +111,73 @@ func (s *Transaction) Model(chain, format string, verbose bool, extraOpts map[st
 		"encoding",
 	}
 
-	model["gasCost"] = s.GasCost()
-
-	// TODO: Shouldn't this use the Function model - the answer is yes?
-	var articulatedTx map[string]any
-	isArticulated := extraOpts["articulate"] == true && s.ArticulatedTx != nil
-	if isArticulated && format != "json" {
+	if extraOpts["articulate"] == true && s.ArticulatedTx != nil && format != "json" {
 		order = append(order, "compressedTx")
 	}
-	if isArticulated {
-		articulatedTx = map[string]any{
-			"name": s.ArticulatedTx.Name,
-		}
-		inputModels := parametersToMap(s.ArticulatedTx.Inputs)
-		if inputModels != nil {
-			articulatedTx["inputs"] = inputModels
-		}
-		outputModels := parametersToMap(s.ArticulatedTx.Outputs)
-		if outputModels != nil {
-			articulatedTx["outputs"] = outputModels
-		}
-		sm := s.ArticulatedTx.StateMutability
-		if sm != "" && sm != "nonpayable" && sm != "view" {
-			articulatedTx["stateMutability"] = sm
+
+	if format != "json" {
+		order = append(order, "type")
+		if extraOpts["traces"] == true {
+			order = append(order, "nTraces")
 		}
 	}
 
-	if format == "json" {
-		if s.Statements != nil {
-			statements := make([]map[string]any, 0, len(*s.Statements))
-			for _, statement := range *s.Statements {
-				statements = append(statements, statement.Model(chain, format, verbose, extraOpts).Data)
-			}
-			model["statements"] = statements
+	asEther := true // special case for transactions, we always show --ether -- extraOpts["ether"] == true
+	if asEther {
+		order = append(order, "ether")
+	}
+
+	// Add receipt log addresses to rawNames for labeling
+	if s.Receipt != nil && len(s.Receipt.Logs) > 0 {
+		for i, log := range s.Receipt.Logs {
+			logName := fmt.Sprintf("log%dAddress", i)
+			rawNames = append(rawNames, NewLabeler(log.Address, logName))
 		}
+	}
+	// EXISTING_CODE
+
+	for _, item := range rawNames {
+		key := item.name + "Name"
+		if _, exists := model[key]; exists {
+			order = append(order, key)
+		}
+	}
+	order = reorderFields(order)
+
+	return Model{
+		Data:  model,
+		Order: order,
+	}
+}
+
+// RawMap returns a map containing only the raw/base fields for this Transaction.
+func (s *Transaction) RawMap(p *ModelProps, needed *[]Labeler) map[string]any {
+	model := map[string]any{
+		// EXISTING_CODE
+		"blockNumber":      s.BlockNumber,
+		"from":             s.From,
+		"gasPrice":         s.GasPrice,
+		"gasUsed":          s.GasUsed,
+		"hash":             s.Hash,
+		"timestamp":        s.Timestamp,
+		"transactionIndex": s.TransactionIndex,
+		"value":            s.Value.String(),
+		// EXISTING_CODE
+	}
+
+	// EXISTING_CODE
+	to := s.To.Hex()
+	if to == "0x0000000000000000000000000000000000000000" {
+		to = "0x0" // weird special case to preserve what RPC does
+	}
+	model["to"] = to
+
+	if p.Format == "json" {
 		model["blockHash"] = s.BlockHash
 		if s.Nonce > 0 {
 			model["nonce"] = s.Nonce
 		}
 		model["gas"] = s.Gas
-
 		if s.MaxFeePerGas > 0 {
 			model["maxFeePerGas"] = s.MaxFeePerGas
 		}
@@ -181,13 +196,66 @@ func (s *Transaction) Model(chain, format string, verbose bool, extraOpts map[st
 		if s.IsError {
 			model["isError"] = s.IsError
 		}
+	} else {
+		if s.TransactionType != "0x0" {
+			model["type"] = s.TransactionType
+		} else {
+			model["type"] = ""
+		}
+		model["isError"] = s.IsError
+	}
+	// EXISTING_CODE
+
+	return labelAddresses(p, model, needed)
+}
+
+// CalcMap returns a map containing the calculated/derived fields for this type.
+func (s *Transaction) CalcMap(p *ModelProps) map[string]any {
+	_ = p // delint
+	model := map[string]any{
+		// EXISTING_CODE
+		"date":    s.Date(),
+		"gasCost": s.GasCost(),
+		// EXISTING_CODE
+	}
+
+	// EXISTING_CODE
+	// TODO: Shouldn't this use the Function model - the answer is yes?
+	var articulatedTx map[string]any
+	isArticulated := p.ExtraOpts["articulate"] == true && s.ArticulatedTx != nil
+	if isArticulated {
+		articulatedTx = map[string]any{
+			"name": s.ArticulatedTx.Name,
+		}
+		inputModels := parametersToMap(s.ArticulatedTx.Inputs)
+		if inputModels != nil {
+			articulatedTx["inputs"] = inputModels
+		}
+		outputModels := parametersToMap(s.ArticulatedTx.Outputs)
+		if outputModels != nil {
+			articulatedTx["outputs"] = outputModels
+		}
+		sm := s.ArticulatedTx.StateMutability
+		if sm != "" && sm != "nonpayable" && sm != "view" {
+			articulatedTx["stateMutability"] = sm
+		}
+	}
+
+	if p.Format == "json" {
+		if s.Statements != nil {
+			statements := make([]map[string]any, 0, len(*s.Statements))
+			for _, statement := range *s.Statements {
+				statements = append(statements, statement.Model(p.Chain, p.Format, p.Verbose, p.ExtraOpts).Data)
+			}
+			model["statements"] = statements
+		}
 
 		if s.Receipt != nil && !s.Receipt.IsDefault() {
 			contractAddress := s.Receipt.ContractAddress.Hex()
 
 			// TODO: This is quite odd. Why?
 			status := &s.Receipt.Status
-			if s.BlockNumber < base.KnownBlock(chain, base.Byzantium) || *status == 4294967295-1 {
+			if s.BlockNumber < base.KnownBlock(p.Chain, base.Byzantium) || *status == 4294967295-1 {
 				status = nil
 			}
 
@@ -210,7 +278,7 @@ func (s *Transaction) Model(chain, format string, verbose bool, extraOpts map[st
 					"timestamp": s.Timestamp,
 					"date":      s.Date(),
 				}
-				if extraOpts["articulate"] == true && log.ArticulatedLog != nil {
+				if p.ExtraOpts["articulate"] == true && log.ArticulatedLog != nil {
 					inputModels := parametersToMap(log.ArticulatedLog.Inputs)
 					articulatedLog := map[string]any{
 						"name":   log.ArticulatedLog.Name,
@@ -218,12 +286,10 @@ func (s *Transaction) Model(chain, format string, verbose bool, extraOpts map[st
 					}
 					logModel["articulatedLog"] = articulatedLog
 				}
-				if name, loaded, found := nameAddress(extraOpts, log.Address); found {
+				if name, loaded, found := labelAddress(p.ExtraOpts, log.Address); found {
 					logModel["addressName"] = name.Name
-					order = append(order, "addressName")
-				} else if loaded && format != "json" {
-					model["addressName"] = ""
-					order = append(order, "addressName")
+				} else if loaded && p.Format != "json" {
+					logModel["addressName"] = ""
 				}
 				logs = append(logs, logModel)
 			}
@@ -233,10 +299,10 @@ func (s *Transaction) Model(chain, format string, verbose bool, extraOpts map[st
 			model["receipt"] = map[string]any{}
 		}
 
-		if extraOpts["traces"] == true && len(s.Traces) > 0 {
+		if p.ExtraOpts["traces"] == true && len(s.Traces) > 0 {
 			traceModels := make([]map[string]any, 0, len(s.Traces))
 			for _, trace := range s.Traces {
-				traceModels = append(traceModels, trace.Model(chain, format, verbose, extraOpts).Data)
+				traceModels = append(traceModels, trace.Model(p.Chain, p.Format, p.Verbose, p.ExtraOpts).Data)
 			}
 			model["traces"] = traceModels
 		} else {
@@ -245,7 +311,6 @@ func (s *Transaction) Model(chain, format string, verbose bool, extraOpts map[st
 
 		if isArticulated {
 			model["articulatedTx"] = articulatedTx
-
 		} else {
 			if s.Message != "" {
 				model["message"] = s.Message
@@ -253,17 +318,10 @@ func (s *Transaction) Model(chain, format string, verbose bool, extraOpts map[st
 		}
 
 	} else {
-		if s.TransactionType != "0x0" {
-			model["type"] = s.TransactionType
-		} else {
-			model["type"] = ""
-		}
-		order = append(order, "type")
 		ethGasPrice := base.NewWei(0).SetUint64(uint64(s.GasPrice)).ToFloatString(18)
 		model["ethGasPrice"] = ethGasPrice
-		model["isError"] = s.IsError
 
-		if extraOpts["articulate"] == true && s.ArticulatedTx != nil {
+		if p.ExtraOpts["articulate"] == true && s.ArticulatedTx != nil {
 			model["encoding"] = s.ArticulatedTx.Encoding
 		}
 
@@ -281,41 +339,18 @@ func (s *Transaction) Model(chain, format string, verbose bool, extraOpts map[st
 			model["compressedTx"] = s.Message
 		}
 
-		if extraOpts["traces"] == true {
+		if p.ExtraOpts["traces"] == true {
 			model["nTraces"] = len(s.Traces)
-			order = append(order, "nTraces")
 		}
 	}
 
-	asEther := true // special case for transactions, we always show --ether -- extraOpts["ether"] == true
+	asEther := true // special case for transactions, we always show --ether -- p.ExtraOpts["ether"] == true
 	if asEther {
 		model["ether"] = s.Value.ToFloatString(18)
-		order = append(order, "ether")
 	}
-
-	items := []namer{
-		{addr: s.From, name: "fromName"},
-		{addr: s.To, name: "toName"},
-	}
-	for _, item := range items {
-		if name, loaded, found := nameAddress(extraOpts, item.addr); found {
-			model[item.name] = name.Name
-			order = append(order, item.name)
-		} else if loaded && format != "json" {
-			model[item.name] = ""
-			order = append(order, item.name)
-		} else if len(name.Name) > 0 {
-			model[item.name] = name.Name
-			order = append(order, item.name)
-		}
-	}
-	order = reorderOrdering(order)
 	// EXISTING_CODE
 
-	return Model{
-		Data:  model,
-		Order: order,
-	}
+	return model
 }
 
 func (s *Transaction) Date() string {
@@ -564,8 +599,47 @@ func (s *Transaction) UnmarshalCache(fileVersion uint64, reader io.Reader) (err 
 // FinishUnmarshal is used by the cache. It may be unused depending on auto-code-gen
 func (s *Transaction) FinishUnmarshal(fileVersion uint64) {
 	_ = fileVersion
+	s.Calcs = nil
 	// EXISTING_CODE
 	// EXISTING_CODE
+}
+
+// TransactionCalcs holds lazy-loaded calculated fields for Transaction
+type TransactionCalcs struct {
+	// EXISTING_CODE
+	Date          string                 `json:"date"`
+	GasCost       base.Wei               `json:"gasCost"`
+	ArticulatedTx map[string]interface{} `json:"articulatedTx,omitempty"`
+	Statements    []map[string]any       `json:"statements,omitempty"`
+	Receipt       map[string]interface{} `json:"receipt,omitempty"`
+	Traces        []map[string]any       `json:"traces,omitempty"`
+	Message       string                 `json:"message,omitempty"`
+	EthGasPrice   string                 `json:"ethGasPrice,omitempty"`
+	Encoding      string                 `json:"encoding,omitempty"`
+	CompressedTx  string                 `json:"compressedTx,omitempty"`
+	NTraces       int                    `json:"nTraces,omitempty"`
+	Ether         string                 `json:"ether"`
+	// EXISTING_CODE
+}
+
+func (s *Transaction) EnsureCalcs(p *ModelProps, fieldFilter []string) error {
+	_ = fieldFilter // delint
+	if s.Calcs != nil {
+		return nil
+	}
+
+	calcMap := s.CalcMap(p)
+	if len(calcMap) == 0 {
+		return nil
+	}
+
+	jsonBytes, err := json.Marshal(calcMap)
+	if err != nil {
+		return err
+	}
+
+	s.Calcs = &TransactionCalcs{}
+	return json.Unmarshal(jsonBytes, s.Calcs)
 }
 
 // EXISTING_CODE

@@ -9,5 +9,21 @@ type Model struct {
 	Order []string
 }
 
+type ModelProps struct {
+	Chain     string
+	Format    string
+	Verbose   bool
+	ExtraOpts map[string]any
+}
+
+func NewModelProps(chain, format string, verbose bool, extraOpts map[string]any) *ModelProps {
+	return &ModelProps{
+		Chain:     chain,
+		Format:    format,
+		Verbose:   verbose,
+		ExtraOpts: extraOpts,
+	}
+}
+
 // EXISTING_CODE
 // EXISTING_CODE

@@ -14,13 +14,14 @@ import "encoding/json"
 // EXISTING_CODE
 
 type Chain struct {
-	Chain          string `json:"chain"`
-	ChainId        uint64 `json:"chainId"`
-	IpfsGateway    string `json:"ipfsGateway"`
-	LocalExplorer  string `json:"localExplorer"`
-	RemoteExplorer string `json:"remoteExplorer"`
-	RpcProvider    string `json:"rpcProvider"`
-	Symbol         string `json:"symbol"`
+	Chain          string      `json:"chain"`
+	ChainId        uint64      `json:"chainId"`
+	IpfsGateway    string      `json:"ipfsGateway"`
+	LocalExplorer  string      `json:"localExplorer"`
+	RemoteExplorer string      `json:"remoteExplorer"`
+	RpcProvider    string      `json:"rpcProvider"`
+	Symbol         string      `json:"symbol"`
+	Calcs          *ChainCalcs `json:"calcs,omitempty"`
 	// EXISTING_CODE
 	// EXISTING_CODE
 }
@@ -31,23 +32,16 @@ func (s Chain) String() string {
 }
 
 func (s *Chain) Model(chain, format string, verbose bool, extraOpts map[string]any) Model {
-	_ = chain
-	_ = format
-	_ = verbose
-	_ = extraOpts
-	var model = map[string]any{}
-	var order = []string{}
+	props := NewModelProps(chain, format, verbose, extraOpts)
 
-	// EXISTING_CODE
-	model = map[string]any{
-		"chain":          s.Chain,
-		"chainId":        s.ChainId,
-		"ipfsGateway":    s.IpfsGateway,
-		"localExplorer":  s.LocalExplorer,
-		"remoteExplorer": s.RemoteExplorer,
-		"rpcProvider":    s.RpcProvider,
-		"symbol":         s.Symbol,
+	rawNames := []Labeler{}
+	model := s.RawMap(props, &rawNames)
+	for k, v := range s.CalcMap(props) {
+		model[k] = v
 	}
+
+	var order = []string{}
+	// EXISTING_CODE
 	order = []string{
 		"chain",
 		"chainId",
@@ -59,17 +53,86 @@ func (s *Chain) Model(chain, format string, verbose bool, extraOpts map[string]a
 	}
 	// EXISTING_CODE
 
+	for _, item := range rawNames {
+		key := item.name + "Name"
+		if _, exists := model[key]; exists {
+			order = append(order, key)
+		}
+	}
+	order = reorderFields(order)
+
 	return Model{
 		Data:  model,
 		Order: order,
 	}
 }
 
+// RawMap returns a map containing only the raw/base fields for this Chain.
+func (s *Chain) RawMap(p *ModelProps, needed *[]Labeler) map[string]any {
+	model := map[string]any{
+		// EXISTING_CODE
+		"chain":          s.Chain,
+		"chainId":        s.ChainId,
+		"ipfsGateway":    s.IpfsGateway,
+		"localExplorer":  s.LocalExplorer,
+		"remoteExplorer": s.RemoteExplorer,
+		"rpcProvider":    s.RpcProvider,
+		"symbol":         s.Symbol,
+		// EXISTING_CODE
+	}
+
+	// EXISTING_CODE
+	// EXISTING_CODE
+
+	return labelAddresses(p, model, needed)
+}
+
+// CalcMap returns a map containing the calculated/derived fields for this type.
+func (s *Chain) CalcMap(p *ModelProps) map[string]any {
+	_ = p // delint
+	model := map[string]any{
+		// EXISTING_CODE
+		// EXISTING_CODE
+	}
+
+	// EXISTING_CODE
+	// EXISTING_CODE
+
+	return model
+}
+
 // FinishUnmarshal is used by the cache. It may be unused depending on auto-code-gen
 func (s *Chain) FinishUnmarshal(fileVersion uint64) {
 	_ = fileVersion
+	s.Calcs = nil
 	// EXISTING_CODE
 	// EXISTING_CODE
+}
+
+// ChainCalcs holds lazy-loaded calculated fields for Chain
+type ChainCalcs struct {
+	// EXISTING_CODE
+	// EXISTING_CODE
+}
+
+func (s *Chain) EnsureCalcs(p *ModelProps, fieldFilter []string) error {
+	_ = fieldFilter // delint
+	if s.Calcs != nil {
+		return nil
+	}
+
+	calcMap := s.CalcMap(p)
+	if len(calcMap) == 0 {
+		return nil
+	}
+
+	jsonBytes, err := json.Marshal(calcMap)
+	if err != nil {
+		return err
+	}
+
+	s.Calcs = &ChainCalcs{}
+	return json.Unmarshal(jsonBytes, s.Calcs)
 }
 
 // EXISTING_CODE

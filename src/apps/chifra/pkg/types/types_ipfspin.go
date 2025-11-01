@@ -24,6 +24,7 @@ type IpfsPin struct {
 	FileName   string        `json:"fileName"`
 	Size       int64         `json:"size"`
 	Status     string        `json:"status"`
+	Calcs      *IpfsPinCalcs `json:"calcs,omitempty"`
 	// EXISTING_CODE
 	// EXISTING_CODE
 }
@@ -34,21 +35,16 @@ func (s IpfsPin) String() string {
 }
 
 func (s *IpfsPin) Model(chain, format string, verbose bool, extraOpts map[string]any) Model {
-	_ = chain
-	_ = format
-	_ = verbose
-	_ = extraOpts
-	var model = map[string]any{}
-	var order = []string{}
+	props := NewModelProps(chain, format, verbose, extraOpts)
 
-	// EXISTING_CODE
-	model = map[string]any{
-		"fileName":   s.FileName,
-		"cid":        s.Cid,
-		"datePinned": cleanDate(s.DatePinned),
-		"status":     s.Status,
-		"size":       s.Size,
+	rawNames := []Labeler{}
+	model := s.RawMap(props, &rawNames)
+	for k, v := range s.CalcMap(props) {
+		model[k] = v
 	}
+
+	var order = []string{}
+	// EXISTING_CODE
 	order = []string{
 		"fileName",
 		"cid",
@@ -58,17 +54,85 @@ func (s *IpfsPin) Model(chain, format string, verbose bool, extraOpts map[string
 	}
 	// EXISTING_CODE
 
+	for _, item := range rawNames {
+		key := item.name + "Name"
+		if _, exists := model[key]; exists {
+			order = append(order, key)
+		}
+	}
+	order = reorderFields(order)
+
 	return Model{
 		Data:  model,
 		Order: order,
 	}
 }
 
+// RawMap returns a map containing only the raw/base fields for this IpfsPin.
+func (s *IpfsPin) RawMap(p *ModelProps, needed *[]Labeler) map[string]any {
+	model := map[string]any{
+		// EXISTING_CODE
+		"fileName": s.FileName,
+		"cid":      s.Cid,
+		"status":   s.Status,
+		"size":     s.Size,
+		// EXISTING_CODE
+	}
+
+	// EXISTING_CODE
+	// EXISTING_CODE
+
+	return labelAddresses(p, model, needed)
+}
+
+// CalcMap returns a map containing the calculated/derived fields for this type.
+func (s *IpfsPin) CalcMap(p *ModelProps) map[string]any {
+	_ = p // delint
+	model := map[string]any{
+		// EXISTING_CODE
+		"datePinned": cleanDate(s.DatePinned),
+		// EXISTING_CODE
+	}
+
+	// EXISTING_CODE
+	// EXISTING_CODE
+
+	return model
+}
+
 // FinishUnmarshal is used by the cache. It may be unused depending on auto-code-gen
 func (s *IpfsPin) FinishUnmarshal(fileVersion uint64) {
 	_ = fileVersion
+	s.Calcs = nil
 	// EXISTING_CODE
 	// EXISTING_CODE
+}
+
+// IpfsPinCalcs holds lazy-loaded calculated fields for IpfsPin
+type IpfsPinCalcs struct {
+	// EXISTING_CODE
+	DatePinned string `json:"datePinned"`
+	// EXISTING_CODE
+}
+
+func (s *IpfsPin) EnsureCalcs(p *ModelProps, fieldFilter []string) error {
+	_ = fieldFilter // delint
+	if s.Calcs != nil {
+		return nil
+	}
+
+	calcMap := s.CalcMap(p)
+	if len(calcMap) == 0 {
+		return nil
+	}
+
+	jsonBytes, err := json.Marshal(calcMap)
+	if err != nil {
+		return err
+	}
+
+	s.Calcs = &IpfsPinCalcs{}
+	return json.Unmarshal(jsonBytes, s.Calcs)
 }
 
 // EXISTING_CODE

@@ -34,6 +34,7 @@ type State struct {
 	Parts       StatePart      `json:"parts"`
 	Proxy       base.Address   `json:"proxy"`
 	Timestamp   base.Timestamp `json:"timestamp"`
+	Calcs       *StateCalcs    `json:"calcs,omitempty"`
 	// EXISTING_CODE
 	// EXISTING_CODE
 }
@@ -44,33 +45,93 @@ func (s State) String() string {
 }
 
 func (s *State) Model(chain, format string, verbose bool, extraOpts map[string]any) Model {
-	_ = chain
-	_ = format
-	_ = verbose
-	_ = extraOpts
-	var model = map[string]any{}
+	props := NewModelProps(chain, format, verbose, extraOpts)
+
+	rawNames := []Labeler{
+		NewLabeler(s.Address, "address"),
+		NewLabeler(s.Proxy, "proxy"),
+	}
+	model := s.RawMap(props, &rawNames)
+	for k, v := range s.CalcMap(props) {
+		model[k] = v
+	}
+
 	var order = []string{}
-
 	// EXISTING_CODE
-	model["blockNumber"] = s.BlockNumber
-	model["address"] = s.Address
-
 	order = []string{"blockNumber", "address"}
 	if verbose {
 		if s.Timestamp > 0 {
-			model["timestamp"] = s.Timestamp
-			model["date"] = s.Date()
 			order = []string{"blockNumber", "address", "timestamp", "date"}
 		}
-		// This old code used to export the Parts enum as a string which breaks
-		// JSON unmarshaling.
-		// model["parts"] = s.Parts.String()
-		// order = append(order, "parts")
 	}
 
-	hasProxy := false
 	if extraOpts != nil {
-		if fields, ok := extraOpts["fields"]; ok {
+		if fields, ok := extraOpts["outFields"]; ok {
+			if fields, ok := fields.([]string); ok {
+				order = append(order, fields...)
+			}
+		}
+	}
+
+	if _, ok := model["balance"]; ok {
+		asEther := extraOpts["ether"] == true
+		if asEther {
+			order = append(order, "ether")
+		}
+	}
+	// EXISTING_CODE
+
+	for _, item := range rawNames {
+		key := item.name + "Name"
+		if _, exists := model[key]; exists {
+			order = append(order, key)
+		}
+	}
+	order = reorderFields(order)
+
+	return Model{
+		Data:  model,
+		Order: order,
+	}
+}
+
+// RawMap returns a map containing only the raw/base fields for this State.
+func (s *State) RawMap(p *ModelProps, needed *[]Labeler) map[string]any {
+	model := map[string]any{
+		// EXISTING_CODE
+		"blockNumber": s.BlockNumber,
+		"address":     s.Address,
+		// EXISTING_CODE
+	}
+
+	// EXISTING_CODE
+	if p.Verbose {
+		if s.Timestamp > 0 {
+			model["timestamp"] = s.Timestamp
+		}
+	}
+	// EXISTING_CODE
+
+	return labelAddresses(p, model, needed)
+}
+
+// CalcMap returns a map containing the calculated/derived fields for this type.
+func (s *State) CalcMap(p *ModelProps) map[string]any {
+	_ = p // delint
+	model := map[string]any{
+		// EXISTING_CODE
+		// EXISTING_CODE
+	}
+
+	// EXISTING_CODE
+	if p.Verbose {
+		if s.Timestamp > 0 {
+			model["date"] = s.Date()
+		}
+	}
+
+	if p.ExtraOpts != nil {
+		if fields, ok := p.ExtraOpts["outFields"]; ok {
 			if fields, ok := fields.([]string); ok {
 				for _, field := range fields {
 					switch field {
@@ -79,9 +140,8 @@ func (s *State) Model(chain, format string, verbose bool, extraOpts map[string]a
 					case "nonce":
 						model["nonce"] = s.Nonce
 					case "code":
-						model["code"] = utils.FormattedCode(verbose, s.Code)
+						model["code"] = utils.FormattedCode(p.Verbose, s.Code)
 					case "proxy":
-						hasProxy = true
 						model["proxy"] = s.Proxy
 					case "deployed":
 						if s.Deployed == base.NOPOSN {
@@ -92,7 +152,6 @@ func (s *State) Model(chain, format string, verbose bool, extraOpts map[string]a
 					case "accttype":
 						model["accttype"] = s.AccountType
 					}
-					order = append(order, field)
 				}
 			}
 		}
@@ -100,34 +159,10 @@ func (s *State) Model(chain, format string, verbose bool, extraOpts map[string]a
 
 	if _, ok := model["balance"]; ok {
 		model["ether"] = s.Balance.ToFloatString(18)
-		asEther := extraOpts["ether"] == true
-		if asEther {
-			order = append(order, "ether")
-		}
 	}
-
-	items := []namer{
-		{addr: s.Address, name: "addressName"},
-	}
-	if hasProxy {
-		items = append(items, namer{addr: s.Proxy, name: "proxyName"})
-	}
-	for _, item := range items {
-		if name, loaded, found := nameAddress(extraOpts, item.addr); found {
-			model[item.name] = name.Name
-			order = append(order, item.name)
-		} else if loaded && format != "json" {
-			model[item.name] = ""
-			order = append(order, item.name)
-		}
-	}
-	order = reorderOrdering(order)
 	// EXISTING_CODE
 
-	return Model{
-		Data:  model,
-		Order: order,
-	}
+	return model
 }
 
 func (s *State) Date() string {
@@ -264,8 +299,36 @@ func (s *State) UnmarshalCache(fileVersion uint64, reader io.Reader) (err error)
 // FinishUnmarshal is used by the cache. It may be unused depending on auto-code-gen
 func (s *State) FinishUnmarshal(fileVersion uint64) {
 	_ = fileVersion
+	s.Calcs = nil
 	// EXISTING_CODE
 	// EXISTING_CODE
+}
+
+// StateCalcs holds lazy-loaded calculated fields for State
+type StateCalcs struct {
+	// EXISTING_CODE
+	Date string `json:"date,omitempty"`
+	// EXISTING_CODE
+}
+
+func (s *State) EnsureCalcs(p *ModelProps, fieldFilter []string) error {
+	_ = fieldFilter // delint
+	if s.Calcs != nil {
+		return nil
+	}
+
+	calcMap := s.CalcMap(p)
+	if len(calcMap) == 0 {
+		return nil
+	}
+
+	jsonBytes, err := json.Marshal(calcMap)
+	if err != nil {
+		return err
+	}
+
+	s.Calcs = &StateCalcs{}
+	return json.Unmarshal(jsonBytes, s.Calcs)
 }
 
 // EXISTING_CODE
@@ -301,10 +364,10 @@ func (s StatePart) String() string {
 }
 
 // SliceToStateParts converts a string array of part names to a bit mask of parts and returns the corresponding output field names or none if no valid parts are present
-func SliceToStateParts(parts []string) (stateFields StatePart, outputFields []string, none bool) {
+func SliceToStateParts(parts []string) (stateFields StatePart, outFields []string, none bool) {
 	if len(parts) == 0 {
 		stateFields = Balance
-		outputFields = []string{"balance"}
+		outFields = []string{"balance"}
 		return
 	}
 
@@ -312,7 +375,7 @@ func SliceToStateParts(parts []string) (stateFields StatePart, outputFields []st
 		switch part {
 		case "none":
 			none = true
-			outputFields = nil
+			outFields = nil
 			return
 		case "some":
 			stateFields |= Balance | Nonce | Code | Type
@@ -333,26 +396,26 @@ func SliceToStateParts(parts []string) (stateFields StatePart, outputFields []st
 		}
 	}
 
-	outputFields = make([]string, 0, 6)
+	outFields = make([]string, 0, 6)
 	if (stateFields & Proxy) != 0 {
-		outputFields = append(outputFields, "proxy")
+		outFields = append(outFields, "proxy")
 	}
 
 	// Always show balance for non-none parts
 	stateFields |= Balance
-	outputFields = append(outputFields, "balance")
+	outFields = append(outFields, "balance")
 
 	if (stateFields & Nonce) != 0 {
-		outputFields = append(outputFields, "nonce")
+		outFields = append(outFields, "nonce")
 	}
 	if (stateFields & Code) != 0 {
-		outputFields = append(outputFields, "code")
+		outFields = append(outFields, "code")
 	}
 	if (stateFields & Deployed) != 0 {
-		outputFields = append(outputFields, "deployed")
+		outFields = append(outFields, "deployed")
 	}
 	if (stateFields & Type) != 0 {
-		outputFields = append(outputFields, "accttype")
+		outFields = append(outFields, "accttype")
 	}
 
 	return

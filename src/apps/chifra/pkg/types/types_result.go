@@ -31,6 +31,7 @@ type Result struct {
 	Name             string         `json:"name"`
 	Signature        string         `json:"signature"`
 	Timestamp        base.Timestamp `json:"timestamp"`
+	Calcs            *ResultCalcs   `json:"calcs,omitempty"`
 	// EXISTING_CODE
 	Values        map[string]string `json:"values"`
 	ReturnedBytes string
@@ -43,30 +44,18 @@ func (s Result) String() string {
 }
 
 func (s *Result) Model(chain, format string, verbose bool, extraOpts map[string]any) Model {
-	_ = chain
-	_ = format
-	_ = verbose
-	_ = extraOpts
-	var model = map[string]any{}
+	props := NewModelProps(chain, format, verbose, extraOpts)
+
+	rawNames := []Labeler{
+		NewLabeler(s.Address, "address"),
+	}
+	model := s.RawMap(props, &rawNames)
+	for k, v := range s.CalcMap(props) {
+		model[k] = v
+	}
+
 	var order = []string{}
-
 	// EXISTING_CODE
-	callResult := map[string]any{
-		"name":      s.Name,
-		"signature": s.Signature,
-		"encoding":  s.Encoding,
-		"outputs":   s.Values,
-	}
-	model = map[string]any{
-		"blockNumber": s.BlockNumber,
-		"timestamp":   s.Timestamp,
-		"date":        s.Date(),
-		"address":     s.Address.Hex(),
-		"encoding":    s.Encoding,
-		"bytes":       s.EncodedArguments,
-		"callResult":  callResult,
-	}
-
 	if verbose {
 		order = []string{
 			"blockNumber",
@@ -87,11 +76,65 @@ func (s *Result) Model(chain, format string, verbose bool, extraOpts map[string]
 			"bytes",
 			"compressedResult",
 		}
-		delete(model, "timestamp")
-		delete(model, "date")
+	}
+	// EXISTING_CODE
+
+	for _, item := range rawNames {
+		key := item.name + "Name"
+		if _, exists := model[key]; exists {
+			order = append(order, key)
+		}
+	}
+	order = reorderFields(order)
+
+	return Model{
+		Data:  model,
+		Order: order,
+	}
+}
+
+// RawMap returns a map containing only the raw/base fields for this Result.
+func (s *Result) RawMap(p *ModelProps, needed *[]Labeler) map[string]any {
+	model := map[string]any{
+		// EXISTING_CODE
+		"blockNumber": s.BlockNumber,
+		"address":     s.Address.Hex(),
+		"encoding":    s.Encoding,
+		"bytes":       s.EncodedArguments,
+		// EXISTING_CODE
 	}
 
-	isArticulated := extraOpts["articulate"] == true && s.ArticulatedOut != nil
+	// EXISTING_CODE
+	if p.Verbose {
+		model["timestamp"] = s.Timestamp
+	}
+	// EXISTING_CODE
+
+	return labelAddresses(p, model, needed)
+}
+
+// CalcMap returns a map containing the calculated/derived fields for this type.
+func (s *Result) CalcMap(p *ModelProps) map[string]any {
+	_ = p // delint
+	model := map[string]any{
+		// EXISTING_CODE
+		// EXISTING_CODE
+	}
+
+	// EXISTING_CODE
+	if p.Verbose {
+		model["date"] = s.Date()
+	}
+
+	callResult := map[string]any{
+		"name":      s.Name,
+		"signature": s.Signature,
+		"encoding":  s.Encoding,
+		"outputs":   s.Values,
+	}
+	model["callResult"] = callResult
+
+	isArticulated := p.ExtraOpts["articulate"] == true && s.ArticulatedOut != nil
 	var articulatedOut map[string]any
 	if isArticulated {
 		articulatedOut = map[string]any{
@@ -101,30 +144,18 @@ func (s *Result) Model(chain, format string, verbose bool, extraOpts map[string]
 		if outputModels != nil {
 			articulatedOut["outputs"] = outputModels
 		}
-		if format == "json" {
+		if p.Format == "json" {
 			model["callResult"] = articulatedOut
 		}
 	}
 
-	if format != "json" {
+	if p.Format != "json" {
 		model["signature"] = s.Signature
 		model["compressedResult"] = MakeCompressed(s.Values)
 	}
-
-	if name, loaded, found := nameAddress(extraOpts, s.Address); found {
-		model["addressName"] = name.Name
-		order = append(order, "addressName")
-	} else if loaded && format != "json" {
-		model["addressName"] = ""
-		order = append(order, "addressName")
-	}
-	order = reorderOrdering(order)
 	// EXISTING_CODE
 
-	return Model{
-		Data:  model,
-		Order: order,
-	}
+	return model
 }
 
 func (s *Result) Date() string {
@@ -246,12 +277,41 @@ func (s *Result) UnmarshalCache(fileVersion uint64, reader io.Reader) (err error
 // FinishUnmarshal is used by the cache. It may be unused depending on auto-code-gen
 func (s *Result) FinishUnmarshal(fileVersion uint64) {
 	_ = fileVersion
+	s.Calcs = nil
 	// EXISTING_CODE
 	s.Values = make(map[string]string)
 	for index, output := range s.ArticulatedOut.Outputs {
 		s.Values[output.DisplayName(index)] = fmt.Sprint(output.Value)
 	}
 	// EXISTING_CODE
+}
+
+// ResultCalcs holds lazy-loaded calculated fields for Result
+type ResultCalcs struct {
+	// EXISTING_CODE
+	Date       string      `json:"date,omitempty"`
+	CallResult interface{} `json:"callResult"`
+	// EXISTING_CODE
+}
+
+func (s *Result) EnsureCalcs(p *ModelProps, fieldFilter []string) error {
+	_ = fieldFilter // delint
+	if s.Calcs != nil {
+		return nil
+	}
+
+	calcMap := s.CalcMap(p)
+	if len(calcMap) == 0 {
+		return nil
+	}
+
+	jsonBytes, err := json.Marshal(calcMap)
+	if err != nil {
+		return err
+	}
+
+	s.Calcs = &ResultCalcs{}
+	return json.Unmarshal(jsonBytes, s.Calcs)
 }
 
 // EXISTING_CODE

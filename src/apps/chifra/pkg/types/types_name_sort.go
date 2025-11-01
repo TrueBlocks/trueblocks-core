@@ -1,3 +1,11 @@
+// Copyright 2016, 2024 The TrueBlocks Authors. All rights reserved.
+// Use of this source code is governed by a license that can
+// be found in the LICENSE file.
+/*
+ * Parts of this file were auto generated. Edit only those parts of
+ * the code inside of 'EXISTING_CODE' tags.
+ */
+
 package types
 
 import "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v6/pkg/logger"
@@ -31,11 +39,10 @@ func NameBy(field NameField, order SortOrder) func(p1, p2 Name) bool {
 	switch field {
 	case NameAddress: // address
 		return func(p1, p2 Name) bool {
-			cmp := p1.Address.Cmp(p2.Address.Address)
 			if order == Ascending {
-				return cmp == -1
+				return p1.Address.LessThan(p2.Address)
 			}
-			return cmp == 1
+			return p2.Address.LessThan(p1.Address)
 		}
 	case NameDecimals: // uint64
 		return func(p1, p2 Name) bool {

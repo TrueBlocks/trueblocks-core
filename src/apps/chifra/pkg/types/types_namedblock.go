@@ -18,11 +18,12 @@ import (
 // EXISTING_CODE
 
 type NamedBlock struct {
-	BlockNumber base.Blknum    `json:"blockNumber"`
-	Component   string         `json:"component,omitempty"`
-	Description string         `json:"description,omitempty"`
-	Name        string         `json:"name,omitempty"`
-	Timestamp   base.Timestamp `json:"timestamp"`
+	BlockNumber base.Blknum      `json:"blockNumber"`
+	Component   string           `json:"component,omitempty"`
+	Description string           `json:"description,omitempty"`
+	Name        string           `json:"name,omitempty"`
+	Timestamp   base.Timestamp   `json:"timestamp"`
+	Calcs       *NamedBlockCalcs `json:"calcs,omitempty"`
 	// EXISTING_CODE
 	// EXISTING_CODE
 }
@@ -33,31 +34,73 @@ func (s NamedBlock) String() string {
 }
 
 func (s *NamedBlock) Model(chain, format string, verbose bool, extraOpts map[string]any) Model {
-	_ = chain
-	_ = format
-	_ = verbose
-	_ = extraOpts
-	var model = map[string]any{}
-	var order = []string{}
+	props := NewModelProps(chain, format, verbose, extraOpts)
 
-	// EXISTING_CODE
-	model = map[string]any{
-		"blockNumber": s.BlockNumber,
-		"timestamp":   s.Timestamp,
-		"date":        s.Date(),
+	rawNames := []Labeler{}
+	model := s.RawMap(props, &rawNames)
+	for k, v := range s.CalcMap(props) {
+		model[k] = v
 	}
 
+	var order = []string{}
+	// EXISTING_CODE
 	order = []string{
 		"blockNumber",
 		"timestamp",
 		"date",
+		"name",
 	}
 
-	if format == "json" {
+	if verbose {
+		order = append(order, "component")
+		order = append(order, "description")
+	}
+	// EXISTING_CODE
+
+	for _, item := range rawNames {
+		key := item.name + "Name"
+		if _, exists := model[key]; exists {
+			order = append(order, key)
+		}
+	}
+	order = reorderFields(order)
+
+	return Model{
+		Data:  model,
+		Order: order,
+	}
+}
+
+// RawMap returns a map containing only the raw/base fields for this NamedBlock.
+func (s *NamedBlock) RawMap(p *ModelProps, needed *[]Labeler) map[string]any {
+	model := map[string]any{
+		// EXISTING_CODE
+		"blockNumber": s.BlockNumber,
+		"timestamp":   s.Timestamp,
+		// EXISTING_CODE
+	}
+
+	// EXISTING_CODE
+	// EXISTING_CODE
+
+	return labelAddresses(p, model, needed)
+}
+
+// CalcMap returns a map containing the calculated/derived fields for this type.
+func (s *NamedBlock) CalcMap(p *ModelProps) map[string]any {
+	_ = p // delint
+	model := map[string]any{
+		// EXISTING_CODE
+		"date": s.Date(),
+		// EXISTING_CODE
+	}
+
+	// EXISTING_CODE
+	if p.Format == "json" {
 		if len(s.Name) > 0 {
 			model["name"] = s.Name
 		}
-		if verbose {
+		if p.Verbose {
 			if len(s.Component) > 0 {
 				model["component"] = s.Component
 			}
@@ -65,26 +108,16 @@ func (s *NamedBlock) Model(chain, format string, verbose bool, extraOpts map[str
 				model["description"] = s.Description
 			}
 		}
-
 	} else {
 		model["name"] = s.Name
-		order = append(order, "name")
-
-		if verbose {
+		if p.Verbose {
 			model["component"] = s.Component
-			order = append(order, "component")
-
 			model["description"] = s.Description
-			order = append(order, "description")
 		}
 	}
-
 	// EXISTING_CODE
 
-	return Model{
-		Data:  model,
-		Order: order,
-	}
+	return model
 }
 
 func (s *NamedBlock) Date() string {
@@ -94,8 +127,37 @@ func (s *NamedBlock) Date() string {
 // FinishUnmarshal is used by the cache. It may be unused depending on auto-code-gen
 func (s *NamedBlock) FinishUnmarshal(fileVersion uint64) {
 	_ = fileVersion
+	s.Calcs = nil
 	// EXISTING_CODE
 	// EXISTING_CODE
+}
+
+// NamedBlockCalcs holds lazy-loaded calculated fields for NamedBlock
+type NamedBlockCalcs struct {
+	// EXISTING_CODE
+	Date string `json:"date"`
+	Name string `json:"name,omitempty"`
+	// EXISTING_CODE
+}
+
+func (s *NamedBlock) EnsureCalcs(p *ModelProps, fieldFilter []string) error {
+	_ = fieldFilter // delint
+	if s.Calcs != nil {
+		return nil
+	}
+
+	calcMap := s.CalcMap(p)
+	if len(calcMap) == 0 {
+		return nil
+	}
+
+	jsonBytes, err := json.Marshal(calcMap)
+	if err != nil {
+		return err
+	}
+
+	s.Calcs = &NamedBlockCalcs{}
+	return json.Unmarshal(jsonBytes, s.Calcs)
 }
 
 // EXISTING_CODE
