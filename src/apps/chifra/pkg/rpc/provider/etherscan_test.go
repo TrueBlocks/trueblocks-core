@@ -32,7 +32,7 @@ func TestEtherscanProvider_url(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	expected = "https://api.etherscan.io/api?module=account&sort=asc&action=txlistinternal&address=0xf503017d7baf7fbc0fff7492b751025c6a78179b&page=1&offset=10&apikey="
+	expected = "https://api.etherscan.io/v2/api?chainid=1&module=account&sort=asc&action=txlistinternal&address=0xf503017d7baf7fbc0fff7492b751025c6a78179b&page=1&offset=10&apikey="
 	if result != expected {
 		t.Fatal("wrong value", result)
 	}
@@ -52,7 +52,7 @@ func TestEtherscanProvider_url(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	expected = "https://api.etherscan.io/api?module=account&sort=asc&action=txlistinternal&address=0xf503017d7baf7fbc0fff7492b751025c6a78179b&page=2&offset=10&apikey="
+	expected = "https://api.etherscan.io/v2/api?chainid=1&module=account&sort=asc&action=txlistinternal&address=0xf503017d7baf7fbc0fff7492b751025c6a78179b&page=2&offset=10&apikey="
 	if result != expected {
 		t.Fatal("wrong value", result)
 	}
