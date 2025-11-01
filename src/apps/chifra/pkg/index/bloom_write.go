@@ -5,9 +5,9 @@ import (
 	"io"
 	"os"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v5/pkg/base"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v5/pkg/config"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v5/pkg/file"
 )
 
 // writeBloom writes a single Bloom filter to file. We do not make a backup copy of the file

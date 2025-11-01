@@ -5,8 +5,8 @@
 package articulate
 
 import (
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/abi"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v5/pkg/abi"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v5/pkg/types"
 )
 
 // TestArticulateTx is a wrapper around articulateTx for testing purposes

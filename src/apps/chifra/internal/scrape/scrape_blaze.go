@@ -11,14 +11,14 @@ import (
 	"sync/atomic"
 	"time"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/notify"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/tslib"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/uniq"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v5/pkg/base"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v5/pkg/config"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v5/pkg/logger"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v5/pkg/notify"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v5/pkg/tslib"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v5/pkg/types"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v5/pkg/uniq"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v5/pkg/utils"
 )
 
 // HandleBlaze does the actual scraping, walking through block_cnt blocks and querying traces and logs

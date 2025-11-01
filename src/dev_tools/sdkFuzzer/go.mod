@@ -3,13 +3,11 @@ module github.com/TrueBlocks/trueblocks-core/sdkFuzzer/v5
 // Go Version
 go 1.25.1
 
-require (
-	github.com/TrueBlocks/trueblocks-core/src/apps/chifra v0.0.0-20250928045016-814dde303ad8
-	github.com/TrueBlocks/trueblocks-sdk/v5 v5.9.3
-)
+require github.com/TrueBlocks/trueblocks-sdk/v5 v5.9.3
 
 require (
 	github.com/Microsoft/go-winio v0.6.2 // indirect
+	github.com/TrueBlocks/trueblocks-core/src/apps/chifra v0.0.0-20250928045016-814dde303ad8 // indirect
 	github.com/alecthomas/participle/v2 v2.1.4 // indirect
 	github.com/benbjohnson/clock v1.3.5 // indirect
 	github.com/bits-and-blooms/bitset v1.22.0 // indirect

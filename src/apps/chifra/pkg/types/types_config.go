@@ -6,7 +6,7 @@ package types
 import (
 	"encoding/json"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/configtypes"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v5/pkg/configtypes"
 )
 
 type Config struct {

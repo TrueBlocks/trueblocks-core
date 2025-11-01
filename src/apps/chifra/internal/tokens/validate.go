@@ -8,12 +8,12 @@ import (
 	"errors"
 	"path/filepath"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/monitor"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v5/pkg/base"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v5/pkg/config"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v5/pkg/file"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v5/pkg/monitor"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v5/pkg/rpc"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v5/pkg/validate"
 )
 
 func (opts *TokensOptions) validateTokens() error {

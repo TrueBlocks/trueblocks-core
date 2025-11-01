@@ -4,7 +4,7 @@
 
 package config
 
-import "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/configtypes"
+import "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v5/pkg/configtypes"
 
 // GetChain returns the chain for a given chain
 func GetChain(chain string) configtypes.ChainGroup {

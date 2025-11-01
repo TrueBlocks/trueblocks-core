@@ -5,10 +5,10 @@ import (
 	"errors"
 	"fmt"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/abi"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpc"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/topics"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v5/pkg/abi"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v5/pkg/rpc"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v5/pkg/topics"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v5/pkg/types"
 )
 
 // ArticulateLog articulates a log by attaching the Articulated log structure if the ABI is found.

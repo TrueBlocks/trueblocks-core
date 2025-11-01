@@ -6,7 +6,7 @@ import (
 	"os"
 	"strings"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v5/pkg/colors"
 )
 
 // queryUserHelper is a private helper function that handles user input

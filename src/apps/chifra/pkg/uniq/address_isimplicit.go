@@ -3,7 +3,7 @@ package uniq
 import (
 	"strings"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v5/pkg/base"
 )
 
 // IsImplicitAddress processes a transaction's 'input' data and 'output' data or an event's data field.

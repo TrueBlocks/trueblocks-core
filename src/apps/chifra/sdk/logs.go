@@ -12,9 +12,9 @@ import (
 	"io"
 	"net/url"
 
-	logs "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/logs"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
-	outputHelpers "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output/helpers"
+	logs "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v5/internal/logs"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v5/pkg/output"
+	outputHelpers "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v5/pkg/output/helpers"
 )
 
 // Logs provides an interface to the command line chifra logs through the SDK.

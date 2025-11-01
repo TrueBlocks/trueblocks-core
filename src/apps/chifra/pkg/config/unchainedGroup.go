@@ -5,8 +5,8 @@ import (
 	"strings"
 	"sync"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/configtypes"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/history"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v5/pkg/configtypes"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v5/pkg/history"
 	"github.com/ethereum/go-ethereum/crypto"
 )
 

@@ -12,9 +12,9 @@ import (
 	"io"
 	"net/url"
 
-	status "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/status"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
-	outputHelpers "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output/helpers"
+	status "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v5/internal/status"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v5/pkg/output"
+	outputHelpers "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v5/pkg/output/helpers"
 )
 
 // Status provides an interface to the command line chifra status through the SDK.

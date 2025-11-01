@@ -3,7 +3,7 @@ package identifiers
 import (
 	"strings"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v5/pkg/types"
 )
 
 func IdsToApps(chain string, ids []Identifier) ([]types.Appearance, int, error) {

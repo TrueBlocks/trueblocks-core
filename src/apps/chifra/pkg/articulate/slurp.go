@@ -1,7 +1,7 @@
 package articulate
 
 import (
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v5/pkg/types"
 )
 
 func (abiCache *AbiCache) ArticulateSlurp(slurp *types.Slurp) error {

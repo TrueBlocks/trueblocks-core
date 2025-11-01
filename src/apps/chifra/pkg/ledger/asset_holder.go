@@ -1,6 +1,6 @@
 package ledger
 
-import "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
+import "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v5/pkg/base"
 
 // -----------------------------------------------------------------
 // assetHolder represents a unique combination of an asset and its holder.

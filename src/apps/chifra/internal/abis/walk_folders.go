@@ -1,8 +1,8 @@
 package abisPkg
 
 import (
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/abi"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/walk"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v5/pkg/abi"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v5/pkg/walk"
 )
 
 func (opts *AbisOptions) ForEveryAbi(known bool, vFunc walk.ForEveryFunc, errorChan chan error) {

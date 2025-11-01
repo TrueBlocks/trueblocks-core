@@ -3,7 +3,7 @@ package config
 import (
 	"testing"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/configtypes"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v5/pkg/configtypes"
 )
 
 func Test_setByPath(t *testing.T) {

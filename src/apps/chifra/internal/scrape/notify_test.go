@@ -8,9 +8,9 @@ import (
 	"sync"
 	"testing"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/notify"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/uniq"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v5/pkg/notify"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v5/pkg/types"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v5/pkg/uniq"
 )
 
 func TestNotify(t *testing.T) {

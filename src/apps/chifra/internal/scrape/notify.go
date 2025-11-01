@@ -10,8 +10,8 @@ import (
 	"strings"
 	"syscall"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/notify"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v5/pkg/config"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v5/pkg/notify"
 )
 
 // TODO: THIS IS PART OF THE NOTIFY CODE TO BE USED FOR MONITORING

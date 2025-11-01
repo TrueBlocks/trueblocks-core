@@ -12,9 +12,9 @@ import (
 	"io"
 	"net/url"
 
-	config "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/config"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
-	outputHelpers "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output/helpers"
+	config "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v5/internal/config"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v5/pkg/output"
+	outputHelpers "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v5/pkg/output/helpers"
 )
 
 // Config provides an interface to the command line chifra config through the SDK.

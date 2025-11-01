@@ -17,10 +17,10 @@ import (
 	"path/filepath"
 	"strings"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/topics"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/version"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v5/pkg/base"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v5/pkg/cache"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v5/pkg/topics"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v5/pkg/version"
 )
 
 // EXISTING_CODE

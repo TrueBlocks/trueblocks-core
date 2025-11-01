@@ -5,7 +5,7 @@
 package monitor
 
 import (
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/types"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v5/pkg/types"
 )
 
 func (mon *Monitor) RemoveDups() (int64, int64, error) {

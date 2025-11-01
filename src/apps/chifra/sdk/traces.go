@@ -12,9 +12,9 @@ import (
 	"io"
 	"net/url"
 
-	traces "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/traces"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
-	outputHelpers "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output/helpers"
+	traces "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v5/internal/traces"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v5/pkg/output"
+	outputHelpers "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v5/pkg/output/helpers"
 )
 
 // Traces provides an interface to the command line chifra traces through the SDK.

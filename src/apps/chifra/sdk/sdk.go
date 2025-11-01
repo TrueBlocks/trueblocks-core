@@ -1,6 +1,6 @@
 package sdk
 
-import "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/base"
+import "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v5/pkg/base"
 
 var sdkTestMode = false
 

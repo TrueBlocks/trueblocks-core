@@ -12,9 +12,9 @@ import (
 	"io"
 	"net/url"
 
-	state "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/state"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
-	outputHelpers "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output/helpers"
+	state "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v5/internal/state"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v5/pkg/output"
+	outputHelpers "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v5/pkg/output/helpers"
 )
 
 // State provides an interface to the command line chifra state through the SDK.

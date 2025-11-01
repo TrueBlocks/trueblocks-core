@@ -12,9 +12,9 @@ import (
 	"io"
 	"net/url"
 
-	chunks "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/chunks"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
-	outputHelpers "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output/helpers"
+	chunks "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v5/internal/chunks"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v5/pkg/output"
+	outputHelpers "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v5/pkg/output/helpers"
 )
 
 // Chunks provides an interface to the command line chifra chunks through the SDK.

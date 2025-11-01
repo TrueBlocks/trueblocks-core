@@ -7,7 +7,7 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/configtypes"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v5/pkg/configtypes"
 )
 
 // loadFromEnv loads configuration from environment variables

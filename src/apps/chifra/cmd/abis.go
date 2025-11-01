@@ -12,11 +12,11 @@ package cmd
 import (
 	"os"
 
-	abisPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/abis"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/caps"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
-	outputHelpers "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output/helpers"
+	abisPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v5/internal/abis"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v5/internal/globals"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v5/pkg/caps"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v5/pkg/file"
+	outputHelpers "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v5/pkg/output/helpers"
 	"github.com/spf13/cobra"
 )
 

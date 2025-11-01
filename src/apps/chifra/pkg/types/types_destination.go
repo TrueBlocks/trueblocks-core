@@ -15,7 +15,7 @@ import (
 	"path"
 	"strings"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v5/pkg/config"
 )
 
 // EXISTING_CODE
