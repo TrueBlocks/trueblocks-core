@@ -10,3 +10,6 @@
 [submodule "src/dev_tools/goMaker"]
 	path = src/dev_tools/goMaker
 	url = https://github.com/TrueBlocks/goMaker.git
+[submodule "src/dev_tools/testRunner"]
+	path = src/dev_tools/testRunner
+	url = https://github.com/TrueBlocks/trueblocks-testRunner.git
