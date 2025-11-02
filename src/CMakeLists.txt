@@ -93,8 +93,6 @@ if(GOLANGCI_LINT)
         # COMMAND ${GOLANGCI_LINT} run --config ${CMAKE_SOURCE_DIR}/../.golangci.yml ${CMAKE_SOURCE_DIR}/../examples/cancelContext/...
         COMMAND ${GOLANGCI_LINT} run --config ${CMAKE_SOURCE_DIR}/../.golangci.yml ${CMAKE_SOURCE_DIR}/dev_tools/testRunner/...
         COMMAND ${GOLANGCI_LINT} run --config ${CMAKE_SOURCE_DIR}/../.golangci.yml ${CMAKE_SOURCE_DIR}/dev_tools/goMaker/...
-        # COMMAND ${GOLANGCI_LINT} run --config ${CMAKE_SOURCE_DIR}/../.golangci.yml ${CMAKE_SOURCE_DIR}/dev_tools/sdkFuzzer/...
-        COMMAND ${GOLANGCI_LINT} run --config ${CMAKE_SOURCE_DIR}/../.golangci.yml ${CMAKE_SOURCE_DIR}/dev_tools/indexManager/...
         WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}/..
         COMMENT "Running golangci-lint across all Go modules in the repo"
     )
@@ -147,17 +145,11 @@ add_go_installable_program(chifra
     ${CMAKE_SOURCE_DIR}/apps/chifra ${BIN_DIR})
 add_go_installable_program(goMaker
     ${CMAKE_SOURCE_DIR}/dev_tools/goMaker /usr/local/bin)
-add_go_installable_program(indexManager
-    ${CMAKE_SOURCE_DIR}/dev_tools/indexManager ${BIN_DIR})
 
 if(NOT WIN32)
     add_go_installable_program(testRunner
         ${CMAKE_SOURCE_DIR}/dev_tools/testRunner ${BIN_DIR})
-    add_go_installable_program(sdkFuzzer
-        ${CMAKE_SOURCE_DIR}/dev_tools/sdkFuzzer ${BIN_DIR})
     add_dependencies(testRunner goMaker)
-    add_dependencies(sdkFuzzer goMaker)
-    add_dependencies(indexManager goMaker)
     add_dependencies(chifra testRunner)
 endif()
 
