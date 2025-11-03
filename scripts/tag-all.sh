@@ -36,28 +36,35 @@ fi
 
 if [ "$1" = "show" ]; then
     # Show mode - display latest tags
-    echo -e "${YELLOW}[tag-all]${NC} Showing latest tags:"
+    echo -e "${YELLOW}[tag-all]${NC} Repository tags:"
     echo
     
-    # Show root repo tag
-    echo -e "${GREEN}Root repository:${NC}"
-    LATEST_TAG=$(git describe --tags --abbrev=0 2>/dev/null || echo "No tags found")
-    echo "  Latest tag: $LATEST_TAG"
-    echo
+    # Get the directory where the script is located and go to repo root
+    SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+    cd "$SCRIPT_DIR/.."
     
-    # Show submodule tags
+    # Collect all repo info
+    REPO_INFO=""
+    
+    # Add root repo
+    LATEST_TAG=$(git describe --tags --abbrev=0 2>/dev/null || echo "No tags")
+    REPO_INFO="${REPO_INFO}trueblocks-core|${LATEST_TAG}\n"
+    
+    # Add submodules
     SUBMODULES=$(git submodule status | awk '{print $2}')
     if [ -n "$SUBMODULES" ]; then
-        echo -e "${GREEN}Submodules:${NC}"
         for SUBMODULE in $SUBMODULES; do
             if [ -d "$SUBMODULE" ]; then
                 cd "$SUBMODULE" || continue
-                LATEST_TAG=$(git describe --tags --abbrev=0 2>/dev/null || echo "No tags found")
-                echo "  $SUBMODULE: $LATEST_TAG"
+                LATEST_TAG=$(git describe --tags --abbrev=0 2>/dev/null || echo "No tags")
+                REPO_INFO="${REPO_INFO}${SUBMODULE}|${LATEST_TAG}\n"
                 cd "$SCRIPT_DIR/.." || exit 1
             fi
         done
     fi
+    
+    # Print table with aligned columns
+    echo -e "$REPO_INFO" | column -t -s '|'
     exit 0
 fi
 
