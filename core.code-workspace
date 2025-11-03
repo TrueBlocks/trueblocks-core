@@ -1,20 +1,24 @@
 {
   "folders": [
     {
-      "name": "trueblocks-core",
+      "name": "core",
       "path": "."
     },
     {
+      "name": "chifra",
+      "path": "./chifra"
+    },
+    {
       "name": "sdk",
-      "path": "sdk"
+      "path": "./sdk"
     },
     {
       "name": "examples",
-      "path": "examples"
+      "path": "./examples"
     },
     {
       "name": "khedra",
-      "path": "khedra"
+      "path": "./khedra"
     }
   ],
   "settings": {
