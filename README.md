@@ -1,4 +1,4 @@
-<b>If you have an existing installation, complete applicable [Migrations](https://github.com/TrueBlocks/trueblocks-core/blob/develop/MIGRATIONS.md) before proceeding.</b><hr>
+<big><b>If you have an existing installation, complete applicable [Migrations](https://github.com/TrueBlocks/trueblocks-core/blob/main/MIGRATIONS.md) before proceeding.</b></big><hr>
 
 <h1>TrueBlocks / Unchained Index</h1>
 

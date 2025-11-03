@@ -2,6 +2,10 @@
 
 This file details changes made to TrueBlocks over time. All version prior to version 3.0.0 are now no longer supported.
 
+## v6.4.5 - MAJOR REWORKING OF GO MODULES - BREAKING
+
+**See the [MIGRATIONS.md](./MIGRATIONS.md) file for detailed migration instructions.**
+
 ## v6.1.0 - Summary (2025/11/01)
 
 **Note:** The repository `VERSION` file contains `6.1.0`, but this `CHANGES.md` does not contain detailed release notes for `v6.0.x` or `v6.1.0` — only a placeholder for `v6.0.0`. Below is a concise, facts-backed summary of the nearest documented release (v5.0.0) and guidance for producing an exact, commit-level changelog between `v5.0.0` and `v6.1.0`.
