@@ -1,6 +1,8 @@
 # Migrations
 
-There was a near complete re-write of the entire repo between version 5.9.3 and 6.0.0. The repo version as of this document is v6.4.5. These instructions help you migrate to the new format
+There was a near complete re-write of the entire repo between version 5.9.3 and 6.0.0. The repo version as of this document is v6.4.5. These instructions help you migrate to the new format.
+
+**Don't want to migrate?** See [Not Migrating](#not-migrating) for how to stay on the older versions.
 
 ## How to migrate to v6.4.5
 
@@ -96,4 +98,35 @@ The 5.9.3 and earlier releases used `master` as the main branch. They now use `m
 ### 3. Idiomatic Go Development
 
 This repo was originally born as a C++ project. The new format is much more idiomatic GoLang. Our hope is to spend much less time managing what was essentially borken. All our development tools (testRunner, goMaker, scripts) are now much easier to manage, and our CI/CD processes are significantly improved.
+
+## Not Migrating
+
+If you prefer not to migrate to the new v6.x.x format, you can continue using the older versions. However, **please note that continuing changes and bug fixes will not be back-ported to the older versions.**
+
+To avoid migrating, stay with these versions:
+
+- **TrueBlocks Core**: Use version `v5.9.3`
+- **TrueBlocks SDK**: Use `github.com/TrueBlocks/trueblocks-sdk/v5`
+- **TrueBlocks Khedra**: Use `github.com/TrueBlocks/trueblocks-khedra/v5`
+
+### Example go.mod for non-migrating projects:
+
+```go
+module your-project
+
+go 1.21
+
+require (
+    github.com/TrueBlocks/trueblocks-core/src/apps/chifra v5.9.3
+    github.com/TrueBlocks/trueblocks-sdk/v5 v5.9.3
+    github.com/TrueBlocks/trueblocks-khedra/v5 v5.9.3
+)
+```
+
+**Important:** By choosing not to migrate, you will miss out on:
+- New features and improvements
+- Security updates
+- Bug fixes
+- Performance optimizations
+- Community support for newer versions
 

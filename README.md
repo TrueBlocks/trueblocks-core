@@ -1,4 +1,6 @@
-<big><b>If you have an existing installation, complete applicable [Migrations](https://github.com/TrueBlocks/trueblocks-core/blob/main/MIGRATIONS.md) before proceeding.</b></big><hr>
+## ⚠️ **If you have an installation earlier than v6.0.0, complete applicable [Migrations]([./MIGRATIONS.md](https://github.com/TrueBlocks/trueblocks-core/blob/main/MIGRATIONS.md)) before proceeding.**
+
+---
 
 <h1>TrueBlocks / Unchained Index</h1>
 
@@ -10,6 +12,7 @@
 
 **Table of Contents**
 
+- [⚠️ **If you have an installation earlier than v6.0.0, complete applicable Migrations before proceeding.**](#️-if-you-have-an-installation-earlier-than-v600-complete-applicable-migrations-before-proceeding)
 - [Introduction](#introduction)
 - [Installing](#installing)
 - [Command line](#command-line)
