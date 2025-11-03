@@ -6,6 +6,12 @@
 #          to a go.work file, and runs go work sync
 
 #------------------------------------------------
+# Colors for output
+BLUE='\033[0;34m'
+GREEN='\033[0;32m'
+NC='\033[0m' # No Color
+
+#------------------------------------------------
 # Get the directory where the script is located
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
@@ -15,7 +21,7 @@ cd "$SCRIPT_DIR/.."
 #------------------------------------------------
 # Function to check if git submodules are initialized
 check_submodules() {
-    echo "===> Checking Git submodules..."
+    echo -e "${BLUE}[go-work-sync]${NC} Checking submodules..."
     if git submodule status | grep -q '^-'; then
         echo "Error: Some submodules are not initialized!"
         echo "Run: git submodule update --init --recursive"
@@ -36,9 +42,8 @@ if [ ! -f "$GO_WORK_FILE" ]; then
 fi
 
 #------------------------------------------------
-# Find all go.mod files in the src directory and
-# add their directories to go.work.
-echo "===> Getting latest sdk and chifra..."
+# Find all go.mod files and add their directories to go.work
+echo -e "${BLUE}[go-work-sync]${NC} Updating module dependencies..."
 find . -type f -name 'go.mod' | while read -r modfile; do
     moddir=$(dirname "$modfile")
     go work use "$moddir"
@@ -48,17 +53,30 @@ find . -type f -name 'go.mod' | while read -r modfile; do
 
     if [ "$moddir" = "./sdk" ]; then isSdk=true; else isSdk=false; fi
     if [ "$moddir" = "./chifra" ]; then isChifra=true; else isChifra=false; fi
-    if [ "$moddir" = "./src/dev_tools/goMaker" ]; then isGoMaker=true; else isGoMaker=false; fi
+    if [ "$moddir" = "./dev-tools/goMaker" ]; then isGoMaker=true; else isGoMaker=false; fi
+    if [ "$moddir" = "./dev-tools/testRunner" ]; then isTestRunner=true; else isTestRunner=false; fi
+    if [ "$moddir" = "./khedra" ]; then isKhedra=true; else isKhedra=false; fi
     if [ "$moddir" = "./node" ]; then isNode=true; else isNode=false; fi
-    if [ "$moddir" = "./examples/four_bytes" ]; then isFourbyte=true; else isFourbyte=false; fi
-    if [ "$moddir" = "./examples/keystore" ]; then isKeystore=true; else isKeystore=false; fi
-    if [ "$moddir" = "./examples/simple" ]; then isSimple=true; else isSimple=false; fi
-
-    if [ "$isGoMaker" = true ] || [ "$isNode" = true ] || [ "$isFourbyte" = true ]; then
-        go get github.com/btcsuite/btcd 2> /dev/null
+    
+    # Detect blockchain-heavy examples that need btcsuite/btcd
+    if [[ "$moddir" =~ ^./examples/ ]] && grep -q "github.com/ethereum/go-ethereum" "$moddir/go.mod" 2>/dev/null; then
+        isBlockchainExample=true
+    else
+        isBlockchainExample=false
+    fi
+    
+    # Detect SDK-based examples  
+    if [[ "$moddir" =~ ^./examples/ ]] && grep -q "github.com/TrueBlocks/trueblocks-sdk/v6" "$moddir/go.mod" 2>/dev/null; then
+        isSdkExample=true
+    else
+        isSdkExample=false
     fi
 
-    if [ "$isSdk" = false ] && [ "$isChifra" = false ] && [ "$isGoMaker" = false ] && [ "$isFourbyte" = false ] && [ "$isIndexMan" = false ] && [ "$isKeystore" = false ]; then
+    if [ "$isTestRunner" = true ] || [ "$isKhedra" = true ] || [ "$isNode" = true ] || [ "$isBlockchainExample" = true ]; then
+        go get github.com/btcsuite/btcd >/dev/null 2>&1
+    fi
+
+    if [ "$isSdk" = false ] && [ "$isChifra" = false ] && [ "$isGoMaker" = false ] && [ "$isTestRunner" = false ] && [ "$isKhedra" = false ] && [ "$isBlockchainExample" = false ] && [ "$isIndexMan" = false ] && [ "$isSdkExample" = false ]; then
         go get github.com/TrueBlocks/trueblocks-sdk/v6@latest
     fi
 
@@ -66,27 +84,27 @@ find . -type f -name 'go.mod' | while read -r modfile; do
         go get github.com/TrueBlocks/trueblocks-chifra/v6@latest
     fi
 
-    go mod tidy
+    go mod tidy >/dev/null 2>&1
     cd - > /dev/null
 done
 
 #------------------------------------------------
 echo
-echo "===> Creating a fresh go.work file..."
+echo -e "${BLUE}[go-work-sync]${NC} Creating go.work file..."
 go work sync
 cat go.work
 
 #------------------------------------------------
 echo
-echo "===> Tidying go.mod files..."
+echo -e "${BLUE}[go-work-sync]${NC} Running go-mod-tidy..."
 "$SCRIPT_DIR/go-mod-tidy.sh"
 
 echo
-echo "===> The repo imports these TrueBlocks modules..."
+echo -e "${BLUE}[go-work-sync]${NC} Showing TrueBlocks modules..."
 "$SCRIPT_DIR/go-show-trueblocks.sh"
 
 cd - 2>&1 > /dev/null
 echo
-echo "===> Done..."
+echo -e "${GREEN}[go-work-sync]${NC} Done."
 
 exit 0
