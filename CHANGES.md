@@ -1422,8 +1422,8 @@ The following data models were either modified, added, removed, or renamed by ha
 **makeClass**
 
 - Complete rewrite in GoLang.
-- Consolidates all auto-code-gen templates from to `./src/dev_tools/goMaker/templates`.
-- Consolidates all type definition files from `./src/other/data-models` to `./src/dev_tools/goMaker/templates`.
+- Consolidates all auto-code-gen templates from to `./dev-tools/goMaker/templates`.
+- Consolidates all type definition files from `./src/other/data-models` to `./src/dev-tools/goMaker/templates`.
 
 **testRunner**
 

@@ -27,7 +27,7 @@ make -C "${INSTALL}"
 if [ -z "${TB_TEST_ENABLED}" ] && [ -z "${TB_TEST_FILTER}" ]; then
     #------------------------------------------------
     echo "Running Go integration tests..."
-    CHIFRA="${REPO_ROOT}/src/apps/chifra"
+    CHIFRA="${REPO_ROOT}/chifra"
     cd "${CHIFRA}" || exit 1  # Ensure we actually enter the directory
     TB_NO_PROVIDER_CHECK=true go test --tags integration ./...
     STATUS=$?

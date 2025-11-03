@@ -76,25 +76,30 @@ set(SCRIPTS_DIR ${REPO_DIR}/scripts)
 # ----------------------------------------------------------------------------
 find_program(GOLANGCI_LINT golangci-lint)
 if(GOLANGCI_LINT)
+    # Build lint command dynamically based on what submodules exist
+    set(LINT_COMMANDS "")
+    list(APPEND LINT_COMMANDS COMMAND ${GOLANGCI_LINT} run --config ${CMAKE_SOURCE_DIR}/../.golangci.yml ${CMAKE_SOURCE_DIR}/../chifra/...)
+    
+    if(EXISTS "${CMAKE_SOURCE_DIR}/../sdk/go.mod")
+        list(APPEND LINT_COMMANDS COMMAND ${GOLANGCI_LINT} run --config ${CMAKE_SOURCE_DIR}/../.golangci.yml ${CMAKE_SOURCE_DIR}/../sdk/...)
+    endif()
+    
+    if(EXISTS "${CMAKE_SOURCE_DIR}/../khedra/go.mod")
+        list(APPEND LINT_COMMANDS COMMAND ${GOLANGCI_LINT} run --config ${CMAKE_SOURCE_DIR}/../.golangci.yml ${CMAKE_SOURCE_DIR}/../khedra/...)
+    endif()
+    
+    if(EXISTS "${CMAKE_SOURCE_DIR}/../dev-tools/testRunner/go.mod")
+        list(APPEND LINT_COMMANDS COMMAND ${GOLANGCI_LINT} run --config ${CMAKE_SOURCE_DIR}/../.golangci.yml ${CMAKE_SOURCE_DIR}/../dev-tools/testRunner/...)
+    endif()
+    
+    if(EXISTS "${CMAKE_SOURCE_DIR}/../dev-tools/goMaker/go.mod")
+        list(APPEND LINT_COMMANDS COMMAND ${GOLANGCI_LINT} run --config ${CMAKE_SOURCE_DIR}/../.golangci.yml ${CMAKE_SOURCE_DIR}/../dev-tools/goMaker/...)
+    endif()
+
     add_custom_target(lint
-        COMMAND ${GOLANGCI_LINT} run --config ${CMAKE_SOURCE_DIR}/../.golangci.yml ${CMAKE_SOURCE_DIR}/apps/chifra/...
-        COMMAND ${GOLANGCI_LINT} run --config ${CMAKE_SOURCE_DIR}/../.golangci.yml ${CMAKE_SOURCE_DIR}/../sdk/...
-        COMMAND ${GOLANGCI_LINT} run --config ${CMAKE_SOURCE_DIR}/../.golangci.yml ${CMAKE_SOURCE_DIR}/../khedra/...
-        # COMMAND ${GOLANGCI_LINT} run --config ${CMAKE_SOURCE_DIR}/../.golangci.yml ${CMAKE_SOURCE_DIR}/../examples/accounting/...
-        # COMMAND ${GOLANGCI_LINT} run --config ${CMAKE_SOURCE_DIR}/../.golangci.yml ${CMAKE_SOURCE_DIR}/../examples/keystore/...
-        # COMMAND ${GOLANGCI_LINT} run --config ${CMAKE_SOURCE_DIR}/../.golangci.yml ${CMAKE_SOURCE_DIR}/../examples/checkNodes/...
-        # COMMAND ${GOLANGCI_LINT} run --config ${CMAKE_SOURCE_DIR}/../.golangci.yml ${CMAKE_SOURCE_DIR}/../examples/withStreaming/...
-        # COMMAND ${GOLANGCI_LINT} run --config ${CMAKE_SOURCE_DIR}/../.golangci.yml ${CMAKE_SOURCE_DIR}/../examples/four_bytes/...
-        # COMMAND ${GOLANGCI_LINT} run --config ${CMAKE_SOURCE_DIR}/../.golangci.yml ${CMAKE_SOURCE_DIR}/../examples/simple/...
-        # COMMAND ${GOLANGCI_LINT} run --config ${CMAKE_SOURCE_DIR}/../.golangci.yml ${CMAKE_SOURCE_DIR}/../examples/balanceChart/...
-        # COMMAND ${GOLANGCI_LINT} run --config ${CMAKE_SOURCE_DIR}/../.golangci.yml ${CMAKE_SOURCE_DIR}/../examples/findFirst/...
-        # COMMAND ${GOLANGCI_LINT} run --config ${CMAKE_SOURCE_DIR}/../.golangci.yml ${CMAKE_SOURCE_DIR}/../examples/comparison/...
-        # COMMAND ${GOLANGCI_LINT} run --config ${CMAKE_SOURCE_DIR}/../.golangci.yml ${CMAKE_SOURCE_DIR}/../examples/nameManager/...
-        # COMMAND ${GOLANGCI_LINT} run --config ${CMAKE_SOURCE_DIR}/../.golangci.yml ${CMAKE_SOURCE_DIR}/../examples/cancelContext/...
-        COMMAND ${GOLANGCI_LINT} run --config ${CMAKE_SOURCE_DIR}/../.golangci.yml ${CMAKE_SOURCE_DIR}/dev_tools/testRunner/...
-        COMMAND ${GOLANGCI_LINT} run --config ${CMAKE_SOURCE_DIR}/../.golangci.yml ${CMAKE_SOURCE_DIR}/dev_tools/goMaker/...
+        ${LINT_COMMANDS}
         WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}/..
-        COMMENT "Running golangci-lint across all Go modules in the repo"
+        COMMENT "Running golangci-lint across all available Go modules in the repo"
     )
 else()
     message(WARNING "golangci-lint not found. Please install it to use 'make lint'.")
@@ -111,14 +116,24 @@ add_custom_target(test-all
     WORKING_DIRECTORY ${REPO_DIR}/build)
 
 # ----------------------------------------------------------------------------
-add_custom_target(examples ALL
-    COMMAND ${SCRIPTS_DIR}/build-examples.sh
-    WORKING_DIRECTORY ${REPO_DIR})
+# Only build examples if the submodule is present
+if(EXISTS "${REPO_DIR}/examples/.git" OR EXISTS "${REPO_DIR}/examples/simple/go.mod")
+    add_custom_target(examples ALL
+        COMMAND ${SCRIPTS_DIR}/build-examples.sh
+        WORKING_DIRECTORY ${REPO_DIR})
+else()
+    message(STATUS "Examples submodule not found, skipping examples build")
+endif()
 
 # ----------------------------------------------------------------------------
-add_custom_target(khedra ALL
-    COMMAND ${SCRIPTS_DIR}/build-khedra.sh
-    WORKING_DIRECTORY ${REPO_DIR})
+# Only build khedra if the submodule is present
+if(EXISTS "${REPO_DIR}/khedra/go.mod")
+    add_custom_target(khedra ALL
+        COMMAND ${SCRIPTS_DIR}/build-khedra.sh
+        WORKING_DIRECTORY ${REPO_DIR})
+else()
+    message(STATUS "Khedra submodule not found, skipping khedra build")
+endif()
 
 # ----------------------------------------------------------------------------
 function(add_go_installable_program NAME MAIN_SRC DEST_DIR)
@@ -142,24 +157,38 @@ endfunction()
 add_subdirectory(other/install)
 
 add_go_installable_program(chifra
-    ${CMAKE_SOURCE_DIR}/apps/chifra ${BIN_DIR})
-add_go_installable_program(goMaker
-    ${CMAKE_SOURCE_DIR}/dev_tools/goMaker /usr/local/bin)
+    ${CMAKE_SOURCE_DIR}/../chifra ${BIN_DIR})
 
-if(NOT WIN32)
-    add_go_installable_program(testRunner
-        ${CMAKE_SOURCE_DIR}/dev_tools/testRunner ${BIN_DIR})
-    add_dependencies(testRunner goMaker)
-    add_dependencies(chifra testRunner)
+# Only build goMaker if the submodule is present
+if(EXISTS "${CMAKE_SOURCE_DIR}/../dev-tools/goMaker/go.mod")
+    add_go_installable_program(goMaker
+        ${CMAKE_SOURCE_DIR}/../dev-tools/goMaker /usr/local/bin)
+else()
+    message(STATUS "goMaker submodule not found, skipping goMaker build")
 endif()
 
-add_dependencies(examples chifra)
+if(NOT WIN32)
+    # Only build testRunner if the submodule is present
+    if(EXISTS "${CMAKE_SOURCE_DIR}/../dev-tools/testRunner/go.mod")
+        add_go_installable_program(testRunner
+            ${CMAKE_SOURCE_DIR}/../dev-tools/testRunner ${BIN_DIR})
+        
+        # Only add goMaker dependency if goMaker exists
+        if(EXISTS "${CMAKE_SOURCE_DIR}/../dev-tools/goMaker/go.mod")
+            add_dependencies(testRunner goMaker)
+        endif()
+        
+        add_dependencies(chifra testRunner)
+    else()
+        message(STATUS "testRunner submodule not found, skipping testRunner build")
+    endif()
+endif()
 
-add_dependencies(khedra chifra)
+# Only add dependencies if the submodules exist
+if(EXISTS "${REPO_DIR}/examples/.git" OR EXISTS "${REPO_DIR}/examples/simple/go.mod")
+    add_dependencies(examples chifra)
+endif()
 
-file(GLOB CHIFRA_FOR_DOCKER_FILES
-    "${CMAKE_SOURCE_DIR}/apps/chifra/*.go")
-add_custom_target(chifra-for-docker ALL
-    COMMAND ${GO_EXECUTABLE} build -o ${BIN_DIR}/chifra
-            ${CHIFRA_FOR_DOCKER_FILES}
-    WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}/apps/chifra)
+if(EXISTS "${REPO_DIR}/khedra/go.mod")
+    add_dependencies(khedra chifra)
+endif()

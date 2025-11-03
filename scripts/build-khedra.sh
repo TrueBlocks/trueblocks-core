@@ -13,7 +13,6 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 # Begin script execution here
 cd "$SCRIPT_DIR/../khedra" || exit 1  # Exit if changing directory fails
 
-echo "Built target khedra"
 if ! go build -o "../bin/khedra"; then
     echo "Build failed!" >&2
     exit 1

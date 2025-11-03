@@ -47,12 +47,11 @@ find . -type f -name 'go.mod' | while read -r modfile; do
     cd "$moddir" || exit
 
     if [ "$moddir" = "./sdk" ]; then isSdk=true; else isSdk=false; fi
-    if [ "$moddir" = "./src/apps/chifra" ]; then isChifra=true; else isChifra=false; fi
+    if [ "$moddir" = "./chifra" ]; then isChifra=true; else isChifra=false; fi
     if [ "$moddir" = "./src/dev_tools/goMaker" ]; then isGoMaker=true; else isGoMaker=false; fi
     if [ "$moddir" = "./node" ]; then isNode=true; else isNode=false; fi
     if [ "$moddir" = "./examples/four_bytes" ]; then isFourbyte=true; else isFourbyte=false; fi
     if [ "$moddir" = "./examples/keystore" ]; then isKeystore=true; else isKeystore=false; fi
-    if [ "$moddir" = "./src/dev_tools/indexManager" ]; then isIndexMan=true; else isIndexMan=false; fi
     if [ "$moddir" = "./examples/simple" ]; then isSimple=true; else isSimple=false; fi
 
     if [ "$isGoMaker" = true ] || [ "$isNode" = true ] || [ "$isFourbyte" = true ]; then
@@ -64,7 +63,7 @@ find . -type f -name 'go.mod' | while read -r modfile; do
     fi
 
     if [ "$isChifra" = false ]; then
-        go get github.com/TrueBlocks/trueblocks-core/src/apps/chifra/v6@latest
+        go get github.com/TrueBlocks/trueblocks-chifra/v6@latest
     fi
 
     go mod tidy
