@@ -1,4 +1,4 @@
-## ⚠️ **If you have an installation earlier than v6.0.0, complete applicable [Migrations]([./MIGRATIONS.md](https://github.com/TrueBlocks/trueblocks-core/blob/main/MIGRATIONS.md)) before proceeding.**
+## ⚠️ **If you have an installation earlier than v6.0.0, complete applicable [Migrations](https://github.com/TrueBlocks/trueblocks-core/blob/main/MIGRATIONS.md) before proceeding.**
 
 ---
 
