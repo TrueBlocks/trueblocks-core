@@ -48,7 +48,7 @@ This is every receipt (or log, or transaction, or trace if you have a tracing no
 
 ### Getting rate limited
 
-How about a block with a lot of transacitons? Try this:
+How about a block with a lot of transactions? Try this:
 
 ```bash
 chifra blocks 4100000 --uniq --cache --cache_txs --cache_traces
@@ -60,7 +60,7 @@ chifra blocks 4100000 --uniq --cache --cache_txs --cache_traces
 
 ----
 
-**Important:** If you get rate limited, don't run the command again. They may cut you off permenantly.
+**Important:** If you get rate limited, don't run the command again. They may cut you off permanently.
 
 Did you get rate limited? We didn't.
 

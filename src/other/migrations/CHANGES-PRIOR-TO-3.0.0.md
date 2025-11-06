@@ -1100,7 +1100,7 @@ The following existing data models were either added, removed, or modified by ha
 **chifra daemon**
 
 - Exposed previously hidden `chifra daemon --api`, `chifra daemon --scrape`, and `chifra daemon --monitor` tools.
-- Added an option `chifra deamon --grpc` to start a GRPC names server (and other data models in the future) that should speed up some queries. This is optional and experimental, so use with caution.
+- Added an option `chifra daemon --grpc` to start a GRPC names server (and other data models in the future) that should speed up some queries. This is optional and experimental, so use with caution.
 
 **chifra scrape**
 

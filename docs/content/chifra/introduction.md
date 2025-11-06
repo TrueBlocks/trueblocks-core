@@ -80,7 +80,7 @@ Depending on your setup, you may get the following error message when you run so
 If you get this error, edit the configuration file mentioned. The file is well documented, so refer to that file for further information.
 
 When the `chifra config` command returns a valid response, you may move to the next section. If
-you continue to have trouble, join our [discord disscussion](https://discord.gg/kAFcZH2x7K).
+you continue to have trouble, join our [discord discussion](https://discord.gg/kAFcZH2x7K).
 
 ## Using chifra
 

@@ -32,7 +32,7 @@ It took me weeks, but I finally had the data. I’m so pleased, that I’ve deci
 
 #### Now What?
 
-Given this data, the first thing I wanted to do was to separate out the ‘Token Creation’ transactions from the transactions that have occured since the creation period.
+Given this data, the first thing I wanted to do was to separate out the ‘Token Creation’ transactions from the transactions that have occurred since the creation period.
 
 The Mist browser tells me that the token creation period ended at timeStamp = 146442600.
 
@@ -60,7 +60,7 @@ I’m currently interested in the data field called ‘input’ which contains w
 
 I am also interested two fields called ‘gasUsed’ and ‘gas,’ which, in some cases, are equal to each other. My first thought about these fields is that being equal may indicate an “out of gas” condition, but it turns out this is not quite correct.
 
-I’ve hand-checked a number of these transactions, and I’m finding three different types of ‘gas=gasUsed’ transactions: (1) transactions that do not have enough gas to even get started and, therefore, they fail on their first opcode ([example](https://etherscan.io/vmtrace?txhash=0x0c86ed91f75f5b44d7e8e97facbebba9cf1a14982d9006da480049c34d7cc12f)), (2) transactions that have exactly the right amout of gas, and finish their execution with zero gas remaining ([example](https://etherscan.io/vmtrace?txhash=0x685a466ac4ffa7a12172652726341fe7c18f124b8f94cef3ff30134ed81115b4)), and (3) a very odd type of transaction that fails when it encounters an opcode that charges about ten god-gillion gas. 76 digits worth of gas ([example](https://etherscan.io/vmtrace?txhash=0x8f3717c30250ccb23f5261319671c2a1b33ee3e9bf7c46a69c372c0217e177fa)). That is way more atoms than there are in the ether, let alone ether in anyone’s wallet. I’m not sure what’s going on there. \[Jun 11: Thanks to [Yoichi Hirai](https://thedao.slack.com/messages/@yhirai) on thedao slack, I’ve since learned that this large number is just a negative amount of gas remaining. Thanks Yoichi.\]
+I’ve hand-checked a number of these transactions, and I’m finding three different types of ‘gas=gasUsed’ transactions: (1) transactions that do not have enough gas to even get started and, therefore, they fail on their first opcode ([example](https://etherscan.io/vmtrace?txhash=0x0c86ed91f75f5b44d7e8e97facbebba9cf1a14982d9006da480049c34d7cc12f)), (2) transactions that have exactly the right amount of gas, and finish their execution with zero gas remaining ([example](https://etherscan.io/vmtrace?txhash=0x685a466ac4ffa7a12172652726341fe7c18f124b8f94cef3ff30134ed81115b4)), and (3) a very odd type of transaction that fails when it encounters an opcode that charges about ten god-gillion gas. 76 digits worth of gas ([example](https://etherscan.io/vmtrace?txhash=0x8f3717c30250ccb23f5261319671c2a1b33ee3e9bf7c46a69c372c0217e177fa)). That is way more atoms than there are in the ether, let alone ether in anyone’s wallet. I’m not sure what’s going on there. \[Jun 11: Thanks to [Yoichi Hirai](https://thedao.slack.com/messages/@yhirai) on thedao slack, I’ve since learned that this large number is just a negative amount of gas remaining. Thanks Yoichi.\]
 
 #### Who Cares?
 

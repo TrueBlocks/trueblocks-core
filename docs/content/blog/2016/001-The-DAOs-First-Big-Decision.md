@@ -19,7 +19,7 @@ The locus of discussion on all issues related to “The DAO” (which is not its
 
 _As you can tell — I’m having difficulty figuring out exactly what the DAO is. It’s difficult because this is a brand new thing that has not existed before in the world. There are simply no words yet. I slip into imprecise language in this post, please forgive me._
 
-There are hundreds of discusson topics on the forum. The two most active are (1) the aforementioned slock.it proposal and (2) a topic called “Name this DAO,” with nearly 150 responses.
+There are hundreds of discussion topics on the forum. The two most active are (1) the aforementioned slock.it proposal and (2) a topic called “Name this DAO,” with nearly 150 responses.
 
 There have been many names proposed for the organization, from “The DAO” to “motherDAO” to “DAWN” to “DAOy McDAOface,” and the conversation is very lively. As soon as someone suggests a name, people respond. Many times in support, but also sometimes in opposition. The discussion is cordial, but it seems to me to be very disorganized.
 

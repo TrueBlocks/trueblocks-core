@@ -133,7 +133,7 @@ Here's what these numbers mean:
 | unripe    | Blocks that are "too close to the head" to be reliable.                            | 0 blocks              | no           | **yes**              |
 | timestamp | The latest scraped timestamp (used for debugging).                                 | n/a                   | -            | no                   |
 
-For a much better explaination of these numbers (and more generally the scraper), please see the [TrueBlocks Spec](https://trueblocks.io/papers/2022/file-format-spec-v0.40.0-beta.pdf).
+For a much better explanation of these numbers (and more generally the scraper), please see the [TrueBlocks Spec](https://trueblocks.io/papers/2022/file-format-spec-v0.40.0-beta.pdf).
 
 #### -- I'm getting an error message: current file does not sequentially follow previous file. What do?
 
