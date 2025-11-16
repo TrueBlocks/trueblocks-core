@@ -3,11 +3,6 @@ title: "forEveryChain"
 description: "Using the new mutli-chain features of TrueBlocks"
 lead: "Come Visit with Us for a While"
 date: 2022-02-15T10:45:28-04:00
-lastmod:
-  - :git
-  - lastmod
-  - date
-  - publishDate
 images: []
 draft: false
 contributor: ["rush"]
@@ -45,7 +40,8 @@ We assume a certain amount of familiarity with TrueBlocks in particular how to [
 
 In our repo there’s a folder called `./examples` and in that folder, there’s an example in a sub-folder called `./forEvery`. This is the contents of the code in the folder:
 
-<img src="https://miro.medium.com/max/1400/1*bYH13f6MYqetjD_NTVHxXg.png" width="640px">
+![Command Line](https://miro.medium.com/max/1400/1*bYH13f6MYqetjD_NTVHxXg.png)
+
 <p>
 
 If you’re familiar with C++ code at all, you’ll notice the `main` function at **line 34** is really simple. Initialize the library, call a single function, clean up, and finish.
@@ -98,8 +94,7 @@ This is the exact problem we have with solutions such as AmberData and EtherScan
 As I mentioned above, this week we added a multi-chain feature to TrueBlocks which means we can process queries for any EVM-based blockchain with the same equal ease as we process Mainnet.
 
 I was inspired to write this post because I thought of the following modification to the above example.
-
-<img src="https://miro.medium.com/max/1400/1*Qt-bK1e_eQHetmAZcsWAhA.png" width="640px">
+![Command Line](https://miro.medium.com/max/1400/1*Qt-bK1e_eQHetmAZcsWAhA.png)
 <p>
 
 What does this actually do?
@@ -121,6 +116,6 @@ TrueBlocks is self-funded from our own personal funds and grants from our suppor
 
 And you!
 
-If you like this article and wish to support please donate to our GitCoin grant https://gitcoin.co/grants/184/trueblocks. Donate during the next matching round, and we get the added benefit of the matching grants. Even small amounts have a big impact.
+If you like this article and wish to support, please donate to our [GitCoin grant](https://gitcoin.co/grants/184/trueblocks). Donate during the next matching round, and we get the added benefit of the matching grants. Even small amounts have a big impact.
 
 If you’d rather, feel free to send ETH or any other token to us directly at trueblocks.eth or 0xf503017d7baf7fbc0fff7492b751025c6a78179b.

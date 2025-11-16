@@ -3,7 +3,6 @@ title: Dynamic Traversers for TrueBlocks
 lead: Customized scraping of the index
 description: "Extend the chifra command line with traverses. Flexibly grab whatever data you need"
 date: '2020-12-09T12:29:07.973Z'
-lastmod: .lastmod
 categories:
 - Trueblocks
 tags: ['trueblocks']

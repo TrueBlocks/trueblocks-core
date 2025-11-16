@@ -2,7 +2,6 @@
 title: The DAO’s First Big Decision
 lead: What should we name The DAO?
 date: '2016-05-06T19:48:48.273Z'
-lastmod: .lastmod
 categories:
 - Ethereum
 tags: ['ethereum']

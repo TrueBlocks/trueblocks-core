@@ -3,11 +3,6 @@ title: "Other articles published in 2021"
 description: "A few articles published on my Medium blog"
 lead: "A few articles published on my Medium blog"
 date: 2021-12-23T18:10:28-04:00
-lastmod:
-  - :git
-  - lastmod
-  - date
-  - publishDate
 images: []
 draft: false
 tags: ["trueblocks"]
