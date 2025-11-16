@@ -6,6 +6,67 @@ This file details changes made to TrueBlocks over time. All version prior to ver
 
 **See the [MIGRATIONS.md](./MIGRATIONS.md) file for detailed migration instructions.**
 
+goMaker was made a submodule instead of a folder in dev_tools
+Update all go.mod files to use `v6` throughout
+
+
+
+testRunner
+	updated all to v6
+
+sdkFuzzer
+	updated all to v6
+
+indexManager
+	updated all to v6
+
+chifra
+	exports
+		return Transaction instead of Log type for --approval option
+
+	tokens
+		exports address names for spender, holder, asset
+
+	traces
+		export date as well as timestamp
+
+	abis
+		cleans up missing column in export to include name
+
+Packages
+	abis
+		switches to Etherscan's new v2 api
+
+	output
+		fixes a bug in SDK related to unclosed model and error channels
+
+
+	type
+		much better naming of addresses during Model call
+		
+
+In SDK/core addition of BaseMap and CalcMap and EnforceCalc to "enhance" sdk results with calculated data.
+
+
+
+
+
+NO CHANGES TO THE API
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 ## v6.1.0 - Summary (2025/11/01)
 
 **Note:** The repository `VERSION` file contains `6.1.0`, but this `CHANGES.md` does not contain detailed release notes for `v6.0.x` or `v6.1.0` — only a placeholder for `v6.0.0`. Below is a concise, facts-backed summary of the nearest documented release (v5.0.0) and guidance for producing an exact, commit-level changelog between `v5.0.0` and `v6.1.0`.
