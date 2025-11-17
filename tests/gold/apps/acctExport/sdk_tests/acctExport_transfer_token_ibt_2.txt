@@ -50,6 +50,7 @@ Format:  json
       "blockNumber": 12705892,
       "holder": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
       "logIndex": 0,
+      "recipientName": "GitCoin Grant 6,7,8",
       "transactionIndex": 117
     },
     {
@@ -60,6 +61,7 @@ Format:  json
       "blockNumber": 12705892,
       "holder": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
       "logIndex": 286,
+      "recipientName": "dGitcoin - Hot wallet",
       "transactionIndex": 117
     },
     {
@@ -70,6 +72,7 @@ Format:  json
       "blockNumber": 12705892,
       "holder": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
       "logIndex": 288,
+      "recipientName": "Grant 2918 - MolochV3 (codename: Baal)",
       "transactionIndex": 117
     },
     {
@@ -90,6 +93,7 @@ Format:  json
       "blockNumber": 12705892,
       "holder": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
       "logIndex": 292,
+      "recipientName": "Grant 1636 Buidl Guidl",
       "transactionIndex": 117
     },
     {
@@ -100,6 +104,7 @@ Format:  json
       "blockNumber": 12705892,
       "holder": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
       "logIndex": 294,
+      "recipientName": "abcoathup",
       "transactionIndex": 117
     }
   ],
