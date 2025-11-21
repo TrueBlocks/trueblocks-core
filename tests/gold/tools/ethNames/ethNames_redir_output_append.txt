@@ -207,4 +207,4 @@ tags	address	name	symbol	source	decimals
 80-Prefund	0x05bb64a916be66f460f5e3b64332110d209e19ae	Prefund_0197		Genesis	
 80-Prefund	0x05bf4fcfe772e45b826443852e6c351350ce72a2	Prefund_0198		Genesis	
 80-Prefund	0x05c64004a9a826e94e5e4ee267fa2a7632dd4e6f	Prefund_0199		Genesis	
-31-Gitcoin:Stewards	0xf503017d7baf7fbc0fff7492b751025c6a78179b	Thomas Jay Rush (trueblocks.eth forum:tjayrush)		
+31-Gitcoin:Stewards	0xf503017d7baf7fbc0fff7492b751025c6a78179b	trueblocks.eth		
