@@ -2,10 +2,6 @@
 title: "Explore"
 description: ""
 lead: ""
-lastmod:
-  - :git
-  - lastmod
-  - publishDate
 draft: false
 aliases:
  - "/docs/explorer/explorer"

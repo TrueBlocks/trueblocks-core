@@ -3,12 +3,23 @@ canonifyURLs = false
 disableAliases = false
 disableHugoGeneratorInject = true
 enableEmoji = true
-enableGitInfo = true
+enableGitInfo = false
 enableRobotsTXT = true
 languageCode = "en-US"
-paginate = 10
 rssLimit = 10
 googleAnalytics="G-4M60J4ZGSQ"
+
+# Exclude non-Hugo files and directories from processing
+ignoreFiles = [
+  "lambda/.*",
+  "\\.redocly\\.yaml$",
+  "makefile$",
+  "node_modules/.*",
+  "\\.git/.*"
+]
+
+[pagination]
+pagerSize = 10
 
 # add redirects/headers
 [outputs]

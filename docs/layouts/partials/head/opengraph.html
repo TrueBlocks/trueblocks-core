@@ -72,16 +72,14 @@
 {{ end -}}
 
 {{ if .IsPage -}}
-  {{ range .Site.Authors -}}
-    <meta property="article:section" content="{{ .Section }}">
-    {{ with .Params.tags -}}
-      {{ range first 6 . -}}
-        <meta property="article:tag" content="{{ . }}">
-      {{ end -}}
+  <meta property="article:section" content="{{ .Section }}">
+  {{ with .Params.tags -}}
+    {{ range first 6 . -}}
+      <meta property="article:tag" content="{{ . }}">
     {{ end -}}
   {{ end -}}
 {{ end -}}
 
-{{ with .Site.Social.facebook_admin -}}
+{{ with .Site.Params.facebookAdmin -}}
   <meta property="fb:admins" content="{{ . }}">
 {{ end -}}

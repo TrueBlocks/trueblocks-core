@@ -10,11 +10,9 @@ CYAN='\033[0;36m'
 NC='\033[0m' # No Color
 
 #------------------------------------------------
-# Get the directory where the script is located
-SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-
-#------------------------------------------------
-cd $SCRIPT_DIR/..
+# Navigate to the root of the repo
+REPO_ROOT="$(git rev-parse --show-toplevel)"
+cd "$REPO_ROOT"
 
 #------------------------------------------------
 find . -type f -name 'go.mod' | while read -r modfile; do

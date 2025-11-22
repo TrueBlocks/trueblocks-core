@@ -3,11 +3,6 @@ title: "Better Token Accounting"
 description: "Information about how we account for tokens"
 lead: "Information about how we account for tokens"
 date: 2021-12-23T18:10:28-04:00
-lastmod:
-  - :git
-  - lastmod
-  - date
-  - publishDate
 images: []
 draft: false
 contributor: ["rush"]

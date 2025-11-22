@@ -9,6 +9,7 @@ export?addrs=0xf503017d7baf7fbc0fff7492b751025c6a78179b&accounting&transfers&fir
       "blockNumber": 8860513,
       "holder": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
       "logIndex": 0,
+      "recipientName": "Giveth Bridge",
       "transactionIndex": 85
     },
     {
@@ -19,6 +20,7 @@ export?addrs=0xf503017d7baf7fbc0fff7492b751025c6a78179b&accounting&transfers&fir
       "blockNumber": 8860513,
       "holder": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
       "logIndex": 84,
+      "recipientName": "Giveth Bridge",
       "transactionIndex": 85
     },
     {
@@ -29,6 +31,7 @@ export?addrs=0xf503017d7baf7fbc0fff7492b751025c6a78179b&accounting&transfers&fir
       "blockNumber": 8860529,
       "holder": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
       "logIndex": 0,
+      "recipientName": "Dai Stablecoin v1.0",
       "transactionIndex": 145
     },
     {
@@ -39,6 +42,7 @@ export?addrs=0xf503017d7baf7fbc0fff7492b751025c6a78179b&accounting&transfers&fir
       "blockNumber": 8860531,
       "holder": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
       "logIndex": 0,
+      "recipientName": "Giveth Bridge",
       "transactionIndex": 152
     },
     {
@@ -49,6 +53,7 @@ export?addrs=0xf503017d7baf7fbc0fff7492b751025c6a78179b&accounting&transfers&fir
       "blockNumber": 8860531,
       "holder": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
       "logIndex": 95,
+      "recipientName": "Giveth Bridge",
       "transactionIndex": 152
     }
   ],

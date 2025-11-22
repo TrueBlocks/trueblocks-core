@@ -2,10 +2,6 @@
 title: "Chain state"
 description: "Access to account and token state"
 lead: ""
-lastmod:
-  - :git
-  - lastmod
-  - publishDate
 draft: false
 menu:
   data:

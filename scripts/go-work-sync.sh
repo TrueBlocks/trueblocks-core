@@ -12,11 +12,9 @@ GREEN='\033[0;32m'
 NC='\033[0m' # No Color
 
 #------------------------------------------------
-# Get the directory where the script is located
-SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-
 # Navigate to the root of the repo
-cd "$SCRIPT_DIR/.."
+REPO_ROOT="$(git rev-parse --show-toplevel)"
+cd "$REPO_ROOT"
 
 #------------------------------------------------
 # Function to check if git submodules are initialized

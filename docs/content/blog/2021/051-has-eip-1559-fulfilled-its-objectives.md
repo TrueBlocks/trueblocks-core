@@ -3,11 +3,6 @@ title: "Has EIP-1559 Fulfilled Its Objectives?"
 description: "A look at the two purported advantages of EIP-1559"
 lead: "A look at the two purported advantages of EIP-1559"
 date: 2021-12-22T18:10:28-04:00
-lastmod:
-  - :git
-  - lastmod
-  - date
-  - publishDate
 images: []
 draft: false
 tags: ["community"]

@@ -10,7 +10,7 @@ Format:  json
   "data": [
     {
       "address": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
-      "name": "Thomas Jay Rush (trueblocks.eth forum:tjayrush)",
+      "name": "trueblocks.eth",
       "source": "https://gov.gitcoin.co/t/introducing-stewards-governance/41",
       "tags": "31-Gitcoin:Stewards"
     }

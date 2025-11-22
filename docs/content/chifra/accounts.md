@@ -2,10 +2,6 @@
 title: "Accounts"
 description: "Access and cache transactional data"
 lead: ""
-lastmod:
-  - :git
-  - lastmod
-  - publishDate
 draft: false
 aliases:
  - "/docs/chifra/accounts"

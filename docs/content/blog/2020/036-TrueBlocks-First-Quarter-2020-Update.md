@@ -6,7 +6,6 @@ categories:
 - Trueblocks
 tags: ['trueblocks']
 draft: false
-categories: []
 keywords: []
 weight: 964
 ---
@@ -31,7 +30,7 @@ One thing has become very clear: the more we build, the more excited we get. Loc
 
 Here’s a nice picture of our current app, which we’ve taken to calling the **TrueBlocks Account Explorer**:
 
-![](/blog/img/036-TrueBlocks-First-Quarter-2020-Update-001.png)
+![First Quarter 2020](/blog/img/036-TrueBlocks-First-Quarter-2020-Update-001.png)
 
 This is a screen shot of the ‘Digests’ page which gives the user insight into the ‘chunks of the index of appearances.’ We’ve written about this [elsewhere](https://medium.com/@tjayrush/indexing-addresses-on-the-ethereum-blockchain-5c0806161eb9) and [thelsewhere](https://medium.com/@tjayrush) (sic).
 
@@ -50,7 +49,7 @@ We’ve learned a lot of unexpected things while building this app out (some of 
 
 We claimed above we invented the idea of user-centered blockchain exploring — maybe, maybe not, but I do think we’re the first team to have actually implemented it. Here’s another fine screen shot:
 
-![](/blog/img/036-TrueBlocks-First-Quarter-2020-Update-002.png)
+![First Quater 2020](/blog/img/036-TrueBlocks-First-Quarter-2020-Update-002.png)
 
 This is the ‘skinned’ Monitors page of the **TrueBlocks Accounts Explorer** (TrueBlocks frontend allows you to change your skin!) Here, we’re showing a list of addresses that are being actively monitored. From this page, one can access the Explore page which allows you to scroll through the history of the account(s), seeing ‘everything that ever happened to the account.’ (That last sentence is what we’ve been working on for four years.)
 

@@ -2,10 +2,6 @@
 title: "Globals"
 description: ""
 lead: ""
-lastmod:
-  - :git
-  - lastmod
-  - publishDate
 draft: false
 aliases:
  - "/docs/chifra/accounts"

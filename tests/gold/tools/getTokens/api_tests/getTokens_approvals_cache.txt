@@ -34,7 +34,7 @@ tokens?addrs=trueblocks.eth&approvals&cache
       "tokenName": "Uniswap (L1)"
     },
     {
-      "allowance": "115792089237316195423570985008687907853269984665640564039453157405169617241697",
+      "allowance": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
       "blockNumber": 14000000,
       "date": "2022-01-13 22:59:55 UTC",
       "lastAppBlock": 12930151,
@@ -50,7 +50,7 @@ tokens?addrs=trueblocks.eth&approvals&cache
       "tokenName": "Livepeer Token"
     },
     {
-      "allowance": "115792089237316195423570985008687907853269984665640564039455368446995741316059",
+      "allowance": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
       "blockNumber": 14000000,
       "date": "2022-01-13 22:59:55 UTC",
       "lastAppBlock": 12964803,
@@ -66,7 +66,7 @@ tokens?addrs=trueblocks.eth&approvals&cache
       "tokenName": "Livepeer Token"
     },
     {
-      "allowance": "100000000000000000000",
+      "allowance": "1000000000000000000000",
       "blockNumber": 14000000,
       "date": "2022-01-13 22:59:55 UTC",
       "lastAppBlock": 12271496,
@@ -114,7 +114,7 @@ tokens?addrs=trueblocks.eth&approvals&cache
       "tokenName": "Dai Stablecoin (L1)"
     },
     {
-      "allowance": "20000000000000000000",
+      "allowance": "108000000000000000000",
       "blockNumber": 14000000,
       "date": "2022-01-13 22:59:55 UTC",
       "lastAppBlock": 10957425,
@@ -162,7 +162,7 @@ tokens?addrs=trueblocks.eth&approvals&cache
       "tokenName": "Dai Stablecoin (L1)"
     },
     {
-      "allowance": "0",
+      "allowance": "500000000000000000000",
       "blockNumber": 14000000,
       "date": "2022-01-13 22:59:55 UTC",
       "lastAppBlock": 9458061,
@@ -178,7 +178,7 @@ tokens?addrs=trueblocks.eth&approvals&cache
       "tokenName": "Dai Stablecoin (L1)"
     },
     {
-      "allowance": "0",
+      "allowance": "30000000000000000000",
       "blockNumber": 14000000,
       "date": "2022-01-13 22:59:55 UTC",
       "lastAppBlock": 10361939,
@@ -273,7 +273,7 @@ tokens?addrs=trueblocks.eth&approvals&cache
       "tokenName": "Matic Token"
     },
     {
-      "allowance": "0",
+      "allowance": "7000000000000000000000",
       "blockNumber": 14000000,
       "date": "2022-01-13 22:59:55 UTC",
       "lastAppBlock": 8860529,
@@ -289,7 +289,7 @@ tokens?addrs=trueblocks.eth&approvals&cache
       "tokenName": "Dai Stablecoin v1.0"
     },
     {
-      "allowance": "0",
+      "allowance": "10000000",
       "blockNumber": 14000000,
       "date": "2022-01-13 22:59:55 UTC",
       "lastAppBlock": 9364175,

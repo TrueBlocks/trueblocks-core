@@ -5,5 +5,5 @@ TEST[DATE|TIME] Parts:  [all]
 TEST[DATE|TIME] Cache:  true
 TEST[DATE|TIME] Caps:  cache,decache
 TEST[DATE|TIME] Format:  txt
-address	blockNumber	name	symbol	decimals	totalSupply
-0xa9fe4601811213c340e850ea305481aff02f5b28	12000000	WETH yVault	yvWETH	18	10359.022508923948006858
+address	addressName	blockNumber	name	symbol	decimals	totalSupply
+0xa9fe4601811213c340e850ea305481aff02f5b28	WETH yVault	12000000	WETH yVault	yvWETH	18	10359.022508923948006858

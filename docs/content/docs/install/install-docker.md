@@ -3,11 +3,6 @@ title: "Install Docker"
 description: "Install the Docker Version of TrueBlocks "
 lead: "Explorer is the GUI frontend for TrueBlocks"
 date: 2021-07-02T08:01:07-03:00
-lastmod:
-  - :git
-  - lastmod
-  - date
-  - publishDate
 draft: true
 images: []
 menu: 

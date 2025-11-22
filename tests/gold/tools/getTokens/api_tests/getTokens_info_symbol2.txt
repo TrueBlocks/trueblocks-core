@@ -1,5 +1,5 @@
 tokens?addrs=0xd26114cd6ee289accf82350c8d8487fedb8a0c07%200xb9e7f8568e08d5659f5d29c4997173d84cdf2607&parts=symbol&fmt=csv
-address,blockNumber,symbol
-0xd26114cd6ee289accf82350c8d8487fedb8a0c07,17000000,OMG
-0xb9e7f8568e08d5659f5d29c4997173d84cdf2607,17000000,SWT
+address,addressName,blockNumber,symbol
+0xd26114cd6ee289accf82350c8d8487fedb8a0c07,OMGToken,17000000,OMG
+0xb9e7f8568e08d5659f5d29c4997173d84cdf2607,Swarm City Token,17000000,SWT
 

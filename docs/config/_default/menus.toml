@@ -77,6 +77,12 @@
     weight = 50
 
 [[main]]
+    identifier = "applications"
+    name = "Applications"
+    url = "/applications/"
+    weight = 750
+
+[[main]]
     identifier = "faq"
     name = "FAQ"
     url = "/faq/"

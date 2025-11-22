@@ -41,6 +41,7 @@ Results in ./transfer_forward_out.file
       "blockNumber": 8769052,
       "holder": "0x868b8fd259abfcfdf9634c343593b34ef359641d",
       "logIndex": 0,
+      "recipientName": "Tellor Tributes",
       "transactionIndex": 73
     },
     {
@@ -51,6 +52,7 @@ Results in ./transfer_forward_out.file
       "blockNumber": 8769052,
       "holder": "0x868b8fd259abfcfdf9634c343593b34ef359641d",
       "logIndex": 0,
+      "recipientName": "IDEX 1",
       "transactionIndex": 74
     },
     {
@@ -61,6 +63,7 @@ Results in ./transfer_forward_out.file
       "blockNumber": 8769052,
       "holder": "0x868b8fd259abfcfdf9634c343593b34ef359641d",
       "logIndex": 73,
+      "recipientName": "IDEX 1",
       "transactionIndex": 74
     },
     {
@@ -71,6 +74,7 @@ Results in ./transfer_forward_out.file
       "blockNumber": 8769064,
       "holder": "0x868b8fd259abfcfdf9634c343593b34ef359641d",
       "logIndex": 0,
+      "senderName": "IDEX 1",
       "transactionIndex": 131
     },
     {

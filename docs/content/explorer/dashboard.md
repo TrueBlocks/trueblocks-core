@@ -2,10 +2,6 @@
 title: "Dashboard"
 description: ""
 lead: ""
-lastmod:
-  - :git
-  - lastmod
-  - publishDate
 draft: false
 aliases:
  - "/docs/explorer/dashboard"

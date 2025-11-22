@@ -9,6 +9,7 @@ Format:  json
   "data": [
     {
       "address": "0xde30da39c46104798bb5aa3fe8b9e0e1f348163f",
+      "addressName": "Gitcoin (L1)",
       "balance": "0",
       "balanceDec": "0",
       "blockNumber": 12506399,
@@ -19,6 +20,7 @@ Format:  json
     },
     {
       "address": "0xde30da39c46104798bb5aa3fe8b9e0e1f348163f",
+      "addressName": "Gitcoin (L1)",
       "balance": "0",
       "balanceDec": "0",
       "blockNumber": 12506499,
@@ -29,6 +31,7 @@ Format:  json
     },
     {
       "address": "0xde30da39c46104798bb5aa3fe8b9e0e1f348163f",
+      "addressName": "Gitcoin (L1)",
       "balance": "0",
       "balanceDec": "0",
       "blockNumber": 12506599,
@@ -39,6 +42,7 @@ Format:  json
     },
     {
       "address": "0xde30da39c46104798bb5aa3fe8b9e0e1f348163f",
+      "addressName": "Gitcoin (L1)",
       "balance": "0",
       "balanceDec": "0",
       "blockNumber": 12506699,
@@ -49,6 +53,7 @@ Format:  json
     },
     {
       "address": "0xde30da39c46104798bb5aa3fe8b9e0e1f348163f",
+      "addressName": "Gitcoin (L1)",
       "balance": "24504933299536999219200",
       "balanceDec": "24504.9332995369992192",
       "blockNumber": 12506799,
@@ -59,6 +64,7 @@ Format:  json
     },
     {
       "address": "0xde30da39c46104798bb5aa3fe8b9e0e1f348163f",
+      "addressName": "Gitcoin (L1)",
       "balance": "24504933299536999219200",
       "balanceDec": "24504.9332995369992192",
       "blockNumber": 12506899,
@@ -69,6 +75,7 @@ Format:  json
     },
     {
       "address": "0xde30da39c46104798bb5aa3fe8b9e0e1f348163f",
+      "addressName": "Gitcoin (L1)",
       "balance": "24504933299536999219200",
       "balanceDec": "24504.9332995369992192",
       "blockNumber": 12506999,
@@ -79,6 +86,7 @@ Format:  json
     },
     {
       "address": "0xde30da39c46104798bb5aa3fe8b9e0e1f348163f",
+      "addressName": "Gitcoin (L1)",
       "balance": "24504933299536999219200",
       "balanceDec": "24504.9332995369992192",
       "blockNumber": 12507099,
