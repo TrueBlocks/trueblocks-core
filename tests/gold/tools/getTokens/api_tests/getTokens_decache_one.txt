@@ -1,6 +1,13 @@
 tokens?addrs=0xa9fe4601811213c340e850ea305481aff02f5b28&blocks=12000000&decache
 {
-  "data": [],
+  "data": [
+    {
+      "msg": "0 items totaling 0 bytes were removed from the tokens cache."
+    },
+    {
+      "msg": "0 items totaling 0 bytes were removed from the approvals cache."
+    }
+  ],
   "meta": {
     "client": "0xdeadbeef",
     "finalized": "0xdeadbeef",

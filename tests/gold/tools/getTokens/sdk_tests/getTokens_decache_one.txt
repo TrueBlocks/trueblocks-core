@@ -7,9 +7,15 @@ Parts:  [all]
 Decache:  true
 Caps:  cache,decache
 Format:  json
-chifra tokens --decache is not yet implemented
 {
-  "data": [],
+  "data": [
+    {
+      "msg": "0 items totaling 0 bytes were removed from the tokens cache."
+    },
+    {
+      "msg": "0 items totaling 0 bytes were removed from the approvals cache."
+    }
+  ],
   "meta": {
     "client": "0xdeadbeef",
     "finalized": "0xdeadbeef",
