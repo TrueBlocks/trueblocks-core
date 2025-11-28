@@ -2,10 +2,6 @@
 title: "Chain data"
 description: "Access and cache blockchain-related data"
 lead: ""
-lastmod:
-  - :git
-  - lastmod
-  - publishDate
 draft: false
 aliases:
  - "/docs/chifra/chaindata"

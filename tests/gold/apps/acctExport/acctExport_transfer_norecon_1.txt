@@ -16,6 +16,7 @@ TEST[DATE|TIME] Format:  json
       "blockNumber": 9278039,
       "holder": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
       "logIndex": 38,
+      "senderName": "Grant 0233 Ethereumetl",
       "transactionIndex": 26
     },
     {
@@ -25,6 +26,7 @@ TEST[DATE|TIME] Format:  json
       "blockNumber": 9279453,
       "holder": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
       "logIndex": 43,
+      "recipientName": "Grant 0233 Ethereumetl",
       "transactionIndex": 208
     },
     {
@@ -34,6 +36,7 @@ TEST[DATE|TIME] Format:  json
       "blockNumber": 9279453,
       "holder": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
       "logIndex": 44,
+      "recipientName": "Gitcoin Maintainer",
       "transactionIndex": 208
     }
   ]

@@ -5,4 +5,5 @@ TEST[DATE|TIME] Parts:  [all]
 TEST[DATE|TIME] Decache:  true
 TEST[DATE|TIME] Caps:  cache,decache
 TEST[DATE|TIME] Format:  txt
-EROR[DATE|TIME] chifra tokens --decache is not yet implemented
+0 items totaling 0 bytes were removed from the tokens cache.
+0 items totaling 0 bytes were removed from the approvals cache.

@@ -2,10 +2,6 @@
 title: "Support"
 description: ""
 lead: ""
-lastmod:
-  - :git
-  - lastmod
-  - publishDate
 draft: false
 aliases:
  - "/docs/explorer/support"

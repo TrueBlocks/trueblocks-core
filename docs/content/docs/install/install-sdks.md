@@ -2,10 +2,6 @@
 title: "Install SDKs"
 description: "Install the SDKs of TrueBlocks"
 lead: "Install the SDKs of TrueBlocks"
-lastmod:
-  - :git
-  - lastmod
-  - publishDate
 draft: true
 menu: 
   docs:

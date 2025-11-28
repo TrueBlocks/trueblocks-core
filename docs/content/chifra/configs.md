@@ -2,10 +2,6 @@
 title: "Configurations"
 description: ""
 lead: ""
-lastmod:
-  - :git
-  - lastmod
-  - publishDate
 draft: false
 images: []
 aliases:

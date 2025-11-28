@@ -108,7 +108,16 @@ endif()
 # ----------------------------------------------------------------------------
 add_custom_target(generate
     COMMAND goMaker
-    WORKING_DIRECTORY ${REPO_DIR})
+    COMMAND ${CMAKE_COMMAND} -E chdir ${REPO_DIR}/chifra make generate
+    COMMAND ${CMAKE_COMMAND} -E chdir ${REPO_DIR}/sdk make generate
+    COMMAND ${CMAKE_COMMAND} -E chdir ${REPO_DIR}/examples make generate
+    WORKING_DIRECTORY ${REPO_DIR}
+    COMMENT "Running goMaker for core generation and SDK-specific generation")
+
+# Make generate depend on goMaker being built first
+if(EXISTS "${CMAKE_SOURCE_DIR}/../dev-tools/goMaker/go.mod")
+    add_dependencies(generate goMaker)
+endif()
 
 # ----------------------------------------------------------------------------
 add_custom_target(test-all

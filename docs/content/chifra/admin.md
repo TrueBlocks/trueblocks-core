@@ -2,10 +2,6 @@
 title: "Admin"
 description: "Control the scraper and build the index"
 lead: ""
-lastmod:
-  - :git
-  - lastmod
-  - publishDate
 draft: false
 aliases:
  - "/docs/chifra/admin"

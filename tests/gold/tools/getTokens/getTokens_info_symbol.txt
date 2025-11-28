@@ -4,5 +4,5 @@ TEST[DATE|TIME] Blocks:  [17000000]
 TEST[DATE|TIME] Parts:  [symbol]
 TEST[DATE|TIME] Caps:  cache,decache
 TEST[DATE|TIME] Format:  txt
-address	blockNumber	symbol
-0xd26114cd6ee289accf82350c8d8487fedb8a0c07	17000000	OMG
+address	addressName	blockNumber	symbol
+0xd26114cd6ee289accf82350c8d8487fedb8a0c07	OMGToken	17000000	OMG

@@ -2,10 +2,6 @@
 title: "Step 1 - Getting Started"
 description: ""
 date: 2023-09-05T19:25:12+02:00
-lastmod:
-  - :git
-  - lastmod
-  - publishDate
 draft: false
 ---
 

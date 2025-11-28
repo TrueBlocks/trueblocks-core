@@ -3,7 +3,6 @@ title: "Showing ERC-20 Transfers"
 description: "Showing ERC-20 Transfers"
 lead: "Can I show all token transfers on a contract?"
 date: 2021-04-13T08:00:02-04:00
-lastmod: .lastmod
 categories:
 - Tutorials
 tags: ['tutorials']

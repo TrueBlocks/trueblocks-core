@@ -6,7 +6,6 @@ categories:
 - Ethereum
 tags: ['ethereum']
 draft: false
-categories: []
 keywords: []
 weight: 958
 ---

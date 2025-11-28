@@ -3,11 +3,6 @@ title: "Design philosophy"
 description: "The philosophy behind the technical design of TrueBlocks"
 lead: "A core set of values guides every aspect of TrueBlocks' technical design."
 date: 2021-10-04T10:03:01-03:00
-lastmod:
-  - :git
-  - lastmod
-  - date
-  - publishDate
 draft: false
 images: []
 menu: 

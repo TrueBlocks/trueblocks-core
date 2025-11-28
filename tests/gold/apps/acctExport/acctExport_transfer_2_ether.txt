@@ -21,6 +21,7 @@ Results in ./transfer_2_ether_out.file
       "holder": "0x08166f02313feae18bb044e7877c808b55b5bf58",
       "holderName": "Prefund_0270",
       "logIndex": 0,
+      "recipientName": "Prefund_0270",
       "transactionIndex": 270
     },
     {
@@ -32,6 +33,7 @@ Results in ./transfer_2_ether_out.file
       "holder": "0x08166f02313feae18bb044e7877c808b55b5bf58",
       "holderName": "Prefund_0270",
       "logIndex": 0,
+      "senderName": "Prefund_0270",
       "transactionIndex": 0
     },
     {
@@ -43,6 +45,7 @@ Results in ./transfer_2_ether_out.file
       "holder": "0x08166f02313feae18bb044e7877c808b55b5bf58",
       "holderName": "Prefund_0270",
       "logIndex": 0,
+      "senderName": "Prefund_0270",
       "transactionIndex": 0
     }
   ]

@@ -2,10 +2,6 @@
 title: "Other"
 description: "Access to other and external data"
 lead: ""
-lastmod:
-  - :git
-  - lastmod
-  - publishDate
 draft: false
 aliases:
  - "/docs/chifra/other"
