@@ -1531,7 +1531,7 @@ gh pr list --search "is:pr is:closed closed:>2024-06-04" --limit 300 --state mer
 - #3677 Feature/more examples 12
 - #3674 Feature/more examples 11
 - #3672 Feature/more examples 10
-- #3671 Updates go.mod in src/apps/chifra
+- #3671 Updates go.mod in chifra
 - #3666 Shows covalent and alchemy in chifra slurp --help
 - #3663 Bugfix/slurp enum
 - #3662 Fixes tokens sdk fuzzer
@@ -1563,9 +1563,9 @@ gh pr list --search "is:pr is:closed closed:>2024-06-04" --limit 300 --state mer
 - #3594 Fixes tests
 - #3593 Removes Simple throughout
 - #3591 Remove all cpp code 3
-- #3589 Bump golang.org/x/net from 0.10.0 to 0.23.0 in /src/apps/chifra
+- #3589 Bump golang.org/x/net from 0.10.0 to 0.23.0 in /chifra
 - #3588 Don't call fatal in handler
-- #3586 Bump golang.org/x/net from 0.10.0 to 0.23.0 in /src/apps/chifra
+- #3586 Bump golang.org/x/net from 0.10.0 to 0.23.0 in /chifra
 - #3584 Slurp: Covalent provider
 - #3579 Feature/slurp key endpoint support
 - #3578 Enable daemon sdk
@@ -1592,8 +1592,8 @@ gh pr list --search "is:pr is:closed closed:>2024-06-04" --limit 300 --state mer
 - #3545 Adds an example for optimism
 - #3541 Feature/test sdk 2
 - #3540 Bug/better progress logger
-- #3539 Bump google.golang.org/protobuf in /src/apps/chifra
-- #3538 Bump google.golang.org/protobuf from 1.30.0 to 1.33.0 in /src/apps/chifra
+- #3539 Bump google.golang.org/protobuf in /chifra
+- #3538 Bump google.golang.org/protobuf from 1.30.0 to 1.33.0 in /chifra
 - #3535 Cleans up some enums especially chifra tokens
 - #3530 Improves messaging to make debugging accounting easier
 - #3528 Shows RPC endpoint when scraper starts
@@ -1632,7 +1632,7 @@ gh pr list --search "is:pr is:closed closed:>2024-06-04" --limit 300 --state mer
 - #3470 Moves monitor freshening to monitor package
 - #3469 Fix typos
 - #3465 Adds curl debugging throughout
-- #3462 Bump golang.org/x/crypto from 0.6.0 to 0.17.0 in /src/apps/chifra
+- #3462 Bump golang.org/x/crypto from 0.6.0 to 0.17.0 in /chifra
 - #3461 Fix/accounting 5
 - #3459 Fix/accounting 4
 - #3456 Fix/accounting 3

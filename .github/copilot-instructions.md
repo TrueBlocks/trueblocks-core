@@ -86,7 +86,7 @@ When I say "Let's go into design mode" or similar, switch to these rules:
 
 TrueBlocks is a Go-based blockchain data indexing system that provides fast, local access to Ethereum transaction data through the "Unchained Index". The project consists of:
 
-- **chifra**: Main CLI tool (`src/apps/chifra/`) built with Cobra framework
+- **chifra**: Main CLI tool (`chifra/`) built with Cobra framework
 - **SDK**: Multi-language bindings (Go, TypeScript, Python) in `sdk/`
 - **khedra**: Extension system for specialized indexing (`khedra/`)
 - **examples**: Integration examples demonstrating SDK usage (`examples/`)
@@ -94,9 +94,9 @@ TrueBlocks is a Go-based blockchain data indexing system that provides fast, loc
 ## Architecture Patterns
 
 **Command Structure**: Each chifra command follows the pattern:
-- Command definition in `src/apps/chifra/cmd/[command].go`
-- Internal logic in `src/apps/chifra/internal/[command]/`
-- Package-specific types in `src/apps/chifra/pkg/types/`
+- Command definition in `chifra/cmd/[command].go`
+- Internal logic in `chifra/internal/[command]/`
+- Package-specific types in `chifra/pkg/types/`
 
 **Data Flow**: RPC → Cache → Index → Output
 - RPC calls through `pkg/rpc/`
@@ -117,7 +117,7 @@ TrueBlocks is a Go-based blockchain data indexing system that provides fast, loc
 # Full build with CMake
 cd build && make
 # Go build only (always use -o /tmp to avoid workspace clutter)
-cd src/apps/chifra && go build -o /tmp/chifra
+cd chifra && go build -o /tmp/chifra
 # For other modules
 go build -o /tmp/[binary-name] .
 ```
@@ -178,7 +178,7 @@ go build -o /tmp/[binary-name] .
 
 ## Key Files to Reference
 
-- `src/apps/chifra/cmd/root.go` - CLI framework setup
-- `src/apps/chifra/pkg/base/types.go` - Core type definitions  
+- `chifra/cmd/root.go` - CLI framework setup
+- `chifra/pkg/base/types.go` - Core type definitions  
 - `examples/simple/main.go` - Basic SDK usage pattern
 - `scripts/test-all.sh` - Complete testing workflow

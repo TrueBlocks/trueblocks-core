@@ -88,7 +88,7 @@ Data models produced by this tool:
 Links:
 
 - [api docs](/api/#operation/chainstate-state)
-- [source code](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/state)
+- [source code](https://github.com/TrueBlocks/trueblocks-core/tree/master/chifra/internal/state)
 
 ## chifra tokens
 
@@ -148,6 +148,6 @@ Data models produced by this tool:
 Links:
 
 - [api docs](/api/#operation/chainstate-tokens)
-- [source code](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/tokens)
+- [source code](https://github.com/TrueBlocks/trueblocks-core/tree/master/chifra/internal/tokens)
 
 *Copyright (c) 2024, TrueBlocks, LLC. All rights reserved. Generated with goMaker.*

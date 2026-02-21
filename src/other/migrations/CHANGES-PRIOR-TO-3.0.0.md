@@ -680,10 +680,10 @@ The following data models were either modified, added, removed, or renamed by ha
 - #3364 Improved chifra index manifest
 - #3362 Allows for adjustible sleep time during pinning based on size.
 - #3360 Implements chifra export --withdrawals
-- #3356 Bump google.golang.org/grpc from 1.54.0 to 1.56.3 in /src/apps/chifra
+- #3356 Bump google.golang.org/grpc from 1.54.0 to 1.56.3 in /chifra
 - #3355 Fixes the issue further
 - #3354 Fixes an issue with finding block with no addresses (which is actuall…
-- #3353 Bump google.golang.org/grpc from 1.54.0 to 1.56.3 in /src/apps/chifra
+- #3353 Bump google.golang.org/grpc from 1.54.0 to 1.56.3 in /chifra
 - #3352 3324 chifra chunks index truncate should show progress
 - #3351 chifra init --all overwriting valid chunks
 - #3349 Fix/erigon trace change
@@ -691,7 +691,7 @@ The following data models were either modified, added, removed, or renamed by ha
 - #3344 Removes unused --wei global option
 - #3341 Hot fixes two issues with version and withdrawal txs being in index.
 - #3337 Typos
-- #3336 Bump google.golang.org/grpc from 1.54.0 to 1.56.3 in /src/apps/chifra
+- #3336 Bump google.golang.org/grpc from 1.54.0 to 1.56.3 in /chifra
 - #3335 Various improvements to various things
 - #3334 Feature/chunks pins count 1
 - #3328 Fix chifra chunks index --check for chifra init mode

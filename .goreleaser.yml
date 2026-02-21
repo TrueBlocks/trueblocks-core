@@ -1,6 +1,6 @@
 version: 2
 builds:
-  - dir: src/apps/chifra
+  - dir: chifra
     env:
       - CGO_ENABLED=0
     goos:

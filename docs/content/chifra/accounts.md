@@ -73,7 +73,7 @@ Data models produced by this tool:
 Links:
 
 - [api docs](/api/#operation/accounts-list)
-- [source code](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/list)
+- [source code](https://github.com/TrueBlocks/trueblocks-core/tree/master/chifra/internal/list)
 
 ## chifra export
 
@@ -179,7 +179,7 @@ Data models produced by this tool:
 Links:
 
 - [api docs](/api/#operation/accounts-export)
-- [source code](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/export)
+- [source code](https://github.com/TrueBlocks/trueblocks-core/tree/master/chifra/internal/export)
 
 ### further information
 
@@ -241,7 +241,7 @@ Data models produced by this tool:
 Links:
 
 - [api docs](/api/#operation/accounts-monitors)
-- [source code](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/monitors)
+- [source code](https://github.com/TrueBlocks/trueblocks-core/tree/master/chifra/internal/monitors)
 
 ## chifra names
 
@@ -299,7 +299,7 @@ Data models produced by this tool:
 Links:
 
 - [api docs](/api/#operation/accounts-names)
-- [source code](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/names)
+- [source code](https://github.com/TrueBlocks/trueblocks-core/tree/master/chifra/internal/names)
 
 ## chifra abis
 
@@ -364,7 +364,7 @@ Data models produced by this tool:
 Links:
 
 - [api docs](/api/#operation/accounts-abis)
-- [source code](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/abis)
+- [source code](https://github.com/TrueBlocks/trueblocks-core/tree/master/chifra/internal/abis)
 
 ### further information
 

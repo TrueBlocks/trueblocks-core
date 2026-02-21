@@ -14,7 +14,7 @@ The repository structure has been completely reorganized with proper Go module v
 
 **Old import path:**
 ```go
-github.com/TrueBlocks/trueblocks-core/src/apps/chifra
+github.com/TrueBlocks/trueblocks-core/chifra
 ```
 
 **New import path:**
@@ -64,7 +64,7 @@ module your-project
 go 1.21
 
 require (
-    github.com/TrueBlocks/trueblocks-core/src/apps/chifra v0.0.0
+    github.com/TrueBlocks/trueblocks-core/chifra v0.0.0
     github.com/TrueBlocks/trueblocks-sdk/v5 v5.9.3
 )
 ```
@@ -117,7 +117,7 @@ module your-project
 go 1.21
 
 require (
-    github.com/TrueBlocks/trueblocks-core/src/apps/chifra v5.9.3
+    github.com/TrueBlocks/trueblocks-core/chifra v5.9.3
     github.com/TrueBlocks/trueblocks-sdk/v5 v5.9.3
     github.com/TrueBlocks/trueblocks-khedra/v5 v5.9.3
 )

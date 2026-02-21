@@ -56,7 +56,7 @@ Data models produced by this tool:
 Links:
 
 - [api docs](/api/#operation/admin-config)
-- [source code](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/config)
+- [source code](https://github.com/TrueBlocks/trueblocks-core/tree/master/chifra/internal/config)
 
 ## chifra status
 
@@ -113,7 +113,7 @@ Data models produced by this tool:
 Links:
 
 - [api docs](/api/#operation/admin-status)
-- [source code](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/status)
+- [source code](https://github.com/TrueBlocks/trueblocks-core/tree/master/chifra/internal/status)
 
 ## chifra daemon
 
@@ -161,7 +161,7 @@ Data models produced by this tool:
 Links:
 
 - no api for this command
-- [source code](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/daemon)
+- [source code](https://github.com/TrueBlocks/trueblocks-core/tree/master/chifra/internal/daemon)
 
 ### further information
 
@@ -229,7 +229,7 @@ Data models produced by this tool:
 Links:
 
 - no api for this command
-- [source code](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/scrape)
+- [source code](https://github.com/TrueBlocks/trueblocks-core/tree/master/chifra/internal/scrape)
 
 ### configuration
 
@@ -380,7 +380,7 @@ Data models produced by this tool:
 Links:
 
 - [api docs](/api/#operation/admin-chunks)
-- [source code](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/chunks)
+- [source code](https://github.com/TrueBlocks/trueblocks-core/tree/master/chifra/internal/chunks)
 
 ## chifra init
 
@@ -435,6 +435,6 @@ Data models produced by this tool:
 Links:
 
 - [api docs](/api/#operation/admin-init)
-- [source code](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/init)
+- [source code](https://github.com/TrueBlocks/trueblocks-core/tree/master/chifra/internal/init)
 
 *Copyright (c) 2024, TrueBlocks, LLC. All rights reserved. Generated with goMaker.*
