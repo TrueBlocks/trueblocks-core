@@ -145,21 +145,32 @@ else()
 endif()
 
 # ----------------------------------------------------------------------------
+# Helper script for go build with compile-time timestamp injection
+file(WRITE ${CMAKE_BINARY_DIR}/go_build_with_timestamp.sh
+"#!/bin/sh
+COMPILE_TIME=$(date -u '+%Y-%m-%d %H:%M:%S UTC')
+cd \"$1\"
+exec go build -ldflags \"-X 'main.compileTime=$COMPILE_TIME'\" -o \"$2\"
+")
+
 function(add_go_installable_program NAME MAIN_SRC DEST_DIR)
     get_filename_component(MAIN_SRC_ABS ${MAIN_SRC} ABSOLUTE)
-    file(GLOB SRC_FILE_LIST "${MAIN_SRC}/*.go")
     set(EXE_NAME ${NAME})
     if(WIN32)
         set(EXE_NAME ${NAME}.exe)
     endif()
 
-    add_custom_target(${NAME} ALL)
-    add_custom_command(TARGET ${NAME}
-                    POST_BUILD
-                    COMMAND go build
-                    -o "${DEST_DIR}/${EXE_NAME}"
-                    ${CMAKE_GO_FLAGS} ${SRC_FILE_LIST}
-                    WORKING_DIRECTORY ${CMAKE_CURRENT_LIST_DIR})
+    set(OUTPUT_FILE "${DEST_DIR}/${EXE_NAME}")
+
+    add_custom_command(OUTPUT ${OUTPUT_FILE}
+                    COMMAND sh ${CMAKE_BINARY_DIR}/go_build_with_timestamp.sh
+                    ${MAIN_SRC_ABS} ${OUTPUT_FILE}
+                    COMMENT "Building ${NAME} from ${MAIN_SRC_ABS}")
+
+    add_custom_target(${NAME} ALL DEPENDS ${OUTPUT_FILE})
+
+    # Register the output so 'make clean' removes installed binaries
+    set_property(DIRECTORY APPEND PROPERTY ADDITIONAL_MAKE_CLEAN_FILES ${OUTPUT_FILE})
 endfunction()
 
 # ----------------------------------------------------------------------------
@@ -201,3 +212,5 @@ endif()
 if(EXISTS "${REPO_DIR}/khedra/go.mod")
     add_dependencies(khedra chifra)
 endif()
+
+

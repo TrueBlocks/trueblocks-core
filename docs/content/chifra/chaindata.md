@@ -91,7 +91,7 @@ Data models produced by this tool:
 Links:
 
 - [api docs](/api/#operation/chaindata-blocks)
-- [source code](https://github.com/TrueBlocks/trueblocks-core/tree/master/chifra/internal/blocks)
+- [source code](https://github.com/TrueBlocks/trueblocks-chifra/tree/master/internal/blocks)
 
 ### further information
 
@@ -157,7 +157,7 @@ Data models produced by this tool:
 Links:
 
 - [api docs](/api/#operation/chaindata-transactions)
-- [source code](https://github.com/TrueBlocks/trueblocks-core/tree/master/chifra/internal/transactions)
+- [source code](https://github.com/TrueBlocks/trueblocks-chifra/tree/master/internal/transactions)
 
 ### further information
 
@@ -208,7 +208,7 @@ Data models produced by this tool:
 Links:
 
 - [api docs](/api/#operation/chaindata-receipts)
-- [source code](https://github.com/TrueBlocks/trueblocks-core/tree/master/chifra/internal/receipts)
+- [source code](https://github.com/TrueBlocks/trueblocks-chifra/tree/master/internal/receipts)
 
 ## chifra logs
 
@@ -255,7 +255,7 @@ Data models produced by this tool:
 Links:
 
 - [api docs](/api/#operation/chaindata-logs)
-- [source code](https://github.com/TrueBlocks/trueblocks-core/tree/master/chifra/internal/logs)
+- [source code](https://github.com/TrueBlocks/trueblocks-chifra/tree/master/internal/logs)
 
 ## chifra traces
 
@@ -311,7 +311,7 @@ Data models produced by this tool:
 Links:
 
 - [api docs](/api/#operation/chaindata-traces)
-- [source code](https://github.com/TrueBlocks/trueblocks-core/tree/master/chifra/internal/traces)
+- [source code](https://github.com/TrueBlocks/trueblocks-chifra/tree/master/internal/traces)
 
 ### further information
 
@@ -379,6 +379,6 @@ Data models produced by this tool:
 Links:
 
 - [api docs](/api/#operation/chaindata-when)
-- [source code](https://github.com/TrueBlocks/trueblocks-core/tree/master/chifra/internal/when)
+- [source code](https://github.com/TrueBlocks/trueblocks-chifra/tree/master/internal/when)
 
 *Copyright (c) 2024, TrueBlocks, LLC. All rights reserved. Generated with goMaker.*

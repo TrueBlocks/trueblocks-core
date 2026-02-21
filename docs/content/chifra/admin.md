@@ -56,7 +56,7 @@ Data models produced by this tool:
 Links:
 
 - [api docs](/api/#operation/admin-config)
-- [source code](https://github.com/TrueBlocks/trueblocks-core/tree/master/chifra/internal/config)
+- [source code](https://github.com/TrueBlocks/trueblocks-chifra/tree/master/internal/config)
 
 ## chifra status
 
@@ -113,7 +113,7 @@ Data models produced by this tool:
 Links:
 
 - [api docs](/api/#operation/admin-status)
-- [source code](https://github.com/TrueBlocks/trueblocks-core/tree/master/chifra/internal/status)
+- [source code](https://github.com/TrueBlocks/trueblocks-chifra/tree/master/internal/status)
 
 ## chifra daemon
 
@@ -161,7 +161,7 @@ Data models produced by this tool:
 Links:
 
 - no api for this command
-- [source code](https://github.com/TrueBlocks/trueblocks-core/tree/master/chifra/internal/daemon)
+- [source code](https://github.com/TrueBlocks/trueblocks-chifra/tree/master/internal/daemon)
 
 ### further information
 
@@ -210,7 +210,6 @@ Flags:
   -l, --touch uint       first block to visit when scraping (snapped back to most recent snap_to_grid mark)
   -u, --run_count uint   run the scraper this many times, then quit
   -d, --dry_run          show the configuration that would be applied if run,no changes are made
-  -o, --notify           enable the notify feature
   -v, --verbose          enable verbose output
   -h, --help             display this help screen
 
@@ -229,7 +228,7 @@ Data models produced by this tool:
 Links:
 
 - no api for this command
-- [source code](https://github.com/TrueBlocks/trueblocks-core/tree/master/chifra/internal/scrape)
+- [source code](https://github.com/TrueBlocks/trueblocks-chifra/tree/master/internal/scrape)
 
 ### configuration
 
@@ -380,7 +379,7 @@ Data models produced by this tool:
 Links:
 
 - [api docs](/api/#operation/admin-chunks)
-- [source code](https://github.com/TrueBlocks/trueblocks-core/tree/master/chifra/internal/chunks)
+- [source code](https://github.com/TrueBlocks/trueblocks-chifra/tree/master/internal/chunks)
 
 ## chifra init
 
@@ -435,6 +434,6 @@ Data models produced by this tool:
 Links:
 
 - [api docs](/api/#operation/admin-init)
-- [source code](https://github.com/TrueBlocks/trueblocks-core/tree/master/chifra/internal/init)
+- [source code](https://github.com/TrueBlocks/trueblocks-chifra/tree/master/internal/init)
 
 *Copyright (c) 2024, TrueBlocks, LLC. All rights reserved. Generated with goMaker.*

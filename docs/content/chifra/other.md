@@ -51,7 +51,7 @@ Data models produced by this tool:
 Links:
 
 - no api for this command
-- [source code](https://github.com/TrueBlocks/trueblocks-core/tree/master/chifra/internal/explore)
+- [source code](https://github.com/TrueBlocks/trueblocks-chifra/tree/master/internal/explore)
 
 ## chifra slurp
 
@@ -120,7 +120,7 @@ Data models produced by this tool:
 Links:
 
 - [api docs](/api/#operation/other-slurp)
-- [source code](https://github.com/TrueBlocks/trueblocks-core/tree/master/chifra/internal/slurp)
+- [source code](https://github.com/TrueBlocks/trueblocks-chifra/tree/master/internal/slurp)
 
 ### Adding provider API key
 Call `chifra config edit` to edit the configuration file.
