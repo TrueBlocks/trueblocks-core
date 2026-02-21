@@ -12,6 +12,7 @@ Arguments:
   blocks - one or more dates, block numbers, hashes, or special named blocks (see notes)
 
 Flags:
+      --diff            show the number of blocks per period (requires a non-blockly period modifier on the block range) (hidden)
   -l, --list            export a list of the 'special' blocks
   -t, --timestamps      display or process timestamps
   -U, --count           with --timestamps only, returns the number of timestamps in the cache

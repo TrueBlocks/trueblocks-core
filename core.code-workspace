@@ -26,6 +26,9 @@
       "analyses": {
         "infertypeargs": false
       }
+    },
+    "chat.tools.terminal.autoApprove": {
+      "diff": true
     }
   }
 }

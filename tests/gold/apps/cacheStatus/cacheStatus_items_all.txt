@@ -149,6 +149,15 @@ TEST[DATE|TIME] Format:  json
           "nFolders": 456,
           "path": "--paths--",
           "sizeInBytes": 789,
+          "type": "approvalsCache"
+        },
+        {
+          "items": [],
+          "lastCached": "--lastCached--",
+          "nFiles": 123,
+          "nFolders": 456,
+          "path": "--paths--",
+          "sizeInBytes": 789,
           "type": "tracesCache"
         },
         {

@@ -10,7 +10,6 @@ Flags:
   -l, --touch uint            first block to visit when scraping (snapped back to most recent snap_to_grid mark)
   -u, --run_count uint        run the scraper this many times, then quit
   -d, --dry_run               show the configuration that would be applied if run,no changes are made
-  -o, --notify                enable the notify feature
       --apps_per_chunk uint   the number of appearances to build into a chunk before consolidating it (hidden) (default 2000000)
       --snap_to_grid uint     an override to apps_per_chunk to snap-to-grid at every modulo of this value, this allows easier corrections to the index (hidden) (default 250000)
       --first_snap uint       the first block at which snap_to_grid is enabled (hidden) (default 2000000)
