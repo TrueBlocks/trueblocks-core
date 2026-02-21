@@ -33,13 +33,13 @@ linters:
     rules:
       - linters:
           - ineffassign
-        path: src/apps/chifra/internal/scrape/handle_show.go
+        path: internal/scrape/handle_show.go
       - linters:
           - ineffassign
-        path: src/apps/chifra/internal/[^/]+/options\.go
+        path: internal/[^/]+/options\.go
       - linters:
           - ineffassign
-        path: src/apps/chifra/pkg/types/types_
+        path: pkg/types/types_
       - linters:
           - errcheck
           - goconst

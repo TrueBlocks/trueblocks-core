@@ -1,7 +1,7 @@
 name: BuildAndTest
 on: [pull_request, workflow_dispatch]
 env:
-  CHIFRA_PATH: src/apps/chifra
+  CHIFRA_PATH: chifra
   KHEDRA_PATH: khedra
   # Go Version
   GO_VERSION: 1.25.1

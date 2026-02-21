@@ -2,7 +2,7 @@
   "folders": [
     {
       "name": "core",
-      "path": "."
+      "path": "/Users/jrush/Development/trueblocks-core"
     },
     {
       "name": "chifra",
@@ -28,7 +28,8 @@
       }
     },
     "chat.tools.terminal.autoApprove": {
-      "diff": true
+      "diff": true,
+      "golangci-lint": true
     }
   }
 }
