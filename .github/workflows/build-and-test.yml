@@ -70,3 +70,35 @@ jobs:
           # cd ${{ env.KHEDRA_PATH }}
           # export TB_NO_PROVIDER_CHECK=true
           # go test ./...
+  RemoteTests:
+    needs: Build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Run tests remotely
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          # These secrets are configured in the repository settings
+          host: ${{ secrets.TESTING_HOST }} # Remote testing server hostname
+          username: ${{ secrets.TESTING_USERNAME }} # SSH username for remote testing
+          key: ${{ secrets.SSH_PRIVATE_KEY }} # SSH private key for authentication
+          command_timeout: 40m
+          script: |
+            set -e  # Exit on any error
+            rm -rf testing/${{ github.sha }}
+            mkdir -p testing/${{ github.sha }}
+            mkdir -p test_results/${{ github.sha }}
+            cd  testing/${{ github.sha }}
+            git clone --quiet https://github.com/${{ github.repository }}
+            cd trueblocks-core
+            git checkout ${{ github.head_ref }}
+            git submodule update --init --recursive
+            cd scripts
+            bash check_go_version.sh ${{ env.GO_VERSION }}
+            if CONFIG_FILE=$HOME/trueBlocks.toml bash test-with-docker.sh ${{ github.repository }} ${{ github.sha }} ${{ github.head_ref }}; then
+              echo "✅ Tests passed successfully"
+              echo "Results placed in /home/testuser/testing/${{ github.sha }}"
+            else
+              echo "❌ Tests failed"
+              exit 1
+            fi
+            docker system prune -af --filter "until=1h"

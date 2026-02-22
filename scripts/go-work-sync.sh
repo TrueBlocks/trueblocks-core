@@ -78,7 +78,7 @@ find . -type f -name 'go.mod' | while read -r modfile; do
         go get github.com/btcsuite/btcd >/dev/null 2>&1
     fi
 
-    if [ "$isSdk" = false ] && [ "$isChifra" = false ] && [ "$isGoMaker" = false ] && [ "$isTestRunner" = false ] && [ "$isKhedra" = false ] && [ "$isBlockchainExample" = false ] && [ "$isIndexMan" = false ] && [ "$isSdkExample" = false ]; then
+    if [ "$isSdk" = false ] && [ "$isChifra" = false ] && [ "$isGoMaker" = false ] && [ "$isNode" = false ]; then
         go get github.com/TrueBlocks/trueblocks-sdk/v6@latest
     fi
 
