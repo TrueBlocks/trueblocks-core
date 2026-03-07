@@ -56,9 +56,9 @@
     url = "/sdks/introduction"
     weight = 10
 [[sdks]]
-    identifier = "langauges"
-    name = "Langauges"
-    url = "/sdks/langauges"
+    identifier = "languages"
+    name = "Languages"
+    url = "/sdks/languages"
     weight = 20
 
 [[main]]

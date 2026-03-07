@@ -9,7 +9,7 @@ draft: false
 
 Let's dig deeper. Let's query specific addresses. In other words, snoop.
 
-**Note:** chances are very high that if you're not running your own node, you will get rate limted with these commands.
+**Note:** chances are very high that if you're not running your own node, you will get rate limited with these commands.
 
 Do this:
 
@@ -34,7 +34,7 @@ Note how slow this is (TrueBlocks is a work in progress).
 chifra state --no_header --ether --chain mainnet --file grants.txt
 ```
 
-A bit slow, but this is the current ether balance of each of the grant receipients. I don't know about you, all other things equal, I'd give to a project with a smaller balance than an larger one. Even if only because they're smart enough to drain thier wallet.
+A bit slow, but this is the current ether balance of each of the grant recipients. I don't know about you, all other things equal, I'd give to a project with a smaller balance than an larger one. Even if only because they're smart enough to drain their wallet.
 
 Notice four other things with this command:
 
@@ -45,15 +45,15 @@ Notice four other things with this command:
 
 ### Getting Token Balances
 
-We leave this part of the tutorial as an excercise. Run `chifra tokens`. Read the help text. Figure out how to get token balances for each of the grant receipients for any token, but here's a hint:
+We leave this part of the tutorial as an exercise. Run `chifra tokens`. Read the help text. Figure out how to get token balances for each of the grant recipients for any token, but here's a hint:
 
-The holdings as the latest block for each of the grants receipients for the DAI stable coin:
+The holdings as the latest block for each of the grants recipients for the DAI stable coin:
 
 ```bash
 chifra names dai stable 0x6 -s | chifra tokens --no_header --chain mainnet 0x6b175474e89094c44da98b954eedeac495271d0f --file grants.txt --cache
 ```
 
-The holdings each week for each of the grants receipients for the DAI stable coin:
+The holdings each week for each of the grants recipients for the DAI stable coin:
 
 ```bash
 chifra names dai stable 0x6 -s | chifra tokens --no_header --chain mainnet 0x6b175474e89094c44da98b954eedeac495271d0f --file grants.txt --cache 14000000-15000000:weekly

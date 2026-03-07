@@ -30,7 +30,7 @@ We hope to show why:
 - The RPC is broken, but it can be fixed,
 - Web 2.0 APIs delivering Web 3.0 data makes NO SENSE!
   - Rate limiting slows the world to molasses,
-  - Thier non-standard endpoints will capture you,
+  - Their non-standard endpoints will capture you,
   - They MUST know who you are so they can rate limit you,
   - The API game is winner-take-all. Witness Google,
   - How do we know they're not lying?

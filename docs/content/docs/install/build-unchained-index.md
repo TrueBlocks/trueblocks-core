@@ -102,7 +102,7 @@ For detailed instructions, see the [`chifra scrape` command documentation](/chif
 
 **How it works**:
 
-The end result of `chifa scrape` is the same as the end result of `chifra init --all`. However, the process is crucially different: rather than downloading the index that we publish (that is, trusting us), `chifra scrape` _builds the index on your local machine connecting only with your local-running RPC endpoint_, which means if you trust your own setup, you can trust the data.
+The end result of `chifra scrape` is the same as the end result of `chifra init --all`. However, the process is crucially different: rather than downloading the index that we publish (that is, trusting us), `chifra scrape` _builds the index on your local machine connecting only with your local-running RPC endpoint_, which means if you trust your own setup, you can trust the data.
 
 (One note: It's possible to run against any RPC endpoint -- remote or local -- but because the TrueBlocks scraper hits the node continually and very aggressively, you will probably get rate-limited against a shared RPC server such as Infura.)
 
