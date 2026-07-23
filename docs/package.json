@@ -52,7 +52,7 @@
     "katex": "^0.16.10",
     "lazysizes": "^5.3",
     "markdownlint-cli": "^0.43",
-    "postcss": "^8.4.31",
+    "postcss": "^8.5.10",
     "postcss-cli": "^8.3",
     "purgecss-whitelister": "^2.4",
     "rimraf": "^3.0",
