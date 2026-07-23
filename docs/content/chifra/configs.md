@@ -56,7 +56,7 @@ A single global configuration, called `trueBlocks.toml`, which stores all the co
 
 Note: As of version 2.5.2, this is no longer true.
 
-In addition, each individual tool may have its own configuration file with items peculuar to that tool.
+In addition, each individual tool may have its own configuration file with items peculiar to that tool.
 If a configuration item is found in a particular file, it applies only to that tool.
 
 If, however, one of the items documented below under `trueBlocks.toml` is found in a tool's

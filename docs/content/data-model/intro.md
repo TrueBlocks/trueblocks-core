@@ -18,7 +18,7 @@ toc: true
 
 ## TrueBlocks data
 
-On its own blockchain data is an unintelligable blob of binary bytes. But, we all know there
+On its own blockchain data is an unintelligible blob of binary bytes. But, we all know there
 is an amazing collection of deeply interesting information contained therein. Thousands of
 people are trading, voting, expressing their preferences, making markets for valueless
 items every minute.

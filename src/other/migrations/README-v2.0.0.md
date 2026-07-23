@@ -84,7 +84,7 @@ If `withdrawals` are available for your chain, and you know which block `withdra
 chifra chunks index --truncate <bn> --chain <chain>
 ```
 
-The above will remove all blocks prior to and including the chunk containing `bn` from your index. You may then re-run `chifar scrape` to catch back up to the head.
+The above will remove all blocks prior to and including the chunk containing `bn` from your index. You may then re-run `chifra scrape` to catch back up to the head.
 
 ### Tagging an existing index
 

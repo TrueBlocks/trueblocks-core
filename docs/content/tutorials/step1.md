@@ -24,7 +24,7 @@ Progress:          4259662, 0, 0, 0 ts: 4438781
 
 1. The paths listed in the middle of the output may come in handy for configuration.
 2. The final line shows five numbers:
-   - The first number is the lastest block on the chain.
+   - The first number is the latest block on the chain.
    - The last number is the latest timestamps (this was downloaded).
    - The three middle numbers are related to the index. Ignore them for now.
 
@@ -42,7 +42,7 @@ Run this command which displays the current state of the index. It will report a
 chifra chunks blooms
 ```
 
-This makes sense. It's telling you that you've not yet initalized the system. It suggests either `chifra init` or `chifra scrape`. Let's try `chifra scrape`.
+This makes sense. It's telling you that you've not yet initialized the system. It suggests either `chifra init` or `chifra scrape`. Let's try `chifra scrape`.
 
 Run:
 
