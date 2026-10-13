@@ -7,7 +7,7 @@ titleAddition = "Light, local index of the Ethereum blockchain"
 titleSeparator = "-"
 
 ## Open Graph + Twitter Cards
-images = ["https://trueblocks.io/trueblocks.png"]
+images = ["social-card.png"]
 ogLocale = "en_US"
 twitterCreator = "TrueBlocks"
 twitterSite = "TrueBlocks"

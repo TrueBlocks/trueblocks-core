@@ -3,14 +3,14 @@
 <meta property="og:type" content="{{ if .IsPage }}article{{ else }}website{{ end }}">
 {{ if $.Scratch.Get "paginator" -}}
   {{ $paginator := .Paginate (where .Site.RegularPages.ByDate.Reverse "Section" "blog" ) -}}
-  <meta property="og:url" content="{{ .Paginator.URL | relURL }}">
+  <meta property="og:url" content="{{ .Paginator.URL | absURL }}">
 {{ else -}}
-  <meta property="og:url" content="{{ .RelPermalink }}">
+  <meta property="og:url" content="{{ .Permalink }}">
 {{ end -}}
 
 {{ with $.Params.images -}}
   {{ range first 6 . -}}
-  <meta property="og:image" content="{{ $.RelPermalink }}{{ . }}">
+  <meta property="og:image" content="{{ $.Permalink }}{{ . }}">
   {{ end -}}
 {{ else -}}
   {{ $images := $.Resources.ByType "image" -}}
@@ -19,10 +19,10 @@
     {{ $featured = $images.GetMatch "{*cover*,*thumbnail*}" }}
   {{ end -}}
   {{ with $featured -}}
-    <meta property="og:image" content="{{ $featured.RelPermalink }}"/>
+    <meta property="og:image" content="{{ $featured.Permalink }}"/>
   {{ else -}}
     {{ with $.Site.Params.images -}}
-      <meta property="og:image" content="{{ index . 0 | relURL }}"/>
+      <meta property="og:image" content="{{ index . 0 | absURL }}"/>
     {{ end -}}
   {{ end -}}
 {{ end -}}
