@@ -2,6 +2,218 @@
 
 This file details changes made to TrueBlocks over time. All version prior to version 3.0.0 are now no longer supported.
 
+## v6.7.0 - Update Spring 2026 - Lehigh (2026/03/01)
+
+**Summary**
+
+- Lazy-loaded calculated fields (`EnsureCalcs`) added to all ~45 data types, allowing SDK/frontend consumers to access backend-computed values without reimplementing logic.
+- Unified RPC endpoint checking across core and Khedra — `PingRpc` now returns detailed probe results including chain ID and latency.
+- `chifra export --approvals` reworked to return `Transaction` type (not `Log`), capturing both successful and failed approval transactions.
+- StateMutability bug fixed — `"view"` and `"pure"` ABI values are no longer incorrectly converted to `"nonpayable"`.
+- Go bumped to 1.25.1.
+- New `Approval` and `Destination` data types.
+- New `chunkDiagnostics` example for Unchained Index health checking.
+
+## Breaking Changes
+
+- `PingRpc` signature changed from `PingRpc(url) error` to `PingRpc(url) (*PingResult, error)`. SDK wrapper preserves backward compatibility.
+- `GetBalanceAt` made private (`getBalanceAt`) — external callers should use `GetBalanceAtToken`.
+- `chifra export --approvals` now returns `Transaction` objects instead of `Log` objects.
+- StateMutability fix may change ABI output for cached ABIs — cached ABIs with corrupted `stateMutability` values should be regenerated.
+
+## System Wide Changes
+
+- Bumps Go version to 1.25.1.
+- Added lazy-loaded `Calcs *{Type}Calcs` field and `EnsureCalcs(p *ModelProps, fieldFilter []string) error` method to all ~45 data types.
+- Added `{Type}Calcs` structs for every data type to hold calculated fields.
+- Unified RPC probe: `PingRpc` now uses `eth_chainId` (instead of `web3_clientVersion`) for liveness + network validation.
+- New `PingResult` struct with `OK`, `ChainID`, `StatusCode`, `LatencyMS`, `Error` fields.
+- Fixed StateMutability bug: `FunctionFromAbiMethod()` no longer strips `"view"` and `"pure"` values.
+- `GetBalanceAt` renamed to `getBalanceAt` (private) — only used internally in rpc package.
+- Consistent naming pattern: `getBalanceAt` (ETH), `GetBalanceAtToken` (ERC-20).
+
+## SDK
+
+- SDK wrapper maintains backward-compatible `PingRpc(url) error` interface over enhanced core function.
+- All SDK types now include `Calcs` field for lazy-loaded calculated data.
+
+## Changes to the Unchained Index Specification
+
+- No changes.
+
+## Changes to Khedra
+
+- Replaced Khedra's internal `RpcProbeJSON` calls with core `rpc.PingRpc`.
+- Eliminated ~90% of duplicated RPC probe code between core and Khedra.
+- Khedra's `validity.go` and `control.go` now use unified probe path.
+- Deprecated `RpcProbeHandler` (kept for backward compat).
+
+## Changes to Testing
+
+- No significant changes documented.
+
+## Changes to Data Models
+
+- See below.
+
+### Modified data models
+
+| model    | change | description                                                         |
+| -------- | ------ | ------------------------------------------------------------------- |
+| All (~45)| added  | `calcs` - lazy-loaded calculated fields via `EnsureCalcs()` method  |
+| Function | fixed  | `stateMutability` - no longer corrupts `"view"` / `"pure"` values  |
+
+### New data models
+
+| model       | description                                                              |
+| ----------- | ------------------------------------------------------------------------ |
+| Approval    | Token approval state: allowance, owner, spender, token, block, names     |
+| Destination | Destination type for routing/output                                      |
+| PingResult  | RPC probe result: OK, ChainID, StatusCode, LatencyMS, Error              |
+
+### Removed data models
+
+| model | description |
+| ----- | ----------- |
+| None  |             |
+
+### Renamed data models
+
+| model | description |
+| ----- | ----------- |
+| None  |             |
+
+## Tool Specific Changes
+
+**chifra list**
+
+- No changes.
+
+**chifra export**
+
+- `--approvals` now returns `Transaction` type instead of `Log` type.
+- `--approvals` now captures failed approval transactions (approval fourbytes but no receipt/logs).
+- Filtered logs are attached to the returned transaction for successful approvals.
+- Help text and behavior now align: "export all token approval transactions for the given address."
+
+**chifra monitors**
+
+- No changes.
+
+**chifra names**
+
+- No changes.
+
+**chifra abis**
+
+- Fixed StateMutability bug where `"view"` and `"pure"` were incorrectly converted to `"nonpayable"`.
+
+**chifra blocks**
+
+- No changes.
+
+**chifra transactions**
+
+- No changes.
+
+**chifra receipts**
+
+- No changes.
+
+**chifra logs**
+
+- No changes.
+
+**chifra traces**
+
+- No changes.
+
+**chifra when**
+
+- No changes.
+
+**chifra state**
+
+- No changes.
+
+**chifra tokens**
+
+- Internal: `GetBalanceAt` made private; callers use `GetBalanceAtToken`.
+
+**chifra config**
+
+- No changes.
+
+**chifra status**
+
+- No changes.
+
+**chifra daemon**
+
+- No changes.
+
+**chifra scrape**
+
+- No changes.
+
+**chifra chunks**
+
+- No changes.
+
+**chifra init**
+
+- No changes.
+
+**chifra explore**
+
+- No changes.
+
+**chifra slurp**
+
+- No changes.
+
+**goMaker**
+
+- No changes.
+
+**testRunner**
+
+- No changes.
+
+## New Examples
+
+- `chunkDiagnostics` — Unchained Index health checker ("The Blockchain Doctor"). Validates range agreement, size agreement, IPFS availability, and header consistency across manifest, index files, and bloom filters.
+
+## Pull Requests (0)
+
+<!--
+gh pr list --search "is:pr is:closed closed:>2025-11-01" --limit 300 --state merged | cut -f1,2 | sed 's/^/- #/' | tr '\t' ' '
+-->
+
+- #4029 Bump micromatch from 4.0.7 to 4.0.8 in /docs
+- #4028 Bump js-yaml in /docs
+- #4027 Bump ajv in /docs
+- #4024 Changes and improvements after version 6.1.0 release
+
+## Issues Closed (0)
+
+<!--
+gh issue list --search "closed:>2025-11-01 is:closed is:issue sort:created-desc" --limit 300 --state closed | cut -f1,3 | sort -r | sed 's/^/- #/' | tr '\t' ' '
+-->
+
+- #4016 Etherscan API V1 has been deprecated
+- #4015 Analytics integration guide
+
+## Issues Opened (0)
+
+<!--
+gh issue list --search "created:>2025-11-01 is:open is:issue sort:created-desc" --limit 300 --state open | cut -f1,3 | sort -r | sed 's/^/- #/' | tr '\t' ' '
+-->
+
+- None.
+
+---
+
 ## v6.4.5 - MAJOR REWORKING OF GO MODULES - BREAKING
 
 **See the [MIGRATIONS.md](./MIGRATIONS.md) file for detailed migration instructions.**
