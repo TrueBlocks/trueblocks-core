@@ -2495,7 +2495,6 @@ tags	address	name	symbol	source	decimals	deleted	isCustom	isPrefund	isContract	i
 50-Tokens:ERC721	0x18f36d3222324ddac1efd0a524aabfb9d77d8041	Glarbs	GLARB	On chain	18	false	false	false	true	true	true
 90-Individuals:Twitter	0x18f6f7753dbf2e84cda9291b63f1872a6d8a4c63	Vega0x		banteg on twitter		false	false	false	false	false	false
 90-Individuals:Twitter	0x18fbd9af7aa545a39deee25b2f07bf1c65ff44f8	3ji000		banteg on twitter		false	false	false	false	false	false
-90-Individuals:Twitter	0x1900.eth	Jay1900		Twitter: Sepolia ETH drop, Mar 2023 (@0x1900)		false	false	false	false	false	false
 90-Individuals:Gitcoin Grants	0x190473b3071946df65306989972706a4c006a561	chainlinkgod		Gitcoin Website		false	false	false	false	false	false
 50-Tokens:ERC20	0x19062190b1925b5b6689d7073fdfc8c2976ef8cb	BZZ	BZZ	Rotki	16	false	false	false	true	true	false
 30-Contracts	0x19076bd01e86fa3d76334e27d4b8e6789688a42d	Gnosis Auction		TrueBlocks.io		false	false	false	true	false	false
@@ -21984,7 +21983,6 @@ tags	address	name	symbol	source	decimals	deleted	isCustom	isPrefund	isContract	i
 30-Contracts	0xcffdded873554f362ac02f8fb1f02e5ada10516f	Uniswap V2	UNI-V2	Etherscan 	18	false	false	false	true	true	false
 31-Gitcoin:Grants	0xcffe08bdf20918007f8ab268c32f8756494fc8d8	Grant 1264 Talking Crypto with Gabriel		https://gitcoin.co/grants/1264/talking-crypto-with-gabriel		false	false	false	false	false	false
 60-Rotki	0xcfff80bff55dea6d4f27af5d872665ea40047953	OPT-20 Token	opti	Rotki	18	false	false	false	false	false	false
-90-Individuals:Twitter	0xcryptozach.eth	Crypto Zach		Twitter: Sepolia ETH drop, Mar 2023 (@CryptoZach)		false	false	false	false	false	false
 31-Gitcoin:Grants	0xd004d76e60d31aca6f99ca670839d90706b5886c	Grant 2315 - The ArtDAO		https://gitcoin.co/grants/2315/the-artdao		false	false	false	false	false	false
 31-Gitcoin:Grants	0xd00656f316657f128e284f89cd8bbfb3f02d6ee6	Grant 3085 - Gitcoin Dance		https://gitcoin.co/grants/3085/gitcoin-dance		false	false	false	false	false	false
 90-Individuals:Twitter	0xd00c196e91cb61f3ddf009dafedf995f5586fdc4	DaiYu006		banteg on twitter		false	false	false	false	false	false
