@@ -4,7 +4,7 @@
 
 Repo for the [TrueBlocks.io website](https://trueblocks.io).
 
-Note: There is only a `main` branch which is protected. Make any PRs against this branch and we will review and merge if approriate.
+Note: There is only a `main` branch which is protected. Make any PRs against this branch and we will review and merge if appropriate.
 
 ## Contributing to the docs
 

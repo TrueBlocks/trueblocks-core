@@ -65,7 +65,7 @@ Note this only works for non-CEX addresses which must be handled separately and 
 
 It's faster, cheaper, uncensorable, and private.
 
-**Faster:** You can hit your own RPC endpoints as fast as you could possible want. No rate limiting. It's surprsing how important this is. It transforms a "difficult-to-use node" into a perfectly fine data server.
+**Faster:** You can hit your own RPC endpoints as fast as you could possible want. No rate limiting. It's surprising how important this is. It transforms a "difficult-to-use node" into a perfectly fine data server.
 
 **Cheaper:** Over time, it's way, way cheaper to run your own infrastructure. There's only a single initial capital outlay. Plus -- you don't need a huge memory machine. Once the node and our scraper are caught up to the front of the chain, there's only a single block at every so many seconds. This is easily handled for both the local node and TrueBlocks. More memory is better, of course, but is also not the main bottleneck. (In fact, there are no bottlenecks--they system is mostly waiting for new blocks from the network.)
 
@@ -127,13 +127,13 @@ Here's what these numbers mean:
 | block     | meaning                                                                            | distance<br>from head | configurable | will be<br>revisited |
 | --------- | ---------------------------------------------------------------------------------- | --------------------- | ------------ | -------------------- |
 | latest    | The latest block on the chain. Same as `eth_getBlockByNumber('latest').            | 0 blocks              | -            | -                    |
-| finalized | The last block that has been consilidated into a "chunk". (i.e. an index portion). | depends               | **yes**      | no                   |
+| finalized | The last block that has been consolidated into a "chunk". (i.e. an index portion). | depends               | **yes**      | no                   |
 | staging   | The latest block "on the stage". (i.e. awaiting inclusion in the next chunk).      | depends               | **yes**      | no                   |
 | ripe      | Blocks that have been scraped, but not yet staged.                                 | 28 blocks             | **yes**      | no                   |
 | unripe    | Blocks that are "too close to the head" to be reliable.                            | 0 blocks              | no           | **yes**              |
 | timestamp | The latest scraped timestamp (used for debugging).                                 | n/a                   | -            | no                   |
 
-For a much better explaination of these numbers (and more generally the scraper), please see the [TrueBlocks Spec](https://trueblocks.io/papers/2022/file-format-spec-v0.40.0-beta.pdf).
+For a much better explanation of these numbers (and more generally the scraper), please see the [TrueBlocks Spec](https://trueblocks.io/papers/2022/file-format-spec-v0.40.0-beta.pdf).
 
 #### -- I'm getting an error message: current file does not sequentially follow previous file. What do?
 
@@ -207,19 +207,19 @@ When you do chifra export (without --unripe) you get both types, so you're alway
 
 Does that help?
 
-The Magizine Model
+The Magazine Model
 
 Magazines have exactly the same qualities as immutable data. They publish periodically. They cannot go back and correct
 something previously published. They publish in chunks (issue) and collect those issues in volumes (manifests) and make
 corrections via errata. And can be indexed and sliced and diced.
 
-We should study the library science of magizine publishing. How do librarians organize magazines? How do magizines
+We should study the library science of magazine publishing. How do librarians organize magazines? How do magazines
 organize themselves.
 
-We should change our code to reflect this and suggest to the guy who's doing the EIPs that he use the magizine metaphor
+We should change our code to reflect this and suggest to the guy who's doing the EIPs that he use the magazine metaphor
 over the book metaphor. Books are multi-chapter, but they are not published periodically.
 
-We can offer Uniswap a magizine publishing model (and it should not escape our notice that magizines have subscribers).
+We can offer Uniswap a magazine publishing model (and it should not escape our notice that magazines have subscribers).
 
 They can:
 

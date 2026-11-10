@@ -20,10 +20,10 @@ This has very significant performance implications because there is no serializa
 server case, the code must read the data from the RPC (or the local binary cache), turn it into a JSON string,
 and send it to the TypeScript or Python SDK. 
 
-In the GoLang SDK, the data is in memory ready for use directly from disc. No strinification. This makes the
+In the GoLang SDK, the data is in memory ready for use directly from disk. No stringification. This makes the
 GoLang SDK as fast as it can possibly be.
 
-The two API-releated SDKs are the [TypeScript SDK](/sdks/typescript-sdk/) and the [Python SDK](/sdks/python-sdk/).
+The two API-related SDKs are the [TypeScript SDK](/sdks/typescript-sdk/) and the [Python SDK](/sdks/python-sdk/).
 
 The GoLang SDKs is here [GoLang SDK](/sdks/go-sdk/).
 

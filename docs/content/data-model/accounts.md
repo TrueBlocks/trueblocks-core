@@ -61,7 +61,7 @@ Appearances consist of the following fields:
 A Monitor is a list of [Appearances](/data-model/accounts/#appearance) associated with a given
 address along with various details about those appearances. A monitor is created when a user
 expresses interest in an address by calling either [chifra list](/chifra/accounts/#chifra-list)
-or [chifra export](/chifra/accounts/#chifra-export) tool (or querying thier associated APIs).
+or [chifra export](/chifra/accounts/#chifra-export) tool (or querying their associated APIs).
 
 Once created, a monitor may be periodically *freshened* by calling either `chifra list` or `chifra
 export`, however, it is also possible to freshen a monitor continually with
@@ -217,7 +217,7 @@ Statements consist of the following fields:
 
 ## Transfer
 
-The Transfer type is used by the Reconcilation type to represent any transfer of an asset from one account to another.
+The Transfer type is used by the Reconciliation type to represent any transfer of an asset from one account to another.
 
 The following commands produce and manage Transfers:
 
